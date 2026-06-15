@@ -31,13 +31,15 @@ import { FinalneCTA } from '@/components/sections/FinalneCTA';
 export const dynamic = 'force-static';
 
 /**
- * Metadata strony głównej (spec 04 §7.4). Money query: "AI dla firm".
- * Title bez sufiksu marki (dodaje template w layout), opis 140–160 znaków,
- * konkret + liczba/czas, zero żargonu, zero em-dash (głos Pawła).
- * canonical = url główny; OG dziedziczy domyślny obraz z SITE.
+ * Metadata strony głównej (spec 04 §7.4, fix SEO 05 §3.1). Money query: "AI dla firm".
+ *
+ * FIX SEO #1 (05-seo-geo-strategia §1.2 / §3.1): marka MUSI być w <title> i og:title.
+ * Template '%s · SimpleFast.ai' z layoutu NIE działa na home (segment dostaje `default`,
+ * nie `template`), więc tytuł home jest samowystarczalny z marką. Cel: 50–60 zn., marka
+ * + fraza. Bez em-dash (głos Pawła): zamiast "—" używamy dwukropka. og:title dziedziczy z title.
  */
 export const metadata: Metadata = buildMetadata({
-  title: 'Architekt AI full-stack dla firm',
+  title: 'SimpleFast.ai: budujemy AI Agentów dla firm',
   description:
     'Budujemy AI Agentów dla polskich firm: odbierają telefony, odpisują klientom, umawiają wizyty. Dane w UE, zaczynasz od małego kroku, płacisz za efekt.',
   path: '/',

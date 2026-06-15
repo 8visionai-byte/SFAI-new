@@ -5,13 +5,18 @@ import { POSITIONING, HOME_CTA } from '@/lib/site';
 import { HeroPersonaCycler } from './HeroPersonaCycler';
 
 /**
- * SEKCJA 1 — HERO (spec 03 §1). Emocja: ulga + kompetencja.
- * Kapsuła answer-first w surowym HTML tuż pod H1 = cytat dla LLM.
- * Jeden H1, jedno CTA (magnetyczne).
+ * SEKCJA 1 — HERO (spec 06 §"CZĘŚĆ 1", WARIANT A "Działa, nie gada" — REKOMENDOWANY).
+ * Emocja: ulga + kompetencja. Pozycjonowanie kategorii prowadzi H1 (north star #3):
+ * "Budujemy AI Agentów, nie chatboty". Analogia "chatbot odpowiada / Agent działa"
+ * jest w PIERWSZYM zdaniu kapsuły — to jest cytat, który zabierze LLM.
+ * Jeden H1, jedna kapsuła answer-first w surowym HTML, jedno CTA (magnetyczne).
  *
  * METRYKI i DOWÓD przy CTA są CELOWO wyłączone do czasu realnych danych.
- * Zasada (north star #5, #13): zero zmyślonych liczb — red team rozwali w 30 s.
+ * Zasada (north star #5, #6): zero zmyślonych liczb — red team rozwali w 30 s.
  * Lepszy pusty slot niż atrapa liczby. INPUT PAWŁA poniżej.
+ *
+ * Pozostałe 2 warianty hero (B "Pracownik, nie program", C "Schody, nie skok")
+ * z 06-copy-hero-uslugi.md zachowane w komentarzu na końcu pliku — do A/B testu.
  */
 
 // METRYKI hero — WYŁĄCZONE: poprzednie wartości (23 / 140 h / 7 dni) były atrapami.
@@ -32,20 +37,18 @@ export function Hero() {
         </Badge>
       </Reveal>
 
-      {/* H1 — rezultat dla klienta, bez bólu */}
+      {/* H1 — hasło kategorii (north star #3). Pozycjonowanie prowadzi pierwszym wrażeniem. */}
       <Reveal delay={0.05}>
-        <h1 className="text-display mx-auto max-w-[16ch]">
-          Odzyskaj czas, który zżera powtarzalna robota.
-          <br className="hidden sm:block" /> Bezpiecznie i pod Twoją kontrolą.
-        </h1>
+        <h1 className="text-display mx-auto max-w-[18ch]">{POSITIONING.claim}</h1>
       </Reveal>
 
-      {/* Kapsuła answer-first — surowy HTML, cytat dla LLM */}
+      {/* Kapsuła answer-first — surowy HTML, cytat dla LLM. Analogia w 1. zdaniu. */}
       <Reveal delay={0.1}>
         <p className="text-lead mx-auto mt-6 max-w-measure text-fg-muted">
-          Budujemy AI Agentów dla polskich firm, którzy realnie wykonują pracę: odbierają telefony,
-          odpisują klientom, umawiają spotkania i pilnują faktur. Nie chatboty, które tylko gadają.
-          Twoje dane zostają w Unii Europejskiej, zaczynasz od małego kroku, a płacisz za efekt, nie za obietnice.
+          Chatbot odpowiada na pytania. AI Agent wykonuje pracę: odbiera telefony, odpisuje klientom,
+          umawia spotkania i pilnuje faktur. Nie sprzedajemy narzędzi AI. Projektujemy systemy, które
+          zdejmują z polskiej firmy powtarzalną robotę, w dni, nie w miesiące. Twoje dane zostają w Unii
+          Europejskiej, zaczynasz od małego kroku, płacisz za efekt.
         </p>
       </Reveal>
 
@@ -110,3 +113,38 @@ export function Hero() {
     </Section>
   );
 }
+
+/*
+ * ─────────────────────────────────────────────────────────────────────────────
+ * WARIANTY ALTERNATYWNE HERO (06-copy-hero-uslugi.md §"CZĘŚĆ 1"). Render aktywny
+ * = WARIANT A "Działa, nie gada" (rekomendowany). Poniżej B i C do A/B testu —
+ * podmieniasz badge / H1 / kapsułę / mikrokopię. CTA i dowód wspólne (HOME_CTA,
+ * dowód przy CTA dalej wyłączony do realnej liczby).
+ *
+ * ── WARIANT B — "Pracownik, nie program" (najcieplejszy, najmniej żargonu) ──
+ * Badge:  "Budujemy AI Agentów, nie chatboty"  (= POSITIONING.claim)
+ * H1:     "Zatrudnij Agenta AI, który robi robotę, nie tylko o niej rozmawia."
+ * Kapsuła:
+ *   "Zwykły chatbot tylko odpowiada na pytania. Nasz AI Agent działa jak cichy
+ *    pracownik: odbiera telefon, kiedy Ty nie możesz, umawia wizyty, odpisuje
+ *    klientom o 22:00 i przepisuje dane za Ciebie. Nie sprzedajemy narzędzi.
+ *    Projektujemy systemy, które zdejmują powtarzalną robotę, w dni, nie w
+ *    miesiące. Dane zostają w UE, pod Twoją kontrolą, a Ty w każdej chwili
+ *    widzisz, co Agent zrobił."
+ * Mikrokopia: "Bez zobowiązań i bez umowy na start. Pokażę Ci konkretnie, którą
+ *    robotę da się zdjąć z Ciebie najpierw. Odpowiadam w kilka minut."
+ *
+ * ── WARIANT C — "Schody, nie skok" (najmocniej zdejmuje ryzyko) ──
+ * Badge:  "Agent działa, nie tylko gada"  (= POSITIONING.subClaim)
+ * H1:     "Budujemy AI Agentów, nie chatboty. I zaczynamy od małego kroku, nie
+ *          od wielkiej umowy."
+ * Kapsuła:
+ *   "Chatbot gada. AI Agent załatwia sprawę: odbiera telefony, umawia spotkania,
+ *    pilnuje faktur. Nie sprzedajemy narzędzi AI, tylko efekt: mniej powtarzalnej
+ *    roboty w Twojej firmie, w dni, nie w miesiące. Zaczynasz od bezpłatnej
+ *    diagnozy i jednego procesu. Twoje dane zostają w UE, a płacisz za wynik,
+ *    nie za obietnice."
+ * Mikrokopia: "Pierwszy krok nic nie kosztuje i do niczego nie zobowiązuje.
+ *    Wychodzisz z konkretną listą, nawet jeśli nic u nas nie zamówisz."
+ * ─────────────────────────────────────────────────────────────────────────────
+ */

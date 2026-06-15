@@ -92,9 +92,15 @@ export function Rozwiazanie() {
         </blockquote>
       </Reveal>
 
+      {/*
+        CTA tej sekcji prowadzi do JEDYNEGO flow konwersji home (#diagnoza, north star #4).
+        Wcześniej linkowała do /uslugi/agenci-ai — slug spoza rejestru lib/uslugi,
+        a przy dynamicParams=false to twarde 404 (strona nie była prerenderowana).
+        Intencja przycisku ("którego Agenta potrzebujesz") = dokładnie to, co robi diagnoza.
+      */}
       <Reveal delay={0.15}>
         <div className="mt-7">
-          <Button variant="secondary" href="/uslugi/agenci-ai">
+          <Button variant="secondary" href="#diagnoza">
             Sprawdź, którego Agenta potrzebujesz
           </Button>
         </div>

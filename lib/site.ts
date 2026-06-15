@@ -130,6 +130,13 @@ export type RouteEntry = {
 export const HOME_LAST_MODIFIED = '2026-06-15';
 
 /**
+ * Data publikacji 6 stron uslug (/uslugi/<slug>) — faza 3 wypelnila je trescia.
+ * Uzywana przez sitemap (app/sitemap.ts) jako `lastModified` dla URL-i z rejestru
+ * lib/uslugi. NIE `new Date()` przy buildzie (falszywa swiezosc traci wartosc GEO).
+ */
+export const USLUGI_LAST_MODIFIED = '2026-06-15';
+
+/**
  * Wszystkie planowane trasy z IA (spec 01 §1). `live` odzwierciedla realny stan
  * repo: na ten moment istnieje tylko strona glowna. Reszta = scaffold pod sitemap,
  * przelaczana na `live: true` przy stawianiu kazdej podstrony.
@@ -137,14 +144,16 @@ export const HOME_LAST_MODIFIED = '2026-06-15';
 export const ROUTES: RouteEntry[] = [
   { path: '/', priority: 1.0, changeFrequency: 'weekly', live: true, lastModified: HOME_LAST_MODIFIED },
 
-  // Huby i strony uslug (spec 01 §1 — konwencja IA jest nadrzedna).
+  // Hub /uslugi (rozdroze) — jeszcze NIE zbudowany (trasa [usluga] obsluguje tylko
+  // 6 stron-lisci). Zostaje live:false do czasu postawienia huba.
   { path: '/uslugi', priority: 0.9, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
-  { path: '/uslugi/automatyzacja', priority: 0.9, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
-  { path: '/uslugi/chatboty', priority: 0.9, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
-  { path: '/uslugi/voiceboty', priority: 0.9, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
-  { path: '/uslugi/agenci-ai', priority: 0.9, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
-  { path: '/uslugi/strony-seo-geo', priority: 0.9, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
-  { path: '/uslugi/aplikacje-i-wtyczki', priority: 0.8, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
+
+  // 6 stron uslug (/uslugi/<slug>) NIE jest tu wpisanych pojedynczo — zrodlem prawdy
+  // ich URL-i jest rejestr lib/uslugi (USLUGI_SLUGS), a sitemap (app/sitemap.ts) dolacza
+  // je bezposrednio z rejestru. Dzieki temu slug w trasie SSG, w linkach nawigacji i w
+  // sitemapie NIGDY sie nie rozjedzie (zamyka bloker #1: rozjazd slugow ROUTES <-> rejestr).
+  // Wczesniej byly tu slugi IA (automatyzacja / strony-seo-geo / agenci-ai / aplikacje-i-wtyczki),
+  // ktore NIE pasowaly do realnych tras SSG — celowo usuniete.
 
   // Huby branz / slownik / narzedzia.
   { path: '/narzedzia', priority: 0.7, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },

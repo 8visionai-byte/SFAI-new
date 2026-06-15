@@ -1,6 +1,13 @@
 import Link from 'next/link';
 import { SITE, NAV_LINKS, LEGAL_ROUTES } from '@/lib/site';
+import { USLUGI } from '@/lib/uslugi';
 import { Logo } from './Logo';
+
+/**
+ * Linki "Strony" bez "/uslugi" — usługi mają własną kolumnę z 6 realnymi stronami,
+ * a hub /uslugi nie jest jeszcze live (lib/site.ts). Zero martwych linków w stopce.
+ */
+const FOOTER_NAV_REST = NAV_LINKS.filter((l) => l.href !== '/uslugi');
 
 /**
  * Footer — sekcja tech na ciemnym (spec 02 §7), NAP spójny + świeżość + encja.
@@ -15,7 +22,7 @@ export function Footer() {
   return (
     <footer data-theme="dark" className="bg-bg text-fg">
       <div className="mx-auto w-full max-w-container px-gutter py-section-tight">
-        <div className="grid gap-8 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div className="grid gap-8 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* Encja + opis */}
           <div>
             <Logo />
@@ -24,11 +31,28 @@ export function Footer() {
             </p>
           </div>
 
+          {/* Usługi — 6 realnych stron, anchor = H1 = money query (linkowanie pod GEO) */}
+          <nav aria-label="Stopka: usługi">
+            <h2 className="mb-3 text-overline uppercase text-fg-subtle">Usługi</h2>
+            <ul className="space-y-2">
+              {USLUGI.map((u) => (
+                <li key={u.slug}>
+                  <Link
+                    href={`/uslugi/${u.slug}`}
+                    className="text-body-sm text-fg-muted transition-colors hover:text-fg"
+                  >
+                    {u.h1}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
           {/* Nawigacja */}
-          <nav aria-label="Stopka — strony">
+          <nav aria-label="Stopka: strony">
             <h2 className="mb-3 text-overline uppercase text-fg-subtle">Strony</h2>
             <ul className="space-y-2">
-              {NAV_LINKS.map((link) => (
+              {FOOTER_NAV_REST.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-body-sm text-fg-muted transition-colors hover:text-fg">
                     {link.label}

@@ -22,10 +22,13 @@
     --sf-navy-400: #5a6b91;
     --sf-navy-300: #8d9ab8;
 
-    /* Cyan — akcent akcji (JEDYNY) */
-    --sf-cyan-700: #0e7c86;
+    /* Cyan — akcent akcji (JEDYNY)
+       Kontrast vs biel (#fff): 500=2.42:1 · 600=3.35:1 · 700=4.95:1 · 800=7.07:1.
+       => na TEKST/PRZYCISKI tylko 700+ (AA 4.5:1). 500/400 = wyłącznie dekoracja. */
+    --sf-cyan-800: #0a626b; /* tekst-akcja hover / badge na soft (7.07:1 na biel) */
+    --sf-cyan-700: #0e7c86; /* CYJAN TEKSTOWY (AA: 4.95:1 na biel, 4.74:1 na paper) */
     --sf-cyan-600: #0f9ba8;
-    --sf-cyan-500: #14b8c4; /* CYJAN BAZOWY (akcja/CTA) */
+    --sf-cyan-500: #14b8c4; /* CYJAN DEKORACYJNY (glow/border/ring — NIE na tekst) */
     --sf-cyan-400: #3ccdd6;
     --sf-cyan-300: #7fe0e6;
     --sf-cyan-100: #d6f5f7;
@@ -143,10 +146,14 @@
     --fg-subtle: var(--sf-gray-500);
     --fg-on-accent: var(--sf-white);
 
-    /* Brand / akcent */
+    /* Brand / akcent
+       WCAG AA: --accent musi zdać na biel/paper jako TEKST (4.5:1) i jako tło
+       przycisku pod białym tekstem. cyan-700 = 4.95:1 (✓). cyan-600 (3.35:1)
+       NIE zdawał — to była usterka kontrastu na logo ".ai" / CTA / badge. */
+    --accent: var(--sf-cyan-700); /* tekst-akcja + tło CTA — AA 4.95:1 vs biel */
+    --accent-hover: var(--sf-cyan-800); /* stan hover — ciemniejszy, 7.07:1 */
+    --accent-decor: var(--sf-cyan-500); /* WYŁĄCZNIE dekoracja (glow/border) */
     --brand: var(--sf-navy-700);
-    --accent: var(--sf-cyan-600); /* tekst-akcja na jasnym = cyan-600 dla AA */
-    --accent-hover: var(--sf-cyan-700);
     --accent-soft: var(--sf-cyan-100);
     --accent-contrast: var(--sf-white);
 
@@ -154,7 +161,11 @@
     --border: var(--sf-gray-200);
     --border-strong: var(--sf-gray-300);
     --border-accent: var(--sf-cyan-500);
-    --ring: var(--sf-cyan-500);
+    /* Pierścień focus: cyan-500 (#14b8c4) dawał 2.42:1 na biel / 2.32:1 na paper —
+       poniżej progu WCAG 1.4.11 (Non-text Contrast, 3:1) dla wskaźnika fokusa.
+       cyan-700 (#0e7c86) = 4.95:1 na biel i 4.74:1 na paper (zapas ponad 3:1),
+       ten sam akcent co CTA (spójność). Tryb ciemny zostaje na cyan-400 (9.71:1). */
+    --ring: var(--sf-cyan-700);
 
     /* Semantyka */
     --success: var(--sf-success);
@@ -184,10 +195,11 @@
     --fg-on-accent: var(--sf-navy-950);
 
     --brand: #ffffff;
-    --accent: var(--sf-cyan-400); /* na ciemnym jaśniejszy cyjan dla AA */
+    --accent: var(--sf-cyan-400); /* na ciemnym jaśniejszy cyjan: 7.38:1 na navy-700 (AA ✓) */
     --accent-hover: var(--sf-cyan-300);
+    --accent-decor: var(--sf-cyan-500); /* dekoracja (glow/border) — spójnie z light */
     --accent-soft: rgba(20, 184, 196, 0.14);
-    --accent-contrast: var(--sf-navy-950);
+    --accent-contrast: var(--sf-navy-950); /* tekst na CTA: 9.71:1 na cyan-400 (AA ✓) */
 
     --border: rgba(255, 255, 255, 0.1);
     --border-strong: rgba(255, 255, 255, 0.18);

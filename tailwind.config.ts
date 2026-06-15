@@ -28,6 +28,8 @@ const config: Config = {
         brand: 'var(--brand)',
         accent: 'var(--accent)',
         'accent-hover': 'var(--accent-hover)',
+        // accent-decor = jasny cyjan TYLKO dekoracyjnie (glow/border). Nie na tekst — nie zda AA.
+        'accent-decor': 'var(--accent-decor)',
         'accent-soft': 'var(--accent-soft)',
         'accent-contrast': 'var(--accent-contrast)',
         border: 'var(--border)',

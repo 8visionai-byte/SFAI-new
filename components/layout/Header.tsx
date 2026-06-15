@@ -4,7 +4,15 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui';
 import { NAV_LINKS, HOME_CTA } from '@/lib/site';
+import { USLUGI } from '@/lib/uslugi';
 import { Logo } from './Logo';
+import { ServicesMenu } from './ServicesMenu';
+
+/**
+ * Pozostałe linki nawigacji bez "/uslugi" — bo "Usługi" obsługuje ServicesMenu
+ * (rozwijana lista 6 realnych stron), a hub /uslugi nie jest jeszcze live.
+ */
+const NAV_LINKS_REST = NAV_LINKS.filter((l) => l.href !== '/uslugi');
 
 /**
  * Header — sticky nav, mobile-first (spec 02 §6.5).
@@ -46,9 +54,10 @@ export function Header() {
       <nav className="mx-auto flex h-16 w-full max-w-container items-center gap-4 px-gutter" aria-label="Główna">
         <Logo />
 
-        {/* Desktop nav */}
+        {/* Desktop nav — "Usługi" = ServicesMenu (6 realnych stron), reszta = linki */}
         <ul className="ml-auto hidden items-center gap-1 lg:flex">
-          {NAV_LINKS.map((link) => (
+          <ServicesMenu />
+          {NAV_LINKS_REST.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
@@ -96,8 +105,26 @@ export function Header() {
               </svg>
             </button>
           </div>
-          <ul className="flex flex-col gap-1 px-gutter pt-4">
-            {NAV_LINKS.map((link) => (
+          <ul className="flex flex-col gap-1 overflow-y-auto px-gutter pt-4">
+            {/* Usługi — grupa 6 realnych stron (hub /uslugi nie jest jeszcze live) */}
+            <li>
+              <p className="pt-2 text-overline uppercase text-fg-subtle">Usługi</p>
+              <ul className="mt-1 flex flex-col">
+                {USLUGI.map((u) => (
+                  <li key={u.slug}>
+                    <Link
+                      href={`/uslugi/${u.slug}`}
+                      onClick={() => setOpen(false)}
+                      className="block rounded-sm py-2 text-body text-fg-muted hover:text-fg"
+                    >
+                      {u.h1}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </li>
+
+            {NAV_LINKS_REST.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}

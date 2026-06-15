@@ -1,4 +1,5 @@
 import { SITE } from '@/lib/site';
+import type { Usluga } from '@/lib/uslugi/types';
 
 /**
  * Funkcje budujące obiekty JSON-LD (spec 04 §6).
@@ -118,3 +119,46 @@ export const breadcrumbSchema = (
     item: abs(item.path),
   })),
 });
+
+/**
+ * uslugaSchemas — buduje KOMPLET JSON-LD dla strony usługi z obiektu `Usluga`:
+ * Service (provider -> #organization) + FAQPage (1:1 z widoczną sekcją FAQ) +
+ * BreadcrumbList (Strona główna -> Usługi -> [usługa]).
+ *
+ * To jedyny punkt mapujący pola PL `Usluga` na schema.org. Dzięki temu strona
+ * (page.tsx) nie powtarza tej logiki, a tekst FAQ jest gwarantowanie ten sam
+ * w schema i w HTML (te same stringi `faq[].odpowiedz`).
+ *
+ * `offers` (w Service) wchodzi TYLKO gdy `ramaCeny.minPrice` jest realną liczbą
+ * spójną z UI — inaczej brak ceny w schema (north star #6: zero zmyślonych cen).
+ *
+ * `basePath` = prefix huba usług (domyślnie '/uslugi'). Pełny URL strony =
+ * `${basePath}/${usluga.slug}`.
+ */
+export const uslugaSchemas = (
+  usluga: Usluga,
+  basePath = '/uslugi'
+): { service: Json; faq: Json; breadcrumb: Json } => {
+  const path = `${basePath}/${usluga.slug}`;
+
+  const service = serviceSchema({
+    serviceType: usluga.h1,
+    name: usluga.h1,
+    description: usluga.kapsula,
+    path,
+    minPrice: usluga.ramaCeny.minPrice,
+  });
+
+  const faq = faqSchema(
+    usluga.faq.map((item) => ({ q: item.pytanie, a: item.odpowiedz })),
+    path
+  );
+
+  const breadcrumb = breadcrumbSchema([
+    { name: 'Strona główna', path: '/' },
+    { name: 'Usługi', path: basePath },
+    { name: usluga.h1, path },
+  ]);
+
+  return { service, faq, breadcrumb };
+};

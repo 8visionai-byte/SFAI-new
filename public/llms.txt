@@ -12,12 +12,12 @@
 > odpowiada na pytania. Budujemy Agentow, ktorzy dzialaja, nie systemy, ktore gadaja.
 
 ## Uslugi
-- [Automatyzacja procesow](https://simplefast.ai/uslugi/automatyzacja): zdejmuje powtarzalna robote (Make.com, OpenAI, Claude).
-- [Chatboty AI](https://simplefast.ai/uslugi/chatboty): obsluga i sprzedaz 24/7 na bazie wiedzy firmy.
-- [Voiceboty](https://simplefast.ai/uslugi/voiceboty): glosowy asystent, umawianie wizyt, odbieranie polaczen.
-- [AI Agenci](https://simplefast.ai/uslugi/agenci-ai): wykonuja zadania end-to-end pod nadzorem.
-- [Strony www pod SEO/GEO](https://simplefast.ai/uslugi/strony-seo-geo): strony cytowane przez ChatGPT, Claude, Gemini, Perplexity.
-- [Aplikacje i wtyczki](https://simplefast.ai/uslugi/aplikacje-i-wtyczki): rozwiazania na zamowienie.
+- [Automatyzacja procesow w firmie z AI](https://simplefast.ai/uslugi/automatyzacje): system przejmuje powtarzalna robote (przepisywanie danych, potwierdzenia, terminy), wdrozenie w dni.
+- [Chatbot AI dla firmy](https://simplefast.ai/uslugi/chatboty): odpowiada klientom 24/7 na bazie wiedzy firmy, zbiera leady, rosnie do Agenta, ktory umawia i zapisuje.
+- [Voicebot dla firmy](https://simplefast.ai/uslugi/voiceboty): bot glosowy odbiera telefon po polsku, umawia wizyty, przyjmuje zgloszenia, oddzwania.
+- [Strony WWW widoczne w Google i w AI](https://simplefast.ai/uslugi/strony-www): tresc w kodzie od razu (SSG), answer-first, cytowalne przez ChatGPT, Claude, Gemini, Perplexity.
+- [Pozycjonowanie pod AI (GEO)](https://simplefast.ai/uslugi/optymalizacja): ustawiamy strone tak, by silniki AI ja polecaly, i mierzymy cytowalnosc co tydzien w 4 silnikach.
+- [Indywidualne rozwiazania AI](https://simplefast.ai/uslugi/rozwiazania): aplikacje webowe, wtyczki i Agenci na zamowienie, gdy gotowe narzedzia nie pasuja.
 
 ## Dowod
 - [Realizacje](https://simplefast.ai/realizacje): case studies z konkretnymi liczbami.
@@ -31,6 +31,7 @@
 - [Kontakt](https://simplefast.ai/kontakt): formularz i umowienie rozmowy.
 
 ## Uwaga (uczciwie)
-> Strona jest w trakcie budowy. Zywy punkt wejscia to strona glowna (https://simplefast.ai)
-> i kontakt. Czesc podstron uslug i dowodu jest publikowana etapami — sitemap.xml
-> zawiera wylacznie strony juz dostepne.
+> Zywe i dostepne sa: strona glowna (https://simplefast.ai) oraz 6 stron uslug
+> powyzej (/uslugi/automatyzacje, /chatboty, /voiceboty, /strony-www, /optymalizacja,
+> /rozwiazania). Sekcje Realizacje, Dowod, Blog i O nas oraz hub /uslugi sa
+> publikowane etapami. sitemap.xml zawiera wylacznie strony juz dostepne (200 OK).

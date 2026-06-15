@@ -1,6 +1,8 @@
+import Link from 'next/link';
 import { Section, MagneticButton, Card, Badge } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HOME_CTA } from '@/lib/site';
+import { USLUGI } from '@/lib/uslugi';
 
 /**
  * SEKCJA 7 — OFERTA + ramy cen (spec 03 §7). Emocja: pewność, brak ukrytych kosztów.
@@ -96,6 +98,33 @@ export function Oferta() {
           To są widełki startowe, nie ostateczne faktury. Dokładną cenę poznasz na bezpłatnej diagnozie, zanim
           cokolwiek zamówisz. Bez ukrytych kosztów, bez abonamentu na siłę.
         </p>
+      </Reveal>
+
+      {/*
+        Linkowanie wewnętrzne pod GEO (fix SEO 05 §2.4): home -> każda z 6 stron /uslugi.
+        Anchor = H1 usługi = money query (NIE "zobacz więcej"). Lista z rejestru USLUGI
+        (single source) — slug i fraza nigdy się nie rozjadą. Treść w HTML (SSG), bot widzi linki.
+      */}
+      <Reveal delay={0.12}>
+        <nav aria-label="Nasze usługi" className="mx-auto mt-12 max-w-container">
+          <h3 className="text-h3 text-center">Co konkretnie wdrażamy?</h3>
+          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {USLUGI.map((u) => (
+              <li key={u.slug}>
+                <Link
+                  href={`/uslugi/${u.slug}`}
+                  className="group block h-full rounded-lg border border-border bg-surface p-5 shadow-xs transition-colors hover:border-brand"
+                >
+                  <span className="block text-body font-medium text-fg group-hover:text-brand">
+                    {u.h1}
+                  </span>
+                  <span className="mt-2 block text-body-sm text-fg-muted">{u.metaDescription}</span>
+                  <span className="mt-3 block text-caption text-fg-subtle">Zobacz, jak to działa →</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </Reveal>
 
       {/* Wariant z dotacją 2026 */}

@@ -31,17 +31,19 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url), // KONIECZNE — OG/canonical z relatywnych ścieżek
   title: {
-    default: 'SimpleFast.ai — Architekt AI full-stack dla firm',
+    default: 'SimpleFast.ai: Architekt AI full-stack dla firm',
     template: '%s · SimpleFast.ai',
   },
   description: SITE.description,
+  // Author = founder ze schema (fix SEO 05 §3.7) — spójność encji dla GEO.
+  authors: [{ name: SITE.founder.name }],
   alternates: { canonical: SITE.url },
   openGraph: {
     type: 'website',
     url: SITE.url,
     siteName: SITE.name,
     locale: SITE.locale,
-    title: 'SimpleFast.ai — Architekt AI full-stack dla firm',
+    title: 'SimpleFast.ai: Architekt AI full-stack dla firm',
     description: SITE.description,
   },
   // Ikony emitujemy TYLKO gdy pliki istnieją (SITE.assetsReady). Wskazywanie na

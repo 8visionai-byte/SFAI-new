@@ -13,9 +13,12 @@ const base =
   'inline-flex items-center gap-1 font-sans font-semibold text-caption rounded-full px-3 py-1';
 
 const variantClass: Record<BadgeVariant, string> = {
+  // accent: ciemny cyjan (--accent-hover = cyan-800) na soft (cyan-100) = 6.14:1 (AA ✓).
+  // text-accent (cyan-700) na cyan-100 dałby tylko 4.30:1 — dlatego hover-wariant.
   accent: 'bg-accent-soft text-accent-hover',
   neutral: 'bg-bg-subtle text-fg-muted border border-border',
   success: 'bg-success-bg text-success',
+  // metric: cyan-700 na białym/paper tle sekcji = 4.95:1 (AA ✓).
   metric: 'bg-transparent text-accent px-0 py-0 tabular-nums',
 };
 
