@@ -7,6 +7,7 @@ import { FAQ_ITEMS } from '@/components/sections/faqData';
 import { Hero } from '@/components/sections/Hero';
 import { PasekZaufania } from '@/components/sections/PasekZaufania';
 import { Problem } from '@/components/sections/Problem';
+import { BranzeDemo } from '@/components/sections/BranzeDemo';
 import { Rozwiazanie } from '@/components/sections/Rozwiazanie';
 import { Bezpieczenstwo } from '@/components/sections/Bezpieczenstwo';
 import { Dowod } from '@/components/sections/Dowod';
@@ -52,6 +53,7 @@ export default function HomePage() {
       <Hero />
       <PasekZaufania />
       <Problem />
+      <BranzeDemo />
       <Rozwiazanie />
       <Bezpieczenstwo />
       <Dowod />
