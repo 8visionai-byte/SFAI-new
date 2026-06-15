@@ -7,9 +7,7 @@ import { Reveal } from '@/components/motion/Reveal';
  *
  * Treść w HTML = cytowalna dla LLM przy "czy AI dla firmy jest bezpieczne / RODO".
  * Konkrety poniżej są realne (dane w UE, umowa powierzenia, log akcji, jawność AI).
- *
- * INPUT PAWŁA: certyfikat cyberbezpieczeństwa — gdy będzie konkret (nazwa certu),
- * wpisać go w czwarty kafelek zamiast ogólnej formuły o kompetencjach.
+ * Bez żadnych certyfikatów — komunikujemy wyłącznie to, co faktycznie robimy.
  */
 const PUNKTY = [
   {
@@ -57,11 +55,6 @@ export function Bezpieczenstwo() {
           </Reveal>
         ))}
       </ul>
-
-      {/*
-        Certyfikat cyberbezpieczeństwa — INPUT PAWŁA. Gdy będzie konkret (nazwa certu),
-        dodać tu kafelek/odznakę z realną nazwą. Do tego czasu NIC nie zmyślamy.
-      */}
     </Section>
   );
 }

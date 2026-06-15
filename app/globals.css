@@ -324,6 +324,77 @@
 }
 
 /* ==========================================================================
+   SUWAKI NARZĘDZI (.sf-range) — spójne z tokenami, WCAG focus (spec 07)
+   Track = border (szyna), wypełnienie po lewej rysujemy przez tło kciuka + cień.
+   Kciuk = akcent, duży cel dotykowy (>=24px), pierścień focus 3px (cyan-700).
+   ========================================================================== */
+@layer components {
+  .sf-range {
+    --thumb: 26px;
+  }
+  /* Szyna toru */
+  .sf-range::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--border-strong);
+  }
+  .sf-range::-moz-range-track {
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--border-strong);
+  }
+  /* Wypełnienie do kciuka (tylko Firefox natywnie) */
+  .sf-range::-moz-range-progress {
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--accent);
+  }
+  /* Kciuk */
+  .sf-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: calc((8px - var(--thumb)) / 2);
+    height: var(--thumb);
+    width: var(--thumb);
+    border-radius: var(--radius-full);
+    background: var(--accent);
+    border: 3px solid var(--surface);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  .sf-range::-moz-range-thumb {
+    height: var(--thumb);
+    width: var(--thumb);
+    border-radius: var(--radius-full);
+    background: var(--accent);
+    border: 3px solid var(--surface);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+  }
+  .sf-range:active::-webkit-slider-thumb {
+    transform: scale(1.08);
+  }
+  /* Focus widoczny na kciuku (bramka A11y, 1.4.11) */
+  .sf-range:focus-visible::-webkit-slider-thumb {
+    box-shadow: var(--shadow-sm), 0 0 0 3px var(--ring);
+  }
+  .sf-range:focus-visible::-moz-range-thumb {
+    box-shadow: var(--shadow-sm), 0 0 0 3px var(--ring);
+  }
+}
+
+/* Wzrost słupka wykresu (skala od dołu). Wyłączany przez reduced-motion poniżej. */
+@keyframes sfBarGrow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* ==========================================================================
    prefers-reduced-motion — globalna bramka A11y (spec 02 §5.4)
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {

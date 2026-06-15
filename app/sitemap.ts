@@ -1,6 +1,11 @@
 import type { MetadataRoute } from 'next';
 import { SITE, ROUTES, USLUGI_LAST_MODIFIED } from '@/lib/site';
 import { USLUGI_SLUGS } from '@/lib/uslugi';
+import { REALIZACJE_SLUGS } from '@/lib/realizacje';
+import { POSTS } from '@/lib/blog';
+
+/** Realna data publikacji realizacji (ostatnia rewizja treści) — do sitemap. */
+const TRESC_LAST_MODIFIED = '2026-06-15';
 
 /**
  * sitemap.xml generowany dynamicznie (spec 04 §10, 01 §7.2).
@@ -36,5 +41,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
-  return [...staticRoutes, ...uslugiRoutes];
+  // Realizacje (case studies) — zrodlo prawdy = rejestr lib/realizacje.
+  const realizacjeRoutes: MetadataRoute.Sitemap = REALIZACJE_SLUGS.map((slug) => ({
+    url: `${SITE.url}/realizacje/${slug}`,
+    lastModified: new Date(TRESC_LAST_MODIFIED),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }));
+
+  // Wpisy bloga — zrodlo prawdy = rejestr lib/blog; lastmod z daty wpisu.
+  const blogRoutes: MetadataRoute.Sitemap = POSTS.map((p) => ({
+    url: `${SITE.url}/blog/${p.slug}`,
+    lastModified: new Date(p.data),
+    changeFrequency: 'monthly',
+    priority: 0.5,
+  }));
+
+  return [...staticRoutes, ...uslugiRoutes, ...realizacjeRoutes, ...blogRoutes];
 }

@@ -6,6 +6,10 @@
  *
  * UWAGA: pola oznaczone TODO:ZWERYFIKUJ muszą być potwierdzone z Pawłem przed shipem.
  * Żelazna zasada: do schema i meta wchodzą TYLKO prawdziwe, weryfikowalne dane.
+ *
+ * Firma ma DWÓCH founderów: Paweł Pieloch (Architekt AI / twarz) i Marcin Karpeta
+ * (współprowadzący). `founder` (l.poj.) = Paweł jako twarz/autor treści; `founders`
+ * (tablica) = pełen skład do schema Organization i bloku „kto za tym stoi".
  */
 export const SITE = {
   name: 'SimpleFast.ai',
@@ -15,24 +19,53 @@ export const SITE = {
   lang: 'pl',
   description:
     'Architekt AI dla MŚP: automatyzacje, chatboty, voiceboty, aplikacje i wtyczki oraz strony www pozycjonowane pod SEO/AEO/GEO. Budujemy AI Agentów, którzy wykonują pracę, nie tylko gadają.',
+  /**
+   * Founder „twarz" — Paweł prowadzi komunikację i jest autorem treści (E-E-A-T,
+   * authors w metadanych, podpis w stopce). Marcin jest w `founders` poniżej.
+   */
   founder: {
     name: 'Paweł Pieloch',
     jobTitle: 'Architekt AI full-stack',
+    email: 'pawel.pieloch@simplefast.ai',
+    phone: '+48 696 674 874',
     sameAs: [
       'https://www.linkedin.com/in/pawel-pieloch', // TODO:ZWERYFIKUJ realny URL
     ],
   },
+  /**
+   * Pełen skład założycielski (DWÓCH founderów) — źródło dla schema Organization
+   * (founder[]) i bloku autorytetu na stronie. Tylko realne osoby i kontakty.
+   */
+  founders: [
+    {
+      name: 'Paweł Pieloch',
+      jobTitle: 'Architekt AI full-stack',
+      email: 'pawel.pieloch@simplefast.ai',
+      phone: '+48 696 674 874',
+    },
+    {
+      name: 'Marcin Karpeta',
+      jobTitle: 'Współzałożyciel',
+      email: 'marcin.karpeta@simplefast.ai',
+      phone: '+48 669 863 894',
+    },
+  ],
   // NAP — IDENTYCZNE wszędzie (strona, Google Business, Clutch, llms.txt, schema)
   contact: {
-    email: 'kontakt@simplefast.ai', // TODO:ZWERYFIKUJ realny, działający adres
+    email: 'kontakt@simplefast.ai', // realny, główny adres kontaktowy firmy
     /**
      * Guard świadomy weryfikacji: e-mail renderujemy do NAP/mailto/schema TYLKO gdy
-     * emailVerified === true. Sam niepusty string NIE wystarcza (poprzedni guard
-     * przepuszczał niezweryfikowany adres na produkcję). INPUT PAWŁA: potwierdzić,
-     * że adres działa (wysłać testa, sprawdzić odbiór), potem ustawić true.
+     * emailVerified === true. kontakt@simplefast.ai to realny, działający adres
+     * firmowy podany przez Pawła — dlatego true.
      */
-    emailVerified: false,
-    phone: '', // jeśli publiczny — format +48...
+    emailVerified: true,
+    /**
+     * Główny publiczny telefon = Paweł (twarz firmy). Format E.164-friendly z
+     * `+48` — działa w `tel:` i w schema ContactPoint. Drugi numer (Marcin) jest
+     * w `founders` / kontakcie osobowym, nie dublujemy go w głównym NAP.
+     */
+    phone: '+48 696 674 874',
+    hours: 'pon-pt 9-18',
     areaServed: 'PL',
   },
   sameAs: [
@@ -67,7 +100,6 @@ export const NAV_LINKS = [
   { label: 'Usługi', href: '/uslugi' },
   { label: 'Realizacje', href: '/realizacje' },
   { label: 'Narzędzia', href: '/narzedzia' },
-  { label: 'Dowód', href: '/dowod' },
   { label: 'O nas', href: '/o-nas' },
   { label: 'Blog', href: '/blog' },
 ] as const;
@@ -156,12 +188,12 @@ export const ROUTES: RouteEntry[] = [
   // ktore NIE pasowaly do realnych tras SSG — celowo usuniete.
 
   // Huby branz / slownik / narzedzia.
-  { path: '/narzedzia', priority: 0.7, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
+  { path: '/narzedzia', priority: 0.7, changeFrequency: 'monthly', live: true, lastModified: HOME_LAST_MODIFIED },
 
   // Dowod i konwersja.
-  { path: '/realizacje', priority: 0.8, changeFrequency: 'weekly', live: false, lastModified: HOME_LAST_MODIFIED },
-  { path: '/blog', priority: 0.6, changeFrequency: 'weekly', live: false, lastModified: HOME_LAST_MODIFIED },
-  { path: '/o-nas', priority: 0.6, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
+  { path: '/realizacje', priority: 0.8, changeFrequency: 'weekly', live: true, lastModified: HOME_LAST_MODIFIED },
+  { path: '/blog', priority: 0.6, changeFrequency: 'weekly', live: true, lastModified: HOME_LAST_MODIFIED },
+  { path: '/o-nas', priority: 0.6, changeFrequency: 'monthly', live: true, lastModified: HOME_LAST_MODIFIED },
   { path: '/dowod', priority: 0.5, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
   { path: '/kontakt', priority: 0.5, changeFrequency: 'yearly', live: false, lastModified: HOME_LAST_MODIFIED },
 
