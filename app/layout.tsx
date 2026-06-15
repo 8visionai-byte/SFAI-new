@@ -1,0 +1,97 @@
+import type { Metadata, Viewport } from 'next';
+import { Inter, Fraunces } from 'next/font/google';
+import './globals.css';
+import { SITE } from '@/lib/site';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { organizationSchema, websiteSchema } from '@/components/seo/schemas';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
+import { ChatLauncher } from '@/components/demo/ChatLauncher';
+
+/**
+ * Fonty self-host przez next/font/google (zero requestów do fonts.googleapis.com,
+ * brak CLS dzięki metrycznemu fallbackowi). subsets latin + latin-ext = polskie znaki.
+ * Fraunces (display) + Inter (tekst) = 1 display + 1 tekstowy (north star #4).
+ */
+const inter = Inter({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-inter',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+});
+
+const fraunces = Fraunces({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-fraunces',
+  display: 'swap',
+  weight: ['400', '500', '600'],
+  style: ['normal'],
+});
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE.url), // KONIECZNE — OG/canonical z relatywnych ścieżek
+  title: {
+    default: 'SimpleFast.ai — Architekt AI full-stack dla firm',
+    template: '%s · SimpleFast.ai',
+  },
+  description: SITE.description,
+  alternates: { canonical: SITE.url },
+  openGraph: {
+    type: 'website',
+    url: SITE.url,
+    siteName: SITE.name,
+    locale: SITE.locale,
+    title: 'SimpleFast.ai — Architekt AI full-stack dla firm',
+    description: SITE.description,
+  },
+  // Ikony emitujemy TYLKO gdy pliki istnieją (SITE.assetsReady). Wskazywanie na
+  // nieistniejący favicon.ico/icon.svg = 404. INPUT PAWŁA: dostarczyć pliki i
+  // przełączyć SITE.assetsReady = true.
+  ...(SITE.assetsReady
+    ? {
+        icons: {
+          icon: '/favicon.ico',
+          shortcut: '/favicon.ico',
+          apple: '/icon.svg',
+        },
+      }
+    : {}),
+  robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#fbfaf8' },
+    { media: '(prefers-color-scheme: dark)', color: '#0b1220' },
+  ],
+  width: 'device-width',
+  initialScale: 1,
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="pl" className={`${inter.variable} ${fraunces.variable}`}>
+      <body>
+        {/* Skip-link — pierwsza rzecz w tab order (bramka A11y) */}
+        <a href="#main" className="skip-link">
+          Przejdź do treści
+        </a>
+
+        <Header />
+        {children}
+        <Footer />
+
+        {/* Pływający launcher czatu (STUB demo) — nie blokuje treści/indeksacji */}
+        <ChatLauncher />
+
+        {/* Schema globalna — Organization + WebSite na każdej stronie (spec 04 §6.2–6.3) */}
+        <JsonLd data={organizationSchema()} />
+        <JsonLd data={websiteSchema()} />
+      </body>
+    </html>
+  );
+}

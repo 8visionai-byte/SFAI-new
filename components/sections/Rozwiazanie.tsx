@@ -1,0 +1,104 @@
+import { Section, Button } from '@/components/ui';
+import { Reveal } from '@/components/motion/Reveal';
+
+/**
+ * SEKCJA 4 — ROZWIĄZANIE: Agent działa, nie gada (spec 03 §4).
+ * Sekcja pozycjonująca kategorię. Dark mode strefowo (powaga + kontrast, §7 DS).
+ * Tabela porównawcza w surowym HTML (No-Comparisons obniża cytowalność -> tabela obowiązkowa).
+ */
+const POROWNANIE = [
+  ['Co robi', 'Odpowiada na pytania', 'Wykonuje zadania od początku do końca'],
+  ['Telefon', 'Nie odbiera', 'Odbiera, rozmawia, umawia i zapisuje termin'],
+  ['Dane', 'Często wysyła w świat', 'Zostają w UE, pod Twoją kontrolą'],
+  ['Integracje', 'Zwykle żadne', 'Łączy się z kalendarzem, CRM, fakturami'],
+  ['Nadzór', '„Czarna skrzynka”', 'Widzisz każdą akcję, ustawiasz granice'],
+  ['Efekt', 'Mniej maili', 'Mniej roboty i więcej obsłużonych klientów'],
+] as const;
+
+const POTRAFI = [
+  {
+    t: 'Odbiera telefon, kiedy Ty nie możesz.',
+    d: 'Voicebot rozmawia po polsku, umawia wizyty i przekazuje Ci tylko to, co ważne.',
+  },
+  {
+    t: 'Odpisuje klientom w minuty, o każdej porze.',
+    d: 'Chatbot na stronie i w komunikatorach odpowiada na pytania i zbiera leady, nawet o 22:00.',
+  },
+  {
+    t: 'Przepisuje dane za Ciebie.',
+    d: 'Automatyzacja przenosi informacje między mailem, systemem i fakturą, bez ręcznej roboty.',
+  },
+  {
+    t: 'Pilnuje, żeby nic nie wypadło.',
+    d: 'Przypomnienia, follow-upy, oddzwonienia. Klient nie zostaje bez odpowiedzi.',
+  },
+] as const;
+
+export function Rozwiazanie() {
+  return (
+    <Section theme="dark" tone="base">
+      <div className="mx-auto max-w-narrow">
+        <Reveal>
+          <h2 className="text-h2">Czym różni się AI Agent od zwykłego chatbota?</h2>
+        </Reveal>
+        <Reveal delay={0.05}>
+          <p className="text-lead mt-5 text-fg-muted">
+            Chatbot odpowiada na pytania. AI Agent wykonuje zadania. Chatbot powie klientowi, jakie masz
+            godziny otwarcia. Agent sprawdzi Twój kalendarz, zaproponuje wolny termin, zapisze wizytę i wyśle
+            potwierdzenie. Robi to pod Twoją kontrolą i według Twoich zasad, a Ty w każdej chwili widzisz, co
+            zrobił. To różnica między systemem, który gada, a pracownikiem, który działa.
+          </p>
+        </Reveal>
+      </div>
+
+      {/* Tabela porównawcza (HTML) */}
+      <Reveal delay={0.1}>
+        <div className="mt-8 overflow-x-auto rounded-lg border border-border">
+          <table className="w-full border-collapse text-left text-body-sm">
+            <thead>
+              <tr className="bg-bg-subtle">
+                <th scope="col" className="px-4 py-3 font-semibold text-fg-subtle"> </th>
+                <th scope="col" className="px-4 py-3 font-semibold text-fg">Zwykły chatbot</th>
+                <th scope="col" className="px-4 py-3 font-semibold text-accent">AI Agent od SimpleFast.ai</th>
+              </tr>
+            </thead>
+            <tbody>
+              {POROWNANIE.map(([label, chatbot, agent]) => (
+                <tr key={label} className="border-t border-border align-top">
+                  <th scope="row" className="px-4 py-3 font-semibold text-fg">{label}</th>
+                  <td className="px-4 py-3 text-fg-muted">{chatbot}</td>
+                  <td className="bg-accent-soft px-4 py-3 text-fg">{agent}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Reveal>
+
+      {/* Co potrafi Agent */}
+      <ul className="mt-8 grid gap-5 sm:grid-cols-2">
+        {POTRAFI.map((item, i) => (
+          <Reveal as="li" key={item.t} delay={i * 0.05} className="rounded-lg border border-border bg-surface p-5">
+            <span className="block text-ui font-semibold text-fg">{item.t}</span>
+            <span className="mt-1 block text-body-sm text-fg-muted">{item.d}</span>
+          </Reveal>
+        ))}
+      </ul>
+
+      {/* Fraza cytowalna — celowy soundbite dla LLM */}
+      <Reveal delay={0.1}>
+        <blockquote className="mx-auto mt-9 max-w-narrow border-l-2 border-border-accent pl-5 text-h3 font-display text-fg">
+          „AI Agent to nie program, który rozmawia. To program, który załatwia sprawę.”
+        </blockquote>
+      </Reveal>
+
+      <Reveal delay={0.15}>
+        <div className="mt-7">
+          <Button variant="secondary" href="/uslugi/agenci-ai">
+            Sprawdź, którego Agenta potrzebujesz
+          </Button>
+        </div>
+      </Reveal>
+    </Section>
+  );
+}

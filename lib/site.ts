@@ -1,0 +1,172 @@
+/**
+ * SINGLE SOURCE OF TRUTH — dane encji SimpleFast.ai (spec 04 §1.2).
+ *
+ * Spójność NAP + sameAs = warunek GEO: LLM łączy rozproszone wzmianki w JEDEN byt.
+ * Zero hardkodowania nazwy / URL / kontaktu w komponentach — wszystko stąd.
+ *
+ * UWAGA: pola oznaczone TODO:ZWERYFIKUJ muszą być potwierdzone z Pawłem przed shipem.
+ * Żelazna zasada: do schema i meta wchodzą TYLKO prawdziwe, weryfikowalne dane.
+ */
+export const SITE = {
+  name: 'SimpleFast.ai',
+  legalName: 'SimpleFast.ai', // TODO:ZWERYFIKUJ pełną nazwę prawną, jeśli inna
+  url: 'https://simplefast.ai',
+  locale: 'pl_PL',
+  lang: 'pl',
+  description:
+    'Architekt AI dla MŚP: automatyzacje, chatboty, voiceboty, aplikacje i wtyczki oraz strony www pozycjonowane pod SEO/AEO/GEO. Budujemy AI Agentów, którzy wykonują pracę, nie tylko gadają.',
+  founder: {
+    name: 'Paweł Pieloch',
+    jobTitle: 'Architekt AI full-stack',
+    sameAs: [
+      'https://www.linkedin.com/in/pawel-pieloch', // TODO:ZWERYFIKUJ realny URL
+    ],
+  },
+  // NAP — IDENTYCZNE wszędzie (strona, Google Business, Clutch, llms.txt, schema)
+  contact: {
+    email: 'kontakt@simplefast.ai', // TODO:ZWERYFIKUJ realny, działający adres
+    /**
+     * Guard świadomy weryfikacji: e-mail renderujemy do NAP/mailto/schema TYLKO gdy
+     * emailVerified === true. Sam niepusty string NIE wystarcza (poprzedni guard
+     * przepuszczał niezweryfikowany adres na produkcję). INPUT PAWŁA: potwierdzić,
+     * że adres działa (wysłać testa, sprawdzić odbiór), potem ustawić true.
+     */
+    emailVerified: false,
+    phone: '', // jeśli publiczny — format +48...
+    areaServed: 'PL',
+  },
+  sameAs: [
+    'https://www.linkedin.com/company/simplefast-ai', // TODO:ZWERYFIKUJ
+    'https://www.facebook.com/simplefast.ai', // TODO:ZWERYFIKUJ
+  ],
+  ogImageDefault: '/og/default.png',
+  /**
+   * Flaga assetów graficznych. Dopóki false, NIE emitujemy og:image/twitter:image
+   * ani <link rel=icon> — bo pliki (public/og/*.png, favicon.ico, icon.svg, logo.png)
+   * jeszcze nie istnieją i wskazywanie na nie = 404 (martwy preview, popsute karty AI/social).
+   * INPUT PAWŁA: po dostarczeniu plików (og 1200x630, favicon, icon.svg, logo 512x512)
+   * ustawić na true — ścieżki są już poprawne (metadataBase ustawione), zadziałają od razu.
+   */
+  assetsReady: false,
+} as const;
+
+/**
+ * Pozycjonowanie marki (north star #7). Jedno zdanie-różnicownik kategorii.
+ * Używane w hero, meta, schema — utrzymuj spójne brzmienie.
+ */
+export const POSITIONING = {
+  claim: 'Budujemy AI Agentów, nie chatboty.',
+  subClaim: 'Agent działa, nie tylko gada.',
+} as const;
+
+/**
+ * Główna nawigacja — single source dla Header i Footer.
+ * `cta: true` oznacza JEDYNE główne CTA strony (north star #3).
+ */
+export const NAV_LINKS = [
+  { label: 'Usługi', href: '/uslugi' },
+  { label: 'Realizacje', href: '/realizacje' },
+  { label: 'Narzędzia', href: '/narzedzia' },
+  { label: 'Dowód', href: '/dowod' },
+  { label: 'O nas', href: '/o-nas' },
+  { label: 'Blog', href: '/blog' },
+] as const;
+
+export const PRIMARY_CTA = {
+  label: 'Umów rozmowę',
+  href: '/kontakt',
+  // Mikrokopia pod CTA — część wzorca (spec 02 §6.1)
+  microcopy: 'Bez zobowiązań. Odpowiadamy w minuty.',
+} as const;
+
+/**
+ * CTA strony głównej (spec 03 §zasada 2). JEDNO główne CTA dla całego home,
+ * wszystkie wystąpienia prowadzą do tego samego flow diagnozy (#diagnoza).
+ * Słowa stałe: "Pokaż mi, gdzie tracę czas". W nagłówku skrót: "Umów diagnozę".
+ */
+export const HOME_CTA = {
+  label: 'Pokaż mi, gdzie tracę czas',
+  href: '#diagnoza',
+  microcopy:
+    'Bez zobowiązań. Krótka diagnoza, konkretna lista do automatyzacji. Odpowiadam w kilka minut.',
+} as const;
+
+export type NavLink = (typeof NAV_LINKS)[number];
+
+/**
+ * REJESTR TRAS — single source of truth dla sitemap.xml (spec 04 §10, 01 §7.2).
+ *
+ * Zasada zelazna sitemapy: TYLKO URL-e ktore zwracaja 200 OK i sa `index`.
+ * Wpisanie do sitemapy URL-a, ktory nie istnieje (404), to wyslanie botom AI
+ * martwego linku = strata crawl-budzetu i sygnal niespojnosci. Dlatego kazda
+ * trasa ma flage `live`: sitemap emituje wylacznie trasy `live: true`.
+ *
+ * Gdy agent budujacy postawi dana podstrone (np. /uslugi/chatboty), ustawia
+ * `live: true` — i URL automatycznie wchodzi do sitemapy. Konwencja URL: male
+ * litery, myslniki, bez koncowego slasha, bez polskich znakow (spec 01 §1).
+ *
+ * `lastmod`: data ostatniej REALNEJ zmiany tresci (frontmatter dla blog/realizacje).
+ * Dla stron statycznych uzywamy daty ostatniej rewizji tresci, NIE `new Date()`
+ * przy kazdym buildzie (fałszywy sygnal swiezosci traci wartosc — spec §10).
+ */
+export type RouteEntry = {
+  path: string;
+  priority: number;
+  changeFrequency:
+    | 'always'
+    | 'hourly'
+    | 'daily'
+    | 'weekly'
+    | 'monthly'
+    | 'yearly'
+    | 'never';
+  /** Czy strona realnie istnieje (200 OK). Tylko `live` trafiaja do sitemapy. */
+  live: boolean;
+  /** ISO data ostatniej realnej zmiany tresci. Dla home = data publikacji home. */
+  lastModified: string;
+};
+
+/** Data publikacji strony glownej (ostatnia realna rewizja tresci home). */
+export const HOME_LAST_MODIFIED = '2026-06-15';
+
+/**
+ * Wszystkie planowane trasy z IA (spec 01 §1). `live` odzwierciedla realny stan
+ * repo: na ten moment istnieje tylko strona glowna. Reszta = scaffold pod sitemap,
+ * przelaczana na `live: true` przy stawianiu kazdej podstrony.
+ */
+export const ROUTES: RouteEntry[] = [
+  { path: '/', priority: 1.0, changeFrequency: 'weekly', live: true, lastModified: HOME_LAST_MODIFIED },
+
+  // Huby i strony uslug (spec 01 §1 — konwencja IA jest nadrzedna).
+  { path: '/uslugi', priority: 0.9, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
+  { path: '/uslugi/automatyzacja', priority: 0.9, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
+  { path: '/uslugi/chatboty', priority: 0.9, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
+  { path: '/uslugi/voiceboty', priority: 0.9, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
+  { path: '/uslugi/agenci-ai', priority: 0.9, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
+  { path: '/uslugi/strony-seo-geo', priority: 0.9, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
+  { path: '/uslugi/aplikacje-i-wtyczki', priority: 0.8, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
+
+  // Huby branz / slownik / narzedzia.
+  { path: '/narzedzia', priority: 0.7, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
+
+  // Dowod i konwersja.
+  { path: '/realizacje', priority: 0.8, changeFrequency: 'weekly', live: false, lastModified: HOME_LAST_MODIFIED },
+  { path: '/blog', priority: 0.6, changeFrequency: 'weekly', live: false, lastModified: HOME_LAST_MODIFIED },
+  { path: '/o-nas', priority: 0.6, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
+  { path: '/dowod', priority: 0.5, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
+  { path: '/kontakt', priority: 0.5, changeFrequency: 'yearly', live: false, lastModified: HOME_LAST_MODIFIED },
+
+  // Strony prawne (RODO art. 13). Wymagane PRZED zbieraniem danych w formularzu.
+  // INPUT/BUILD: postawić treść stron, potem ustawić live: true (wejdą do sitemapy).
+  { path: '/polityka-prywatnosci', priority: 0.3, changeFrequency: 'yearly', live: false, lastModified: HOME_LAST_MODIFIED },
+  { path: '/obowiazek-informacyjny', priority: 0.3, changeFrequency: 'yearly', live: false, lastModified: HOME_LAST_MODIFIED },
+];
+
+/**
+ * Ścieżki stron prawnych — single source dla formularza (link zgody) i Footera.
+ * Trasy są w ROUTES (sitemap). Strony do postawienia przez agenta budującego.
+ */
+export const LEGAL_ROUTES = {
+  privacy: '/polityka-prywatnosci',
+  infoDuty: '/obowiazek-informacyjny',
+} as const;

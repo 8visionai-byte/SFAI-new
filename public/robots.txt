@@ -1,0 +1,55 @@
+# robots.txt — SimpleFast.ai
+# Cel: wpuscic WSZYSTKIE boty AI + wyszukiwarki, wskazac sitemap.
+# Plik statyczny (Next.js serwuje 1:1 z public/). NIE tworzyc rownolegle app/robots.ts
+# — dwa zrodla dla /robots.txt to konflikt w App Routerze.
+#
+# UWAGA (bramka 0/1, spec 04 §8): od 2026 Cloudflare domyslnie blokuje boty AI
+# na poziomie CDN, ZANIM dojda do tego pliku. Po deployu zweryfikuj w logach
+# Cloudflare wizyty GPTBot / ClaudeBot / PerplexityBot / OAI-SearchBot.
+# Allow ponizej bez odblokowania CDN = zero efektu.
+
+User-agent: *
+Allow: /
+
+# --- Boty AI retrieval (generuja cytaty i ruch) ---
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# --- Bot treningowy (obecnosc w przyszlych modelach) ---
+User-agent: GPTBot
+Allow: /
+
+# --- Wyszukiwarka Bing (zasila indeks ChatGPT) ---
+User-agent: Bingbot
+Allow: /
+
+# Zaplecze bez tresci — nie marnujemy crawl-budzetu botow.
+# NIE blokujemy /_next/ (zasoby CSS/JS potrzebne do renderu dla Google).
+User-agent: *
+Disallow: /api/
+
+Sitemap: https://simplefast.ai/sitemap.xml

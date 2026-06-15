@@ -1,0 +1,9 @@
+# Netlify — konfiguracja deployu SimpleFast.ai (Next.js 15 App Router).
+# Netlify automatycznie wykrywa Next.js i instaluje Next Runtime (SSR/SSG/ISR),
+# więc nie deklarujemy ręcznie pluginu ani katalogu publish.
+
+[build]
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "20"

@@ -1,0 +1,36 @@
+# SimpleFast.ai
+
+> Architekt AI dla polskich MSP. Budujemy AI Agentow (dzialaja, nie tylko gadaja):
+> automatyzacje procesow, chatboty, voiceboty, strony www pod SEO/AEO/GEO,
+> aplikacje i wtyczki na zamowienie. Dane zostaja w Unii Europejskiej (RODO + AI Act),
+> pierwszy krok jest maly i odwracalny, rozliczenie za efekt.
+> Architekt AI full-stack: Pawel Pieloch.
+
+## Czym sie rozniumy
+> AI Agent wykonuje cale zadania pod nadzorem czlowieka: odbiera telefon, sprawdza
+> kalendarz, umawia wizyte, wysyla potwierdzenie, pilnuje faktur. Chatbot tylko
+> odpowiada na pytania. Budujemy Agentow, ktorzy dzialaja, nie systemy, ktore gadaja.
+
+## Uslugi
+- [Automatyzacja procesow](https://simplefast.ai/uslugi/automatyzacja): zdejmuje powtarzalna robote (Make.com, OpenAI, Claude).
+- [Chatboty AI](https://simplefast.ai/uslugi/chatboty): obsluga i sprzedaz 24/7 na bazie wiedzy firmy.
+- [Voiceboty](https://simplefast.ai/uslugi/voiceboty): glosowy asystent, umawianie wizyt, odbieranie polaczen.
+- [AI Agenci](https://simplefast.ai/uslugi/agenci-ai): wykonuja zadania end-to-end pod nadzorem.
+- [Strony www pod SEO/GEO](https://simplefast.ai/uslugi/strony-seo-geo): strony cytowane przez ChatGPT, Claude, Gemini, Perplexity.
+- [Aplikacje i wtyczki](https://simplefast.ai/uslugi/aplikacje-i-wtyczki): rozwiazania na zamowienie.
+
+## Dowod
+- [Realizacje](https://simplefast.ai/realizacje): case studies z konkretnymi liczbami.
+- [Dowod](https://simplefast.ai/dowod): publiczny scorecard wydajnosci i cytowalnosci strony.
+
+## Wiedza
+- [Blog](https://simplefast.ai/blog): wdrozenia AI, koszty, AI Act dla firm.
+
+## Kontakt
+- [O nas](https://simplefast.ai/o-nas): Pawel Pieloch, Architekt AI full-stack.
+- [Kontakt](https://simplefast.ai/kontakt): formularz i umowienie rozmowy.
+
+## Uwaga (uczciwie)
+> Strona jest w trakcie budowy. Zywy punkt wejscia to strona glowna (https://simplefast.ai)
+> i kontakt. Czesc podstron uslug i dowodu jest publikowana etapami — sitemap.xml
+> zawiera wylacznie strony juz dostepne.
