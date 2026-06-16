@@ -1,6 +1,6 @@
 /**
- * Barrel components/oferta — komponenty strony-parasola „Zewnętrzny Dział AI"
- * (/uslugi/zewnetrzny-dzial-ai). Strona statyczna OBOK [usluga] (NIE w rejestrze
+ * Barrel components/oferta — komponenty strony-parasola „Architekci Wartości AI"
+ * (/uslugi/architekci-wartosci-ai). Strona statyczna OBOK [usluga] (NIE w rejestrze
  * lib/uslugi), więc komponenty mają własną przestrzeń.
  *
  * Import: import { DrabinaOfert, CzegoNieMusisz, ObiekcjeOdpowiedzi, TabelaCen } from '@/components/oferta';

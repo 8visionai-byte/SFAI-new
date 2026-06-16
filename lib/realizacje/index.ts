@@ -20,6 +20,9 @@ import { chatbotEdukacyjnyKursy } from './chatbot-edukacyjny-kursy';
 import { leadGenerator } from './lead-generator';
 import { transkrypcjaRozmow } from './transkrypcja-rozmow';
 import { agenciAi247 } from './agenci-ai-24-7';
+import { autoPodsumowaniaSpotkan } from './auto-podsumowania-spotkan';
+import { automatTresciSocial } from './automat-tresci-social';
+import { automatyczneRaporty } from './automatyczne-raporty';
 
 export type {
   Realizacja,
@@ -36,6 +39,9 @@ export { KATEGORIA_LABEL } from './types';
 export const REALIZACJE: readonly Realizacja[] = [
   autoEmailBok,
   leadGenerator,
+  autoPodsumowaniaSpotkan,
+  automatTresciSocial,
+  automatyczneRaporty,
   chatbotEdukacyjnyKursy,
   agenciAi247,
   transkrypcjaRozmow,

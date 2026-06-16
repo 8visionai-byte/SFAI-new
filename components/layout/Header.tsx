@@ -116,13 +116,13 @@ export function Header() {
                 Usługi
               </Link>
 
-              {/* Wyróżniony wpis: strona-parasol "Zewnętrzny Dział AI". */}
+              {/* Wyróżniony wpis: strona-parasol "Architekci Wartości AI". */}
               <Link
-                href="/uslugi/zewnetrzny-dzial-ai"
+                href="/uslugi/architekci-wartosci-ai"
                 onClick={() => setOpen(false)}
                 className="mt-1 block rounded-md bg-accent-soft px-3 py-2 text-body font-semibold text-accent-hover"
               >
-                Zewnętrzny Dział AI
+                Architekci Wartości AI
                 <span className="block text-caption font-normal text-fg-muted">
                   Nie wiesz od czego zacząć? Zacznij tutaj.
                 </span>

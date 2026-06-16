@@ -2,7 +2,7 @@ import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 
 /**
- * CzegoNieMusisz — SEKCJA 4 strony „Zewnętrzny Dział AI" (obniżenie lęku).
+ * CzegoNieMusisz — SEKCJA strony „Architekci Wartości AI" (obniżenie lęku).
  *
  * Lista „czego NIE musisz mieć ani wiedzieć", żeby zacząć. Każdy punkt zdejmuje
  * jedną barierę wejścia: brak wiedzy o AI, brak budżetu na start, brak pomysłu co

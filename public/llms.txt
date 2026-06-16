@@ -11,8 +11,8 @@
 > kalendarz, umawia wizyte, wysyla potwierdzenie, pilnuje faktur. Chatbot tylko
 > odpowiada na pytania. Budujemy Agentow, ktorzy dzialaja, nie systemy, ktore gadaja.
 
-## Zewnetrzny Dzial AI (strona-parasol, zacznij tutaj)
-- [Zewnetrzny Dzial AI dla firm](https://simplefast.ai/uslugi/zewnetrzny-dzial-ai): my zamiast etatowego dzialu AI. Sami sprawdzamy, gdzie tracisz godziny, budujemy jedna automatyzacje na probe i ja utrzymujemy. Pelny jawny cennik od 0 zl (darmowa diagnoza). Pierwszy platny krok: Sprint Diagnostyczny 1490 zl, odliczany od wdrozenia. Zaczynasz od jednej automatyzacji, nie od calego dzialu.
+## Architekci Wartosci AI (strona-parasol, zacznij tutaj)
+- [Architekci Wartosci AI dla firm](https://simplefast.ai/uslugi/architekci-wartosci-ai): my zamiast etatowego dzialu AI. Sami sprawdzamy, gdzie tracisz godziny, budujemy jedna automatyzacje na probe i ja utrzymujemy. Pelny jawny cennik od 0 zl (darmowa diagnoza). Pierwszy platny krok: Sprint Diagnostyczny 1490 zl, odliczany od wdrozenia. Zaczynasz od jednej automatyzacji, nie od calego dzialu.
 
 ## Uslugi
 - [Wszystkie uslugi (hub)](https://simplefast.ai/uslugi): rozdroze 10 uslug w 3 grupach: obsluga 24/7, back-office i procesy, budowa i strategia.
@@ -27,6 +27,9 @@
 - [Strony WWW widoczne w Google i w AI](https://simplefast.ai/uslugi/strony-www): tresc w kodzie od razu (SSG), answer-first, cytowalne przez ChatGPT, Claude, Gemini, Perplexity.
 - [Pozycjonowanie pod AI (GEO)](https://simplefast.ai/uslugi/optymalizacja): ustawiamy strone tak, by silniki AI ja polecaly, i mierzymy cytowalnosc co tydzien w 4 silnikach.
 
+## Produkty
+- [Produkty (co zbudowalismy)](https://simplefast.ai/produkty): cztery wlasne narzedzia AI opisane przez funkcje (skaner faktur do KSeF, apka coachingowa z agentami, obecnosc i skladki zespolu, centrum dowodzenia glosem) plus katalog klockow, z ktorych skladamy rozwiazania na zamowienie. Zaden nie jest produktem z polki, to punkt wyjscia pod indywidualne wdrozenie.
+
 ## Dowod
 - [Realizacje](https://simplefast.ai/realizacje): case studies z konkretnymi liczbami.
 - [Dowod](https://simplefast.ai/dowod): publiczny scorecard wydajnosci i cytowalnosci strony.
@@ -40,7 +43,7 @@
 
 ## Uwaga (uczciwie)
 > Zywe i dostepne sa: strona glowna (https://simplefast.ai), hub /uslugi, strona-parasol
-> /uslugi/zewnetrzny-dzial-ai oraz 10 stron uslug (chatboty, voiceboty, agent-rekrutacyjny,
+> /uslugi/architekci-wartosci-ai oraz 10 stron uslug (chatboty, voiceboty, agent-rekrutacyjny,
 > automatyzacje, dokumenty-faktury, opieka-ai, audyt-ai, rozwiazania, strony-www, optymalizacja),
-> a takze Realizacje, Blog i O nas. Sekcje Dowod i Kontakt oraz strony prawne sa publikowane
-> etapami. sitemap.xml zawiera wylacznie strony juz dostepne (200 OK).
+> a takze hub /produkty, Realizacje, Blog i O nas. Sekcje Dowod i Kontakt oraz strony prawne sa
+> publikowane etapami. sitemap.xml zawiera wylacznie strony juz dostepne (200 OK).

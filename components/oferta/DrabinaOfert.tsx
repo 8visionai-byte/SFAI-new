@@ -3,7 +3,7 @@ import { Section, Card, Badge } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 
 /**
- * DrabinaOfert — SEKCJA 3 strony „Zewnętrzny Dział AI" (jak to działa = drabina).
+ * DrabinaOfert — SEKCJA strony „Architekci Wartości AI" (jak to działa = drabina).
  *
  * Drabina niskiego progu L0->L5 jako kroki: najtańszy/darmowy PIERWSZY, każdy
  * kolejny szczebel droższy i głębszy. Każdy szczebel ma: poziom (L0..L5), nazwę,
@@ -78,10 +78,10 @@ export const DRABINA: Szczebel[] = [
   },
   {
     poziom: 'L5',
-    nazwa: 'Zewnętrzny Dział AI',
+    nazwa: 'Architekci Wartości AI',
     dlaKogo: 'Dla firm, które chcą, żeby ktoś po prostu „ogarniał AI" na stałe.',
     coDostajesz:
-      'Pełny zewnętrzny dział: strategia, budowa, wdrożenia i utrzymanie pod jednym dachem. Paweł prowadzi kierunek, Marcin buduje. Ty dostajesz efekty, nie kolejne narzędzie do nauki.',
+      'Pełny zewnętrzny dział rozliczany za wartość: strategia, budowa, wdrożenia i utrzymanie pod jednym dachem. Paweł prowadzi kierunek, Marcin buduje. Płacisz za efekt, nie za godziny, a pakiet skrojony jest tak, by zwracał się oszczędnością.',
     cena: 'od 10000 zł / mc',
   },
 ];

@@ -20,34 +20,39 @@ import {
 } from '@/components/oferta';
 
 /**
- * FLAGOWA STRONA-PARASOL „Zewnętrzny Dział AI" (/uslugi/zewnetrzny-dzial-ai).
+ * FLAGOWA STRONA-PARASOL „Architekci Wartości AI" (/uslugi/architekci-wartosci-ai).
+ *
+ * RENAME + PRZEPOZYCJONOWANIE strony „Zewnętrzny Dział AI". Sens nowej nazwy:
+ * rozliczamy się za PRZYNIESIONĄ WARTOŚĆ (odzyskane godziny i złotówki, ROI),
+ * a nie za godziny pracy. Pakiety są skrojone tak, by zwracały się oszczędnością.
  *
  * Trasa STATYCZNA OBOK dynamicznej [usluga] — celowo NIE w rejestrze lib/uslugi,
  * bo to strategiczne centrum oferty (drabina niskiego progu, pełny cennik, zespół),
  * a nie pojedyncza usługa z szablonu 8-sekcyjnego. Next routing: ten segment
- * (`zewnetrzny-dzial-ai/page.tsx`) ma pierwszeństwo przed [usluga] dla tego slugu,
+ * (`architekci-wartosci-ai/page.tsx`) ma pierwszeństwo przed [usluga] dla tego slugu,
  * więc nie koliduje z generateStaticParams w [usluga] (slug i tak nie jest w rejestrze).
  *
  * STRATEGIA NISKIEGO PROGU (kolejność sekcji = od najtańszego/darmowego):
- *  hero (zacznij od jednej automatyzacji) -> problem -> drabina L0..L5 ->
- *  „czego nie musisz" -> obiekcje -> PEŁNY cennik (transparentność) -> zespół
- *  (nie freelancer) -> dla kogo -> FAQ -> finalne CTA. Jedno główne CTA: #diagnoza.
+ *  hero (zacznij od jednej automatyzacji) -> problem -> „rozliczamy się za wartość" ->
+ *  drabina L0..L5 -> „czego nie musisz" -> obiekcje -> PEŁNY cennik (transparentność) ->
+ *  zespół (nie freelancer) -> dla kogo -> FAQ -> finalne CTA. Jedno główne CTA: #diagnoza.
  *
  * KPI #1 (cytowalność = priorytet Pawła): cała treść w surowym HTML przy 1. żądaniu
  * (force-static SSG). JSON-LD Service + FAQPage + BreadcrumbList wstrzyknięty
  * SERWEROWO. Tekst FAQ jest 1:1 z sekcją widoczną (jedno źródło: stała FAQ).
  *
- * SITEMAP/NAV: NIE dotykamy ROUTES ani nawigacji — integrator doda trasę live.
+ * SITEMAP/NAV: NIE dotykamy ROUTES ani nawigacji — integrator podmieni slug
+ * (lista miejsc do podmiany jest w manifeście tej zmiany).
  */
 export const dynamic = 'force-static';
 
-const PATH = '/uslugi/zewnetrzny-dzial-ai';
+const PATH = '/uslugi/architekci-wartosci-ai';
 const CANONICAL = `${SITE.url}${PATH}`;
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Zewnętrzny Dział AI dla firm: zacznij od jednej automatyzacji',
+  title: 'Architekci Wartości AI: wdrożenie AI rozliczane za efekt',
   description:
-    'Nie musisz budować całego działu AI. Sprawdzamy, gdzie tracisz godziny, robimy jeden proces na próbę, decydujesz. Darmowa diagnoza, pełny jawny cennik od 0 zł.',
+    'Rozliczamy się za przyniesioną wartość, nie za godziny. Sprawdzamy, gdzie tracisz pieniądze, robimy jeden proces na próbę, decydujesz. Darmowa diagnoza, pełny jawny cennik od 0 zł.',
   path: PATH,
 });
 
@@ -58,9 +63,14 @@ export const metadata: Metadata = buildMetadata({
  */
 const FAQ: { pytanie: string; odpowiedz: string }[] = [
   {
-    pytanie: 'Czym jest Zewnętrzny Dział AI?',
+    pytanie: 'Kim są Architekci Wartości AI?',
     odpowiedz:
-      'To my zamiast etatowego działu AI. Sami sprawdzamy, gdzie tracisz czas, budujemy automatyzacje i je utrzymujemy. Ty dostajesz efekty, a nie kolejne narzędzie do nauki. Zaczynasz od jednej automatyzacji, nie od całego działu.',
+      'To my zamiast etatowego działu AI. Sami sprawdzamy, gdzie tracisz czas i pieniądze, budujemy automatyzacje i je utrzymujemy. Rozliczamy się za przyniesioną wartość, czyli za odzyskane godziny i złotówki, a nie za samo klepanie kodu. Zaczynasz od jednej automatyzacji, nie od całego działu.',
+  },
+  {
+    pytanie: 'Co znaczy „rozliczamy się za wartość”?',
+    odpowiedz:
+      'Najpierw liczymy, ile dany proces Cię kosztuje: ile godzin i złotówek zjada miesięcznie. Potem dobieramy pakiet tak, żeby zwracał się oszczędnością, którą realnie odzyskasz. Patrzysz na koszt po stronie tego, co wraca do firmy, a nie po stronie cennika. Cennik jest jawny, a wartość jest mierzalna.',
   },
   {
     pytanie: 'Ile kosztuje start?',
@@ -76,11 +86,6 @@ const FAQ: { pytanie: string; odpowiedz: string }[] = [
     pytanie: 'Co jeśli automatyzacja nie zadziała?',
     odpowiedz:
       'Dlatego zaczynamy od jednego procesu na próbę w ramach AI Start za 1990 zł, a nie od wielkiego wdrożenia. Najpierw widzisz realny efekt na swoich danych, dopiero potem decydujesz o kolejnych krokach. To mały, odwracalny krok.',
-  },
-  {
-    pytanie: 'Czy to jest dla małych firm?',
-    odpowiedz:
-      'Tak, przede wszystkim. Mniejsza firma traci procentowo więcej, bo te same osoby robią wszystko naraz. Pierwszą niszę robimy dla biur rachunkowych, czyli klasycznych MŚP. Działa też dla kancelarii, e-commerce i firm usługowych.',
   },
   {
     pytanie: 'Czy AI zwolni moich ludzi?',
@@ -114,50 +119,53 @@ const NISZE: { branza: string; opis: string; pierwsza?: boolean }[] = [
   },
 ];
 
-export default function ZewnetrznyDzialAiPage() {
+export default function ArchitekciWartosciAiPage() {
   return (
     <main id="main">
       {/* ───────────────────────────────────────────────────────────────
           (1) HERO NISKIEGO PROGU — H1 + kapsuła answer-first + jedno CTA.
-          10000 NIGDY w hero; prowadzi najtańszy, odwracalny krok. */}
+          10000 NIGDY w hero; prowadzi najtańszy, odwracalny krok.
+          Przepozycjonowanie: komunikat o WARTOŚCI/ROI (płacisz za efekt). */}
       <Section tone="base">
         <div className="mx-auto max-w-narrow">
           <Breadcrumbs
             items={[
               { name: 'Strona główna', href: '/' },
               { name: 'Usługi', href: '/uslugi' },
-              { name: 'Zewnętrzny Dział AI' },
+              { name: 'Architekci Wartości AI' },
             ]}
           />
 
           <Reveal>
             <Badge variant="accent" className="mt-6">
-              Zewnętrzny Dział AI
+              Architekci Wartości AI
             </Badge>
           </Reveal>
 
           <Reveal delay={0.05}>
             <h1 className="text-display mt-5">
-              Zacznij od jednej automatyzacji. Najpierw efekt, potem decyzja.
+              Płacisz za przyniesioną wartość, nie za godziny.
             </h1>
           </Reveal>
 
           {/* Kapsuła answer-first — surowy HTML, cytat dla LLM. */}
           <Reveal delay={0.1}>
             <p className="text-lead mt-6 text-fg-muted">
-              Nie musisz budować całego działu AI. Sprawdzamy, gdzie tracisz
-              godziny, robimy jeden proces na próbę, a Ty decydujesz, czy idziemy
-              dalej. Najpierw zobaczysz efekt na swoich danych, dopiero potem
-              rozmawiamy o reszcie. Zaczynasz za 0 zł.
+              Nie rozliczamy się za czas pracy. Rozliczamy się za to, co realnie
+              wraca do Twojej firmy: odzyskane godziny i złotówki. Sprawdzamy,
+              gdzie tracisz najwięcej, robimy jeden proces na próbę, a Ty decydujesz,
+              czy idziemy dalej. Najpierw zobaczysz efekt na swoich danych, dopiero
+              potem rozmawiamy o reszcie. Zaczynasz za 0 zł.
             </p>
           </Reveal>
 
           <Reveal delay={0.15}>
             <p className="mt-5 text-body text-fg-muted">
-              „Zewnętrzny Dział AI” to poziom docelowy: my prowadzimy całe AI w
-              Twojej firmie zamiast etatowego działu. Ale nikt nie każe Ci tam
-              zaczynać. Wchodzisz najniższym szczeblem i wspinasz się tylko, jeśli
-              poprzedni krok się opłacił.
+              „Architekci Wartości AI” to poziom docelowy: my prowadzimy całe AI w
+              Twojej firmie zamiast etatowego działu, a pakiety skrojone są tak, by
+              zwracały się oszczędnością. Ale nikt nie każe Ci tam zaczynać.
+              Wchodzisz najniższym szczeblem i wspinasz się tylko, jeśli poprzedni
+              krok się opłacił.
             </p>
           </Reveal>
 
@@ -204,23 +212,85 @@ export default function ZewnetrznyDzialAiPage() {
       </Section>
 
       {/* ───────────────────────────────────────────────────────────────
-          (3) JAK TO DZIAŁA = DRABINA L0..L5 (najtańszy pierwszy). */}
+          (3) ROZLICZAMY SIĘ ZA WARTOŚĆ — nowa sekcja przepozycjonowania.
+          Płacisz za efekt: odzyskane godziny i złotówki. Pakiety skrojone tak,
+          by zwracały się oszczędnością. Answer-first, surowy HTML, trzy filary. */}
+      <Section tone="base">
+        <div className="mx-auto max-w-narrow">
+          <Reveal>
+            <h2 className="text-h2">Za co właściwie płacisz?</h2>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <p className="text-lead mt-5 text-fg-muted">
+              Za przyniesioną wartość, nie za godziny pracy. Najpierw liczymy, ile
+              dany proces Cię kosztuje miesięcznie. Potem dobieramy pakiet tak, żeby
+              zwracał się oszczędnością, którą realnie odzyskasz. Patrzysz na koszt
+              po stronie tego, co wraca do firmy, nie po stronie cennika.
+            </p>
+          </Reveal>
+
+          <ul className="mt-9 grid gap-6 sm:grid-cols-3">
+            <Reveal as="li" delay={0.05}>
+              <Card as="article" variant="highlight" className="h-full">
+                <h3 className="text-h3">Najpierw liczymy</h3>
+                <p className="mt-3 text-body-sm text-fg-muted">
+                  Ile godzin i złotówek zjada dany proces dziś. To jest punkt
+                  odniesienia, do którego potem wracamy. Bez liczby nie ma rozmowy o
+                  wartości.
+                </p>
+              </Card>
+            </Reveal>
+            <Reveal as="li" delay={0.1}>
+              <Card as="article" className="h-full">
+                <h3 className="text-h3">Płacisz za efekt</h3>
+                <p className="mt-3 text-body-sm text-fg-muted">
+                  Pakiet dobieramy tak, by zwracał się oszczędnością, którą realnie
+                  odzyskasz: mniej klikania, szybsze odpowiedzi, godziny z powrotem
+                  w tygodniu.
+                </p>
+              </Card>
+            </Reveal>
+            <Reveal as="li" delay={0.15}>
+              <Card as="article" className="h-full">
+                <h3 className="text-h3">Sprawdzasz na swoich danych</h3>
+                <p className="mt-3 text-body-sm text-fg-muted">
+                  Zaczynasz od jednego procesu na próbę. Najpierw widzisz efekt,
+                  dopiero potem decydujesz o reszcie. Mały, odwracalny krok, nie
+                  wielka umowa w ciemno.
+                </p>
+              </Card>
+            </Reveal>
+          </ul>
+
+          <Reveal delay={0.2}>
+            <p className="mt-8 text-body text-fg-muted">
+              Cennik jest jawny w całości (znajdziesz go niżej), a wartość jest
+              mierzalna. To dlatego pierwszy płatny krok, Sprint Diagnostyczny za
+              1490 zł, odliczamy potem od wdrożenia. Nie chcemy, żebyś płacił dwa
+              razy za tę samą decyzję.
+            </p>
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* ───────────────────────────────────────────────────────────────
+          (4) JAK TO DZIAŁA = DRABINA L0..L5 (najtańszy pierwszy). */}
       <DrabinaOfert />
 
       {/* ───────────────────────────────────────────────────────────────
-          (4) CZEGO NIE MUSISZ MIEĆ/WIEDZIEĆ (obniża lęk). */}
+          (5) CZEGO NIE MUSISZ MIEĆ/WIEDZIEĆ (obniża lęk). */}
       <CzegoNieMusisz />
 
       {/* ───────────────────────────────────────────────────────────────
-          (5) OBIEKCJE -> ODPOWIEDZI (tabela). */}
+          (6) OBIEKCJE -> ODPOWIEDZI (tabela). */}
       <ObiekcjeOdpowiedzi />
 
       {/* ───────────────────────────────────────────────────────────────
-          (6) PEŁNY CENNIK (transparentność, od najtańszego). */}
+          (7) PEŁNY CENNIK (transparentność, od najtańszego). */}
       <TabelaCen />
 
       {/* ───────────────────────────────────────────────────────────────
-          (7) ZESPÓŁ, NIE FREELANCER — role Paweł/Marcin + realne certy. */}
+          (8) ZESPÓŁ, NIE FREELANCER — role Paweł/Marcin + realne certy. */}
       <Section tone="subtle">
         <div className="mx-auto max-w-narrow">
           <Reveal>
@@ -274,7 +344,7 @@ export default function ZewnetrznyDzialAiPage() {
       </Section>
 
       {/* ───────────────────────────────────────────────────────────────
-          (8) DLA KOGO — pierwsza nisza biura rachunkowe + inne. */}
+          (9) DLA KOGO — pierwsza nisza biura rachunkowe + inne. */}
       <Section tone="base">
         <div className="mx-auto max-w-narrow">
           <Reveal>
@@ -311,7 +381,7 @@ export default function ZewnetrznyDzialAiPage() {
       </Section>
 
       {/* ───────────────────────────────────────────────────────────────
-          (9) FAQ — answer-first, 1:1 z FAQPage JSON-LD. */}
+          (10) FAQ — answer-first, 1:1 z FAQPage JSON-LD. */}
       <Section tone="subtle">
         <div className="mx-auto max-w-narrow">
           <Reveal>
@@ -351,7 +421,7 @@ export default function ZewnetrznyDzialAiPage() {
       </Section>
 
       {/* ───────────────────────────────────────────────────────────────
-          (10) FINALNE CTA — jedno główne, z dowodem (strefa dark). */}
+          (11) FINALNE CTA — jedno główne, z dowodem (strefa dark). */}
       <Section tone="base" theme="dark" id="diagnoza">
         <div className="mx-auto max-w-narrow text-center">
           <Reveal>
@@ -385,15 +455,15 @@ export default function ZewnetrznyDzialAiPage() {
            bo wejściowa cena to 0 zł (darmowa diagnoza) — minPrice 0 jako oferta
            wprowadzałby w błąd; pełny cennik jest jawny w treści. Zero zmyślonych cen.
          - FAQPage: tekst odpowiedzi 1:1 z sekcją FAQ (te same stringi ze stałej FAQ).
-         - BreadcrumbList: Strona główna -> Usługi -> Zewnętrzny Dział AI.
+         - BreadcrumbList: Strona główna -> Usługi -> Architekci Wartości AI.
         Organization + WebSite są globalnie w layout.tsx (każda strona).
       */}
       <JsonLd
         data={serviceSchema({
-          serviceType: 'Zewnętrzny Dział AI',
-          name: 'Zewnętrzny Dział AI dla firm',
+          serviceType: 'Architekci Wartości AI',
+          name: 'Architekci Wartości AI dla firm',
           description:
-            'Zewnętrzny dział AI dla MŚP: diagnoza, budowa i utrzymanie automatyzacji. Zaczynasz od jednej automatyzacji na próbę, nie od całego działu.',
+            'Wdrożenie AI dla MŚP rozliczane za przyniesioną wartość, nie za godziny: diagnoza, budowa i utrzymanie automatyzacji. Pakiety skrojone tak, by zwracały się oszczędnością. Zaczynasz od jednej automatyzacji na próbę, nie od całego działu.',
           path: PATH,
         })}
       />
@@ -407,7 +477,7 @@ export default function ZewnetrznyDzialAiPage() {
         data={breadcrumbSchema([
           { name: 'Strona główna', path: '/' },
           { name: 'Usługi', path: '/uslugi' },
-          { name: 'Zewnętrzny Dział AI', path: PATH },
+          { name: 'Architekci Wartości AI', path: PATH },
         ])}
       />
 

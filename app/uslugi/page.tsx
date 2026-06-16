@@ -19,15 +19,15 @@ import { HOME_CTA } from '@/lib/site';
  * tylko wzbogacaja; tekst, naglowki i linki sa w HTML niezaleznie od JS.
  *
  * STRUKTURA (answer-first):
- *  hero (co tu jest, 2-3 zdania) -> wyrozniony blok parasola "Zewnetrzny Dzial AI"
+ *  hero (co tu jest, 2-3 zdania) -> wyrozniony blok parasola "Architekci Wartosci AI"
  *  -> 3 KLASTRY uslug (Obsluga 24/7 · Back-office i procesy · Budowa i strategia)
  *  -> CTA domykajace (#diagnoza).
  *
  * ZRODLO PRAWDY listy = rejestr lib/uslugi (getUslugaBySlug po slugu). Klastry
  * skladamy z realnych slugow -> zero martwych linkow. Kazdy kafel linkuje do
- * /uslugi/<slug> (SSG, 200 OK). Parasol linkuje do /uslugi/zewnetrzny-dzial-ai.
+ * /uslugi/<slug> (SSG, 200 OK). Parasol linkuje do /uslugi/architekci-wartosci-ai.
  *
- * SITEMAP/NAV: trase /uslugi i /uslugi/zewnetrzny-dzial-ai ustawia integrator w
+ * SITEMAP/NAV: trase /uslugi i /uslugi/architekci-wartosci-ai ustawia integrator w
  * lib/site.ts (ROUTES live:true). 10 uslug wchodzi do sitemapy przez rejestr.
  */
 export const dynamic = 'force-static';
@@ -143,7 +143,7 @@ export default function UslugiHubPage() {
       </Section>
 
       {/* ───────────────────────────────────────────────────────────────
-          (2) WYRÓŻNIONY BLOK PARASOLA — wejście do "Zewnętrzny Dział AI". */}
+          (2) WYRÓŻNIONY BLOK PARASOLA — wejście do "Architekci Wartości AI". */}
       <Section tone="subtle">
         <div className="mx-auto max-w-narrow">
           <Reveal>
@@ -151,12 +151,12 @@ export default function UslugiHubPage() {
               <Badge variant="accent">Zacznij tutaj</Badge>
               <h2 className="text-h2 mt-4">Nie wiesz, którą usługę wybrać?</h2>
               <p className="text-lead mt-4 text-fg-muted">
-                Zewnętrzny Dział AI to my zamiast etatowego działu AI. Sami sprawdzamy,
+                Architekci Wartości AI to my zamiast etatowego działu AI. Sami sprawdzamy,
                 gdzie tracisz godziny, budujemy jedną automatyzację na próbę i ją
                 utrzymujemy. Ty decydujesz, czy idziemy dalej. Zaczynasz za 0 zł.
               </p>
               <div className="mt-7">
-                <MagneticButton variant="primary" size="lg" href="/uslugi/zewnetrzny-dzial-ai">
+                <MagneticButton variant="primary" size="lg" href="/uslugi/architekci-wartosci-ai">
                   Zobacz, jak to działa
                 </MagneticButton>
               </div>

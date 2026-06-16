@@ -2,7 +2,7 @@ import { Section, Badge } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 
 /**
- * TabelaCen — SEKCJA 6 strony „Zewnętrzny Dział AI" (pełny, jawny cennik).
+ * TabelaCen — SEKCJA strony „Architekci Wartości AI" (pełny, jawny cennik).
  *
  * Zasada Pawła: jawność WSZYSTKICH cen = zaufanie. Pełny cennik „w dół" strony
  * jest dowodem uczciwości (10000 NIGDY w hero, najtańszy krok prowadzi). Kolejność
@@ -66,10 +66,10 @@ const POZYCJE: Pozycja[] = [
     cofazwiera: '250 zł/h. Najniższa stawka godzinowa, stałe tempo wdrożeń.',
   },
   {
-    nazwa: 'Zewnętrzny Dział AI',
+    nazwa: 'Architekci Wartości AI',
     cena: 'od 10000 zł / mc',
     cofazwiera:
-      'Pełny zewnętrzny dział: strategia, budowa, wdrożenia i utrzymanie pod jednym dachem.',
+      'Pełny zewnętrzny dział rozliczany za wartość: strategia, budowa, wdrożenia i utrzymanie pod jednym dachem.',
     tag: 'Poziom docelowy',
   },
 ];

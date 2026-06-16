@@ -4,7 +4,7 @@ import type { Usluga } from './types';
  * USŁUGA — OPIEKA AI (utrzymanie i rozwój automatyzacji).
  * Answer-first, głos Pawła, zero em-dash, zero zmyślonych liczb.
  * Pozycjonowanie: serwis IT, ale od AI. Monitoring, poprawki promptów, rozwój,
- * raport miesięczny. Ryczałt 10/20/40h. Podstawa modelu "Zewnętrzny Dział AI".
+ * raport miesięczny. Ryczałt 10/20/40h. Podstawa najszerszego modelu "Architekci Wartości AI".
  *
  * CENNIK REALNY (źródło prawdy do tabeli transparentności i ramaCeny):
  *  - Sprint Diagnostyczny: 1490 zł (odliczany od wdrożenia, gdy wejdzie współpraca).
@@ -12,7 +12,7 @@ import type { Usluga } from './types';
  *  - Stawka bazowa: 350 zł/h.
  *  - Opieka AI / ryczałt: 10h = 3000 zł (300/h), 20h = 5500 zł (275/h),
  *    40h = 10000 zł/mc (250/h).
- *  - Zewnętrzny Dział AI: od 10000 zł/mc.
+ *  - Architekci Wartości AI (najszerszy model): od 10000 zł/mc.
  *
  * INPUT PAWŁA (do uzupełnienia przed shipem, NIE renderowane):
  *  - cta.dowod: realna liczba z opieki (np. ile poprawek/mc, uptime automatyzacji
@@ -39,7 +39,7 @@ export const opiekaAi: Usluga = {
   rozwiazanie: {
     h2: 'Co dokładnie robimy w ramach opieki?',
     tresc:
-      'Bierzemy Twoje automatyzacje pod stałą opiekę i pilnujemy, żeby działały. Monitorujemy je, więc o awarii wiemy my, a nie Twój klient. Poprawiamy prompty, gdy odpowiedzi schodzą z tonu. Łatamy integracje, gdy dostawca coś zmieni. Rozwijamy automatyzacje o nowe rzeczy, których potrzebujesz. Co miesiąc dostajesz raport: co działało, co poprawiliśmy, co proponujemy dalej. Pracujemy na ryczałcie godzin, więc wiesz z góry, ile płacisz. Niewykorzystany czas nie znika w próżni, idzie na rozwój. To podstawa modelu Zewnętrzny Dział AI: my dbamy o AI, Ty robisz swoje.',
+      'Bierzemy Twoje automatyzacje pod stałą opiekę i pilnujemy, żeby działały. Monitorujemy je, więc o awarii wiemy my, a nie Twój klient. Poprawiamy prompty, gdy odpowiedzi schodzą z tonu. Łatamy integracje, gdy dostawca coś zmieni. Rozwijamy automatyzacje o nowe rzeczy, których potrzebujesz. Co miesiąc dostajesz raport: co działało, co poprawiliśmy, co proponujemy dalej. Pracujemy na ryczałcie godzin, więc wiesz z góry, ile płacisz. Niewykorzystany czas nie znika w próżni, idzie na rozwój. To podstawa naszego najszerszego modelu, Architekci Wartości AI: my dbamy o AI, Ty robisz swoje.',
   },
 
   tabelaPorownawcza: {
@@ -106,9 +106,9 @@ export const opiekaAi: Usluga = {
         'Nie przepadają w sensie zmarnowanej kasy. Jeśli w danym miesiącu utrzymanie zajęło mniej, zostały czas idzie na rozwój: nowe usprawnienia, dodatkowe automatyzacje, optymalizacje. Płacisz za stałą gotowość i za to, że ktoś realnie dba o Twoje AI, a nie tylko czeka na awarię.',
     },
     {
-      pytanie: 'Czym Opieka AI różni się od Zewnętrznego Działu AI?',
+      pytanie: 'Czym Opieka AI różni się od modelu Architekci Wartości AI?',
       odpowiedz:
-        'Opieka AI to utrzymanie i rozwój tego, co już masz wdrożone, w ramach ryczałtu godzin. Zewnętrzny Dział AI idzie dalej: to my jesteśmy Twoim działem od AI, który nie tylko utrzymuje, ale i sam proponuje, co automatyzować dalej, i to wdraża. Zewnętrzny Dział AI startuje od 10000 zł miesięcznie. Opieka AI to jego podstawa i naturalny pierwszy krok.',
+        'Opieka AI to utrzymanie i rozwój tego, co już masz wdrożone, w ramach ryczałtu godzin. Architekci Wartości AI to nasz najszerszy model: jesteśmy wtedy Twoim działem od AI, który nie tylko utrzymuje, ale i sam proponuje, co automatyzować dalej, i to wdraża. Ten model startuje od 10000 zł miesięcznie. Opieka AI jest jego podstawą i naturalnym pierwszym krokiem.',
     },
     {
       pytanie: 'Czy muszę podpisywać długą umowę?',

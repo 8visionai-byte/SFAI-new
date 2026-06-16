@@ -98,6 +98,7 @@ export const POSITIONING = {
  */
 export const NAV_LINKS = [
   { label: 'Usługi', href: '/uslugi' },
+  { label: 'Produkty', href: '/produkty' },
   { label: 'Realizacje', href: '/realizacje' },
   { label: 'Narzędzia', href: '/narzedzia' },
   { label: 'O nas', href: '/o-nas' },
@@ -180,10 +181,10 @@ export const ROUTES: RouteEntry[] = [
   // + wejscie do strony-parasola. live:true -> wchodzi do sitemapy.
   { path: '/uslugi', priority: 0.9, changeFrequency: 'monthly', live: true, lastModified: USLUGI_LAST_MODIFIED },
 
-  // Strona-parasol "Zewnetrzny Dzial AI" (app/uslugi/zewnetrzny-dzial-ai/page.tsx, SSG).
+  // Strona-parasol "Architekci Wartosci AI" (app/uslugi/architekci-wartosci-ai/page.tsx, SSG).
   // CELOWO poza rejestrem lib/uslugi (to centrum oferty, nie szablonowa usluga), wiec
   // jej URL wpisujemy tu recznie. live:true -> wchodzi do sitemapy.
-  { path: '/uslugi/zewnetrzny-dzial-ai', priority: 0.9, changeFrequency: 'monthly', live: true, lastModified: USLUGI_LAST_MODIFIED },
+  { path: '/uslugi/architekci-wartosci-ai', priority: 0.9, changeFrequency: 'monthly', live: true, lastModified: USLUGI_LAST_MODIFIED },
 
   // 6 stron uslug (/uslugi/<slug>) NIE jest tu wpisanych pojedynczo — zrodlem prawdy
   // ich URL-i jest rejestr lib/uslugi (USLUGI_SLUGS), a sitemap (app/sitemap.ts) dolacza
@@ -194,6 +195,10 @@ export const ROUTES: RouteEntry[] = [
 
   // Huby branz / slownik / narzedzia.
   { path: '/narzedzia', priority: 0.7, changeFrequency: 'monthly', live: true, lastModified: HOME_LAST_MODIFIED },
+
+  // Hub /produkty (gotowe produkty AID) — zbudowany (app/produkty/page.tsx, SSG).
+  // live:true -> wchodzi do sitemapy. W menu (NAV_LINKS) jako "Produkty".
+  { path: '/produkty', priority: 0.8, changeFrequency: 'monthly', live: true, lastModified: HOME_LAST_MODIFIED },
 
   // Dowod i konwersja.
   { path: '/realizacje', priority: 0.8, changeFrequency: 'weekly', live: true, lastModified: HOME_LAST_MODIFIED },

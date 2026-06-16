@@ -2,7 +2,7 @@ import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 
 /**
- * ObiekcjeOdpowiedzi — SEKCJA 5 strony „Zewnętrzny Dział AI" (obiekcje -> odpowiedzi).
+ * ObiekcjeOdpowiedzi — SEKCJA strony „Architekci Wartości AI" (obiekcje -> odpowiedzi).
  *
  * Prawdziwa, semantyczna <table>: kolumna „Co myślisz" (obiekcja) i „Jak jest"
  * (odpowiedź). Tabele są nadreprezentowane w cytatach AI — to twarda bramka GEO

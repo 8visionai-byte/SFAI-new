@@ -6,7 +6,7 @@ import { USLUGI } from '@/lib/uslugi';
 
 /**
  * Menu "Usługi" w nagłówku (desktop) — rozwijana lista wszystkich realnych stron
- * /uslugi/* + wejście do huba /uslugi i do strony-parasola "Zewnętrzny Dział AI".
+ * /uslugi/* + wejście do huba /uslugi i do strony-parasola "Architekci Wartości AI".
  *
  * Hub /uslugi jest live (lib/site.ts ROUTES.live=true), więc top-level "Usługi"
  * prowadzi do rozdroża huba, a strzałka rozwija pełną listę usług. Parasol jest
@@ -70,15 +70,15 @@ export function ServicesMenu() {
           className="absolute right-0 top-full mt-2 w-[min(92vw,28rem)] rounded-lg border border-border bg-surface p-2 shadow-md"
           role="menu"
         >
-          {/* Wyróżniony wpis: strona-parasol "Zewnętrzny Dział AI" (centrum oferty). */}
+          {/* Wyróżniony wpis: strona-parasol "Architekci Wartości AI" (centrum oferty). */}
           <li role="none">
             <Link
               role="menuitem"
-              href="/uslugi/zewnetrzny-dzial-ai"
+              href="/uslugi/architekci-wartosci-ai"
               onClick={() => setOpen(false)}
               className="block rounded-sm bg-accent-soft px-3 py-2 text-body-sm font-semibold text-accent-hover transition-colors hover:bg-accent-soft/80"
             >
-              Zewnętrzny Dział AI
+              Architekci Wartości AI
               <span className="block text-caption font-normal text-fg-muted">
                 Nie wiesz od czego zacząć? Zacznij tutaj.
               </span>
