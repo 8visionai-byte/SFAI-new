@@ -2,6 +2,7 @@ import { SITE } from '@/lib/site';
 import type { Usluga } from '@/lib/uslugi/types';
 import type { Post } from '@/lib/blog/types';
 import type { Realizacja } from '@/lib/realizacje/types';
+import type { Poradnik } from '@/lib/poradniki/types';
 
 /**
  * Funkcje budujące obiekty JSON-LD (spec 04 §6).
@@ -282,6 +283,55 @@ export const postSchemas = (
     post.faq && post.faq.length > 0
       ? faqSchema(
           post.faq.map((item) => ({ q: item.pytanie, a: item.odpowiedz })),
+          path
+        )
+      : undefined;
+
+  return { article, breadcrumb, faq };
+};
+
+/**
+ * poradnikSchemas — KOMPLET JSON-LD dla poradnika evergreen z obiektu `Poradnik`:
+ * Article (author -> Paweł, publisher -> #organization) + BreadcrumbList
+ * (Strona główna -> Centrum Wiedzy -> Poradniki -> [poradnik]) + opcjonalnie
+ * FAQPage (1:1 z widoczną sekcją FAQ, gdy `poradnik.faq` istnieje).
+ *
+ * Wzorzec 1:1 z `postSchemas`, ale breadcrumb wiedzie przez hub /wiedza i listę
+ * /poradniki (poradniki to dział Centrum Wiedzy, nie blog). To jedyny punkt
+ * mapujący pola PL `Poradnik` na schema.org — strona (page.tsx) nie powtarza tej
+ * logiki, a tekst FAQ jest gwarantowanie ten sam w schema i w HTML.
+ *
+ * `basePath` = prefix listy poradników (domyślnie '/poradniki'). Pełny URL
+ * poradnika = `${basePath}/${poradnik.slug}`.
+ */
+export const poradnikSchemas = (
+  poradnik: Poradnik,
+  basePath = '/poradniki'
+): { article: Json; breadcrumb: Json; faq?: Json } => {
+  const path = `${basePath}/${poradnik.slug}`;
+
+  const article = articleSchema({
+    headline: poradnik.tytul,
+    description: poradnik.lead,
+    path,
+    datePublished: poradnik.data,
+    dateModified: poradnik.dataAktualizacji,
+    section: poradnik.kategoria,
+    keywords: poradnik.queries,
+    // image: `/og/poradniki/${poradnik.slug}.png` — wejdzie, gdy SITE.assetsReady i plik istnieje.
+  });
+
+  const breadcrumb = breadcrumbSchema([
+    { name: 'Strona główna', path: '/' },
+    { name: 'Centrum Wiedzy', path: '/wiedza' },
+    { name: 'Poradniki', path: basePath },
+    { name: poradnik.tytul, path },
+  ]);
+
+  const faq =
+    poradnik.faq && poradnik.faq.length > 0
+      ? faqSchema(
+          poradnik.faq.map((item) => ({ q: item.pytanie, a: item.odpowiedz })),
           path
         )
       : undefined;

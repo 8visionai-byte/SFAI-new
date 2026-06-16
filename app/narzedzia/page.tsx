@@ -14,6 +14,8 @@ import { KalkulatorOszczednosci } from '@/components/narzedzia/KalkulatorOszczed
 import { KalkulatorProcesu } from '@/components/narzedzia/KalkulatorProcesu';
 import { TestGotowosciAI } from '@/components/narzedzia/TestGotowosciAI';
 import { AudytStronyAI } from '@/components/narzedzia/AudytStronyAI';
+import { GeneratorPromptow } from '@/components/narzedzia/GeneratorPromptow';
+import { PRZYKLADY } from '@/lib/narzedzia/generator-promptow';
 
 /**
  * HUB /narzedzia — darmowe narzędzia AI, SSG (force-static).
@@ -41,6 +43,7 @@ const WYSPY: Record<string, ComponentType> = {
   'kalkulator-procesu': KalkulatorProcesu,
   'test-gotowosci-ai': TestGotowosciAI,
   'audyt-strony-ai': AudytStronyAI,
+  'generator-promptow': GeneratorPromptow,
 };
 
 export default function NarzedziaPage() {
@@ -107,6 +110,103 @@ export default function NarzedziaPage() {
               <Reveal delay={0.1}>
                 <div className="mt-10">
                   <Wyspa />
+                </div>
+              </Reveal>
+            ) : null}
+
+            {/* Treść opisowa generatora — w surowym HTML (cytowalna, działa bez JS) */}
+            {n.slug === 'generator-promptow' ? (
+              <Reveal delay={0.15}>
+                <div className="mx-auto mt-12 max-w-narrow">
+                  <h3 className="text-h3">
+                    Czym jest prompt i czemu sposób pytania zmienia odpowiedź AI?
+                  </h3>
+                  <p className="mt-3 text-body text-fg-muted">
+                    Prompt to polecenie, które wpisujesz do AI. To, jak je sformułujesz,
+                    decyduje o jakości odpowiedzi bardziej niż sam model. Dobry prompt mówi
+                    AI cztery rzeczy: kim ma być, co ma zrobić, po co i w jakim stylu. Ogólne
+                    pytanie daje ogólną odpowiedź. Konkretny prompt daje gotowy do użycia
+                    tekst.
+                  </p>
+
+                  <h3 className="text-h3 mt-10">Jak działa generator promptów AI dla firm?</h3>
+                  <p className="mt-3 text-body text-fg-muted">
+                    Wybierasz cztery rzeczy z list: branżę, zadanie, cel i styl. Generator
+                    skleja z nich gotowy prompt według sprawdzonego wzoru: rola eksperta,
+                    kontekst Twojej branży, konkretne zadanie, cel tekstu, styl i format
+                    wyjścia. Na końcu dokłada zasady, które pilnują jakości, na przykład żeby
+                    AI nie zmyślało danych, tylko pytało o brakujące informacje. Kopiujesz
+                    prompt i wklejasz do swojego AI.
+                  </p>
+
+                  {/* Tabela: zły prompt vs gotowy prompt */}
+                  <div className="mt-8 overflow-hidden rounded-lg border border-border">
+                    <table className="w-full border-collapse text-left text-body-sm">
+                      <thead>
+                        <tr className="bg-bg-subtle">
+                          <th className="border-b border-border p-4 font-semibold text-fg">
+                            Zły prompt
+                          </th>
+                          <th className="border-b border-border p-4 font-semibold text-fg">
+                            Gotowy prompt z generatora
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-fg-muted">
+                        <tr>
+                          <td className="border-b border-border p-4 align-top">
+                            „Napisz mail do klienta.”
+                          </td>
+                          <td className="border-b border-border p-4 align-top">
+                            Rola, kontekst branży, konkretne zadanie, cel, styl i format. AI
+                            wie, kim być i co dokładnie napisać.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="border-b border-border p-4 align-top">
+                            Efekt: ogólny, bez tonu, trzeba poprawiać.
+                          </td>
+                          <td className="border-b border-border p-4 align-top">
+                            Efekt: tekst w Twoim stylu, gotowy po uzupełnieniu danych w
+                            nawiasach.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 align-top">
+                            AI zmyśla brakujące dane.
+                          </td>
+                          <td className="p-4 align-top">
+                            AI najpierw pyta o brakujące informacje, dopiero potem pisze.
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Gotowe przykłady promptów — wydrukowane w HTML (cytowalne) */}
+                  <h3 className="text-h3 mt-10">Przykładowe gotowe prompty</h3>
+                  <p className="mt-3 text-body text-fg-muted">
+                    Tak wygląda prompt złożony przez generator. Możesz skopiować dowolny i
+                    użyć od razu.
+                  </p>
+                  <div className="mt-5 space-y-5">
+                    {PRZYKLADY.map((p) => (
+                      <figure key={p.tytul}>
+                        <figcaption className="text-caption font-semibold text-fg">
+                          {p.tytul}
+                        </figcaption>
+                        <pre className="mt-2 overflow-x-auto whitespace-pre-wrap rounded-md border border-border bg-bg-subtle p-4 font-mono text-caption leading-relaxed text-fg-muted">
+                          {p.prompt}
+                        </pre>
+                      </figure>
+                    ))}
+                  </div>
+
+                  <h3 className="text-h3 mt-10">Czy ten generator promptów jest darmowy?</h3>
+                  <p className="mt-3 text-body text-fg-muted">
+                    Tak. Bez logowania, bez limitu, bez maila. Składasz prompt, kopiujesz,
+                    używasz.
+                  </p>
                 </div>
               </Reveal>
             ) : null}

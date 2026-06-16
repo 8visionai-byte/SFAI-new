@@ -34,8 +34,16 @@
 - [Realizacje](https://simplefast.ai/realizacje): case studies z konkretnymi liczbami.
 - [Dowod](https://simplefast.ai/dowod): publiczny scorecard wydajnosci i cytowalnosci strony.
 
-## Wiedza
-- [Blog](https://simplefast.ai/blog): wdrozenia AI, koszty, AI Act dla firm.
+## Centrum Wiedzy
+- [Centrum Wiedzy AI dla firm (hub)](https://simplefast.ai/wiedza): jedno miejsce z odpowiedziami o AI dla MSP. Cztery dzialy: Poradniki, AI Radar, Przemyslenia (blog) i Case studies (realizacje).
+- [Poradniki AI dla firm](https://simplefast.ai/poradniki): konkret krok po kroku pod pytania wlasciciela: ile kosztuje chatbot, ile kosztuje wdrozenie AI agenta, ktore procesy w biurze rachunkowym zautomatyzowac.
+- [AI Radar: newsy AI dla firm](https://simplefast.ai/ai-radar): newsy ze swiata AI przefiltrowane przez jedno pytanie: co to znaczy dla Twojej firmy. Co sie stalo, czemu wazne dla MSP, nasz filtr i co zrobic. Bez hype. Start z 2 wpisami-szablonami formatu (realne newsy dochodza na biezaco).
+- [Blog (Przemyslenia o AI)](https://simplefast.ai/blog): wdrozenia AI, koszty, AI Act dla firm, roznica chatbot vs agent.
+- [Materialy do pobrania](https://simplefast.ai/materialy): darmowe, gotowe materialy AI dla firm: zestawy promptow, checklisty procesow do automatyzacji i arkusze kosztow. Cala tresc czytasz na stronie, za darmo i bez zapisu.
+
+## Narzedzia
+- [Narzedzia AI dla firm (hub)](https://simplefast.ai/narzedzia): darmowe narzedzia, ktore daja konkretna liczbe: kalkulator oszczednosci, test gotowosci AI, audyt strony.
+- [Generator promptow AI dla firm](https://simplefast.ai/narzedzia#generator-promptow): skladasz gotowy, dobry prompt do ChatGPT, Claude czy Gemini w 30 sekund. Wybierasz cel i kontekst firmy, dostajesz prompt do skopiowania. Za darmo, bez logowania.
 
 ## Kontakt
 - [O nas](https://simplefast.ai/o-nas): Pawel Pieloch, Architekt AI full-stack.
@@ -45,5 +53,8 @@
 > Zywe i dostepne sa: strona glowna (https://simplefast.ai), hub /uslugi, strona-parasol
 > /uslugi/architekci-wartosci-ai oraz 10 stron uslug (chatboty, voiceboty, agent-rekrutacyjny,
 > automatyzacje, dokumenty-faktury, opieka-ai, audyt-ai, rozwiazania, strony-www, optymalizacja),
-> a takze hub /produkty, Realizacje, Blog i O nas. Sekcje Dowod i Kontakt oraz strony prawne sa
-> publikowane etapami. sitemap.xml zawiera wylacznie strony juz dostepne (200 OK).
+> hub /produkty, Realizacje, O nas, narzedzia (z generatorem promptow) oraz cale Centrum Wiedzy:
+> hub /wiedza, Poradniki, AI Radar, Blog i Materialy do pobrania. Wpisy startowe AI Radar to
+> jawnie oznaczone SZABLONY formatu (noindex, nie wchodza do sitemapy) — realne newsy dochodza
+> na biezaco. Sekcje Dowod i Kontakt oraz strony prawne sa publikowane etapami. sitemap.xml
+> zawiera wylacznie strony juz dostepne (200 OK) i indexowalne (zaden noindex).

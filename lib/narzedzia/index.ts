@@ -65,6 +65,16 @@ export const NARZEDZIA: readonly Narzedzie[] = [
     kategoria: 'audyt',
     lastModified: NARZEDZIA_LAST_MODIFIED,
   },
+  {
+    slug: 'generator-promptow',
+    etykieta: 'Generator',
+    tytul: 'Generator promptów AI dla firm',
+    opis:
+      'Wybierasz branżę, zadanie, cel i styl, a generator składa gotowy prompt do skopiowania, taki, który od razu działa w ChatGPT czy Claude. Deterministyczne szablony, zero logowania, zero czekania. Masz gotowy prompt w 30 sekund.',
+    korzysc: 'Przestań walczyć z pustym polem. Skopiuj gotowy prompt.',
+    kategoria: 'generator',
+    lastModified: NARZEDZIA_LAST_MODIFIED,
+  },
 ] as const;
 
 /**

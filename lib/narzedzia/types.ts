@@ -8,7 +8,7 @@
  */
 
 /** Pozycja w lejku — do grupowania/sortowania kart na hubie (opisowo). */
-export type KategoriaNarzedzia = 'kalkulator' | 'test' | 'audyt';
+export type KategoriaNarzedzia = 'kalkulator' | 'test' | 'audyt' | 'generator';
 
 export type Narzedzie = {
   /** Slug URL: małe litery, myślniki, bez polskich znaków, bez końcowego slasha. */

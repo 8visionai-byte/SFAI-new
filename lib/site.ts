@@ -102,7 +102,10 @@ export const NAV_LINKS = [
   { label: 'Realizacje', href: '/realizacje' },
   { label: 'Narzędzia', href: '/narzedzia' },
   { label: 'O nas', href: '/o-nas' },
-  { label: 'Blog', href: '/blog' },
+  // „Wiedza" (hub Centrum Wiedzy) zamiast „Blog": blog staje sie dzialem huba,
+  // dostepnym z /wiedza i breadcrumbow. Rekomendacja strategow z fazy 1 (jedno
+  // wejscie do calej wiedzy: poradniki + AI Radar + przemyslenia + case studies).
+  { label: 'Wiedza', href: '/wiedza' },
 ] as const;
 
 export const PRIMARY_CTA = {
@@ -170,6 +173,14 @@ export const HOME_LAST_MODIFIED = '2026-06-15';
 export const USLUGI_LAST_MODIFIED = '2026-06-15';
 
 /**
+ * Data ostatniej realnej rewizji huba /ai-radar (Centrum Wiedzy -> AI Radar).
+ * Hub startuje z 2 wpisami-szablonami formatu (data 2026-06-16). Trzymamy literal
+ * (lib/site.ts bez zaleznosci od warstwy tresci); pojedyncze wpisy /ai-radar/[slug]
+ * biora lastmod z `data` w rejestrze lib/ai-radar.
+ */
+export const AI_RADAR_LAST_MODIFIED = '2026-06-16';
+
+/**
  * Wszystkie planowane trasy z IA (spec 01 §1). `live` odzwierciedla realny stan
  * repo: na ten moment istnieje tylko strona glowna. Reszta = scaffold pod sitemap,
  * przelaczana na `live: true` przy stawianiu kazdej podstrony.
@@ -199,6 +210,26 @@ export const ROUTES: RouteEntry[] = [
   // Hub /produkty (gotowe produkty AID) — zbudowany (app/produkty/page.tsx, SSG).
   // live:true -> wchodzi do sitemapy. W menu (NAV_LINKS) jako "Produkty".
   { path: '/produkty', priority: 0.8, changeFrequency: 'monthly', live: true, lastModified: HOME_LAST_MODIFIED },
+
+  // Centrum Wiedzy AI — hub /wiedza organizuje 4 dzialy (Poradniki, AI Radar,
+  // Przemyslenia=/blog, Case studies=/realizacje). Hub i Poradniki zbudowane (SSG):
+  // app/wiedza/page.tsx i app/poradniki/page.tsx -> live:true (wchodza do sitemapy).
+  // Pojedyncze /poradniki/[slug] NIE sa tu wpisane pojedynczo: zrodlem prawdy ich
+  // URL-i jest rejestr lib/poradniki (PORADNIKI_SLUGS), a sitemap dolacza je z rejestru
+  // (jak lib/blog/lib/uslugi) -> slug w trasie SSG i w sitemapie nigdy sie nie rozjedzie.
+  { path: '/wiedza', priority: 0.8, changeFrequency: 'monthly', live: true, lastModified: HOME_LAST_MODIFIED },
+  { path: '/poradniki', priority: 0.7, changeFrequency: 'monthly', live: true, lastModified: HOME_LAST_MODIFIED },
+
+  // AI Radar (silnik newsow „AI o 19:00") — hub /ai-radar zbudowany (SSG, 200 OK):
+  // app/ai-radar/page.tsx + app/ai-radar/[slug]. Startuje z 2 wpisami-SZABLONAMI
+  // formatu (szablon:true, widoczny disclaimer „PRZYKLAD/SZABLON") — realne newsy
+  // doda redakcja (Pawel/Make). Tresc jest realna i 200 OK, wiec live:true. Pojedyncze
+  // /ai-radar/[slug] dolacza sitemap z rejestru lib/ai-radar (RADAR_SLUGS), jak blog.
+  { path: '/ai-radar', priority: 0.6, changeFrequency: 'weekly', live: true, lastModified: AI_RADAR_LAST_MODIFIED },
+  // /materialy: hub + 3 magnety z pelna trescia postawione (SSG, 200 OK) -> live:true.
+  // lastModified zsynchronizowany z MATERIALY_LAST_MODIFIED w rejestrze lib/materialy
+  // (trzymamy literal, bo lib/site.ts pozostaje bez zaleznosci od warstwy tresci).
+  { path: '/materialy', priority: 0.6, changeFrequency: 'monthly', live: true, lastModified: '2026-06-16' },
 
   // Dowod i konwersja.
   { path: '/realizacje', priority: 0.8, changeFrequency: 'weekly', live: true, lastModified: HOME_LAST_MODIFIED },
