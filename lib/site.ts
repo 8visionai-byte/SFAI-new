@@ -176,9 +176,14 @@ export const USLUGI_LAST_MODIFIED = '2026-06-15';
 export const ROUTES: RouteEntry[] = [
   { path: '/', priority: 1.0, changeFrequency: 'weekly', live: true, lastModified: HOME_LAST_MODIFIED },
 
-  // Hub /uslugi (rozdroze) — jeszcze NIE zbudowany (trasa [usluga] obsluguje tylko
-  // 6 stron-lisci). Zostaje live:false do czasu postawienia huba.
-  { path: '/uslugi', priority: 0.9, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
+  // Hub /uslugi (rozdroze) — zbudowany (app/uslugi/page.tsx, SSG): rozdroze 3 klastrow
+  // + wejscie do strony-parasola. live:true -> wchodzi do sitemapy.
+  { path: '/uslugi', priority: 0.9, changeFrequency: 'monthly', live: true, lastModified: USLUGI_LAST_MODIFIED },
+
+  // Strona-parasol "Zewnetrzny Dzial AI" (app/uslugi/zewnetrzny-dzial-ai/page.tsx, SSG).
+  // CELOWO poza rejestrem lib/uslugi (to centrum oferty, nie szablonowa usluga), wiec
+  // jej URL wpisujemy tu recznie. live:true -> wchodzi do sitemapy.
+  { path: '/uslugi/zewnetrzny-dzial-ai', priority: 0.9, changeFrequency: 'monthly', live: true, lastModified: USLUGI_LAST_MODIFIED },
 
   // 6 stron uslug (/uslugi/<slug>) NIE jest tu wpisanych pojedynczo — zrodlem prawdy
   // ich URL-i jest rejestr lib/uslugi (USLUGI_SLUGS), a sitemap (app/sitemap.ts) dolacza

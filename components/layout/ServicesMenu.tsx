@@ -5,11 +5,12 @@ import Link from 'next/link';
 import { USLUGI } from '@/lib/uslugi';
 
 /**
- * Menu "Usługi" w nagłówku (desktop) — rozwijana lista 6 realnych stron /uslugi/*.
+ * Menu "Usługi" w nagłówku (desktop) — rozwijana lista wszystkich realnych stron
+ * /uslugi/* + wejście do huba /uslugi i do strony-parasola "Zewnętrzny Dział AI".
  *
- * Dlaczego disclosure, a nie link: hub /uslugi nie jest jeszcze live (lib/site.ts
- * ROUTES.live=false). Top-level "Usługi" nie może prowadzić do martwego URL-a, więc
- * jest wyzwalaczem listy, a klikalne są tylko 6 stron-liści (200 OK, SSG).
+ * Hub /uslugi jest live (lib/site.ts ROUTES.live=true), więc top-level "Usługi"
+ * prowadzi do rozdroża huba, a strzałka rozwija pełną listę usług. Parasol jest
+ * wyróżniony na górze listy (centrum oferty, wejście niskiego progu).
  *
  * Linki = anchor po H1 usługi (= money query) — linkowanie wewnętrzne pod GEO
  * (fix SEO 05 §2.4). Lista z rejestru USLUGI (single source, zero rozjazdu slugów).
@@ -34,15 +35,24 @@ export function ServicesMenu() {
   }, [open]);
 
   return (
-    <li ref={ref} className="relative">
+    <li ref={ref} className="relative flex items-center">
+      {/* Hub /uslugi jest live — top-level "Usługi" to realny link do rozdroża. */}
+      <Link
+        href="/uslugi"
+        className="rounded-sm px-3 py-2 text-ui font-medium text-fg-muted transition-colors duration-fast hover:text-fg"
+      >
+        Usługi
+      </Link>
+
+      {/* Strzałka = osobny toggle rozwijanej listy (nie miesza z nawigacją do huba). */}
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-haspopup="true"
-        className="inline-flex items-center gap-1 rounded-sm px-3 py-2 text-ui font-medium text-fg-muted transition-colors duration-fast hover:text-fg"
+        aria-label="Rozwiń listę usług"
+        className="inline-flex items-center rounded-sm px-1 py-2 text-fg-muted transition-colors duration-fast hover:text-fg"
       >
-        Usługi
         <svg
           width="16"
           height="16"
@@ -60,6 +70,35 @@ export function ServicesMenu() {
           className="absolute right-0 top-full mt-2 w-[min(92vw,28rem)] rounded-lg border border-border bg-surface p-2 shadow-md"
           role="menu"
         >
+          {/* Wyróżniony wpis: strona-parasol "Zewnętrzny Dział AI" (centrum oferty). */}
+          <li role="none">
+            <Link
+              role="menuitem"
+              href="/uslugi/zewnetrzny-dzial-ai"
+              onClick={() => setOpen(false)}
+              className="block rounded-sm bg-accent-soft px-3 py-2 text-body-sm font-semibold text-accent-hover transition-colors hover:bg-accent-soft/80"
+            >
+              Zewnętrzny Dział AI
+              <span className="block text-caption font-normal text-fg-muted">
+                Nie wiesz od czego zacząć? Zacznij tutaj.
+              </span>
+            </Link>
+          </li>
+
+          {/* Link do całego huba (rozdroże 3 klastrów). */}
+          <li role="none">
+            <Link
+              role="menuitem"
+              href="/uslugi"
+              onClick={() => setOpen(false)}
+              className="block rounded-sm px-3 py-2 text-body-sm text-fg-muted transition-colors hover:bg-bg-subtle hover:text-fg"
+            >
+              Wszystkie usługi
+            </Link>
+          </li>
+
+          <li role="separator" className="my-1 border-t border-border" />
+
           {USLUGI.map((u) => (
             <li key={u.slug} role="none">
               <Link

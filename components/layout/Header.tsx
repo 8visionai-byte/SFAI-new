@@ -106,10 +106,29 @@ export function Header() {
             </button>
           </div>
           <ul className="flex flex-col gap-1 overflow-y-auto px-gutter pt-4">
-            {/* Usługi — grupa 6 realnych stron (hub /uslugi nie jest jeszcze live) */}
+            {/* Usługi — hub live + parasol wyróżniony + pełna lista usług z rejestru */}
             <li>
-              <p className="pt-2 text-overline uppercase text-fg-subtle">Usługi</p>
-              <ul className="mt-1 flex flex-col">
+              <Link
+                href="/uslugi"
+                onClick={() => setOpen(false)}
+                className="block rounded-sm py-3 text-h3 text-fg"
+              >
+                Usługi
+              </Link>
+
+              {/* Wyróżniony wpis: strona-parasol "Zewnętrzny Dział AI". */}
+              <Link
+                href="/uslugi/zewnetrzny-dzial-ai"
+                onClick={() => setOpen(false)}
+                className="mt-1 block rounded-md bg-accent-soft px-3 py-2 text-body font-semibold text-accent-hover"
+              >
+                Zewnętrzny Dział AI
+                <span className="block text-caption font-normal text-fg-muted">
+                  Nie wiesz od czego zacząć? Zacznij tutaj.
+                </span>
+              </Link>
+
+              <ul className="mt-2 flex flex-col">
                 {USLUGI.map((u) => (
                   <li key={u.slug}>
                     <Link

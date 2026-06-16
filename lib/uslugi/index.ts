@@ -24,17 +24,32 @@ import { voiceboty } from './voiceboty';
 import { stronyWww } from './strony-www';
 import { optymalizacja } from './optymalizacja';
 import { rozwiazania } from './rozwiazania';
+import { opiekaAi } from './opieka-ai';
+import { dokumentyFaktury } from './dokumenty-faktury';
+import { agentRekrutacyjny } from './agent-rekrutacyjny';
+import { audytAi } from './audyt-ai';
 
 export type { Usluga, FaqItem, TabelaWiersz, Krok, Cta } from './types';
 
-/** Wszystkie usługi, w kolejności prezentacji w hubie /uslugi. */
+/**
+ * Wszystkie usługi, w kolejności prezentacji. Kolejność = klastry intencji z huba
+ * /uslugi (Obsługa 24/7 -> Back-office i procesy -> Budowa i strategia). Hub i tak
+ * grupuje je jawnie, ale ta kolejność trzyma spójny default dla ServicesMenu/Header.
+ */
 export const USLUGI: readonly Usluga[] = [
-  automatyzacje,
+  // Obsługa 24/7 (pierwsza linia: klient, telefon, kandydat)
   chatboty,
   voiceboty,
+  agentRekrutacyjny,
+  // Back-office i procesy (powtarzalna robota za kulisami)
+  automatyzacje,
+  dokumentyFaktury,
+  opiekaAi,
+  // Budowa i strategia (od czego zacząć, co zbudować, gdzie być widocznym)
+  audytAi,
+  rozwiazania,
   stronyWww,
   optymalizacja,
-  rozwiazania,
 ] as const;
 
 /**
