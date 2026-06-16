@@ -45,7 +45,7 @@ export function DowodSpoleczny() {
                 <blockquote className="text-body text-fg">„{cytat}”</blockquote>
                 <figcaption className="mt-4 flex items-center gap-3">
                   {/* INPUT PAWŁA: prawdziwe zdjęcie klienta, zero stocku, zero twarzy z AI */}
-                  <span className="inline-block h-10 w-10 rounded-full bg-bg-subtle" aria-hidden="true" />
+                  <span className="inline-block h-[40px] w-[40px] shrink-0 rounded-full bg-bg-subtle" aria-hidden="true" />
                   <span className="text-caption text-fg-muted">{osoba}</span>
                 </figcaption>
               </Card>

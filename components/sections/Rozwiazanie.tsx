@@ -36,10 +36,23 @@ const POTRAFI = [
 
 export function Rozwiazanie() {
   return (
-    <Section theme="dark" tone="base">
+    /*
+      Sekcja „tech" — .surface-tech daje metaliczną poświatę w rogach + górną linię
+      połysku (DEKORACJA pod treścią) i przełącza tokeny na ciemne (jasny tekst:
+      --fg 16.35:1 na navy = AAA). theme="dark" zostaje dla spójności semantyki.
+      Tła nie ma konfliktu: .surface-tech ustawia --bg = navy-950, a klasa bg-bg
+      (z tone="base") to var(--bg) = ta sama navy-950 — radialne glow .surface-tech
+      malują się jako background-image NA tej bazie. Kontrast tekstu bez zmian (AAA).
+    */
+    <Section theme="dark" tone="base" className="surface-tech">
       <div className="mx-auto max-w-narrow">
         <Reveal>
-          <h2 className="text-h2">Czym różni się AI Agent od zwykłego chatbota?</h2>
+          {/* .text-metal = metaliczny gradient na nagłówku. Solidny fallback
+              --metal-fg (na dark = jasny fiolet, 10.14:1 na navy = AA) gwarantuje
+              czytelność, gdy clip-text nie działa. Dekoracja, nie treść. */}
+          <h2 className="text-h2 text-metal">Czym różni się AI Agent od zwykłego chatbota?</h2>
+          {/* Metaliczna linia-akcent (dekoracja, aria-hidden) — „krok po kroku". */}
+          <div className="sf-accent-line mt-4 max-w-[8rem]" aria-hidden="true" />
         </Reveal>
         <Reveal delay={0.05}>
           <p className="text-lead mt-5 text-fg-muted">

@@ -174,7 +174,7 @@ export function TestGotowosciAI() {
         <ol className="mt-4 space-y-4">
           {wynik.najslabsze.map((o, i) => (
             <li key={o.id} className="flex gap-3">
-              <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-soft text-caption font-semibold text-accent-hover">
+              <span className="mt-0.5 flex h-[24px] w-[24px] shrink-0 items-center justify-center rounded-full bg-accent-soft text-caption font-semibold text-accent-hover">
                 {i + 1}
               </span>
               <div>

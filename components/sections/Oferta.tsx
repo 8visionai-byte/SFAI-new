@@ -48,7 +48,8 @@ export function Oferta() {
     <Section tone="base">
       <div className="mx-auto max-w-narrow">
         <Reveal>
-          <h2 className="text-h2">Ile kosztuje wdrożenie AI Agenta dla firmy?</h2>
+          {/* .text-metal — fallback --metal-fg = fiolet 6.81:1 na paper (AA). */}
+          <h2 className="text-h2 text-metal">Ile kosztuje wdrożenie AI Agenta dla firmy?</h2>
         </Reveal>
         <Reveal delay={0.05}>
           <p className="text-lead mt-5 text-fg-muted">
@@ -63,7 +64,14 @@ export function Oferta() {
       <div className="mt-9 grid items-stretch gap-6 md:grid-cols-3">
         {POZIOMY.map((p, i) => (
           <Reveal key={p.name} delay={i * 0.06}>
-            <Card variant={p.highlight ? 'highlight' : 'base'} as="article" className="flex h-full flex-col">
+            {/* Karta „Najczęściej wybierane" dostaje szklany połysk (.card-glossy):
+                dekoracyjna warstwa ::after w rogu, pod treścią. Ramka akcentowa i
+                kontrast treści bez zmian — to wyłącznie premium sheen. */}
+            <Card
+              variant={p.highlight ? 'highlight' : 'base'}
+              as="article"
+              className={`flex h-full flex-col${p.highlight ? ' card-glossy' : ''}`}
+            >
               {p.highlight && (
                 <Badge variant="accent" className="absolute -top-3 left-6">
                   Najczęściej wybierane

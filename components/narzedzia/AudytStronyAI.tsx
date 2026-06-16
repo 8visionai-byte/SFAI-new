@@ -181,7 +181,7 @@ export function AudytStronyAI() {
               <ol className="mt-4 space-y-3">
                 {wynik.doNaprawy.map((p, i) => (
                   <li key={p.id} className="flex gap-3">
-                    <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-soft text-caption font-semibold text-accent-hover">
+                    <span className="mt-0.5 flex h-[24px] w-[24px] shrink-0 items-center justify-center rounded-full bg-accent-soft text-caption font-semibold text-accent-hover">
                       {i + 1}
                     </span>
                     <p className="text-body-sm text-fg">{p.dlaczego}</p>

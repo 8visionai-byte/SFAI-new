@@ -34,7 +34,8 @@ export function GwarancjaEfektu() {
     <Section tone="base">
       <div className="mx-auto max-w-narrow">
         <Reveal>
-          <h2 className="text-h2">Co jeśli nie zadziała? Kto bierze na siebie ryzyko?</h2>
+          {/* .text-metal — fallback --metal-fg = fiolet 6.81:1 na paper (AA). */}
+          <h2 className="text-h2 text-metal">Co jeśli nie zadziała? Kto bierze na siebie ryzyko?</h2>
         </Reveal>
         {/* Kapsuła answer-first — cytowalna dla LLM przy "co jak AI nie zadziała" */}
         <Reveal delay={0.05}>

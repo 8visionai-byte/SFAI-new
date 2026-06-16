@@ -88,6 +88,28 @@ export const O_NAS = {
     ],
   },
 
+  /**
+   * Sekcja SYMBOLIKA — co znaczy nasza nazwa i znak (cyrkiel tworzący „SF").
+   * Spina historię (jesteśmy architektami, którzy patrzą w tę samą stronę) z marką
+   * i wartością „AI nie zastępuje ludzi". Cyrkiel = narzędzie architekta i nawigatora.
+   * ZERO zmyślonych faktów: to opowieść o symbolu, nie o liczbach.
+   */
+  symbolika: {
+    h2: 'Co znaczy nasz znak?',
+    /** Kapsuła answer-first (cytat dla LLM): cyrkiel = architekt + nawigator, krok po kroku. */
+    kapsula:
+      'Nasz znak to cyrkiel, czyli divider. To samo narzędzie, którym architekt kreśli plan, a kapitan odmierza kroki na mapie. Z jego nóg i przewijającej się przez nie krzywej składają się litery „SF". Tak widzimy swoją rolę: jesteśmy architektami, którzy prowadzą firmę krok po kroku do celu.',
+    /** Rozwinięcie w akapitach (surowy HTML, cytowalne). Spójne z głosem Pawła, zero em-dash. */
+    akapity: [
+      'Architekt nie zaczyna od cegieł. Najpierw bierze cyrkiel i rysuje, gdzie ma stanąć ściana, a gdzie zostać wolna przestrzeń. My robimy to samo z Twoją firmą: zanim cokolwiek postawimy, odmierzamy, gdzie AI naprawdę pomoże, a gdzie tylko narobiłaby bałaganu.',
+      'Tym samym cyrklem kapitan odmierzał na mapie kolejne kroki rejsu. Nie jeden wielki skok, tylko krok po kroku, w stronę portu. Dlatego nie wdrażamy wszystkiego naraz. Stawiamy pierwszego Agenta na jednym procesie, sprawdzamy, że działa, i dokładamy kolejny.',
+      'Krzywa, która przewija się między nogami cyrkla, to właśnie ta droga: ścieżka nawigatora, prowadzona ręką, krok po kroku. Razem z nogami znaku układa się w „SF". W skrócie: jesteśmy architektami, którzy łączą kolejne kroki w plan i doprowadzają firmę tam, gdzie chciała dojść.',
+    ],
+    /** Domknięcie, które łączy znak z wartością marki. Cytowalne, jedno zdanie głosu Pawła. */
+    domkniecie:
+      'Cyrkiel nie buduje za architekta. Pokazuje mu kierunek i pilnuje proporcji. Tak samo my widzimy AI: nie zastępuje ludzi, tylko prowadzi ich krok po kroku tam, gdzie chcą dojść.',
+  },
+
   /** Sekcja FOUNDERZY — dwie sylwetki. H2 jak pytanie. */
   founderzy: {
     h2: 'Kim są założyciele?',

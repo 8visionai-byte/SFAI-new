@@ -11,3 +11,5 @@ export { Badge } from './Badge';
 export type { BadgeVariant } from './Badge';
 export { Container } from './Container';
 export { Section } from './Section';
+export { VideoBackground } from './VideoBackground';
+export type { VideoBackgroundProps } from './VideoBackground';

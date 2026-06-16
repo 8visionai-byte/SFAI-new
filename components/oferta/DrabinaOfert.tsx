@@ -113,7 +113,7 @@ export function DrabinaOfert() {
             >
               <div className="flex flex-wrap items-center gap-3">
                 <span
-                  className="flex h-9 min-w-9 items-center justify-center rounded-full bg-accent-soft px-2 font-display text-body-sm font-semibold text-accent-hover"
+                  className="flex h-[36px] min-w-[36px] items-center justify-center rounded-full bg-accent-soft px-2 font-display text-body-sm font-semibold text-accent-hover"
                   aria-hidden="true"
                 >
                   {s.poziom}

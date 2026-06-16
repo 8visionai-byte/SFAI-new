@@ -33,7 +33,8 @@ export function Bezpieczenstwo() {
     <Section tone="subtle">
       <div className="mx-auto max-w-narrow">
         <Reveal>
-          <h2 className="text-h2">Czy AI Agent dla firmy jest bezpieczny i zgodny z RODO?</h2>
+          {/* .text-metal — fallback --metal-fg = fiolet 6.81:1 na paper (AA). */}
+          <h2 className="text-h2 text-metal">Czy AI Agent dla firmy jest bezpieczny i zgodny z RODO?</h2>
         </Reveal>
         {/* Kapsuła answer-first — cytat dla LLM */}
         <Reveal delay={0.05}>

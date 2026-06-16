@@ -44,6 +44,19 @@ const config: Config = {
         'error-bg': 'var(--error-bg)',
         info: 'var(--info)',
         'info-bg': 'var(--info-bg)',
+        // METAL — akcenty (theme-aware). Stopnie bazowe zdają AA jako tekst;
+        // *-decor są jaśniejsze i służą TYLKO dekoracji (gradient/sheen/tło).
+        'metal-blue': 'var(--metal-blue)',
+        'metal-violet': 'var(--metal-violet)',
+        'metal-green': 'var(--metal-green)',
+        'metal-silver': 'var(--metal-silver)',
+        'metal-fg': 'var(--metal-fg)',
+      },
+      backgroundImage: {
+        // gradient marki: niebieski -> fiolet -> zielony (krok po kroku)
+        metal: 'var(--metal-gradient)',
+        'metal-decor': 'var(--metal-gradient-decor)',
+        'metal-sheen': 'var(--metal-sheen)',
       },
       fontFamily: {
         display: ['var(--font-fraunces)', 'Georgia', 'serif'],

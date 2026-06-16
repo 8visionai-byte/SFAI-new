@@ -58,7 +58,7 @@ export function PasekZaufania() {
       <ul className="grid gap-6 sm:grid-cols-3">
         {FILARY.map((f, i) => (
           <Reveal as="li" key={f.title} delay={i * 0.06} className="flex items-start gap-3">
-            <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent-hover">
+            <span className="mt-0.5 inline-flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent-hover">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 {f.icon}
               </svg>

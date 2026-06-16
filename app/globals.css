@@ -179,6 +179,57 @@
 
     /* Pierścień focus (alternatywa box-shadow) */
     --shadow-focus: 0 0 0 3px var(--ring);
+
+    /* ---- 6. METAL — warstwa AKCENTÓW (spec 03-metal) ----
+       Reguła nadrzędna: metal = DEKORACJA (gradient/sheen/border). Treść NIGDY
+       nie zależy od gradientu — .text-metal ma zawsze solidny --metal-fg jako
+       fallback koloru, który SAM zdaje AA. Stopnie „decor” są jaśniejsze i bywają
+       < 3:1 na jasnym tle, więc służą wyłącznie do połysku/tła, nie pod tekst
+       ani jako krawędź niosąca znaczenie. Kolejność stopni = „krok po kroku”
+       (cyrkiel architekta): niebieski -> fiolet -> zielony (akcent „AI”). */
+
+    /* Stopnie TEKSTOWE (AA na paper #fbfaf8): blue-700 6.42 · violet-700 6.81 · emerald-700 5.26 */
+    --metal-blue: #1d4ed8;
+    --metal-violet: #6d28d9;
+    --metal-green: #047857;
+    /* Stopnie DEKORACYJNE (jaśniejsze — tylko gradient/sheen, NIE pod tekst) */
+    --metal-blue-decor: #3b82f6;
+    --metal-violet-decor: #8b5cf6;
+    --metal-green-decor: #10b981;
+    /* Srebro (ciepłe, = gray-300) + highlight połysku */
+    --metal-silver: #c4c0b6;
+    --metal-silver-hi: #eceae5;
+
+    /* Gradient marki (pod tekst .text-metal, gdy background-clip:text wspierany) */
+    --metal-gradient: linear-gradient(
+      120deg,
+      var(--metal-blue) 0%,
+      var(--metal-violet) 50%,
+      var(--metal-green) 100%
+    );
+    /* Gradient dekoracyjny (jaśniejszy — tła/sheen, nie pod tekst) */
+    --metal-gradient-decor: linear-gradient(
+      120deg,
+      var(--metal-blue-decor) 0%,
+      var(--metal-violet-decor) 50%,
+      var(--metal-green-decor) 100%
+    );
+    /* Sheen — wąski pas połysku (glossy), przesuwany animacją sf-metal-sheen */
+    --metal-sheen: linear-gradient(
+      105deg,
+      transparent 0%,
+      transparent 38%,
+      rgba(255, 255, 255, 0.05) 46%,
+      rgba(255, 255, 255, 0.55) 50%,
+      rgba(255, 255, 255, 0.05) 54%,
+      transparent 62%,
+      transparent 100%
+    );
+
+    /* Solidny fallback koloru dla .text-metal (tryb jasny). Środek gradientu =
+       fiolet, który zdaje AA (6.81:1 na paper). To jest realny kolor tekstu,
+       gdy clip-text nie działa LUB w narzędziach kontrastu. */
+    --metal-fg: var(--metal-violet);
   }
 
   /* ===== TOKENY SEMANTYCZNE — TRYB CIEMNY (strefowo: sekcje tech) ===== */
@@ -221,6 +272,21 @@
     --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.5);
     --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.6);
     --shadow-accent: 0 8px 28px rgba(20, 184, 196, 0.35);
+
+    /* ---- METAL na ciemnym (sekcje tech) ----
+       Na navy-950 (#0b1220) JAŚNIEJSZE stopnie zdają AA jako tekst:
+       blue-500 10.38:1 · violet-400 10.14:1 · emerald-400 9.74:1.
+       Dlatego na dark gradient i fallback budujemy z hue „decor”/jasnych,
+       a fallback koloru .text-metal przeskakuje na jasny fiolet (czytelny). */
+    --metal-blue: #93c5fd; /* blue-300  — 10.38:1 na navy-950 */
+    --metal-violet: #c4b5fd; /* violet-300 — 10.14:1 na navy-950 */
+    --metal-green: #34d399; /* emerald-400 — 9.74:1 na navy-950 */
+    --metal-blue-decor: #60a5fa;
+    --metal-violet-decor: #a78bfa;
+    --metal-green-decor: #10b981;
+    --metal-silver: #c4c0b6; /* 10.31:1 na navy-950 */
+    --metal-silver-hi: #f5f4f1;
+    --metal-fg: var(--metal-violet); /* jasny fiolet: 10.14:1 na navy-950 (AA ✓) */
   }
 
   /* ==========================================================================
@@ -324,6 +390,340 @@
 }
 
 /* ==========================================================================
+   TŁO-FILM / METAL — placeholder dekoracyjny (komponent VideoBackground)
+   .bg-metal-sheen = animowany metaliczny gradient (niebieski→fiolet→zielony)
+   z przesuwającym się srebrnym połyskiem ("sheen"). Czysty CISS, zero JS.
+   Reduced-motion gasi ruch globalną bramką niżej → zostaje statyczny gradient.
+   UWAGA: to TYLKO dekoracja. Czytelność tekstu daje scrim (.bg-scrim*), nie ten
+   gradient. Bez scrim nie wolno kłaść tekstu na tym tle (regresja kontrastu AA).
+   ========================================================================== */
+@layer components {
+  .bg-metal-sheen {
+    /* Baza ciemna pod metalem (= navy-950) — nigdy nie błyśnie pustką. */
+    background-color: var(--sf-navy-950);
+    /* Dwie warstwy: 1) wędrujący srebrny połysk (token --metal-sheen),
+       2) bazowy gradient metalu DEKORACYJNY (--metal-gradient-decor).
+       Oba tokeny są theme-aware (light/dark) — spójne z resztą systemu metalu. */
+    background-image:
+      var(--metal-sheen),
+      var(--metal-gradient-decor);
+    background-size:
+      250% 100%,
+      180% 180%;
+    background-position:
+      -60% 0%,
+      0% 50%;
+    background-repeat: no-repeat;
+    /* Ruch: połysk przesuwa się lewo→prawo (efekt "live"), baza delikatnie
+       oddycha. Obie warstwy ruszane jedną animacją, by pozycje się nie rozjechały. */
+    animation: sfMetalSheen 9s var(--ease-in-out) infinite;
+    will-change: background-position;
+  }
+
+  /* Połysk lewo → prawo + dryf bazy. Spójne z faviconem (ten sam kierunek). */
+  @keyframes sfMetalSheen {
+    0% {
+      background-position:
+        -60% 0%,
+        0% 50%;
+    }
+    50% {
+      background-position:
+        160% 0%,
+        100% 50%;
+    }
+    100% {
+      background-position:
+        -60% 0%,
+        0% 50%;
+    }
+  }
+
+  /* ── Scrim / overlay pod tekst — GWARANTUJE kontrast AA na tle-filmie ──
+     Dwa warianty: dark (jasny tekst na ciemnym przyciemnieniu) i light.
+     Kładziony JAKO osobna warstwa NAD wideo/gradientem, POD treścią. */
+  .bg-scrim-dark {
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(8, 12, 22, 0.72) 0%,
+        rgba(8, 12, 22, 0.62) 45%,
+        rgba(8, 12, 22, 0.78) 100%
+      );
+  }
+  .bg-scrim-light {
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(251, 250, 248, 0.82) 0%,
+        rgba(251, 250, 248, 0.74) 45%,
+        rgba(251, 250, 248, 0.88) 100%
+      );
+  }
+}
+
+/* ==========================================================================
+   METAL — UTILITY AKCENTÓW (.text-metal / .border-metal / .surface-tech)
+   Zasada AA: gradient = dekoracja. Treść nigdy nie zależy od clip-text.
+   ========================================================================== */
+/* UWAGA architektoniczna: at-rule'y zależne od warunku (@supports / @media)
+   ORAZ @keyframes trzymamy POZA @layer components. Tailwind v3 (bez pluginu
+   nestingu) przy zagnieżdżeniu @supports/@media w @layer potrafi zgubić ich
+   ciało w buildzie produkcyjnym — zweryfikowane przez realny pipeline
+   (postcss: tailwindcss + autoprefixer). Bazowe klasy mogą zostać w @layer. */
+@layer components {
+  /* .text-metal — metaliczny gradient NA TEKŚCIE.
+     KRYTYCZNE dla AA i cytowalności: najpierw SOLIDNY color (--metal-fg, zdaje
+     AA: 6.81:1 na paper / 10.14:1 na navy-950). Gradient clip-text dokładany jest
+     w regule @supports niżej. Gdy clip-text nie działa (stare silniki, wymuszone
+     kolory, narzędzia kontrastu) — zostaje czytelny color. Tekst jest realnym
+     tekstem w DOM (SSG, boty czytają normalnie — cytowalność #1). */
+  .text-metal {
+    color: var(--metal-fg);
+  }
+
+  /* .border-metal — metaliczna krawędź (gradient przez border-image).
+     Dekoracja: krawędź NIE niesie znaczenia. Fallback to jednolity --border,
+     więc bez border-image (np. forced-colors) dalej widać ramkę. */
+  .border-metal {
+    border: 1px solid var(--border);
+    border-image: var(--metal-gradient) 1;
+  }
+  /* Wariant „karty”: zachowany promień rogów (border-image gubi radius),
+     dlatego gradient rysujemy maską padding-box/border-box. */
+  .border-metal-rounded {
+    position: relative;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(var(--surface), var(--surface)) padding-box,
+      var(--metal-gradient) border-box;
+  }
+
+  /* .surface-tech — ciemna sekcja „tech”. Ustawia data-theme=dark wewnętrznie
+     przez nadpisanie tokenów, więc CAŁY system semantyczny (fg/accent/border)
+     przeskakuje w wariant ciemny → kontrast jasnego tekstu liczony i zdany:
+       --fg #eaf0fa  na navy-950  = 16.35:1 (AAA)
+       --fg-muted    navy-300     =  6.64:1 (AA, duży i mały tekst)
+       --accent      cyan-400     =  9.71:1 (AA)
+     Metaliczny akcent dekoracyjny: subtelny gradient w tle + górna linia połysku. */
+  .surface-tech {
+    /* Przełącz tokeny semantyczne na ciemne (lokalnie, bez atrybutu w DOM). */
+    --bg: var(--sf-navy-950);
+    --bg-subtle: var(--sf-navy-900);
+    --surface: var(--sf-navy-800);
+    --surface-raised: var(--sf-navy-700);
+    --surface-sunken: var(--sf-navy-900);
+    --fg: #eaf0fa;
+    --fg-muted: var(--sf-navy-300);
+    --fg-subtle: #6f7e9e;
+    --fg-on-accent: var(--sf-navy-950);
+    --brand: #ffffff;
+    --accent: var(--sf-cyan-400);
+    --accent-hover: var(--sf-cyan-300);
+    --accent-decor: var(--sf-cyan-500);
+    --accent-soft: rgba(20, 184, 196, 0.14);
+    --accent-contrast: var(--sf-navy-950);
+    --border: rgba(255, 255, 255, 0.1);
+    --border-strong: rgba(255, 255, 255, 0.18);
+    --border-accent: var(--sf-cyan-400);
+    --ring: var(--sf-cyan-400);
+    /* Metal na ciemnym (jasne stopnie, zdają AA jako tekst na navy-950). */
+    --metal-blue: #93c5fd;
+    --metal-violet: #c4b5fd;
+    --metal-green: #34d399;
+    --metal-blue-decor: #60a5fa;
+    --metal-violet-decor: #a78bfa;
+    --metal-green-decor: #10b981;
+    --metal-silver-hi: #f5f4f1;
+    --metal-fg: var(--metal-violet);
+
+    background-color: var(--bg);
+    color: var(--fg);
+    /* Dekoracja: delikatna metaliczna poświata w rogach (radialne), pod treścią. */
+    background-image:
+      radial-gradient(120% 90% at 0% 0%, rgba(59, 130, 246, 0.16) 0%, transparent 55%),
+      radial-gradient(120% 90% at 100% 0%, rgba(139, 92, 246, 0.14) 0%, transparent 55%),
+      radial-gradient(140% 120% at 50% 120%, rgba(16, 185, 129, 0.12) 0%, transparent 55%);
+    position: relative;
+    isolation: isolate;
+  }
+  /* Górna linia połysku metalu — czysta dekoracja, nad tłem, pod treścią. */
+  .surface-tech::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: var(--metal-gradient-decor);
+    opacity: 0.65;
+    pointer-events: none;
+    z-index: -1;
+  }
+  /* Nagłówki/linki dziedziczą --accent ciemny — bez dodatkowych reguł. */
+}
+
+/* ==========================================================================
+   PŁYWAJĄCE SMACZKI / GLOSSY — warstwa premium (DEKORACJA, aria-hidden).
+   Reguła nadrzędna: to wyłącznie połysk i ruch. Treść i jej kontrast nigdy nie
+   zależą od tych warstw (scrim/tokeny robią AA). Wszystko gaszone bramką
+   reduced-motion (statyczny fallback: orby zostają, przestają dryfować).
+   ========================================================================== */
+@layer components {
+  /* Kontener pływających orbów — kładziony ZA treścią (z-index ujemny), nigdy
+     nie łapie zdarzeń. Sam w sobie przezroczysty; dzieci to rozmyte plamy metalu. */
+  .sf-orbs {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    /* Bez własnego z-index: warstwowanie wynika z KOLEJNOŚCI w DOM. W tle
+       VideoBackground orby renderujemy między gradientem a scrimem (scrim je
+       re-przyciemnia → kontrast AA pod tekstem gwarantowany). W zwykłym
+       kontenerze `relative` umieszcza się je jako pierwsze dziecko (pod treścią). */
+  }
+  /* Pojedynczy orb: rozmyta plama koloru metalu, „oddycha" i delikatnie dryfuje.
+     Kolory z palety metalu (decor) — niebieski/fiolet/zielony. Bardzo niska
+     krycie + duży blur => czysty nastrój, nie zaciemnia tekstu. */
+  .sf-orb {
+    position: absolute;
+    border-radius: var(--radius-full);
+    filter: blur(48px);
+    opacity: 0.5;
+    will-change: transform;
+    animation: sfOrbFloat 18s var(--ease-in-out) infinite;
+  }
+  .sf-orb--blue {
+    background: radial-gradient(circle at 50% 50%, var(--metal-blue-decor), transparent 70%);
+  }
+  .sf-orb--violet {
+    background: radial-gradient(circle at 50% 50%, var(--metal-violet-decor), transparent 70%);
+  }
+  .sf-orb--green {
+    background: radial-gradient(circle at 50% 50%, var(--metal-green-decor), transparent 70%);
+  }
+  /* Warianty tempa/kierunku, żeby orby nie poruszały się synchronicznie. */
+  .sf-orb--slow {
+    animation-duration: 26s;
+  }
+  .sf-orb--rev {
+    animation-direction: reverse;
+  }
+
+  /* .card-glossy — kluczowa karta z metaliczną krawędzią + szklanym połyskiem.
+     Bazuje na .border-metal-rounded (gradientowa ramka z zachowanym promieniem).
+     Połysk to osobna, dekoracyjna warstwa ::after (nad tłem, pod treścią karty). */
+  .card-glossy {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .card-glossy::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    /* Subtelny diagonalny połysk „szkła" w lewym-górnym rogu. Bardzo niskie
+       krycie i szybki zanik (transparent < 30%), więc NIE obniża kontrastu
+       tekstu treści (zaczyna się niżej). mix-blend-mode: rozjaśnia tylko tło. */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, transparent 28%);
+    mix-blend-mode: screen;
+    z-index: 0;
+  }
+
+  /* .sf-accent-line — cienka metaliczna linia (np. pod nagłówkiem sekcji),
+     z wędrującym połyskiem. Czysta dekoracja, aria-hidden u użycia. */
+  .sf-accent-line {
+    height: 2px;
+    width: 100%;
+    background-image: var(--metal-sheen), var(--metal-gradient-decor);
+    background-size:
+      220% 100%,
+      100% 100%;
+    background-position:
+      -60% 0,
+      0 0;
+    background-repeat: no-repeat;
+    border-radius: var(--radius-full);
+    animation: sfTextMetalSheen 6s var(--ease-in-out) infinite;
+  }
+}
+
+/* Pływanie orbów — delikatny dryf + oddech skali. Gaszone reduced-motion niżej. */
+@keyframes sfOrbFloat {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(3%, -4%, 0) scale(1.08);
+  }
+  66% {
+    transform: translate3d(-3%, 3%, 0) scale(0.96);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* ==========================================================================
+   METAL — clip-text gradient (POZA @layer, by build nie zgubił @supports).
+   Prefiks -webkit- jest OBOWIĄZKOWY: background-clip:text w Blink/WebKit działa
+   tylko z -webkit-. Komentarz kontrolny wyłącza „czyszczenie” przez autoprefixer,
+   który inaczej usuwa nasz -webkit-background-clip (i efekt znika w Safari).
+   ========================================================================== */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .text-metal {
+    /* autoprefixer: off */
+    background-image: var(--metal-gradient);
+    background-size: 100% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  /* .text-metal-sheen — wariant glossy z wędrującym połyskiem (efekt „live”). */
+  .text-metal-sheen {
+    background-image: var(--metal-sheen), var(--metal-gradient);
+    background-size:
+      220% 100%,
+      100% 100%;
+    background-position:
+      -60% 0,
+      0 0;
+    background-repeat: no-repeat;
+    animation: sfTextMetalSheen 6s var(--ease-in-out) infinite;
+  }
+}
+
+/* Forced-colors (Windows High Contrast): porzuć gradient, oddaj kolor systemowi. */
+@media (forced-colors: active) {
+  .text-metal,
+  .text-metal-sheen {
+    background-image: none;
+    -webkit-text-fill-color: CanvasText;
+    color: CanvasText;
+  }
+}
+
+/* Przesuw połysku po tekście (lewo → prawo). Gaszony bramką reduced-motion niżej. */
+@keyframes sfTextMetalSheen {
+  0% {
+    background-position:
+      -60% 0,
+      0 0;
+  }
+  50% {
+    background-position:
+      160% 0,
+      0 0;
+  }
+  100% {
+    background-position:
+      -60% 0,
+      0 0;
+  }
+}
+
+/* ==========================================================================
    SUWAKI NARZĘDZI (.sf-range) — spójne z tokenami, WCAG focus (spec 07)
    Track = border (szyna), wypełnienie po lewej rysujemy przez tło kciuka + cień.
    Kciuk = akcent, duży cel dotykowy (>=24px), pierścień focus 3px (cyan-700).
@@ -392,6 +792,24 @@
   to {
     transform: scaleY(1);
   }
+}
+
+/* Pływający „smaczek" — subtelny dryf w pionie (znak cyrkla na /o-nas).
+   DEKORACJA: nie niesie treści. Globalna bramka reduced-motion niżej zatrzymuje
+   ruch (animation-duration 0.01ms) -> znak stoi statycznie. Trzymane POZA @layer
+   (jak pozostałe @keyframes) dla pewności w buildzie produkcyjnym. */
+@keyframes sfFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+.sf-float {
+  animation: sfFloat 6s var(--ease-in-out) infinite;
+  will-change: transform;
 }
 
 /* ==========================================================================

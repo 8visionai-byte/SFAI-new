@@ -8,6 +8,7 @@ import { O_NAS, FOUNDER_PHOTOS } from '@/lib/o-nas/content';
 import {
   OnasHero,
   OnasHistoria,
+  OnasSymbolika,
   OnasFounderzy,
   OnasPodejscie,
   OnasWartosci,
@@ -54,16 +55,19 @@ export default function ONasPage() {
       {/* (2) Historia — prawdziwa (poznali się na szkoleniu, Paweł założył, Marcin dołącza) */}
       <OnasHistoria />
 
-      {/* (3) Founderzy — dwie sylwetki (Paweł = Architekt AI/twarz; Marcin = współprowadzący) */}
+      {/* (3) Symbolika — cyrkiel/znak „SF": architekci, którzy łączą kroki krok po kroku */}
+      <OnasSymbolika />
+
+      {/* (4) Founderzy — dwie sylwetki (Paweł = Architekt AI/twarz; Marcin = współprowadzący) */}
       <OnasFounderzy />
 
-      {/* (4) Podejście — jak pracujemy: pokaż problem -> mapujemy wąskie gardła -> wdrażamy */}
+      {/* (5) Podejście — jak pracujemy: pokaż problem -> mapujemy wąskie gardła -> wdrażamy */}
       <OnasPodejscie />
 
-      {/* (5) Wartości — głos marki („AI nie zastępuje ludzi...") */}
+      {/* (6) Wartości — głos marki („AI nie zastępuje ludzi...") */}
       <OnasWartosci />
 
-      {/* (6) CTA — jedno główne (umów bezpłatny audyt), z dowodem */}
+      {/* (7) CTA — jedno główne (umów bezpłatny audyt), z dowodem */}
       <OnasCTA />
 
       {/*

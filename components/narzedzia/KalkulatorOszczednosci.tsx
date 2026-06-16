@@ -150,7 +150,7 @@ export function KalkulatorOszczednosci() {
               step={5}
               aria-label="Procent automatyzacji (precyzyjnie)"
               onChange={(e) => setProcAuto(parseInt(e.target.value, 10) / 100)}
-              className="sf-range mt-3 h-11 w-full cursor-pointer appearance-none bg-transparent focus-visible:outline-none"
+              className="sf-range mt-3 h-[44px] w-full cursor-pointer appearance-none bg-transparent focus-visible:outline-none"
             />
             <p className="mt-1 text-caption text-fg-subtle">
               Im bardziej schematyczne zadanie, tym wyższy procent.

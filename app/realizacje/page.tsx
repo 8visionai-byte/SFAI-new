@@ -55,7 +55,7 @@ export default function RealizacjePage() {
         {/* Siatka kafelków z hover preview (mobile-first: 1 -> 2 -> 3 kolumny) */}
         <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {REALIZACJE.map((r, i) => (
-            <Reveal as="li" key={r.slug} delay={Math.min(i * 0.05, 0.2)} className="h-full">
+            <Reveal as="li" key={r.slug} delay={Math.min(i * 0.05, 0.2)} className="h-full min-w-0">
               {/* RealizacjaCard renderuje własne <li>? Nie — tu owijamy w Reveal-li,
                   więc używamy wariantu bez zewnętrznego <li>. */}
               <RealizacjaCard realizacja={r} />

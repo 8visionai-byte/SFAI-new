@@ -4,6 +4,7 @@
  */
 export { OnasHero } from './OnasHero';
 export { OnasHistoria } from './OnasHistoria';
+export { OnasSymbolika } from './OnasSymbolika';
 export { OnasFounderzy } from './OnasFounderzy';
 export { FounderCard } from './FounderCard';
 export { OnasPodejscie } from './OnasPodejscie';

@@ -9,7 +9,7 @@ import { useId } from 'react';
  * A11y: <label> spięty z OBOMA inputami (suwak ma własne id, pole własne id, oba
  * opisuje ten sam tekst pod polem przez aria-describedby). Suwak i pole mają
  * min/max/step, więc klawiatura i czytnik dostają pełny kontekst. Cel dotykowy
- * suwaka >=44px (track h-11 z grubym kciukiem). Liczby w tabular-nums.
+ * suwaka >=44px (track h-[44px] z grubym kciukiem). Liczby w tabular-nums.
  *
  * Mobile-first: kciukiem działa suwak, palcem klawiatury pole. Wartość zawsze
  * widoczna jako liczba (nie tylko pozycja kciuka).
@@ -82,7 +82,7 @@ export function PolePrzewodnik({
         step={step}
         aria-describedby={opisId}
         onChange={(e) => onChange(clamp(parseFloat(e.target.value)))}
-        className="sf-range h-11 w-full cursor-pointer appearance-none bg-transparent focus-visible:outline-none"
+        className="sf-range h-[44px] w-full cursor-pointer appearance-none bg-transparent focus-visible:outline-none"
       />
 
       <p id={opisId} className="mt-1 text-caption text-fg-subtle">

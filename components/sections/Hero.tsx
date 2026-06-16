@@ -1,5 +1,6 @@
-import { Section, MagneticButton, Badge } from '@/components/ui';
+import { Section, MagneticButton, Badge, VideoBackground } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
+import { FloatingOrbs } from '@/components/motion/FloatingOrbs';
 // import { AnimatedMetric } from '@/components/motion/AnimatedMetric'; // wróci z realnymi metrykami
 import { POSITIONING, HOME_CTA } from '@/lib/site';
 import { HeroPersonaCycler } from './HeroPersonaCycler';
@@ -30,17 +31,37 @@ import { HeroPersonaCycler } from './HeroPersonaCycler';
 
 export function Hero() {
   return (
-    <Section tone="base" containerWidth="default" className="text-center">
-      <Reveal>
-        <Badge variant="accent" className="mb-5">
-          {POSITIONING.subClaim}
-        </Badge>
-      </Reveal>
+    /*
+      WARSTWA PREMIUM (czysto dekoracyjna, nie rusza treści/H1/CTA):
+       • VideoBackground = tło-film. BRAK mp4 → animowany metaliczny gradient
+         (niebieski→fiolet→zielony). scrim="dark" GWARANTUJE kontrast AA pod
+         jasnym tekstem (nie sam gradient — to było raz naprawiane, nie regresować).
+       • theme="dark" na Section przełącza tokeny semantyczne na jasny tekst —
+         spójnie ze scrimem. Tło Section wymuszone na transparentne, żeby było
+         widać gradient/wideo pod spodem (bg-bg navy-950 by je zasłonił).
+       • FloatingOrbs = pływające plamy metalu (CSS, reduced-motion → statyczne).
+      Treść (Badge/H1/kapsuła/CTA) jest w surowym HTML nad tłem — cytowalna 1:1.
+    */
+    <VideoBackground scrim="dark" decoration={<FloatingOrbs />}>
+      <Section
+        theme="dark"
+        tone="base"
+        containerWidth="default"
+        className="!bg-transparent text-center"
+      >
+        <Reveal>
+          <Badge variant="accent" className="mb-5">
+            {POSITIONING.subClaim}
+          </Badge>
+        </Reveal>
 
-      {/* H1 — hasło kategorii (north star #3). Pozycjonowanie prowadzi pierwszym wrażeniem. */}
-      <Reveal delay={0.05}>
-        <h1 className="text-display mx-auto max-w-[18ch]">{POSITIONING.claim}</h1>
-      </Reveal>
+        {/* H1 — hasło kategorii (north star #3). Pozycjonowanie prowadzi pierwszym
+            wrażeniem. .text-metal-sheen = metaliczny połysk NA TEKŚCIE: ma solidny
+            fallback koloru (--metal-fg, jasny fiolet 10.14:1 na navy = AA), więc
+            gdy clip-text nie działa albo przy reduced-motion tekst zostaje czytelny. */}
+        <Reveal delay={0.05}>
+          <h1 className="text-display text-metal-sheen mx-auto max-w-[18ch]">{POSITIONING.claim}</h1>
+        </Reveal>
 
       {/* Kapsuła answer-first — surowy HTML, cytat dla LLM. Analogia w 1. zdaniu. */}
       <Reveal delay={0.1}>
@@ -110,7 +131,8 @@ export function Hero() {
           </a>
         </p>
       </Reveal>
-    </Section>
+      </Section>
+    </VideoBackground>
   );
 }
 

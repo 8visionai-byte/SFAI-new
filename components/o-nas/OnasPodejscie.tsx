@@ -24,7 +24,7 @@ export function OnasPodejscie() {
         {O_NAS.podejscie.kroki.map((k, i) => (
           <Reveal as="li" key={k.tytul} delay={i * 0.06}>
             <Card as="article" className="h-full">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-soft font-display text-h3 font-semibold text-accent-hover">
+              <span className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-accent-soft font-display text-h3 font-semibold text-accent-hover">
                 {i + 1}
               </span>
               <h3 className="text-h3 mt-4">{k.tytul}</h3>

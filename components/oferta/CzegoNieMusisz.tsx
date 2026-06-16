@@ -62,7 +62,7 @@ export function CzegoNieMusisz() {
               <div className="flex gap-3">
                 <span
                   aria-hidden="true"
-                  className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-success-bg text-success"
+                  className="mt-0.5 flex h-[24px] w-[24px] shrink-0 items-center justify-center rounded-full bg-success-bg text-success"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                     <path

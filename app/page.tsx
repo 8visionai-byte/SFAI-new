@@ -4,6 +4,7 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { faqSchema, serviceSchema } from '@/components/seo/schemas';
 import { FAQ_ITEMS } from '@/components/sections/faqData';
 
+import { ScrollMetalProgress } from '@/components/motion/ScrollMetalProgress';
 import { Hero } from '@/components/sections/Hero';
 import { PasekZaufania } from '@/components/sections/PasekZaufania';
 import { Problem } from '@/components/sections/Problem';
@@ -50,6 +51,13 @@ export const metadata: Metadata = buildMetadata({
 export default function HomePage() {
   return (
     <main id="main">
+      {/*
+        Smaczek premium: metaliczny pasek postępu czytania (DEKORACJA, aria-hidden,
+        client island). prefers-reduced-motion → nie renderuje się w ogóle.
+        Treść/SSG/kolejność sekcji bez zmian — pasek leży nad układem, niczego nie
+        zasłania (3px na górnej krawędzi). Wzorzec dla pozostałych stron.
+      */}
+      <ScrollMetalProgress />
       <Hero />
       <PasekZaufania />
       <Problem />

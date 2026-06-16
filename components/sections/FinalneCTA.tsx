@@ -14,7 +14,8 @@ export function FinalneCTA() {
         {/* Lewa: domknięcie + dowód */}
         <div>
           <Reveal>
-            <h2 className="text-h2">Gotowy zobaczyć, gdzie Twoja firma traci czas?</h2>
+            {/* .text-metal — fallback --metal-fg = fiolet 6.81:1 na paper (AA). */}
+            <h2 className="text-h2 text-metal">Gotowy zobaczyć, gdzie Twoja firma traci czas?</h2>
           </Reveal>
           <Reveal delay={0.05}>
             <p className="text-lead mt-5 text-fg-muted">

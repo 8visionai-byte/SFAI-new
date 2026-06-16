@@ -44,6 +44,7 @@ export function Header() {
   }, [open]);
 
   return (
+    <>
     <header
       className={
         'sticky top-0 z-nav border-b border-border backdrop-blur-md transition-shadow duration-base ' +
@@ -81,31 +82,42 @@ export function Header() {
           onClick={() => setOpen(true)}
           aria-label="Otwórz menu"
           aria-expanded={open}
-          className="ml-1 inline-flex h-11 w-11 items-center justify-center rounded-sm text-fg lg:hidden focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+          className="ml-1 inline-flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-sm text-fg lg:hidden focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>
         </button>
       </nav>
+      </header>
 
-      {/* Mobile panel */}
+      {/* Mobile panel — RENDEROWANY POZA <header>, bo header ma backdrop-blur
+          (backdrop-filter tworzy containing block dla position:fixed → inset-0
+          liczyłby się względem 64px paska, nie viewportu, i dół menu z CTA był
+          nieosiągalny). Tutaj fixed inset-0 = pełny viewport.
+          Flex-kolumna: stały pasek (logo+zamknij) u góry, niżej JEDEN obszar
+          przewijany (lista + CTA), więc na niskich ekranach (320×740 z pełną listą
+          usług) całość, łącznie z głównym CTA, jest osiągalna przez scroll.
+          Cała sekcja jest lg:hidden, więc desktop nietknięty. */}
       {open && (
-        <div className="fixed inset-0 z-overlay bg-bg lg:hidden">
-          <div className="flex h-16 items-center gap-4 px-gutter">
+        <div className="fixed inset-0 z-overlay flex flex-col bg-bg lg:hidden">
+          <div className="flex h-16 shrink-0 items-center gap-4 px-gutter">
             <Logo />
             <button
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Zamknij menu"
-              className="ml-auto inline-flex h-11 w-11 items-center justify-center rounded-sm text-fg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+              className="ml-auto inline-flex h-[44px] w-[44px] items-center justify-center rounded-sm text-fg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </button>
           </div>
-          <ul className="flex flex-col gap-1 overflow-y-auto px-gutter pt-4">
+          {/* Obszar przewijany: lista nawigacji + CTA. flex-1 + min-h-0 pozwala
+              overflow-y-auto faktycznie zadziałać wewnątrz flex-kolumny. */}
+          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+          <ul className="flex flex-col gap-1 px-gutter pt-4">
             {/* Usługi — hub live + parasol wyróżniony + pełna lista usług z rejestru */}
             <li>
               <Link
@@ -155,13 +167,14 @@ export function Header() {
               </li>
             ))}
           </ul>
-          <div className="px-gutter pt-6">
+          <div className="px-gutter pb-2 pt-6">
             <Button variant="primary" size="lg" href={HOME_CTA.href} onClick={() => setOpen(false)} className="w-full">
               Umów diagnozę
             </Button>
           </div>
+          </div>
         </div>
       )}
-    </header>
+    </>
   );
 }
