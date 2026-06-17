@@ -3,54 +3,33 @@ import Link from 'next/link';
 import { cn } from '@/lib/cn';
 
 /**
- * Logo — OFICJALNY render marki (brandbook Pawła), nie własny rysunek zespołu.
+ * Logo — nazwa marki w dwóch postaciach:
  *
- * DLACZEGO RENDER PNG, A NIE SVG:
- * Wcześniejszy znak był odtworzony przez zespół w SVG (CompassMark) i Paweł go
- * odrzucił. Źródłem prawdy jest teraz OFICJALNY render w public/brand/:
- *   - header.png        1800x560  — znak (cyrkiel/divider „SF") + wordmark „SimpleFast.ai"
- *                                   + tagline. Render na CIEMNYM, NIEprzezroczystym tle
- *                                   (#07090D-family, alpha=255 w całości).
- *   - logo-vertical.png 1145x1155 — znak pionowo nad wordmarkiem (kwadratowy kadr).
- *   - favicon-256.png   256x256   — sam znak w kwadracie (na ciemnym tle).
+ *  1) NAGŁÓWEK / STOPKA  -> `Logo` = CZYSTY WORDMARK (prawdziwy tekst „SimpleFast.ai"
+ *     w gradiencie marki, background-clip:text). Przezroczyste tło, ostry na każdym
+ *     ekranie, skalowalny, dostępny i CYTOWALNY (boty czytają tekst, nie piksele).
+ *     Świeci na ciemnym pasku jak w referencji (niebieski -> fiolet -> zielony).
  *
- * OSADZENIE / „WTOPIENIE": tło renderu jest CIEMNE i opaque, więc pasek, w którym
- * stoi logo, musi być ciemny (Header.tsx = ciemny glass #07090D + backdrop-blur).
- * Wtedy ciemne krawędzie renderu zlewają się z paskiem i nie widać prostokątnej
- * ramki. Na jasnym tle render NIE może stać (widoczny ciemny prostokąt) — dlatego
- * używamy go w nagłówku i stopce, które są ciemne.
- *
- * CYTOWALNOŚĆ (#1 GEO): obraz to dekoracja wizualna, ale etykietę niesie tekst —
- * `alt="SimpleFast.ai"` + `aria-label` linku. Boty czytają nazwę marki z atrybutów,
- * nie zależy ona od pikseli. Wordmark widoczny jest w renderze; w treści stron nazwa
- * marki żyje też jako prawdziwy tekst (H1/akapity), więc cytowalność jest zachowana.
- *
- * Dostępność: link do „/" z aria-label; obraz `priority` (LCP nagłówka), `h-` w CSS,
- * `w-auto` trzyma proporcje. Wariant 'mark' = kwadratowy znak (favicon-256) do wąskich
- * miejsc. Mobile-first: logo nie szersze niż potrzeba (h-[34px] -> sm:h-[40px]).
+ *  2) DUŻE KONTEKSTY  -> `LogoImage` = OFICJALNY render 3D (public/brand/*.png).
+ *     Render ma CIEMNE, nieprzezroczyste tło, więc nadaje się TYLKO do dużych miejsc
+ *     na ciemnym tle (og:image, hero, sekcja symboliki /o-nas), gdzie wygląda
+ *     świetnie. W małym nagłówku robił się brzydkim prostokątem — dlatego NIE tam.
  */
-
-/**
- * Warianty OFICJALNEGO renderu (public/brand/):
- *  - 'full'     header.png        — poziomy (znak + wordmark + tagline), do paska/stopki.
- *  - 'mark'     favicon-256.png   — sam znak w kwadracie, do wąskich miejsc.
- *  - 'vertical' logo-vertical.png — znak + wordmark pionowo (kwadratowy kadr), np. /o-nas.
- */
-type LogoVariant = 'full' | 'mark' | 'vertical';
 
 const LABEL = 'SimpleFast.ai';
 
-// Źródło + naturalne proporcje per wariant (next/image skaluje przez CSS h-/w-auto).
-const RENDERS: Record<LogoVariant, { src: string; width: number; height: number }> = {
-  full: { src: '/brand/header.png', width: 643, height: 200 }, // 1800:560 = 45:14
-  mark: { src: '/brand/favicon-256.png', width: 256, height: 256 }, // 1:1
-  vertical: { src: '/brand/logo-vertical.png', width: 1145, height: 1155 }, // ~1:1
+type RenderVariant = 'full' | 'mark' | 'vertical';
+
+// Oficjalny render (DUŻE konteksty). Naturalne proporcje; next/image skaluje przez CSS.
+const RENDERS: Record<RenderVariant, { src: string; width: number; height: number }> = {
+  full: { src: '/brand/header.png', width: 1800, height: 560 },
+  mark: { src: '/brand/favicon-256.png', width: 256, height: 256 },
+  vertical: { src: '/brand/logo-vertical.png', width: 1145, height: 1155 },
 };
 
 /**
- * LogoImage — sam render (bez linku), żeby używać go też dekoracyjnie poza nagłówkiem
- * (np. sekcja o symbolice na /o-nas) bez duplikowania ścieżek/proporcji. `decorative`
- * => aria-hidden (treść niesie tekst obok); inaczej alt = nazwa marki.
+ * LogoImage — sam render 3D (bez linku). Do og/hero/sekcji symboliki na CIEMNYM tle.
+ * `decorative` => aria-hidden (etykietę niesie tekst obok); inaczej alt = nazwa marki.
  */
 export function LogoImage({
   variant = 'full',
@@ -59,14 +38,13 @@ export function LogoImage({
   priority = false,
   sizes,
 }: {
-  variant?: LogoVariant;
+  variant?: RenderVariant;
   className?: string;
   decorative?: boolean;
   priority?: boolean;
   sizes?: string;
 }) {
   const { src, width, height } = RENDERS[variant];
-
   return (
     <Image
       src={src}
@@ -82,39 +60,28 @@ export function LogoImage({
 }
 
 /**
- * Logo — render marki opakowany w link do strony głównej (nagłówek/stopka).
- * Wariant 'mark' (kwadrat) dla bardzo wąskich miejsc; domyślnie 'full' (z wordmarkiem).
+ * Logo — CZYSTY WORDMARK do nagłówka/stopki. Tekst „SimpleFast.ai" w gradiencie marki.
+ * `.text-metal` = gradient #007BFF -> #7A35FF (62%) -> #63F000 z fallbackiem solidnego
+ * koloru (AA) gdy clip-text niewspierany. Litera po literze: Simple=niebieski,
+ * Fast=fiolet, .ai=zielony (jak w brandbooku).
  */
 export function Logo({
   className,
-  variant = 'full',
-  priority = false,
 }: {
   className?: string;
-  variant?: LogoVariant;
+  /** Akceptowane dla zgodności wstecznej (wordmark to tekst — nieużywane). */
   priority?: boolean;
+  variant?: RenderVariant;
 }) {
-  if (variant === 'mark') {
-    return (
-      <Link
-        href="/"
-        aria-label={`${LABEL} — strona główna`}
-        className={cn('inline-flex items-center', className)}
-      >
-        <LogoImage variant="mark" priority={priority} className="h-[34px] w-[34px] sm:h-[40px] sm:w-[40px]" />
-      </Link>
-    );
-  }
-
   return (
     <Link
       href="/"
       aria-label={`${LABEL} — strona główna`}
       className={cn('inline-flex items-center', className)}
     >
-      {/* Pełny render (znak + wordmark + tagline). h-[34px]->sm:h-[40px], w-auto =
-          proporcje 45:14, więc na mobile szerokość ~109px, na sm ~129px (nie za szeroki). */}
-      <LogoImage variant="full" priority={priority} className="h-[34px] w-auto sm:h-[40px]" />
+      <span className="text-metal font-sans text-[1.3rem] font-extrabold leading-none tracking-[-0.03em] sm:text-[1.5rem]">
+        SimpleFast.ai
+      </span>
     </Link>
   );
 }
