@@ -188,17 +188,28 @@
        ani jako krawędź niosąca znaczenie. Kolejność stopni = „krok po kroku”
        (cyrkiel architekta): niebieski -> fiolet -> zielony (akcent „AI”). */
 
-    /* Stopnie TEKSTOWE (AA na paper #fbfaf8): blue-700 6.42 · violet-700 6.81 · emerald-700 5.26 */
+    /* Stopnie TEKSTOWE (AA na paper #fbfaf8): blue-700 6.42 · violet-700 6.81 · emerald-700 5.26.
+       NIETKNIĘTE — to fallback AA na jasnym tle (.text-metal solidny color). */
     --metal-blue: #1d4ed8;
     --metal-violet: #6d28d9;
     --metal-green: #047857;
-    /* Stopnie DEKORACYJNE (jaśniejsze — tylko gradient/sheen, NIE pod tekst) */
-    --metal-blue-decor: #3b82f6;
-    --metal-violet-decor: #8b5cf6;
-    --metal-green-decor: #10b981;
-    /* Srebro (ciepłe, = gray-300) + highlight połysku */
-    --metal-silver: #c4c0b6;
-    --metal-silver-hi: #eceae5;
+    /* Stopnie DEKORACYJNE = OFICJALNE kolory marki (brandbook Pawła).
+       Tylko gradient/sheen/dekoracja na CIEMNYM — NIE pod tekst na jasnym tle.
+       ai-green #63F000 jest jaskrawy: wolno go tylko jako dekorację (AA pod tekst
+       gwarantuje stopień tekstowy --metal-green powyżej). */
+    --metal-blue-decor: #007bff; /* brand blue */
+    --metal-violet-decor: #7a35ff; /* brand violet */
+    --metal-green-decor: #63f000; /* brand ai-green (jaskrawy — dekoracja/ciemne) */
+
+    /* ---- Oficjalne kolory marki (brandbook) — tokeny pomocnicze ---- */
+    --sfai-cyan: #00d8ff;
+    --sfai-magenta-violet: #c238ff;
+    --sfai-emerald: #00b894;
+    --sfai-glow: #7debff;
+
+    /* Srebro marki (brandbook): steel + steel-highlight */
+    --metal-silver: #aeb8c3; /* brand steel */
+    --metal-silver-hi: #e7edf5; /* brand steel-highlight */
 
     /* Gradient marki (pod tekst .text-metal, gdy background-clip:text wspierany) */
     --metal-gradient: linear-gradient(
@@ -207,11 +218,13 @@
       var(--metal-violet) 50%,
       var(--metal-green) 100%
     );
-    /* Gradient dekoracyjny (jaśniejszy — tła/sheen, nie pod tekst) */
+    /* GŁÓWNY GRADIENT MARKI (brandbook) — H1 „Budujemy AI Agentów" na ciemnym
+       hero MA mieć dokładnie te kolory i stopnie. Dekoracja/ciemne tło, nie pod
+       tekst na jasnym (ai-green #63F000 jest jaskrawy). */
     --metal-gradient-decor: linear-gradient(
-      120deg,
+      90deg,
       var(--metal-blue-decor) 0%,
-      var(--metal-violet-decor) 50%,
+      var(--metal-violet-decor) 62%,
       var(--metal-green-decor) 100%
     );
     /* Sheen — wąski pas połysku (glossy), przesuwany animacją sf-metal-sheen */
@@ -278,14 +291,15 @@
        blue-500 10.38:1 · violet-400 10.14:1 · emerald-400 9.74:1.
        Dlatego na dark gradient i fallback budujemy z hue „decor”/jasnych,
        a fallback koloru .text-metal przeskakuje na jasny fiolet (czytelny). */
-    --metal-blue: #93c5fd; /* blue-300  — 10.38:1 na navy-950 */
-    --metal-violet: #c4b5fd; /* violet-300 — 10.14:1 na navy-950 */
-    --metal-green: #34d399; /* emerald-400 — 9.74:1 na navy-950 */
-    --metal-blue-decor: #60a5fa;
-    --metal-violet-decor: #a78bfa;
-    --metal-green-decor: #10b981;
-    --metal-silver: #c4c0b6; /* 10.31:1 na navy-950 */
-    --metal-silver-hi: #f5f4f1;
+    --metal-blue: #93c5fd; /* blue-300  — 10.38:1 na navy-950 (TEKST, nietknięty) */
+    --metal-violet: #c4b5fd; /* violet-300 — 10.14:1 na navy-950 (TEKST, nietknięty) */
+    --metal-green: #34d399; /* emerald-400 — 9.74:1 na navy-950 (TEKST, nietknięty) */
+    /* Dekoracja = oficjalne kolory marki (na ciemnym jaskrawy ai-green świeci dobrze) */
+    --metal-blue-decor: #007bff; /* brand blue */
+    --metal-violet-decor: #7a35ff; /* brand violet */
+    --metal-green-decor: #63f000; /* brand ai-green */
+    --metal-silver: #aeb8c3; /* brand steel — 9.55:1 na navy-950 */
+    --metal-silver-hi: #e7edf5; /* brand steel-highlight */
     --metal-fg: var(--metal-violet); /* jasny fiolet: 10.14:1 na navy-950 (AA ✓) */
   }
 
@@ -416,7 +430,8 @@
     background-repeat: no-repeat;
     /* Ruch: połysk przesuwa się lewo→prawo (efekt "live"), baza delikatnie
        oddycha. Obie warstwy ruszane jedną animacją, by pozycje się nie rozjechały. */
-    animation: sfMetalSheen 9s var(--ease-in-out) infinite;
+    /* Zwolnione 9s -> 20s (Paweł: „za szybko") — spokojniejszy, subtelniejszy przesuw. */
+    animation: sfMetalSheen 20s var(--ease-in-out) infinite;
     will-change: background-position;
   }
 
@@ -527,23 +542,26 @@
     --border-strong: rgba(255, 255, 255, 0.18);
     --border-accent: var(--sf-cyan-400);
     --ring: var(--sf-cyan-400);
-    /* Metal na ciemnym (jasne stopnie, zdają AA jako tekst na navy-950). */
+    /* Metal na ciemnym (jasne stopnie TEKSTOWE, zdają AA jako tekst na navy-950). */
     --metal-blue: #93c5fd;
     --metal-violet: #c4b5fd;
     --metal-green: #34d399;
-    --metal-blue-decor: #60a5fa;
-    --metal-violet-decor: #a78bfa;
-    --metal-green-decor: #10b981;
-    --metal-silver-hi: #f5f4f1;
+    /* Dekoracja = oficjalne kolory marki (brandbook) */
+    --metal-blue-decor: #007bff;
+    --metal-violet-decor: #7a35ff;
+    --metal-green-decor: #63f000;
+    --metal-silver: #aeb8c3;
+    --metal-silver-hi: #e7edf5;
     --metal-fg: var(--metal-violet);
 
     background-color: var(--bg);
     color: var(--fg);
     /* Dekoracja: delikatna metaliczna poświata w rogach (radialne), pod treścią. */
+    /* Brand RGB: blue #007BFF=0,123,255 · violet #7A35FF=122,53,255 · ai-green #63F000=99,240,0 */
     background-image:
-      radial-gradient(120% 90% at 0% 0%, rgba(59, 130, 246, 0.16) 0%, transparent 55%),
-      radial-gradient(120% 90% at 100% 0%, rgba(139, 92, 246, 0.14) 0%, transparent 55%),
-      radial-gradient(140% 120% at 50% 120%, rgba(16, 185, 129, 0.12) 0%, transparent 55%);
+      radial-gradient(120% 90% at 0% 0%, rgba(0, 123, 255, 0.16) 0%, transparent 55%),
+      radial-gradient(120% 90% at 100% 0%, rgba(122, 53, 255, 0.14) 0%, transparent 55%),
+      radial-gradient(140% 120% at 50% 120%, rgba(99, 240, 0, 0.1) 0%, transparent 55%);
     position: relative;
     isolation: isolate;
   }
@@ -644,7 +662,8 @@
       0 0;
     background-repeat: no-repeat;
     border-radius: var(--radius-full);
-    animation: sfTextMetalSheen 6s var(--ease-in-out) infinite;
+    /* Zwolnione 6s -> 16s (Paweł: „za szybko") — subtelniejszy połysk. */
+    animation: sfTextMetalSheen 16s var(--ease-in-out) infinite;
   }
 }
 
@@ -690,7 +709,8 @@
       -60% 0,
       0 0;
     background-repeat: no-repeat;
-    animation: sfTextMetalSheen 6s var(--ease-in-out) infinite;
+    /* Zwolnione 6s -> 16s (Paweł: „za szybko") — spokojniejszy przesuw połysku po tekście. */
+    animation: sfTextMetalSheen 16s var(--ease-in-out) infinite;
   }
 }
 

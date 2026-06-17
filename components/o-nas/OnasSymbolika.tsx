@@ -1,6 +1,6 @@
 import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
-import { CompassMark } from '@/components/layout/Logo';
+import { LogoImage } from '@/components/layout/Logo';
 import { O_NAS } from '@/lib/o-nas/content';
 
 /**
@@ -14,18 +14,28 @@ import { O_NAS } from '@/lib/o-nas/content';
  * (kim są) — czyli „kim jesteśmy jako marka" pomiędzy „jak powstaliśmy" a „kto za tym stoi".
  *
  * GEO/KPI #1: cała treść (kapsuła + akapity + domknięcie) jest w surowym HTML przy
- * 1. żądaniu — cytowalna dla LLM. CompassMark jest DEKORACYJNY (aria-hidden): nie
- * niesie treści, tekst opisuje znak słowami. Reveal tylko wzbogaca; reduced-motion ->
- * statyczny render. Strefa `dark` = „tech smaczek" pokazujący metaliczny znak,
- * kontrast tekstu zapewniają kolory semantyczne (WCAG AA, bez regresji).
+ * 1. żądaniu — cytowalna dla LLM. Logo (OFICJALNY render logo-vertical.png) jest
+ * DEKORACYJNE (aria-hidden): nie niesie treści, tekst opisuje znak słowami. Reveal
+ * tylko wzbogaca; reduced-motion -> statyczny render. Strefa `dark` = „tech smaczek":
+ * render ma CIEMNE tło (#07090D-family), więc WTAPIA się w ciemną sekcję bez ramki.
+ * Kontrast tekstu zapewniają kolory semantyczne (WCAG AA, bez regresji).
+ *
+ * SPÓJNOŚĆ: symbolika opisuje PRAWDZIWE logo (cyrkiel/divider „SF" z przewijającą się
+ * krzywą), które widać tu w renderze — tekst i obraz mówią o tym samym znaku.
  */
 export function OnasSymbolika() {
   return (
     <Section tone="base" theme="dark">
       <div className="mx-auto grid max-w-narrow items-center gap-10 md:grid-cols-[auto,1fr] md:gap-12">
-        {/* Znak — duży, dekoracyjny (aria-hidden). Treść niesie tekst obok. */}
+        {/* Znak — OFICJALNY render (pionowy), dekoracyjny (aria-hidden). Ciemne tło
+            renderu wtapia się w ciemną sekcję. Treść niesie tekst obok. */}
         <Reveal className="flex justify-center md:justify-start">
-          <CompassMark className="sf-float h-28 w-28 shrink-0 sm:h-36 sm:w-36" />
+          <LogoImage
+            variant="vertical"
+            decorative
+            sizes="(min-width: 640px) 160px, 128px"
+            className="sf-float h-auto w-32 shrink-0 sm:w-40"
+          />
         </Reveal>
 
         <div>

@@ -7,6 +7,7 @@ import { organizationSchema, websiteSchema } from '@/components/seo/schemas';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { ChatLauncher } from '@/components/demo/ChatLauncher';
+import { FaviconPulse } from '@/components/effects/FaviconPulse';
 
 /**
  * Fonty self-host przez next/font/google (zero requestów do fonts.googleapis.com,
@@ -54,7 +55,7 @@ export const metadata: Metadata = {
         icons: {
           icon: '/favicon.ico',
           shortcut: '/favicon.ico',
-          apple: '/icon.svg',
+          apple: '/icon.png',
         },
       }
     : {}),
@@ -89,6 +90,9 @@ export default function RootLayout({
 
         {/* Pływający launcher czatu (STUB demo) — nie blokuje treści/indeksacji */}
         <ChatLauncher />
+
+        {/* Pulsujący favicon w karcie (efekt „live", canvas) — reduced-motion safe */}
+        <FaviconPulse />
 
         {/* Schema globalna — Organization + WebSite na każdej stronie (spec 04 §6.2–6.3) */}
         <JsonLd data={organizationSchema()} />

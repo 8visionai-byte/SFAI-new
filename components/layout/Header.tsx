@@ -20,6 +20,15 @@ const NAV_LINKS_REST = NAV_LINKS.filter((l) => l.href !== '/uslugi');
  * Cień pojawia się po scrollu. Mobile: hamburger -> pełny panel, zamykanie ESC.
  *
  * Nawigacja w HTML (linki widoczne dla botów); klient tylko obsługuje toggle/scroll.
+ *
+ * CIEMNY GLASS (osadzenie OFICJALNEGO logo): render marki (public/brand/header.png)
+ * ma CIEMNE, nieprzezroczyste tło (#07090D-family). Żeby logo się WTOPIŁO w pasek,
+ * pasek jest ciemnym szkłem: tło #07090D z przezroczystością + backdrop-blur. Ciemne
+ * krawędzie renderu zlewają się z paskiem (brak widocznego prostokąta). `data-theme=
+ * "dark"` przełącza CAŁY system semantyczny nawigacji (Logo, ServicesMenu, linki) na
+ * wariant ciemny — kontrast jasnego tekstu jest już zaudytowany jako WCAG AA:
+ *   --fg #eaf0fa 16.35:1 · --fg-muted navy-300 6.64:1 · --accent cyan-400 9.71:1.
+ * ai-green #63F000 świeci tu wyłącznie jako dekoracja na ciemnym (nie pod tekst).
  */
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -46,14 +55,17 @@ export function Header() {
   return (
     <>
     <header
+      data-theme="dark"
       className={
-        'sticky top-0 z-nav border-b border-border backdrop-blur-md transition-shadow duration-base ' +
-        (scrolled ? 'shadow-sm' : '')
+        'sticky top-0 z-nav border-b border-border text-fg backdrop-blur-md transition-shadow duration-base ' +
+        (scrolled ? 'shadow-md' : '')
       }
-      style={{ background: 'color-mix(in srgb, var(--bg) 82%, transparent)' }}
+      // Ciemny glass = baza #07090D (tożsama z tłem renderu logo) z przezroczystością,
+      // by backdrop-blur prześwitywał. Logo wtapia się ciemną krawędzią w ten pasek.
+      style={{ background: 'color-mix(in srgb, #07090D 86%, transparent)' }}
     >
       <nav className="mx-auto flex h-16 w-full max-w-container items-center gap-4 px-gutter" aria-label="Główna">
-        <Logo />
+        <Logo priority />
 
         {/* Desktop nav — "Usługi" = ServicesMenu (6 realnych stron), reszta = linki */}
         <ul className="ml-auto hidden items-center gap-1 lg:flex">
@@ -100,9 +112,14 @@ export function Header() {
           usług) całość, łącznie z głównym CTA, jest osiągalna przez scroll.
           Cała sekcja jest lg:hidden, więc desktop nietknięty. */}
       {open && (
-        <div className="fixed inset-0 z-overlay flex flex-col bg-bg lg:hidden">
+        <div
+          data-theme="dark"
+          className="fixed inset-0 z-overlay flex flex-col text-fg lg:hidden"
+          // Ciemne tło panelu (#07090D) = spójne z paskiem; logo wtapia się tak samo.
+          style={{ background: '#07090D' }}
+        >
           <div className="flex h-16 shrink-0 items-center gap-4 px-gutter">
-            <Logo />
+            <Logo priority />
             <button
               type="button"
               onClick={() => setOpen(false)}
