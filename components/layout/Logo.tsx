@@ -85,7 +85,7 @@ export function Logo({
         className={
           isMark
             ? 'h-[34px] w-[34px] sm:h-[40px] sm:w-[40px]'
-            : 'h-[34px] w-auto sm:h-[42px]'
+            : 'h-[44px] w-auto sm:h-[56px]'
         }
       />
     </Link>
