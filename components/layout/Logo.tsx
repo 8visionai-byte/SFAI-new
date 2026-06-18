@@ -3,33 +3,33 @@ import Link from 'next/link';
 import { cn } from '@/lib/cn';
 
 /**
- * Logo — nazwa marki w dwóch postaciach:
+ * Logo — OFICJALNY render Pawła z USUNIĘTYM tłem (przezroczyste PNG).
  *
- *  1) NAGŁÓWEK / STOPKA  -> `Logo` = CZYSTY WORDMARK (prawdziwy tekst „SimpleFast.ai"
- *     w gradiencie marki, background-clip:text). Przezroczyste tło, ostry na każdym
- *     ekranie, skalowalny, dostępny i CYTOWALNY (boty czytają tekst, nie piksele).
- *     Świeci na ciemnym pasku jak w referencji (niebieski -> fiolet -> zielony).
+ * Pliki w public/brand/ powstały z renderów Pawła; białe tło zostało wycięte
+ * (flood-fill od krawędzi + erozja anty-halo, skrypt _zespol/key-logo.js), więc
+ * logo ma prawdziwą alfę i SIADA CZYSTO na dowolnym tle (zero brzydkiego prostokąta).
+ *   - logo-header-t.png 2172x724 — poziomy lockup (znak cyrkla + „SimpleFast.ai").
+ *   - mark-t.png        1254x1254 — sam znak (cyrkiel+SF), do faviconu/wąskich miejsc.
+ *   - logo-vertical.png 1145x1155 — render pionowy (ciemne tło) do dużych sekcji.
  *
- *  2) DUŻE KONTEKSTY  -> `LogoImage` = OFICJALNY render 3D (public/brand/*.png).
- *     Render ma CIEMNE, nieprzezroczyste tło, więc nadaje się TYLKO do dużych miejsc
- *     na ciemnym tle (og:image, hero, sekcja symboliki /o-nas), gdzie wygląda
- *     świetnie. W małym nagłówku robił się brzydkim prostokątem — dlatego NIE tam.
+ * CYTOWALNOŚĆ (#1 GEO): obraz to dekoracja; etykietę niesie `alt`/`aria-label`,
+ * a nazwa marki żyje też jako prawdziwy tekst w treści. next/image optymalizuje
+ * (avif/webp) do realnego rozmiaru w nagłówku, więc źródłowy PNG nie ciąży CWV.
  */
 
 const LABEL = 'SimpleFast.ai';
 
 type RenderVariant = 'full' | 'mark' | 'vertical';
 
-// Oficjalny render (DUŻE konteksty). Naturalne proporcje; next/image skaluje przez CSS.
 const RENDERS: Record<RenderVariant, { src: string; width: number; height: number }> = {
-  full: { src: '/brand/header.png', width: 1800, height: 560 },
-  mark: { src: '/brand/favicon-256.png', width: 256, height: 256 },
+  full: { src: '/brand/logo-header-t.png', width: 2172, height: 724 },
+  mark: { src: '/brand/mark-t.png', width: 1254, height: 1254 },
   vertical: { src: '/brand/logo-vertical.png', width: 1145, height: 1155 },
 };
 
 /**
- * LogoImage — sam render 3D (bez linku). Do og/hero/sekcji symboliki na CIEMNYM tle.
- * `decorative` => aria-hidden (etykietę niesie tekst obok); inaczej alt = nazwa marki.
+ * LogoImage — sam obraz logo (bez linku). Do użycia dekoracyjnego poza nagłówkiem
+ * (np. sekcja symboliki /o-nas). `decorative` => aria-hidden; inaczej alt = marka.
  */
 export function LogoImage({
   variant = 'full',
@@ -60,28 +60,34 @@ export function LogoImage({
 }
 
 /**
- * Logo — CZYSTY WORDMARK do nagłówka/stopki. Tekst „SimpleFast.ai" w gradiencie marki.
- * `.text-metal` = gradient #007BFF -> #7A35FF (62%) -> #63F000 z fallbackiem solidnego
- * koloru (AA) gdy clip-text niewspierany. Litera po literze: Simple=niebieski,
- * Fast=fiolet, .ai=zielony (jak w brandbooku).
+ * Logo — przezroczysty poziomy lockup w linku do strony głównej (nagłówek/stopka).
+ * Wariant 'mark' = sam znak (kwadrat) do bardzo wąskich miejsc.
  */
 export function Logo({
   className,
+  variant = 'full',
+  priority = false,
 }: {
   className?: string;
-  /** Akceptowane dla zgodności wstecznej (wordmark to tekst — nieużywane). */
-  priority?: boolean;
   variant?: RenderVariant;
+  priority?: boolean;
 }) {
+  const isMark = variant === 'mark';
   return (
     <Link
       href="/"
       aria-label={`${LABEL} — strona główna`}
       className={cn('inline-flex items-center', className)}
     >
-      <span className="text-metal font-sans text-[1.3rem] font-extrabold leading-none tracking-[-0.03em] sm:text-[1.5rem]">
-        SimpleFast.ai
-      </span>
+      <LogoImage
+        variant={isMark ? 'mark' : 'full'}
+        priority={priority}
+        className={
+          isMark
+            ? 'h-[34px] w-[34px] sm:h-[40px] sm:w-[40px]'
+            : 'h-[34px] w-auto sm:h-[42px]'
+        }
+      />
     </Link>
   );
 }

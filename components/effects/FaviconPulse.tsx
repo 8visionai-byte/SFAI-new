@@ -50,7 +50,7 @@ export function FaviconPulse() {
     img.onerror = () => {
       ready = false;
     };
-    img.src = '/brand/favicon-256.png';
+    img.src = '/brand/mark-t.png';
 
     const PERIOD = 2800; // ms na pełny przelot błysku
     const MIN_FRAME = 1000 / 12; // ~12 fps
