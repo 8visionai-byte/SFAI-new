@@ -908,3 +908,190 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ==========================================================================
+   H1 HERO — EFEKT PISANIA LITERA-PO-LITERZE z wędrującym neonowym flashem.
+   Zastępuje połysk-sweep przez cały napis (Paweł: „nie cały-napis-strzał, tylko
+   pisanie długopisem litera po literze, a za czubkiem błysk"). Server renderuje
+   pełny czytelny napis (spany per-znak, SSG/GEO). Stan SPOCZYNKU = brand gradient
+   clip-text z AA-bezpieczną zielenią (blue-700 6.42 / violet-700 6.81 / emerald-700
+   5.26 na paper — large text, zapas ponad 3:1). Pełny neon (cyan/violet/ai-green)
+   WYŁĄCZNIE jako przechodzący flash pisania (drop-shadow nad już-czytelną literą,
+   kończy się zerem) — AA stanu spoczynku nienaruszone.
+
+   ARCHITEKTURA (jak reszta metalu): @supports / @media / @keyframes POZA @layer,
+   bo Tailwind v3 + autoprefixer gubi ich ciało przy zagnieżdżeniu w @layer.
+
+   Mechanika: gradient marki CIĄGŁY na całym H1 (.sf-write, clip-text na rodzicu),
+   spany dziedziczą przezroczysty fill = kolor płynie przez całe hasło, nie resetuje
+   się na literze. Odsłanianie przez clip-path:inset (NIE opacity) — stan bazowy
+   spanu to PEŁNA litera, więc każda awaria degraduje do czytelnego napisu, nie do
+   dziury. Ruch czubka pióra = stagger animation-delay: calc(var(--i) * 42ms).
+   ========================================================================== */
+
+/* Bazowy stan H1 — CZYTELNY ZAWSZE (bez JS, bez clip-text). Solidny kolor = środek
+   brand-gradientu (--metal-fg = violet-700, 6.81:1 na paper) jako fallback gdy
+   clip-text nie działa. line-height stały = wysokość zarezerwowana (anty-CLS). */
+.sf-write {
+  color: var(--metal-fg);
+  line-height: 1.08;
+}
+
+/* Litery: inline-block, by miały własny clip-path/transform/filter. Nie łamią się
+   wewnątrz wyrazu. */
+.sf-write-letter {
+  display: inline-block;
+  white-space: pre;
+  clip-path: inset(0 0 0 0); /* SPOCZYNEK = pełna litera; to też stan końcowy animacji */
+  filter: none;
+}
+
+/* Spacje: ZWYKŁY inline (NIE inline-block!) = naturalny punkt zawijania wiersza.
+   Inline-block + brak białych znaków między spanami sprawiłby, że napis nie zawija
+   się na wąskim mobile (overflow). Dlatego spacja zostaje zwykłym, zawijalnym znakiem. */
+.sf-write-space {
+  display: inline;
+}
+
+/* --------------------------------------------------------------------------
+   KOLOR: ciągły gradient marki clip-text na CAŁYM H1. Gradient leży na rodzicu
+   jako jedno pole (background-size:100%), spany dziedziczą text-fill:transparent
+   i odsłaniają sklipowane piksele rodzica, więc kolor jest CIĄGŁY przez wszystkie
+   znaki. Fiolet na 58%: na ~18ch haśle zieleń ląduje akcentem na końcu („chatboty.").
+   AA na paper: blue-700 6.42 / violet-700 6.81 / emerald-700 5.26 (wszystkie ≥4.5:1).
+   -------------------------------------------------------------------------- */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .sf-write {
+    /* autoprefixer: off */
+    background-image: linear-gradient(
+      90deg,
+      var(--metal-blue) 0%,
+      var(--metal-violet) 58%,
+      var(--metal-green) 100%
+    );
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  /* Spany muszą też mieć przezroczysty fill, inaczej odziedziczą solidny kolor i
+     przykryją gradient rodzica. background:none => żaden span nie ma własnego tła. */
+  .sf-write .sf-write-letter,
+  .sf-write .sf-write-space {
+    /* autoprefixer: off */
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    background: none;
+  }
+}
+
+/* URUCHOMIENIE: dopiero gdy client trigger doda .is-writing (i tylko bez
+   reduced-motion — trigger sam sprawdza matchMedia). Dwie animacje per-litera,
+   obie opóźnione o calc(var(--i) * 42ms) = ruch czubka pióra lewo->prawo. */
+.sf-write.is-writing .sf-write-letter {
+  animation:
+    sfWriteIn 460ms var(--ease-out) both,
+    sfWriteFlash 620ms ease-out both;
+  animation-delay: calc(var(--i) * 42ms);
+  will-change: clip-path, filter, transform;
+}
+
+/* Pisanie: litera odsłania się lewa->prawa (clip-path od prawej krawędzi), z
+   mikro-osiadaniem atramentu (translateY + blur->0). clip-path (nie opacity)
+   gwarantuje, że doskok reduced-motion do 100% daje pełną literkę. translateY
+   działa na warstwie kompozycji — NIE zmienia layoutu (zero reflow/CLS). */
+@keyframes sfWriteIn {
+  0% {
+    clip-path: inset(0 100% 0 0);
+    transform: translateY(0.06em);
+    filter: blur(0.6px);
+  }
+  60% {
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Iluminacja „za czubkiem pióra": pełne neony marki rozświetlają literę dokładnie
+   w chwili napisania (szczyt 22%, gdy sfWriteIn jest ~60% odsłonięty), potem gasną
+   do zera (spoczynek). drop-shadow (nie text-shadow!) działa na realnie namalowanych
+   pikselach glifu mimo clip-text. KAŻDA klatka ma te same 3 drop-shadow (różnią się
+   tylko kryciem/rozmyciem), żeby filtr interpolował się PŁYNNIE, nie skokowo.
+   Kolory: cyan #00D8FF rdzeń, violet #7A35FF środek, ai-green #63F000 halo, w ogonie
+   chłodny glow #7DEBFF. Pełny neon TYLKO tutaj (transyt nad już-czytelną literą). */
+@keyframes sfWriteFlash {
+  0% {
+    filter:
+      drop-shadow(0 0 4px rgba(0, 216, 255, 0))
+      drop-shadow(0 0 9px rgba(122, 53, 255, 0))
+      drop-shadow(0 0 16px rgba(99, 240, 0, 0));
+  }
+  22% {
+    filter:
+      drop-shadow(0 0 7px rgba(0, 216, 255, 0.95))
+      drop-shadow(0 0 14px rgba(122, 53, 255, 0.7))
+      drop-shadow(0 0 22px rgba(99, 240, 0, 0.5));
+  }
+  55% {
+    filter:
+      drop-shadow(0 0 4px rgba(125, 235, 255, 0.5))
+      drop-shadow(0 0 9px rgba(122, 53, 255, 0.32))
+      drop-shadow(0 0 16px rgba(99, 240, 0, 0));
+  }
+  100% {
+    filter:
+      drop-shadow(0 0 4px rgba(125, 235, 255, 0))
+      drop-shadow(0 0 9px rgba(122, 53, 255, 0))
+      drop-shadow(0 0 16px rgba(99, 240, 0, 0));
+  }
+}
+
+/* SPOCZYNKOWY ODDECH (po napisaniu): subtelna, ciągła poświata marki (istniejący
+   keyframe sfTextGlow, stłumione kolory — nie neon), żeby napis „żył". Działa gdy
+   NIE trwa pisanie. Gaszony globalną bramką reduced-motion (iteration:1). */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .sf-write:not(.is-writing) {
+    animation: sfTextGlow 7s var(--ease-in-out) 0.2s infinite;
+  }
+}
+
+/* Forced-colors (Windows High Contrast): porzuć gradient i neon, oddaj kolor
+   systemowi (spójnie z .text-metal*). Tekst pełny i czytelny. */
+@media (forced-colors: active) {
+  .sf-write,
+  .sf-write .sf-write-letter,
+  .sf-write .sf-write-space {
+    background-image: none;
+    -webkit-text-fill-color: CanvasText;
+    color: CanvasText;
+  }
+  .sf-write-letter {
+    clip-path: none;
+    filter: none;
+    animation: none;
+  }
+  .sf-write:not(.is-writing) {
+    animation: none;
+  }
+}
+
+/* prefers-reduced-motion: BEZ pisania. Twardy pas bezpieczeństwa, gdyby klasa
+   .is-writing jednak trafiła — napis od razu pełny i czytelny, zero mignięcia neonu. */
+@media (prefers-reduced-motion: reduce) {
+  .sf-write.is-writing .sf-write-letter {
+    animation: none !important;
+    clip-path: inset(0 0 0 0) !important;
+    filter: none !important;
+    transform: none !important;
+  }
+  .sf-write:not(.is-writing) {
+    animation: none !important;
+  }
+}

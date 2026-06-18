@@ -1,0 +1,31 @@
+feat(hero): H1 pisany litera-po-literze z wedrujacym neonowym blyskiem
+
+Zyczenie Pawla: zamiast jednego sweepu przez caly napis, hero H1 ma sie
+"pisac" jak dlugopisem, litera po literze, a za czubkiem ma podazac jasny
+neonowy blysk (iluminacja), w kolorach marki.
+
+Efekt wybrany przez panel projektowy (4 podejscia + sedzia): clip-path:inset
+jako mechanizm odslaniania (stan bazowy litery = pelna czytelna litera, wiec
+kazda awaria degraduje do napisu, nie do dziury) + ciagly gradient marki
+clip-text na calym H1 + wedrujacy per-litera flash drop-shadow.
+
+- Nowy WritingHeadline (server component): serwerowy podzial na spany per-znak
+  -> pelny tekst w surowym HTML (SSG/GEO #1: boty czytaja zdanie; aria-label +
+  aria-hidden na spanach). Potwierdzone w prerenderze: index.html ma aria-label
+  i spany sf-write-letter z --i.
+- Nowy WritingTrigger (client ~20 linii, zero renderu): IntersectionObserver
+  odpala pisanie w widoku raz, sprawdza prefers-reduced-motion, sprzata klase.
+- globals.css: .sf-write* + @keyframes sfWriteIn (clip-reveal) + sfWriteFlash
+  (neon trail, 3 spojne drop-shadow w kazdej klatce dla plynnej interpolacji) +
+  spoczynkowy oddech sfTextGlow + obrona reduced-motion/forced-colors.
+- AA: stan SPOCZYNKU = brand gradient blue-700 6.42 / violet-700 6.81 /
+  emerald-700 5.26 na paper (zielen poglebiona do czytelnej; pelny neon
+  #63F000/#00D8FF tylko jako przechodzacy flash, konczy sie zerem).
+- Spacje jako zwykly inline (nie inline-block) = naturalne zawijanie na mobile.
+- Hero.tsx: H1 bez <Reveal> (pisanie JEST revealem), bez text-metal-sheen.
+
+Weryfikacja: build SSG zielony; prerender HTML zawiera pelny H1 + spany;
+clip-text transparent + gradient potwierdzony inspekcja; animacje poprawnie
+podpiete (sfWriteIn+sfWriteFlash) po dodaniu .is-writing; zero bledow konsoli.
+
+Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>

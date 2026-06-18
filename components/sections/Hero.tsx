@@ -1,6 +1,7 @@
 import { Section, MagneticButton, Badge, VideoBackground } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { FloatingOrbs } from '@/components/motion/FloatingOrbs';
+import { WritingHeadline } from '@/components/motion/WritingHeadline';
 // import { AnimatedMetric } from '@/components/motion/AnimatedMetric'; // wróci z realnymi metrykami
 import { POSITIONING, HOME_CTA } from '@/lib/site';
 import { HeroPersonaCycler } from './HeroPersonaCycler';
@@ -57,13 +58,12 @@ export function Hero() {
           </Badge>
         </Reveal>
 
-        {/* H1 — hasło kategorii (north star #3). Pozycjonowanie prowadzi pierwszym
-            wrażeniem. .text-metal-sheen = metaliczny połysk NA TEKŚCIE: ma solidny
-            fallback koloru (--metal-fg, jasny fiolet 10.14:1 na navy = AA), więc
-            gdy clip-text nie działa albo przy reduced-motion tekst zostaje czytelny. */}
-        <Reveal delay={0.05}>
-          <h1 className="text-display text-metal-sheen mx-auto max-w-[18ch]">{POSITIONING.claim}</h1>
-        </Reveal>
+        {/* H1 — hasło kategorii (north star #3) pisane LITERA PO LITERZE z wędrującym
+            neonowym błyskiem (WritingHeadline). Gradient marki jest ciągły (clip-text),
+            stan spoczynku AA-bezpieczny, pełny neon tylko jako przechodzący flash pióra.
+            BEZ <Reveal> — pisanie JEST revealem. Tekst H1 zostaje realnym tekstem w DOM
+            (boty czytają; aria-label daje czytnikom pełne zdanie jednym ciągiem). */}
+        <WritingHeadline text={POSITIONING.claim} className="text-display mx-auto max-w-[18ch]" />
 
       {/* Kapsuła answer-first — surowy HTML, cytat dla LLM. Analogia w 1. zdaniu. */}
       <Reveal delay={0.1}>
