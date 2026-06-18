@@ -8,10 +8,12 @@ import { useEffect } from 'react';
  * Życzenie Pawła: ikona w zakładce ma „żyć" (przesuwający się błysk lewo<->prawo),
  * sygnalizując, że coś się dzieje. To favicon ma pulsować, NIE strona.
  *
- * Mechanika: ładujemy oficjalny favicon (/brand/favicon-256.png), rysujemy go na
- * canvas 64x64 i co klatkę nakładamy przesuwający się pas światła w kolorach marki
- * (cyan -> fiolet -> zielony), po czym podmieniamy <link rel="icon"> przez
- * canvas.toDataURL. ~12 fps (spokojnie, nie miga), pełny przelot ~2.8 s.
+ * Mechanika: rysujemy JASNY zaokrąglony kafelek (favicon widoczny też na CIEMNYCH
+ * paskach kart i w ciemnych aplikacjach), na nim oficjalny znak (/brand/mark-t.png)
+ * na canvas 64x64, i co klatkę nakładamy przesuwający się pas światła w kolorach marki
+ * (cyan -> fiolet -> zielony; tryb 'lighter' rozświetla ciemny znak neonem, a jasny
+ * kafelek zostaje jasny). Podmieniamy <link rel="icon"> przez canvas.toDataURL.
+ * ~12 fps (spokojnie, nie miga), pełny przelot ~2.8 s.
  *
  * Bezpiecznie:
  *  - prefers-reduced-motion -> NIE animujemy (statyczny /icon.png zostaje),
@@ -56,6 +58,18 @@ export function FaviconPulse() {
     const MIN_FRAME = 1000 / 12; // ~12 fps
     const COLORS = ['#00D8FF', '#7A35FF', '#63F000']; // markowe: cyan, fiolet, zielony
 
+    const TILE = '#fbfaf8'; // jasny kafelek (brand paper) — widoczny na ciemnym tle
+    const R = SIZE * 0.22; // zaokrąglenie rogów (look „app icon")
+    const PAD = SIZE * 0.12; // wcięcie znaku od krawędzi kafelka
+
+    // Ścieżka zaokrąglonego kwadratu (do tła i przycięcia). roundRect jest w nowych
+    // przeglądarkach; fallback do prostokąta, gdy brak.
+    const roundedPath = () => {
+      ctx.beginPath();
+      if (typeof ctx.roundRect === 'function') ctx.roundRect(0, 0, SIZE, SIZE, R);
+      else ctx.rect(0, 0, SIZE, SIZE);
+    };
+
     let raf = 0;
     let start = 0;
     let last = -Infinity;
@@ -70,9 +84,18 @@ export function FaviconPulse() {
       const p = ((t - start) % PERIOD) / PERIOD; // 0..1 faza cyklu
 
       ctx.clearRect(0, 0, SIZE, SIZE);
-      ctx.drawImage(img, 0, 0, SIZE, SIZE);
+      ctx.save();
+      roundedPath();
+      ctx.clip(); // kafelek + znak + błysk w zaokrąglonym kwadracie (rogi przezroczyste)
 
-      // Pas światła przesuwający się od lewej do prawej.
+      // Jasny kafelek (baza widoczna na ciemnych paskach kart).
+      ctx.fillStyle = TILE;
+      ctx.fillRect(0, 0, SIZE, SIZE);
+      // Znak (ciemny metaliczny cyrkiel) wcięty na kafelku.
+      ctx.drawImage(img, PAD, PAD, SIZE - PAD * 2, SIZE - PAD * 2);
+
+      // Pas światła lewo->prawo. 'lighter' rozświetla CIEMNY znak neonem; na jasnym
+      // kafelku pozostaje jasny (nie psuje tła).
       const cx = -SIZE * 0.4 + p * SIZE * 1.8;
       const grad = ctx.createLinearGradient(cx - SIZE * 0.55, 0, cx + SIZE * 0.55, SIZE);
       const c = COLORS[Math.floor(p * COLORS.length) % COLORS.length] ?? '#7DEBFF';
@@ -82,9 +105,8 @@ export function FaviconPulse() {
       grad.addColorStop(0.54, c + '00');
       grad.addColorStop(1, c + '00');
 
-      ctx.save();
       ctx.globalCompositeOperation = 'lighter';
-      ctx.globalAlpha = 0.5;
+      ctx.globalAlpha = 0.55;
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, SIZE, SIZE);
       ctx.restore();

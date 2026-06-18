@@ -964,11 +964,19 @@
   filter: none;
 }
 
-/* Spacje: ZWYKŁY inline (NIE inline-block!) = naturalny punkt zawijania wiersza.
-   Inline-block + brak białych znaków między spanami sprawiłby, że napis nie zawija
-   się na wąskim mobile (overflow). Dlatego spacja zostaje zwykłym, zawijalnym znakiem. */
+/* Spacje: ZWYKŁY inline (NIE inline-block!) = naturalny punkt zawijania wiersza
+   MIĘDZY słowami. To JEDYNE miejsca, gdzie wiersz może się złamać. */
 .sf-write-space {
   display: inline;
+}
+
+/* Słowo: opakowanie liter jednego wyrazu. white-space:nowrap + inline-block =
+   wyraz jest atomowy i NIE łamie się w środku (naprawa „Agen / tów" — bug, gdzie
+   ciąg inline-block liter łamał się na DOWOLNej literze). Złamanie wiersza zachodzi
+   tylko na spacjach między słowami. Litery w środku zachowują clip-path/kolor/flash. */
+.sf-write-word {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 /* --------------------------------------------------------------------------

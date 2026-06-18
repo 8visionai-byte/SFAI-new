@@ -89,7 +89,7 @@ export const SITE = {
  */
 export const POSITIONING = {
   claim: 'Budujemy AI Agentów, nie chatboty.',
-  subClaim: 'Agent działa, nie tylko gada.',
+  subClaim: 'Agent AI działa, nie tylko gada.',
 } as const;
 
 /**
