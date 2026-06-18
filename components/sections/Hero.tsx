@@ -34,17 +34,19 @@ export function Hero() {
     /*
       WARSTWA PREMIUM (czysto dekoracyjna, nie rusza treści/H1/CTA):
        • VideoBackground = tło-film. BRAK mp4 → animowany metaliczny gradient
-         (niebieski→fiolet→zielony). scrim="dark" GWARANTUJE kontrast AA pod
-         jasnym tekstem (nie sam gradient — to było raz naprawiane, nie regresować).
-       • theme="dark" na Section przełącza tokeny semantyczne na jasny tekst —
-         spójnie ze scrimem. Tło Section wymuszone na transparentne, żeby było
-         widać gradient/wideo pod spodem (bg-bg navy-950 by je zasłonił).
-       • FloatingOrbs = pływające plamy metalu (CSS, reduced-motion → statyczne).
+         (niebieski→fiolet→zielony). scrim="light" GWARANTUJE kontrast AA pod
+         CIEMNYM tekstem: rozjaśnia tło-film do jasnej, czystej bazy (życzenie
+         Pawła: tła jasne, gotowe pod przyszłe wideo/zdjęcia), przepuszczając
+         tylko subtelny ruch koloru metalu. Nie regresować do ciemnego scrimu.
+       • Section bez theme="dark" → tokeny jasne (domyślne): tekst ciemny na
+         jasnym, a H1 (.text-metal-sheen) to gradient marki + pulsująca poświata.
+         Tło Section wymuszone na transparentne, żeby było widać tło-film pod spodem.
+       • FloatingOrbs = pływające plamy metalu (CSS, reduced-motion → statyczne);
+         scrim je rozjaśnia, więc pozostają subtelne na jasnym tle.
       Treść (Badge/H1/kapsuła/CTA) jest w surowym HTML nad tłem — cytowalna 1:1.
     */
-    <VideoBackground scrim="dark" decoration={<FloatingOrbs />}>
+    <VideoBackground scrim="light" decoration={<FloatingOrbs />}>
       <Section
-        theme="dark"
         tone="base"
         containerWidth="default"
         className="!bg-transparent text-center"

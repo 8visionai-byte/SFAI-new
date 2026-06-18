@@ -37,14 +37,13 @@ const POTRAFI = [
 export function Rozwiazanie() {
   return (
     /*
-      Sekcja „tech" — .surface-tech daje metaliczną poświatę w rogach + górną linię
-      połysku (DEKORACJA pod treścią) i przełącza tokeny na ciemne (jasny tekst:
-      --fg 16.35:1 na navy = AAA). theme="dark" zostaje dla spójności semantyki.
-      Tła nie ma konfliktu: .surface-tech ustawia --bg = navy-950, a klasa bg-bg
-      (z tone="base") to var(--bg) = ta sama navy-950 — radialne glow .surface-tech
-      malują się jako background-image NA tej bazie. Kontrast tekstu bez zmian (AAA).
+      Sekcja pozycjonująca — .surface-aurora daje subtelną kolorową zorzę marki w
+      rogach + metaliczny hairline u góry (DEKORACJA pod treścią) na JASNYM tle
+      (życzenie Pawła: tła jasne, kolor na napisach). Tokeny zostają jasne, więc
+      tekst jest ciemny na jasnym (WCAG AA), a nagłówek .text-metal niesie kolor i
+      pulsującą poświatę. Kontrast treści bez zmian.
     */
-    <Section theme="dark" tone="base" className="surface-tech">
+    <Section tone="base" className="surface-aurora">
       <div className="mx-auto max-w-narrow">
         <Reveal>
           {/* .text-metal = metaliczny gradient na nagłówku. Solidny fallback

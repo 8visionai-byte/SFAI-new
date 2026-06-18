@@ -4,13 +4,13 @@ import type { Usluga } from '@/lib/uslugi/types';
 
 /**
  * ServiceCTA — SEKCJA 8 szablonu (jedno główne CTA, personalizowane).
- * Strefa "dark" (sekcja domykająca, spec 02 §7) — kolory semantyczne działają
- * automatycznie. Przy CTA zawsze dowód (north star #5): tu uczciwy sygnał oferty
+ * Jasna sekcja domykająca (.surface-aurora): subtelna zorza marki na jasnym tle,
+ * kolory semantyczne działają automatycznie. Przy CTA zawsze dowód (north star #5): tu uczciwy sygnał oferty
  * z `cta.dowod`, bez zmyślonej liczby. Anchor `#diagnoza` = ten sam flow co home.
  */
 export function ServiceCTA({ cta }: { cta: Usluga['cta'] }) {
   return (
-    <Section tone="base" theme="dark" id="diagnoza">
+    <Section tone="base" id="diagnoza" className="surface-aurora">
       <div className="mx-auto max-w-narrow text-center">
         <Reveal>
           <h2 className="text-h2">Zacznij od bezpłatnej diagnozy</h2>

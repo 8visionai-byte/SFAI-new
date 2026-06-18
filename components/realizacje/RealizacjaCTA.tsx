@@ -10,7 +10,7 @@ import { HOME_CTA } from '@/lib/site';
  */
 export function RealizacjaCTA() {
   return (
-    <Section tone="base" theme="dark" id="diagnoza">
+    <Section tone="base" id="diagnoza" className="surface-aurora">
       <div className="mx-auto max-w-narrow text-center">
         <Reveal>
           <h2 className="text-h2">Policzmy, co da się zdjąć u Ciebie</h2>

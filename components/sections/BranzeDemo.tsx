@@ -125,7 +125,7 @@ export function BranzeDemo() {
   }, [reduce]);
 
   return (
-    <Section theme="dark" tone="base" id="branze">
+    <Section tone="subtle" id="branze">
       <div className="mx-auto max-w-narrow">
         <Reveal>
           <h2 className="text-h2">Powtarzalna robota wygląda inaczej w każdej branży</h2>

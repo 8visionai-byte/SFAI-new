@@ -9,8 +9,8 @@ import { Reveal } from '@/components/motion/Reveal';
  * automatyzować, niechęć do dużej umowy. Głos Pawła: AI nie zastępuje ludzi, AI
  * zastępuje to, co ich zatrzymuje.
  *
- * KPI #1: lista w surowym HTML, czytelna dla botów. Strefa dark dla kontrastu
- * rytmu (sekcja „oddechu" przed twardym cennikiem). Kontrast AA na ciemnym tle.
+ * KPI #1: lista w surowym HTML, czytelna dla botów. Jasna sekcja „oddechu" (tone
+ * subtle) przed twardym cennikiem — delikatny rytm bez ciemnego bloku. Kontrast AA.
  */
 
 type Punkt = { nie: string; ale: string };
@@ -44,7 +44,7 @@ const PUNKTY: Punkt[] = [
 
 export function CzegoNieMusisz() {
   return (
-    <Section tone="base" theme="dark">
+    <Section tone="subtle">
       <div className="mx-auto max-w-narrow">
         <Reveal>
           <h2 className="text-h2">Czego NIE musisz mieć, żeby zacząć?</h2>

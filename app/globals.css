@@ -493,7 +493,8 @@
      w regule @supports niżej. Gdy clip-text nie działa (stare silniki, wymuszone
      kolory, narzędzia kontrastu) — zostaje czytelny color. Tekst jest realnym
      tekstem w DOM (SSG, boty czytają normalnie — cytowalność #1). */
-  .text-metal {
+  .text-metal,
+  .text-metal-sheen {
     color: var(--metal-fg);
   }
 
@@ -577,6 +578,32 @@
     z-index: -1;
   }
   /* Nagłówki/linki dziedziczą --accent ciemny — bez dodatkowych reguł. */
+
+  /* .surface-aurora — JASNA sekcja premium (życzenie Pawła: tła jasne, kolor i
+     „iluminacje" tylko na napisach). W odróżnieniu od .surface-tech NIE przełącza
+     tokenów na ciemne — --bg zostaje jasny. „Smaczek" daje subtelna kolorowa zorza
+     marki (radialne glow o niskim kryciu) w rogach + metaliczny hairline u góry.
+     Zostawia oddech pod przyszłe wideo/zdjęcia (tło pozostaje jasne i czyste).
+     Kontrast treści bez zmian — tekst liczony na jasnym tle (tokeny semantyczne). */
+  .surface-aurora {
+    position: relative;
+    isolation: isolate;
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(85% 65% at 0% 0%, rgba(0, 123, 255, 0.08) 0%, transparent 55%),
+      radial-gradient(85% 65% at 100% 0%, rgba(122, 53, 255, 0.07) 0%, transparent 55%),
+      radial-gradient(120% 90% at 50% 120%, rgba(99, 240, 0, 0.05) 0%, transparent 55%);
+  }
+  .surface-aurora::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: var(--metal-gradient-decor);
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: -1;
+  }
 }
 
 /* ==========================================================================
@@ -698,9 +725,18 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
+    /* Iluminacja: delikatna, oddychająca poświata marki pod tekstem (Paweł:
+       „przejściowe pulsowania" na napisach). Spokojna (7 s), żeby nagłówki
+       sekcji żyły, ale nie rozpraszały. */
+    animation: sfTextGlow 7s var(--ease-in-out) infinite;
   }
-  /* .text-metal-sheen — wariant glossy z wędrującym połyskiem (efekt „live”). */
+  /* .text-metal-sheen — wariant glossy z wędrującym połyskiem (efekt „live”).
+     Samowystarczalny clip-text (NIE wymaga już dodatkowej klasy .text-metal):
+     gradient + sheen są klipowane do kształtu liter, a tekst-fill jest
+     przezroczysty. Bez tych właściwości H1 hero malował gradient jako tło-prostokąt
+     pod literami zamiast w literach (usterka odkryta przy przejściu na jasne tło). */
   .text-metal-sheen {
+    /* autoprefixer: off */
     background-image: var(--metal-sheen), var(--metal-gradient);
     background-size:
       220% 100%,
@@ -709,8 +745,16 @@
       -60% 0,
       0 0;
     background-repeat: no-repeat;
-    /* Zwolnione 6s -> 16s (Paweł: „za szybko") — spokojniejszy przesuw połysku po tekście. */
-    animation: sfTextMetalSheen 16s var(--ease-in-out) infinite;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    /* Dwie animacje na jednym tekście: 1) przesuw metalicznego połysku (16 s,
+       spokojny), 2) pulsująca iluminacja-poświata marki (5.5 s) — „smaczek" na
+       napisie z hero. Obie zatrzymywane globalną bramką reduced-motion niżej. */
+    animation:
+      sfTextMetalSheen 16s var(--ease-in-out) infinite,
+      sfTextGlow 5.5s var(--ease-in-out) infinite;
   }
 }
 
@@ -740,6 +784,25 @@
     background-position:
       -60% 0,
       0 0;
+  }
+}
+
+/* Pulsująca iluminacja pod metalicznym tekstem — Paweł: kolor i „przejściowe
+   pulsowania" mają żyć na NAPISACH, nie na tłach. drop-shadow działa na realnie
+   namalowanych pikselach tekstu (text-shadow NIE, bo text-fill jest transparentny
+   przy clip-text). Kolory marki (niebieski + fiolet), subtelny oddech krycia.
+   Reduced-motion zatrzymuje na stanie 100% = delikatna, statyczna poświata. */
+@keyframes sfTextGlow {
+  0%,
+  100% {
+    filter:
+      drop-shadow(0 1px 5px rgba(0, 123, 255, 0.12))
+      drop-shadow(0 0 9px rgba(122, 53, 255, 0.1));
+  }
+  50% {
+    filter:
+      drop-shadow(0 2px 15px rgba(0, 123, 255, 0.3))
+      drop-shadow(0 0 26px rgba(122, 53, 255, 0.26));
   }
 }
 

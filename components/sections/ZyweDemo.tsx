@@ -5,7 +5,7 @@ import { ChatDemo } from '@/components/demo/ChatDemo';
 
 /**
  * SEKCJA 10 — DEMO POKAZOWE (spec 03 §10). Emocja: kompetencja (szewc w butach).
- * Dark mode strefowo. Kapsuła + opis w HTML (nie blokuje indeksacji).
+ * Jasna sekcja premium (.surface-aurora). Kapsuła + opis w HTML (nie blokuje indeksacji).
  * Czat = ChatDemo (STUB, atrapa). Voicebot = przycisk-stub. Backend = security layer.
  *
  * UWAGA SPÓJNOŚCI: dopóki czat to atrapa (bez /api/chat), tekst sekcji NIE może
@@ -15,7 +15,7 @@ import { ChatDemo } from '@/components/demo/ChatDemo';
  */
 export function ZyweDemo() {
   return (
-    <Section theme="dark" tone="base" id="demo">
+    <Section tone="base" id="demo" className="surface-aurora">
       <div className="mx-auto max-w-narrow">
         <Reveal>
           <h2 className="text-h2">Zobacz, jak rozmawia nasz Agent. Wersja pokazowa.</h2>

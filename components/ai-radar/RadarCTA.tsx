@@ -33,7 +33,7 @@ export function RadarCTA({ news }: { news: RadarNews }) {
       </Section>
 
       {/* 2. Jedno główne CTA -> #diagnoza (ten sam flow co home/usługi) */}
-      <Section tone="base" theme="dark" id="diagnoza">
+      <Section tone="base" id="diagnoza" className="surface-aurora">
         <div className="mx-auto max-w-narrow text-center">
           <Reveal>
             <h2 className="text-h2">

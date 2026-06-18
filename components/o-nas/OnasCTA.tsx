@@ -4,13 +4,13 @@ import { O_NAS } from '@/lib/o-nas/content';
 
 /**
  * OnasCTA — SEKCJA 6 (domykająca): JEDNO główne CTA strony (north star #3).
- * Strefa „dark" jak ServiceCTA (kolory semantyczne działają automatycznie).
+ * Jasna sekcja domykająca (.surface-aurora) jak ServiceCTA (kolory semantyczne auto).
  * Przy CTA zawsze dowód (north star #5): uczciwy sygnał (rozmowa z founderem,
  * pierwszy krok bezpłatny), bez zmyślonej liczby. Cel = /kontakt (formularz).
  */
 export function OnasCTA() {
   return (
-    <Section tone="base" theme="dark">
+    <Section tone="base" className="surface-aurora">
       <div className="mx-auto max-w-narrow text-center">
         <Reveal>
           <h2 className="text-h2">{O_NAS.cta.h2}</h2>

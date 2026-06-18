@@ -284,8 +284,8 @@ export default function WiedzaPage() {
       </Section>
 
       {/* ───────────────────────────────────────────────────────────────
-          (5) CTA DOMYKAJĄCE — jedno główne, wspólny flow diagnozy (strefa dark). */}
-      <Section tone="base" theme="dark" id="diagnoza">
+          (5) CTA DOMYKAJĄCE — jedno główne, wspólny flow diagnozy (.surface-aurora). */}
+      <Section tone="base" id="diagnoza" className="surface-aurora">
         <div className="mx-auto max-w-narrow text-center">
           <Reveal>
             <h2 className="text-h2">Wiesz już sporo. Zobaczmy to na Twoich danych.</h2>

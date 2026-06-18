@@ -162,8 +162,8 @@ export default function ProduktyPage() {
       </Section>
 
       {/* ───────────────────────────────────────────────────────────────
-          (4) CTA DOMYKAJĄCE — jedno główne CTA, wspólny flow diagnozy (dark). */}
-      <Section tone="base" theme="dark" id="diagnoza">
+          (4) CTA DOMYKAJĄCE — jedno główne CTA, wspólny flow diagnozy (.surface-aurora). */}
+      <Section tone="base" id="diagnoza" className="surface-aurora">
         <div className="mx-auto max-w-narrow text-center">
           <Reveal>
             <h2 className="text-h2">Który z tych klocków zdjąłby najwięcej z Twojego dnia?</h2>

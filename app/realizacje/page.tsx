@@ -64,8 +64,8 @@ export default function RealizacjePage() {
         </ul>
       </Section>
 
-      {/* CTA domykające (strefa dark), wspólny flow diagnozy */}
-      <Section tone="base" theme="dark" id="diagnoza">
+      {/* CTA domykające (jasna sekcja premium .surface-aurora), wspólny flow diagnozy */}
+      <Section tone="base" id="diagnoza" className="surface-aurora">
         <div className="mx-auto max-w-narrow text-center">
           <Reveal>
             <h2 className="text-h2">Chcesz podobny efekt u siebie?</h2>

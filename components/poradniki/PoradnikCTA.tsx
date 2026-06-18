@@ -10,7 +10,7 @@ import { HOME_CTA } from '@/lib/site';
  */
 export function PoradnikCTA() {
   return (
-    <Section tone="base" theme="dark" id="diagnoza">
+    <Section tone="base" id="diagnoza" className="surface-aurora">
       <div className="mx-auto max-w-narrow text-center">
         <Reveal>
           <h2 className="text-h2">

@@ -14,10 +14,10 @@ import { O_NAS } from '@/lib/o-nas/content';
  * (kim są) — czyli „kim jesteśmy jako marka" pomiędzy „jak powstaliśmy" a „kto za tym stoi".
  *
  * GEO/KPI #1: cała treść (kapsuła + akapity + domknięcie) jest w surowym HTML przy
- * 1. żądaniu — cytowalna dla LLM. Logo (OFICJALNY render logo-vertical.png) jest
- * DEKORACYJNE (aria-hidden): nie niesie treści, tekst opisuje znak słowami. Reveal
- * tylko wzbogaca; reduced-motion -> statyczny render. Strefa `dark` = „tech smaczek":
- * render ma CIEMNE tło (#07090D-family), więc WTAPIA się w ciemną sekcję bez ramki.
+ * 1. żądaniu — cytowalna dla LLM. Znak (OFICJALNY przezroczysty render `mark` —
+ * sam cyrkiel „SF") jest DEKORACYJNY (aria-hidden): nie niesie treści, tekst opisuje
+ * znak słowami. Sekcja jest JASNA (spójność całej strony): przezroczysty znak siada
+ * czysto na jasnym tle, a ciemny metaliczny cyrkiel ma na bieli świetny kontrast.
  * Kontrast tekstu zapewniają kolory semantyczne (WCAG AA, bez regresji).
  *
  * SPÓJNOŚĆ: symbolika opisuje PRAWDZIWE logo (cyrkiel/divider „SF" z przewijającą się
@@ -25,13 +25,13 @@ import { O_NAS } from '@/lib/o-nas/content';
  */
 export function OnasSymbolika() {
   return (
-    <Section tone="base" theme="dark">
+    <Section tone="subtle">
       <div className="mx-auto grid max-w-narrow items-center gap-10 md:grid-cols-[auto,1fr] md:gap-12">
-        {/* Znak — OFICJALNY render (pionowy), dekoracyjny (aria-hidden). Ciemne tło
-            renderu wtapia się w ciemną sekcję. Treść niesie tekst obok. */}
+        {/* Znak — OFICJALNY przezroczysty render (sam cyrkiel „SF"), dekoracyjny
+            (aria-hidden). Siada czysto na jasnym tle. Treść niesie tekst obok. */}
         <Reveal className="flex justify-center md:justify-start">
           <LogoImage
-            variant="vertical"
+            variant="mark"
             decorative
             sizes="(min-width: 640px) 160px, 128px"
             className="sf-float h-auto w-32 shrink-0 sm:w-40"

@@ -201,8 +201,8 @@ export default function UslugiHubPage() {
       })}
 
       {/* ───────────────────────────────────────────────────────────────
-          (4) CTA DOMYKAJĄCE — jedno główne, wspólny flow diagnozy (strefa dark). */}
-      <Section tone="base" theme="dark" id="diagnoza">
+          (4) CTA DOMYKAJĄCE — jedno główne, wspólny flow diagnozy (.surface-aurora). */}
+      <Section tone="base" id="diagnoza" className="surface-aurora">
         <div className="mx-auto max-w-narrow text-center">
           <Reveal>
             <h2 className="text-h2">Zacznijmy od jednej rzeczy, która zżera Ci najwięcej czasu.</h2>

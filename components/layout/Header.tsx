@@ -21,14 +21,13 @@ const NAV_LINKS_REST = NAV_LINKS.filter((l) => l.href !== '/uslugi');
  *
  * Nawigacja w HTML (linki widoczne dla botów); klient tylko obsługuje toggle/scroll.
  *
- * CIEMNY GLASS (osadzenie OFICJALNEGO logo): render marki (public/brand/header.png)
- * ma CIEMNE, nieprzezroczyste tło (#07090D-family). Żeby logo się WTOPIŁO w pasek,
- * pasek jest ciemnym szkłem: tło #07090D z przezroczystością + backdrop-blur. Ciemne
- * krawędzie renderu zlewają się z paskiem (brak widocznego prostokąta). `data-theme=
- * "dark"` przełącza CAŁY system semantyczny nawigacji (Logo, ServicesMenu, linki) na
- * wariant ciemny — kontrast jasnego tekstu jest już zaudytowany jako WCAG AA:
- *   --fg #eaf0fa 16.35:1 · --fg-muted navy-300 6.64:1 · --accent cyan-400 9.71:1.
- * ai-green #63F000 świeci tu wyłącznie jako dekoracja na ciemnym (nie pod tekst).
+ * JASNY GLASS (życzenie Pawła: spójne jasne tła w całej stronie, kolor tylko na
+ * napisach). Pasek to jasne, matowe szkło: baza paper z przezroczystością +
+ * backdrop-blur. OFICJALNE logo (ciemny metaliczny znak cyrkla + nasycony gradient
+ * „SimpleFast.ai") ma świetny kontrast na jasnym, a przezroczyste „dziury" po
+ * keyingu znikają na jasnym tle (nie widać artefaktów). Tokeny semantyczne są jasne
+ * (domyślne), więc nawigacja jest ciemnym tekstem na jasnym pasku — WCAG AA:
+ *   --fg navy-900 · --fg-muted gray-600 · --accent cyan-700 (4.95:1 na bieli).
  */
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -55,14 +54,13 @@ export function Header() {
   return (
     <>
     <header
-      data-theme="dark"
       className={
         'sticky top-0 z-nav border-b border-border text-fg backdrop-blur-md transition-shadow duration-base ' +
         (scrolled ? 'shadow-md' : '')
       }
-      // Ciemny glass = baza #07090D (tożsama z tłem renderu logo) z przezroczystością,
-      // by backdrop-blur prześwitywał. Logo wtapia się ciemną krawędzią w ten pasek.
-      style={{ background: 'color-mix(in srgb, #07090D 86%, transparent)' }}
+      // Jasny frosted glass = baza paper z przezroczystością, by backdrop-blur prześwitywał.
+      // Logo siada czysto na jasnym; przezroczyste „dziury" po keyingu znikają na bieli.
+      style={{ background: 'color-mix(in srgb, var(--sf-paper) 82%, transparent)' }}
     >
       <nav className="mx-auto flex h-16 w-full max-w-container items-center gap-4 px-gutter" aria-label="Główna">
         <Logo priority />
@@ -113,10 +111,9 @@ export function Header() {
           Cała sekcja jest lg:hidden, więc desktop nietknięty. */}
       {open && (
         <div
-          data-theme="dark"
           className="fixed inset-0 z-overlay flex flex-col text-fg lg:hidden"
-          // Ciemne tło panelu (#07090D) = spójne z paskiem; logo wtapia się tak samo.
-          style={{ background: '#07090D' }}
+          // Jasne tło panelu = spójne z paskiem i resztą strony; logo siada czysto na jasnym.
+          style={{ background: 'var(--sf-paper)' }}
         >
           <div className="flex h-16 shrink-0 items-center gap-4 px-gutter">
             <Logo priority />

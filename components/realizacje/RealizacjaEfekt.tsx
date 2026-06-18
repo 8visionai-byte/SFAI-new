@@ -20,7 +20,7 @@ export function RealizacjaEfekt({ efekt }: { efekt: Realizacja['efekt'] }) {
         : 'sm:grid-cols-1';
 
   return (
-    <Section tone="base" theme="dark">
+    <Section tone="subtle">
       <div className="mx-auto max-w-narrow">
         <Reveal>
           <h2 className="text-h2">{efekt.h2}</h2>

@@ -421,8 +421,8 @@ export default function ArchitekciWartosciAiPage() {
       </Section>
 
       {/* ───────────────────────────────────────────────────────────────
-          (11) FINALNE CTA — jedno główne, z dowodem (strefa dark). */}
-      <Section tone="base" theme="dark" id="diagnoza">
+          (11) FINALNE CTA — jedno główne, z dowodem (.surface-aurora). */}
+      <Section tone="base" id="diagnoza" className="surface-aurora">
         <div className="mx-auto max-w-narrow text-center">
           <Reveal>
             <h2 className="text-h2">

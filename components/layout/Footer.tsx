@@ -10,8 +10,9 @@ import { Logo } from './Logo';
 const FOOTER_NAV_REST = NAV_LINKS.filter((l) => l.href !== '/uslugi');
 
 /**
- * Footer — sekcja tech na ciemnym (spec 02 §7), NAP spójny + świeżość + encja.
- * Wszystko w HTML (sygnały zaufania cytowalne). Data aktualizacji = bramkarz GEO.
+ * Footer — JASNA stopka (życzenie Pawła: spójne jasne tła), NAP spójny + świeżość +
+ * encja. Subtelne tło `bg-bg-subtle` + górna linia oddzielają ją od treści bez
+ * ciemnego bloku. Wszystko w HTML (sygnały zaufania cytowalne). Data = bramkarz GEO.
  *
  * NAP bierzemy z SITE (single source of truth). Telefon/adres pokazujemy TYLKO
  * gdy realne (pole SITE.contact.phone puste -> nie renderujemy fałszywej danej).
@@ -20,7 +21,7 @@ const LAST_UPDATED = '2026-06-15'; // [PLACEHOLDER] wpiąć w realny rytm aktual
 
 export function Footer() {
   return (
-    <footer data-theme="dark" className="bg-bg text-fg">
+    <footer className="border-t border-border bg-bg-subtle text-fg">
       <div className="mx-auto w-full max-w-container px-gutter py-section-tight">
         <div className="grid gap-8 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* Encja + opis */}

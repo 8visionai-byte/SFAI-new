@@ -214,8 +214,8 @@ export default function NarzedziaPage() {
         );
       })}
 
-      {/* CTA domykające (strefa dark), wspólny flow diagnozy */}
-      <Section tone="base" theme="dark" id="diagnoza">
+      {/* CTA domykające (jasna sekcja premium .surface-aurora), wspólny flow diagnozy */}
+      <Section tone="base" id="diagnoza" className="surface-aurora">
         <div className="mx-auto max-w-narrow text-center">
           <Reveal>
             <h2 className="text-h2">Liczby się zgadzają? Pogadajmy o konkretach.</h2>
