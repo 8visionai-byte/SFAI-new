@@ -333,12 +333,12 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Nagłówki — Fraunces, ujemny tracking (gęstość = premium) */
+  /* Nagłówki — Plus Jakarta Sans (przyjazny, czytelny sans; Paweł: „bardziej przystępny") */
   h1,
   h2,
   h3,
   h4 {
-    font-family: var(--font-fraunces), Georgia, serif;
+    font-family: var(--font-jakarta), system-ui, sans-serif;
     font-weight: 600;
     color: var(--fg);
     text-wrap: balance;
@@ -951,6 +951,8 @@
 .sf-write {
   color: var(--metal-fg);
   line-height: 1.15; /* trochę luzu, by descendery (g/j/y) z linii 1 nie tłoczyły linii 2 */
+  font-weight: 700; /* hero H1 w Plus Jakarta Sans 700 (mocniejszy akcent niż 600 sekcji) */
+  letter-spacing: -0.02em;
 }
 
 /* Litery: inline-block, by miały własny clip-path/transform/filter (efekt pisania

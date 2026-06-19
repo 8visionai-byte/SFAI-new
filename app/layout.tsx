@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Fraunces } from 'next/font/google';
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { SITE } from '@/lib/site';
 import { JsonLd } from '@/components/seo/JsonLd';
@@ -12,7 +12,8 @@ import { FaviconPulse } from '@/components/effects/FaviconPulse';
 /**
  * Fonty self-host przez next/font/google (zero requestów do fonts.googleapis.com,
  * brak CLS dzięki metrycznemu fallbackowi). subsets latin + latin-ext = polskie znaki.
- * Fraunces (display) + Inter (tekst) = 1 display + 1 tekstowy (north star #4).
+ * Plus Jakarta Sans (nagłówki, przyjazny i czytelny) + Inter (tekst) = 1 display +
+ * 1 tekstowy (north star #4). Zmiana z Fraunces na życzenie Pawła („bardziej przystępny").
  */
 const inter = Inter({
   subsets: ['latin', 'latin-ext'],
@@ -21,12 +22,11 @@ const inter = Inter({
   weight: ['400', '500', '600', '700'],
 });
 
-const fraunces = Fraunces({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin', 'latin-ext'],
-  variable: '--font-fraunces',
+  variable: '--font-jakarta',
   display: 'swap',
-  weight: ['400', '500', '600'],
-  style: ['normal'],
+  weight: ['400', '500', '600', '700', '800'],
 });
 
 export const metadata: Metadata = {
@@ -77,7 +77,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pl" className={`${inter.variable} ${fraunces.variable}`}>
+    <html lang="pl" className={`${inter.variable} ${jakarta.variable}`}>
       <body>
         {/* Skip-link — pierwsza rzecz w tab order (bramka A11y) */}
         <a href="#main" className="skip-link">

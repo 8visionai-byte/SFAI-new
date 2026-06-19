@@ -59,7 +59,7 @@ const config: Config = {
         'metal-sheen': 'var(--metal-sheen)',
       },
       fontFamily: {
-        display: ['var(--font-fraunces)', 'Georgia', 'serif'],
+        display: ['var(--font-jakarta)', 'system-ui', 'sans-serif'],
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
       },
       fontSize: {
