@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui';
-import { LEGAL_ROUTES } from '@/lib/site';
+import { SITE, LEGAL_ROUTES } from '@/lib/site';
 
 /**
  * DiagnozaForm — multi-step formularz diagnozy (spec 03 §11).
@@ -83,12 +83,31 @@ export function DiagnozaForm() {
     }
     if (!zgoda) return; // RODO: bez zgody nie wysyłamy
     setBladKontakt(null);
-    // TODO: Make.com — wysyłka przez webhook (po stronie SERWERA). Wysłać też:
-    //   zgoda: true, zgodaTimestamp: new Date().toISOString() (dowód zgody RODO),
-    //   oraz honeypot/time-trap walidować ponownie na serwerze.
-    // Tu tylko symulujemy stan sukcesu, żeby pokazać mikrokopię z §11.
     setStatus('sending');
-    setTimeout(() => setStatus('success'), 600);
+    // Netlify Forms: POST application/x-www-form-urlencoded do "/" z form-name +
+    // polami. Ukryty formularz-detektor (statyczny HTML niżej) pozwala Netlify wykryć
+    // schemat „diagnoza" przy buildzie. Zgodę RODO wysyłamy jako pole (dowód zgody);
+    // honeypot/time-trap są też walidowane wyżej. Lead ląduje w panelu Netlify Forms.
+    const data: Record<string, string> = {
+      'form-name': 'diagnoza',
+      potrzeba: potrzeba ?? '',
+      branza,
+      zespol,
+      imie: imie.trim(),
+      kontakt: kontakt.trim(),
+      zgoda: 'tak',
+      firma_www: honeypot,
+    };
+    const body = Object.keys(data)
+      .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(data[k]!)}`)
+      .join('&');
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body,
+    })
+      .then((res) => setStatus(res.ok ? 'success' : 'error'))
+      .catch(() => setStatus('error'));
   }
 
   if (status === 'success') {
@@ -96,14 +115,47 @@ export function DiagnozaForm() {
       <div className="rounded-lg border border-border bg-success-bg p-7 text-center">
         <h3 className="text-h3 mb-2">Mam to.</h3>
         <p className="text-body text-fg-muted">
-          Odzywam się w kilka minut. Sprawdź też skrzynkę, wysłałem potwierdzenie.
+          Dziękuję, zgłoszenie do mnie dotarło. Odezwę się w kilka minut na podany kontakt.
+        </p>
+      </div>
+    );
+  }
+
+  if (status === 'error') {
+    return (
+      <div className="rounded-lg border border-error bg-error-bg p-7 text-center">
+        <h3 className="text-h3 mb-2">Coś nie zadziałało z wysyłką.</h3>
+        <p className="text-body text-fg-muted">
+          Najszybciej złap mnie wprost: napisz na{' '}
+          <a
+            href={`mailto:${SITE.contact.email}`}
+            className="font-semibold text-accent underline decoration-1 underline-offset-2 hover:text-accent-hover"
+          >
+            {SITE.contact.email}
+          </a>{' '}
+          albo zadzwoń pod {SITE.contact.phone}. Odezwę się od razu.
         </p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="card-aura rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-7">
+    <>
+      {/* Netlify Forms — ukryty formularz-detektor (statyczny). Netlify wykrywa po nim
+          schemat „diagnoza" przy buildzie. Realny formularz niżej POST-uje fetch-em z
+          form-name=diagnoza; pola muszą pokrywać się z body w handleSubmit. */}
+      <form name="diagnoza" data-netlify="true" netlify-honeypot="firma_www" hidden>
+        <input type="hidden" name="form-name" defaultValue="diagnoza" />
+        <input type="text" name="potrzeba" />
+        <input type="text" name="branza" />
+        <input type="text" name="zespol" />
+        <input type="text" name="imie" />
+        <input type="text" name="kontakt" />
+        <input type="text" name="zgoda" />
+        <input type="text" name="firma_www" />
+      </form>
+
+      <form onSubmit={handleSubmit} className="card-aura rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-7">
       {/* Pasek postępu */}
       <div className="mb-6">
         <div className="mb-2 flex items-center justify-between">
@@ -315,6 +367,7 @@ export function DiagnozaForm() {
           </p>
         </fieldset>
       )}
-    </form>
+      </form>
+    </>
   );
 }

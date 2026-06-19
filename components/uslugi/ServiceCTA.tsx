@@ -24,7 +24,7 @@ export function ServiceCTA({ cta }: { cta: Usluga['cta'] }) {
 
         <Reveal delay={0.1}>
           <div className="mt-9 flex flex-col items-center gap-3">
-            <MagneticButton variant="primary" size="lg" href={cta.href}>
+            <MagneticButton variant="primary" size="lg" href="/kontakt">
               {cta.label}
             </MagneticButton>
             <span className="text-caption max-w-[60ch] text-fg-subtle">{cta.dowod}</span>

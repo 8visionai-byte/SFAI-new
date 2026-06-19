@@ -87,12 +87,15 @@ export const Button = forwardRef<
   if ('href' in rest && rest.href !== undefined) {
     const { href, external, ...anchorRest } = rest as AsLink;
 
-    if (external) {
+    // Kotwica w obrębie strony (#sekcja) ORAZ link zewnętrzny -> zwykły <a>.
+    // next/link do czystych kotwic bywa zawodny przy przewijaniu (klik „nic nie robi");
+    // natywny <a> + scroll-behavior:smooth + scroll-margin daje pewne, gładkie przejście.
+    if (external || href.startsWith('#')) {
       return (
         <a
           ref={ref as React.Ref<HTMLAnchorElement>}
           href={href}
-          rel="noopener noreferrer"
+          {...(external ? { rel: 'noopener noreferrer' } : {})}
           className={classes}
           {...anchorRest}
         >

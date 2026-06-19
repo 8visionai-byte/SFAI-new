@@ -322,6 +322,11 @@
     scroll-behavior: smooth;
   }
 
+  /* Kotwice (#sekcja) lądują poniżej sticky-nagłówka (~64px), nie pod nim. */
+  :where([id]) {
+    scroll-margin-top: 5rem;
+  }
+
   body {
     background-color: var(--bg);
     color: var(--fg);

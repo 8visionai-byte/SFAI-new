@@ -122,7 +122,7 @@ export const PRIMARY_CTA = {
  */
 export const HOME_CTA = {
   label: 'Pokaż mi, gdzie tracę czas',
-  href: '#diagnoza',
+  href: '/kontakt',
   microcopy:
     'Bez zobowiązań. Krótka diagnoza, konkretna lista do automatyzacji. Odpowiadam w kilka minut.',
 } as const;
@@ -236,11 +236,11 @@ export const ROUTES: RouteEntry[] = [
   { path: '/blog', priority: 0.6, changeFrequency: 'weekly', live: true, lastModified: HOME_LAST_MODIFIED },
   { path: '/o-nas', priority: 0.6, changeFrequency: 'monthly', live: true, lastModified: HOME_LAST_MODIFIED },
   { path: '/dowod', priority: 0.5, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
-  { path: '/kontakt', priority: 0.5, changeFrequency: 'yearly', live: false, lastModified: HOME_LAST_MODIFIED },
+  { path: '/kontakt', priority: 0.6, changeFrequency: 'monthly', live: true, lastModified: '2026-06-19' },
 
   // Strony prawne (RODO art. 13). Wymagane PRZED zbieraniem danych w formularzu.
   // INPUT/BUILD: postawić treść stron, potem ustawić live: true (wejdą do sitemapy).
-  { path: '/polityka-prywatnosci', priority: 0.3, changeFrequency: 'yearly', live: false, lastModified: HOME_LAST_MODIFIED },
+  { path: '/polityka-prywatnosci', priority: 0.3, changeFrequency: 'yearly', live: true, lastModified: '2026-06-19' },
   { path: '/obowiazek-informacyjny', priority: 0.3, changeFrequency: 'yearly', live: false, lastModified: HOME_LAST_MODIFIED },
 ];
 
