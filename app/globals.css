@@ -950,7 +950,7 @@
    bezpiecznik dziedziczenia, gdyby inline color z jakiegoś powodu nie dotarł. */
 .sf-write {
   color: var(--metal-fg);
-  line-height: 1.08;
+  line-height: 1.15; /* trochę luzu, by descendery (g/j/y) z linii 1 nie tłoczyły linii 2 */
 }
 
 /* Litery: inline-block, by miały własny clip-path/transform/filter (efekt pisania
@@ -960,7 +960,9 @@
 .sf-write-letter {
   display: inline-block;
   white-space: pre;
-  clip-path: inset(0 0 0 0); /* SPOCZYNEK = pełna litera; to też stan końcowy animacji */
+  /* SPOCZYNEK = brak przycięcia (descendery j/g/y/p były ścinane przez inset(0)).
+     Reveal robi tylko PRAWA krawędź w keyframach; pion zostaje wolny. */
+  clip-path: none;
   filter: none;
 }
 
@@ -1031,7 +1033,10 @@
    działa na warstwie kompozycji — NIE zmienia layoutu (zero reflow/CLS). */
 @keyframes sfWriteIn {
   0% {
-    clip-path: inset(0 100% 0 0);
+    /* Top/bottom = -45%: clip wychodzi PONAD i POD pudełko litery, więc ascendery
+       i descendery (j, g, y, p) NIGDY nie są ścinane. Reveal robi tylko PRAWA
+       krawędź (right 100% -> 0), czyli odsłanianie lewa->prawa. */
+    clip-path: inset(-45% 100% -45% 0);
     transform: translateY(0.06em);
     filter: blur(0.6px);
   }
@@ -1040,7 +1045,7 @@
     filter: blur(0);
   }
   100% {
-    clip-path: inset(0 0 0 0);
+    clip-path: inset(-45% 0 -45% 0);
     transform: translateY(0);
     filter: blur(0);
   }
@@ -1120,7 +1125,7 @@
 @media (prefers-reduced-motion: reduce) {
   .sf-write.is-writing .sf-write-letter {
     animation: none !important;
-    clip-path: inset(0 0 0 0) !important;
+    clip-path: none !important;
     filter: none !important;
     transform: none !important;
   }
