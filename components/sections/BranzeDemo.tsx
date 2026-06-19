@@ -141,7 +141,7 @@ export function BranzeDemo() {
 
       {/* OKNO AGENTA — terminal/czat. Sama warstwa wizualna typewritera. */}
       <Reveal delay={0.1}>
-        <div className="mx-auto mt-8 max-w-narrow overflow-hidden rounded-lg border border-border bg-surface shadow-md">
+        <div className="card-aura mx-auto mt-8 max-w-narrow overflow-hidden rounded-lg border border-border bg-surface shadow-md">
           {/* Pasek okna: kropki + etykieta + status */}
           <div className="flex items-center gap-2 border-b border-border px-4 py-3 sm:px-5">
             <span className="flex items-center gap-1.5" aria-hidden="true">

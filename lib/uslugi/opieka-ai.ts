@@ -39,7 +39,7 @@ export const opiekaAi: Usluga = {
   rozwiazanie: {
     h2: 'Co dokładnie robimy w ramach opieki?',
     tresc:
-      'Bierzemy Twoje automatyzacje pod stałą opiekę i pilnujemy, żeby działały. Monitorujemy je, więc o awarii wiemy my, a nie Twój klient. Poprawiamy prompty, gdy odpowiedzi schodzą z tonu. Łatamy integracje, gdy dostawca coś zmieni. Rozwijamy automatyzacje o nowe rzeczy, których potrzebujesz. Co miesiąc dostajesz raport: co działało, co poprawiliśmy, co proponujemy dalej. Pracujemy na ryczałcie godzin, więc wiesz z góry, ile płacisz. Niewykorzystany czas nie znika w próżni, idzie na rozwój. To podstawa naszego najszerszego modelu, Architekci Wartości AI: my dbamy o AI, Ty robisz swoje.',
+      'Bierzemy Twoje automatyzacje pod stałą opiekę i pilnujemy, żeby działały. Monitorujemy je, więc o awarii wiemy my, a nie Twój klient. Poprawiamy prompty, gdy odpowiedzi schodzą z tonu. Łatamy integracje, gdy dostawca coś zmieni. Rozwijamy automatyzacje o nowe rzeczy, których potrzebujesz, audytujemy kolejne miejsca i optymalizujemy to, co już działa. Pracujemy na ryczałcie godzin, więc wiesz z góry, ile płacisz, a cały ryczałt pracuje co miesiąc nad Twoim AI: utrzymanie, rozwój, nowe automatyzacje. Pod koniec miesiąca dostajesz raport: co działało, co poprawiliśmy, co rozwinęliśmy i co proponujemy dalej. To podstawa naszego najszerszego modelu, Architekci Wartości AI: my dbamy o AI, Ty robisz swoje.',
   },
 
   tabelaPorownawcza: {
@@ -72,7 +72,7 @@ export const opiekaAi: Usluga = {
       {
         tytul: 'Opieka i rozwój co miesiąc',
         opis:
-          'Pilnujemy, poprawiamy i rozwijamy. Co miesiąc dostajesz raport, co zrobiliśmy i co proponujemy dalej. Niewykorzystane godziny idą na nowe usprawnienia.',
+          'Pilnujemy, poprawiamy i rozwijamy, a cały ryczałt godzin co miesiąc pracuje nad Twoim AI: utrzymanie, nowe automatyzacje, audyty i optymalizacje. Pod koniec miesiąca dostajesz raport ze zmianami: co zrobiliśmy, co rozwinęliśmy i co proponujemy dalej.',
       },
     ],
   },
@@ -80,7 +80,7 @@ export const opiekaAi: Usluga = {
   ramaCeny: {
     h2: 'Ile kosztuje Opieka AI?',
     tresc:
-      'Opieka AI działa na ryczałcie godzin miesięcznie i im większy pakiet, tym niższa stawka za godzinę. 10 godzin to 3000 zł miesięcznie, czyli 300 zł za godzinę. 20 godzin to 5500 zł, czyli 275 zł za godzinę. 40 godzin to 10000 zł miesięcznie, czyli 250 zł za godzinę. Stawka bazowa poza ryczałtem to 350 zł za godzinę, więc ryczałt zawsze wychodzi taniej. Niewykorzystane godziny nie przepadają, idą na rozwój. Ile godzin realnie potrzebujesz, ustalamy na bezpłatnej diagnozie. Bez ukrytych kosztów.',
+      'Opieka AI działa na ryczałcie godzin miesięcznie i im większy pakiet, tym niższa stawka za godzinę. 10 godzin to 3000 zł miesięcznie, czyli 300 zł za godzinę. 20 godzin to 5500 zł, czyli 275 zł za godzinę. 40 godzin to 10000 zł miesięcznie, czyli 250 zł za godzinę. Stawka bazowa poza ryczałtem to 350 zł za godzinę, więc ryczałt zawsze wychodzi taniej. Cały ryczałt pracuje co miesiąc nad Twoim AI: utrzymanie, rozwój, nowe automatyzacje i optymalizacje, a pod koniec miesiąca dostajesz raport ze zmianami. Ile godzin realnie potrzebujesz, ustalamy na bezpłatnej diagnozie. Bez ukrytych kosztów.',
     minPrice: 3000,
   },
 
@@ -93,7 +93,7 @@ export const opiekaAi: Usluga = {
     {
       pytanie: 'Co obejmuje utrzymanie automatyzacji?',
       odpowiedz:
-        'Monitoring, żeby o awarii wiedzieliśmy my, a nie Twój klient. Poprawki promptów, gdy odpowiedzi schodzą z tonu. Łatanie integracji, gdy dostawca coś zmieni. Rozwój o nowe rzeczy, których potrzebujesz. Oraz raport miesięczny, co zrobiliśmy i co proponujemy dalej. Wszystko w ramach jednego ryczałtu godzin.',
+        'Utrzymanie automatyzacji to ciągła praca nad Twoim AI w ramach jednego ryczałtu godzin. Monitorujemy Twoje automatyzacje, więc o awarii wiemy my, a nie Twój klient. Poprawiamy prompty, gdy odpowiedzi schodzą z tonu, i łatamy integracje, gdy dostawca coś zmieni. Na bieżąco rozwijamy automatyzacje o nowe rzeczy, których potrzebujesz, sprawdzamy, czy nic się nie sypie, i optymalizujemy to, co już działa. Pod koniec miesiąca dostajesz raport: co zrobiliśmy, co rozwinęliśmy i co proponujemy dalej.',
     },
     {
       pytanie: 'Czy mogę kupić opiekę nad automatyzacją zrobioną przez kogoś innego?',
@@ -101,9 +101,9 @@ export const opiekaAi: Usluga = {
         'Tak, ale najpierw musimy ją obejrzeć. Na bezpłatnej diagnozie sprawdzamy, jak jest zbudowana i czy da się ją sensownie utrzymywać. Czasem trzeba ją najpierw uporządkować, czasem od razu bierzemy pod opiekę. Powiemy uczciwie, co zastaliśmy i ile godzin miesięcznie to wymaga.',
     },
     {
-      pytanie: 'Co się dzieje z niewykorzystanymi godzinami?',
+      pytanie: 'Za co dokładnie płacę co miesiąc?',
       odpowiedz:
-        'Nie przepadają w sensie zmarnowanej kasy. Jeśli w danym miesiącu utrzymanie zajęło mniej, zostały czas idzie na rozwój: nowe usprawnienia, dodatkowe automatyzacje, optymalizacje. Płacisz za stałą gotowość i za to, że ktoś realnie dba o Twoje AI, a nie tylko czeka na awarię.',
+        'Płacisz za gotowość i za realną, ciągłą pracę nad Twoim AI. Każdy miesiąc planujemy z góry: część godzin idzie na utrzymanie i pilnowanie, część na rozwój nowych automatyzacji, część na audyt i optymalizacje w kolejnych miejscach. Cały ryczałt pracuje przez cały czas, więc Twoje AI stale idzie do przodu, a nie tylko czeka na awarię. Sama gotowość, że ktoś pilnuje i jest gotów reagować w każdej chwili, też ma wartość. Pod koniec miesiąca dostajesz raport ze zmianami, który czarno na białym pokazuje, na co poszły godziny.',
     },
     {
       pytanie: 'Czym Opieka AI różni się od modelu Architekci Wartości AI?',

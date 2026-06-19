@@ -103,7 +103,7 @@ export function DiagnozaForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-7">
+    <form onSubmit={handleSubmit} className="card-aura rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-7">
       {/* Pasek postępu */}
       <div className="mb-6">
         <div className="mb-2 flex items-center justify-between">

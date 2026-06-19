@@ -36,15 +36,18 @@ import { WritingTrigger } from './WritingTrigger';
 
 type RGB = readonly [number, number, number];
 
-/* Stopy interpolacji = AA-bezpieczne stopnie tekstowe marki na paper #fbfaf8
-   (te same wartości co --metal-blue/violet/green w :root):
-     blue-700   #1d4ed8  → 6.42:1
-     violet-700 #6d28d9  → 6.81:1
-     emerald-700#047857  → 5.26:1  (zieleń pogłębiona „pod .ai", zachowuje AA ≥3:1)
-   Każdy interpolowany środek (sRGB lerp, dwa segmenty) ma ≥5.26:1 na paper. */
-const STOP_BLUE: RGB = [0x1d, 0x4e, 0xd8];
-const STOP_VIOLET: RGB = [0x6d, 0x28, 0xd9];
-const STOP_GREEN: RGB = [0x04, 0x78, 0x57];
+/* Stopy interpolacji = OFICJALNE kolory LOGO (Paweł: „te same kolory co w logo").
+   H1 to large text (≥44px bold), więc próg AA = 3:1 i wszystkie stopnie zdają na
+   paper #fbfaf8:
+     brand-blue   #007BFF → 3.85:1
+     brand-violet #7A35FF → 5.30:1
+     green         #0A9D4A → 3.40:1  (żywa zieleń „pod .ai"; pełny neon #63F000 ma
+                                      1.44:1 i jest nieczytelny na jasnym, więc lekko
+                                      pogłębiony, ale wciąż wyraźnie zielony)
+   Najniższy punkt całej frazy = zielony koniec 3.40:1 (zapas nad progiem 3:1). */
+const STOP_BLUE: RGB = [0x00, 0x7b, 0xff];
+const STOP_VIOLET: RGB = [0x7a, 0x35, 0xff];
+const STOP_GREEN: RGB = [0x0a, 0x9d, 0x4a];
 
 function mix(a: RGB, b: RGB, t: number): string {
   const ch = (i: 0 | 1 | 2) => Math.round(a[i] + (b[i] - a[i]) * t);

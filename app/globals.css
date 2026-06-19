@@ -896,6 +896,75 @@
 }
 
 /* ==========================================================================
+   .card-aura — PREMIUM ramka: wędrujący błysk DOOKOŁA obramowania + ODDECH.
+   Paweł: „po ramkach przesuwał się błysk dookoła, pulsowanie, breathing".
+   Ring = ::before z conic-gradient marki (niebieski→fiolet→zielony→cyan), maskowany
+   do samej obwódki (1.5px); animowany kąt = błysk wędruje dookoła. Oddech = pulsująca
+   kolorowa poświata (box-shadow) na karcie. Dekoracja pod treścią; gaszone globalną
+   bramką reduced-motion (zostaje statyczna ramka-gradient + brak pulsu).
+   @property pozwala płynnie animować kąt conic (Houdini). Bez wsparcia mask-composite
+   pomijamy ring (zostaje sam oddech) — zero zepsutego wypełnienia.
+   ========================================================================== */
+@property --sf-aura-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@layer components {
+  .card-aura {
+    position: relative;
+    isolation: isolate;
+    animation: sfAuraBreathe 5s var(--ease-in-out) infinite;
+  }
+}
+
+@supports ((-webkit-mask-composite: xor) or (mask-composite: exclude)) {
+  .card-aura::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(
+      from var(--sf-aura-angle),
+      transparent 0deg,
+      #007bff 70deg,
+      #7a35ff 150deg,
+      #63f000 220deg,
+      #00d8ff 300deg,
+      transparent 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    animation: sfAuraSpin 6s linear infinite;
+  }
+}
+
+/* Obrót kąta = błysk objeżdża ramkę. */
+@keyframes sfAuraSpin {
+  to {
+    --sf-aura-angle: 360deg;
+  }
+}
+/* Oddech = poświata marki narasta i gaśnie (breathing). */
+@keyframes sfAuraBreathe {
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(122, 53, 255, 0);
+  }
+  50% {
+    box-shadow:
+      0 8px 30px rgba(122, 53, 255, 0.18),
+      0 0 18px rgba(0, 123, 255, 0.14);
+  }
+}
+
+/* ==========================================================================
    prefers-reduced-motion — globalna bramka A11y (spec 02 §5.4)
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
@@ -993,19 +1062,21 @@
    -------------------------------------------------------------------------- */
 @supports (color: color-mix(in oklab, red, blue)) {
   .sf-write-letter {
+    /* Stopy = OFICJALNE kolory logo (spójne z inline hex w WritingHeadline):
+       brand-blue #007BFF, brand-violet #7A35FF, zieleń #0A9D4A (czytelna ≥3:1). */
     /* p = i/(n-1), clamp na wypadek n=1 (mianownik 0 → 1) */
     --p: calc(var(--i) / max(var(--n) - 1, 1));
     /* segment 0 (p≤0.5): blue→violet, seg = p/0.5 = p*2 */
     --c0: color-mix(
       in oklab,
-      var(--metal-blue),
-      var(--metal-violet) calc(var(--p) * 200%)
+      #007bff,
+      #7a35ff calc(var(--p) * 200%)
     );
     /* segment 1 (p>0.5): violet→green, seg = (p-0.5)/0.5 = p*2 - 1 */
     --c1: color-mix(
       in oklab,
-      var(--metal-violet),
-      var(--metal-green) calc(var(--p) * 200% - 100%)
+      #7a35ff,
+      #0a9d4a calc(var(--p) * 200% - 100%)
     );
     /* wybór segmentu bez @container/if: gdy p≤0.5 użyj --c0, inaczej --c1.
        --pick = 0 dla p≤0.5, 1 dla p>0.5 (round to-zero przez clamp+sign trick):
