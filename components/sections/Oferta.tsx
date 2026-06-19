@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Section, MagneticButton, Card, Badge } from '@/components/ui';
+import { Section, MagneticButton, Card } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HOME_CTA } from '@/lib/site';
 import { USLUGI } from '@/lib/uslugi';
@@ -64,18 +64,22 @@ export function Oferta() {
       <div className="mt-9 grid items-stretch gap-6 md:grid-cols-3">
         {POZIOMY.map((p, i) => (
           <Reveal key={p.name} delay={i * 0.06}>
-            {/* Karta „Najczęściej wybierane" dostaje szklany połysk (.card-glossy):
-                dekoracyjna warstwa ::after w rogu, pod treścią. Ramka akcentowa i
-                kontrast treści bez zmian — to wyłącznie premium sheen. */}
+            {/* Wszystkie karty cennika dostają „oddychającą" ramkę marki (.card-aura),
+                a wyróżniona grubszą (.card-aura-bold). Badge „Najczęściej wybierane"
+                w barwach marki. Bez .card-glossy: jego overflow:hidden ucinał badge
+                wystający nad górną krawędź (zgłoszenie Pawła: napis ucięty). */}
             <Card
               variant={p.highlight ? 'highlight' : 'base'}
               as="article"
-              className={`flex h-full flex-col${p.highlight ? ' card-glossy' : ''}`}
+              className={`card-aura flex h-full flex-col${p.highlight ? ' card-aura-bold' : ''}`}
             >
               {p.highlight && (
-                <Badge variant="accent" className="absolute -top-3 left-6">
+                <span
+                  className="absolute -top-3 left-6 rounded-full px-3 py-1 text-caption font-semibold text-white shadow-sm"
+                  style={{ background: 'linear-gradient(90deg, #007BFF, #7A35FF, #2FA500)' }}
+                >
                   Najczęściej wybierane
-                </Badge>
+                </span>
               )}
               <h3 className="text-h3">{p.name}</h3>
               <p className="mt-1 text-body-sm text-fg-muted">{p.forWho}</p>

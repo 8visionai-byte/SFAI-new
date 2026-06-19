@@ -922,6 +922,10 @@
     isolation: isolate;
     animation: sfAuraBreathe 5s var(--ease-in-out) infinite;
   }
+  /* Wariant „mocniejszy" — grubsza obwódka (np. wyróżniona karta cennika). */
+  .card-aura-bold {
+    --aura-w: 2.5px;
+  }
 }
 
 @supports ((-webkit-mask-composite: xor) or (mask-composite: exclude)) {
@@ -930,7 +934,7 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    padding: 1.5px;
+    padding: var(--aura-w, 1.5px);
     background: conic-gradient(
       from var(--sf-aura-angle),
       transparent 0deg,
@@ -1081,7 +1085,7 @@
     --c1: color-mix(
       in oklab,
       #7a35ff,
-      #0a9d4a calc(var(--p) * 200% - 100%)
+      #2fa500 calc(var(--p) * 200% - 100%)
     );
     /* wybór segmentu bez @container/if: gdy p≤0.5 użyj --c0, inaczej --c1.
        --pick = 0 dla p≤0.5, 1 dla p>0.5 (round to-zero przez clamp+sign trick):

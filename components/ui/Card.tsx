@@ -17,12 +17,15 @@ const base =
 
 const variantClass: Record<CardVariant, string> = {
   base: '',
+  // „Oddychająca" ramka marki (.card-aura) na kartach prominentnych/klikalnych
+  // (Paweł: wędrujący błysk dookoła ramki na wszystkich ramkach). Statyczne karty
+  // `base`/`bento` zostają czyste, żeby nie było rainbow-ramek na każdym bloczku.
   interactive:
-    'transition-[transform,box-shadow,border-color] duration-base ease-out cursor-pointer ' +
+    'card-aura transition-[transform,box-shadow,border-color] duration-base ease-out cursor-pointer ' +
     'hover:-translate-y-1 hover:shadow-md hover:border-border-strong ' +
     'focus-within:shadow-[0_0_0_3px_var(--ring)]',
   bento: 'h-full',
-  highlight: 'border-[1.5px] border-border-accent shadow-sm relative',
+  highlight: 'card-aura border-[1.5px] border-border-accent shadow-sm relative',
 };
 
 type CardProps<T extends React.ElementType> = {

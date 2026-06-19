@@ -41,13 +41,14 @@ type RGB = readonly [number, number, number];
    paper #fbfaf8:
      brand-blue   #007BFF → 3.85:1
      brand-violet #7A35FF → 5.30:1
-     green         #0A9D4A → 3.40:1  (żywa zieleń „pod .ai"; pełny neon #63F000 ma
-                                      1.44:1 i jest nieczytelny na jasnym, więc lekko
-                                      pogłębiony, ale wciąż wyraźnie zielony)
-   Najniższy punkt całej frazy = zielony koniec 3.40:1 (zapas nad progiem 3:1). */
+     green         #2FA500 → 3.10:1  (żywa, „mocno zielona" limonka bliżej logo;
+                                      pełny neon #63F000 ma 1.44:1 i jest nieczytelny
+                                      na jasnym, to maksymalnie żywy zielony, który
+                                      jeszcze zdaje próg large-text 3:1)
+   Najniższy punkt całej frazy = zielony koniec 3.10:1 (zapas nad progiem 3:1). */
 const STOP_BLUE: RGB = [0x00, 0x7b, 0xff];
 const STOP_VIOLET: RGB = [0x7a, 0x35, 0xff];
-const STOP_GREEN: RGB = [0x0a, 0x9d, 0x4a];
+const STOP_GREEN: RGB = [0x2f, 0xa5, 0x00];
 
 function mix(a: RGB, b: RGB, t: number): string {
   const ch = (i: 0 | 1 | 2) => Math.round(a[i] + (b[i] - a[i]) * t);
