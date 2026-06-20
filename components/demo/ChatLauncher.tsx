@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ChatDemo } from './ChatDemo';
+import { ChatAgent } from './ChatAgent';
 
 /**
  * ChatLauncher — pływający launcher czatu (prawy dolny róg) + wysuwany panel
@@ -37,7 +37,7 @@ export function ChatLauncher() {
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.98 }}
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
           >
-            <ChatDemo />
+            <ChatAgent />
           </motion.div>
         )}
       </AnimatePresence>
