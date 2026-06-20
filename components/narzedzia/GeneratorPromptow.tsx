@@ -76,7 +76,7 @@ export function GeneratorPromptow() {
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-10">
       {/* KOLUMNA WYBORÓW */}
-      <div className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-7">
+      <div className="card-aura rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-7">
         <h3 className="text-h3">Złóż swój prompt</h3>
         <p className="mt-1 text-caption text-fg-subtle">
           Wybierz cztery rzeczy. Prompt złoży się sam, na bieżąco.
@@ -128,7 +128,7 @@ export function GeneratorPromptow() {
 
       {/* KOLUMNA WYNIKU */}
       <div>
-        <div className="rounded-xl border border-border bg-bg-subtle p-6 shadow-sm sm:p-7">
+        <div className="card-aura rounded-xl border border-border bg-bg-subtle p-6 shadow-sm sm:p-7">
           <div className="flex items-center justify-between gap-3">
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-fg-subtle">
               Twój gotowy prompt
@@ -160,7 +160,7 @@ export function GeneratorPromptow() {
         </div>
 
         {/* Bridge do magnetów (realna wartość) */}
-        <div className="mt-4 rounded-xl border border-border bg-surface p-5 shadow-sm">
+        <div className="card-aura mt-4 rounded-xl border border-border bg-surface p-5 shadow-sm">
           <p className="text-body-sm text-fg">
             Chcesz więcej gotowców? Mamy zestawy promptów do skopiowania.
           </p>

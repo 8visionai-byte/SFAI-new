@@ -40,7 +40,7 @@ export function ZyweDemo() {
 
         {/* Voicebot (stub) */}
         <Reveal delay={0.06}>
-          <div className="flex h-full flex-col justify-center rounded-lg border border-border bg-surface p-6">
+          <div className="card-aura flex h-full flex-col justify-center rounded-lg border border-border bg-surface p-6">
             <h3 className="text-h3">Wolisz posłuchać?</h3>
             <p className="mt-2 text-body-sm text-fg-muted">
               Voicebot odbierze, porozmawia po polsku i pokaże, jak brzmi obsługa telefonu bez Twojego udziału.

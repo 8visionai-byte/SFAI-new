@@ -126,7 +126,7 @@ export function ChatAgent() {
   }
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-lg border border-border bg-surface shadow-sm">
+    <div className="card-aura flex flex-col overflow-hidden rounded-lg border border-border bg-surface shadow-sm">
       {/* Naglowek */}
       <div className="flex items-center gap-2 border-b border-border px-5 py-4">
         <span

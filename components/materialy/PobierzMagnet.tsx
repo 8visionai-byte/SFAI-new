@@ -66,7 +66,7 @@ export function PobierzMagnet({ materialSlug, tytul, cta }: PobierzMagnetProps) 
 
   if (status === 'success') {
     return (
-      <div className="rounded-lg border border-border bg-success-bg p-5 text-center">
+      <div className="card-aura rounded-lg border border-border bg-success-bg p-5 text-center">
         <p className="text-body-sm font-medium text-fg">PDF jedzie na maila.</p>
         <p className="mt-1 text-caption text-fg-muted">
           Sprawdź skrzynkę za chwilę. Gdyby nie dotarł, zajrzyj do spamu. Całą treść
@@ -79,7 +79,7 @@ export function PobierzMagnet({ materialSlug, tytul, cta }: PobierzMagnetProps) 
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-lg border border-dashed border-border-strong bg-bg-subtle p-5"
+      className="card-aura rounded-lg border border-dashed border-border-strong bg-bg-subtle p-5"
     >
       <p className="text-body-sm font-medium text-fg">
         Chcesz mieć {`„${tytul}"`} w PDF? Wpisz maila, wyślemy go na skrzynkę.

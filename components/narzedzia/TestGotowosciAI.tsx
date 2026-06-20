@@ -69,7 +69,7 @@ export function TestGotowosciAI() {
     // krok jest zawsze < PYTANIA.length (gate `ukonczone` wyżej); guard dla TS (noUncheckedIndexedAccess)
     if (!p) return null;
     return (
-      <div className="mx-auto max-w-narrow rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-7">
+      <div className="card-aura mx-auto max-w-narrow rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-7">
         {/* pasek postępu */}
         <div className="mb-6">
           <div className="mb-2 flex items-center justify-between">
@@ -120,7 +120,7 @@ export function TestGotowosciAI() {
   // ===== WIDOK WYNIKU =====
   return (
     <div className="mx-auto max-w-narrow">
-      <div className="rounded-xl border border-border bg-bg-subtle p-6 shadow-sm sm:p-7">
+      <div className="card-aura rounded-xl border border-border bg-bg-subtle p-6 shadow-sm sm:p-7">
         <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-fg-subtle">
@@ -157,7 +157,7 @@ export function TestGotowosciAI() {
       </div>
 
       {/* Wskazanie procesu, który najszybciej się zwróci (z osi use-case) */}
-      <div className="mt-4 rounded-xl border-[1.5px] border-border-accent bg-surface p-5 shadow-sm">
+      <div className="card-aura mt-4 rounded-xl border-[1.5px] border-border-accent bg-surface p-5 shadow-sm">
         <p className="text-caption font-semibold uppercase tracking-[0.08em] text-accent">
           Pierwszy proces do zdjęcia
         </p>
@@ -169,7 +169,7 @@ export function TestGotowosciAI() {
       </div>
 
       {/* 3 rekomendacje z najsłabszych osi + linki do REALNYCH usług */}
-      <div className="mt-4 rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6">
+      <div className="card-aura mt-4 rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6">
         <h3 className="text-h3">Od czego zacząć: 3 rzeczy</h3>
         <ol className="mt-4 space-y-4">
           {wynik.najslabsze.map((o, i) => (

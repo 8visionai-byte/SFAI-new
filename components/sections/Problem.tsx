@@ -52,7 +52,7 @@ export function Problem() {
         jako krok 1 flow i wtedy można wrócić do słowa "policz".
       */}
       <Reveal delay={0.1}>
-        <div className="mx-auto mt-8 max-w-narrow rounded-lg border border-border bg-bg-subtle p-6">
+        <div className="card-aura mx-auto mt-8 max-w-narrow rounded-lg border border-border bg-bg-subtle p-6">
           <p className="text-body text-fg">
             Nie zgaduj. Na bezpłatnej diagnozie pokażę Ci, ile godzin i złotych miesięcznie zjada
             powtarzalna robota w Twojej firmie. Konkretne liczby z Twoich procesów, nie ogólniki.

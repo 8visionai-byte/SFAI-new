@@ -71,7 +71,7 @@ export default function NarzedziaPage() {
                 <li key={n.slug}>
                   <a
                     href={`#${n.slug}`}
-                    className="group flex h-full flex-col rounded-lg border border-border bg-surface p-4 transition-colors duration-fast hover:border-border-strong"
+                    className="card-aura group flex h-full flex-col rounded-lg border border-border bg-surface p-4 transition-colors duration-fast hover:border-border-strong"
                   >
                     <span className="text-overline uppercase tracking-[0.08em] text-accent">
                       {n.etykieta}
@@ -195,7 +195,7 @@ export default function NarzedziaPage() {
                         <figcaption className="text-caption font-semibold text-fg">
                           {p.tytul}
                         </figcaption>
-                        <pre className="mt-2 overflow-x-auto whitespace-pre-wrap rounded-md border border-border bg-bg-subtle p-4 font-mono text-caption leading-relaxed text-fg-muted">
+                        <pre className="card-aura mt-2 overflow-x-auto whitespace-pre-wrap rounded-md border border-border bg-bg-subtle p-4 font-mono text-caption leading-relaxed text-fg-muted">
                           {p.prompt}
                         </pre>
                       </figure>

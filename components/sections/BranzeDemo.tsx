@@ -211,7 +211,7 @@ export function BranzeDemo() {
             key={b.label}
             className={
               reduce
-                ? 'rounded-lg border border-border bg-surface px-5 py-4'
+                ? 'card-aura rounded-lg border border-border bg-surface px-5 py-4'
                 : undefined
             }
           >

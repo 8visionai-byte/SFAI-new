@@ -77,7 +77,7 @@ export function Hero() {
 
       {/* Dynamiczny odbiorca (personalizacja językiem, RODO-safe) */}
       <Reveal delay={0.15}>
-        <div className="mx-auto mt-7 max-w-narrow rounded-lg border border-border bg-surface px-5 py-4 text-left shadow-xs">
+        <div className="card-aura mx-auto mt-7 max-w-narrow rounded-lg border border-border bg-surface px-5 py-4 text-left shadow-xs">
           <p className="text-caption text-fg-subtle">
             Powtarzalna robota wygląda inaczej w każdej branży. Pokaż mi swoją.
           </p>

@@ -90,7 +90,7 @@ export function Rozwiazanie() {
       {/* Co potrafi Agent */}
       <ul className="mt-8 grid gap-5 sm:grid-cols-2">
         {POTRAFI.map((item, i) => (
-          <Reveal as="li" key={item.t} delay={i * 0.05} className="rounded-lg border border-border bg-surface p-5">
+          <Reveal as="li" key={item.t} delay={i * 0.05} className="card-aura rounded-lg border border-border bg-surface p-5">
             <span className="block text-ui font-semibold text-fg">{item.t}</span>
             <span className="mt-1 block text-body-sm text-fg-muted">{item.d}</span>
           </Reveal>

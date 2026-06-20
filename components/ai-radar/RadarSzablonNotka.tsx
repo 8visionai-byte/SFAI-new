@@ -22,7 +22,7 @@ export function RadarSzablonNotka({ variant = 'full' }: { variant?: 'card' | 'fu
   return (
     <aside
       role="note"
-      className="rounded-lg border border-border-strong bg-bg-subtle px-4 py-3 text-body-sm text-fg-muted"
+      className="card-aura rounded-lg border border-border-strong bg-bg-subtle px-4 py-3 text-body-sm text-fg-muted"
     >
       <strong className="font-semibold text-fg">Przykład / szablon.</strong>{' '}
       To nie jest realny news. Ten wpis pokazuje format AI Radar na neutralnym

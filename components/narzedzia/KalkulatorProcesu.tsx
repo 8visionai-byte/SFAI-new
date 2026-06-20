@@ -115,7 +115,7 @@ export function KalkulatorProcesu() {
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-10">
       {/* WEJŚCIE */}
-      <div className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-7">
+      <div className="card-aura rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-7">
         <h3 className="text-h3">Opisz ten proces</h3>
         <p className="mt-1 text-caption text-fg-subtle">
           Koszt wdrożenia i opiekę podajesz Ty. My nie zgadujemy cen.
@@ -241,7 +241,7 @@ export function KalkulatorProcesu() {
 
       {/* WYNIK */}
       <div>
-        <div className="rounded-xl border border-border bg-bg-subtle p-6 shadow-sm sm:p-7">
+        <div className="card-aura rounded-xl border border-border bg-bg-subtle p-6 shadow-sm sm:p-7">
           {/* Werdykt */}
           <div className={`rounded-lg border-[1.5px] px-4 py-3 ${tonClass[werdykt.ton]}`}>
             <p className="text-caption font-semibold uppercase tracking-[0.08em] opacity-80">Werdykt</p>

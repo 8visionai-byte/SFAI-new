@@ -22,7 +22,7 @@ export function RealizacjaCard({ realizacja }: { realizacja: Realizacja }) {
   return (
     <Link
       href={`/realizacje/${realizacja.slug}`}
-      className="group flex h-full flex-col rounded-lg border border-border bg-surface p-6 shadow-xs transition-[transform,box-shadow,border-color] duration-base ease-out hover:-translate-y-1 hover:border-border-strong hover:shadow-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+      className="card-aura group flex h-full flex-col rounded-lg border border-border bg-surface p-6 shadow-xs transition-[transform,box-shadow,border-color] duration-base ease-out hover:-translate-y-1 hover:border-border-strong hover:shadow-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
     >
         <div className="flex items-center justify-between gap-3">
           <Badge variant="neutral">{KATEGORIA_LABEL[realizacja.kategoria]}</Badge>

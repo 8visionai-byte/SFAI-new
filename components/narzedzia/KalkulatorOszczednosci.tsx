@@ -75,7 +75,7 @@ export function KalkulatorOszczednosci() {
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-10">
       {/* KOLUMNA WEJŚCIA */}
-      <div className="rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-7">
+      <div className="card-aura rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-7">
         <h3 className="text-h3">Wpisz swoje liczby</h3>
         <p className="mt-1 text-caption text-fg-subtle">
           Domyślne wartości to typowe założenie. Zmień każde na swoje.
@@ -181,7 +181,7 @@ export function KalkulatorOszczednosci() {
 
       {/* KOLUMNA WYNIKU */}
       <div>
-        <div className="rounded-xl border border-border bg-bg-subtle p-6 shadow-sm sm:p-7">
+        <div className="card-aura rounded-xl border border-border bg-bg-subtle p-6 shadow-sm sm:p-7">
           <p className="text-caption font-semibold uppercase tracking-[0.08em] text-fg-subtle">
             Odzyskujesz rocznie
           </p>

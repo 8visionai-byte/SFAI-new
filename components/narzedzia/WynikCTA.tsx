@@ -27,7 +27,7 @@ type WynikCTAProps = {
 
 export function WynikCTA({ mikrokopia }: WynikCTAProps) {
   return (
-    <div className="mt-8 rounded-xl border border-border bg-surface p-6 shadow-sm">
+    <div className="card-aura mt-8 rounded-xl border border-border bg-surface p-6 shadow-sm">
       <p className="text-body font-medium text-fg">{mikrokopia}</p>
       <div className="mt-4 flex flex-col items-start gap-3">
         <MagneticButton variant="primary" size="lg" href={HOME_CTA.href}>

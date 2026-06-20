@@ -31,7 +31,7 @@ export function FinalneCTA() {
             Do czasu realnych danych — uczciwy sygnał oferty, BEZ widocznego [PLACEHOLDER].
           */}
           <Reveal delay={0.1}>
-            <div className="mt-7 rounded-lg border border-border bg-surface p-5 shadow-xs">
+            <div className="card-aura mt-7 rounded-lg border border-border bg-surface p-5 shadow-xs">
               <p className="text-body-sm text-fg-muted">
                 Diagnoza trwa 30 minut i nic nie kosztuje. Wychodzisz z konkretną listą tego, co da się u Ciebie
                 zautomatyzować, nawet jeśli nic u nas nie zamówisz.

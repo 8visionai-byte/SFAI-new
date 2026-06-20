@@ -33,7 +33,7 @@ export function PowiazanaUsluga({ kategoria }: { kategoria: RealizacjaKategoria 
         <Reveal delay={0.1}>
           <Link
             href={`/uslugi/${usluga.slug}`}
-            className="group mt-6 block rounded-lg border border-border bg-surface p-6 shadow-xs transition-colors hover:border-brand"
+            className="card-aura group mt-6 block rounded-lg border border-border bg-surface p-6 shadow-xs transition-colors hover:border-brand"
           >
             <span className="block text-body font-medium text-fg group-hover:text-brand">
               {usluga.h1}

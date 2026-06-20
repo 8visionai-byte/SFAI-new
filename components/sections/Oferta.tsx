@@ -125,7 +125,7 @@ export function Oferta() {
               <li key={u.slug}>
                 <Link
                   href={`/uslugi/${u.slug}`}
-                  className="group block h-full rounded-lg border border-border bg-surface p-5 shadow-xs transition-colors hover:border-brand"
+                  className="card-aura group block h-full rounded-lg border border-border bg-surface p-5 shadow-xs transition-colors hover:border-brand"
                 >
                   <span className="block text-body font-medium text-fg group-hover:text-brand">
                     {u.h1}
@@ -141,7 +141,7 @@ export function Oferta() {
 
       {/* Wariant z dotacją 2026 */}
       <Reveal delay={0.12}>
-        <div className="mx-auto mt-6 max-w-narrow rounded-lg border border-border bg-bg-subtle p-6">
+        <div className="card-aura mx-auto mt-6 max-w-narrow rounded-lg border border-border bg-bg-subtle p-6">
           <h3 className="text-h3">Można to sfinansować z dotacji?</h3>
           {/* INPUT PAWŁA: gdy będzie konkretny program dofinansowania, dopisać jego nazwę. */}
           <p className="mt-2 text-body-sm text-fg-muted">

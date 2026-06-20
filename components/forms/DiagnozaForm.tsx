@@ -112,7 +112,7 @@ export function DiagnozaForm() {
 
   if (status === 'success') {
     return (
-      <div className="rounded-lg border border-border bg-success-bg p-7 text-center">
+      <div className="card-aura rounded-lg border border-border bg-success-bg p-7 text-center">
         <h3 className="text-h3 mb-2">Mam to.</h3>
         <p className="text-body text-fg-muted">
           Dziękuję, zgłoszenie do mnie dotarło. Odezwę się w kilka minut na podany kontakt.
@@ -123,7 +123,7 @@ export function DiagnozaForm() {
 
   if (status === 'error') {
     return (
-      <div className="rounded-lg border border-error bg-error-bg p-7 text-center">
+      <div className="card-aura rounded-lg border border-error bg-error-bg p-7 text-center">
         <h3 className="text-h3 mb-2">Coś nie zadziałało z wysyłką.</h3>
         <p className="text-body text-fg-muted">
           Najszybciej złap mnie wprost: napisz na{' '}
