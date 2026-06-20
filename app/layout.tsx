@@ -8,6 +8,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { ChatLauncher } from '@/components/demo/ChatLauncher';
 import { FaviconPulse } from '@/components/effects/FaviconPulse';
+import { AuraDesync } from '@/components/effects/AuraDesync';
 
 /**
  * Fonty self-host przez next/font/google (zero requestów do fonts.googleapis.com,
@@ -93,6 +94,10 @@ export default function RootLayout({
 
         {/* Pulsujący favicon w karcie (efekt „live", canvas) — reduced-motion safe */}
         <FaviconPulse />
+
+        {/* Różnicuje tempo/fazę „oddychających" ramek (.card-aura), żeby ramki obok
+            siebie migotały niezależnie, nie w rytm. Reduced-motion safe. */}
+        <AuraDesync />
 
         {/* Schema globalna — Organization + WebSite na każdej stronie (spec 04 §6.2–6.3) */}
         <JsonLd data={organizationSchema()} />

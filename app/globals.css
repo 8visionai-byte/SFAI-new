@@ -920,7 +920,11 @@
   .card-aura {
     position: relative;
     isolation: isolate;
-    animation: sfAuraBreathe 5s var(--ease-in-out) infinite;
+    /* Tempo (duration) i faza (delay) są ZMIENNE per ramka (ustawia je AuraDesync),
+       żeby ramki obok siebie migotały niezależnie, nie w rytm. Fallback 5s/0s =
+       stara, zsynchronizowana wersja (działa też bez JS). */
+    animation: sfAuraBreathe var(--aura-breathe-dur, 5s) var(--ease-in-out)
+      var(--aura-breathe-delay, 0s) infinite;
   }
   /* Wariant „mocniejszy" — grubsza obwódka (np. wyróżniona karta cennika). */
   .card-aura-bold {
@@ -950,7 +954,10 @@
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
-    animation: sfAuraSpin 6s linear infinite;
+    /* Wędrujący błysk: tempo i faza zmienne per ramka (AuraDesync), niezależne
+       od sąsiadów. Fallback 6s/0s. Zmienne dziedziczą z .card-aura do ::before. */
+    animation: sfAuraSpin var(--aura-spin-dur, 6s) linear
+      var(--aura-spin-delay, 0s) infinite;
   }
 }
 
