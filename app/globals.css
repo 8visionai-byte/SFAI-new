@@ -1085,7 +1085,7 @@
     --c1: color-mix(
       in oklab,
       #7a35ff,
-      #2fa500 calc(var(--p) * 200% - 100%)
+      #63f000 calc(var(--p) * 200% - 100%)
     );
     /* wybór segmentu bez @container/if: gdy p≤0.5 użyj --c0, inaczej --c1.
        --pick = 0 dla p≤0.5, 1 dla p>0.5 (round to-zero przez clamp+sign trick):

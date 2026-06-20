@@ -36,19 +36,15 @@ import { WritingTrigger } from './WritingTrigger';
 
 type RGB = readonly [number, number, number];
 
-/* Stopy interpolacji = OFICJALNE kolory LOGO (Paweł: „te same kolory co w logo").
-   H1 to large text (≥44px bold), więc próg AA = 3:1 i wszystkie stopnie zdają na
-   paper #fbfaf8:
-     brand-blue   #007BFF → 3.85:1
-     brand-violet #7A35FF → 5.30:1
-     green         #2FA500 → 3.10:1  (żywa, „mocno zielona" limonka bliżej logo;
-                                      pełny neon #63F000 ma 1.44:1 i jest nieczytelny
-                                      na jasnym, to maksymalnie żywy zielony, który
-                                      jeszcze zdaje próg large-text 3:1)
-   Najniższy punkt całej frazy = zielony koniec 3.10:1 (zapas nad progiem 3:1). */
+/* Stopy interpolacji = MAGNETYCZNE (żywe) kolory marki 1:1 z logo (Paweł: „nasze
+   kolory są magnetyczne, nie stłumione"). To dokładnie brand decor gradient
+   --metal-gradient-decor: brand-blue #007BFF, brand-violet #7A35FF, ai-green #63F000.
+   UWAGA KONTRAST: ai-green #63F000 na jasnym paperze ma ~1.4:1 (slabo czytelny),
+   ale to świadoma decyzja Pawła: „z tyłu dorzucimy tło", na którym żywe kolory
+   zaświecą. Gdyby tło zostało jasne na stałe, wróć do pogłębionej zieleni (#2FA500). */
 const STOP_BLUE: RGB = [0x00, 0x7b, 0xff];
 const STOP_VIOLET: RGB = [0x7a, 0x35, 0xff];
-const STOP_GREEN: RGB = [0x2f, 0xa5, 0x00];
+const STOP_GREEN: RGB = [0x63, 0xf0, 0x00];
 
 function mix(a: RGB, b: RGB, t: number): string {
   const ch = (i: 0 | 1 | 2) => Math.round(a[i] + (b[i] - a[i]) * t);
