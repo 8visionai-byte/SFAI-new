@@ -3,17 +3,13 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * WritingTrigger — JEDYNY klient efektu pisania H1 (~20 linii, zero renderu
- * wizualnego: pusty aria-hidden span z display:none, nie wstrzykuje treści).
+ * WritingTrigger — maszyna do pisania H1 (jak w oknie czatu): po wejściu w widok
+ * litery pojawiają się kolejno (klasa .typed), a tuż za ostatnią miga pionowy
+ * kursor (.sf-caret). Płynnie, bez „kafelków" i bez neonowego flasha.
  *
- * Po mount: jeśli user NIE ma prefers-reduced-motion, obserwuje rodzica
- * H1[data-writing] i przy wejściu w widok JEDEN raz dodaje klasę `.is-writing`
- * (to ona uruchamia animacje per-litera w globals.css), po czym odłącza obserwatora.
- * Po zakończeniu pisania zdejmuje `.is-writing` (sprzątanie will-change; stan bazowy
- * clip-path:inset(0) trzyma napis czytelnym niezależnie).
- *
- * Gdy JS się nie wykona (albo reduced-motion) — `.is-writing` nigdy się nie pojawia,
- * a H1 zostaje w spoczynku = pełny, czytelny napis z gradientem marki. Fail-safe.
+ * Zero renderu wizualnego (pusty aria-hidden span, display:none). Reduced-motion =>
+ * nic nie robi (napis od razu pełny). Gdy JS się nie wykona => napis też pełny i
+ * czytelny (stan bazowy bez .is-typing). Fail-safe + GEO (tekst w DOM od początku).
  */
 export function WritingTrigger() {
   const ref = useRef<HTMLSpanElement>(null);
@@ -24,13 +20,35 @@ export function WritingTrigger() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (h1.dataset.written === '1') return;
 
+    const SPEED = 30; // ms na literę (szybko, jak szybkie pisanie w czacie)
+    let timer = 0;
+
     const start = () => {
       if (h1.dataset.written === '1') return;
       h1.dataset.written = '1';
-      h1.classList.add('is-writing');
-      const letters = h1.querySelectorAll('.sf-write-letter').length;
-      const total = letters * 42 + 700; // ostatnia litera (delay) + ogon flasha
-      window.setTimeout(() => h1.classList.remove('is-writing'), total + 200);
+      const letters = Array.from(
+        h1.querySelectorAll<HTMLElement>('.sf-write-letter')
+      );
+      if (letters.length === 0) return;
+
+      h1.classList.add('is-typing'); // ukrywa jeszcze-nienapisane litery
+      let i = 0;
+      const step = () => {
+        if (i > 0) letters[i - 1]?.classList.remove('sf-caret');
+        if (i < letters.length) {
+          const el = letters[i];
+          if (el) el.classList.add('typed', 'sf-caret');
+          i += 1;
+          timer = window.setTimeout(step, SPEED);
+        } else {
+          // Koniec: kursor miga chwilę na końcu, potem wracamy do spoczynku.
+          timer = window.setTimeout(() => {
+            letters[letters.length - 1]?.classList.remove('sf-caret');
+            h1.classList.remove('is-typing');
+          }, 1400);
+        }
+      };
+      step();
     };
 
     const io = new IntersectionObserver(
@@ -46,7 +64,10 @@ export function WritingTrigger() {
       { rootMargin: '0px 0px -10% 0px', threshold: 0.25 }
     );
     io.observe(h1);
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      window.clearTimeout(timer);
+    };
   }, []);
 
   return <span ref={ref} aria-hidden="true" style={{ display: 'none' }} />;

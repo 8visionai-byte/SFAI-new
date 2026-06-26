@@ -1105,92 +1105,57 @@
   }
 }
 
-/* URUCHOMIENIE: dopiero gdy client trigger doda .is-writing (i tylko bez
-   reduced-motion — trigger sam sprawdza matchMedia). Dwie animacje per-litera,
-   obie opóźnione o calc(var(--i) * 42ms) = ruch czubka pióra lewo->prawo. */
-.sf-write.is-writing .sf-write-letter {
-  animation:
-    sfWriteIn 460ms var(--ease-out) both,
-    sfWriteFlash 700ms ease-out both;
-  animation-delay: calc(var(--i) * 42ms);
-  will-change: clip-path, filter, transform;
+/* PISANIE = maszyna do pisania (jak w oknie czatu): litery pojawiają się kolejno,
+   gładko (opacity), z migającym pionowym kursorem za ostatnią. BEZ clip-path /
+   „kafelków" i BEZ neonowego flasha (Paweł: ma iść płynnie, jak w czacie). Stan bazowy
+   (bez .is-typing) = pełny, czytelny KOLOROWY napis (no-JS / reduced-motion / GEO).
+   JS (WritingTrigger) dodaje .is-typing i steruje klasą .typed na kolejnych literach
+   + .sf-caret na ostatniej napisanej. */
+
+/* Nienapisane jeszcze litery: niewidoczne, ale REZERWUJĄ miejsce (opacity, nie
+   display) => zero skoku layoutu (CLS). Napisane (.typed) pojawiają się gładko. */
+.sf-write.is-typing .sf-write-letter {
+  opacity: 0;
+}
+.sf-write.is-typing .sf-write-letter.typed {
+  opacity: 1;
+  transition: opacity 90ms linear;
 }
 
-/* Pisanie: litera odsłania się lewa->prawa (clip-path od prawej krawędzi), z
-   mikro-osiadaniem atramentu (translateY + blur->0). clip-path (nie opacity)
-   gwarantuje, że doskok reduced-motion do 100% daje pełną literkę. translateY
-   działa na warstwie kompozycji — NIE zmienia layoutu (zero reflow/CLS). */
-@keyframes sfWriteIn {
-  0% {
-    /* Top/bottom = -45%: clip wychodzi PONAD i POD pudełko litery, więc ascendery
-       i descendery (j, g, y, p) NIGDY nie są ścinane. Reveal robi tylko PRAWA
-       krawędź (right 100% -> 0), czyli odsłanianie lewa->prawa. */
-    clip-path: inset(-45% 100% -45% 0);
-    transform: translateY(0.06em);
-    filter: blur(0.6px);
+/* Kursor: pionowa kreska tuż za ostatnio napisaną literą, miga (jak w czacie).
+   Absolutny => ruch kursora NIE zmienia szerokości liter (zero jittera centrowania). */
+.sf-write-letter.sf-caret {
+  position: relative;
+}
+.sf-write-letter.sf-caret::after {
+  content: '|';
+  position: absolute;
+  right: -0.16em;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--metal-violet);
+  -webkit-text-fill-color: var(--metal-violet);
+  font-weight: 400;
+  animation: sfCaretBlink 0.85s steps(1, end) infinite;
+}
+@keyframes sfCaretBlink {
+  0%,
+  49% {
+    opacity: 1;
   }
-  60% {
-    transform: translateY(0);
-    filter: blur(0);
-  }
+  50%,
   100% {
-    clip-path: inset(-45% 0 -45% 0);
-    transform: translateY(0);
-    filter: blur(0);
+    opacity: 0;
   }
 }
 
-/* Iluminacja „za czubkiem pióra" — WZMOCNIONY neon (Paweł: „błysk ma być mocniejszy").
-   Pełne neony marki rozświetlają literę dokładnie w chwili napisania (szczyt 20%, gdy
-   sfWriteIn jest ~60% odsłonięty), potem gasną do zera (spoczynek). drop-shadow (nie
-   text-shadow!) działa na realnie namalowanych pikselach SOLIDNEGO glifu — tu nie ma
-   już clip-text, więc glow jest jeszcze wyraźniejszy. KAŻDA klatka ma te same 4
-   drop-shadow (różnią się tylko alpha/blur), żeby filtr interpolował się PŁYNNIE.
-   Wzmocnienie vs poprzednia wersja: 3 warstwy → 4, alpha 0.95/0.7/0.5 → 1/0.92/0.72,
-   większe blury + dodatkowa szeroka aura glow #7DEBFF. Premium (ciasny rdzeń + miękka
-   aura), nie disco (brak pełnego prześwietlenia całego napisu). */
-@keyframes sfWriteFlash {
-  0% {
-    filter:
-      drop-shadow(0 0 0 rgba(0, 216, 255, 0))
-      drop-shadow(0 0 0 rgba(122, 53, 255, 0))
-      drop-shadow(0 0 0 rgba(99, 240, 0, 0))
-      drop-shadow(0 0 0 rgba(125, 235, 255, 0));
-  }
-  18% {
-    filter:
-      drop-shadow(0 0 7px rgba(0, 216, 255, 1))
-      drop-shadow(0 0 16px rgba(122, 53, 255, 0.95))
-      drop-shadow(0 0 28px rgba(99, 240, 0, 0.78))
-      drop-shadow(0 0 42px rgba(125, 235, 255, 0.6));
-  }
-  45% {
-    filter:
-      drop-shadow(0 0 5px rgba(0, 216, 255, 0.5))
-      drop-shadow(0 0 11px rgba(122, 53, 255, 0.38))
-      drop-shadow(0 0 22px rgba(99, 240, 0, 0.2))
-      drop-shadow(0 0 34px rgba(125, 235, 255, 0.16));
-  }
-  100% {
-    filter:
-      drop-shadow(0 0 4px rgba(0, 216, 255, 0))
-      drop-shadow(0 0 10px rgba(122, 53, 255, 0))
-      drop-shadow(0 0 20px rgba(99, 240, 0, 0))
-      drop-shadow(0 0 34px rgba(125, 235, 255, 0));
-  }
-}
-
-/* SPOCZYNKOWY ODDECH (po napisaniu): subtelna, ciągła poświata marki (istniejący
-   keyframe sfTextGlow, stłumione kolory — nie neon), żeby napis „żył". Działa gdy
-   NIE trwa pisanie. Nie zależy już od clip-text — leży wprost na H1, działa zawsze.
-   Gaszony globalną bramką reduced-motion (iteration:1) + jawnym blokiem niżej. */
-.sf-write:not(.is-writing) {
+/* SPOCZYNKOWY ODDECH (gdy NIE piszemy): subtelna, ciągła poświata marki (sfTextGlow,
+   stłumione kolory), żeby napis „żył". */
+.sf-write:not(.is-typing) {
   animation: sfTextGlow 7s var(--ease-in-out) 0.2s infinite;
 }
 
-/* Forced-colors (Windows High Contrast): porzuć kolory marki i neon, oddaj kolor
-   systemowi (spójnie z .text-metal*). Tekst pełny i czytelny. !important nadpisuje
-   inline `color` z serwera (inaczej hex litery wygrałby z CanvasText). */
+/* Forced-colors (Windows High Contrast): kolor systemowy, napis pełny, bez kursora. */
 @media (forced-colors: active) {
   .sf-write,
   .sf-write .sf-write-letter,
@@ -1198,27 +1163,29 @@
     color: CanvasText !important;
     -webkit-text-fill-color: CanvasText;
   }
-  .sf-write-letter {
-    clip-path: none;
-    filter: none;
-    animation: none;
+  .sf-write.is-typing .sf-write-letter {
+    opacity: 1 !important;
   }
-  .sf-write:not(.is-writing) {
+  .sf-write-letter.sf-caret::after {
+    animation: none;
+    opacity: 0;
+  }
+  .sf-write:not(.is-typing) {
     animation: none;
   }
 }
 
-/* prefers-reduced-motion: BEZ pisania. Twardy pas bezpieczeństwa, gdyby klasa
-   .is-writing jednak trafiła — napis od razu pełny, KOLOROWY i czytelny (solidny
-   per-litera color jest w bazie), zero mignięcia neonu, zero oddechu. */
+/* prefers-reduced-motion: BEZ pisania. Napis od razu pełny i kolorowy (trigger nie
+   doda .is-typing, ale dla pewności wymuszamy widoczność i gasimy kursor/oddech). */
 @media (prefers-reduced-motion: reduce) {
-  .sf-write.is-writing .sf-write-letter {
-    animation: none !important;
-    clip-path: none !important;
-    filter: none !important;
-    transform: none !important;
+  .sf-write.is-typing .sf-write-letter {
+    opacity: 1 !important;
   }
-  .sf-write:not(.is-writing) {
+  .sf-write-letter.sf-caret::after {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+  .sf-write:not(.is-typing) {
     animation: none !important;
   }
 }
