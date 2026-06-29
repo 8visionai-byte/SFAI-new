@@ -980,6 +980,16 @@
   }
 }
 
+/* WYDAJNOŚĆ (PageSpeed): ramki POZA widokiem mają WSTRZYMANĄ animację. Klasę
+   .aura-paused nadaje AuraDesync przez IntersectionObserver. Bez tego ~44 conic-ringi
+   re-rasteryzują się co klatkę (Style & Layout > 1 s → zablokowany główny wątek →
+   pierwsze malowanie H1, a więc LCP, dociąga do 7 s). Animują tylko ramki widoczne,
+   reszta jest zamrożona w bieżącej klatce (zero kosztu per-frame). LCP/TBT → zieleń. */
+.card-aura.aura-paused,
+.card-aura.aura-paused::before {
+  animation-play-state: paused !important;
+}
+
 /* ==========================================================================
    prefers-reduced-motion — globalna bramka A11y (spec 02 §5.4)
    ========================================================================== */

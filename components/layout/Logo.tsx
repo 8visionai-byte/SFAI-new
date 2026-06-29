@@ -82,6 +82,9 @@ export function Logo({
       <LogoImage
         variant={isMark ? 'mark' : 'full'}
         priority={priority}
+        // WYDAJNOŚĆ: bez `sizes` next/image serwował logo w 3840px (~55 KiB) na realne
+        // ~170px w nagłówku. Podpowiadamy faktyczną szerokość renderu → ~256-384px (~8 KiB).
+        sizes={isMark ? '40px' : '(min-width: 640px) 170px, 135px'}
         className={
           isMark
             ? 'h-[34px] w-[34px] sm:h-[40px] sm:w-[40px]'
