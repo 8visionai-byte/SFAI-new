@@ -46,3 +46,5 @@ next-env.d.ts
 
 # wewnętrzne dokumenty zespołu (research, strategia, ceny) — NIE publikować
 /_zespol/
+PROFIL-STRATEGICZNY-SIMPLEFAST.md
+PROFIL-STRATEGICZNY-*.md

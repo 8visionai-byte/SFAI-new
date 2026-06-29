@@ -10,8 +10,8 @@ import { SITE, LEGAL_ROUTES } from '@/lib/site';
  * Krok 1 łatwy (kafelki "czego potrzebujesz") = wyższa konwersja (multi-step
  * ~13,9% vs single ~4,5%). Krok 2 kontekst, krok 3 dane + termin (Cal.com stub).
  *
- * STATUS: UI bez backendu. Wysyłka to TODO: Make.com (webhook). Cal.com embed
- * to placeholder. Walidacja podstawowa client-side; kontakt nie jest wysyłany.
+ * STATUS: wysyłka leada to TODO Make.com (webhook na Vercelu). Wybór terminu =
+ * AKTYWNY link do kalendarza Cal.com. Walidacja podstawowa client-side.
  *
  * RODO (art. 13): krok 3 zbiera dane osobowe (imię + kontakt), więc WYMAGA zgody
  * z linkiem do polityki prywatności. Submit zablokowany bez zaznaczenia. Zgodę +
@@ -342,13 +342,16 @@ export function DiagnozaForm() {
             </label>
           </div>
 
-          {/* Cal.com embed — PLACEHOLDER (stub) */}
-          <div className="rounded-md border border-dashed border-border-strong bg-bg-subtle p-4 text-center">
-            <p className="text-caption text-fg-subtle">
-              {/* TODO: Cal.com embed — wybór terminu */}
-              Wybór terminu w kalendarzu pojawi się tutaj (Cal.com).
-            </p>
-          </div>
+          {/* Wybór terminu w kalendarzu Cal.com (aktywny link, otwiera się w nowej karcie). */}
+          <a
+            href="https://cal.com/simple-fast-ai/spotkanie-ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-[48px] items-center justify-center gap-2 rounded-md border-[1.5px] border-accent bg-accent-soft px-4 text-center text-body-sm font-semibold text-accent-hover transition-colors duration-fast ease-out hover:bg-accent hover:text-accent-contrast focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+          >
+            Wolisz od razu wybrać termin? Otwórz kalendarz
+            <span aria-hidden="true">→</span>
+          </a>
 
           <div className="flex items-center justify-between gap-3 pt-2">
             <Button type="button" variant="ghost" onClick={back}>
