@@ -53,6 +53,10 @@ export function LogoImage({
       width={width}
       height={height}
       priority={priority}
+      // LCP: logo w nagłówku jest elementem LCP na mobile. `priority` daje preload,
+      // ale Next 15.5 nie dokłada fetchpriority=high — dodajemy jawnie, by przeglądarka
+      // pobrała logo PRZED resztą (PageSpeed: "preload powinien mieć fetchpriority=high").
+      fetchPriority={priority ? 'high' : undefined}
       sizes={sizes}
       className={className}
     />
