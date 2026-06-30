@@ -1061,7 +1061,7 @@
   }
 }
 .sf-persona-swap {
-  animation: sfPersonaIn 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: sfPersonaIn 0.62s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* Panel czatu: wejście/wyjście (zastępuje AnimatePresence). */
@@ -1220,7 +1220,7 @@
 }
 .sf-write.is-typing .sf-write-letter.typed {
   opacity: 1;
-  transition: opacity 90ms linear;
+  transition: opacity 120ms linear;
 }
 
 /* Kursor: pionowa kreska tuż za ostatnio napisaną literą, miga (jak w czacie).

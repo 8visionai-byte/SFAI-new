@@ -20,7 +20,7 @@ export function WritingTrigger() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (h1.dataset.written === '1') return;
 
-    const SPEED = 22; // ms na literę (szybciej; krócej dotyka głównego wątku po hydracji)
+    const SPEED = 48; // ms na literę (premium: spokojne, deliberatne pisanie ~21 zn/s; LCP-neutralne, główny wątek nietknięty)
     let timer = 0;
 
     const start = () => {
@@ -45,7 +45,7 @@ export function WritingTrigger() {
           timer = window.setTimeout(() => {
             letters[letters.length - 1]?.classList.remove('sf-caret');
             h1.classList.remove('is-typing');
-          }, 900);
+          }, 1350);
         }
       };
       step();

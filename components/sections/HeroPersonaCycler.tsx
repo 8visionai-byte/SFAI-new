@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 /**
- * HeroPersonaCycler — jedno słowo/fraza w podtytule hero cykluje co ~2.8 s
+ * HeroPersonaCycler — jedno słowo/fraza w podtytule hero cykluje co ~5.2 s
  * z subtelnym fade (personalizacja językiem, NIE behawioralna = RODO-safe).
  *
  * WERSJA bez framer-motion: zmiana indeksu remountuje span (key={index}), a wejście
@@ -18,7 +18,7 @@ const PERSONAS = [
   'biura, w którym faktury i maile zjadają pół dnia',
 ] as const;
 
-const INTERVAL = 2800;
+const INTERVAL = 5200;
 
 export function HeroPersonaCycler() {
   const [index, setIndex] = useState(0);
