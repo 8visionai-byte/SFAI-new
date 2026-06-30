@@ -52,7 +52,7 @@ export function Hero() {
         containerWidth="default"
         className="!bg-transparent text-center"
       >
-        <Reveal>
+        <Reveal eager>
           <Badge variant="accent" className="mb-5">
             {POSITIONING.subClaim}
           </Badge>
@@ -66,7 +66,7 @@ export function Hero() {
         <WritingHeadline text={POSITIONING.claim} className="text-display mx-auto max-w-[18ch]" />
 
       {/* Kapsuła answer-first — surowy HTML, cytat dla LLM. Analogia w 1. zdaniu. */}
-      <Reveal delay={0.1}>
+      <Reveal eager delay={0.1}>
         <p className="text-lead mx-auto mt-6 max-w-measure text-fg-muted">
           Chatbot odpowiada na pytania. AI Agent wykonuje pracę: odbiera telefony, odpisuje klientom,
           umawia spotkania i pilnuje faktur. Nie sprzedajemy narzędzi AI. Projektujemy systemy, które
@@ -76,7 +76,7 @@ export function Hero() {
       </Reveal>
 
       {/* Dynamiczny odbiorca (personalizacja językiem, RODO-safe) */}
-      <Reveal delay={0.15}>
+      <Reveal eager delay={0.15}>
         <div className="card-aura mx-auto mt-7 max-w-narrow rounded-lg border border-border bg-surface px-5 py-4 text-left shadow-xs">
           <p className="text-caption text-fg-subtle">
             Powtarzalna robota wygląda inaczej w każdej branży. Pokaż mi swoją.
@@ -106,7 +106,7 @@ export function Hero() {
       */}
 
       {/* CTA główne + mikrokopia */}
-      <Reveal delay={0.2}>
+      <Reveal eager delay={0.2}>
         <div className="mt-9 flex flex-col items-center gap-3">
           <MagneticButton variant="primary" size="lg" href={HOME_CTA.href}>
             {HOME_CTA.label}
@@ -123,7 +123,7 @@ export function Hero() {
       </Reveal>
 
       {/* Linki drugorzędne — NIE konkurują z CTA */}
-      <Reveal delay={0.3}>
+      <Reveal eager delay={0.3}>
         <p className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-caption text-fg-subtle">
           <a href="#problem" className="underline decoration-1 underline-offset-2 hover:text-fg">
             Zobacz, jak liczę oszczędność →

@@ -1,20 +1,32 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ChatAgent } from './ChatAgent';
+import { useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { cn } from '@/lib/cn';
 
 /**
- * ChatLauncher — pływający launcher czatu (prawy dolny róg) + wysuwany panel
- * z demem (spec 03 §10, "szewc w butach"). STUB: panel używa ChatDemo (atrapa).
+ * ChatLauncher — pływający launcher czatu (prawy dolny róg) + wysuwany panel z
+ * Agentem (spec 03 §10, "szewc w butach").
+ *
+ * WYDAJNOŚĆ: ChatAgent ładowany LENIWIE (next/dynamic, ssr:false) — kod czatu trafia
+ * do osobnego chunku i pobiera się dopiero przy pierwszym otwarciu, nie obciąża
+ * pierwszego wczytania strony. Animacja wejścia/wyjścia panelu = czysty CSS
+ * (.sf-chat-panel), bez framer-motion.
  *
  * A11y: panel ma role="dialog", zamykanie ESC, focus-visible. Launcher jest
  * przyciskiem, nie linkiem. Nie blokuje treści strony.
  */
-export function ChatLauncher() {
-  const reduce = useReducedMotion();
-  const [open, setOpen] = useState(false);
+const ChatAgent = dynamic(() => import('./ChatAgent').then((m) => m.ChatAgent), {
+  ssr: false,
+});
 
+export function ChatLauncher() {
+  const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false); // panel w DOM (dla animacji wyjścia)
+  const [visible, setVisible] = useState(false); // klasa enter/exit
+  const closeTimer = useRef<number>(0);
+
+  // Zamknięcie klawiszem ESC.
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -24,23 +36,33 @@ export function ChatLauncher() {
     return () => window.removeEventListener('keydown', onKey);
   }, [open]);
 
+  // Choreografia mount -> enter / exit -> unmount (zastępuje AnimatePresence).
+  useEffect(() => {
+    window.clearTimeout(closeTimer.current);
+    if (open) {
+      setMounted(true);
+      const r = requestAnimationFrame(() => setVisible(true));
+      return () => cancelAnimationFrame(r);
+    }
+    setVisible(false);
+    closeTimer.current = window.setTimeout(() => setMounted(false), 240);
+    return undefined;
+  }, [open]);
+
   return (
     <div className="fixed bottom-5 right-5 z-dropdown print:hidden">
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            role="dialog"
-            aria-label="Demo czatu z Agentem SimpleFast.ai"
-            className="mb-3 w-[min(22rem,calc(100vw-2.5rem))]"
-            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.98 }}
-            animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.98 }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <ChatAgent />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {mounted && (
+        <div
+          role="dialog"
+          aria-label="Demo czatu z Agentem SimpleFast.ai"
+          className={cn(
+            'sf-chat-panel mb-3 w-[min(22rem,calc(100vw-2.5rem))]',
+            visible && 'is-open'
+          )}
+        >
+          <ChatAgent />
+        </div>
+      )}
 
       <button
         type="button"

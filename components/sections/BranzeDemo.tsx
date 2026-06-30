@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useReducedMotion } from 'framer-motion';
+import { useReducedMotion } from '@/components/motion/hooks';
 import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 

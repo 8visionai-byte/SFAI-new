@@ -1,6 +1,6 @@
 'use client';
 
-import { useReducedMotion } from 'framer-motion';
+import { useReducedMotion } from '@/components/motion/hooks';
 
 /**
  * WykresSlupkowy — porównanie dwóch wartości (np. "koszt dziś" vs "koszt po")

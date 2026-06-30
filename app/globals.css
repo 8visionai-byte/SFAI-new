@@ -1005,6 +1005,97 @@
 }
 
 /* ==========================================================================
+   ANIMACJE CSS — zamienniki framer-motion (czysty CSS = ~42 KiB JS mniej i brak
+   ~3 s blokady głównego wątku na mobile). Wygląd 1:1.
+   ========================================================================== */
+
+/* Reveal NAD foldem (eager): wejście odpala się OD RAZU z CSS — nie czeka na JS,
+   więc element LCP (akapit hero) maluje się na starcie animacji. */
+@keyframes sfRevealIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+[data-reveal-eager] {
+  animation: sfRevealIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Reveal poniżej folda: ukryte z SSR, IntersectionObserver dokłada [data-reveal-shown]. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-reveal][data-reveal-shown] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Magnetyczne CTA: transform ustawia JS na pointermove, transition daje sprężynę. */
+.sf-magnetic {
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Pasek postępu scrolla: JS ustawia scaleX, transition wygładza („sprężyna"). */
+.sf-scroll-progress {
+  transition: transform 0.12s linear;
+}
+
+/* Cykler person: wejście nowego wariantu (remount przez key={index}). */
+@keyframes sfPersonaIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.sf-persona-swap {
+  animation: sfPersonaIn 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Panel czatu: wejście/wyjście (zastępuje AnimatePresence). */
+.sf-chat-panel {
+  opacity: 0;
+  transform: translateY(12px) scale(0.98);
+  transform-origin: bottom right;
+  transition:
+    opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sf-chat-panel.is-open {
+  opacity: 1;
+  transform: none;
+}
+
+/* reduced-motion: po globalnej bramce jawnie resetujemy opacity/transform, żeby
+   nic nie zostało ukryte (gdyby JS był wolny/wyłączony). */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal][data-reveal-shown],
+  [data-reveal-eager],
+  .sf-chat-panel,
+  .sf-chat-panel.is-open {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  [data-reveal-eager],
+  .sf-persona-swap {
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
    H1 HERO — EFEKT PISANIA LITERA-PO-LITERZE z wędrującym neonowym flashem.
    Paweł: „pisanie długopisem litera po literze, a za czubkiem błysk", „same litery
    kolorowe — jak w logo: niebieski → fiolet → zielony (.ai)".

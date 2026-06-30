@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useInView, useReducedMotion } from 'framer-motion';
+import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
+import { useInView, useReducedMotion } from './hooks';
 
 /**
  * AnimatedMetric — licznik count-up od 0 do wartości docelowej (spec 02 §5.2).
@@ -50,7 +50,7 @@ function parseMetric(value: string) {
 export function AnimatedMetric({ value, className, durationMs = 1200 }: AnimatedMetricProps) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-15%' });
+  const inView = useInView(ref as RefObject<Element | null>, { once: true, margin: '-15%' });
   // STABILNY po `value` — kluczowe: nie tworzymy nowego obiektu co render, więc efekt
   // nie restartuje się na każdej klatce.
   const parsed = useMemo(() => parseMetric(value), [value]);

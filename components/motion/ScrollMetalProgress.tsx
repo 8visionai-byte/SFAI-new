@@ -1,41 +1,59 @@
 'use client';
 
-import { motion, useScroll, useSpring, useReducedMotion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * ScrollMetalProgress — cienki, metaliczny pasek postępu czytania na samej górze
- * okna. Smaczek „premium": przy scrollu rośnie od 0 do 100% szerokości, w kolorze
- * marki (niebieski → fiolet → zielony). Daje wrażenie „żywej", dopracowanej strony
- * i subtelnie prowadzi wzrok w dół (do CTA #diagnoza).
+ * okna. Przy scrollu rośnie od 0 do 100% szerokości, w kolorze marki. Subtelnie
+ * prowadzi wzrok w dół (do CTA #diagnoza).
  *
- * ZASADY (north star, nienegocjowalne):
- *  • DEKORACJA — nie niesie treści. aria-hidden, pointer-events:none, fixed.
- *  • prefers-reduced-motion → komponent NIE renderuje paska (zero ruchu, zero
- *    migotania). Treść strony jest kompletna bez niego.
- *  • Nie dotyka kontrastu tekstu (leży nad układem, nie pod tekstem treści).
- *  • Client island — montuje się po hydratacji; przy SSR/botach po prostu go nie ma
- *    (cytowalność i tak liczy się z treści, nie z paska).
+ * WERSJA bez framer-motion: pasywny listener scrolla + jeden rAF (coalesced) ustawia
+ * scaleX; wygładzenie „sprężyny" robi `transition: transform` (.sf-scroll-progress).
+ * Brak wiecznej pętli rAF = znikomy koszt na mobile.
  *
- * scaleX 0→1 ze sprężyną (useSpring) — płynnie, bez „skoków" przy szybkim scrollu.
+ * ZASADY: DEKORACJA (aria-hidden, pointer-events:none, fixed). reduced-motion =>
+ * pasek się nie renderuje. Client island — przy SSR/botach po prostu go nie ma.
  */
 export function ScrollMetalProgress() {
-  const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll();
-  // Sprężyna wygładza wartość — pasek „dogania" scroll miękko (premium feel).
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 30,
-    restDelta: 0.001,
-  });
+  const ref = useRef<HTMLDivElement>(null);
+  const [enabled, setEnabled] = useState(true);
 
-  // Reduced-motion: brak paska w ogóle (najczystszy, statyczny stan).
-  if (reduce) return null;
+  useEffect(() => {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+      setEnabled(false);
+      return;
+    }
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const el = ref.current;
+      if (!el) return;
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      const p = max > 0 ? Math.min(1, Math.max(0, doc.scrollTop / max)) : 0;
+      el.style.transform = `scaleX(${p})`;
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  if (!enabled) return null;
 
   return (
-    <motion.div
+    <div
+      ref={ref}
       aria-hidden="true"
-      className="bg-metal-decor pointer-events-none fixed inset-x-0 top-0 z-toast h-[3px] origin-left"
-      style={{ scaleX }}
+      className="bg-metal-decor pointer-events-none fixed inset-x-0 top-0 z-toast h-[3px] origin-left sf-scroll-progress"
+      style={{ transform: 'scaleX(0)' }}
     />
   );
 }
