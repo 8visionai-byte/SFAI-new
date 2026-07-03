@@ -9,9 +9,10 @@ import { cn } from '@/lib/cn';
  * Agentem (spec 03 §10, "szewc w butach").
  *
  * WYDAJNOŚĆ: ChatAgent ładowany LENIWIE (next/dynamic, ssr:false) — kod czatu trafia
- * do osobnego chunku i pobiera się dopiero przy pierwszym otwarciu, nie obciąża
- * pierwszego wczytania strony. Animacja wejścia/wyjścia panelu = czysty CSS
- * (.sf-chat-panel), bez framer-motion.
+ * do osobnego chunku poza ścieżką krytyczną (nie obciąża pierwszego wczytania).
+ * PREFETCH: chunk rozgrzewamy w tle po 1. interakcji użytkownika, więc klik w launcher
+ * otwiera panel OD RAZU (bez czekania ~1-2 s na pobranie). Animacja wejścia/wyjścia
+ * panelu = czysty CSS (.sf-chat-panel), bez framer-motion.
  *
  * A11y: panel ma role="dialog", zamykanie ESC, focus-visible. Launcher jest
  * przyciskiem, nie linkiem. Nie blokuje treści strony.
@@ -35,6 +36,26 @@ export function ChatLauncher() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [open]);
+
+  // PREFETCH czatu: rozgrzej chunk ChatAgent w tle po 1. interakcji (lub po chwili),
+  // żeby klik otwierał panel OD RAZU zamiast czekać ~1-2 s na pobranie kodu. Nie dotyka
+  // ścieżki krytycznej: odpala się po interakcji/idle, nie na starcie, więc wynik
+  // PageSpeed zostaje, a UX czatu jest natychmiastowy.
+  useEffect(() => {
+    const events = ['pointerdown', 'touchstart', 'keydown', 'scroll'] as const;
+    let timer = 0;
+    const warm = () => {
+      events.forEach((e) => window.removeEventListener(e, warm));
+      window.clearTimeout(timer);
+      void import('./ChatAgent'); // pobiera chunk -> trafia do cache modułu
+    };
+    events.forEach((e) => window.addEventListener(e, warm, { passive: true }));
+    timer = window.setTimeout(warm, 3500);
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, warm));
+      window.clearTimeout(timer);
+    };
+  }, []);
 
   // Choreografia mount -> enter / exit -> unmount (zastępuje AnimatePresence).
   useEffect(() => {
