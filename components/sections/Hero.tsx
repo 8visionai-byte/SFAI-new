@@ -46,7 +46,7 @@ export function Hero() {
          scrim je rozjaśnia, więc pozostają subtelne na jasnym tle.
       Treść (Badge/H1/kapsuła/CTA) jest w surowym HTML nad tłem — cytowalna 1:1.
     */
-    <VideoBackground scrim="light" decoration={<FloatingOrbs />}>
+    <VideoBackground src="/brand/hero-bg.mp4" scrim="light" decoration={<FloatingOrbs />}>
       <Section
         tone="base"
         containerWidth="default"
