@@ -21,7 +21,7 @@ const base =
 
 const variantClass: Record<ButtonVariant, string> = {
   primary:
-    'bg-accent text-accent-contrast shadow-accent ' +
+    'sf-cta bg-accent text-accent-contrast shadow-accent ' +
     'hover:bg-accent-hover hover:-translate-y-px ' +
     'active:translate-y-0 active:scale-[0.99] ' +
     'focus-visible:shadow-[var(--shadow-accent),0_0_0_3px_var(--ring)] ' +

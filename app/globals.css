@@ -1078,6 +1078,67 @@
   transform: none;
 }
 
+/* Kropki „pisania" w demo Agenta (AgentDemo). */
+.sf-typing {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+.sf-typing i {
+  width: 4px;
+  height: 4px;
+  border-radius: 9999px;
+  background: currentColor;
+  opacity: 0.35;
+  animation: sfTyping 1s ease-in-out infinite;
+}
+.sf-typing i:nth-child(2) {
+  animation-delay: 0.16s;
+}
+.sf-typing i:nth-child(3) {
+  animation-delay: 0.32s;
+}
+@keyframes sfTyping {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+/* CTA premium — połysk przesuwający się przy hover + jarzenie krawędzi marki.
+   Spoczynek statyczny (perf), efekt tylko na hover. Nakładka background-image nad
+   kolorem tła przycisku (bg-accent). reduced-motion gasi to niżej. */
+.sf-cta {
+  background-image: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.16) 48%,
+    transparent 66%
+  );
+  background-repeat: no-repeat;
+  background-size: 220% 100%;
+  background-position: 160% 0;
+  transition:
+    background-position 0.6s ease,
+    box-shadow 0.35s ease,
+    transform var(--dur-fast, 150ms) ease,
+    background-color var(--dur-fast, 150ms) ease;
+}
+.sf-cta:hover {
+  background-position: -60% 0;
+  box-shadow:
+    var(--shadow-accent),
+    0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent),
+    0 8px 26px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
 /* reduced-motion: po globalnej bramce jawnie resetujemy opacity/transform, żeby
    nic nie zostało ukryte (gdyby JS był wolny/wyłączony). */
 @media (prefers-reduced-motion: reduce) {
@@ -1092,6 +1153,14 @@
   [data-reveal-eager],
   .sf-persona-swap {
     animation: none !important;
+  }
+  .sf-typing i {
+    animation: none !important;
+    opacity: 0.6 !important;
+  }
+  .sf-cta {
+    background-image: none !important;
+    transition: none !important;
   }
 }
 

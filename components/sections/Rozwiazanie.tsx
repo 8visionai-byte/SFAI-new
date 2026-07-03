@@ -1,5 +1,6 @@
 import { Section, Button } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
+import { AgentDemo } from './AgentDemo';
 
 /**
  * SEKCJA 4 — ROZWIĄZANIE: Agent działa, nie gada (spec 03 §4).
@@ -62,6 +63,12 @@ export function Rozwiazanie() {
           </p>
         </Reveal>
       </div>
+
+      {/* Interaktywne demo „pokaż, nie mów": chatbot vs Agent — NAD cytowalną tabelą.
+          Tabela ZOSTAJE (obowiązkowa dla cytowalności LLM); demo to wizualna ilustracja. */}
+      <Reveal delay={0.08}>
+        <AgentDemo />
+      </Reveal>
 
       {/* Tabela porównawcza (HTML) */}
       <Reveal delay={0.1}>
