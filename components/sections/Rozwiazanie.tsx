@@ -1,6 +1,11 @@
+import Link from 'next/link';
 import { Section, Button } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { AgentDemo } from './AgentDemo';
+
+/** Styl frazowego linku w treści — sygnał SEO/AEO do podstron usług. */
+const LINK =
+  'font-medium text-accent underline decoration-1 underline-offset-2 hover:text-accent-hover';
 
 /**
  * SEKCJA 4 — ROZWIĄZANIE: Agent działa, nie gada (spec 03 §4).
@@ -45,7 +50,39 @@ export function Rozwiazanie() {
       pulsującą poświatę. Kontrast treści bez zmian.
     */
     <Section tone="base" className="surface-aurora">
+      {/* BLOK DEFINICYJNY (answer-first) — kanoniczny, cytowalny fragment dla LLM na
+          zapytanie „co to jest AI Agent dla firmy". Zwięzła definicja encyklopedyczna,
+          potem wyróżnik + kontekst ogólnopolski + linki wewnętrzne do usług (sygnał
+          SEO i AEO). Prowadzi czytelnika: CO to jest -> CZYM się różni -> demo -> tabela. */}
       <div className="mx-auto max-w-narrow">
+        <Reveal>
+          <h2 className="text-h2 text-metal">Co to jest AI Agent dla firmy?</h2>
+          <div className="sf-accent-line mt-4 max-w-[8rem]" aria-hidden="true" />
+        </Reveal>
+        <Reveal delay={0.05}>
+          <p className="text-lead mt-5 text-fg-muted">
+            AI Agent dla firmy to system, który samodzielnie wykonuje powtarzalne zadania:
+            odbiera telefony, odpowiada klientom, umawia wizyty i przenosi dane między systemami.
+            Działa według Twoich zasad, ma dostęp do kalendarza, CRM i narzędzi, z których już
+            korzystasz. W odróżnieniu od chatbota nie tylko odpowiada na pytania, ale wykonuje
+            konkretne czynności od początku do końca.
+          </p>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <p className="mt-4 text-body text-fg-muted">
+            W SimpleFast.ai budujemy takich Agentów dla polskich małych i średnich firm.
+            Pracujemy zdalnie dla firm z całej Polski, od jednoosobowych działalności z mniejszych
+            miast po zespoły z Warszawy, Krakowa czy Wrocławia. Najczęściej są to{' '}
+            <Link href="/uslugi/chatboty" className={LINK}>chatboty AI dla firmy</Link>,{' '}
+            <Link href="/uslugi/voiceboty" className={LINK}>voiceboty odbierające telefony po polsku</Link>{' '}
+            oraz <Link href="/uslugi/automatyzacje" className={LINK}>automatyzacja procesów w firmie</Link>.
+            Dane zostają w UE, zgodnie z RODO, a płacisz za efekt.
+          </p>
+        </Reveal>
+      </div>
+
+      {/* RÓŻNICA Agent vs chatbot — drugi cytowalny blok (na zapytanie „czym się różni"). */}
+      <div className="mx-auto mt-14 max-w-narrow">
         <Reveal>
           {/* .text-metal = metaliczny gradient na nagłówku. Solidny fallback
               --metal-fg (na dark = jasny fiolet, 10.14:1 na navy = AA) gwarantuje

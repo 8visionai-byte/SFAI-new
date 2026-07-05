@@ -18,7 +18,7 @@ export const SITE = {
   locale: 'pl_PL',
   lang: 'pl',
   description:
-    'Architekt AI dla MŚP: automatyzacje, chatboty, voiceboty, aplikacje i wtyczki oraz strony www pozycjonowane pod SEO/AEO/GEO. Budujemy AI Agentów, którzy wykonują pracę, nie tylko gadają.',
+    'Architekt AI dla polskich MŚP: automatyzacje, chatboty, voiceboty, aplikacje i wtyczki oraz strony www pod SEO/AEO/GEO. Budujemy AI Agentów, którzy wykonują pracę, nie tylko gadają — dane w UE, zgodnie z RODO, płacisz za efekt.',
   /**
    * Founder „twarz" — Paweł prowadzi komunikację i jest autorem treści (E-E-A-T,
    * authors w metadanych, podpis w stopce). Marcin jest w `founders` poniżej.

@@ -43,7 +43,7 @@ export const dynamic = 'force-static';
 export const metadata: Metadata = buildMetadata({
   title: 'SimpleFast.ai: budujemy AI Agentów dla firm',
   description:
-    'Budujemy AI Agentów dla polskich firm: odbierają telefony, odpisują klientom, umawiają wizyty. Dane w UE, zaczynasz od małego kroku, płacisz za efekt.',
+    'Budujemy AI Agentów dla polskich firm: voiceboty odbierają telefony, chatboty odpisują klientom, automatyzacje pilnują faktur. Dane w UE, płacisz za efekt.',
   path: '/',
   ogImage: '/og/home.png',
 });
