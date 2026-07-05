@@ -47,6 +47,13 @@ export function ChatAgent() {
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Identyfikator sesji czatu — grupuje wiadomosci jednej rozmowy w arkuszu (przez webhook).
+  // Klient-only (ChatAgent ladowany dynamicznie ssr:false), wiec brak ryzyka niespojnosci SSR.
+  const [sessionId] = useState(() =>
+    typeof crypto !== 'undefined' && 'randomUUID' in crypto
+      ? crypto.randomUUID()
+      : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`
+  );
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -76,6 +83,7 @@ export function ChatAgent() {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify({
+            sessionId,
             // Wysylamy historie bez wiadomosci powitalnej (jest tylko UI-owa).
             messages: nextMessages
               .filter((m) => m !== WELCOME)
@@ -110,7 +118,7 @@ export function ChatAgent() {
         inputRef.current?.focus();
       }
     },
-    [messages, loading]
+    [messages, loading, sessionId]
   );
 
   function handleSubmit(e: FormEvent) {
@@ -215,7 +223,7 @@ export function ChatAgent() {
           onChange={(e) => setValue(e.target.value)}
           onKeyDown={handleKeyDown}
           disabled={loading}
-          placeholder="Napisz pytanie, np. ile kosztuje voicebot"
+          placeholder="Napisz pytanie albo zostaw imię i e-mail"
           className="min-h-[48px] w-full rounded-sm border-[1.5px] border-border bg-surface-sunken px-4 text-body-sm text-fg placeholder:text-fg-subtle focus:border-accent focus:bg-surface focus:outline-none focus:ring-[3px] focus:ring-accent-soft disabled:opacity-60"
           autoComplete="off"
           maxLength={2000}
@@ -230,6 +238,19 @@ export function ChatAgent() {
           Wyslij
         </Button>
       </form>
+
+      {/* Nota RODO — widoczna od startu rozmowy (art. 13). Link do pełnej polityki. */}
+      <p className="px-3 pb-3 text-[0.68rem] leading-snug text-fg-subtle">
+        Rozmowę możemy zapisywać, aby ulepszać obsługę i odpowiedzieć na zapytanie; dane usuwamy po
+        90 dniach.{' '}
+        <Link
+          href="/polityka-prywatnosci"
+          className="underline underline-offset-2 hover:text-fg"
+        >
+          Polityka prywatności
+        </Link>
+        .
+      </p>
     </div>
   );
 }

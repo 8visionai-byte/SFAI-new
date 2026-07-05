@@ -22,7 +22,7 @@
  * i nie zalezala od recznego wklejania backtickow w czwartym pliku.
  */
 
-import { NextResponse } from 'next/server';
+import { NextResponse, after } from 'next/server';
 import {
   renderKnowledgeForPrompt,
   KNOWLEDGE_URLS,
@@ -55,7 +55,10 @@ GRANICE
 - Jak nie znasz odpowiedzi z bazy, powiedz to wprost i skieruj na /kontakt (bezplatna diagnoza, rozmowa z founderem).
 
 CEL
-- Pomoc uzytkownikowi szybko zrozumiec, co robi SimpleFast.ai, i trafic do wlasciwej zakladki. Gdy widac realna potrzebe (wdrozenie, wycena, "od czego zaczac"), zaproponuj bezplatna diagnoze: /kontakt.`;
+- Pomoc uzytkownikowi szybko zrozumiec, co robi SimpleFast.ai, i trafic do wlasciwej zakladki. Gdy widac realna potrzebe (wdrozenie, wycena, "od czego zaczac"), zaproponuj bezplatna diagnoze: /kontakt.
+
+POZYSKIWANIE KONTAKTU (delikatnie, tylko RAZ)
+- Gdy PO KILKU wiadomosciach uzytkownik pyta o wycene, wdrozenie, "ile kosztuje" albo "od czego zaczac" i widac realne zainteresowanie, zaproponuj RAZ: "Chcesz, zebysmy sie odezwali z konkretami? Zostaw w wiadomosci imie i e-mail, a wrocimy do Ciebie. Mozesz tez od razu umowic bezplatna diagnoze: /kontakt." Nie narzucaj sie, nie pytaj o kontakt w pierwszej wiadomosci i nie powtarzaj tego w kazdej odpowiedzi.`;
 
 // --- Konfiguracja modelu i limitow -----------------------------------------
 
@@ -208,6 +211,42 @@ async function callAnthropic(
   return text;
 }
 
+// --- Przechwycenie rozmowy do Make (opcjonalne, wg env) ---------------------
+// Wysylamy PO odpowiedzi przez after() -> zero latencji dla uzytkownika, a Vercel
+// utrzymuje funkcje przy zyciu do wykonania calla. Bez MAKE_CHAT_WEBHOOK_URL nic sie
+// nie dzieje. Cichy fail: przechwytywanie NIGDY nie moze zepsuc czatu.
+
+function captureConversation(body: unknown, messages: ChatMessage[], reply: string): void {
+  const url = process.env.MAKE_CHAT_WEBHOOK_URL;
+  if (!url) return;
+
+  const sid = (body as { sessionId?: unknown }).sessionId;
+  const sessionId = typeof sid === 'string' ? sid.slice(0, 64) : 'unknown';
+  const lastUser =
+    [...messages].reverse().find((m) => m.role === 'user')?.content ?? '';
+  // Jesli user zostawil e-mail (bot go o to poprosil) - wyluskujemy do osobnego pola,
+  // zeby lead byl latwy do wychwycenia w arkuszu/Airtable.
+  const emailMatch = lastUser.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i);
+
+  after(async () => {
+    try {
+      await fetch(url, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          sessionId,
+          userMessage: lastUser,
+          assistantReply: reply,
+          email: emailMatch ? emailMatch[0] : null,
+          timestamp: new Date().toISOString(),
+        }),
+      });
+    } catch (e) {
+      console.error('[api/chat] capture webhook failed', e);
+    }
+  });
+}
+
 // --- Handler ----------------------------------------------------------------
 
 export async function POST(req: Request) {
@@ -283,6 +322,9 @@ export async function POST(req: Request) {
       reply =
         'Nie mam na to odpowiedzi w tym, co wiem o SimpleFast.ai. Najlepiej napisz do nas przez /kontakt, odzywamy sie szybko.';
     }
+
+    // Przechwycenie rozmowy do Make (po odpowiedzi, nie blokuje uzytkownika).
+    captureConversation(body, messages, reply);
 
     // KNOWLEDGE_URLS jest dostepne, gdybys chcial dodac twarda walidacje linkow w
     // przyszlosci. Dzis UI i tak linkuje wylacznie sciezki wewnetrzne (anti-XSS),

@@ -21,8 +21,8 @@ import { Section } from '@/components/ui';
 export const dynamic = 'force-static';
 
 const PATH = '/polityka-prywatnosci';
-const UPDATED = '2026-06-19';
-const UPDATED_LABEL = '19 czerwca 2026';
+const UPDATED = '2026-07-03';
+const UPDATED_LABEL = '3 lipca 2026';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Polityka prywatności',
@@ -82,6 +82,17 @@ export default function PolitykaPrywatnosciPage() {
             potrzebujesz. Nie kupujemy baz danych i nie pozyskujemy Twoich danych z innych źródeł.
           </P>
 
+          <H2>Dane z czatu z Agentem AI</H2>
+          <P>
+            Jeśli piszesz do naszego Agenta AI na stronie, zapisujemy treść rozmowy (Twoje
+            wiadomości i odpowiedzi Agenta), aby ulepszać obsługę i odpowiedzieć na Twoje zapytanie.
+            Jeśli w rozmowie zostawisz imię i e-mail, użyjemy ich wyłącznie po to, żeby się z Tobą
+            skontaktować. Dane z czatu przetwarzamy na infrastrukturze w Unii Europejskiej
+            (Make.com, region EU) i usuwamy je po 90 dniach. Podstawą jest Twoja zgoda oraz nasz
+            uzasadniony interes w obsłudze zapytania (art. 6 ust. 1 lit. a i f RODO). Rozmowa
+            z Agentem jest dobrowolna, a treść odpowiedzi generuje model AI.
+          </P>
+
           <H2>W jakim celu i na jakiej podstawie przetwarzamy dane?</H2>
           <P>
             Dane z formularza przetwarzamy, żeby odpowiedzieć na Twoje zgłoszenie, umówić bezpłatną
@@ -94,8 +105,9 @@ export default function PolitykaPrywatnosciPage() {
           <H2>Komu powierzamy dane?</H2>
           <P>
             Dane mogą trafić do zaufanych dostawców, którzy pomagają nam prowadzić firmę: dostawcy
-            hostingu i infrastruktury strony (Netlify) oraz narzędzia do obsługi i automatyzacji
-            zgłoszeń (Make.com). Działają jako podmioty przetwarzające, na podstawie umów powierzenia,
+            hostingu i infrastruktury strony (Vercel) oraz narzędzia do obsługi, automatyzacji
+            zgłoszeń i przechwytywania rozmów z Agentem (Make.com, region UE). Działają jako podmioty
+            przetwarzające, na podstawie umów powierzenia,
             wyłącznie zgodnie z naszymi poleceniami. Dane są przetwarzane na terenie UE lub EOG.
             Nie przekazujemy ich poza EOG bez podstawy i odpowiednich zabezpieczeń wymaganych przez RODO.
           </P>
