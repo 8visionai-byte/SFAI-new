@@ -57,11 +57,32 @@ export function ChatAgent() {
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  // Ref do OSTATNIEJ wiadomosci usera - kotwica przewijania po odpowiedzi bota.
+  const lastUserRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll na dol przy kazdej zmianie listy / stanu pisania.
+  // Przewijanie czatu:
+  //  - gdy user wysyla / bot pisze -> na sam dol (widac wlasna wiadomosc + kropki),
+  //  - gdy przychodzi ODPOWIEDZ bota -> ustaw ostatnia wiadomosc usera na GORZE widoku,
+  //    zeby dluga odpowiedz czytac OD POCZATKU (a nie ladowac na jej koncu).
   useEffect(() => {
-    const el = scrollRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
+    const container = scrollRef.current;
+    if (!container) return;
+    const last = messages[messages.length - 1];
+
+    if (loading || last?.role === 'user') {
+      container.scrollTop = container.scrollHeight;
+      return;
+    }
+
+    // Odpowiedz bota: dosun gore ostatniej wiadomosci usera do gory kontenera.
+    const userEl = lastUserRef.current;
+    if (userEl) {
+      const delta =
+        userEl.getBoundingClientRect().top - container.getBoundingClientRect().top;
+      container.scrollTop += delta - 8; // 8px oddechu nad wiadomoscia usera
+    } else {
+      container.scrollTop = container.scrollHeight;
+    }
   }, [messages, loading]);
 
   const send = useCallback(
@@ -133,6 +154,12 @@ export function ChatAgent() {
     }
   }
 
+  // Indeks ostatniej wiadomosci usera (kotwica przewijania po odpowiedzi bota).
+  const lastUserIndex = messages.reduce(
+    (acc, m, i) => (m.role === 'user' ? i : acc),
+    -1
+  );
+
   return (
     <div className="card-aura flex flex-col overflow-hidden rounded-lg border border-border bg-surface shadow-sm">
       {/* Naglowek */}
@@ -159,6 +186,7 @@ export function ChatAgent() {
         {messages.map((m, i) => (
           <div
             key={i}
+            ref={i === lastUserIndex ? lastUserRef : undefined}
             className={
               m.role === 'assistant'
                 ? 'max-w-[88%] self-start rounded-lg rounded-bl-xs bg-bg-subtle px-4 py-3 text-body-sm text-fg'
