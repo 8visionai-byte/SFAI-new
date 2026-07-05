@@ -22,7 +22,7 @@
  * i nie zalezala od recznego wklejania backtickow w czwartym pliku.
  */
 
-import { NextResponse, after } from 'next/server';
+import { NextResponse } from 'next/server';
 import {
   renderKnowledgeForPrompt,
   KNOWLEDGE_URLS,
@@ -216,35 +216,53 @@ async function callAnthropic(
 // utrzymuje funkcje przy zyciu do wykonania calla. Bez MAKE_CHAT_WEBHOOK_URL nic sie
 // nie dzieje. Cichy fail: przechwytywanie NIGDY nie moze zepsuc czatu.
 
-function captureConversation(body: unknown, messages: ChatMessage[], reply: string): void {
+async function captureConversation(
+  body: unknown,
+  messages: ChatMessage[],
+  reply: string
+): Promise<void> {
   const url = process.env.MAKE_CHAT_WEBHOOK_URL;
-  if (!url) return;
+  if (!url) {
+    console.warn('[api/chat] MAKE_CHAT_WEBHOOK_URL nieustawiony - pomijam przechwycenie.');
+    return;
+  }
 
   const sid = (body as { sessionId?: unknown }).sessionId;
   const sessionId = typeof sid === 'string' ? sid.slice(0, 64) : 'unknown';
   const lastUser =
     [...messages].reverse().find((m) => m.role === 'user')?.content ?? '';
   // Jesli user zostawil e-mail (bot go o to poprosil) - wyluskujemy do osobnego pola,
-  // zeby lead byl latwy do wychwycenia w arkuszu/Airtable.
+  // zeby lead byl latwy do wychwycenia w arkuszu.
   const emailMatch = lastUser.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i);
 
-  after(async () => {
-    try {
-      await fetch(url, {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
-          sessionId,
-          userMessage: lastUser,
-          assistantReply: reply,
-          email: emailMatch ? emailMatch[0] : null,
-          timestamp: new Date().toISOString(),
-        }),
-      });
-    } catch (e) {
-      console.error('[api/chat] capture webhook failed', e);
+  // Awaited (nie after()) - pewne wykonanie w cyklu zadania, niezaleznie od platformy.
+  // Timeout 2.5 s + try/catch => wolny/padniety webhook NIGDY nie zablokuje ani nie zepsuje czatu.
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 2500);
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        sessionId,
+        userMessage: lastUser,
+        assistantReply: reply,
+        email: emailMatch ? emailMatch[0] : null,
+        timestamp: new Date().toISOString(),
+      }),
+      signal: controller.signal,
+      cache: 'no-store',
+    });
+    if (!res.ok) {
+      console.error(`[api/chat] capture webhook status ${res.status}`);
+    } else {
+      console.log(`[api/chat] przechwycono rozmowe do Make (${res.status})`);
     }
-  });
+  } catch (e) {
+    console.error('[api/chat] capture webhook failed', e);
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 // --- Handler ----------------------------------------------------------------
@@ -323,8 +341,9 @@ export async function POST(req: Request) {
         'Nie mam na to odpowiedzi w tym, co wiem o SimpleFast.ai. Najlepiej napisz do nas przez /kontakt, odzywamy sie szybko.';
     }
 
-    // Przechwycenie rozmowy do Make (po odpowiedzi, nie blokuje uzytkownika).
-    captureConversation(body, messages, reply);
+    // Przechwycenie rozmowy do Make (awaited, ale z timeoutem + cichym failem, wiec
+    // nie zablokuje ani nie zepsuje odpowiedzi dla uzytkownika).
+    await captureConversation(body, messages, reply);
 
     // KNOWLEDGE_URLS jest dostepne, gdybys chcial dodac twarda walidacje linkow w
     // przyszlosci. Dzis UI i tak linkuje wylacznie sciezki wewnetrzne (anti-XSS),
