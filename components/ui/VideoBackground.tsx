@@ -134,18 +134,11 @@ export function VideoBackground({
                 tabIndex={-1}
                 disablePictureInPicture
               />
-            ) : poster ? (
-              // Mobile / reduced-motion: statyczny poster zamiast wideo.
-              // eslint-disable-next-line @next/next/no-img-element -- tło dekoracyjne, nie LCP treści
-              <img
-                src={poster}
-                alt=""
-                aria-hidden="true"
-                className="absolute inset-0 h-full w-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
             ) : null}
+            {/* MOBILE / reduced-motion: świadomie NIE renderujemy <img> z posterem —
+                95 KB w hero stało się elementem LCP i ścięło wynik mobile (95 -> 72).
+                Zostaje animowany gradient (baza wyżej), lekki i on-brand. Poster służy
+                WYŁĄCZNIE jako klatka startowa <video> na desktopie (atrybut poster). */}
           </>
         )}
 
