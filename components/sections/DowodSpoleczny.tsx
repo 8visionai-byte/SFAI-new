@@ -11,10 +11,52 @@ import { HOME_CTA, SITE } from '@/lib/site';
  * puste i renderujemy uczciwy stan — najmocniejszy jest blok autorytetu Pawła
  * (z realnych danych SITE).
  *
- * INPUT PAWŁA: realne opinie (cytat z konkretem/liczbą + imię, rola, firma, twarz,
- * za zgodą klienta) -> wpisać do OPINIE, a render automatycznie je pokaże.
+ * REALNE opinie (dostarczone przez Pawła, publikacja za zgodą klienta) — render
+ * automatycznie je pokazuje. Cytaty zostawiamy DOSŁOWNIE (głos klienta, także z
+ * jego myślnikiem — to jego słowa, nie nasza kopia). Widoczny HTML (blockquote +
+ * figcaption) => cytowalne przez LLM i Google. `branza` = pogrubiona linia,
+ * `podpis` = osoba/rola/firma pod spodem.
  */
-const OPINIE: ReadonlyArray<readonly [string, string]> = [];
+type Opinia = { cytat: string; branza: string; podpis: string };
+
+const OPINIE: readonly Opinia[] = [
+  {
+    cytat:
+      'Prowadzę kancelarię dwadzieścia lat. Każde narzędzie które obiecuje oszczędność czasu najpierw ten czas pochłania. Tu było inaczej. Raporty po spotkaniach przestały być problemem. Zespół to poczuł szybciej niż ja.',
+    branza: 'Kancelaria Prawno-Finansowa',
+    podpis: 'Tomasz, Partner Zarządzający (KNF Team)',
+  },
+  {
+    cytat:
+      'Ha! Sezon, słońce, goście pytają o wszystko i nic, a ja biegam z telefonem między pomostem a biurem. W lipcu gość pisze o 23:00 w sprawie rowerów. O 23:00! Chatbot odpowiada, on rezerwuje, ja śpię. Rano patrzę, rezerwacja gotowa. No to się chłopaki śmialiśmy. Teraz goście mówią że obsługa u mnie błyskawiczna. No jest, tylko już nie ja biegam!',
+    branza: 'Turystyka, Mazury',
+    podpis: 'Jerzy, Właściciel (Przystań Jurgen)',
+  },
+  {
+    cytat:
+      'Co nie jest zapisane to nie istnieje, tak mówię swoim ludziom od lat. A sam wieczorami siadałem i odtwarzałem z głowy co gdzie ustalono. Teraz nagrywam w aucie zaraz po robocie. Mail idzie sam, klient dostaje wszystko tego samego dnia. Proste.',
+    branza: 'Firma Budowlana',
+    podpis: 'Andrzej, Właściciel (Torocken Haus)',
+  },
+  {
+    cytat:
+      'Mieliśmy faktury z 6 różnych źródeł, każda inaczej wyglądała. Dwie osoby przez łącznie kilka godzin tygodniowo przepisywały dane ręcznie. I tak raz na jakiś czas coś wpadało nie tam gdzie trzeba. Byłam sceptyczna bo wcześniej próbowaliśmy innych rozwiązań i zawsze coś nie działało z naszym systemem. Tu działało od pierwszego tygodnia. Teraz te same dwie osoby robią coś innego — coś co faktycznie wymaga myślenia. To chyba najlepszy sposób żeby to opisać.',
+    branza: 'Hotel i Restauracja',
+    podpis: 'Edyta i Rafał, Właścicielka (ONYX)',
+  },
+  {
+    cytat:
+      'Przyszliśmy do nich sprzedać nasze usługi. Skończyło się na tym że sami kupiliśmy. A właściwie zamieniliśmy się. Oni dostali nasze kampanie, my dostaliśmy ich narzędzia AI i to był strzał w dziesiątkę dla obu stron. Prowadzę kampanie dla dużych marek, wiem co działa, wiem co to wyniki. I wiem że to co zbudowali dla naszych procesów to nie jest zabawka. To realne narzędzie które działa codziennie.',
+    branza: 'Agencja Marketingowa, Social Media',
+    podpis: 'Y ADS',
+  },
+  {
+    cytat:
+      'Zaczęli u nas jako kursanci. Skończyli jako partnerzy. Mieliśmy 3000 stron transkrypcji z kursów i użytkownicy musieli przekopywać setki filmów żeby znaleźć to czego szukali. Teraz chatbot robi to w sekundy, dokładnie, bez błędów. Do tego asystent mailowy który odpowiada tak jak odpowiedziałby nasz człowiek, uczy się nowych produktów sam i działa autonomicznie w 60% przypadków. Support odetchnął. Szczerze, trochę niesamowite że to zaproponowali nam nasi własni absolwenci.',
+    branza: 'Dyrektor, Edukacja AI',
+    podpis: 'Instytut Kryptografii',
+  },
+];
 
 export function DowodSpoleczny() {
   return (
@@ -25,28 +67,27 @@ export function DowodSpoleczny() {
         </Reveal>
         <Reveal delay={0.05}>
           {/*
-            INPUT PAWŁA: realne branże + liczba wdrożeń + suma zdjętych godzin/mc.
-            Do czasu danych — uczciwa kapsuła BEZ widocznych [PLACEHOLDER]
-            (które zacytowałby LLM jako fakt o firmie).
+            Realne branże z opinii poniżej (kancelaria, turystyka, budowlanka,
+            hotel/gastro, agencja, edukacja). Bez zmyślonych liczb wdrożeń/godzin —
+            uczciwie zapowiadamy głosy klientów, których cytujemy dosłownie.
           */}
           <p className="text-lead mt-5 text-fg-muted">
-            Stawiamy AI Agentów dla polskich firm z usług, handlu i produkcji. Konkretne nazwy, liczby wdrożeń
-            i zdjęte godziny publikujemy tutaj wtedy, gdy klient da na to zielone światło, nie wcześniej.
+            Kancelarie, turystyka, budowlanka, hotele, agencje i edukacja. Poniżej prawdziwe głosy właścicieli,
+            którzy już pracują z naszymi Agentami. Cytujemy dosłownie, publikujemy za zgodą klienta.
           </p>
         </Reveal>
       </div>
 
-      {/* Opinie — renderujemy TYLKO realne (z twarzą). Brak realnych = uczciwy stan. */}
+      {/* Opinie — renderujemy TYLKO realne. Brak realnych = uczciwy stan (else). */}
       {OPINIE.length > 0 ? (
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
-          {OPINIE.map(([cytat, osoba], i) => (
-            <Reveal key={i} delay={i * 0.06}>
-              <Card as="figure" className="h-full">
-                <blockquote className="text-body text-fg">„{cytat}”</blockquote>
-                <figcaption className="mt-4 flex items-center gap-3">
-                  {/* INPUT PAWŁA: prawdziwe zdjęcie klienta, zero stocku, zero twarzy z AI */}
-                  <span className="inline-block h-[40px] w-[40px] shrink-0 rounded-full bg-bg-subtle" aria-hidden="true" />
-                  <span className="text-caption text-fg-muted">{osoba}</span>
+        <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {OPINIE.map((o, i) => (
+            <Reveal key={i} delay={i * 0.06} className="h-full">
+              <Card as="figure" className="flex h-full flex-col">
+                <blockquote className="text-body text-fg">„{o.cytat}”</blockquote>
+                <figcaption className="mt-auto pt-5">
+                  <span className="block font-semibold text-fg">{o.branza}</span>
+                  <span className="mt-1 block text-caption text-fg-muted">{o.podpis}</span>
                 </figcaption>
               </Card>
             </Reveal>

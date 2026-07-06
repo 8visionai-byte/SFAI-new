@@ -16,6 +16,20 @@ const PATHS: Record<string, string> = {
     'M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z',
 };
 
+/**
+ * Kolory marek (do hover). Solidny, rozpoznawalny kolor per profil, widoczny na
+ * jasnym tle stopki. Ikony renderują `fill: currentColor`, więc kolor ustawia
+ * rodzic przez `color` (zmienna --brand w Footer). Instagram = magenta z logo,
+ * TikTok = czerwień marki (czarny nie czyta się jako „kolor" na jasnym).
+ */
+export const BRAND_COLORS: Record<string, string> = {
+  Instagram: '#E4405F',
+  TikTok: '#FE2C55',
+  Facebook: '#1877F2',
+  LinkedIn: '#0A66C2',
+  YouTube: '#FF0000',
+};
+
 export function SocialIcon({ name }: { name: string }) {
   const d = PATHS[name];
   if (!d) return null;

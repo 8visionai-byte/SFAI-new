@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { SITE, NAV_LINKS, LEGAL_ROUTES, SOCIALS } from '@/lib/site';
 import { USLUGI } from '@/lib/uslugi';
 import { Logo } from './Logo';
-import { SocialIcon } from './SocialIcon';
+import { SocialIcon, BRAND_COLORS } from './SocialIcon';
 
 /**
  * Linki "Strony" bez "/uslugi" — usługi mają własną kolumnę z 6 realnymi stronami,
@@ -31,8 +31,13 @@ export function Footer() {
             <p className="mt-4 max-w-[40ch] text-body-sm text-fg-muted">
               Budujemy AI Agentów dla polskich firm. Dane w UE, RODO, AI Act.
             </p>
-            {/* Profile społecznościowe — oryginalne ikony marek, otwierane w nowej karcie. */}
-            <ul className="mt-5 flex items-center gap-3">
+            {/*
+              Profile społecznościowe — oryginalne ikony marek, otwierane w nowej
+              karcie. W spoczynku subtelne (mono), na hover/focus: kolor marki +
+              powiększenie + delikatny lift. Płynna animacja czystym CSS (bez
+              biblioteki, zgodnie z decyzją perf). Kolor per marka przez --brand.
+            */}
+            <ul className="mt-5 flex items-center gap-3.5">
               {SOCIALS.map((s) => (
                 <li key={s.name}>
                   <a
@@ -40,7 +45,8 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`SimpleFast.ai na ${s.name}`}
-                    className="inline-flex text-fg-subtle transition-colors hover:text-accent"
+                    style={{ '--brand': BRAND_COLORS[s.name] } as React.CSSProperties}
+                    className="inline-flex text-fg-subtle transition-[color,transform] duration-200 ease-out hover:-translate-y-0.5 hover:scale-125 hover:text-[color:var(--brand)] focus-visible:-translate-y-0.5 focus-visible:scale-125 focus-visible:text-[color:var(--brand)] motion-reduce:transform-none motion-reduce:transition-colors"
                   >
                     <SocialIcon name={s.name} />
                   </a>
