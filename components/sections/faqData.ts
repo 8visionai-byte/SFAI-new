@@ -37,6 +37,10 @@ export const FAQ_ITEMS: { q: string; a: string }[] = [
     a: 'Chatbot odpowiada na pytania, a AI Agent wykonuje całe zadania. Chatbot poda godziny otwarcia. Agent sprawdzi kalendarz, zaproponuje termin, zapisze wizytę i wyśle potwierdzenie. To różnica między systemem, który gada, a takim, który działa.',
   },
   {
+    q: 'Jak sprawić, żeby ChatGPT, Gemini i Perplexity polecały moją firmę?',
+    a: 'To zadanie dla pozycjonowania pod AI (GEO/AEO). Ustawiamy Twoją stronę tak, żeby silniki AI w ogóle widziały jej treść, umiały ją zacytować (bezpośrednia odpowiedź na początku, konkretne liczby, tabele, nagłówki w formie pytań) i miały dla niej autorytet spoza samej strony. To inna gra niż klasyczne SEO w Google, a liczy się coraz bardziej, bo klienci pytają AI „polećcie firmę do X”. Co tydzień sprawdzamy ręcznie w czterech silnikach, czy realnie zaczynasz padać w odpowiedziach.',
+  },
+  {
     q: 'Czy potrzebuję wiedzy technicznej, żeby to ogarnąć?',
     a: 'Nie. Całą część techniczną bierzemy na siebie, a Ty dostajesz gotowe, działające rozwiązanie i prosty panel, w którym widzisz, co się dzieje. Mówimy po ludzku, bez żargonu. Jeśli czegoś nie rozumiesz, to znaczy, że my źle wytłumaczyliśmy, nie Ty.',
   },

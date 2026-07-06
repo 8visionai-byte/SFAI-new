@@ -25,13 +25,12 @@ export function buildMetadata({
   const url = `${SITE.url}${path}`;
   const image = `${SITE.url}${ogImage ?? SITE.ogImageDefault}`;
 
-  // OG/twitter image emitujemy TYLKO gdy plik realnie istnieje (SITE.assetsReady).
-  // Bez tego og:image/twitter:image wskazują na 404 = zero preview w social i kartach AI.
-  // INPUT PAWŁA: dostarczyć public/og/*.png (1200x630) i przełączyć SITE.assetsReady = true.
-  const og = SITE.assetsReady
+  // OG/twitter image emitujemy TYLKO gdy plik realnie istnieje (SITE.ogReady).
+  // Pliki public/og/*.png (1200x630) sa juz dostarczone, wiec ogReady=true.
+  const og = SITE.ogReady
     ? { images: [{ url: image, width: 1200, height: 630, alt: title }] }
     : {};
-  const tw = SITE.assetsReady ? { images: [image] } : {};
+  const tw = SITE.ogReady ? { images: [image] } : {};
 
   return {
     title,

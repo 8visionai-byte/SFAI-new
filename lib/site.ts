@@ -67,12 +67,25 @@ export const SITE = {
     phone: '+48 696 674 874',
     hours: 'pon-pt 9-18',
     areaServed: 'PL',
+    // Siedziba (realna, podana przez Pawła) — do NAP w stopce i schema (poziom miasta,
+    // bez ulicy). NIE ogranicza obszaru usług: pracujemy w całej Polsce, zdalnie i na miejscu.
+    city: 'Pisz',
+    region: 'warmińsko-mazurskie',
+    country: 'PL',
+    offices: ['Gubin', 'Strzegom'],
   },
+  // Profile społecznościowe (realne). W sameAs = sygnał weryfikowalności encji dla LLM/Google.
   sameAs: [
-    'https://www.linkedin.com/company/simplefast-ai', // TODO:ZWERYFIKUJ
-    'https://www.facebook.com/simplefast.ai', // TODO:ZWERYFIKUJ
+    'https://www.instagram.com/simplefast.ai/',
+    'https://www.tiktok.com/@simple_fast_ai',
+    'https://www.facebook.com/people/Simple-Fast-AI/61588806909698/',
+    'https://www.linkedin.com/company/simple-fast-ai/',
+    'https://www.youtube.com/channel/UCuj5DvHxTZvB6l6IOOMDrTw',
   ],
   ogImageDefault: '/og/default.png',
+  // og:image/twitter:image gotowe (public/og/*.png istnieją). OSOBNO od assetsReady,
+  // który bramkuje jeszcze favicon/icon/logo (te pliki wciąż nie istnieją).
+  ogReady: true,
   /**
    * Flaga assetów graficznych. Dopóki false, NIE emitujemy og:image/twitter:image
    * ani <link rel=icon> — bo pliki (public/og/*.png, favicon.ico, icon.svg, logo.png)
@@ -82,6 +95,18 @@ export const SITE = {
    */
   assetsReady: false,
 } as const;
+
+/**
+ * Profile społecznościowe (realne, podane przez Pawła) — źródło ikon w stopce.
+ * Te same URL-e są w SITE.sameAs (schema Organization). Otwierane w nowej karcie.
+ */
+export const SOCIALS = [
+  { name: 'Instagram', href: 'https://www.instagram.com/simplefast.ai/' },
+  { name: 'TikTok', href: 'https://www.tiktok.com/@simple_fast_ai' },
+  { name: 'Facebook', href: 'https://www.facebook.com/people/Simple-Fast-AI/61588806909698/' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/company/simple-fast-ai/' },
+  { name: 'YouTube', href: 'https://www.youtube.com/channel/UCuj5DvHxTZvB6l6IOOMDrTw' },
+] as const;
 
 /**
  * Pozycjonowanie marki (north star #7). Jedno zdanie-różnicownik kategorii.

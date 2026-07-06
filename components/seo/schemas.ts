@@ -41,6 +41,14 @@ export const organizationSchema = (): Json => {
       jobTitle: f.jobTitle,
     })),
     areaServed: { '@type': 'Country', name: 'Polska' },
+    // Siedziba (realna, poziom miasta) — punkt geograficzny encji dla Google/LLM.
+    // Nie ogranicza areaServed (cala Polska); to tylko adres rejestrowy.
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: SITE.contact.city,
+      addressRegion: SITE.contact.region,
+      addressCountry: SITE.contact.country,
+    },
     knowsLanguage: 'pl',
     sameAs: SITE.sameAs,
   };

@@ -1,7 +1,8 @@
 import Link from 'next/link';
-import { SITE, NAV_LINKS, LEGAL_ROUTES } from '@/lib/site';
+import { SITE, NAV_LINKS, LEGAL_ROUTES, SOCIALS } from '@/lib/site';
 import { USLUGI } from '@/lib/uslugi';
 import { Logo } from './Logo';
+import { SocialIcon } from './SocialIcon';
 
 /**
  * Linki "Strony" bez "/uslugi" — usługi mają własną kolumnę z 6 realnymi stronami,
@@ -30,6 +31,22 @@ export function Footer() {
             <p className="mt-4 max-w-[40ch] text-body-sm text-fg-muted">
               Budujemy AI Agentów dla polskich firm. Dane w UE, RODO, AI Act.
             </p>
+            {/* Profile społecznościowe — oryginalne ikony marek, otwierane w nowej karcie. */}
+            <ul className="mt-5 flex items-center gap-3">
+              {SOCIALS.map((s) => (
+                <li key={s.name}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`SimpleFast.ai na ${s.name}`}
+                    className="inline-flex text-fg-subtle transition-colors hover:text-accent"
+                  >
+                    <SocialIcon name={s.name} />
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Usługi — 6 realnych stron, anchor = H1 = money query (linkowanie pod GEO) */}
@@ -93,7 +110,12 @@ export function Footer() {
                   </a>
                 </li>
               )}
-              <li>Obsługujemy całą Polskę.</li>
+              <li>Siedziba: Pisz (woj. warmińsko-mazurskie). Biura: Gubin i Strzegom.</li>
+              <li>
+                Świadczymy usługi w całej Polsce, zdalnie i na miejscu. Miasto nie ma znaczenia:
+                przyjeżdżamy na audyt do Warszawy, Krakowa, Poznania, Gdańska, Wrocławia i wszędzie
+                indziej.
+              </li>
             </ul>
           </div>
         </div>
