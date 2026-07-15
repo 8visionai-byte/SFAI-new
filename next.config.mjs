@@ -52,6 +52,17 @@ const securityHeaders = [
   },
 ];
 
+// Cache dla assetów brand — wersjonowane nazwą pliku (zmiana treści = nowa nazwa),
+// więc rok + immutable jest bezpieczny; przeglądarka nie odpytuje ponownie.
+const brandCacheHeaders = [
+  {
+    source: '/brand/:path*',
+    headers: [
+      { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+    ],
+  },
+];
+
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
@@ -59,7 +70,7 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
   },
   async headers() {
-    return securityHeaders;
+    return [...securityHeaders, ...brandCacheHeaders];
   },
 };
 

@@ -1,4 +1,4 @@
-import { Section, MagneticButton, Badge, VideoBackground } from '@/components/ui';
+import { Section, MagneticButton, Badge } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { FloatingOrbs } from '@/components/motion/FloatingOrbs';
 import { WritingHeadline } from '@/components/motion/WritingHeadline';
@@ -34,24 +34,22 @@ export function Hero() {
   return (
     /*
       WARSTWA PREMIUM (czysto dekoracyjna, nie rusza treści/H1/CTA):
-       • VideoBackground = tło-film. BRAK mp4 → animowany metaliczny gradient
-         (niebieski→fiolet→zielony). scrim="light" GWARANTUJE kontrast AA pod
-         CIEMNYM tekstem: rozjaśnia tło-film do jasnej, czystej bazy (życzenie
-         Pawła: tła jasne, gotowe pod przyszłe wideo/zdjęcia), przepuszczając
-         tylko subtelny ruch koloru metalu. Nie regresować do ciemnego scrimu.
+       • Tło-film jest teraz GLOBALNE: ScrollVideoBackground w app/page.tsx
+         (fixed, scrubowane scrollem — film przewija się klatkami razem ze
+         scrollem całej strony). Hero to zwykła sekcja NAD tym tłem. Bez scrimu:
+         film jest JASNY (ciepła biel jak paper), więc ciemny tekst ma na nim
+         kontrast bez rozjaśniającej nakładki.
        • Section bez theme="dark" → tokeny jasne (domyślne): tekst ciemny na
          jasnym, a H1 (.text-metal-sheen) to gradient marki + pulsująca poświata.
          Tło Section wymuszone na transparentne, żeby było widać tło-film pod spodem.
-       • FloatingOrbs = pływające plamy metalu (CSS, reduced-motion → statyczne);
-         scrim je rozjaśnia, więc pozostają subtelne na jasnym tle.
+       • FloatingOrbs = pływające plamy metalu (CSS, reduced-motion → statyczne),
+         w absolutnej warstwie -z-10 pod treścią hero (aria-hidden u źródła i tu).
       Treść (Badge/H1/kapsuła/CTA) jest w surowym HTML nad tłem — cytowalna 1:1.
     */
-    <VideoBackground
-      src="/brand/hero-bg.mp4"
-      poster="/brand/hero-bg-poster.jpg"
-      scrim="light"
-      decoration={<FloatingOrbs />}
-    >
+    <div className="relative isolate overflow-hidden">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <FloatingOrbs />
+      </div>
       <Section
         tone="base"
         containerWidth="default"
@@ -139,7 +137,7 @@ export function Hero() {
         </p>
       </Reveal>
       </Section>
-    </VideoBackground>
+    </div>
   );
 }
 

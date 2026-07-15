@@ -5,6 +5,7 @@ import { faqSchema, serviceSchema } from '@/components/seo/schemas';
 import { FAQ_ITEMS } from '@/components/sections/faqData';
 
 import { ScrollMetalProgress } from '@/components/motion/ScrollMetalProgress';
+import { ScrollVideoBackground } from '@/components/motion/ScrollVideoBackground';
 import { Hero } from '@/components/sections/Hero';
 import { PasekZaufania } from '@/components/sections/PasekZaufania';
 import { Problem } from '@/components/sections/Problem';
@@ -50,7 +51,18 @@ export const metadata: Metadata = buildMetadata({
 
 export default function HomePage() {
   return (
-    <main id="main">
+    <main id="main" className="has-scroll-video">
+      {/*
+        GLOBALNE tło-film scrubowane scrollem (DEKORACJA, fixed, za treścią):
+        film przewija się klatkami razem ze scrollem strony; bez scrolla stoi.
+        Klasa .has-scroll-video na <main> uchyla krycie jasnych sekcji
+        (globals.css), żeby film prześwitywał przez CAŁĄ stronę. Mobile: zero
+        wideo (bazowy kolor). Treść/SSG/kolejność sekcji bez zmian.
+      */}
+      <ScrollVideoBackground
+        src="/brand/bg-topo-scrub.mp4"
+        poster="/brand/bg-topo-poster.webp"
+      />
       {/*
         Smaczek premium: metaliczny pasek postępu czytania (DEKORACJA, aria-hidden,
         client island). prefers-reduced-motion → nie renderuje się w ogóle.

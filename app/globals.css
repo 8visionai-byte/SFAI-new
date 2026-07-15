@@ -483,6 +483,28 @@
 }
 
 /* ==========================================================================
+   SCROLL-VIDEO NA HOME (.has-scroll-video na <main>) — globalne tło-film
+   (ScrollVideoBackground, fixed za treścią) ma prześwitywać przez CAŁĄ stronę.
+   Jasne sekcje dostają więc PÓŁPRZEZROCZYSTE tła (te same barwy co tokeny
+   --bg/--bg-subtle/--surface, tylko z alfą). Dark sekcje zostają kryjące
+   (:not([data-theme='dark'])). Selektor celuje TYLKO w <section> — karty
+   (.bg-surface na divach) zostają w pełni kryjące, nietknięte.
+   POZA @layer i ze specyficznością (0,3,1) > utility Tailwinda (0,1,0),
+   więc wygrywa bez !important. Wyjątek: hero ma !bg-transparent (important)
+   i celowo zostaje w pełni przezroczyste.
+   ========================================================================== */
+/* Scroll-video na home: sekcje jasne lekko przepuszczają tło-film. Dark sekcje zostają kryjące. */
+.has-scroll-video section.bg-bg:not([data-theme='dark']) {
+  background-color: rgb(251 250 248 / 0.78);
+}
+.has-scroll-video section.bg-bg-subtle:not([data-theme='dark']) {
+  background-color: rgb(245 244 241 / 0.8);
+}
+.has-scroll-video section.bg-surface:not([data-theme='dark']) {
+  background-color: rgb(255 255 255 / 0.85);
+}
+
+/* ==========================================================================
    METAL — UTILITY AKCENTÓW (.text-metal / .border-metal / .surface-tech)
    Zasada AA: gradient = dekoracja. Treść nigdy nie zależy od clip-text.
    ========================================================================== */
