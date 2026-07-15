@@ -12,8 +12,9 @@ import { useEffect, useRef, useState } from 'react';
  *
  * ZASADY (spójne z VideoBackground.tsx, north star perf tego repo):
  *  • DEKORACJA: aria-hidden, pointer-events:none, -z-10 — poza drzewem
- *    dostępności i zdarzeń. Treść i jej kontrast NIE zależą od filmu
- *    (film jest jasny jak paper, tekst ciemny ma na nim kontrast).
+ *    dostępności i zdarzeń. Treść i jej kontrast NIE zależą od filmu:
+ *    gdy film jest CIEMNY, prop scrim="light" kładzie nad nim jasny scrim
+ *    (.bg-scrim-light) — to gwarancja kontrastu AA ciemnego tekstu strony.
  *  • MOBILE (<768px): <video> NIE montuje się W OGÓLE (zero wideo i zero dużych
  *    obrazów tła na mobile — twarda zasada perf; zostaje bazowy kolor --bg).
  *    SSR-safe: pierwszy render bez wideo, dołącza po potwierdzeniu desktopa.
@@ -30,9 +31,15 @@ export type ScrollVideoBackgroundProps = {
   src: string;
   /** Klatka 0 jako poster: tło zanim film się dogra + statyczny kadr przy reduced-motion. */
   poster: string;
+  /**
+   * Scrim NAD filmem/posterem: 'light' = jasna zasłona (.bg-scrim-light),
+   * gwarancja kontrastu AA ciemnego tekstu strony, gdy film jest ciemny.
+   * Default 'none' (film jasny nie potrzebuje zasłony).
+   */
+  scrim?: 'light' | 'none';
 };
 
-export function ScrollVideoBackground({ src, poster }: ScrollVideoBackgroundProps) {
+export function ScrollVideoBackground({ src, poster, scrim = 'none' }: ScrollVideoBackgroundProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   // SSG / pierwszy paint: zakładamy "nie-wideo" (mobile-first, bezpieczne dla hydration).
   const [mountVideo, setMountVideo] = useState(false);
@@ -144,6 +151,10 @@ export function ScrollVideoBackground({ src, poster }: ScrollVideoBackgroundProp
           disablePictureInPicture
         />
       ) : null}
+      {/* Scrim NAD filmem/posterem (naturalna kolejność DOM, bez -z-10 — leży
+          wyżej niż <video>): jasna zasłona gwarantująca kontrast AA ciemnego
+          tekstu strony, gdy film pod spodem jest ciemny. */}
+      {scrim === 'light' ? <div className="absolute inset-0 bg-scrim-light" /> : null}
       {/* Warstwa bazowa POD filmem (zawsze): kolor --bg, żeby nigdy nie błysnęła
           pustka — na mobile to jest całe tło, na desktopie spód pod posterem/filmem. */}
       <div className="absolute inset-0 -z-10 bg-bg" />

@@ -60,8 +60,9 @@ export default function HomePage() {
         wideo (bazowy kolor). Treść/SSG/kolejność sekcji bez zmian.
       */}
       <ScrollVideoBackground
-        src="/brand/bg-topo-scrub.mp4"
-        poster="/brand/bg-topo-poster.webp"
+        src="/brand/bg-topo-scrub-v2.mp4"
+        poster="/brand/bg-topo-poster-v2.webp"
+        scrim="light"
       />
       {/*
         Smaczek premium: metaliczny pasek postępu czytania (DEKORACJA, aria-hidden,
