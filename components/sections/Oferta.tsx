@@ -45,11 +45,10 @@ const POZIOMY = [
 
 export function Oferta() {
   return (
-    <Section tone="base">
+    <Section tone="subtle">
       <div className="mx-auto max-w-narrow">
         <Reveal>
-          {/* .text-metal — fallback --metal-fg = fiolet 6.81:1 na paper (AA). */}
-          <h2 className="text-h2 text-metal">Ile kosztuje wdrożenie AI Agenta dla firmy?</h2>
+          <h2 className="text-h2">Ile kosztuje wdrożenie AI Agenta dla firmy?</h2>
         </Reveal>
         <Reveal delay={0.05}>
           <p className="text-lead mt-5 text-fg-muted">
@@ -64,14 +63,18 @@ export function Oferta() {
       <div className="mt-9 grid items-stretch gap-6 md:grid-cols-3">
         {POZIOMY.map((p, i) => (
           <Reveal key={p.name} delay={i * 0.06}>
-            {/* Wszystkie karty cennika dostają „oddychającą" ramkę marki (.card-aura),
-                a wyróżniona grubszą (.card-aura-bold). Badge „Najczęściej wybierane"
-                w barwach marki. Bez .card-glossy: jego overflow:hidden ucinał badge
-                wystający nad górną krawędź (zgłoszenie Pawła: napis ucięty). */}
+            {/* BUDŻET KOLORU (redesign): aura marki TYLKO na wyróżnionym planie —
+                1 z DOKŁADNIE 2 aur na home (druga: AgentDemo). Pozostałe karty
+                cennika stoją cicho. Bez .card-glossy: jego overflow:hidden ucinał
+                badge wystający nad górną krawędź (zgłoszenie Pawła: napis ucięty). */}
             <Card
               variant={p.highlight ? 'highlight' : 'base'}
               as="article"
-              className={`card-aura flex h-full flex-col${p.highlight ? ' card-aura-bold' : ''}`}
+              className={
+                p.highlight
+                  ? 'card-aura card-aura-bold flex h-full flex-col'
+                  : 'flex h-full flex-col'
+              }
             >
               {p.highlight && (
                 <span
@@ -125,13 +128,13 @@ export function Oferta() {
               <li key={u.slug}>
                 <Link
                   href={`/uslugi/${u.slug}`}
-                  className="card-aura group block h-full rounded-lg border border-border bg-surface p-5 shadow-xs transition-colors hover:border-brand"
+                  className="group block h-full rounded-lg border border-border bg-surface p-5 shadow-xs transition-colors hover:border-brand"
                 >
                   <span className="block text-body font-medium text-fg group-hover:text-brand">
                     {u.h1}
                   </span>
                   <span className="mt-2 block text-body-sm text-fg-muted">{u.metaDescription}</span>
-                  <span className="mt-3 block text-caption text-fg-subtle">Zobacz, jak to działa →</span>
+                  <span className="mt-3 block text-caption text-fg-subtle">Zobacz, jak to działa <span aria-hidden="true" className="sf-arrow">→</span></span>
                 </Link>
               </li>
             ))}
@@ -141,7 +144,7 @@ export function Oferta() {
 
       {/* Wariant z dotacją 2026 */}
       <Reveal delay={0.12}>
-        <div className="card-aura mx-auto mt-6 max-w-narrow rounded-lg border border-border bg-bg-subtle p-6">
+        <div className="mx-auto mt-6 max-w-narrow rounded-lg border border-border bg-bg-subtle p-6">
           <h3 className="text-h3">Można to sfinansować z dotacji?</h3>
           {/* INPUT PAWŁA: gdy będzie konkretny program dofinansowania, dopisać jego nazwę. */}
           <p className="mt-2 text-body-sm text-fg-muted">

@@ -30,11 +30,13 @@ const PUNKTY = [
 
 export function Bezpieczenstwo() {
   return (
-    <Section tone="subtle">
+    /* JEDYNA ciemna sekcja home (redesign „Precyzja cyrkla"): kotwica powagi na
+       temat lęku #1. theme="dark" przełącza tokeny semantyczne (data-theme),
+       .surface-tech dokłada navy tło + hairline'y (górny/dolny) + glow. */
+    <Section theme="dark" tone="base" className="surface-tech">
       <div className="mx-auto max-w-narrow">
         <Reveal>
-          {/* .text-metal — fallback --metal-fg = fiolet 6.81:1 na paper (AA). */}
-          <h2 className="text-h2 text-metal">Czy AI Agent dla firmy jest bezpieczny i zgodny z RODO?</h2>
+          <h2 className="text-h2">Czy AI Agent dla firmy jest bezpieczny i zgodny z RODO?</h2>
         </Reveal>
         {/* Kapsuła answer-first — cytat dla LLM */}
         <Reveal delay={0.05}>

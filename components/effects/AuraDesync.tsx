@@ -19,7 +19,7 @@ import { useEffect } from 'react';
  *
  * Bezpiecznie:
  *  - prefers-reduced-motion -> nic nie robimy (ramki i tak nie animują),
- *  - bez JS / przed hydracją -> fallbacki CSS (5s/6s/0s) = stara, spójna wersja,
+ *  - bez JS / przed hydracją -> fallbacki CSS (8s/10s/0s) = spójna, wolna wersja,
  *  - MutationObserver (debounce + filtr na .card-aura) łapie karty dokładane przy
  *    nawigacji klienta, ignorując mutacje niezwiązane z ramkami,
  *  - data-aura-desync = idempotentność (każdą ramkę ruszamy/obserwujemy raz).
@@ -45,9 +45,11 @@ export function AuraDesync() {
 
     const desync = (el: HTMLElement) => {
       el.setAttribute('data-aura-desync', '');
-      // Tempo: błysk 5-8.5 s, oddech 4-6.5 s (każda ramka inne).
-      el.style.setProperty('--aura-spin-dur', `${rnd(5, 8.5).toFixed(2)}s`);
-      el.style.setProperty('--aura-breathe-dur', `${rnd(4, 6.5).toFixed(2)}s`);
+      // Tempo: błysk 8.5-14 s, oddech 6.5-10.5 s (każda ramka inne). Zwolnione
+      // (redesign „Precyzja cyrkla"): 2 jedyne aury mają być dostojne, nie neonowe
+      // — zakresy przeskalowane spójnie z fallbackami CSS (10s/8s).
+      el.style.setProperty('--aura-spin-dur', `${rnd(8.5, 14).toFixed(2)}s`);
+      el.style.setProperty('--aura-breathe-dur', `${rnd(6.5, 10.5).toFixed(2)}s`);
       // Faza: ujemny delay w obrębie cyklu = start z innego miejsca.
       el.style.setProperty('--aura-spin-delay', `${(-rnd(0, 6)).toFixed(2)}s`);
       el.style.setProperty('--aura-breathe-delay', `${(-rnd(0, 5)).toFixed(2)}s`);

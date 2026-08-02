@@ -75,8 +75,11 @@
     --section-y: clamp(4rem, 8vw, 8rem);
     --section-y-tight: clamp(3rem, 5vw, 5rem);
 
-    /* ---- Layout ---- */
+    /* ---- Layout ----
+       Osie szerokości (kontrakt redesignu): tekst/kapsuła = narrow (760),
+       grid 3-kolumnowy = wide (980), pełna siatka = container (1200). */
     --container-max: 1200px;
+    --container-wide: 980px;
     --container-narrow: 760px;
     --gutter: clamp(1.25rem, 4vw, 2.5rem);
     --measure: 68ch;
@@ -114,7 +117,10 @@
     --dur-fast: 140ms;
     --dur-base: 220ms;
     --dur-slow: 420ms;
-    --dur-reveal: 600ms;
+    --dur-reveal: 500ms;
+    --reveal-distance: 14px;
+    /* Krok staggera wejść (delay = indeks * krok, max 5 kroków — dalej bez zwłoki). */
+    --stagger: 70ms;
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
     --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -135,7 +141,10 @@
   [data-theme='light'] {
     /* Tła */
     --bg: var(--sf-paper);
-    --bg-subtle: var(--sf-gray-50);
+    /* Subtle pogłębione (redesign): gray-50 #f5f4f1 był nieodróżnialny od paperu
+       #fbfaf8 — rytm sekcji wymaga widocznego kroku tonu. TYLKO jasny motyw
+       (dark: --bg-subtle = navy-900, nietknięte). */
+    --bg-subtle: #f2f0ea;
     --surface: var(--sf-white);
     --surface-raised: var(--sf-white);
     --surface-sunken: var(--sf-gray-50);
@@ -320,6 +329,11 @@
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     scroll-behavior: smooth;
+    /* Zero systemowego szarego błysku Androida — zamiast niego celowe stany
+       :active w komponentach (redesign, jeden język dotyku). */
+    -webkit-tap-highlight-color: transparent;
+    /* Stała rynna scrollbara: brak skoku layoutu między krótką a długą stroną. */
+    scrollbar-gutter: stable;
   }
 
   /* Kotwice (#sekcja) lądują poniżej sticky-nagłówka (~64px), nie pod nim. */
@@ -376,17 +390,38 @@
     text-decoration: none;
   }
 
-  /* Focus widoczny ZAWSZE (bramka A11y). Nigdy outline:none bez zamiennika. */
+  /* Focus widoczny ZAWSZE (bramka A11y). Nigdy outline:none bez zamiennika.
+     JEDEN system focusa (redesign): globalny outline podąża za border-radius
+     elementu, więc BEZ własnego border-radius (zmieniał realny promień elementu
+     przy focusie). Jedyny wyjątek: .sf-cta (tło = kolor ringu) — podwójny
+     box-shadow zdefiniowany przy .sf-cta niżej. */
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 2px;
-    border-radius: var(--radius-xs);
   }
 
-  /* Selekcja tekstu w kolorach brandu */
+  /* Selekcja tekstu w kolorach brandu (jasny cyjan + granat). */
   ::selection {
-    background: var(--accent-soft);
-    color: var(--fg);
+    background: var(--sf-cyan-300);
+    color: var(--sf-navy-900);
+  }
+  /* Na ciemnych pasmach (surface-tech / data-theme=dark) selekcja nie może
+     gasić jasnego tekstu — półprzezroczysty cyjan + jasny fg. */
+  .surface-tech ::selection,
+  [data-theme='dark'] ::selection {
+    background: rgba(20, 184, 196, 0.4);
+    color: #eaf0fa;
+  }
+
+  /* Karetka i natywne kontrolki formularzy w kolorze akcji (detal drogości). */
+  input,
+  textarea {
+    caret-color: var(--accent);
+  }
+  input[type='checkbox'],
+  input[type='radio'],
+  progress {
+    accent-color: var(--accent);
   }
 
   /* Skip-link — pojawia się tylko po focusie (klawiatura) */
@@ -483,26 +518,19 @@
 }
 
 /* ==========================================================================
-   SCROLL-VIDEO NA HOME (.has-scroll-video na <main>) — globalne tło-film
-   (ScrollVideoBackground, fixed za treścią) ma prześwitywać przez CAŁĄ stronę.
-   Jasne sekcje dostają więc PÓŁPRZEZROCZYSTE tła (te same barwy co tokeny
-   --bg/--bg-subtle/--surface, tylko z alfą). Dark sekcje zostają kryjące
-   (:not([data-theme='dark'])). Selektor celuje TYLKO w <section> — karty
-   (.bg-surface na divach) zostają w pełni kryjące, nietknięte.
-   POZA @layer i ze specyficznością (0,3,1) > utility Tailwinda (0,1,0),
-   więc wygrywa bez !important. Wyjątek: hero ma !bg-transparent (important)
-   i celowo zostaje w pełni przezroczyste.
+   (SCROLL-VIDEO USUNIĘTE 2026-07-15 — tła sekcji w pełnym kryciu; reguły
+   .has-scroll-video i wyjątek !bg-transparent na hero usunięte razem z filmem.
+   Tło hero robi teraz HeroContours — patrz sekcja HERO niżej.)
    ========================================================================== */
-/* Scroll-video na home: sekcje jasne lekko przepuszczają tło-film. Dark sekcje zostają kryjące. */
-.has-scroll-video section.bg-bg:not([data-theme='dark']) {
-  background-color: rgb(251 250 248 / 0.78);
-}
-.has-scroll-video section.bg-bg-subtle:not([data-theme='dark']) {
-  background-color: rgb(245 244 241 / 0.8);
-}
-.has-scroll-video section.bg-surface:not([data-theme='dark']) {
-  background-color: rgb(255 255 255 / 0.85);
-}
+
+/* ==========================================================================
+   KONTRAKT REDESIGNU „PRECYZJA CYRKLA" — BUDŻET KOLORU I RUCHU
+   BUDŻET KOLORU: gradient marki na home TYLKO w 4 miejscach: litery H1,
+   HeroContours, ScrollMetalProgress, aura na 2 kartach (cennik highlight +
+   AgentDemo). Interakcja = --accent.
+   BUDŻET RUCHU: max 1 pętla infinite na viewport; wejścia 500-700ms ease-out;
+   reszta rusza się tylko na hover/scroll.
+   ========================================================================== */
 
 /* ==========================================================================
    METAL — UTILITY AKCENTÓW (.text-metal / .border-metal / .surface-tech)
@@ -520,8 +548,7 @@
      w regule @supports niżej. Gdy clip-text nie działa (stare silniki, wymuszone
      kolory, narzędzia kontrastu) — zostaje czytelny color. Tekst jest realnym
      tekstem w DOM (SSG, boty czytają normalnie — cytowalność #1). */
-  .text-metal,
-  .text-metal-sheen {
+  .text-metal {
     color: var(--metal-fg);
   }
 
@@ -584,12 +611,10 @@
 
     background-color: var(--bg);
     color: var(--fg);
-    /* Dekoracja: delikatna metaliczna poświata w rogach (radialne), pod treścią. */
-    /* Brand RGB: blue #007BFF=0,123,255 · violet #7A35FF=122,53,255 · ai-green #63F000=99,240,0 */
+    /* Dekoracja: JEDEN niebieski glow od góry (redesign — trzy kolory w trzech
+       rogach to sygnatura AI-generic; został jeden, centralny). */
     background-image:
-      radial-gradient(120% 90% at 0% 0%, rgba(0, 123, 255, 0.16) 0%, transparent 55%),
-      radial-gradient(120% 90% at 100% 0%, rgba(122, 53, 255, 0.14) 0%, transparent 55%),
-      radial-gradient(140% 120% at 50% 120%, rgba(99, 240, 0, 0.1) 0%, transparent 55%);
+      radial-gradient(120% 90% at 50% -20%, rgba(0, 123, 255, 0.12), transparent 55%);
     position: relative;
     isolation: isolate;
   }
@@ -604,12 +629,30 @@
     pointer-events: none;
     z-index: -1;
   }
+  /* Lustrzany hairline dolny — domyka ciemną kotwicę (szew z jasną sekcją). */
+  .surface-tech::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 1px;
+    background: var(--metal-gradient-decor);
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  /* Karty na ciemnym: cień spoczynkowy z wewnętrznym highlightem (czarny cień
+     ginie na navy — górna kreska światła daje krawędź elewacji). */
+  .surface-tech .shadow-xs {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      0 1px 2px rgba(0, 0, 0, 0.4);
+  }
   /* Nagłówki/linki dziedziczą --accent ciemny — bez dodatkowych reguł. */
 
   /* .surface-aurora — JASNA sekcja premium (życzenie Pawła: tła jasne, kolor i
      „iluminacje" tylko na napisach). W odróżnieniu od .surface-tech NIE przełącza
-     tokenów na ciemne — --bg zostaje jasny. „Smaczek" daje subtelna kolorowa zorza
-     marki (radialne glow o niskim kryciu) w rogach + metaliczny hairline u góry.
+     tokenów na ciemne — --bg zostaje jasny. „Smaczek" daje JEDEN niebieski glow
+     o niskim kryciu od góry + metaliczny hairline u góry w ryzach kontenera
+     (redesign: trzy kolory w trzech rogach = sygnatura AI-generic, wypadły).
      Zostawia oddech pod przyszłe wideo/zdjęcia (tło pozostaje jasne i czyste).
      Kontrast treści bez zmian — tekst liczony na jasnym tle (tokeny semantyczne). */
   .surface-aurora {
@@ -617,67 +660,74 @@
     isolation: isolate;
     background-color: var(--bg);
     background-image:
-      radial-gradient(85% 65% at 0% 0%, rgba(0, 123, 255, 0.08) 0%, transparent 55%),
-      radial-gradient(85% 65% at 100% 0%, rgba(122, 53, 255, 0.07) 0%, transparent 55%),
-      radial-gradient(120% 90% at 50% 120%, rgba(99, 240, 0, 0.05) 0%, transparent 55%);
+      radial-gradient(80% 60% at 50% 0%, rgba(0, 123, 255, 0.06), transparent 60%);
   }
+  /* Hairline w ryzach kontenera — linia kończy się z treścią, nie jak szew
+     renderowania na pełną szerokość viewportu. */
   .surface-aurora::before {
     content: '';
     position: absolute;
-    inset: 0 0 auto 0;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(100% - 2 * var(--gutter), var(--container-max));
     height: 1px;
     background: var(--metal-gradient-decor);
-    opacity: 0.5;
+    opacity: 0.3;
     pointer-events: none;
     z-index: -1;
   }
 }
 
 /* ==========================================================================
-   PŁYWAJĄCE SMACZKI / GLOSSY — warstwa premium (DEKORACJA, aria-hidden).
-   Reguła nadrzędna: to wyłącznie połysk i ruch. Treść i jej kontrast nigdy nie
-   zależą od tych warstw (scrim/tokeny robią AA). Wszystko gaszone bramką
-   reduced-motion (statyczny fallback: orby zostają, przestają dryfować).
+   HERO — sygnaturowe tło „cyrkiel kreśli warstwice" (HeroContours.tsx).
+   DEKORACJA (aria-hidden, pointer-events:none): inline SVG, zero JS. Kontury
+   rysują się RAZ na wejściu (stroke-dashoffset, pathLength=1), pierścień miarki
+   obraca się 120 s — JEDYNA pętla ambient hero (budżet ruchu). Maska rozpływa
+   tło przed szwem z następną sekcją. Keyframes i @media POZA @layer (konwencja
+   pliku: Tailwind v3 gubi ciało at-rule w @layer). Reduced-motion: kontury od
+   razu narysowane, pierścień stoi (bramka niżej).
    ========================================================================== */
 @layer components {
-  /* Kontener pływających orbów — kładziony ZA treścią (z-index ujemny), nigdy
-     nie łapie zdarzeń. Sam w sobie przezroczysty; dzieci to rozmyte plamy metalu. */
-  .sf-orbs {
+  .sf-hero-field {
     position: absolute;
     inset: 0;
     overflow: hidden;
     pointer-events: none;
-    /* Bez własnego z-index: warstwowanie wynika z KOLEJNOŚCI w DOM. W tle
-       VideoBackground orby renderujemy między gradientem a scrimem (scrim je
-       re-przyciemnia → kontrast AA pod tekstem gwarantowany). W zwykłym
-       kontenerze `relative` umieszcza się je jako pierwsze dziecko (pod treścią). */
+    /* Miękkie światło marki za H1 (niebieski + fiolet, bardzo niskie krycie). */
+    background:
+      radial-gradient(75rem 40rem at 50% 34%, rgba(43, 124, 255, 0.07), transparent 62%),
+      radial-gradient(60rem 34rem at 50% 30%, rgba(139, 92, 246, 0.05), transparent 60%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 96%);
+    mask-image: linear-gradient(to bottom, #000 62%, transparent 96%);
   }
-  /* Pojedynczy orb: rozmyta plama koloru metalu, „oddycha" i delikatnie dryfuje.
-     Kolory z palety metalu (decor) — niebieski/fiolet/zielony. Bardzo niska
-     krycie + duży blur => czysty nastrój, nie zaciemnia tekstu. */
-  .sf-orb {
+  .sf-hero-svg {
     position: absolute;
-    border-radius: var(--radius-full);
-    filter: blur(48px);
-    opacity: 0.5;
-    will-change: transform;
-    animation: sfOrbFloat 18s var(--ease-in-out) infinite;
+    inset: 0;
+    width: 100%;
+    height: 100%;
   }
-  .sf-orb--blue {
-    background: radial-gradient(circle at 50% 50%, var(--metal-blue-decor), transparent 70%);
+  /* Warstwice: rysowanie konturu (pathLength=1 → dasharray/dashoffset w ułamkach). */
+  .sf-contour {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: sfContourDraw 1.4s var(--ease-out) forwards;
   }
-  .sf-orb--violet {
-    background: radial-gradient(circle at 50% 50%, var(--metal-violet-decor), transparent 70%);
+  .sf-contour:nth-of-type(2) {
+    animation-delay: 0.12s;
   }
-  .sf-orb--green {
-    background: radial-gradient(circle at 50% 50%, var(--metal-green-decor), transparent 70%);
+  .sf-contour:nth-of-type(3) {
+    animation-delay: 0.24s;
   }
-  /* Warianty tempa/kierunku, żeby orby nie poruszały się synchronicznie. */
-  .sf-orb--slow {
-    animation-duration: 26s;
+  .sf-contour:nth-of-type(4) {
+    animation-delay: 0.36s;
   }
-  .sf-orb--rev {
-    animation-direction: reverse;
+  .sf-contour:nth-of-type(5) {
+    animation-delay: 0.48s;
+  }
+  /* Pierścień miarki — jedyna pętla ambient hero (120 s, dostojnie). */
+  .sf-tickring {
+    animation: sfTickSpin 120s linear infinite;
   }
 
   /* .card-glossy — kluczowa karta z metaliczną krawędzią + szklanym połyskiem.
@@ -702,8 +752,9 @@
     z-index: 0;
   }
 
-  /* .sf-accent-line — cienka metaliczna linia (np. pod nagłówkiem sekcji),
-     z wędrującym połyskiem. Czysta dekoracja, aria-hidden u użycia. */
+  /* .sf-accent-line — cienka metaliczna linia (np. pod nagłówkiem sekcji).
+     Czysta dekoracja, aria-hidden u użycia. STATYCZNA (budżet ruchu redesignu);
+     na home nieużywana (jeden system H2), zostaje dla ewentualnych podstron. */
   .sf-accent-line {
     height: 2px;
     width: 100%;
@@ -716,24 +767,36 @@
       0 0;
     background-repeat: no-repeat;
     border-radius: var(--radius-full);
-    /* Zwolnione 6s -> 16s (Paweł: „za szybko") — subtelniejszy połysk. */
-    animation: sfTextMetalSheen 16s var(--ease-in-out) infinite;
   }
 }
 
-/* Pływanie orbów — delikatny dryf + oddech skali. Gaszone reduced-motion niżej. */
-@keyframes sfOrbFloat {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
+/* Rysowanie warstwicy hero (dashoffset 1 → 0 przy pathLength=1). */
+@keyframes sfContourDraw {
+  to {
+    stroke-dashoffset: 0;
   }
-  33% {
-    transform: translate3d(3%, -4%, 0) scale(1.08);
+}
+/* Obrót pierścienia miarki (transform-origin inline: 720px 340px w viewBox). */
+@keyframes sfTickSpin {
+  to {
+    transform: rotate(360deg);
   }
-  66% {
-    transform: translate3d(-3%, 3%, 0) scale(0.96);
+}
+/* Mobile: pierścień poza kadrem i tak jest niewidoczny — zero pętli na małych
+   ekranach (budżet ruchu + bateria). */
+@media (max-width: 640px) {
+  .sf-tickring {
+    display: none;
   }
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
+}
+/* Reduced-motion: kontury OD RAZU pełne (bez rysowania), pierścień stoi. */
+@media (prefers-reduced-motion: reduce) {
+  .sf-contour {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .sf-tickring {
+    animation: none;
   }
 }
 
@@ -752,84 +815,20 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
-    /* Iluminacja: delikatna, oddychająca poświata marki pod tekstem (Paweł:
-       „przejściowe pulsowania" na napisach). Spokojna (7 s), żeby nagłówki
-       sekcji żyły, ale nie rozpraszały. */
-    animation: sfTextGlow 7s var(--ease-in-out) infinite;
+    /* BUDŻET RUCHU (redesign): STATYCZNY gradient — bez pętli sfTextGlow.
+       Klasa zostaje dla podstron; na home H2 są granatowe (jeden system). */
   }
-  /* .text-metal-sheen — wariant glossy z wędrującym połyskiem (efekt „live”).
-     Samowystarczalny clip-text (NIE wymaga już dodatkowej klasy .text-metal):
-     gradient + sheen są klipowane do kształtu liter, a tekst-fill jest
-     przezroczysty. Bez tych właściwości H1 hero malował gradient jako tło-prostokąt
-     pod literami zamiast w literach (usterka odkryta przy przejściu na jasne tło). */
-  .text-metal-sheen {
-    /* autoprefixer: off */
-    background-image: var(--metal-sheen), var(--metal-gradient);
-    background-size:
-      220% 100%,
-      100% 100%;
-    background-position:
-      -60% 0,
-      0 0;
-    background-repeat: no-repeat;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-    /* Dwie animacje na jednym tekście: 1) przesuw metalicznego połysku (16 s,
-       spokojny), 2) pulsująca iluminacja-poświata marki (5.5 s) — „smaczek" na
-       napisie z hero. Obie zatrzymywane globalną bramką reduced-motion niżej. */
-    animation:
-      sfTextMetalSheen 16s var(--ease-in-out) infinite,
-      sfTextGlow 5.5s var(--ease-in-out) infinite;
-  }
+  /* (.text-metal-sheen USUNIĘTE — redesign „Precyzja cyrkla": klasa nieużywana
+     w markupie po przejściu H1 na .sf-write; razem z nią keyframes
+     sfTextMetalSheen i sfTextGlow — martwe pętle dekoracji.) */
 }
 
 /* Forced-colors (Windows High Contrast): porzuć gradient, oddaj kolor systemowi. */
 @media (forced-colors: active) {
-  .text-metal,
-  .text-metal-sheen {
+  .text-metal {
     background-image: none;
     -webkit-text-fill-color: CanvasText;
     color: CanvasText;
-  }
-}
-
-/* Przesuw połysku po tekście (lewo → prawo). Gaszony bramką reduced-motion niżej. */
-@keyframes sfTextMetalSheen {
-  0% {
-    background-position:
-      -60% 0,
-      0 0;
-  }
-  50% {
-    background-position:
-      160% 0,
-      0 0;
-  }
-  100% {
-    background-position:
-      -60% 0,
-      0 0;
-  }
-}
-
-/* Pulsująca iluminacja pod metalicznym tekstem — Paweł: kolor i „przejściowe
-   pulsowania" mają żyć na NAPISACH, nie na tłach. drop-shadow działa na realnie
-   namalowanych pikselach tekstu (text-shadow NIE, bo text-fill jest transparentny
-   przy clip-text). Kolory marki (niebieski + fiolet), subtelny oddech krycia.
-   Reduced-motion zatrzymuje na stanie 100% = delikatna, statyczna poświata. */
-@keyframes sfTextGlow {
-  0%,
-  100% {
-    filter:
-      drop-shadow(0 1px 5px rgba(0, 123, 255, 0.12))
-      drop-shadow(0 0 9px rgba(122, 53, 255, 0.1));
-  }
-  50% {
-    filter:
-      drop-shadow(0 2px 15px rgba(0, 123, 255, 0.3))
-      drop-shadow(0 0 26px rgba(122, 53, 255, 0.26));
   }
 }
 
@@ -943,9 +942,9 @@
     position: relative;
     isolation: isolate;
     /* Tempo (duration) i faza (delay) są ZMIENNE per ramka (ustawia je AuraDesync),
-       żeby ramki obok siebie migotały niezależnie, nie w rytm. Fallback 5s/0s =
-       stara, zsynchronizowana wersja (działa też bez JS). */
-    animation: sfAuraBreathe var(--aura-breathe-dur, 5s) var(--ease-in-out)
+       żeby ramki obok siebie migotały niezależnie, nie w rytm. Fallback 8s/0s
+       (zwolnione 5s→8s: 2 jedyne aury mają być dostojne, nie neonowe). */
+    animation: sfAuraBreathe var(--aura-breathe-dur, 8s) var(--ease-in-out)
       var(--aura-breathe-delay, 0s) infinite;
   }
   /* Wariant „mocniejszy" — grubsza obwódka (np. wyróżniona karta cennika). */
@@ -977,8 +976,9 @@
     mask-composite: exclude;
     pointer-events: none;
     /* Wędrujący błysk: tempo i faza zmienne per ramka (AuraDesync), niezależne
-       od sąsiadów. Fallback 6s/0s. Zmienne dziedziczą z .card-aura do ::before. */
-    animation: sfAuraSpin var(--aura-spin-dur, 6s) linear
+       od sąsiadów. Fallback 10s (zwolnione 6s→10s — dostojnie, nie neonowo).
+       Zmienne dziedziczą z .card-aura do ::before. */
+    animation: sfAuraSpin var(--aura-spin-dur, 10s) linear
       var(--aura-spin-delay, 0s) infinite;
   }
 }
@@ -1036,7 +1036,7 @@
 @keyframes sfRevealIn {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(var(--reveal-distance));
   }
   to {
     opacity: 1;
@@ -1044,16 +1044,16 @@
   }
 }
 [data-reveal-eager] {
-  animation: sfRevealIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: sfRevealIn var(--dur-reveal) var(--ease-out) both;
 }
 
 /* Reveal poniżej folda: ukryte z SSR, IntersectionObserver dokłada [data-reveal-shown]. */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(var(--reveal-distance));
   transition:
-    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity var(--dur-reveal) var(--ease-out),
+    transform var(--dur-reveal) var(--ease-out);
 }
 [data-reveal][data-reveal-shown] {
   opacity: 1;
@@ -1161,6 +1161,119 @@
     0 8px 26px color-mix(in srgb, var(--accent) 45%, transparent);
 }
 
+/* WYJĄTEK jedynego systemu focusa: primary CTA ma tło w kolorze ringu, więc sam
+   outline by zginął — podwójny pierścień (przerwa w kolorze tła + ring) czyta
+   się na każdym tle. Pozostałe elementy: globalny :focus-visible w bazie. */
+.sf-cta:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--bg),
+    0 0 0 5px var(--ring),
+    var(--shadow-accent);
+}
+
+/* ==========================================================================
+   MIKRORUCH I DETALE (redesign „Precyzja cyrkla").
+   Jeden język interakcji: 4px / var(--dur-base) / var(--ease-out) — te same
+   wartości co SVG-strzałka w RealizacjaCard (zero drugiego tempa).
+   Wszystkie nowe animacje mają jawną bramkę prefers-reduced-motion niżej.
+   ========================================================================== */
+
+/* Strzałka w linkach — glif owinięty w <span aria-hidden class="sf-arrow">;
+   mikro-przesuw w prawo na hover rodzica (link/button/.group). */
+.sf-arrow {
+  display: inline-block;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+a:hover .sf-arrow,
+.group:hover .sf-arrow,
+button:hover .sf-arrow {
+  transform: translateX(4px);
+}
+
+/* Nav desktop — underline-slide od lewej; aktywna strona trzyma podkreślenie
+   (aria-current="page" ustawia Header/ServicesMenu na bazie usePathname). */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 6px;
+  height: 1.5px;
+  border-radius: 999px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.nav-link:hover::after,
+.nav-link[aria-current='page']::after {
+  transform: scaleX(1);
+}
+
+/* Stopka — podkreślenie rysowane od lewej (background-size) zamiast gołej
+   zmiany koloru. */
+.u-slide {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition:
+    background-size var(--dur-base) var(--ease-out),
+    color var(--dur-fast);
+}
+.u-slide:hover {
+  background-size: 100% 1px;
+}
+
+/* Dropdown „Usługi" — krótkie wejście (140ms) zakotwiczone przy strzałce. */
+.sf-menu-pop {
+  transform-origin: top right;
+  animation: sfMenuIn 140ms var(--ease-out);
+}
+@keyframes sfMenuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+}
+
+/* FAQ (natywne <details>) — odpowiedź łagodnie wchodzi po otwarciu.
+   Zero JS: <details> działa dalej bez skryptu, animacja to czysty CSS. */
+details[open] > p,
+details[open] > div {
+  animation: sfFaqOpen 260ms var(--ease-out);
+}
+@keyframes sfFaqOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Wąski, brandowy scrollbar wewnętrznych paneli (czat, menu mobile). */
+.sf-scroll-slim {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sf-gray-300) transparent;
+}
+.sf-scroll-slim::-webkit-scrollbar {
+  width: 8px;
+}
+.sf-scroll-slim::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sf-scroll-slim::-webkit-scrollbar-thumb {
+  background: var(--sf-gray-300);
+  border-radius: 999px;
+}
+
 /* reduced-motion: po globalnej bramce jawnie resetujemy opacity/transform, żeby
    nic nie zostało ukryte (gdyby JS był wolny/wyłączony). */
 @media (prefers-reduced-motion: reduce) {
@@ -1184,12 +1297,32 @@
     background-image: none !important;
     transition: none !important;
   }
+  /* Mikroruch (redesign): strzałki, underline-slide, dropdown i FAQ stoją. */
+  .sf-arrow,
+  .u-slide,
+  .nav-link::after {
+    transition: none !important;
+  }
+  a:hover .sf-arrow,
+  .group:hover .sf-arrow,
+  button:hover .sf-arrow {
+    transform: none !important;
+  }
+  .sf-menu-pop,
+  details[open] > p,
+  details[open] > div {
+    animation: none !important;
+  }
 }
 
 /* ==========================================================================
-   H1 HERO — EFEKT PISANIA LITERA-PO-LITERZE z wędrującym neonowym flashem.
-   Paweł: „pisanie długopisem litera po literze, a za czubkiem błysk", „same litery
-   kolorowe — jak w logo: niebieski → fiolet → zielony (.ai)".
+   H1 HERO — KOLOROWE LITERY + KASKADA SŁÓW (redesign „Precyzja cyrkla").
+   Maszyna do pisania WYPADŁA (3 s pustego hero z „B|" sabotowały najważniejszy
+   moment strony) — wejście robi czysto CSS-owa kaskada słów: każde słowo wjeżdża
+   z lekkim uniesieniem i rozmyciem, delay = var(--w) * 90ms (indeks słowa z SSR).
+   Fraza 4-5 słów kończy się <1.2s, pierwsze słowo widoczne od ~0ms, zero JS,
+   zero IO — LCP-safe (animacja CSS startuje natychmiast po parse). Po wejściu
+   H1 stoi NIERUCHOMO (budżet ruchu).
 
    MODEL KOLORU (po naprawie buga niewidzialnego H1):
    KAŻDA litera ma WŁASNY, SOLIDNY `color` — NIE ma gradient-clip-text na rodzicu.
@@ -1206,20 +1339,12 @@
        jest ignorowana i zostaje inline hex. Baseline 2023 (Chrome/Edge 111, Safari
        16.2, Firefox 113) — w starszych po prostu twardy hex.
 
-   Stopy (AA-safe na paper #fbfaf8, large text próg 3:1; te same co --metal-*):
-     blue-700 #1d4ed8 → 6.42:1 · violet-700 #6d28d9 → 6.81:1 · emerald-700 #047857 → 5.26:1.
-   Każdy interpolowany środek (sRGB lerp dwóch segmentów) ≥5.26:1. Najgorszy punkt
-   całej frazy = czysta zieleń końcowa 5.26:1 (zapas +2.26 ponad 3:1).
-
-   Neon flash (mocny, premium — nie disco): drop-shadow nad już-czytelną, SOLIDNĄ
-   literą, szczyt przy odsłonięciu, wygasza do zera. Każda klatka ma te same N
-   drop-shadow (różnią się tylko alpha/blur) → filtr interpoluje się płynnie.
+   Stopy: brand-blue #007BFF → brand-violet #7A35FF → zieleń POGŁĘBIONA #2FA500
+   (tło hero jest jasne na stałe; jaskrawy ai-green #63F000 miał ~1.4:1 na paperze).
+   Te same stopy w inline hex (WritingHeadline) i w color-mix niżej.
 
    ARCHITEKTURA (jak reszta metalu): @supports / @media / @keyframes POZA @layer,
    bo Tailwind v3 + autoprefixer gubi ich ciało przy zagnieżdżeniu w @layer.
-   Odsłanianie przez clip-path:inset (NIE opacity) — stan bazowy spanu to PEŁNA,
-   KOLOROWA litera, więc każda awaria degraduje do czytelnego napisu, nie do dziury.
-   Ruch czubka pióra = stagger animation-delay: calc(var(--i) * 42ms).
    ========================================================================== */
 
 /* Bazowy stan H1 — line-height stały = wysokość zarezerwowana (anty-CLS). Kolor jest
@@ -1232,17 +1357,12 @@
   letter-spacing: -0.02em;
 }
 
-/* Litery: inline-block, by miały własny clip-path/transform/filter (efekt pisania
-   i drop-shadow per glif). Nie łamią się wewnątrz wyrazu.
-   KOLOR: inline `style.color` (hex z serwera) jest stanem bazowym. Poniżej color-mix
-   nadpisuje go identyczną, gładszą interpolacją tam, gdzie jest wspierany. */
+/* Litery: inline-block (własny box na kolor per glif), nie łamią się wewnątrz
+   wyrazu. KOLOR: inline `style.color` (hex z serwera) jest stanem bazowym. Poniżej
+   color-mix nadpisuje go identyczną, gładszą interpolacją tam, gdzie wspierany. */
 .sf-write-letter {
   display: inline-block;
   white-space: pre;
-  /* SPOCZYNEK = brak przycięcia (descendery j/g/y/p były ścinane przez inset(0)).
-     Reveal robi tylko PRAWA krawędź w keyframach; pion zostaje wolny. */
-  clip-path: none;
-  filter: none;
 }
 
 /* Spacje: ZWYKŁY inline (NIE inline-block!) = naturalny punkt zawijania wiersza
@@ -1254,10 +1374,28 @@
 /* Słowo: opakowanie liter jednego wyrazu. white-space:nowrap + inline-block =
    wyraz jest atomowy i NIE łamie się w środku (naprawa „Agen / tów" — bug, gdzie
    ciąg inline-block liter łamał się na DOWOLNej literze). Złamanie wiersza zachodzi
-   tylko na spacjach między słowami. Litery w środku zachowują clip-path/kolor/flash. */
+   tylko na spacjach między słowami.
+   KASKADA WEJŚCIA: każde słowo wjeżdża z delayem var(--w) * 90ms (indeks słowa
+   z SSR). `both` trzyma słowo ukryte przed startem (zero błysku kolejności). */
 .sf-write-word {
   display: inline-block;
   white-space: nowrap;
+  animation: sfWordIn 700ms var(--ease-out) both;
+  animation-delay: calc(var(--w, 0) * 90ms);
+}
+
+/* Wejście słowa: uniesienie 0.35em + rozmycie → ostro, na miejscu. */
+@keyframes sfWordIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1270,8 +1408,9 @@
    -------------------------------------------------------------------------- */
 @supports (color: color-mix(in oklab, red, blue)) {
   .sf-write-letter {
-    /* Stopy = OFICJALNE kolory logo (spójne z inline hex w WritingHeadline):
-       brand-blue #007BFF, brand-violet #7A35FF, zieleń #0A9D4A (czytelna ≥3:1). */
+    /* Stopy SPÓJNE z inline hex w WritingHeadline: brand-blue #007BFF,
+       brand-violet #7A35FF, zieleń POGŁĘBIONA #2FA500 (kontrast na jasnym
+       paperze; jaskrawy ai-green #63F000 miał ~1.4:1 — patrz nagłówek sekcji). */
     /* p = i/(n-1), clamp na wypadek n=1 (mianownik 0 → 1) */
     --p: calc(var(--i) / max(var(--n) - 1, 1));
     /* segment 0 (p≤0.5): blue→violet, seg = p/0.5 = p*2 */
@@ -1284,7 +1423,7 @@
     --c1: color-mix(
       in oklab,
       #7a35ff,
-      #63f000 calc(var(--p) * 200% - 100%)
+      #2fa500 calc(var(--p) * 200% - 100%)
     );
     /* wybór segmentu bez @container/if: gdy p≤0.5 użyj --c0, inaczej --c1.
        --pick = 0 dla p≤0.5, 1 dla p>0.5 (round to-zero przez clamp+sign trick):
@@ -1297,57 +1436,11 @@
   }
 }
 
-/* PISANIE = maszyna do pisania (jak w oknie czatu): litery pojawiają się kolejno,
-   gładko (opacity), z migającym pionowym kursorem za ostatnią. BEZ clip-path /
-   „kafelków" i BEZ neonowego flasha (Paweł: ma iść płynnie, jak w czacie). Stan bazowy
-   (bez .is-typing) = pełny, czytelny KOLOROWY napis (no-JS / reduced-motion / GEO).
-   JS (WritingTrigger) dodaje .is-typing i steruje klasą .typed na kolejnych literach
-   + .sf-caret na ostatniej napisanej. */
+/* (MASZYNA DO PISANIA USUNIĘTA — redesign „Precyzja cyrkla": reguły pisania
+   litera-po-literze, migający kursor i spoczynkowy oddech wypadły razem
+   z klienckim triggerem. Wejście robi kaskada słów .sf-write-word wyżej.) */
 
-/* Nienapisane jeszcze litery: niewidoczne, ale REZERWUJĄ miejsce (opacity, nie
-   display) => zero skoku layoutu (CLS). Napisane (.typed) pojawiają się gładko. */
-.sf-write.is-typing .sf-write-letter {
-  opacity: 0;
-}
-.sf-write.is-typing .sf-write-letter.typed {
-  opacity: 1;
-  transition: opacity 120ms linear;
-}
-
-/* Kursor: pionowa kreska tuż za ostatnio napisaną literą, miga (jak w czacie).
-   Absolutny => ruch kursora NIE zmienia szerokości liter (zero jittera centrowania). */
-.sf-write-letter.sf-caret {
-  position: relative;
-}
-.sf-write-letter.sf-caret::after {
-  content: '|';
-  position: absolute;
-  right: -0.16em;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--metal-violet);
-  -webkit-text-fill-color: var(--metal-violet);
-  font-weight: 400;
-  animation: sfCaretBlink 0.85s steps(1, end) infinite;
-}
-@keyframes sfCaretBlink {
-  0%,
-  49% {
-    opacity: 1;
-  }
-  50%,
-  100% {
-    opacity: 0;
-  }
-}
-
-/* SPOCZYNKOWY ODDECH (gdy NIE piszemy): subtelna, ciągła poświata marki (sfTextGlow,
-   stłumione kolory), żeby napis „żył". */
-.sf-write:not(.is-typing) {
-  animation: sfTextGlow 7s var(--ease-in-out) 0.2s infinite;
-}
-
-/* Forced-colors (Windows High Contrast): kolor systemowy, napis pełny, bez kursora. */
+/* Forced-colors (Windows High Contrast): kolor systemowy, napis pełny. */
 @media (forced-colors: active) {
   .sf-write,
   .sf-write .sf-write-letter,
@@ -1355,29 +1448,14 @@
     color: CanvasText !important;
     -webkit-text-fill-color: CanvasText;
   }
-  .sf-write.is-typing .sf-write-letter {
-    opacity: 1 !important;
-  }
-  .sf-write-letter.sf-caret::after {
-    animation: none;
-    opacity: 0;
-  }
-  .sf-write:not(.is-typing) {
-    animation: none;
-  }
 }
 
-/* prefers-reduced-motion: BEZ pisania. Napis od razu pełny i kolorowy (trigger nie
-   doda .is-typing, ale dla pewności wymuszamy widoczność i gasimy kursor/oddech). */
+/* prefers-reduced-motion: BEZ kaskady. Napis od razu pełny, kolorowy, nieruchomy. */
 @media (prefers-reduced-motion: reduce) {
-  .sf-write.is-typing .sf-write-letter {
-    opacity: 1 !important;
-  }
-  .sf-write-letter.sf-caret::after {
-    animation: none !important;
-    opacity: 0 !important;
-  }
-  .sf-write:not(.is-typing) {
-    animation: none !important;
+  .sf-write-word {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
 }

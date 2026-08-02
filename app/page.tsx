@@ -5,7 +5,6 @@ import { faqSchema, serviceSchema } from '@/components/seo/schemas';
 import { FAQ_ITEMS } from '@/components/sections/faqData';
 
 import { ScrollMetalProgress } from '@/components/motion/ScrollMetalProgress';
-import { ScrollVideoBackground } from '@/components/motion/ScrollVideoBackground';
 import { Hero } from '@/components/sections/Hero';
 import { PasekZaufania } from '@/components/sections/PasekZaufania';
 import { Problem } from '@/components/sections/Problem';
@@ -51,19 +50,11 @@ export const metadata: Metadata = buildMetadata({
 
 export default function HomePage() {
   return (
-    <main id="main" className="has-scroll-video">
+    <main id="main">
       {/*
-        GLOBALNE tło-film scrubowane scrollem (DEKORACJA, fixed, za treścią):
-        film przewija się klatkami razem ze scrollem strony; bez scrolla stoi.
-        Klasa .has-scroll-video na <main> uchyla krycie jasnych sekcji
-        (globals.css), żeby film prześwitywał przez CAŁĄ stronę. Mobile: zero
-        wideo (bazowy kolor). Treść/SSG/kolejność sekcji bez zmian.
+        Tło-film scroll-scrub USUNIĘTE decyzją Pawła (2026-07-15) — czyste jasne
+        tła + sygnaturowe hero w CSS (redesign "Google quality").
       */}
-      <ScrollVideoBackground
-        src="/brand/bg-topo-scrub-v2.mp4"
-        poster="/brand/bg-topo-poster-v2.webp"
-        scrim="light"
-      />
       {/*
         Smaczek premium: metaliczny pasek postępu czytania (DEKORACJA, aria-hidden,
         client island). prefers-reduced-motion → nie renderuje się w ogóle.

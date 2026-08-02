@@ -143,7 +143,7 @@ export function DrabinaOfert() {
                   className="mt-5 inline-flex items-center gap-1 text-body-sm font-semibold text-accent-hover underline decoration-1 underline-offset-2 hover:text-fg"
                 >
                   {s.cta.label}
-                  <span aria-hidden="true">-&gt;</span>
+                  <span aria-hidden="true" className="sf-arrow">-&gt;</span>
                 </Link>
               ) : null}
             </Card>

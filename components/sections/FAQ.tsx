@@ -20,7 +20,7 @@ export function FAQ() {
           {FAQ_ITEMS.map((item, i) => (
             <Reveal key={i} delay={Math.min(i * 0.03, 0.15)}>
               <details className="group py-2">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-3 text-h3 font-medium text-fg [&::-webkit-details-marker]:hidden focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring">
+                <summary className="-mx-2 flex cursor-pointer list-none items-center justify-between gap-4 rounded-sm px-2 py-3 text-h3 font-medium text-fg transition-colors duration-fast hover:bg-bg-subtle [&::-webkit-details-marker]:hidden">
                   <span>{item.q}</span>
                   <svg
                     width="22"
@@ -28,7 +28,7 @@ export function FAQ() {
                     viewBox="0 0 24 24"
                     fill="none"
                     aria-hidden="true"
-                    className="shrink-0 text-accent transition-transform duration-base group-open:rotate-45"
+                    className="shrink-0 text-accent transition-transform duration-base group-hover:scale-110 group-open:rotate-45"
                   >
                     <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                   </svg>

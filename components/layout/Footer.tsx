@@ -46,7 +46,7 @@ export function Footer() {
                     rel="noopener noreferrer"
                     aria-label={`SimpleFast.ai na ${s.name}`}
                     style={{ '--brand': BRAND_COLORS[s.name] } as React.CSSProperties}
-                    className="inline-flex text-fg-subtle transition-[color,transform] duration-200 ease-out hover:-translate-y-0.5 hover:scale-125 hover:text-[color:var(--brand)] focus-visible:-translate-y-0.5 focus-visible:scale-125 focus-visible:text-[color:var(--brand)] motion-reduce:transform-none motion-reduce:transition-colors"
+                    className="inline-flex text-fg-subtle transition-[color,transform] duration-base ease-out hover:-translate-y-0.5 hover:scale-110 hover:text-[color:var(--brand)] focus-visible:-translate-y-0.5 focus-visible:scale-110 focus-visible:text-[color:var(--brand)] motion-reduce:transform-none motion-reduce:transition-colors"
                   >
                     <SocialIcon name={s.name} />
                   </a>
@@ -63,7 +63,7 @@ export function Footer() {
                 <li key={u.slug}>
                   <Link
                     href={`/uslugi/${u.slug}`}
-                    className="text-body-sm text-fg-muted transition-colors hover:text-fg"
+                    className="u-slide text-body-sm text-fg-muted hover:text-fg"
                   >
                     {u.h1}
                   </Link>
@@ -78,18 +78,18 @@ export function Footer() {
             <ul className="space-y-2">
               {FOOTER_NAV_REST.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-body-sm text-fg-muted transition-colors hover:text-fg">
+                  <Link href={link.href} className="u-slide text-body-sm text-fg-muted hover:text-fg">
                     {link.label}
                   </Link>
                 </li>
               ))}
               <li>
-                <Link href="/kontakt" className="text-body-sm text-fg-muted transition-colors hover:text-fg">
+                <Link href="/kontakt" className="u-slide text-body-sm text-fg-muted hover:text-fg">
                   Kontakt
                 </Link>
               </li>
               <li>
-                <Link href={LEGAL_ROUTES.privacy} className="text-body-sm text-fg-muted transition-colors hover:text-fg">
+                <Link href={LEGAL_ROUTES.privacy} className="u-slide text-body-sm text-fg-muted hover:text-fg">
                   Polityka prywatności
                 </Link>
               </li>
@@ -104,14 +104,14 @@ export function Footer() {
               {/* E-mail TYLKO gdy zweryfikowany (nie sam niepusty string) — patrz SITE.contact */}
               {SITE.contact.emailVerified && SITE.contact.email && (
                 <li>
-                  <a href={`mailto:${SITE.contact.email}`} className="transition-colors hover:text-fg">
+                  <a href={`mailto:${SITE.contact.email}`} className="u-slide hover:text-fg">
                     {SITE.contact.email}
                   </a>
                 </li>
               )}
               {SITE.contact.phone && (
                 <li>
-                  <a href={`tel:${SITE.contact.phone}`} className="transition-colors hover:text-fg">
+                  <a href={`tel:${SITE.contact.phone}`} className="u-slide hover:text-fg">
                     {SITE.contact.phone}
                   </a>
                 </li>

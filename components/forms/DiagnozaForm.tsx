@@ -112,7 +112,7 @@ export function DiagnozaForm() {
 
   if (status === 'success') {
     return (
-      <div className="card-aura rounded-lg border border-border bg-success-bg p-7 text-center">
+      <div className="rounded-lg border border-border bg-success-bg p-7 text-center">
         <h3 className="text-h3 mb-2">Mam to.</h3>
         <p className="text-body text-fg-muted">
           Dziękuję, zgłoszenie do mnie dotarło. Odezwę się w kilka minut na podany kontakt.
@@ -123,7 +123,7 @@ export function DiagnozaForm() {
 
   if (status === 'error') {
     return (
-      <div className="card-aura rounded-lg border border-error bg-error-bg p-7 text-center">
+      <div className="rounded-lg border border-error bg-error-bg p-7 text-center">
         <h3 className="text-h3 mb-2">Coś nie zadziałało z wysyłką.</h3>
         <p className="text-body text-fg-muted">
           Najszybciej złap mnie wprost: napisz na{' '}
@@ -155,7 +155,7 @@ export function DiagnozaForm() {
         <input type="text" name="firma_www" />
       </form>
 
-      <form onSubmit={handleSubmit} className="card-aura rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-7">
+      <form onSubmit={handleSubmit} className="rounded-xl border border-border bg-surface p-6 shadow-xs sm:p-7">
       {/* Pasek postępu */}
       <div className="mb-6">
         <div className="mb-2 flex items-center justify-between">
@@ -191,7 +191,7 @@ export function DiagnozaForm() {
                   }}
                   aria-pressed={selected}
                   className={
-                    'flex min-h-[64px] items-center rounded-md border-[1.5px] px-4 py-3 text-left text-body-sm font-medium transition-[border-color,background-color] duration-fast ease-out focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring ' +
+                    'flex min-h-[64px] items-center rounded-md border-[1.5px] px-4 py-3 text-left text-body-sm font-medium transition-[border-color,background-color] duration-fast ease-out ' +
                     (selected
                       ? 'border-accent bg-accent-soft text-fg'
                       : 'border-border bg-surface-sunken text-fg hover:border-border-strong')
@@ -327,7 +327,7 @@ export function DiagnozaForm() {
                 required
                 checked={zgoda}
                 onChange={(e) => setZgoda(e.target.checked)}
-                className="mt-0.5 h-4 w-4 shrink-0 rounded-xs border-[1.5px] border-border-strong accent-accent focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+                className="mt-0.5 h-4 w-4 shrink-0 rounded-xs border-[1.5px] border-border-strong accent-accent"
               />
               <span>
                 Zgadzam się na kontakt i przetwarzanie moich danych w celu obsługi zgłoszenia, zgodnie z{' '}
@@ -347,10 +347,10 @@ export function DiagnozaForm() {
             href="https://cal.com/simple-fast-ai/spotkanie-ai"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex min-h-[48px] items-center justify-center gap-2 rounded-md border-[1.5px] border-accent bg-accent-soft px-4 text-center text-body-sm font-semibold text-accent-hover transition-colors duration-fast ease-out hover:bg-accent hover:text-accent-contrast focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+            className="flex min-h-[48px] items-center justify-center gap-2 rounded-md border-[1.5px] border-accent bg-accent-soft px-4 text-center text-body-sm font-semibold text-accent-hover transition-colors duration-fast ease-out hover:bg-accent hover:text-accent-contrast"
           >
             Wolisz od razu wybrać termin? Otwórz kalendarz
-            <span aria-hidden="true">→</span>
+            <span aria-hidden="true" className="sf-arrow">→</span>
           </a>
 
           <div className="flex items-center justify-between gap-3 pt-2">

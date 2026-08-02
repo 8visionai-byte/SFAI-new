@@ -1,20 +1,21 @@
 import { Fragment } from 'react';
 import type { CSSProperties } from 'react';
-import { WritingTrigger } from './WritingTrigger';
 
 /**
- * WritingHeadline — H1 hero pisany LITERA PO LITERZE (efekt długopisu z wędrującym
- * neonowym błyskiem). SERVER component: podział na słowa + litery wykonuje się przy
- * buildzie (SSG) i ląduje do surowego HTML, więc konkatenacja zawartości spanów =
- * dokładnie `text` (boty/LLM czytają normalny tekst, cytowalność #1).
+ * WritingHeadline — H1 hero: litery kolorowane per-glif gradientem marki, wejście
+ * = czysto CSS-owa KASKADA SŁÓW (sfWordIn w globals.css, delay = --w * 90ms; fraza
+ * 4-5 słów kończy się <1.2s, pierwsze słowo widoczne od ~0ms — LCP-safe, zero JS,
+ * zero IntersectionObservera). SERVER component: podział na słowa + litery wykonuje
+ * się przy buildzie (SSG) i ląduje do surowego HTML, więc konkatenacja zawartości
+ * spanów = dokładnie `text` (boty/LLM czytają normalny tekst, cytowalność #1).
  *
  * ŁAMANIE WIERSZA (naprawa „Agen / tów"): ciąg liter `display:inline-block` łamał się
  * na DOWOLNej literze, bo między atomowymi inline-block boxami jest punkt zawijania.
  * Dlatego litery KAŻDEGO słowa są opakowane w `.sf-write-word` (white-space:nowrap),
  * więc wyraz jest atomowy i nie pęka w środku. Wiersz łamie się TYLKO na spacjach
  * (osobne `.sf-write-space` między słowami). Indeks --i jest GLOBALNY (ciągły przez
- * całą frazę), więc stagger pisania i przepływ koloru lecą przez całe hasło, nie
- * resetują się na granicy słowa.
+ * całą frazę), więc przepływ koloru leci przez całe hasło, nie resetuje się na
+ * granicy słowa.
  *
  * KOLOR (naprawa buga niewidzialnego H1): każda litera ma WŁASNY, SOLIDNY kolor jako
  * inline `style.color` (hex), interpolowany wzdłuż frazy blue → violet → green (jak
@@ -24,27 +25,28 @@ import { WritingTrigger } from './WritingTrigger';
  * progresywne, gładsze ulepszenie; inline hex jest twardym fallbackiem i domyślnym
  * renderem.
  *
- * RUCH jest w globals.css (.sf-write*): pisanie = clip-path reveal + stagger (--i), a
- * za czubkiem pióra mocny neon flash (drop-shadow nad już-czytelną, solidną literą).
+ * RUCH jest w globals.css (.sf-write-word): kaskada słów — każde słowo wjeżdża
+ * z lekkim uniesieniem i rozmyciem (delay z indeksu słowa --w). Po wejściu H1 stoi
+ * NIERUCHOMO (budżet ruchu redesignu). prefers-reduced-motion → napis od razu pełny.
  *
  * DOSTĘPNOŚĆ: aria-label = pełne zdanie jednym ciągiem; spany aria-hidden (czytnik
  * nie literuje znak po znaku). Array.from (nie split('')) — bezpiecznie dla glifów
- * wielobajtowych (np. „ó"). REVEAL: H1 NIE jest owijany w <Reveal> — pisanie JEST
- * revealem; stan spoczynku litery (clip-path:inset(0) + solidny color) trzyma napis
- * czytelnym i kolorowym nawet gdy JS/CSS zawiedzie albo przy reduced-motion.
+ * wielobajtowych (np. „ó"). REVEAL: H1 NIE jest owijany w <Reveal> — kaskada JEST
+ * revealem; stan bazowy litery (solidny color) trzyma napis czytelnym i kolorowym
+ * nawet gdy JS/CSS zawiedzie albo przy reduced-motion.
  */
 
 type RGB = readonly [number, number, number];
 
-/* Stopy interpolacji = MAGNETYCZNE (żywe) kolory marki 1:1 z logo (Paweł: „nasze
-   kolory są magnetyczne, nie stłumione"). To dokładnie brand decor gradient
-   --metal-gradient-decor: brand-blue #007BFF, brand-violet #7A35FF, ai-green #63F000.
-   UWAGA KONTRAST: ai-green #63F000 na jasnym paperze ma ~1.4:1 (slabo czytelny),
-   ale to świadoma decyzja Pawła: „z tyłu dorzucimy tło", na którym żywe kolory
-   zaświecą. Gdyby tło zostało jasne na stałe, wróć do pogłębionej zieleni (#2FA500). */
+/* Stopy interpolacji: brand-blue #007BFF i brand-violet #7A35FF 1:1 z logo.
+   ZIELEŃ POGŁĘBIONA #2FA500 (redesign „Precyzja cyrkla"): tło hero zostało JASNE
+   na stałe (film usunięty), a ai-green #63F000 na paperze miał ~1.4:1 — nieczytelny.
+   #2FA500 trzyma charakter zieleni marki i kontrast na jasnym tle (własna zasada
+   tego pliku: przy jasnym tle pogłębiona zieleń). Ta sama wartość co w badge
+   „Najczęściej wybierane" (Oferta) i w color-mix w globals.css — jedno źródło tonu. */
 const STOP_BLUE: RGB = [0x00, 0x7b, 0xff];
 const STOP_VIOLET: RGB = [0x7a, 0x35, 0xff];
-const STOP_GREEN: RGB = [0x63, 0xf0, 0x00];
+const STOP_GREEN: RGB = [0x2f, 0xa5, 0x00];
 
 function mix(a: RGB, b: RGB, t: number): string {
   const ch = (i: 0 | 1 | 2) => Math.round(a[i] + (b[i] - a[i]) * t);
@@ -75,10 +77,9 @@ export function WritingHeadline({
   // do interpolacji koloru (ułamek i/(N-1)) ORAZ do CSS color-mix przez --n.
   const n = words.reduce((acc, w) => acc + Array.from(w).length, 0);
 
-  let i = -1; // GLOBALNY licznik liter (ciągły przez słowa; pióro pomija spacje)
+  let i = -1; // GLOBALNY licznik liter (ciągły przez słowa; kolor pomija spacje)
   return (
     <h1
-      data-writing
       aria-label={text}
       className={`sf-write ${className}`}
       style={{ '--n': n } as CSSProperties}
@@ -91,8 +92,13 @@ export function WritingHeadline({
               {' '}
             </span>
           )}
-          {/* Słowo atomowe — nie łamie się w środku (white-space:nowrap w CSS). */}
-          <span aria-hidden="true" className="sf-write-word">
+          {/* Słowo atomowe — nie łamie się w środku (white-space:nowrap w CSS).
+              --w = indeks słowa → delay kaskady wejścia (sfWordIn w globals.css). */}
+          <span
+            aria-hidden="true"
+            className="sf-write-word"
+            style={{ '--w': wIdx } as CSSProperties}
+          >
             {Array.from(word).map((ch, cIdx) => {
               i += 1;
               return (
@@ -115,7 +121,6 @@ export function WritingHeadline({
           </span>
         </Fragment>
       ))}
-      <WritingTrigger />
     </h1>
   );
 }

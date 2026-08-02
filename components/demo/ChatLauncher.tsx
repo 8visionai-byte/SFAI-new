@@ -90,7 +90,7 @@ export function ChatLauncher() {
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-label={open ? 'Zamknij czat' : 'Otwórz czat z Agentem'}
-        className="ml-auto flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accent-contrast shadow-accent transition-transform duration-fast ease-out hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+        className="ml-auto flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accent-contrast shadow-accent transition-transform duration-fast ease-out hover:-translate-y-0.5 active:scale-95"
       >
         {open ? (
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">

@@ -76,7 +76,7 @@ export function GeneratorPromptow() {
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-10">
       {/* KOLUMNA WYBORÓW */}
-      <div className="card-aura rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-7">
+      <div className="rounded-xl border border-border bg-surface p-6 shadow-xs sm:p-7">
         <h3 className="text-h3">Złóż swój prompt</h3>
         <p className="mt-1 text-caption text-fg-subtle">
           Wybierz cztery rzeczy. Prompt złoży się sam, na bieżąco.
@@ -120,7 +120,7 @@ export function GeneratorPromptow() {
         <button
           type="button"
           onClick={reset}
-          className="mt-6 text-caption text-fg-muted underline decoration-1 underline-offset-2 hover:text-fg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+          className="mt-6 text-caption text-fg-muted underline decoration-1 underline-offset-2 hover:text-fg"
         >
           Zacznij od nowa
         </button>
@@ -128,7 +128,7 @@ export function GeneratorPromptow() {
 
       {/* KOLUMNA WYNIKU */}
       <div>
-        <div className="card-aura rounded-xl border border-border bg-bg-subtle p-6 shadow-sm sm:p-7">
+        <div className="rounded-xl border border-border bg-bg-subtle p-6 shadow-xs sm:p-7">
           <div className="flex items-center justify-between gap-3">
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-fg-subtle">
               Twój gotowy prompt
@@ -137,7 +137,7 @@ export function GeneratorPromptow() {
               type="button"
               onClick={kopiuj}
               aria-live="polite"
-              className="inline-flex min-h-[40px] items-center rounded-sm border-[1.5px] border-accent bg-accent-soft px-4 text-caption font-semibold text-accent-hover transition-colors duration-fast hover:bg-accent hover:text-bg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+              className="inline-flex min-h-[40px] items-center rounded-sm border-[1.5px] border-accent bg-accent-soft px-4 text-caption font-semibold text-accent-hover transition-colors duration-fast hover:bg-accent hover:text-bg"
             >
               {skopiowano ? 'Skopiowano. Wklej do AI.' : 'Kopiuj prompt'}
             </button>
@@ -150,7 +150,7 @@ export function GeneratorPromptow() {
             value={prompt}
             rows={14}
             aria-label="Wygenerowany prompt do skopiowania"
-            className="mt-4 w-full resize-none rounded-md border border-border bg-surface p-4 font-mono text-caption leading-relaxed text-fg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+            className="mt-4 w-full resize-none rounded-md border border-border bg-surface p-4 font-mono text-caption leading-relaxed text-fg"
           />
 
           <p className="mt-3 text-caption text-fg-subtle">
@@ -160,7 +160,7 @@ export function GeneratorPromptow() {
         </div>
 
         {/* Bridge do magnetów (realna wartość) */}
-        <div className="card-aura mt-4 rounded-xl border border-border bg-surface p-5 shadow-sm">
+        <div className="mt-4 rounded-xl border border-border bg-surface p-5 shadow-xs">
           <p className="text-body-sm text-fg">
             Chcesz więcej gotowców? Mamy zestawy promptów do skopiowania.
           </p>

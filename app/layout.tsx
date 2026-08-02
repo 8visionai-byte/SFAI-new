@@ -95,8 +95,9 @@ export default function RootLayout({
         {/* Pulsujący favicon w karcie (efekt „live", canvas) — reduced-motion safe */}
         <FaviconPulse />
 
-        {/* Różnicuje tempo/fazę „oddychających" ramek (.card-aura), żeby ramki obok
-            siebie migotały niezależnie, nie w rytm. Reduced-motion safe. */}
+        {/* Różnicuje tempo/fazę „oddychających" aur (po redesignie DOKŁADNIE 2 karty:
+            wyróżniony plan cennika + AgentDemo), żeby nie migotały w rytm.
+            Reduced-motion safe. */}
         <AuraDesync />
 
         {/* Schema globalna — Organization + WebSite na każdej stronie (spec 04 §6.2–6.3) */}

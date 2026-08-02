@@ -89,7 +89,7 @@ function UslugaKafel({ usluga }: { usluga: Usluga }) {
     >
       <Link
         href={`/uslugi/${usluga.slug}`}
-        className="flex h-full flex-col rounded-sm focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+        className="flex h-full flex-col rounded-sm"
       >
         <h3 className="text-h3 text-fg">{usluga.h1}</h3>
         <p className="mt-3 text-body-sm text-fg-muted">{usluga.problem.h2}</p>

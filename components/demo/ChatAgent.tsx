@@ -161,7 +161,7 @@ export function ChatAgent() {
   );
 
   return (
-    <div className="card-aura flex flex-col overflow-hidden rounded-lg border border-border bg-surface shadow-sm">
+    <div className="flex flex-col overflow-hidden rounded-lg border border-border bg-surface shadow-sm">
       {/* Naglowek */}
       <div className="flex items-center gap-2 border-b border-border px-5 py-4">
         <span
@@ -179,7 +179,7 @@ export function ChatAgent() {
       {/* Lista wiadomosci */}
       <div
         ref={scrollRef}
-        className="flex max-h-80 min-h-[16rem] flex-col gap-3 overflow-y-auto px-5 py-5"
+        className="sf-scroll-slim flex max-h-80 min-h-[16rem] flex-col gap-3 overflow-y-auto px-5 py-5"
         aria-live="polite"
         aria-busy={loading}
       >
@@ -227,7 +227,7 @@ export function ChatAgent() {
                 key={s}
                 type="button"
                 onClick={() => void send(s)}
-                className="rounded-full border border-border bg-surface px-3 py-1.5 text-caption text-fg-muted transition-colors hover:border-accent hover:text-fg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-accent-soft"
+                className="rounded-full border border-border bg-surface px-3 py-1.5 text-caption text-fg-muted transition-colors hover:border-accent hover:text-fg"
               >
                 {s}
               </button>

@@ -13,33 +13,33 @@ import { cn } from '@/lib/cn';
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'link';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
+/* JEDEN system focusa (redesign): warianty NIE definiują własnych pierścieni —
+   globalny :focus-visible (outline 2px + offset) obsługuje secondary/ghost/link.
+   Wyjątek: primary ma tło = kolor ringu, więc .sf-cta:focus-visible (globals.css)
+   daje podwójny box-shadow zamiast outline. */
 const base =
   'inline-flex items-center justify-center gap-2 font-sans font-semibold text-ui ' +
   'rounded-sm select-none transition-[transform,background-color,box-shadow,border-color] ' +
   'duration-fast ease-out cursor-pointer ' +
-  'focus-visible:outline-none disabled:cursor-not-allowed disabled:pointer-events-none';
+  'disabled:cursor-not-allowed disabled:pointer-events-none';
 
 const variantClass: Record<ButtonVariant, string> = {
   primary:
     'sf-cta bg-accent text-accent-contrast shadow-accent ' +
     'hover:bg-accent-hover hover:-translate-y-px ' +
     'active:translate-y-0 active:scale-[0.99] ' +
-    'focus-visible:shadow-[var(--shadow-accent),0_0_0_3px_var(--ring)] ' +
     'disabled:bg-[var(--sf-gray-300)] disabled:text-[var(--sf-gray-500)] disabled:shadow-none',
   secondary:
     'bg-transparent text-brand border-[1.5px] border-border-strong ' +
     'hover:border-brand hover:bg-bg-subtle ' +
-    'focus-visible:shadow-[0_0_0_3px_var(--ring)] ' +
     'disabled:border-border disabled:text-fg-subtle',
   ghost:
     'bg-transparent text-fg-muted px-3 ' +
     'hover:text-fg hover:bg-bg-subtle ' +
-    'focus-visible:shadow-[0_0_0_3px_var(--ring)] ' +
     'disabled:text-fg-subtle',
   link:
     'bg-transparent text-accent underline underline-offset-2 decoration-1 px-0 ' +
     'hover:text-accent-hover hover:decoration-2 ' +
-    'focus-visible:shadow-[0_0_0_3px_var(--ring)] ' +
     'disabled:text-fg-subtle disabled:no-underline',
 };
 

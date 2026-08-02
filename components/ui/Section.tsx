@@ -14,7 +14,9 @@ type Theme = 'light' | 'dark';
 
 const toneClass: Record<Tone, string> = {
   base: 'bg-bg',
-  subtle: 'bg-bg-subtle',
+  // 1px szew (border-y) na każdej zmianie tonu — rytm sekcji redesignu
+  // „Precyzja cyrkla": widoczna, celowa krawędź zamiast rozmytego przejścia.
+  subtle: 'bg-bg-subtle border-y border-border',
   surface: 'bg-surface',
 };
 

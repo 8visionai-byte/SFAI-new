@@ -1,6 +1,6 @@
 import { Section, MagneticButton, Badge } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
-import { FloatingOrbs } from '@/components/motion/FloatingOrbs';
+import { HeroContours } from '@/components/motion/HeroContours';
 import { WritingHeadline } from '@/components/motion/WritingHeadline';
 // import { AnimatedMetric } from '@/components/motion/AnimatedMetric'; // wróci z realnymi metrykami
 import { POSITIONING, HOME_CTA } from '@/lib/site';
@@ -34,42 +34,35 @@ export function Hero() {
   return (
     /*
       WARSTWA PREMIUM (czysto dekoracyjna, nie rusza treści/H1/CTA):
-       • Tło-film jest teraz GLOBALNE: ScrollVideoBackground w app/page.tsx
-         (fixed, scrubowane scrollem — film przewija się klatkami razem ze
-         scrollem całej strony). Hero to zwykła sekcja NAD tym tłem. Bez scrimu:
-         film jest JASNY (ciepła biel jak paper), więc ciemny tekst ma na nim
-         kontrast bez rozjaśniającej nakładki.
-       • Section bez theme="dark" → tokeny jasne (domyślne): tekst ciemny na
-         jasnym, a H1 (.text-metal-sheen) to gradient marki + pulsująca poświata.
-         Tło Section wymuszone na transparentne, żeby było widać tło-film pod spodem.
-       • FloatingOrbs = pływające plamy metalu (CSS, reduced-motion → statyczne),
-         w absolutnej warstwie -z-10 pod treścią hero (aria-hidden u źródła i tu).
+      HeroContours = sygnaturowe tło hero (cyrkiel z loga kreśli warstwice, inline
+      SVG, zero JS) w absolutnej warstwie -z-10 pod treścią (aria-hidden u źródła
+      i tu). Section ma `relative isolate`, więc warstwa -z-10 maluje się NAD tłem
+      sekcji (bg-bg), a POD treścią — bez wymuszania przezroczystości.
       Treść (Badge/H1/kapsuła/CTA) jest w surowym HTML nad tłem — cytowalna 1:1.
     */
-    <div className="relative isolate overflow-hidden">
+    <Section
+      tone="base"
+      containerWidth="default"
+      className="relative isolate overflow-hidden text-center"
+    >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <FloatingOrbs />
+        <HeroContours />
       </div>
-      <Section
-        tone="base"
-        containerWidth="default"
-        className="!bg-transparent text-center"
-      >
-        <Reveal eager>
+      <Reveal eager>
           <Badge variant="accent" className="mb-5">
             {POSITIONING.subClaim}
           </Badge>
         </Reveal>
 
-        {/* H1 — hasło kategorii (north star #3) pisane LITERA PO LITERZE z wędrującym
-            neonowym błyskiem (WritingHeadline). Gradient marki jest ciągły (clip-text),
-            stan spoczynku AA-bezpieczny, pełny neon tylko jako przechodzący flash pióra.
-            BEZ <Reveal> — pisanie JEST revealem. Tekst H1 zostaje realnym tekstem w DOM
-            (boty czytają; aria-label daje czytnikom pełne zdanie jednym ciągiem). */}
+        {/* H1 — hasło kategorii (north star #3): litery kolorowane per-glif gradientem
+            marki (WritingHeadline), wejście = czysto CSS-owa kaskada słów (sfWordIn,
+            <1.2s, zero JS). BEZ <Reveal> — kaskada JEST revealem. Tekst H1 zostaje
+            realnym tekstem w DOM (boty czytają; aria-label daje czytnikom pełne
+            zdanie jednym ciągiem). Po wejściu H1 stoi NIERUCHOMO (budżet ruchu). */}
         <WritingHeadline text={POSITIONING.claim} className="text-display mx-auto max-w-[18ch]" />
 
       {/* Kapsuła answer-first — surowy HTML, cytat dla LLM. Analogia w 1. zdaniu. */}
-      <Reveal eager delay={0.1}>
+      <Reveal eager delay={0.07}>
         <p className="text-lead mx-auto mt-6 max-w-measure text-fg-muted">
           Chatbot odpowiada na pytania. AI Agent wykonuje pracę: odbiera telefony, odpisuje klientom,
           umawia spotkania i pilnuje faktur. Nie sprzedajemy narzędzi AI. Projektujemy systemy, które
@@ -79,8 +72,8 @@ export function Hero() {
       </Reveal>
 
       {/* Dynamiczny odbiorca (personalizacja językiem, RODO-safe) */}
-      <Reveal eager delay={0.15}>
-        <div className="card-aura mx-auto mt-7 max-w-narrow rounded-lg border border-border bg-surface px-5 py-4 text-left shadow-xs">
+      <Reveal eager delay={0.14}>
+        <div className="mx-auto mt-7 max-w-narrow rounded-lg border border-border bg-surface px-5 py-4 text-left shadow-xs">
           <p className="text-caption text-fg-subtle">
             Powtarzalna robota wygląda inaczej w każdej branży. Pokaż mi swoją.
           </p>
@@ -109,7 +102,7 @@ export function Hero() {
       */}
 
       {/* CTA główne + mikrokopia */}
-      <Reveal eager delay={0.2}>
+      <Reveal eager delay={0.21}>
         <div className="mt-9 flex flex-col items-center gap-3">
           <MagneticButton variant="primary" size="lg" href={HOME_CTA.href}>
             {HOME_CTA.label}
@@ -126,18 +119,17 @@ export function Hero() {
       </Reveal>
 
       {/* Linki drugorzędne — NIE konkurują z CTA */}
-      <Reveal eager delay={0.3}>
+      <Reveal eager delay={0.28}>
         <p className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-caption text-fg-subtle">
           <a href="#problem" className="underline decoration-1 underline-offset-2 hover:text-fg">
-            Zobacz, jak liczę oszczędność →
+            Zobacz, jak liczę oszczędność <span aria-hidden="true" className="sf-arrow">→</span>
           </a>
           <a href="#demo" className="underline decoration-1 underline-offset-2 hover:text-fg">
-            Zobacz, jak rozmawia nasz Agent →
+            Zobacz, jak rozmawia nasz Agent <span aria-hidden="true" className="sf-arrow">→</span>
           </a>
         </p>
       </Reveal>
-      </Section>
-    </div>
+    </Section>
   );
 }
 

@@ -66,7 +66,7 @@ export function PobierzMagnet({ materialSlug, tytul, cta }: PobierzMagnetProps) 
 
   if (status === 'success') {
     return (
-      <div className="card-aura rounded-lg border border-border bg-success-bg p-5 text-center">
+      <div className="rounded-lg border border-border bg-success-bg p-5 text-center">
         <p className="text-body-sm font-medium text-fg">PDF jedzie na maila.</p>
         <p className="mt-1 text-caption text-fg-muted">
           Sprawdź skrzynkę za chwilę. Gdyby nie dotarł, zajrzyj do spamu. Całą treść
@@ -79,7 +79,7 @@ export function PobierzMagnet({ materialSlug, tytul, cta }: PobierzMagnetProps) 
   return (
     <form
       onSubmit={handleSubmit}
-      className="card-aura rounded-lg border border-dashed border-border-strong bg-bg-subtle p-5"
+      className="rounded-lg border border-dashed border-border-strong bg-bg-subtle p-5"
     >
       <p className="text-body-sm font-medium text-fg">
         Chcesz mieć {`„${tytul}"`} w PDF? Wpisz maila, wyślemy go na skrzynkę.
@@ -145,7 +145,7 @@ export function PobierzMagnet({ materialSlug, tytul, cta }: PobierzMagnetProps) 
           type="checkbox"
           checked={zgoda}
           onChange={(e) => setZgoda(e.target.checked)}
-          className="mt-0.5 h-4 w-4 shrink-0 rounded-xs border-[1.5px] border-border-strong accent-accent focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+          className="mt-0.5 h-4 w-4 shrink-0 rounded-xs border-[1.5px] border-border-strong accent-accent"
         />
         <span>
           Zgadzam się na otrzymanie materiału na podany e-mail i przetwarzanie danych

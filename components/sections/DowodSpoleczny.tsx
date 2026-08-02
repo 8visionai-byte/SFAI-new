@@ -80,7 +80,7 @@ export function DowodSpoleczny() {
 
       {/* Opinie — renderujemy TYLKO realne. Brak realnych = uczciwy stan (else). */}
       {OPINIE.length > 0 ? (
-        <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto mt-8 grid max-w-wide gap-6 md:grid-cols-2 lg:grid-cols-3">
           {OPINIE.map((o, i) => (
             <Reveal key={i} delay={i * 0.06} className="h-full">
               <Card as="figure" className="flex h-full flex-col">
@@ -106,7 +106,7 @@ export function DowodSpoleczny() {
 
       {/* Kto za tym stoi — autorytet dwóch founderów (E-E-A-T) */}
       <Reveal delay={0.1}>
-        <div className="card-aura mx-auto mt-8 max-w-narrow rounded-lg border border-border bg-surface p-6 shadow-xs">
+        <div className="mx-auto mt-8 max-w-narrow rounded-lg border border-border bg-surface p-6 shadow-xs">
           <h3 className="text-h3">Kto stawia te Agenty?</h3>
           <p className="mt-3 text-body-sm text-fg-muted">
             Dwóch founderów. {SITE.founders[0].name}, {SITE.founders[0].jobTitle}, prowadzi budowę: strony,
@@ -115,7 +115,7 @@ export function DowodSpoleczny() {
           </p>
           <div className="mt-4">
             <Button variant="link" href="/o-nas">
-              Poznaj założycieli →
+              Poznaj założycieli <span aria-hidden="true" className="sf-arrow">→</span>
             </Button>
           </div>
         </div>
@@ -126,7 +126,7 @@ export function DowodSpoleczny() {
         (konkretna liczba wdrożeń/mc), wpisać ją. Do tego czasu bez zmyślonej liczby.
       */}
       <Reveal delay={0.12}>
-        <div className="card-aura mx-auto mt-6 max-w-narrow rounded-lg border border-border-accent bg-accent-soft p-6">
+        <div className="mx-auto mt-6 max-w-narrow rounded-lg border border-border-accent bg-accent-soft p-6">
           <p className="text-body text-fg">
             Bierzemy tylko tyle wdrożeń naraz, ile jesteśmy w stanie zrobić dobrze. Po to, żeby każde
             dopilnować, a nie po to, żeby naciskać. Jak jest komplet, mówimy wprost i umawiamy na kolejny

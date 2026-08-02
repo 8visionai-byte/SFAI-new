@@ -16,15 +16,18 @@ const base =
   'bg-surface border border-border rounded-lg p-6 shadow-xs';
 
 const variantClass: Record<CardVariant, string> = {
-  // „Oddychająca" ramka marki (.card-aura) na KAŻDEJ karcie marki (życzenie Pawła:
-  // wędrujący błysk dookoła ramki na wszystkich ramkach-kartach na całej stronie).
-  base: 'card-aura',
+  // CISZA W SPOCZYNKU (redesign „Precyzja cyrkla"): aura marki NIE jest częścią
+  // Card. Stara decyzja „błysk na każdej ramce" uchylona — skoro wszystko miga,
+  // nic nie jest ważne. Na home aurę mają DOKŁADNIE 2 karty (wyróżniony plan
+  // cennika + AgentDemo), dopisywaną u użycia.
+  base: '',
+  // Focus: globalny :focus-visible na elemencie fokusowalnym wewnątrz karty
+  // (jeden system focusa redesignu) — bez focus-within na kontenerze.
   interactive:
-    'card-aura transition-[transform,box-shadow,border-color] duration-base ease-out cursor-pointer ' +
-    'hover:-translate-y-1 hover:shadow-md hover:border-border-strong ' +
-    'focus-within:shadow-[0_0_0_3px_var(--ring)]',
-  bento: 'card-aura h-full',
-  highlight: 'card-aura border-[1.5px] border-border-accent shadow-sm relative',
+    'transition-[transform,box-shadow,border-color] duration-base ease-out cursor-pointer ' +
+    'hover:-translate-y-1 hover:shadow-md hover:border-border-strong',
+  bento: 'h-full',
+  highlight: 'border-[1.5px] border-border-accent shadow-sm relative',
 };
 
 type CardProps<T extends React.ElementType> = {

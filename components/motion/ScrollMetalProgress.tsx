@@ -52,7 +52,7 @@ export function ScrollMetalProgress() {
     <div
       ref={ref}
       aria-hidden="true"
-      className="bg-metal-decor pointer-events-none fixed inset-x-0 top-0 z-toast h-[3px] origin-left sf-scroll-progress"
+      className="bg-metal-decor pointer-events-none fixed inset-x-0 top-0 z-toast h-[2px] origin-left sf-scroll-progress"
       style={{ transform: 'scaleX(0)' }}
     />
   );

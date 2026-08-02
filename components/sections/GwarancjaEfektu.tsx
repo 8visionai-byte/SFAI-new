@@ -34,8 +34,7 @@ export function GwarancjaEfektu() {
     <Section tone="base">
       <div className="mx-auto max-w-narrow">
         <Reveal>
-          {/* .text-metal — fallback --metal-fg = fiolet 6.81:1 na paper (AA). */}
-          <h2 className="text-h2 text-metal">Co jeśli nie zadziała? Kto bierze na siebie ryzyko?</h2>
+          <h2 className="text-h2">Co jeśli nie zadziała? Kto bierze na siebie ryzyko?</h2>
         </Reveal>
         {/* Kapsuła answer-first — cytowalna dla LLM przy "co jak AI nie zadziała" */}
         <Reveal delay={0.05}>
@@ -47,7 +46,8 @@ export function GwarancjaEfektu() {
         </Reveal>
       </div>
 
-      <ul className="mx-auto mt-8 grid max-w-narrow gap-6 md:grid-cols-3">
+      {/* Grid 3-kol na osi wide (980px) — karty oddychają, kapsuła wyżej zostaje narrow. */}
+      <ul className="mx-auto mt-8 grid max-w-wide gap-6 md:grid-cols-3">
         {FILARY.map((f, i) => (
           <Reveal as="li" key={f.t} delay={i * 0.06}>
             <Card as="article" className="h-full">

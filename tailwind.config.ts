@@ -94,6 +94,8 @@ const config: Config = {
       },
       maxWidth: {
         container: 'var(--container-max)',
+        // wide = oś gridów 3-kolumnowych (980px); narrow = tekst/kapsuła (760px).
+        wide: 'var(--container-wide)',
         narrow: 'var(--container-narrow)',
         measure: 'var(--measure)',
       },

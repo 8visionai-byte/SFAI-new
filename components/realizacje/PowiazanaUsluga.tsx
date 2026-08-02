@@ -33,7 +33,7 @@ export function PowiazanaUsluga({ kategoria }: { kategoria: RealizacjaKategoria 
         <Reveal delay={0.1}>
           <Link
             href={`/uslugi/${usluga.slug}`}
-            className="card-aura group mt-6 block rounded-lg border border-border bg-surface p-6 shadow-xs transition-colors hover:border-brand"
+            className="group mt-6 block rounded-lg border border-border bg-surface p-6 shadow-xs transition-colors hover:border-brand"
           >
             <span className="block text-body font-medium text-fg group-hover:text-brand">
               {usluga.h1}
@@ -42,7 +42,7 @@ export function PowiazanaUsluga({ kategoria }: { kategoria: RealizacjaKategoria 
               {usluga.metaDescription}
             </span>
             <span className="mt-3 block text-caption text-fg-subtle">
-              Zobacz, jak to działa →
+              Zobacz, jak to działa <span aria-hidden="true" className="sf-arrow">→</span>
             </span>
           </Link>
         </Reveal>

@@ -62,7 +62,7 @@ export function AudytStronyAI() {
   return (
     <div className="mx-auto max-w-narrow">
       {/* Pole URL — tylko etykieta w raporcie, NIE fetchowane (uczciwie zakomunikowane) */}
-      <div className="card-aura rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6">
+      <div className="rounded-xl border border-border bg-surface p-5 shadow-xs sm:p-6">
         <label htmlFor="au-url" className="mb-1 block text-body-sm font-medium text-fg">
           Adres Twojej strony (opcjonalnie)
         </label>
@@ -81,7 +81,7 @@ export function AudytStronyAI() {
       </div>
 
       {/* Checklista 10 pozycji */}
-      <div className="card-aura mt-4 rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6">
+      <div className="mt-4 rounded-xl border border-border bg-surface p-5 shadow-xs sm:p-6">
         <h3 className="text-h3">Odpowiedz na 10 pytań o swojej stronie</h3>
         <ul className="mt-5 space-y-5">
           {POZYCJE.map((p, i) => (
@@ -100,7 +100,7 @@ export function AudytStronyAI() {
                         aria-pressed={active}
                         onClick={() => ustaw(p.id, o.v)}
                         className={
-                          'min-h-[44px] rounded-sm border-[1.5px] px-2 py-2 text-caption font-semibold transition-[border-color,background-color] duration-fast ease-out focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring ' +
+                          'min-h-[44px] rounded-sm border-[1.5px] px-2 py-2 text-caption font-semibold transition-[border-color,background-color] duration-fast ease-out ' +
                           (active
                             ? 'border-accent bg-accent-soft text-fg'
                             : 'border-border bg-surface-sunken text-fg-muted hover:border-border-strong')
@@ -120,7 +120,7 @@ export function AudytStronyAI() {
           type="button"
           onClick={() => setPokazWynik(true)}
           disabled={!wszystkieOdp}
-          className="mt-6 inline-flex min-h-[48px] w-full items-center justify-center rounded-sm bg-accent px-5 font-sans text-ui font-semibold text-accent-contrast shadow-accent transition-[transform,background-color] duration-fast ease-out hover:bg-accent-hover hover:-translate-y-px focus-visible:outline-none focus-visible:shadow-[var(--shadow-accent),0_0_0_3px_var(--ring)] disabled:cursor-not-allowed disabled:bg-[var(--sf-gray-300)] disabled:text-[var(--sf-gray-500)] disabled:shadow-none sm:w-auto"
+          className="mt-6 inline-flex min-h-[48px] w-full items-center justify-center rounded-sm bg-accent px-5 font-sans text-ui font-semibold text-accent-contrast shadow-accent transition-[transform,background-color] duration-fast ease-out hover:bg-accent-hover hover:-translate-y-px disabled:cursor-not-allowed disabled:bg-[var(--sf-gray-300)] disabled:text-[var(--sf-gray-500)] disabled:shadow-none sm:w-auto"
         >
           {wszystkieOdp ? 'Pokaż mój wynik' : `Odpowiedz na wszystkie (${Object.keys(odp).length}/10)`}
         </button>
@@ -129,7 +129,7 @@ export function AudytStronyAI() {
       {/* WYNIK */}
       {pokazWynik && wszystkieOdp ? (
         <>
-          <div className="card-aura mt-4 rounded-xl border border-border bg-bg-subtle p-6 shadow-sm sm:p-7">
+          <div className="mt-4 rounded-xl border border-border bg-bg-subtle p-6 shadow-xs sm:p-7">
             <div className="flex items-center justify-between gap-4">
               <div>
                 <p className="text-caption font-semibold uppercase tracking-[0.08em] text-fg-subtle">
@@ -173,7 +173,7 @@ export function AudytStronyAI() {
 
           {/* TOP 3 do naprawy */}
           {wynik.doNaprawy.length > 0 ? (
-            <div className="card-aura mt-4 rounded-xl border-[1.5px] border-border-accent bg-surface p-5 shadow-sm sm:p-6">
+            <div className="mt-4 rounded-xl border-[1.5px] border-border-accent bg-surface p-5 shadow-xs sm:p-6">
               <h3 className="text-h3">Napraw to najpierw</h3>
               <p className="mt-1 text-caption text-fg-subtle">
                 Posortowane wg wpływu na cytowalność. Góra = największy efekt.
@@ -190,13 +190,13 @@ export function AudytStronyAI() {
               </ol>
             </div>
           ) : (
-            <div className="card-aura mt-4 rounded-xl border border-border bg-success-bg p-5 text-body-sm text-fg">
+            <div className="mt-4 rounded-xl border border-border bg-success-bg p-5 text-body-sm text-fg">
               Twoja strona spełnia wszystkie 10 punktów. Solidna baza pod cytowalność w AI.
             </div>
           )}
 
           {/* Fragment "tak by to wyglądało poprawione" (pozycja #2) */}
-          <div className="card-aura mt-4 rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6">
+          <div className="mt-4 rounded-xl border border-border bg-surface p-5 shadow-xs sm:p-6">
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-fg-subtle">
               Tak wygląda dobra kapsuła odpowiedzi
             </p>

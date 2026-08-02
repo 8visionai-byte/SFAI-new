@@ -43,11 +43,10 @@ const POTRAFI = [
 export function Rozwiazanie() {
   return (
     /*
-      Sekcja pozycjonująca — .surface-aurora daje subtelną kolorową zorzę marki w
-      rogach + metaliczny hairline u góry (DEKORACJA pod treścią) na JASNYM tle
-      (życzenie Pawła: tła jasne, kolor na napisach). Tokeny zostają jasne, więc
-      tekst jest ciemny na jasnym (WCAG AA), a nagłówek .text-metal niesie kolor i
-      pulsującą poświatę. Kontrast treści bez zmian.
+      Sekcja pozycjonująca — .surface-aurora daje subtelny glow marki + metaliczny
+      hairline u góry (DEKORACJA pod treścią) na JASNYM tle. Tokeny zostają jasne,
+      więc tekst jest ciemny na jasnym (WCAG AA). H2 granatowe (jeden system
+      nagłówków redesignu). Kontrast treści bez zmian.
     */
     <Section tone="base" className="surface-aurora">
       {/* BLOK DEFINICYJNY (answer-first) — kanoniczny, cytowalny fragment dla LLM na
@@ -56,8 +55,7 @@ export function Rozwiazanie() {
           SEO i AEO). Prowadzi czytelnika: CO to jest -> CZYM się różni -> demo -> tabela. */}
       <div className="mx-auto max-w-narrow">
         <Reveal>
-          <h2 className="text-h2 text-metal">Co to jest AI Agent dla firmy?</h2>
-          <div className="sf-accent-line mt-4 max-w-[8rem]" aria-hidden="true" />
+          <h2 className="text-h2">Co to jest AI Agent dla firmy?</h2>
         </Reveal>
         <Reveal delay={0.05}>
           <p className="text-lead mt-5 text-fg-muted">
@@ -84,12 +82,9 @@ export function Rozwiazanie() {
       {/* RÓŻNICA Agent vs chatbot — drugi cytowalny blok (na zapytanie „czym się różni"). */}
       <div className="mx-auto mt-14 max-w-narrow">
         <Reveal>
-          {/* .text-metal = metaliczny gradient na nagłówku. Solidny fallback
-              --metal-fg (na dark = jasny fiolet, 10.14:1 na navy = AA) gwarantuje
-              czytelność, gdy clip-text nie działa. Dekoracja, nie treść. */}
-          <h2 className="text-h2 text-metal">Czym różni się AI Agent od zwykłego chatbota?</h2>
-          {/* Metaliczna linia-akcent (dekoracja, aria-hidden) — „krok po kroku". */}
-          <div className="sf-accent-line mt-4 max-w-[8rem]" aria-hidden="true" />
+          {/* Jeden system H2 (redesign): granatowy text-h2 bez gradientu i bez
+              linii akcentowej — gradient marki ma twardy budżet 4 miejsc. */}
+          <h2 className="text-h2">Czym różni się AI Agent od zwykłego chatbota?</h2>
         </Reveal>
         <Reveal delay={0.05}>
           <p className="text-lead mt-5 text-fg-muted">
@@ -134,7 +129,7 @@ export function Rozwiazanie() {
       {/* Co potrafi Agent */}
       <ul className="mt-8 grid gap-5 sm:grid-cols-2">
         {POTRAFI.map((item, i) => (
-          <Reveal as="li" key={item.t} delay={i * 0.05} className="card-aura rounded-lg border border-border bg-surface p-5">
+          <Reveal as="li" key={item.t} delay={Math.min(i, 4) * 0.07} className="rounded-lg border border-border bg-surface p-5">
             <span className="block text-ui font-semibold text-fg">{item.t}</span>
             <span className="mt-1 block text-body-sm text-fg-muted">{item.d}</span>
           </Reveal>

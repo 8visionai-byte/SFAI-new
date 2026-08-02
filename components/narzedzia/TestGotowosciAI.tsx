@@ -69,7 +69,7 @@ export function TestGotowosciAI() {
     // krok jest zawsze < PYTANIA.length (gate `ukonczone` wyżej); guard dla TS (noUncheckedIndexedAccess)
     if (!p) return null;
     return (
-      <div className="card-aura mx-auto max-w-narrow rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-7">
+      <div className="mx-auto max-w-narrow rounded-xl border border-border bg-surface p-6 shadow-xs sm:p-7">
         {/* pasek postępu */}
         <div className="mb-6">
           <div className="mb-2 flex items-center justify-between">
@@ -96,7 +96,7 @@ export function TestGotowosciAI() {
                 key={o.label}
                 type="button"
                 onClick={() => odpowiedz(p.id, o.waga)}
-                className="flex min-h-[60px] w-full items-center rounded-md border-[1.5px] border-border bg-surface-sunken px-4 py-3 text-left text-body-sm font-medium text-fg transition-[border-color,background-color] duration-fast ease-out hover:border-border-strong focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+                className="flex min-h-[60px] w-full items-center rounded-md border-[1.5px] border-border bg-surface-sunken px-4 py-3 text-left text-body-sm font-medium text-fg transition-[border-color,background-color] duration-fast ease-out hover:border-border-strong"
               >
                 {o.label}
               </button>
@@ -108,7 +108,7 @@ export function TestGotowosciAI() {
           <button
             type="button"
             onClick={() => setKrok((k) => Math.max(0, k - 1))}
-            className="mt-5 text-caption text-fg-muted underline decoration-1 underline-offset-2 hover:text-fg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+            className="mt-5 text-caption text-fg-muted underline decoration-1 underline-offset-2 hover:text-fg"
           >
             Wstecz
           </button>
@@ -120,7 +120,7 @@ export function TestGotowosciAI() {
   // ===== WIDOK WYNIKU =====
   return (
     <div className="mx-auto max-w-narrow">
-      <div className="card-aura rounded-xl border border-border bg-bg-subtle p-6 shadow-sm sm:p-7">
+      <div className="rounded-xl border border-border bg-bg-subtle p-6 shadow-xs sm:p-7">
         <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-fg-subtle">
@@ -157,7 +157,7 @@ export function TestGotowosciAI() {
       </div>
 
       {/* Wskazanie procesu, który najszybciej się zwróci (z osi use-case) */}
-      <div className="card-aura mt-4 rounded-xl border-[1.5px] border-border-accent bg-surface p-5 shadow-sm">
+      <div className="mt-4 rounded-xl border-[1.5px] border-border-accent bg-surface p-5 shadow-xs">
         <p className="text-caption font-semibold uppercase tracking-[0.08em] text-accent">
           Pierwszy proces do zdjęcia
         </p>
@@ -169,7 +169,7 @@ export function TestGotowosciAI() {
       </div>
 
       {/* 3 rekomendacje z najsłabszych osi + linki do REALNYCH usług */}
-      <div className="card-aura mt-4 rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6">
+      <div className="mt-4 rounded-xl border border-border bg-surface p-5 shadow-xs sm:p-6">
         <h3 className="text-h3">Od czego zacząć: 3 rzeczy</h3>
         <ol className="mt-4 space-y-4">
           {wynik.najslabsze.map((o, i) => (
@@ -205,7 +205,7 @@ export function TestGotowosciAI() {
       <button
         type="button"
         onClick={reset}
-        className="mt-4 text-caption text-fg-muted underline decoration-1 underline-offset-2 hover:text-fg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+        className="mt-4 text-caption text-fg-muted underline decoration-1 underline-offset-2 hover:text-fg"
       >
         Zacznij test od nowa
       </button>

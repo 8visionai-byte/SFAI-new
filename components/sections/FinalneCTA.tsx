@@ -14,8 +14,7 @@ export function FinalneCTA() {
         {/* Lewa: domknięcie + dowód */}
         <div>
           <Reveal>
-            {/* .text-metal — fallback --metal-fg = fiolet 6.81:1 na paper (AA). */}
-            <h2 className="text-h2 text-metal">Gotowy zobaczyć, gdzie Twoja firma traci czas?</h2>
+            <h2 className="text-h2">Gotowy zobaczyć, gdzie Twoja firma traci czas?</h2>
           </Reveal>
           <Reveal delay={0.05}>
             <p className="text-lead mt-5 text-fg-muted">
@@ -31,7 +30,7 @@ export function FinalneCTA() {
             Do czasu realnych danych — uczciwy sygnał oferty, BEZ widocznego [PLACEHOLDER].
           */}
           <Reveal delay={0.1}>
-            <div className="card-aura mt-7 rounded-lg border border-border bg-surface p-5 shadow-xs">
+            <div className="mt-7 rounded-lg border border-border bg-surface p-5 shadow-xs">
               <p className="text-body-sm text-fg-muted">
                 Diagnoza trwa 30 minut i nic nie kosztuje. Wychodzisz z konkretną listą tego, co da się u Ciebie
                 zautomatyzować, nawet jeśli nic u nas nie zamówisz.

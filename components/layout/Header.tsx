@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui';
 import { NAV_LINKS, HOME_CTA } from '@/lib/site';
 import { USLUGI } from '@/lib/uslugi';
@@ -32,6 +33,11 @@ const NAV_LINKS_REST = NAV_LINKS.filter((l) => l.href !== '/uslugi');
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  // Aktywna strona w nav desktop: aria-current="page" (semantyka) steruje też
+  // podkreśleniem .nav-link (underline-slide w globals.css).
+  const pathname = usePathname();
+  const isActive = (href: string) =>
+    pathname === href || pathname.startsWith(href + '/');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -72,7 +78,8 @@ export function Header() {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="rounded-sm px-3 py-2 text-ui font-medium text-fg-muted transition-colors duration-fast hover:text-fg"
+                aria-current={isActive(link.href) ? 'page' : undefined}
+                className="nav-link rounded-sm px-3 py-2 text-ui font-medium text-fg-muted transition-colors duration-fast hover:text-fg"
               >
                 {link.label}
               </Link>
@@ -92,7 +99,7 @@ export function Header() {
           onClick={() => setOpen(true)}
           aria-label="Otwórz menu"
           aria-expanded={open}
-          className="ml-1 inline-flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-sm text-fg lg:hidden focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+          className="ml-1 inline-flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-sm text-fg lg:hidden"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -121,7 +128,7 @@ export function Header() {
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Zamknij menu"
-              className="ml-auto inline-flex h-[44px] w-[44px] items-center justify-center rounded-sm text-fg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+              className="ml-auto inline-flex h-[44px] w-[44px] items-center justify-center rounded-sm text-fg"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -130,14 +137,14 @@ export function Header() {
           </div>
           {/* Obszar przewijany: lista nawigacji + CTA. flex-1 + min-h-0 pozwala
               overflow-y-auto faktycznie zadziałać wewnątrz flex-kolumny. */}
-          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+          <div className="sf-scroll-slim flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain pb-[max(1.5rem,env(safe-area-inset-bottom))]">
           <ul className="flex flex-col gap-1 px-gutter pt-4">
             {/* Usługi — hub live + parasol wyróżniony + pełna lista usług z rejestru */}
             <li>
               <Link
                 href="/uslugi"
                 onClick={() => setOpen(false)}
-                className="block rounded-sm py-3 text-h3 text-fg"
+                className="block rounded-sm py-3 text-h3 text-fg active:bg-bg-subtle"
               >
                 Usługi
               </Link>
@@ -160,7 +167,7 @@ export function Header() {
                     <Link
                       href={`/uslugi/${u.slug}`}
                       onClick={() => setOpen(false)}
-                      className="block rounded-sm py-2 text-body text-fg-muted hover:text-fg"
+                      className="block rounded-sm py-2 text-body text-fg-muted hover:text-fg active:bg-bg-subtle"
                     >
                       {u.h1}
                     </Link>
@@ -174,7 +181,7 @@ export function Header() {
                 <Link
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="block rounded-sm py-3 text-h3 text-fg"
+                  className="block rounded-sm py-3 text-h3 text-fg active:bg-bg-subtle"
                 >
                   {link.label}
                 </Link>

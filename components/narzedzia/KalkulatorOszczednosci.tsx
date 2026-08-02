@@ -75,7 +75,7 @@ export function KalkulatorOszczednosci() {
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-10">
       {/* KOLUMNA WEJŚCIA */}
-      <div className="card-aura rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-7">
+      <div className="rounded-xl border border-border bg-surface p-6 shadow-xs sm:p-7">
         <h3 className="text-h3">Wpisz swoje liczby</h3>
         <p className="mt-1 text-caption text-fg-subtle">
           Domyślne wartości to typowe założenie. Zmień każde na swoje.
@@ -130,7 +130,7 @@ export function KalkulatorOszczednosci() {
                     aria-pressed={active}
                     onClick={() => setProcAuto(p.proc)}
                     className={
-                      'min-h-[44px] rounded-sm border-[1.5px] px-2 py-2 text-caption font-semibold transition-[border-color,background-color] duration-fast ease-out focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring ' +
+                      'min-h-[44px] rounded-sm border-[1.5px] px-2 py-2 text-caption font-semibold transition-[border-color,background-color] duration-fast ease-out ' +
                       (active
                         ? 'border-accent bg-accent-soft text-fg'
                         : 'border-border bg-surface-sunken text-fg-muted hover:border-border-strong')
@@ -181,7 +181,7 @@ export function KalkulatorOszczednosci() {
 
       {/* KOLUMNA WYNIKU */}
       <div>
-        <div className="card-aura rounded-xl border border-border bg-bg-subtle p-6 shadow-sm sm:p-7">
+        <div className="rounded-xl border border-border bg-bg-subtle p-6 shadow-xs sm:p-7">
           <p className="text-caption font-semibold uppercase tracking-[0.08em] text-fg-subtle">
             Odzyskujesz rocznie
           </p>

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { USLUGI } from '@/lib/uslugi';
 
 /**
@@ -19,6 +20,10 @@ import { USLUGI } from '@/lib/uslugi';
 export function ServicesMenu() {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLLIElement>(null);
+  // Aktywna sekcja usług (hub i podstrony): aria-current="page" trzyma
+  // podkreślenie .nav-link (underline-slide, globals.css).
+  const pathname = usePathname();
+  const uslugiActive = pathname === '/uslugi' || pathname.startsWith('/uslugi/');
 
   useEffect(() => {
     if (!open) return;
@@ -39,7 +44,8 @@ export function ServicesMenu() {
       {/* Hub /uslugi jest live — top-level "Usługi" to realny link do rozdroża. */}
       <Link
         href="/uslugi"
-        className="rounded-sm px-3 py-2 text-ui font-medium text-fg-muted transition-colors duration-fast hover:text-fg"
+        aria-current={uslugiActive ? 'page' : undefined}
+        className="nav-link rounded-sm px-3 py-2 text-ui font-medium text-fg-muted transition-colors duration-fast hover:text-fg"
       >
         Usługi
       </Link>
@@ -67,7 +73,7 @@ export function ServicesMenu() {
 
       {open && (
         <ul
-          className="absolute right-0 top-full mt-2 w-[min(92vw,28rem)] rounded-lg border border-border bg-surface p-2 shadow-md"
+          className="sf-menu-pop absolute right-0 top-full mt-2 w-[min(92vw,28rem)] rounded-lg border border-border bg-surface p-2 shadow-md"
           role="menu"
         >
           {/* Wyróżniony wpis: strona-parasol "Architekci Wartości AI" (centrum oferty). */}
