@@ -1,4 +1,4 @@
-import { Section, Button, Card } from '@/components/ui';
+import { Section, Button, Card, SectionImage } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HOME_CTA } from '@/lib/site';
 
@@ -40,6 +40,18 @@ export function JakToDziala() {
           </p>
         </Reveal>
       </div>
+
+      {/* Zdjęcie pełną osią wide NAD siatką kroków (dodatkowy wiersz; kroki są
+          3-kolumnowe, więc obraz nie wchodzi im w kolumnę). sizes pod oś 980px. */}
+      <Reveal delay={0.08}>
+        <div className="mx-auto mt-8 max-w-wide">
+          <SectionImage
+            src="/img/automatyzacja-procesow-krok-po-kroku.webp"
+            alt="Etapy automatyzacji procesu w firmie połączone świetlistą linią danych"
+            sizes="(min-width: 1024px) 980px, 100vw"
+          />
+        </div>
+      </Reveal>
 
       <ol className="mt-8 grid gap-6 md:grid-cols-3">
         {KROKI.map((k, i) => (

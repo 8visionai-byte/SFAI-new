@@ -1374,28 +1374,10 @@ details[open] > div {
 /* Słowo: opakowanie liter jednego wyrazu. white-space:nowrap + inline-block =
    wyraz jest atomowy i NIE łamie się w środku (naprawa „Agen / tów" — bug, gdzie
    ciąg inline-block liter łamał się na DOWOLNej literze). Złamanie wiersza zachodzi
-   tylko na spacjach między słowami.
-   KASKADA WEJŚCIA: każde słowo wjeżdża z delayem var(--w) * 90ms (indeks słowa
-   z SSR). `both` trzyma słowo ukryte przed startem (zero błysku kolejności). */
+   tylko na spacjach między słowami. Wejście H1 robi MASZYNA DO PISANIA (niżej). */
 .sf-write-word {
   display: inline-block;
   white-space: nowrap;
-  animation: sfWordIn 700ms var(--ease-out) both;
-  animation-delay: calc(var(--w, 0) * 90ms);
-}
-
-/* Wejście słowa: uniesienie 0.35em + rozmycie → ostro, na miejscu. */
-@keyframes sfWordIn {
-  from {
-    opacity: 0;
-    transform: translateY(0.35em);
-    filter: blur(6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: none;
-  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1436,11 +1418,106 @@ details[open] > div {
   }
 }
 
-/* (MASZYNA DO PISANIA USUNIĘTA — redesign „Precyzja cyrkla": reguły pisania
-   litera-po-literze, migający kursor i spoczynkowy oddech wypadły razem
-   z klienckim triggerem. Wejście robi kaskada słów .sf-write-word wyżej.) */
+/* MASZYNA DO PISANIA (PRZYWRÓCONA decyzją Pawła 2026-08-03 — sygnatura hero
+   zostaje): litery pojawiają się kolejno, gładko (opacity), z migającym pionowym
+   kursorem za ostatnią. Stan bazowy (bez .is-typing) = pełny, czytelny KOLOROWY
+   napis (no-JS / reduced-motion / GEO). JS (WritingTrigger) dodaje .is-typing
+   i steruje klasą .typed + .sf-caret. Kursor miga TYLKO podczas pisania
+   (~2.8 s) — po zakończeniu H1 stoi nieruchomo, więc budżet ruchu redesignu
+   („max 1 pętla ambient na viewport") pozostaje zachowany. */
 
-/* Forced-colors (Windows High Contrast): kolor systemowy, napis pełny. */
+/* Nienapisane litery: niewidoczne, ale REZERWUJĄ miejsce (opacity, nie display)
+   => zero skoku layoutu (CLS). Napisane (.typed) pojawiają się gładko. */
+.sf-write.is-typing .sf-write-letter {
+  opacity: 0;
+}
+.sf-write.is-typing .sf-write-letter.typed {
+  opacity: 1;
+  transition: opacity 120ms linear;
+}
+
+/* Kursor: pionowa kreska tuż za ostatnio napisaną literą (jak w czacie).
+   Absolutny => ruch kursora NIE zmienia szerokości liter (zero jittera). */
+.sf-write-letter.sf-caret {
+  position: relative;
+}
+.sf-write-letter.sf-caret::after {
+  content: '|';
+  position: absolute;
+  right: -0.16em;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--metal-violet);
+  -webkit-text-fill-color: var(--metal-violet);
+  font-weight: 400;
+  animation: sfCaretBlink 0.85s steps(1, end) infinite;
+}
+@keyframes sfCaretBlink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   ZDJĘCIA SEKCJI + PRZEJŚCIA STRON (redesign „Precyzja cyrkla").
+   POZA @layer jak pozostałe @supports/@media/@keyframes (konwencja pliku:
+   Tailwind v3 + autoprefixer gubi ciało at-rule zagnieżdżonego w @layer).
+   ========================================================================== */
+
+/* Paralaksa zdjęć: scroll-driven (animation-timeline: view()) — ruch sterowany
+   scrollem UŻYTKOWNIKA (zgodny z budżetem ruchu redesignu), zero JS.
+   Progressive enhancement: starsze przeglądarki mają statyczne zdjęcie.
+   scale 1.1 chowa krawędzie przy przesuwie (ramka .sf-img-frame = overflow-hidden). */
+@supports (animation-timeline: view()) {
+  .sf-img-parallax {
+    animation: sfImgDrift linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+  @keyframes sfImgDrift {
+    from {
+      transform: translateY(-4.5%) scale(1.1);
+    }
+    to {
+      transform: translateY(4.5%) scale(1.1);
+    }
+  }
+}
+
+/* Przejście stron: app/template.tsx re-montuje się przy KAŻDEJ nawigacji →
+   krótkie wejście treści (280ms) między zakładkami, bez bibliotek. */
+.sf-page-enter {
+  animation: sfPageIn 280ms var(--ease-out);
+}
+@keyframes sfPageIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Bramka reduced-motion — JAWNA (globalna bramka skraca duration, ale przy
+   animation-timeline duration nie gra roli, więc paralaksę trzeba zgasić wprost). */
+@media (prefers-reduced-motion: reduce) {
+  .sf-img-parallax {
+    animation: none !important;
+    transform: none !important;
+  }
+  .sf-page-enter {
+    animation: none !important;
+  }
+}
+
+/* Forced-colors (Windows High Contrast): kolor systemowy, napis pełny, bez kursora. */
 @media (forced-colors: active) {
   .sf-write,
   .sf-write .sf-write-letter,
@@ -1448,14 +1525,23 @@ details[open] > div {
     color: CanvasText !important;
     -webkit-text-fill-color: CanvasText;
   }
+  .sf-write.is-typing .sf-write-letter {
+    opacity: 1 !important;
+  }
+  .sf-write-letter.sf-caret::after {
+    animation: none;
+    opacity: 0;
+  }
 }
 
-/* prefers-reduced-motion: BEZ kaskady. Napis od razu pełny, kolorowy, nieruchomy. */
+/* prefers-reduced-motion: BEZ pisania. Napis od razu pełny i kolorowy (trigger
+   nie doda .is-typing, ale dla pewności wymuszamy widoczność i gasimy kursor). */
 @media (prefers-reduced-motion: reduce) {
-  .sf-write-word {
-    animation: none;
-    opacity: 1;
-    transform: none;
-    filter: none;
+  .sf-write.is-typing .sf-write-letter {
+    opacity: 1 !important;
+  }
+  .sf-write-letter.sf-caret::after {
+    animation: none !important;
+    opacity: 0 !important;
   }
 }

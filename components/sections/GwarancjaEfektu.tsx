@@ -1,4 +1,4 @@
-import { Section, MagneticButton, Card } from '@/components/ui';
+import { Section, MagneticButton, Card, SectionImage } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HOME_CTA } from '@/lib/site';
 
@@ -32,17 +32,27 @@ const FILARY = [
 export function GwarancjaEfektu() {
   return (
     <Section tone="base">
-      <div className="mx-auto max-w-narrow">
-        <Reveal>
-          <h2 className="text-h2">Co jeśli nie zadziała? Kto bierze na siebie ryzyko?</h2>
-        </Reveal>
-        {/* Kapsuła answer-first — cytowalna dla LLM przy "co jak AI nie zadziała" */}
-        <Reveal delay={0.05}>
-          <p className="text-lead mt-5 text-fg-muted">
-            Ryzyko bierzemy na siebie tam, gdzie to my decydujemy o efekcie. Zaczynasz od bezpłatnej diagnozy
-            i małego kroku, płacisz dopiero za działające rozwiązanie, a rozliczamy się za wynik, nie za
-            obietnice. Dokładne warunki gwarancji ustalamy na diagnozie i zapisujemy w umowie.
-          </p>
+      {/* Zdjęcie marki (cyrkiel) = dodatkowa kolumna obok nagłówka
+          (mobile: POD tekstem, desktop: obok). Filary niżej bez zmian. */}
+      <div className="mx-auto grid max-w-wide items-center gap-8 md:grid-cols-2">
+        <div>
+          <Reveal>
+            <h2 className="text-h2">Co jeśli nie zadziała? Kto bierze na siebie ryzyko?</h2>
+          </Reveal>
+          {/* Kapsuła answer-first — cytowalna dla LLM przy "co jak AI nie zadziała" */}
+          <Reveal delay={0.05}>
+            <p className="text-lead mt-5 text-fg-muted">
+              Ryzyko bierzemy na siebie tam, gdzie to my decydujemy o efekcie. Zaczynasz od bezpłatnej diagnozy
+              i małego kroku, płacisz dopiero za działające rozwiązanie, a rozliczamy się za wynik, nie za
+              obietnice. Dokładne warunki gwarancji ustalamy na diagnozie i zapisujemy w umowie.
+            </p>
+          </Reveal>
+        </div>
+        <Reveal delay={0.1}>
+          <SectionImage
+            src="/img/precyzja-cyrkla-marka-simplefast.webp"
+            alt="Metalowy cyrkiel kreślarski na ciemnym tle z pierścieniami w kolorach marki SimpleFast"
+          />
         </Reveal>
       </div>
 

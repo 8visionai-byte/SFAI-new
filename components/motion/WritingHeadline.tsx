@@ -1,13 +1,15 @@
 import { Fragment } from 'react';
 import type { CSSProperties } from 'react';
+import { WritingTrigger } from './WritingTrigger';
 
 /**
  * WritingHeadline — H1 hero: litery kolorowane per-glif gradientem marki, wejście
- * = czysto CSS-owa KASKADA SŁÓW (sfWordIn w globals.css, delay = --w * 90ms; fraza
- * 4-5 słów kończy się <1.2s, pierwsze słowo widoczne od ~0ms — LCP-safe, zero JS,
- * zero IntersectionObservera). SERVER component: podział na słowa + litery wykonuje
- * się przy buildzie (SSG) i ląduje do surowego HTML, więc konkatenacja zawartości
- * spanów = dokładnie `text` (boty/LLM czytają normalny tekst, cytowalność #1).
+ * = MASZYNA DO PISANIA (przywrócona decyzją Pawła 2026-08-03 — sygnatura hero):
+ * WritingTrigger (client island) dodaje .is-typing i odsłania litery kolejno
+ * (48 ms/znak) z migającym kursorem. Stan bazowy w HTML = PEŁNY kolorowy napis,
+ * więc no-JS / boty / reduced-motion widzą całość od razu (LCP-safe, cytowalność #1).
+ * Podział na słowa + litery wykonuje się przy buildzie (SSG) i ląduje do surowego
+ * HTML — konkatenacja zawartości spanów = dokładnie `text`.
  *
  * ŁAMANIE WIERSZA (naprawa „Agen / tów"): ciąg liter `display:inline-block` łamał się
  * na DOWOLNej literze, bo między atomowymi inline-block boxami jest punkt zawijania.
@@ -81,6 +83,7 @@ export function WritingHeadline({
   return (
     <h1
       aria-label={text}
+      data-writing=""
       className={`sf-write ${className}`}
       style={{ '--n': n } as CSSProperties}
     >
@@ -121,6 +124,8 @@ export function WritingHeadline({
           </span>
         </Fragment>
       ))}
+      {/* Client island maszyny do pisania — zero renderu, tylko dyrygent klas. */}
+      <WritingTrigger />
     </h1>
   );
 }

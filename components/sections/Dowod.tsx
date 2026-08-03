@@ -1,4 +1,4 @@
-import { Section, MagneticButton, Card, Badge } from '@/components/ui';
+import { Section, MagneticButton, Card, Badge, SectionImage } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HOME_CTA } from '@/lib/site';
 
@@ -26,17 +26,27 @@ const CASE: CaseStudy | null = null;
 export function Dowod() {
   return (
     <Section tone="subtle">
-      <div className="mx-auto max-w-narrow">
-        <Reveal>
-          <h2 className="text-h2">Co konkretnie zmienia się w firmie po wdrożeniu Agenta?</h2>
-        </Reveal>
-        {/* Kapsuła answer-first — uczciwa, bez zmyślonego case'a (INPUT PAWŁA na realny). */}
-        <Reveal delay={0.05}>
-          <p className="text-lead mt-5 text-fg-muted">
-            Po wdrożeniu Agenta firma przestaje gubić telefony i powtarzać tę samą robotę. Voicebot odbiera, gdy
-            Ty nie możesz, chatbot odpowiada klientom o każdej porze, a dane same przechodzą między systemami.
-            Twarde liczby z konkretnych wdrożeń publikujemy tutaj, gdy klient da zielone światło.
-          </p>
+      {/* Zdjęcie = dodatkowa kolumna obok nagłówka (mobile: POD tekstem,
+          desktop: obok). Grid case/karty niżej z NIETKNIĘTĄ logiką CASE. */}
+      <div className="mx-auto grid max-w-wide items-center gap-8 md:grid-cols-2">
+        <div>
+          <Reveal>
+            <h2 className="text-h2">Co konkretnie zmienia się w firmie po wdrożeniu Agenta?</h2>
+          </Reveal>
+          {/* Kapsuła answer-first — uczciwa, bez zmyślonego case'a (INPUT PAWŁA na realny). */}
+          <Reveal delay={0.05}>
+            <p className="text-lead mt-5 text-fg-muted">
+              Po wdrożeniu Agenta firma przestaje gubić telefony i powtarzać tę samą robotę. Voicebot odbiera, gdy
+              Ty nie możesz, chatbot odpowiada klientom o każdej porze, a dane same przechodzą między systemami.
+              Twarde liczby z konkretnych wdrożeń publikujemy tutaj, gdy klient da zielone światło.
+            </p>
+          </Reveal>
+        </div>
+        <Reveal delay={0.1}>
+          <SectionImage
+            src="/img/rozmowa-o-wdrozeniu-ai.webp"
+            alt="Dwie osoby analizują wyniki wdrożenia AI na tablecie w nocnym biurze"
+          />
         </Reveal>
       </div>
 

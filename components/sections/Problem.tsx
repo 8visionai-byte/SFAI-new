@@ -1,4 +1,4 @@
-import { Section, Button, Card } from '@/components/ui';
+import { Section, Button, Card, SectionImage } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HOME_CTA } from '@/lib/site';
 
@@ -18,17 +18,27 @@ const BOLE = [
 export function Problem() {
   return (
     <Section tone="base" id="problem">
-      <div className="mx-auto max-w-narrow">
-        <Reveal>
-          <h2 className="text-h2">Ile czasu w tygodniu zjada Ci robota, którą mógłby robić ktoś inny?</h2>
-        </Reveal>
-        <Reveal delay={0.05}>
-          <p className="text-lead mt-5 text-fg-muted">
-            Większość małych firm traci kilkanaście godzin tygodniowo na to samo: odbieranie tych samych
-            pytań, przepisywanie danych między systemami, oddzwanianie do klientów, którzy nie dodzwonili
-            się za pierwszym razem. To nie jest praca, która rozwija firmę. To praca, która ją tylko utrzymuje
-            na powierzchni. I to właśnie ją zdejmuje AI Agent.
-          </p>
+      {/* Zdjęcie = dodatkowa kolumna obok nagłówka (mobile: POD tekstem,
+          desktop: obok). Teksty i hierarchia nagłówków bez zmian. */}
+      <div className="mx-auto grid max-w-wide items-center gap-8 md:grid-cols-2">
+        <div>
+          <Reveal>
+            <h2 className="text-h2">Ile czasu w tygodniu zjada Ci robota, którą mógłby robić ktoś inny?</h2>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <p className="text-lead mt-5 text-fg-muted">
+              Większość małych firm traci kilkanaście godzin tygodniowo na to samo: odbieranie tych samych
+              pytań, przepisywanie danych między systemami, oddzwanianie do klientów, którzy nie dodzwonili
+              się za pierwszym razem. To nie jest praca, która rozwija firmę. To praca, która ją tylko utrzymuje
+              na powierzchni. I to właśnie ją zdejmuje AI Agent.
+            </p>
+          </Reveal>
+        </div>
+        <Reveal delay={0.1}>
+          <SectionImage
+            src="/img/powtarzalna-robota-przed-i-po.webp"
+            alt="Przedsiębiorca zasypany papierami nocą i ten sam człowiek pracujący spokojnie z asystentem AI"
+          />
         </Reveal>
       </div>
 

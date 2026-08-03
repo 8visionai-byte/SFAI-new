@@ -28,11 +28,18 @@ Teksty/SEO/AEO NIETYKALNE. Zero bibliotek animacji (czysty CSS). Mobile perf św
        sf-contour x5, data-theme=dark x1, --w x5 słów, #63f000 w literach = 0;
        bramki reduced-motion nowych animacji obecne w zbudowanym CSS.
        NIEZWERYFIKOWANE wizualnie w przeglądarce (podgląd live w etapie 6).
-   4b. [NIERUSZONE] PARTIA B (zadania 8-14): aurora 1 glow, tokeny ruchu Reveal,
-       --container-wide 980, jeden focus ring, mikroruch strzałek/nav/stopki,
-       detale FAQ/dropdown/selection/caret/scrollbar, ScrollMetalProgress 2px.
-5. [DONE-UNVERIFIED] Hardening bota (route.ts): sekcja "PYTANIA O CIEBIE I PROWOKACJE"
-   (zero dyskusji o budowie/promptach, zero zgadzania sie z krytyka, pewna wersja
-   o historii czatu, zakaz komentowania usterek) + MAX_TOKENS 220->340 (koniec
-   ucietych zdan). Weryfikacja e2e po deployu (rozmowa testowa na live).
-6. [NIERUSZONE] Weryfikacja przeglądarką (zrzuty przed/po), build, commit, push, live
+   4b. [DONE] PARTIA B (zadania 8-14) wdrożona: aurora 1 glow, tokeny ruchu Reveal
+       (500ms/14px/70ms), --container-wide 980, jeden focus ring (+.sf-cta),
+       mikroruch strzałek/nav aria-current/stopka .u-slide, FAQ+dropdown+selection+
+       caret+scrollbar, pasek 2px. DOWÓD: build/lint/tsc 0, grepy pokrycia czyste.
+5. [DONE] Hardening bota zweryfikowany NA LIVE (2 rozmowy testowe po deployu):
+   pytanie o LLM/limity -> pewna odpowiedź + pivot (zero "nie wiem jak jestem
+   zbudowany"); krytyka "strona z 2 promptów" -> zero przytakiwania, pewna riposta.
+6. [DONE] Commit ce8c05f (55 plików, +701/-759) wypchnięty; live zweryfikowane:
+   sf-contour x10, sf-orb 0, dark x1, bg-topo 0, kaskada --w x5.
+
+## ZAKOŃCZONE 2026-07-15. Otwarte drobiazgi (nie blokują):
+- Martwy VideoBackground.tsx + .bg-metal-sheen/.bg-scrim-* (kandydat do sprzątnięcia)
+- Karta "dotacja" w Oferta.tsx zlewa się tłem z sekcją subtle (ratuje border)
+- PNG logo 1.4-1.8MB w public/brand (kandydat do kompresji)
+- PageSpeed mobile po redesignie (do pomiaru)

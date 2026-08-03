@@ -48,3 +48,6 @@ next-env.d.ts
 /_zespol/
 PROFIL-STRATEGICZNY-SIMPLEFAST.md
 PROFIL-STRATEGICZNY-*.md
+
+# Zrodlowe PNG (47MB) - wersje webp sa w public/img
+zrodla/

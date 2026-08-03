@@ -1,4 +1,4 @@
-import { Section, Card } from '@/components/ui';
+import { Section, Card, SectionImage } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 
 /**
@@ -34,17 +34,29 @@ export function Bezpieczenstwo() {
        temat lęku #1. theme="dark" przełącza tokeny semantyczne (data-theme),
        .surface-tech dokłada navy tło + hairline'y (górny/dolny) + glow. */
     <Section theme="dark" tone="base" className="surface-tech">
-      <div className="mx-auto max-w-narrow">
-        <Reveal>
-          <h2 className="text-h2">Czy AI Agent dla firmy jest bezpieczny i zgodny z RODO?</h2>
-        </Reveal>
-        {/* Kapsuła answer-first — cytat dla LLM */}
-        <Reveal delay={0.05}>
-          <p className="text-lead mt-5 text-fg-muted">
-            Tak. Dane Twoich klientów zostają w Unii Europejskiej, przetwarzamy je zgodnie z RODO i AI Act,
-            a my podpisujemy umowę powierzenia. Widzisz każdą akcję Agenta, ustawiasz granice i w każdej
-            chwili możesz go zatrzymać. Klient po drugiej stronie zawsze wie, że rozmawia z AI.
-          </p>
+      {/* Zdjęcie = dodatkowa kolumna obok nagłówka (mobile: POD tekstem, desktop:
+          obok); lista punktów niżej zostaje w swojej siatce sm:grid-cols-2.
+          Ciemne tło: ramka border-white/10 zamiast border-border (przez className). */}
+      <div className="mx-auto grid max-w-wide items-center gap-8 md:grid-cols-2">
+        <div>
+          <Reveal>
+            <h2 className="text-h2">Czy AI Agent dla firmy jest bezpieczny i zgodny z RODO?</h2>
+          </Reveal>
+          {/* Kapsuła answer-first — cytat dla LLM */}
+          <Reveal delay={0.05}>
+            <p className="text-lead mt-5 text-fg-muted">
+              Tak. Dane Twoich klientów zostają w Unii Europejskiej, przetwarzamy je zgodnie z RODO i AI Act,
+              a my podpisujemy umowę powierzenia. Widzisz każdą akcję Agenta, ustawiasz granice i w każdej
+              chwili możesz go zatrzymać. Klient po drugiej stronie zawsze wie, że rozmawia z AI.
+            </p>
+          </Reveal>
+        </div>
+        <Reveal delay={0.1}>
+          <SectionImage
+            src="/img/bezpieczenstwo-danych-nowoczesna-firma.webp"
+            alt="Nowoczesne szklane biuro nocą, kontrola dostępu i bezpieczeństwo danych"
+            className="border-white/10"
+          />
         </Reveal>
       </div>
 
