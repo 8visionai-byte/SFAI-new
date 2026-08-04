@@ -26,13 +26,27 @@ E3 ruch (find-animation-opportunities, emil-design-eng) → E4 impeccable + dow�
    RIBBON (JakToDziała, wstęga zrośnięta z krokami).
    Znaleziony realny bug: .sf-img-parallax na <img> — animacja bije deklarację,
    więc hover:scale cicho nie działa (paralaksa musi iść na wrapperze).
-3. [W TOKU] Implementacja równoległa:
-   - Partia A (agent 1): globals.css (CAŁY nowy CSS), komponent płyty, hero,
-     5 sekcji ze zdjęciami, ServiceHero. WYŁĄCZNOŚĆ na te pliki.
-   - Partia B (agent 2): pozostałe sekcje, system ruchu/przejść kart, mikrodetale.
-     ZAKAZ dotykania globals.css i plików partii A; CSS oddaje w raporcie.
-4. [NIERUSZONE] Audyt impeccable + weryfikacja przeglądarką (zrzuty przed/po).
-5. [NIERUSZONE] Build, commit, push, weryfikacja live.
+3. [DONE] Implementacja równoległa (36 plików, +1359/-491):
+   - Partia A: globals.css (cały nowy CSS + blok B), komponent .sf-plate z 5 rolami,
+     tokeny (display 88, h2 46, cienie dwuwarstwowe, --hairline, --border-control),
+     hero, 5 sekcji ze zdjęciami, ServiceHero.
+   - Partia B: 18 plików — ściana cytatów, cennik, FAQ 2-kolumnowe z natywną
+     animacją, spec-sheet, PasekZaufania, BranzeDemo, przyciski, mikrodetale.
+4. [DONE] Weryfikacja przeglądarką: 5 ról płyt renderuje się poprawnie (zrzuty:
+   panorama Problem + karty nachodzące, pokój Bezpieczeństwa, kwadrat Dowodu),
+   maszyna pisania działa (30/30), mobile 375px BEZ poziomego scrolla.
+   FIX po drodze: ServiceHero miał BOM + double-encoded UTF-8 (mój błąd z
+   PowerShell w commicie bc12e49) — "Strona gĹowna" na 10 podstronach. Naprawione.
+   Hook impeccable: gradient-text na --metal-gradient = brandbook Pawła, false
+   positive, nie wyciszony (czeka na ewentualną decyzję).
+5. [DONE] Commit d50e9fb wypchnięty; live potwierdzone: 26x sf-plate, 6 kadrów
+   ról, data-writing obecny, zero starych ramek, breadcrumb PL poprawny.
+
+## ZAKOŃCZONE. Otwarte drobiazgi (nie blokują):
+- --ease-spring (bounce) w tokenach — hook uważa za dated; do decyzji Pawła
+- PNG logo 1.4-1.8MB w public/brand (kandydat do kompresji)
+- PageSpeed mobile po redesignie (do pomiaru)
+- interpolate-size: allow-keywords działa globalnie — sprawdzić inne animacje wysokości
 
 ## Kontekst techniczny (dla wznowienia)
 - Ostatni commit: bc12e49 (zdjęcia + maszyna pisania + przejścia stron)

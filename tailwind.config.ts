@@ -128,7 +128,7 @@ const config: Config = {
       transitionTimingFunction: {
         out: 'var(--ease-out)',
         'in-out': 'var(--ease-in-out)',
-        spring: 'var(--ease-spring)',
+        // `spring` usunięty razem z tokenem --ease-spring (patrz globals.css).
       },
       transitionDuration: {
         fast: '140ms',

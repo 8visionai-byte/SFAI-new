@@ -35,7 +35,7 @@ export function PostFAQ({ faq }: { faq: PostFaq[] }) {
                     viewBox="0 0 24 24"
                     fill="none"
                     aria-hidden="true"
-                    className="shrink-0 text-fg-subtle transition-transform duration-base ease-spring group-hover:scale-105 group-open:rotate-45 group-open:text-accent"
+                    className="shrink-0 text-fg-subtle transition-transform duration-base ease-out group-hover:scale-105 group-open:rotate-45 group-open:text-accent"
                   >
                     <path
                       d="M12 5v14M5 12h14"
