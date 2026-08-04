@@ -20,16 +20,28 @@ import { createElement, useEffect, useRef, useState, type ReactNode } from 'reac
  * widzą pełny tekst niezależnie od JS.
  */
 type RevealProps = {
-  as?: 'div' | 'li';
+  /** Element wynikowy — `ul`/`ol`/`figure` pozwalają owinąć LISTĘ bez dzielenia
+   *  jej na kontener + wrapper (jeden obserwator na całą siatkę: .sf-stagger). */
+  as?: 'div' | 'li' | 'ul' | 'ol' | 'figure';
   children: ReactNode;
   /** Opóźnienie startu (s) — do staggera kolejnych elementów. */
   delay?: number;
   className?: string;
   /** NAD foldem: animacja od razu z CSS (bez IO), nie blokuje LCP. */
   eager?: boolean;
+  /** `header` = dłuższa droga i wolniejszy dojazd (H2 ma większą masę niż
+   *  element listy pod nim). Metryki w globals.css. */
+  variant?: 'item' | 'header';
 };
 
-export function Reveal({ as = 'div', children, delay = 0, className, eager = false }: RevealProps) {
+export function Reveal({
+  as = 'div',
+  children,
+  delay = 0,
+  className,
+  eager = false,
+  variant = 'item',
+}: RevealProps) {
   const ref = useRef<HTMLElement>(null);
   const [shown, setShown] = useState(false);
 
@@ -76,6 +88,7 @@ export function Reveal({ as = 'div', children, delay = 0, className, eager = fal
     {
       ref,
       'data-reveal': '',
+      ...(variant === 'header' ? { 'data-reveal-variant': 'header' } : {}),
       ...(shown ? { 'data-reveal-shown': '' } : {}),
       className,
       style: delay ? { transitionDelay: `${delay}s` } : undefined,

@@ -1,4 +1,4 @@
-import { Section, MagneticButton, Card, SectionImage } from '@/components/ui';
+import { Section, MagneticButton, SectionImage } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HOME_CTA } from '@/lib/site';
 
@@ -31,45 +31,59 @@ const FILARY = [
 
 export function GwarancjaEfektu() {
   return (
-    <Section tone="base">
-      {/* Zdjęcie marki (cyrkiel) = dodatkowa kolumna obok nagłówka
-          (mobile: POD tekstem, desktop: obok). Filary niżej bez zmian. */}
-      <div className="mx-auto grid max-w-wide items-center gap-8 md:grid-cols-2">
-        <div>
-          <Reveal>
-            <h2 className="text-h2">Co jeśli nie zadziała? Kto bierze na siebie ryzyko?</h2>
-          </Reveal>
-          {/* Kapsuła answer-first — cytowalna dla LLM przy "co jak AI nie zadziała" */}
-          <Reveal delay={0.05}>
+    <Section tone="base" space="md">
+      {/* CANVAS: to JEDYNE zdjęcie brandowe w zestawie (metalowy cyrkiel z
+          pierścieniami w kolorach marki). Pierścienie zaczynają się na x~0,62,
+          a lewe 55-60% kadru to zaprojektowana, gładka czerń — ta pustka istnieje
+          po to, żeby leżał na niej tekst. Płyta z `children` sama ustawia
+          data-theme="dark", więc kontrast robią TOKENY SEMANTYCZNE, bez ani
+          jednego ręcznie dobranego HEX-a (H2 15:1, kapsuła 6,6:1 — AA).
+          Rola `auto` = wysokość niesie treść, nie sztywna proporcja, więc tekst
+          nigdy nie zostanie ucięty, a płyta i tak rezerwuje miejsce (CLS 0).
+          Teksty H2 i kapsuły co do znaku bez zmian. */}
+      <Reveal>
+        <SectionImage
+          src="/img/precyzja-cyrkla-marka-simplefast.webp"
+          alt="Metalowy cyrkiel kreślarski na ciemnym tle z pierścieniami w kolorach marki SimpleFast"
+          ratio="auto"
+          ratioMd="auto"
+          focus="50% 52%"
+          sizes="100vw"
+          className="mx-auto max-w-container"
+        >
+          {/* Kolumna tekstu max 52% szerokości płyty na desktopie — dalej
+              zaczynają się pierścienie. */}
+          <div className="w-full px-6 py-12 sm:px-10 md:w-[52%] md:py-20 md:pl-14 md:pr-8">
+            <h2 className="text-h2 text-fg">Co jeśli nie zadziała? Kto bierze na siebie ryzyko?</h2>
+            {/* Kapsuła answer-first — cytowalna dla LLM przy "co jak AI nie zadziała" */}
             <p className="text-lead mt-5 text-fg-muted">
               Ryzyko bierzemy na siebie tam, gdzie to my decydujemy o efekcie. Zaczynasz od bezpłatnej diagnozy
               i małego kroku, płacisz dopiero za działające rozwiązanie, a rozliczamy się za wynik, nie za
               obietnice. Dokładne warunki gwarancji ustalamy na diagnozie i zapisujemy w umowie.
             </p>
-          </Reveal>
-        </div>
-        <Reveal delay={0.1}>
-          <SectionImage
-            src="/img/precyzja-cyrkla-marka-simplefast.webp"
-            alt="Metalowy cyrkiel kreślarski na ciemnym tle z pierścieniami w kolorach marki SimpleFast"
-          />
-        </Reveal>
-      </div>
+          </div>
+        </SectionImage>
+      </Reveal>
 
-      {/* Grid 3-kol na osi wide (980px) — karty oddychają, kapsuła wyżej zostaje narrow. */}
-      <ul className="mx-auto mt-8 grid max-w-wide gap-6 md:grid-cols-3">
-        {FILARY.map((f, i) => (
-          <Reveal as="li" key={f.t} delay={i * 0.06}>
-            <Card as="article" className="h-full">
-              <h3 className="text-h3">{f.t}</h3>
-              <p className="mt-2 text-body-sm text-fg-muted">{f.d}</p>
-            </Card>
-          </Reveal>
+      {/* Trzy karty w równym rzędzie -> lista na kreskach: tytuł i opis stoją
+          obok siebie, więc filary czytają się jak karta katalogowa. */}
+      <Reveal
+        as="ul"
+        className="sf-stagger mx-auto mt-12 max-w-wide divide-y divide-border border-y border-border md:mt-16"
+      >
+        {FILARY.map((f) => (
+          <li
+            key={f.t}
+            className="grid gap-2 py-7 md:grid-cols-[minmax(0,24ch)_minmax(0,1fr)] md:gap-10"
+          >
+            <h3 className="text-h3">{f.t}</h3>
+            <p className="text-body-sm text-fg-muted">{f.d}</p>
+          </li>
         ))}
-      </ul>
+      </Reveal>
 
       <Reveal delay={0.1}>
-        <div className="mx-auto mt-9 flex max-w-narrow flex-col items-start gap-2">
+        <div className="mx-auto mt-12 flex max-w-narrow flex-col items-start gap-2">
           <MagneticButton variant="primary" size="lg" href={HOME_CTA.href}>
             {HOME_CTA.label}
           </MagneticButton>

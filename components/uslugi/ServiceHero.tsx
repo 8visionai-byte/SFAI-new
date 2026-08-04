@@ -1,4 +1,4 @@
-﻿import { Section, Badge, MagneticButton, SectionImage } from '@/components/ui';
+import { Section, Badge, MagneticButton, SectionImage } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { POSITIONING } from '@/lib/site';
 import { Breadcrumbs } from './Breadcrumbs';
@@ -6,18 +6,18 @@ import type { Usluga } from '@/lib/uslugi/types';
 import { USLUGA_OBRAZY } from '@/lib/uslugi/obrazy';
 
 /**
- * ServiceHero â€” SEKCJA 1 szablonu usĹ‚ugi (answer-first).
+ * ServiceHero — SEKCJA 1 szablonu usługi (answer-first).
  * Struktura: breadcrumbs + badge (sub-claim kategorii) + H1 (= money query)
- * + kapsuĹ‚a answer-first (surowy HTML = cytat dla LLM) + gĹ‚Ăłwne CTA + mikrokopia.
+ * + kapsuła answer-first (surowy HTML = cytat dla LLM) + główne CTA + mikrokopia.
  *
- * KPI #1: H1 i kapsuĹ‚a sÄ… w HTML przy 1. ĹĽÄ…daniu (Reveal tylko wzbogaca, a przy
- * prefers-reduced-motion pokazuje treĹ›Ä‡ natychmiast). Lewostronne wyrĂłwnanie
- * (czytelnoĹ›Ä‡ dĹ‚ugiej kapsuĹ‚y), spĂłjne z rytmem strony.
+ * KPI #1: H1 i kapsuła są w HTML przy 1. żądaniu (Reveal tylko wzbogaca, a przy
+ * prefers-reduced-motion pokazuje treść natychmiast). Lewostronne wyrównanie
+ * (czytelność długiej kapsuły), spójne z rytmem strony.
  *
- * ZDJÄCIE HERO (opcjonalne, mapa USLUGA_OBRAZY): desktop = druga kolumna po
- * prawej; mobile = BRAK zdjÄ™cia i ZERO transferu (wrapper hidden + loading lazy:
- * przeglÄ…darka nie pobiera lazy-obrazka w kontenerze display:none). Struktura
- * breadcrumbs/H1/kapsuĹ‚y/CTA pozostaje NIETKNIÄTA â€” tylko owiniÄ™ta gridem.
+ * ZDJĘCIE HERO (mapa USLUGA_OBRAZY): płyta w roli FRAME (kwadrat na desktopie),
+ * wychodząca do prawej krawędzi ekranu (.sf-bleed-r). Na mobile leży POD treścią
+ * i zostaje lazy, więc transfer rośnie dopiero po doscrollowaniu. Struktura
+ * breadcrumbs/H1/kapsuły/CTA pozostaje NIETKNIĘTA — tylko owinięta gridem.
  */
 export function ServiceHero({ usluga }: { usluga: Usluga }) {
   const obraz = USLUGA_OBRAZY[usluga.slug];
@@ -26,8 +26,8 @@ export function ServiceHero({ usluga }: { usluga: Usluga }) {
     <div className="mx-auto max-w-narrow">
       <Breadcrumbs
         items={[
-          { name: 'Strona gĹ‚Ăłwna', href: '/' },
-          { name: 'UsĹ‚ugi', href: '/uslugi' },
+          { name: 'Strona główna', href: '/' },
+          { name: 'Usługi', href: '/uslugi' },
           { name: usluga.h1 },
         ]}
       />
@@ -42,7 +42,7 @@ export function ServiceHero({ usluga }: { usluga: Usluga }) {
         <h1 className="text-display mt-5">{usluga.h1}</h1>
       </Reveal>
 
-      {/* KapsuĹ‚a answer-first â€” surowy HTML, cytat dla LLM (40â€“60 sĹ‚Ăłw). */}
+      {/* Kapsuła answer-first — surowy HTML, cytat dla LLM (40–60 słów). */}
       <Reveal eager delay={0.1}>
         <p className="text-lead mt-6 text-fg-muted">{usluga.kapsula}</p>
       </Reveal>
@@ -62,26 +62,37 @@ export function ServiceHero({ usluga }: { usluga: Usluga }) {
 
   if (!obraz) {
     return (
-      <Section tone="base" containerWidth="default">
+      <Section tone="base" containerWidth="default" space="lg">
         {tresc}
       </Section>
     );
   }
 
   return (
-    <Section tone="base" containerWidth="default">
-      <div className="grid items-center gap-8 md:grid-cols-2">
+    <Section tone="base" containerWidth="default" space="lg" className="overflow-x-clip">
+      <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] md:gap-14">
         {tresc}
-        {/* Desktop-only: hidden + loading="lazy" = mobile nie pobiera pliku. */}
-        <div className="hidden md:block">
-          <Reveal eager delay={0.2}>
-            <SectionImage
-              src={obraz.src}
-              alt={obraz.alt}
-              sizes="(min-width: 768px) 45vw, 0px"
-            />
-          </Reveal>
-        </div>
+        {/* ZDJĘCIE JEST TEŻ NA MOBILE: `hidden md:block` zostawiało dziesięć podstron
+            usług bez żadnego wizualu na telefonie, a ruch jest głównie mobilny.
+            LCP bez zmian: element LCP to H1 + kapsuła, zdjęcie ma zwykły Reveal
+            (na mobile leży POD przyciskiem CTA) i `loading="lazy"`, więc transfer
+            rośnie dopiero po doscrollowaniu.
+            Kwadrat, nie pion 4:5: kadr 1:1 z pliku 16:9 pokazuje 56% szerokości
+            (bezpieczne dla wszystkich 10 plików), 4:5 tylko 45% — ucinałoby laptop
+            przy chatbotach i mikrofon przy voicebotach. */}
+        <Reveal delay={0.2}>
+          <SectionImage
+            src={obraz.src}
+            alt={obraz.alt}
+            ratio="wide"
+            ratioMd="square"
+            focus={obraz.focus ?? '50% 50%'}
+            tone={obraz.tone ?? 'dark'}
+            hover
+            className="sf-bleed-r"
+            sizes="(min-width: 1240px) 560px, (min-width: 768px) 48vw, 100vw"
+          />
+        </Reveal>
       </div>
     </Section>
   );

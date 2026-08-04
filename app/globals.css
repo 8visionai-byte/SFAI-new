@@ -74,6 +74,9 @@
 
     --section-y: clamp(4rem, 8vw, 8rem);
     --section-y-tight: clamp(3rem, 5vw, 5rem);
+    /* Trzeci rejestr pionowy (redesign „Płyta na kalce"): rozdziały aktów
+       oddychają szerzej niż zwykła sekcja — 88 -> 160px. */
+    --section-y-loose: clamp(5.5rem, 10.5vw, 10rem);
 
     /* ---- Layout ----
        Osie szerokości (kontrakt redesignu): tekst/kapsuła = narrow (760),
@@ -83,18 +86,25 @@
     --container-narrow: 760px;
     --gutter: clamp(1.25rem, 4vw, 2.5rem);
     --measure: 68ch;
+    /* Miara leadu: przy 24px linia 68ch jest za długa (oko gubi początek wiersza). */
+    --measure-lead: 54ch;
 
-    /* ---- 3. TYPOGRAFIA (skala płynna clamp) ---- */
-    --fs-display: clamp(2.75rem, 6vw + 1rem, 4.5rem);
-    --fs-h1: clamp(2.25rem, 4vw + 0.5rem, 3rem);
-    --fs-h2: clamp(1.75rem, 3vw, 2.25rem);
-    --fs-h3: clamp(1.375rem, 2vw, 1.5rem);
-    --fs-lead: clamp(1.25rem, 1.5vw, 1.375rem);
+    /* ---- 3. TYPOGRAFIA (skala płynna clamp) ----
+       Redesign „Płyta na kalce": dwa duże skoki na górze skali, małe na dole.
+       Profil desktop 88/56/46/24/20/18 = 1,57x 1,22x 1,92x 1,20x 1,11x.
+       H3 zjeżdża do stałych 20px CELOWO: przy H3 24px i leadzie 22px oba
+       rozmiary były praktycznie identyczne, więc tytuł karty i lead nie
+       różniły się ROLĄ, tylko wagą. */
+    --fs-display: clamp(3rem, 7vw, 5.5rem); /* 48 -> 88 */
+    --fs-h1: clamp(2.5rem, 4.6vw, 3.5rem); /* 40 -> 56 */
+    --fs-h2: clamp(2rem, 3.6vw, 2.875rem); /* 32 -> 46 */
+    --fs-h3: 1.25rem; /* 20px na stałe */
+    --fs-lead: clamp(1.25rem, 1.8vw, 1.5rem); /* 20 -> 24 */
     --fs-body: 1.125rem; /* 18px — rytm czytania */
     --fs-body-sm: 1rem; /* 16px */
     --fs-ui: 0.9375rem; /* 15px */
     --fs-caption: 0.8125rem; /* 13px */
-    --fs-overline: 0.75rem; /* 12px */
+    --fs-overline: 0.6875rem; /* 11px — etykieta techniczna, nie mini-nagłówek */
     --fs-metric: clamp(2.5rem, 5vw, 3.5rem);
 
     /* ---- 4. RADIUS ---- */
@@ -106,19 +116,26 @@
     --radius-2xl: 32px;
     --radius-full: 999px;
 
-    /* ---- 4. CIENIE / ELEVATION (jasny) ---- */
-    --shadow-xs: 0 1px 2px rgba(16, 26, 48, 0.06);
-    --shadow-sm: 0 2px 8px rgba(16, 26, 48, 0.07);
-    --shadow-md: 0 8px 24px rgba(16, 26, 48, 0.09);
-    --shadow-lg: 0 16px 40px rgba(16, 26, 48, 0.12);
+    /* ---- 4. CIENIE / ELEVATION (jasny) ----
+       Dwie warstwy na każdym stopniu: krótki cień KONTAKTU (obiekt dotyka
+       kartki) + długi cień AMBIENT (masa obiektu). Jednowarstwowy cień z
+       jednym rozmyciem to podpis darmowego szablonu. Ten sam kierunek światła
+       (z góry) na wszystkich stopniach. */
+    --shadow-xs: 0 1px 1px rgba(16, 26, 48, 0.04), 0 2px 6px -2px rgba(16, 26, 48, 0.06);
+    --shadow-sm: 0 1px 2px rgba(16, 26, 48, 0.05), 0 8px 18px -8px rgba(16, 26, 48, 0.09);
+    --shadow-md: 0 2px 4px rgba(16, 26, 48, 0.05), 0 18px 36px -14px rgba(16, 26, 48, 0.13);
+    --shadow-lg: 0 4px 8px rgba(16, 26, 48, 0.06), 0 36px 68px -22px rgba(16, 26, 48, 0.17);
     --shadow-accent: 0 8px 24px rgba(20, 184, 196, 0.28); /* tylko główne CTA */
 
     /* ---- 5. MOTION ---- */
     --dur-fast: 140ms;
     --dur-base: 220ms;
     --dur-slow: 420ms;
-    --dur-reveal: 500ms;
-    --reveal-distance: 14px;
+    --dur-reveal: 560ms;
+    /* Opacity kończy się SZYBCIEJ niż transform: tekst jest czytelny, zanim
+       element skończy dojeżdżać na miejsce. */
+    --dur-reveal-fast: 420ms;
+    --reveal-distance: 20px; /* 14px było poniżej progu percepcji */
     /* Krok staggera wejść (delay = indeks * krok, max 5 kroków — dalej bez zwłoki). */
     --stagger: 70ms;
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -166,9 +183,18 @@
     --accent-soft: var(--sf-cyan-100);
     --accent-contrast: var(--sf-white);
 
-    /* Linie / obramowania */
-    --border: var(--sf-gray-200);
-    --border-strong: var(--sf-gray-300);
+    /* Linie / obramowania
+       Redesign „Płyta na kalce": kreska ma być WŁOSEM rysunku technicznego, a
+       nie obrysem pudełka. gray-200 (#dddad3) rysował pudełko wokół każdej
+       karty; rozjaśniony #e6e3dc czyta się jako linia, nie jako ramka. */
+    --border: #e6e3dc;
+    --border-strong: #d2cec4;
+    /* Włos kart premium (rgba — kładzie się na każdym tle bez skoku tonu). */
+    --hairline: rgba(16, 26, 48, 0.08);
+    /* Obrys KONTROLKI (input, przycisk secondary). WCAG 1.4.11 wymaga 3:1 dla
+       granicy kontrolki — gray-500 #736f66 = 4,93:1 na paper. --border-strong
+       NIE nadaje się pod kontrolki (1,7:1). */
+    --border-control: var(--sf-gray-500);
     --border-accent: var(--sf-cyan-500);
     /* Pierścień focus: cyan-500 (#14b8c4) dawał 2.42:1 na biel / 2.32:1 na paper —
        poniżej progu WCAG 1.4.11 (Non-text Contrast, 3:1) dla wskaźnika fokusa.
@@ -276,6 +302,10 @@
 
     --border: rgba(255, 255, 255, 0.1);
     --border-strong: rgba(255, 255, 255, 0.18);
+    /* Odpowiedniki jasnych tokenów krawędzi na ciemnym (parytet A11y: obrys
+       kontrolki musi zdać 3:1 także w ciemnej strefie). */
+    --hairline: rgba(255, 255, 255, 0.12);
+    --border-control: rgba(255, 255, 255, 0.55);
     --border-accent: var(--sf-cyan-400);
     --ring: var(--sf-cyan-400);
 
@@ -352,15 +382,32 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Nagłówki — Plus Jakarta Sans (przyjazny, czytelny sans; Paweł: „bardziej przystępny") */
+  /* Nagłówki — Plus Jakarta Sans (przyjazny, czytelny sans; Paweł: „bardziej przystępny")
+     Jedna waga 600 na czterech poziomach spłaszczała hierarchię: po skoku skali
+     (display 88 / h2 46) H1 i H2 niosą MASĘ (700), H3/H4 zostają etykietami (600). */
   h1,
   h2,
   h3,
   h4 {
     font-family: var(--font-jakarta), system-ui, sans-serif;
-    font-weight: 600;
     color: var(--fg);
     text-wrap: balance;
+    font-optical-sizing: auto;
+  }
+
+  h1,
+  h2 {
+    font-weight: 700;
+  }
+
+  h3,
+  h4 {
+    font-weight: 600;
+  }
+
+  /* Akapity: `pretty` pilnuje, żeby ostatni wiersz nie został sierotą. */
+  p {
+    text-wrap: pretty;
   }
 
   /* Liczby/metryki — równe kolumny, brak skakania przy animacji licznika */
@@ -595,6 +642,8 @@
     --accent-contrast: var(--sf-navy-950);
     --border: rgba(255, 255, 255, 0.1);
     --border-strong: rgba(255, 255, 255, 0.18);
+    --hairline: rgba(255, 255, 255, 0.12);
+    --border-control: rgba(255, 255, 255, 0.55);
     --border-accent: var(--sf-cyan-400);
     --ring: var(--sf-cyan-400);
     /* Metal na ciemnym (jasne stopnie TEKSTOWE, zdają AA jako tekst na navy-950). */
@@ -1022,6 +1071,10 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    /* BEZ tego użytkownik RM czekał na PUSTE opóźnienia (delay z staggera leci
+       dalej, mimo że sam ruch trwa 0,01 ms) — treść pojawiała się z poślizgiem. */
+    transition-delay: 0s !important;
+    animation-delay: 0s !important;
     scroll-behavior: auto !important;
   }
 }
@@ -1047,17 +1100,25 @@
   animation: sfRevealIn var(--dur-reveal) var(--ease-out) both;
 }
 
-/* Reveal poniżej folda: ukryte z SSR, IntersectionObserver dokłada [data-reveal-shown]. */
+/* Reveal poniżej folda: ukryte z SSR, IntersectionObserver dokłada [data-reveal-shown].
+   DWA TEMPA (redesign): opacity kończy się w 420 ms, transform jedzie 560 ms —
+   tekst jest czytelny, zanim blok skończy dojeżdżać. */
 [data-reveal] {
   opacity: 0;
   transform: translateY(var(--reveal-distance));
   transition:
-    opacity var(--dur-reveal) var(--ease-out),
+    opacity var(--dur-reveal-fast) var(--ease-out),
     transform var(--dur-reveal) var(--ease-out);
 }
 [data-reveal][data-reveal-shown] {
   opacity: 1;
   transform: none;
+}
+/* Wariant NAGŁÓWKA: dłuższa droga i wolniejszy dojazd — H2 wchodzi z większą
+   masą niż elementy listy pod nim (hierarchia także w ruchu). */
+[data-reveal][data-reveal-variant='header'] {
+  --reveal-distance: 30px;
+  transition-duration: 480ms, 720ms;
 }
 
 /* Magnetyczne CTA: transform ustawia JS na pointermove, transition daje sprężynę. */
@@ -1148,7 +1209,7 @@
   background-size: 220% 100%;
   background-position: 160% 0;
   transition:
-    background-position 0.6s ease,
+    background-position 0.52s ease,
     box-shadow 0.35s ease,
     transform var(--dur-fast, 150ms) ease,
     background-color var(--dur-fast, 150ms) ease;
@@ -1242,10 +1303,15 @@ button:hover .sf-arrow {
 }
 
 /* FAQ (natywne <details>) — odpowiedź łagodnie wchodzi po otwarciu.
-   Zero JS: <details> działa dalej bez skryptu, animacja to czysty CSS. */
-details[open] > p,
-details[open] > div {
-  animation: sfFaqOpen 260ms var(--ease-out);
+   Zero JS: <details> działa dalej bez skryptu, animacja to czysty CSS.
+   FALLBACK: gdzie działa interpolate-size, animujemy realną WYSOKOŚĆ przez
+   ::details-content (BLOK B na końcu pliku) — dwie animacje naraz by się biły,
+   więc ta stara gra wyłącznie tam, gdzie nowej nie ma. */
+@supports not (interpolate-size: allow-keywords) {
+  details[open] > p,
+  details[open] > div {
+    animation: sfFaqOpen 260ms var(--ease-out);
+  }
 }
 @keyframes sfFaqOpen {
   from {
@@ -1352,9 +1418,13 @@ details[open] > div {
    bezpiecznik dziedziczenia, gdyby inline color z jakiegoś powodu nie dotarł. */
 .sf-write {
   color: var(--metal-fg);
-  line-height: 1.15; /* trochę luzu, by descendery (g/j/y) z linii 1 nie tłoczyły linii 2 */
+  /* METRYKI (redesign): przy 88px display line-height 1.15 rozjeżdżał wiersze,
+     a tracking -0.02em rozsypywał wyraz. Mechanizm maszyny do pisania
+     (.is-typing / .typed / .sf-caret / sfCaretBlink) NIETKNIĘTY — zmiana dotyczy
+     wyłącznie metryk. Wysokość dalej rezerwuje line-height (zero CLS). */
+  line-height: 1.06;
   font-weight: 700; /* hero H1 w Plus Jakarta Sans 700 (mocniejszy akcent niż 600 sekcji) */
-  letter-spacing: -0.02em;
+  letter-spacing: -0.035em;
 }
 
 /* Litery: inline-block (własny box na kolor per glif), nie łamią się wewnątrz
@@ -1463,16 +1533,146 @@ details[open] > div {
   }
 }
 
-/* ==========================================================================
-   ZDJĘCIA SEKCJI + PRZEJŚCIA STRON (redesign „Precyzja cyrkla").
+/* ══════════════════════════════════════════════════════════════════════════
+   BLOK A — PŁYTY ZDJĘĆ, BLEED, KRESKA, STAGGER (PARTIA A).
+   PARTIA B DOPISUJE SWOJE REGUŁY NA KOŃCU PLIKU (BLOK B), nie tutaj.
+
+   JĘZYK ZDJĘĆ „PŁYTA NA KALCE": ciemne zdjęcie NIGDY nie dostaje jasnej kreski
+   wokół (border 1px + shadow 6% wokół prawie czarnego kadru = placeholder wideo
+   z szablonu, dokładnie to, co zostało odrzucone). Krawędź robi ŚWIATŁO od
+   wewnątrz (inset), masę niesie dwuwarstwowy cień GRANATOWY (nie czarny), a
+   zdjęcie leży na płycie w kolorze navy-950, w której się rozpływa.
+
    POZA @layer jak pozostałe @supports/@media/@keyframes (konwencja pliku:
    Tailwind v3 + autoprefixer gubi ciało at-rule zagnieżdżonego w @layer).
-   ========================================================================== */
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* Full-bleed bez poziomego scrolla. html ma scrollbar-gutter:stable, więc 100vw
+   jest szersze od dokumentu o szerokość paska. `clip` (NIE `hidden`) nie tworzy
+   kontenera scrolla, więc position:sticky nagłówka dalej działa. */
+body {
+  overflow-x: clip;
+}
+
+/* ── PŁYTA: jedyny dozwolony sposób pokazania zdjęcia ── */
+.sf-plate {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--sf-navy-950);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    0 2px 6px -2px rgba(11, 18, 32, 0.2),
+    0 40px 70px -32px rgba(11, 18, 32, 0.55);
+}
+/* Promień w :where() = specyficzność 0, więc utility Tailwinda (rounded-none,
+   md:rounded-b-none) i .sf-bleed* wygrywają mimo że stoją WYŻEJ w arkuszu.
+   Bez tego zwykła klasa .sf-plate (zdefiniowana po @tailwind utilities) biłaby
+   każdą utility promienia — cicha porażka, zero ostrzeżeń. */
+:where(.sf-plate) {
+  border-radius: var(--radius-xl);
+}
+/* Wariant JASNEJ płyty — wyłącznie dla pliku, który sam jest niemal biały
+   (strona-www-widoczna-w-google-i-ai); na granatowej płycie robiłby dziurę. */
+.sf-plate-light {
+  background-color: var(--sf-gray-50);
+  box-shadow:
+    inset 0 0 0 1px rgba(16, 26, 48, 0.09),
+    0 2px 6px -2px rgba(16, 26, 48, 0.1),
+    0 40px 70px -32px rgba(16, 26, 48, 0.24);
+}
+.sf-plate-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.sf-plate-media > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.sf-plate-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* Duotone marki — TYLKO dla bursztynowego pliku (prop `brand`).
+   mix-blend-mode:color bierze BARWĘ z gradientu, a JASNOŚĆ zostawia ze zdjęcia,
+   więc bursztyn schodzi w niebiesko-fiolet, a twarz nie robi się sina.
+   To PIĄTE i ostatnie miejsce gradientu marki na home: naprawa złamanej palety
+   (jedyny bursztynowy kadr w zestawie), nie ozdoba. */
+.sf-plate-brand > .sf-plate-media > img {
+  filter: saturate(0.7) contrast(1.05);
+}
+.sf-plate-brand > .sf-plate-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: var(--metal-gradient-decor);
+  mix-blend-mode: color;
+  opacity: 0.42;
+}
+
+/* Scrim pod tekst NA płycie (mobile pionowy, desktop poziomy od lewej).
+   Kontrast liczony: pas tekstu ma lum ≈0,008 -> H2 15:1, kapsuła 6,6:1 (AA). */
+.sf-plate-scrim > .sf-plate-media::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 12, 22, 0.95) 0%,
+    rgba(8, 12, 22, 0.9) 46%,
+    rgba(8, 12, 22, 0.55) 100%
+  );
+}
+
+/* ── FULL-BLEED (po .sf-plate, żeby zerowanie rogów wygrało w kaskadzie) ── */
+.sf-bleed {
+  width: 100vw;
+  max-width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  border-radius: 0;
+}
+.sf-bleed .sf-plate {
+  border-radius: 0;
+}
+/* Płyta wychodząca do PRAWEJ krawędzi ekranu: obiekt ucięty kadrem czyta się
+   jak fragment większej sceny, nie jak obrazek wklejony w siatkę. */
+.sf-bleed-r {
+  margin-right: calc(50% - 50vw);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* Wejście: zdjęcie WYWOŁUJE SIĘ w płycie od góry w dół. clip-path leci na
+   WRAPPERZE mediów, nie na .sf-plate — clip-path na płycie ucinałby jej cień.
+   Stan domyślny = odsłonięte (fail-safe bez JS). */
+.sf-plate-media {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 760ms var(--ease-out) 60ms;
+}
+[data-reveal]:not([data-reveal-shown]) .sf-plate-media {
+  clip-path: inset(0 0 16% 0);
+}
+.sf-stagger:not([data-reveal-shown]) > * .sf-plate-media {
+  clip-path: inset(0 0 16% 0);
+}
 
 /* Paralaksa zdjęć: scroll-driven (animation-timeline: view()) — ruch sterowany
-   scrollem UŻYTKOWNIKA (zgodny z budżetem ruchu redesignu), zero JS.
-   Progressive enhancement: starsze przeglądarki mają statyczne zdjęcie.
-   scale 1.1 chowa krawędzie przy przesuwie (ramka .sf-img-frame = overflow-hidden). */
+   scrollem UŻYTKOWNIKA (zgodny z budżetem ruchu), zero JS. Siedzi na WRAPPERZE
+   mediów, NIE na <img>: animacja CSS bije zwykłą deklarację, więc dopóki
+   .sf-img-parallax leżało na <img>, hover:scale na tym samym elemencie po
+   cichu nie działał. Progressive enhancement: starsze silniki = statyczny kadr. */
 @supports (animation-timeline: view()) {
   .sf-img-parallax {
     animation: sfImgDrift linear both;
@@ -1481,12 +1681,96 @@ details[open] > div {
   }
   @keyframes sfImgDrift {
     from {
-      transform: translateY(-4.5%) scale(1.1);
+      transform: translateY(-4%) scale(1.1);
     }
     to {
-      transform: translateY(4.5%) scale(1.1);
+      transform: translateY(4%) scale(1.04);
     }
   }
+}
+
+/* Rysowana kreska rozdziału (sygnatura „cyrkiel kreśli stronę"). Stan bazowy =
+   kreska PEŁNA, więc starsze silniki i reduced-motion dostają statyczną linię.
+   Kolor --border-strong, NIE gradient marki (budżet 4 miejsc nietknięty). */
+.sf-rule {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--border-strong) 14%,
+    var(--border-strong) 86%,
+    transparent
+  );
+  transform-origin: center;
+  transform: scaleX(1);
+}
+
+/* Kreska bazowa hero — JEDNORAZOWA (nie pętla, budżet ruchu nietknięty). */
+.sf-hero-rule {
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--border-strong) 18%,
+    var(--border-strong) 82%,
+    transparent
+  );
+  transform-origin: center;
+  animation: sfBaselineDraw 900ms var(--ease-out) 420ms both;
+}
+@keyframes sfBaselineDraw {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+/* PRAWDZIWY stagger grupowy. Dotąd każdy <Reveal delay={i*0.06}> miał WŁASNY
+   IntersectionObserver z rootMargin -10%, więc na mobile karty i tak wchodziły
+   pojedynczo, z doklejonym PUSTYM opóźnieniem — kaskada istniała wyłącznie w
+   rzędzie 3 kart na desktopie. Teraz: JEDEN obserwator na kontenerze, kaskada
+   na dzieciach (sufit 320 + 560 = cała kaskada poniżej 900 ms). */
+[data-reveal].sf-stagger,
+[data-reveal-eager].sf-stagger {
+  opacity: 1;
+  transform: none;
+  transition: none;
+  animation: none;
+}
+.sf-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--dur-reveal-fast) var(--ease-out) var(--sf-d, 0ms),
+    transform var(--dur-reveal) var(--ease-out) var(--sf-d, 0ms);
+}
+.sf-stagger[data-reveal-shown] > *,
+.sf-stagger[data-reveal-eager] > *,
+[data-reveal-shown] .sf-stagger > * {
+  opacity: 1;
+  transform: none;
+}
+.sf-stagger > :nth-child(1) {
+  --sf-d: 0ms;
+}
+.sf-stagger > :nth-child(2) {
+  --sf-d: 70ms;
+}
+.sf-stagger > :nth-child(3) {
+  --sf-d: 140ms;
+}
+.sf-stagger > :nth-child(4) {
+  --sf-d: 210ms;
+}
+.sf-stagger > :nth-child(5) {
+  --sf-d: 280ms;
+}
+.sf-stagger > :nth-child(n + 6) {
+  --sf-d: 320ms;
 }
 
 /* Przejście stron: app/template.tsx re-montuje się przy KAŻDEJ nawigacji →
@@ -1505,12 +1789,85 @@ details[open] > div {
   }
 }
 
+/* Desktop: scrim skręca w poziom (tekst siada w lewej, zaprojektowanej czerni
+   kadru), full-bleed prawej krawędzi wraca do pełnego bleedu na mobile. */
+@media (min-width: 768px) {
+  .sf-plate-scrim > .sf-plate-media::before {
+    background: linear-gradient(
+      90deg,
+      rgba(8, 12, 22, 0.96) 0%,
+      rgba(8, 12, 22, 0.93) 40%,
+      rgba(8, 12, 22, 0.55) 70%,
+      rgba(8, 12, 22, 0.22) 100%
+    );
+  }
+}
+@media (max-width: 767px) {
+  .sf-bleed-r {
+    margin-inline: calc(50% - 50vw);
+    border-radius: 0;
+  }
+}
+
+/* Rysowanie kreski rozdziału scrollem użytkownika (ten sam wzorzec view(), co
+   paralaksa; zero JS). */
+@supports (animation-timeline: view()) {
+  .sf-rule {
+    animation: sfRuleDraw linear both;
+    animation-timeline: view();
+    animation-range: entry 10% entry 90%;
+  }
+  @keyframes sfRuleDraw {
+    from {
+      transform: scaleX(0.06);
+      opacity: 0.3;
+    }
+    to {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+  }
+}
+
+/* Hover: TYLKO na wskaźniku precyzyjnym i na <img>, więc nie walczy z paralaksą
+   (ta siedzi na wrapperze). */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .sf-plate-hover .sf-plate-media > img {
+    transition:
+      transform 700ms var(--ease-out),
+      filter 700ms var(--ease-out);
+  }
+  .sf-plate-hover:hover .sf-plate-media > img {
+    transform: scale(1.04);
+    filter: brightness(1.08);
+  }
+}
+
 /* Bramka reduced-motion — JAWNA (globalna bramka skraca duration, ale przy
-   animation-timeline duration nie gra roli, więc paralaksę trzeba zgasić wprost). */
+   animation-timeline duration nie gra roli, więc ruch trzeba zgasić wprost). */
 @media (prefers-reduced-motion: reduce) {
   .sf-img-parallax {
     animation: none !important;
     transform: none !important;
+  }
+  .sf-plate-media {
+    clip-path: none !important;
+    transition: none !important;
+  }
+  .sf-plate-hover:hover .sf-plate-media > img {
+    transform: none !important;
+    filter: none !important;
+  }
+  .sf-stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .sf-rule,
+  .sf-hero-rule {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
   }
   .sf-page-enter {
     animation: none !important;
@@ -1543,5 +1900,184 @@ details[open] > div {
   .sf-write-letter.sf-caret::after {
     animation: none !important;
     opacity: 0 !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BLOK B — KARTY, DOTYK, FAQ, SZYNY.
+   Reguły PARTII A (płyty zdjęć, bleed, kreska, stagger) siedzą WYŻEJ, w sekcji
+   zdjęć — nie dopisywać tam nic.
+
+   ZASADA REAKCJI KART: karta NIEklikalna NIE MOŻE się unosić (unoszenie =
+   obietnica „kliknij"). Dostaje PODŚWIETLENIE: krawędź + 2px linia akcentu
+   rysowana od lewej na górnej krawędzi. Karta klikalna dodatkowo się unosi i ma
+   realny feedback nacisku.
+   ══════════════════════════════════════════════════════════════════════════ */
+.card-live {
+  position: relative;
+  transition:
+    border-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+.card-live::after {
+  content: '';
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  top: -1px;
+  height: 2px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 320ms var(--ease-out);
+  pointer-events: none;
+  z-index: 1;
+}
+.card-live:focus-within {
+  border-color: var(--border-strong);
+}
+.card-live:focus-within::after {
+  transform: scaleX(1);
+}
+/* Aura ma własny pierścień — nie dokładamy drugiej krawędzi. */
+.card-aura.card-live::after {
+  display: none;
+}
+
+.card-lift {
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out);
+}
+.card-lift:active {
+  transform: translateY(-1px) scale(0.985);
+  transition-duration: 110ms;
+}
+
+/* Feedback nacisku: na mobile (brak hovera) to JEDYNY sygnał, że interfejs
+   usłyszał kliknięcie. */
+.sf-press:active {
+  transition-duration: 110ms;
+}
+.sf-cta-orb {
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    background-color var(--dur-base) var(--ease-out);
+}
+.sf-cta:hover .sf-cta-orb {
+  transform: translate(3px, -1px) scale(1.06);
+  background-color: rgba(255, 255, 255, 0.24);
+}
+
+/* Szyna zaufania: 2px kreska nad kolumną zamiast ikony w kółku (język cyrkla,
+   karta katalogowa). --border-strong, NIE gradient (budżet 4 miejsc). */
+.sf-rail > li {
+  position: relative;
+  padding-top: 1.25rem;
+}
+.sf-rail > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 2px;
+  width: 2.5rem;
+  border-radius: 999px;
+  background: var(--border-strong);
+}
+
+/* Okno demo: 1px metaliczna krawędź górna zamiast atrapy kropek macOS. */
+.sf-window {
+  position: relative;
+}
+.sf-window::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  z-index: 2;
+  background: var(--metal-gradient-decor);
+  opacity: 0.6;
+  pointer-events: none;
+}
+/* Kursor demo = ten sam blink co karetka H1 (jeden język, zero drugiego tempa). */
+.sf-demo-caret {
+  animation: sfCaretBlink 0.85s steps(1, end) infinite;
+}
+
+/* FAQ: realna animacja WYSOKOŚCI zamiast wyskakującej odpowiedzi. Natywnie,
+   bez JS; starsze silniki dostają fallback sfFaqOpen (wyżej w pliku). */
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+  details.sf-faq::details-content {
+    block-size: 0;
+    overflow: clip;
+    opacity: 0;
+    transition:
+      block-size 300ms var(--ease-out),
+      opacity 200ms var(--ease-out),
+      content-visibility 300ms allow-discrete;
+  }
+  details.sf-faq[open]::details-content {
+    block-size: auto;
+    opacity: 1;
+  }
+}
+.sf-faq > summary {
+  position: relative;
+}
+.sf-faq > summary::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  width: 2px;
+  height: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  transform: translateY(-50%);
+  transition: height 220ms var(--ease-out);
+}
+.sf-faq[open] > summary::before {
+  height: 60%;
+}
+
+/* Reakcje na hover TYLKO na wskaźniku precyzyjnym (na dotyku hover „przykleja
+   się" po tapnięciu). */
+@media (hover: hover) and (pointer: fine) {
+  .card-live:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-sm);
+  }
+  .card-live:hover::after {
+    transform: scaleX(1);
+  }
+  .card-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-live::after,
+  .card-lift,
+  .sf-cta-orb,
+  details.sf-faq::details-content,
+  .sf-faq > summary::before {
+    transition: none !important;
+  }
+  .card-lift:hover,
+  .card-lift:active,
+  .sf-cta:hover .sf-cta-orb {
+    transform: none !important;
+  }
+  .sf-demo-caret {
+    animation: none !important;
+    opacity: 1 !important;
   }
 }

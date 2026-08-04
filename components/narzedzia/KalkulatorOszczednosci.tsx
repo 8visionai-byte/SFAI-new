@@ -225,7 +225,7 @@ export function KalkulatorOszczednosci() {
           />
 
           {/* Wzór rozwinięty — sygnał uczciwości */}
-          <details className="mt-5 rounded-md border border-border bg-surface p-4">
+          <details className="sf-faq mt-5 rounded-md border border-border bg-surface p-4">
             <summary className="cursor-pointer list-none text-body-sm font-medium text-fg [&::-webkit-details-marker]:hidden">
               Jak to liczę?
             </summary>

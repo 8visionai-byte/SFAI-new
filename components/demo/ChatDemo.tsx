@@ -76,7 +76,7 @@ export function ChatDemo() {
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="Napisz pytanie, np. ile kosztuje voicebot dla salonu"
-          className="min-h-[48px] w-full rounded-sm border-[1.5px] border-border bg-surface-sunken px-4 text-body-sm text-fg placeholder:text-fg-subtle focus:border-accent focus:bg-surface focus:outline-none focus:ring-[3px] focus:ring-accent-soft"
+          className="min-h-[48px] w-full rounded-sm border-[1.5px] border-border-control bg-surface-sunken px-4 text-body-sm text-fg placeholder:text-fg-subtle focus:border-accent focus:bg-surface focus:outline-none focus:ring-[3px] focus:ring-accent-soft"
           autoComplete="off"
         />
         <Button type="submit" variant="primary" size="md" aria-label="Wyślij pytanie">

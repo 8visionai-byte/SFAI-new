@@ -34,6 +34,10 @@ const config: Config = {
         'accent-contrast': 'var(--accent-contrast)',
         border: 'var(--border)',
         'border-strong': 'var(--border-strong)',
+        // hairline = włos karty premium; border-control = obrys KONTROLKI
+        // (WCAG 1.4.11 wymaga 3:1 — border-strong tego nie spełnia).
+        hairline: 'var(--hairline)',
+        'border-control': 'var(--border-control)',
         'border-accent': 'var(--border-accent)',
         ring: 'var(--ring)',
         success: 'var(--success)',
@@ -64,11 +68,13 @@ const config: Config = {
       },
       fontSize: {
         // [rozmiar, { lineHeight, letterSpacing }]
-        display: ['var(--fs-display)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
-        h1: ['var(--fs-h1)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
-        h2: ['var(--fs-h2)', { lineHeight: '1.15', letterSpacing: '-0.01em' }],
-        h3: ['var(--fs-h3)', { lineHeight: '1.25', letterSpacing: '-0.01em' }],
-        lead: ['var(--fs-lead)', { lineHeight: '1.5' }],
+        // Metryki po skoku skali (88/56/46/20): im większy stopień, tym ciaśniej
+        // interlinia i tracking — inaczej display rozjeżdża się na dwa akapity.
+        display: ['var(--fs-display)', { lineHeight: '1.02', letterSpacing: '-0.035em' }],
+        h1: ['var(--fs-h1)', { lineHeight: '1.06', letterSpacing: '-0.03em' }],
+        h2: ['var(--fs-h2)', { lineHeight: '1.09', letterSpacing: '-0.025em' }],
+        h3: ['var(--fs-h3)', { lineHeight: '1.3', letterSpacing: '-0.005em' }],
+        lead: ['var(--fs-lead)', { lineHeight: '1.45' }],
         body: ['var(--fs-body)', { lineHeight: '1.65' }],
         'body-sm': ['var(--fs-body-sm)', { lineHeight: '1.6' }],
         ui: ['var(--fs-ui)', { lineHeight: '1.4' }],
@@ -90,6 +96,8 @@ const config: Config = {
         11: 'var(--space-11)',
         section: 'var(--section-y)',
         'section-tight': 'var(--section-y-tight)',
+        // Trzeci rejestr pionowy: oddech otwarcia aktu (88 -> 160px).
+        'section-loose': 'var(--section-y-loose)',
         gutter: 'var(--gutter)',
       },
       maxWidth: {
@@ -98,6 +106,8 @@ const config: Config = {
         wide: 'var(--container-wide)',
         narrow: 'var(--container-narrow)',
         measure: 'var(--measure)',
+        // measure-lead = 54ch: miara leadu 24px (68ch przy tym stopniu za długie).
+        'measure-lead': 'var(--measure-lead)',
       },
       borderRadius: {
         xs: 'var(--radius-xs)',

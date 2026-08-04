@@ -45,7 +45,8 @@ const POZIOMY = [
 
 export function Oferta() {
   return (
-    <Section tone="subtle">
+    /* AKT III otwiera się rysowaną kreską rozdziału (seam), nie pasem tła. */
+    <Section tone="base" space="lg" seam>
       <div className="mx-auto max-w-narrow">
         <Reveal>
           <h2 className="text-h2">Ile kosztuje wdrożenie AI Agenta dla firmy?</h2>
@@ -60,19 +61,24 @@ export function Oferta() {
         </Reveal>
       </div>
 
-      <div className="mt-9 grid items-stretch gap-6 md:grid-cols-3">
-        {POZIOMY.map((p, i) => (
-          <Reveal key={p.name} delay={i * 0.06}>
+      {/* items-center (nie stretch), żeby wypustka wyróżnionego planu nie rozjechała
+          rzędu. Kaskadę robi .sf-stagger — per-item delaye zniknęły. */}
+      <Reveal className="sf-stagger mt-12 grid items-center gap-6 md:mt-16 md:grid-cols-3 md:gap-8">
+        {POZIOMY.map((p) => (
+          <div key={p.name}>
             {/* BUDŻET KOLORU (redesign): aura marki TYLKO na wyróżnionym planie —
                 1 z DOKŁADNIE 2 aur na home (druga: AgentDemo). Pozostałe karty
                 cennika stoją cicho. Bez .card-glossy: jego overflow:hidden ucinał
-                badge wystający nad górną krawędź (zgłoszenie Pawła: napis ucięty). */}
+                badge wystający nad górną krawędź (zgłoszenie Pawła: napis ucięty).
+                Wyróżniony plan podniesiony FIZYCZNIE (md:-my-5 md:py-11 + shadow-md),
+                bez scale — scale rozmywa tekst. Żaden kontener wokół nie może mieć
+                overflow:hidden, bo utnie badge na -top-3. */}
             <Card
               variant={p.highlight ? 'highlight' : 'base'}
               as="article"
               className={
                 p.highlight
-                  ? 'card-aura card-aura-bold flex h-full flex-col'
+                  ? 'card-aura card-aura-bold flex h-full flex-col shadow-md md:-my-5 md:py-11'
                   : 'flex h-full flex-col'
               }
             >
@@ -87,26 +93,32 @@ export function Oferta() {
               <h3 className="text-h3">{p.name}</h3>
               <p className="mt-1 text-body-sm text-fg-muted">{p.forWho}</p>
 
-              <p className="mt-5 font-display text-h2 font-semibold tabular-nums text-brand">{p.price}</p>
+              {/* SLOT CENY: gdy Paweł poda realne widełki „od X zł", wróć do
+                  text-h2 font-semibold tabular-nums text-brand — ten slot jest
+                  zaprojektowany pod LICZBĘ. Dopóki stoi tu fraza, liczbowa skala
+                  i tabular-nums (bez ani jednej cyfry) tylko psują typografię. */}
+              <p className="mt-6 max-w-[16ch] font-display text-h3 font-medium leading-[1.25] text-fg">{p.price}</p>
 
+              {/* Etykiety <dt> 1:1 co do znaku — ginie wyłącznie uppercase i tracking
+                  (limit anty-slop: max 1 eyebrow na 3 sekcje, a tu było ich 9). */}
               <dl className="mt-5 space-y-3 border-t border-border pt-5 text-body-sm">
                 <div>
-                  <dt className="text-caption uppercase tracking-[0.06em] text-fg-subtle">Co dostajesz</dt>
+                  <dt className="text-caption font-medium normal-case text-fg-subtle">Co dostajesz</dt>
                   <dd className="text-fg">{p.get}</dd>
                 </div>
                 <div>
-                  <dt className="text-caption uppercase tracking-[0.06em] text-fg-subtle">Oszczędza</dt>
+                  <dt className="text-caption font-medium normal-case text-fg-subtle">Oszczędza</dt>
                   <dd className="text-fg">{p.saves}</dd>
                 </div>
                 <div>
-                  <dt className="text-caption uppercase tracking-[0.06em] text-fg-subtle">Czas wdrożenia</dt>
+                  <dt className="text-caption font-medium normal-case text-fg-subtle">Czas wdrożenia</dt>
                   <dd className="text-fg">{p.time}</dd>
                 </div>
               </dl>
             </Card>
-          </Reveal>
+          </div>
         ))}
-      </div>
+      </Reveal>
 
       <Reveal delay={0.1}>
         <p className="mx-auto mt-6 max-w-narrow text-caption text-fg-subtle">
@@ -121,20 +133,25 @@ export function Oferta() {
         (single source) — slug i fraza nigdy się nie rozjadą. Treść w HTML (SSG), bot widzi linki.
       */}
       <Reveal delay={0.12}>
-        <nav aria-label="Nasze usługi" className="mx-auto mt-12 max-w-container">
-          <h3 className="text-h3 text-center">Co konkretnie wdrażamy?</h3>
-          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <nav aria-label="Nasze usługi" className="mx-auto mt-16 max-w-container md:mt-20">
+          <h3 className="text-h3">Co konkretnie wdrażamy?</h3>
+          {/* Lista katalogowa zamiast sześciu identycznych pudełek pod trzema
+              identycznymi pudełkami cennika. Anchor = H1 usługi (SEO 1:1).
+              Mikrokopia „Zobacz, jak to działa" nie ginie z treści — schodzi do
+              sr-only, glif → to dekoracja aria-hidden. */}
+          <ul className="mx-auto mt-8 max-w-wide divide-y divide-border border-y border-border">
             {USLUGI.map((u) => (
               <li key={u.slug}>
                 <Link
                   href={`/uslugi/${u.slug}`}
-                  className="group block h-full rounded-lg border border-border bg-surface p-5 shadow-xs transition-colors hover:border-brand"
+                  className="group grid items-baseline gap-x-8 gap-y-1 py-5 transition-colors duration-fast hover:bg-bg-subtle md:grid-cols-[minmax(0,26ch)_minmax(0,1fr)_auto] md:px-3"
                 >
-                  <span className="block text-body font-medium text-fg group-hover:text-brand">
+                  <span className="text-body font-semibold text-fg transition-colors duration-fast group-hover:text-accent">
                     {u.h1}
                   </span>
-                  <span className="mt-2 block text-body-sm text-fg-muted">{u.metaDescription}</span>
-                  <span className="mt-3 block text-caption text-fg-subtle">Zobacz, jak to działa <span aria-hidden="true" className="sf-arrow">→</span></span>
+                  <span className="text-body-sm text-fg-muted">{u.metaDescription}</span>
+                  <span aria-hidden="true" className="sf-arrow hidden text-accent md:block">→</span>
+                  <span className="sr-only">Zobacz, jak to działa</span>
                 </Link>
               </li>
             ))}
@@ -144,7 +161,7 @@ export function Oferta() {
 
       {/* Wariant z dotacją 2026 */}
       <Reveal delay={0.12}>
-        <div className="mx-auto mt-6 max-w-narrow rounded-lg border border-border bg-bg-subtle p-6">
+        <div className="mx-auto mt-10 max-w-narrow border-t border-border pt-6">
           <h3 className="text-h3">Można to sfinansować z dotacji?</h3>
           {/* INPUT PAWŁA: gdy będzie konkretny program dofinansowania, dopisać jego nazwę. */}
           <p className="mt-2 text-body-sm text-fg-muted">
@@ -155,8 +172,8 @@ export function Oferta() {
       </Reveal>
 
       <Reveal delay={0.15}>
-        <div className="mx-auto mt-9 flex max-w-narrow flex-col items-start gap-3">
-          <MagneticButton variant="primary" size="lg" href={HOME_CTA.href}>
+        <div className="mx-auto mt-12 flex max-w-narrow flex-col items-start gap-3 md:mt-16">
+          <MagneticButton variant="primary" size="lg" trailing href={HOME_CTA.href}>
             {HOME_CTA.label}
           </MagneticButton>
           {/*

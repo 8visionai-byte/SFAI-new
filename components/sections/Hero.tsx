@@ -42,6 +42,7 @@ export function Hero() {
     */
     <Section
       tone="base"
+      space="lg"
       containerWidth="default"
       className="relative isolate overflow-hidden text-center"
     >
@@ -63,7 +64,7 @@ export function Hero() {
 
       {/* Kapsuła answer-first — surowy HTML, cytat dla LLM. Analogia w 1. zdaniu. */}
       <Reveal eager delay={0.07}>
-        <p className="text-lead mx-auto mt-6 max-w-measure text-fg-muted">
+        <p className="text-lead mx-auto mt-6 max-w-measure-lead text-fg-muted">
           Chatbot odpowiada na pytania. AI Agent wykonuje pracę: odbiera telefony, odpisuje klientom,
           umawia spotkania i pilnuje faktur. Nie sprzedajemy narzędzi AI. Projektujemy systemy, które
           zdejmują z polskiej firmy powtarzalną robotę, w dni, nie w miesiące. Twoje dane zostają w Unii
@@ -71,13 +72,17 @@ export function Hero() {
         </p>
       </Reveal>
 
-      {/* Dynamiczny odbiorca (personalizacja językiem, RODO-safe) */}
+      {/* Dynamiczny odbiorca (personalizacja językiem, RODO-safe).
+          Pudełko -> kreska: wyśrodkowany prostokąt w środku typograficznego hero
+          czytał się jak baner cookies i psuł ciszę folda. Hero jest teraz czystą
+          kolumną: H1 -> kapsuła -> kreska z personą -> CTA -> linki.
+          `Reveal eager` ZOSTAJE (LCP: maluje się na starcie animacji CSS). */}
       <Reveal eager delay={0.14}>
-        <div className="mx-auto mt-7 max-w-narrow rounded-lg border border-border bg-surface px-5 py-4 text-left shadow-xs">
-          <p className="text-caption text-fg-subtle">
+        <div className="mx-auto mt-9 max-w-[46ch] border-t border-border pt-5 text-center">
+          <p className="text-overline uppercase tracking-[0.14em] text-fg-subtle">
             Powtarzalna robota wygląda inaczej w każdej branży. Pokaż mi swoją.
           </p>
-          <p className="mt-1 text-body text-fg-muted">
+          <p className="mt-2 text-body text-fg-muted">
             …dla <HeroPersonaCycler />.
           </p>
         </div>
@@ -129,6 +134,10 @@ export function Hero() {
           </a>
         </p>
       </Reveal>
+
+      {/* KRESKA BAZOWA — cyrkiel domyka hero jedną, JEDNORAZOWĄ linią (900ms,
+          bez pętli; budżet ruchu nienaruszony). Czysta dekoracja. */}
+      <div aria-hidden="true" className="sf-hero-rule mx-auto mt-12 h-px w-full max-w-wide" />
     </Section>
   );
 }

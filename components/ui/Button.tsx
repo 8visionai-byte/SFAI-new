@@ -20,22 +20,27 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
 const base =
   'inline-flex items-center justify-center gap-2 font-sans font-semibold text-ui ' +
   'rounded-sm select-none transition-[transform,background-color,box-shadow,border-color] ' +
-  'duration-fast ease-out cursor-pointer ' +
+  'duration-fast ease-out cursor-pointer sf-press ' +
   'disabled:cursor-not-allowed disabled:pointer-events-none';
 
+/* FEEDBACK NACISKU: na dotyku nie ma hovera, więc :active jest JEDYNYM sygnałem,
+   że interfejs usłyszał kliknięcie. 1% (stary active:scale-[0.99]) jest poniżej
+   progu percepcji. .sf-press skraca czas przejścia na :active do 110 ms. */
 const variantClass: Record<ButtonVariant, string> = {
   primary:
     'sf-cta bg-accent text-accent-contrast shadow-accent ' +
     'hover:bg-accent-hover hover:-translate-y-px ' +
-    'active:translate-y-0 active:scale-[0.99] ' +
+    'active:translate-y-0 active:scale-[0.97] ' +
     'disabled:bg-[var(--sf-gray-300)] disabled:text-[var(--sf-gray-500)] disabled:shadow-none',
+  // border-control (#736f66 = 4,93:1 na paperze) zamiast border-strong (1,71:1)
+  // — WCAG 1.4.11 wymaga 3:1 dla granicy kontrolki.
   secondary:
-    'bg-transparent text-brand border-[1.5px] border-border-strong ' +
-    'hover:border-brand hover:bg-bg-subtle ' +
+    'bg-transparent text-brand border-[1.5px] border-border-control ' +
+    'hover:border-brand hover:bg-bg-subtle active:scale-[0.98] ' +
     'disabled:border-border disabled:text-fg-subtle',
   ghost:
     'bg-transparent text-fg-muted px-3 ' +
-    'hover:text-fg hover:bg-bg-subtle ' +
+    'hover:text-fg hover:bg-bg-subtle active:scale-[0.98] ' +
     'disabled:text-fg-subtle',
   link:
     'bg-transparent text-accent underline underline-offset-2 decoration-1 px-0 ' +
@@ -52,6 +57,11 @@ const sizeClass: Record<ButtonSize, string> = {
 type CommonProps = {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  /**
+   * Orb kierunkowy po etykiecie (dekoracja aria-hidden) — TYLKO główne CTA home.
+   * Domyślnie false, żeby nie ruszać przycisków na podstronach. Etykieta bez zmian.
+   */
+  trailing?: boolean;
   className?: string;
   children: React.ReactNode;
 };
@@ -74,7 +84,14 @@ export const Button = forwardRef<
   HTMLButtonElement | HTMLAnchorElement,
   ButtonProps
 >(function Button(
-  { variant = 'primary', size = variant === 'link' ? 'sm' : 'md', className, children, ...rest },
+  {
+    variant = 'primary',
+    size = variant === 'link' ? 'sm' : 'md',
+    trailing = false,
+    className,
+    children,
+    ...rest
+  },
   ref
 ) {
   const classes = cn(
@@ -82,6 +99,20 @@ export const Button = forwardRef<
     variantClass[variant],
     variant !== 'link' && sizeClass[size],
     className
+  );
+
+  const content = trailing ? (
+    <>
+      {children}
+      <span
+        aria-hidden="true"
+        className="sf-cta-orb ml-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15"
+      >
+        →
+      </span>
+    </>
+  ) : (
+    children
   );
 
   if ('href' in rest && rest.href !== undefined) {
@@ -99,7 +130,7 @@ export const Button = forwardRef<
           className={classes}
           {...anchorRest}
         >
-          {children}
+          {content}
         </a>
       );
     }
@@ -111,7 +142,7 @@ export const Button = forwardRef<
         className={classes}
         {...anchorRest}
       >
-        {children}
+        {content}
       </Link>
     );
   }
@@ -124,7 +155,7 @@ export const Button = forwardRef<
       className={classes}
       {...buttonRest}
     >
-      {children}
+      {content}
     </button>
   );
 });

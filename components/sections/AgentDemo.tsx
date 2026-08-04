@@ -81,7 +81,9 @@ export function AgentDemo() {
       className="mt-8 grid gap-4 md:grid-cols-2"
     >
       {/* ── LEWO: zwykły chatbot (statyczny, wyblakły) ── */}
-      <div className="rounded-lg border border-border bg-surface p-5 opacity-90 saturate-[0.85]">
+      {/* Test na zmrużone oczy: różnica między panelami ma być czytelna z odległości,
+          bez czytania treści. Stąd mocniejsze wygaszenie i tło bg-subtle. */}
+      <div className="rounded-lg border border-border bg-bg-subtle p-5 opacity-70 saturate-[0.6]">
         <DemoHeader label="Zwykły chatbot" tone="muted" />
         <div className="mt-4 min-h-[16rem] space-y-3">
           <Bubble side="user">Chcę umówić wizytę na czwartek.</Bubble>
@@ -161,12 +163,9 @@ export function AgentDemo() {
 
 function DemoHeader({ label, tone }: { label: string; tone: 'muted' | 'accent' }) {
   return (
+    /* Atrapa kropek okna macOS usunięta (na stronie było ich sześć). Zamiast niej
+       miarka w języku cyrkla: 12px kreska dociągnięta do prawej krawędzi. */
     <div className="flex items-center gap-2 border-b border-border pb-3">
-      <span className="flex gap-1">
-        <span className="h-2 w-2 rounded-full bg-border-strong" />
-        <span className="h-2 w-2 rounded-full bg-border-strong" />
-        <span className="h-2 w-2 rounded-full bg-border-strong" />
-      </span>
       <span
         className={cn(
           'text-caption font-semibold',
@@ -175,6 +174,7 @@ function DemoHeader({ label, tone }: { label: string; tone: 'muted' | 'accent' }
       >
         {label}
       </span>
+      <span className="ml-auto h-px w-12 bg-border" aria-hidden="true" />
     </div>
   );
 }

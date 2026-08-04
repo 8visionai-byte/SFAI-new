@@ -49,27 +49,30 @@ const FILARY = [
 
 export function PasekZaufania() {
   return (
-    <Section tone="subtle" tight>
+    /* MAPA AKTÓW: sekcja siada w tym samym rozdziale co Hero (tone="base"),
+       koniec z pasami ABAB. Rejestr pionowy sm = pasek, nie pełna sekcja. */
+    <Section tone="base" space="sm">
       <Reveal>
-        <p className="mb-6 text-center text-caption uppercase tracking-[0.08em] text-fg-subtle">
+        {/* Etykieta techniczna (11px, tracking .16), wyrównana do lewej —
+            jedna oś wyrównania na całej stronie. Tekst 1:1. */}
+        <p className="mb-10 text-overline uppercase tracking-[0.16em] text-fg-subtle">
           Zanim cokolwiek wdrożymy, zdejmujemy z Ciebie trzy największe obawy
         </p>
       </Reveal>
-      <ul className="grid gap-6 sm:grid-cols-3">
-        {FILARY.map((f, i) => (
-          <Reveal as="li" key={f.title} delay={i * 0.06} className="flex items-start gap-3">
-            <span className="mt-0.5 inline-flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent-hover">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                {f.icon}
-              </svg>
-            </span>
-            <span>
-              <span className="block text-ui font-semibold text-fg">{f.title}</span>
-              <span className="mt-0.5 block text-body-sm text-fg-muted">{f.desc}</span>
-            </span>
-          </Reveal>
+      {/* Kaskadę robi .sf-stagger (JEDEN obserwator na kontenerze) — per-item
+          delaye zniknęły. .sf-rail rysuje 2px kreskę nad każdą kolumną
+          (język karty katalogowej zamiast ikony w kółku). */}
+      <Reveal as="ul" className="sf-stagger sf-rail mx-auto grid max-w-wide gap-8 sm:grid-cols-3 sm:gap-10">
+        {FILARY.map((f) => (
+          <li key={f.title}>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="text-accent">
+              {f.icon}
+            </svg>
+            <span className="mt-5 block text-ui font-semibold text-fg">{f.title}</span>
+            <span className="mt-2 block text-body-sm leading-[1.6] text-fg-muted">{f.desc}</span>
+          </li>
         ))}
-      </ul>
+      </Reveal>
     </Section>
   );
 }

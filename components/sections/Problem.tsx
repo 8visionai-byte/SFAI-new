@@ -1,4 +1,4 @@
-import { Section, Button, Card, SectionImage } from '@/components/ui';
+import { Section, Button, SectionImage } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HOME_CTA } from '@/lib/site';
 
@@ -17,43 +17,62 @@ const BOLE = [
 
 export function Problem() {
   return (
-    <Section tone="base" id="problem">
-      {/* Zdjęcie = dodatkowa kolumna obok nagłówka (mobile: POD tekstem,
-          desktop: obok). Teksty i hierarchia nagłówków bez zmian. */}
-      <div className="mx-auto grid max-w-wide items-center gap-8 md:grid-cols-2">
-        <div>
-          <Reveal>
-            <h2 className="text-h2">Ile czasu w tygodniu zjada Ci robota, którą mógłby robić ktoś inny?</h2>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <p className="text-lead mt-5 text-fg-muted">
-              Większość małych firm traci kilkanaście godzin tygodniowo na to samo: odbieranie tych samych
-              pytań, przepisywanie danych między systemami, oddzwanianie do klientów, którzy nie dodzwonili
-              się za pierwszym razem. To nie jest praca, która rozwija firmę. To praca, która ją tylko utrzymuje
-              na powierzchni. I to właśnie ją zdejmuje AI Agent.
-            </p>
-          </Reveal>
-        </div>
-        <Reveal delay={0.1}>
-          <SectionImage
-            src="/img/powtarzalna-robota-przed-i-po.webp"
-            alt="Przedsiębiorca zasypany papierami nocą i ten sam człowiek pracujący spokojnie z asystentem AI"
-          />
+    <Section tone="base" id="problem" space="md" className="overflow-x-clip">
+      {/* Tekst wraca do JEDNEJ kolumny — kadr „przed i po" nie jest ilustracją
+          obok akapitu, tylko osobnym aktem pod nim. Teksty i hierarchia
+          nagłówków bez zmian. */}
+      <div className="mx-auto max-w-narrow">
+        <Reveal variant="header">
+          <h2 className="text-h2">Ile czasu w tygodniu zjada Ci robota, którą mógłby robić ktoś inny?</h2>
+        </Reveal>
+        <Reveal delay={0.05}>
+          <p className="text-lead mt-5 text-fg-muted">
+            Większość małych firm traci kilkanaście godzin tygodniowo na to samo: odbieranie tych samych
+            pytań, przepisywanie danych między systemami, oddzwanianie do klientów, którzy nie dodzwonili
+            się za pierwszym razem. To nie jest praca, która rozwija firmę. To praca, która ją tylko utrzymuje
+            na powierzchni. I to właśnie ją zdejmuje AI Agent.
+          </p>
         </Reveal>
       </div>
 
-      <ul className="mx-auto mt-8 grid max-w-narrow gap-3">
+      {/* BLEED: plik to DYPTYK ze świetlistą linią w osi 50% („przed" po lewej,
+          „po" po prawej) — kolumna 460px zabijała narrację. 21:9 z 16:9 pokazuje
+          76% wysokości; focus y 42% -> okno 0,10-0,86, czyli obie twarze i
+          papiery zostają w kadrze. Na mobile wraca 16:9 (21:9 przy 375px to
+          pasek 160px). */}
+      <Reveal delay={0.1} className="sf-bleed mt-12 md:mt-16">
+        <SectionImage
+          src="/img/powtarzalna-robota-przed-i-po.webp"
+          alt="Przedsiębiorca zasypany papierami nocą i ten sam człowiek pracujący spokojnie z asystentem AI"
+          ratio="wide"
+          ratioMd="panorama"
+          focus="50% 42%"
+          hover
+          className="rounded-none"
+          sizes="100vw"
+        />
+      </Reveal>
+
+      {/* Pięć osobnych ramek -> JEDNA płyta z pięcioma wierszami, wjeżdżająca na
+          dolną krawędź panoramy: biała płyta na czarnym kadrze robi realną
+          warstwę Z (kolaż), a nie kolejny wiersz siatki. Kaskadę niesie
+          .sf-stagger na kontenerze (jeden obserwator zamiast pięciu). */}
+      <Reveal
+        as="ul"
+        className="sf-stagger relative z-raised mx-auto -mt-10 max-w-narrow divide-y divide-border rounded-lg border border-hairline bg-surface px-6 shadow-md md:-mt-20"
+      >
         {BOLE.map((bol, i) => (
-          <Reveal as="li" key={i} delay={i * 0.05}>
-            <Card className="flex gap-3 py-4">
-              <span aria-hidden="true" className="select-none text-h3 leading-none text-accent">
-                „
-              </span>
-              <p className="text-body-sm text-fg">{bol}</p>
-            </Card>
-          </Reveal>
+          <li key={i} className="flex gap-4 py-5">
+            <span
+              aria-hidden="true"
+              className="select-none font-display text-[2.5rem] leading-[0.6] text-accent-decor"
+            >
+              „
+            </span>
+            <p className="text-body-sm text-fg">{bol}</p>
+          </li>
         ))}
-      </ul>
+      </Reveal>
 
       {/*
         Mostek do diagnozy (CTA wtórne -> główny flow). UWAGA: przycisk prowadzi do
@@ -62,7 +81,7 @@ export function Problem() {
         jako krok 1 flow i wtedy można wrócić do słowa "policz".
       */}
       <Reveal delay={0.1}>
-        <div className="mx-auto mt-8 max-w-narrow rounded-lg border border-border bg-bg-subtle p-6">
+        <div className="mx-auto mt-12 max-w-narrow border-t border-border pt-6">
           <p className="text-body text-fg">
             Nie zgaduj. Na bezpłatnej diagnozie pokażę Ci, ile godzin i złotych miesięcznie zjada
             powtarzalna robota w Twojej firmie. Konkretne liczby z Twoich procesów, nie ogólniki.

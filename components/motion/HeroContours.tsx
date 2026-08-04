@@ -13,13 +13,16 @@
  * od razu narysowane, pierścień stoi. Maska rozpływa tło przed szwem sekcji.
  */
 
-/** Warstwice: (rx, ry, rotate, strokeOpacity) — środek 720,340 (za H1). */
+/** Warstwice: (rx, ry, rotate, strokeOpacity) — środek 720,340 (za H1).
+ *  Krycie podniesione o ~60% (0,16-0,06 -> 0,26-0,10): na ciepłym paperze
+ *  poprzednie wartości były praktycznie niewidoczne, więc sygnaturowe tło hero
+ *  nie istniało. To dekoracja (aria-hidden) — kontrast tekstu bez zmian. */
 const CONTOURS = [
-  { rx: 180, ry: 96, rotate: -8, opacity: 0.16 },
-  { rx: 260, ry: 142, rotate: 5, opacity: 0.13 },
-  { rx: 350, ry: 196, rotate: -4, opacity: 0.1 },
-  { rx: 450, ry: 258, rotate: 7, opacity: 0.08 },
-  { rx: 560, ry: 330, rotate: -2, opacity: 0.06 },
+  { rx: 180, ry: 96, rotate: -8, opacity: 0.26 },
+  { rx: 260, ry: 142, rotate: 5, opacity: 0.21 },
+  { rx: 350, ry: 196, rotate: -4, opacity: 0.16 },
+  { rx: 450, ry: 258, rotate: 7, opacity: 0.13 },
+  { rx: 560, ry: 330, rotate: -2, opacity: 0.1 },
 ] as const;
 
 export function HeroContours() {

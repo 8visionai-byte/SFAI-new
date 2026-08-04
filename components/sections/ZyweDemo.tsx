@@ -5,7 +5,8 @@ import { ChatDemo } from '@/components/demo/ChatDemo';
 
 /**
  * SEKCJA 10 — DEMO POKAZOWE (spec 03 §10). Emocja: kompetencja (szewc w butach).
- * Jasna sekcja premium (.surface-aurora). Kapsuła + opis w HTML (nie blokuje indeksacji).
+ * Jasna sekcja domykająca akt III (rejestr pionowy sm). Kapsuła + opis w HTML
+ * (nie blokuje indeksacji).
  * Czat = ChatDemo (STUB, atrapa). Voicebot = przycisk-stub. Backend = security layer.
  *
  * UWAGA SPÓJNOŚCI: dopóki czat to atrapa (bez /api/chat), tekst sekcji NIE może
@@ -15,7 +16,9 @@ import { ChatDemo } from '@/components/demo/ChatDemo';
  */
 export function ZyweDemo() {
   return (
-    <Section tone="base" id="demo" className="surface-aurora">
+    /* .surface-aurora zeszła stąd do FinalneCTA — budżet gradientu marki ma
+       4 miejsca, a ostatnie należy do jedynego celu konwersji strony. */
+    <Section tone="base" space="sm" id="demo">
       <div className="mx-auto max-w-narrow">
         <Reveal>
           <h2 className="text-h2">Zobacz, jak rozmawia nasz Agent. Wersja pokazowa.</h2>
@@ -29,18 +32,21 @@ export function ZyweDemo() {
         </Reveal>
       </div>
 
-      <div className="mx-auto mt-8 grid max-w-narrow gap-6 md:grid-cols-2">
+      {/* ASYMETRIA: czat dostaje 1,4x więcej miejsca (to jest dowód kompetencji),
+          voicebot cichnie do kolumny odgrodzonej neutralną kreską 1px — przestaje
+          być kartą, która obiecuje działającą funkcję, a w środku ma disabled. */}
+      <div className="mx-auto mt-12 grid max-w-wide gap-10 md:mt-16 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] md:gap-14">
         {/* Czat (widget stub) */}
         <Reveal>
           <ChatDemo />
-          <p className="mt-3 text-caption text-fg-subtle">
+          <p className="mt-4 text-caption text-fg-subtle">
             To demo. Twojego Agenta uczymy na Twoich danych i Twoich zasadach.
           </p>
         </Reveal>
 
         {/* Voicebot (stub) */}
         <Reveal delay={0.06}>
-          <div className="flex h-full flex-col justify-center rounded-lg border border-border bg-surface p-6">
+          <div className="flex h-full flex-col justify-center border-t border-border pt-6 md:border-l md:border-t-0 md:pl-10 md:pt-0">
             <h3 className="text-h3">Wolisz posłuchać?</h3>
             <p className="mt-2 text-body-sm text-fg-muted">
               Voicebot odbierze, porozmawia po polsku i pokaże, jak brzmi obsługa telefonu bez Twojego udziału.

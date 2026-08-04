@@ -155,7 +155,10 @@ export function DiagnozaForm() {
         <input type="text" name="firma_www" />
       </form>
 
-      <form onSubmit={handleSubmit} className="rounded-xl border border-border bg-surface p-6 shadow-xs sm:p-7">
+      {/* REGUŁA PROMIENIA: interakcja 8px, kontener 16px, element wewnątrz kontenera
+          8px, pill = full. Cień: na home to JEDYNY formularz z shadow-md (fizyczny
+          cel konwersji, nie kolejne pudełko). */}
+      <form onSubmit={handleSubmit} className="rounded-lg border border-border bg-surface p-6 shadow-md sm:p-7">
       {/* Pasek postępu */}
       <div className="mb-6">
         <div className="mb-2 flex items-center justify-between">
@@ -191,10 +194,10 @@ export function DiagnozaForm() {
                   }}
                   aria-pressed={selected}
                   className={
-                    'flex min-h-[64px] items-center rounded-md border-[1.5px] px-4 py-3 text-left text-body-sm font-medium transition-[border-color,background-color] duration-fast ease-out ' +
+                    'sf-press flex min-h-[64px] items-center rounded-sm border-[1.5px] px-4 py-3 text-left text-body-sm font-medium transition-[border-color,background-color,transform] duration-fast ease-out active:scale-[0.98] ' +
                     (selected
                       ? 'border-accent bg-accent-soft text-fg'
-                      : 'border-border bg-surface-sunken text-fg hover:border-border-strong')
+                      : 'border-border-control bg-surface-sunken text-fg hover:border-brand')
                   }
                 >
                   {p.label}
@@ -217,7 +220,7 @@ export function DiagnozaForm() {
               id="df-branza"
               value={branza}
               onChange={(e) => setBranza(e.target.value)}
-              className="min-h-[48px] w-full rounded-sm border-[1.5px] border-border bg-surface-sunken px-4 text-body-sm text-fg focus:border-accent focus:bg-surface focus:outline-none focus:ring-[3px] focus:ring-accent-soft"
+              className="min-h-[48px] w-full rounded-sm border-[1.5px] border-border-control bg-surface-sunken px-4 text-body-sm text-fg focus:border-accent focus:bg-surface focus:outline-none focus:ring-[3px] focus:ring-accent-soft"
             >
               <option value="">Wybierz branżę</option>
               {BRANZE.map((b) => (
@@ -235,7 +238,7 @@ export function DiagnozaForm() {
               id="df-zespol"
               value={zespol}
               onChange={(e) => setZespol(e.target.value)}
-              className="min-h-[48px] w-full rounded-sm border-[1.5px] border-border bg-surface-sunken px-4 text-body-sm text-fg focus:border-accent focus:bg-surface focus:outline-none focus:ring-[3px] focus:ring-accent-soft"
+              className="min-h-[48px] w-full rounded-sm border-[1.5px] border-border-control bg-surface-sunken px-4 text-body-sm text-fg focus:border-accent focus:bg-surface focus:outline-none focus:ring-[3px] focus:ring-accent-soft"
             >
               <option value="">Wybierz wielkość</option>
               {ZESPOLY.map((z) => (
@@ -270,7 +273,7 @@ export function DiagnozaForm() {
               onChange={(e) => setImie(e.target.value)}
               required
               autoComplete="given-name"
-              className="min-h-[48px] w-full rounded-sm border-[1.5px] border-border bg-surface-sunken px-4 text-body-sm text-fg placeholder:text-fg-subtle focus:border-accent focus:bg-surface focus:outline-none focus:ring-[3px] focus:ring-accent-soft"
+              className="min-h-[48px] w-full rounded-sm border-[1.5px] border-border-control bg-surface-sunken px-4 text-body-sm text-fg placeholder:text-fg-subtle focus:border-accent focus:bg-surface focus:outline-none focus:ring-[3px] focus:ring-accent-soft"
               placeholder="Jak się do Ciebie zwracać?"
             />
           </div>
@@ -290,7 +293,7 @@ export function DiagnozaForm() {
               required
               aria-invalid={bladKontakt ? true : undefined}
               aria-describedby={bladKontakt ? 'df-kontakt-blad' : undefined}
-              className="min-h-[48px] w-full rounded-sm border-[1.5px] border-border bg-surface-sunken px-4 text-body-sm text-fg placeholder:text-fg-subtle focus:border-accent focus:bg-surface focus:outline-none focus:ring-[3px] focus:ring-accent-soft"
+              className="min-h-[48px] w-full rounded-sm border-[1.5px] border-border-control bg-surface-sunken px-4 text-body-sm text-fg placeholder:text-fg-subtle focus:border-accent focus:bg-surface focus:outline-none focus:ring-[3px] focus:ring-accent-soft"
               placeholder="Na to faktycznie odbierzesz"
             />
             {bladKontakt ? (
@@ -327,7 +330,7 @@ export function DiagnozaForm() {
                 required
                 checked={zgoda}
                 onChange={(e) => setZgoda(e.target.checked)}
-                className="mt-0.5 h-4 w-4 shrink-0 rounded-xs border-[1.5px] border-border-strong accent-accent"
+                className="mt-0.5 h-4 w-4 shrink-0 rounded-xs border-[1.5px] border-border-control accent-accent"
               />
               <span>
                 Zgadzam się na kontakt i przetwarzanie moich danych w celu obsługi zgłoszenia, zgodnie z{' '}
@@ -347,7 +350,7 @@ export function DiagnozaForm() {
             href="https://cal.com/simple-fast-ai/spotkanie-ai"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex min-h-[48px] items-center justify-center gap-2 rounded-md border-[1.5px] border-accent bg-accent-soft px-4 text-center text-body-sm font-semibold text-accent-hover transition-colors duration-fast ease-out hover:bg-accent hover:text-accent-contrast"
+            className="sf-press flex min-h-[48px] items-center justify-center gap-2 rounded-sm border-[1.5px] border-accent bg-accent-soft px-4 text-center text-body-sm font-semibold text-accent-hover transition-[background-color,color,transform] duration-fast ease-out hover:bg-accent hover:text-accent-contrast active:scale-[0.98]"
           >
             Wolisz od razu wybrać termin? Otwórz kalendarz
             <span aria-hidden="true" className="sf-arrow">→</span>

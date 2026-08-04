@@ -25,12 +25,16 @@ const CASE: CaseStudy | null = null;
 
 export function Dowod() {
   return (
-    <Section tone="subtle">
-      {/* Zdjęcie = dodatkowa kolumna obok nagłówka (mobile: POD tekstem,
-          desktop: obok). Grid case/karty niżej z NIETKNIĘTĄ logiką CASE. */}
-      <div className="mx-auto grid max-w-wide items-center gap-8 md:grid-cols-2">
-        <div>
-          <Reveal>
+    <Section tone="base" space="md" className="overflow-x-clip">
+      {/* FRAME: kwadrat 1:1 z pliku 16:9 pokazuje 56,25% szerokości; focus 76%
+          -> okno x 0,33-0,90, czyli obie twarze (mężczyzna 0,62-0,76, kobieta
+          0,77-0,88) i świetliste smugi danych. W kadrze 16:9 połowa powierzchni
+          była pustą czernią i zdjęcie wyglądało na niedoświetlone. Płyta wychodzi
+          do PRAWEJ krawędzi ekranu (prawe rogi wyprostowane) — obiekt ucięty
+          kadrem czyta się jak fragment większej sceny. */}
+      <div className="grid items-center gap-10 md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] md:gap-14">
+        <div className="max-w-narrow">
+          <Reveal variant="header">
             <h2 className="text-h2">Co konkretnie zmienia się w firmie po wdrożeniu Agenta?</h2>
           </Reveal>
           {/* Kapsuła answer-first — uczciwa, bez zmyślonego case'a (INPUT PAWŁA na realny). */}
@@ -46,11 +50,17 @@ export function Dowod() {
           <SectionImage
             src="/img/rozmowa-o-wdrozeniu-ai.webp"
             alt="Dwie osoby analizują wyniki wdrożenia AI na tablecie w nocnym biurze"
+            ratio="wide"
+            ratioMd="square"
+            focus="76% 50%"
+            hover
+            className="sf-bleed-r"
+            sizes="(min-width: 1240px) 620px, (min-width: 768px) 54vw, 100vw"
           />
         </Reveal>
       </div>
 
-      <div className={`mx-auto mt-8 grid max-w-narrow gap-6 ${CASE ? 'md:grid-cols-2' : ''}`}>
+      <div className={`mx-auto mt-12 grid max-w-narrow gap-10 md:mt-16 ${CASE ? 'md:grid-cols-2' : ''}`}>
         {/* Karta case study — TYLKO gdy jest realny case (CASE !== null). */}
         {CASE && (
           <Reveal>
@@ -73,9 +83,12 @@ export function Dowod() {
           </Reveal>
         )}
 
-        {/* Uczciwy stan: pierwsze wdrożenia (zawsze) */}
+        {/* Uczciwy stan: pierwsze wdrożenia (zawsze). Samotny prostokąt z ramką
+            na środku sekcji czytał się jak stan błędu — zostaje oświadczenie na
+            kresce akcentowej 1,5px NAD nagłówkiem (kolorowy border-left czyta
+            się jak alert Bootstrapa). Logika CASE NIETKNIĘTA. */}
         <Reveal delay={0.05}>
-          <Card as="article" className="h-full">
+          <Card as="article" variant="quiet" className="h-full border-t-[1.5px] border-border-accent pt-6">
             <h3 className="text-h3">Pierwsze wdrożenia mówią same za siebie.</h3>
             <p className="mt-3 text-body-sm text-fg-muted">
               Zbieramy twarde liczby z bieżących wdrożeń i publikujemy je tutaj, gdy tylko klient da zielone
@@ -90,7 +103,7 @@ export function Dowod() {
 
       {/* CTA. INPUT PAWŁA: dowód z realną liczbą inny niż w hero (np. połączenia/mc). */}
       <Reveal delay={0.1}>
-        <div className="mx-auto mt-9 flex max-w-narrow flex-col items-start gap-3">
+        <div className="mx-auto mt-12 flex max-w-narrow flex-col items-start gap-3">
           <MagneticButton variant="primary" size="lg" href={HOME_CTA.href}>
             {HOME_CTA.label}
           </MagneticButton>

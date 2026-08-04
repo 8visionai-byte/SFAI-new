@@ -3,31 +3,48 @@ import { cn } from '@/lib/cn';
 /**
  * Card — kontener treści na tokenach (spec 02 §6.2).
  * Warianty:
- *  - base        : statyczna treść, cień xs, BEZ reakcji na hover (uczciwa afordancja)
- *  - interactive : klikalna (case study, usługa) — lift -4px + cień md na hover
- *  - bento       : kafel siatki (bez własnego paddingu zewnętrznego rytmu)
+ *  - base        : statyczna treść, włos zamiast ramki, podświetlenie na hover
+ *  - quiet       : ZERO opakowania (bez tła, ramki, cienia, promienia, paddingu)
+ *  - feature     : karta o większej wadze (szerszy padding + cień md)
+ *  - interactive : klikalna (case study, usługa) — lift + feedback nacisku (.card-lift)
+ *  - bento       : kafel siatki na pełną wysokość
  *  - highlight   : wyróżniona (plan "Najczęściej wybierane") — ramka akcentowa
+ *
+ * UWAGA ARCHITEKTONICZNA: lib/cn.ts to gołe join(' ') BEZ tailwind-merge, więc
+ * klasa dopisana u użycia NIE nadpisuje klasy z wariantu. Dlatego shell (tło,
+ * ramka, promień, padding) MUSI siedzieć w wariantach, a nie w stałej wspólnej —
+ * inaczej `quiet` nie ma jak zdjąć pudełka.
+ *
+ * ELEWACJA: shadow-xs (krycie 6%) zniknął z kart — był niewidzialny i tylko
+ * dokładał szum. Głębię niosą DOKŁADNIE: shadow-sm na hover karty, shadow-md na
+ * feature i wyróżnionym planie, shadow-accent na primary CTA, cień płyty zdjęcia.
  *
  * `as` pozwala wyrenderować <article>/<li> dla poprawnej semantyki.
  */
-export type CardVariant = 'base' | 'interactive' | 'bento' | 'highlight';
+export type CardVariant =
+  | 'base'
+  | 'quiet'
+  | 'feature'
+  | 'interactive'
+  | 'bento'
+  | 'highlight';
 
-const base =
-  'bg-surface border border-border rounded-lg p-6 shadow-xs';
+const shell = 'rounded-lg border border-hairline bg-surface';
 
 const variantClass: Record<CardVariant, string> = {
   // CISZA W SPOCZYNKU (redesign „Precyzja cyrkla"): aura marki NIE jest częścią
   // Card. Stara decyzja „błysk na każdej ramce" uchylona — skoro wszystko miga,
   // nic nie jest ważne. Na home aurę mają DOKŁADNIE 2 karty (wyróżniony plan
   // cennika + AgentDemo), dopisywaną u użycia.
-  base: '',
+  base: `card-live ${shell} p-6`,
+  quiet: '',
+  feature: `card-live ${shell} p-8 shadow-md`,
   // Focus: globalny :focus-visible na elemencie fokusowalnym wewnątrz karty
   // (jeden system focusa redesignu) — bez focus-within na kontenerze.
-  interactive:
-    'transition-[transform,box-shadow,border-color] duration-base ease-out cursor-pointer ' +
-    'hover:-translate-y-1 hover:shadow-md hover:border-border-strong',
-  bento: 'h-full',
-  highlight: 'border-[1.5px] border-border-accent shadow-sm relative',
+  // Ruch (lift + nacisk) robi .card-lift z bramką (hover:hover) w globals.css.
+  interactive: `card-lift ${shell} p-6 cursor-pointer`,
+  bento: `card-live ${shell} p-6 h-full`,
+  highlight: `${shell} p-6 border-[1.5px] border-border-accent shadow-sm relative`,
 };
 
 type CardProps<T extends React.ElementType> = {
@@ -46,7 +63,7 @@ export function Card<T extends React.ElementType = 'div'>({
 }: CardProps<T>) {
   const Component = as ?? 'div';
   return (
-    <Component className={cn(base, variantClass[variant], className)} {...rest}>
+    <Component className={cn(variantClass[variant], className)} {...rest}>
       {children}
     </Component>
   );

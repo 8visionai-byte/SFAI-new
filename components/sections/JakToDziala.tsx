@@ -1,4 +1,4 @@
-import { Section, Button, Card, SectionImage } from '@/components/ui';
+import { Section, Button, SectionImage } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HOME_CTA } from '@/lib/site';
 
@@ -26,9 +26,9 @@ const KROKI = [
 
 export function JakToDziala() {
   return (
-    <Section tone="base">
+    <Section tone="subtle" space="md">
       <div className="mx-auto max-w-narrow">
-        <Reveal>
+        <Reveal variant="header">
           <h2 className="text-h2">Jak wygląda wdrożenie AI Agenta krok po kroku?</h2>
         </Reveal>
         <Reveal delay={0.05}>
@@ -41,34 +41,48 @@ export function JakToDziala() {
         </Reveal>
       </div>
 
-      {/* Zdjęcie pełną osią wide NAD siatką kroków (dodatkowy wiersz; kroki są
-          3-kolumnowe, więc obraz nie wchodzi im w kolumnę). sizes pod oś 980px. */}
-      <Reveal delay={0.08}>
-        <div className="mx-auto mt-8 max-w-wide">
-          <SectionImage
-            src="/img/automatyzacja-procesow-krok-po-kroku.webp"
-            alt="Etapy automatyzacji procesu w firmie połączone świetlistą linią danych"
-            sizes="(min-width: 1024px) 980px, 100vw"
-          />
-        </div>
+      {/* RIBBON: zdjęcie przestaje być prostokątem 16:9 nad siatką i staje się
+          WSTĘGĄ PROCESU przyklejoną do góry kroków — ciemna wstęga i jasny korpus
+          czytają się jak jedna maszynowo obrobiona bryła (obudowa + rdzeń).
+          KADR: 4:1 z 16:9 pokazuje 44,4% wysokości; focus y 36% -> okno 0,20-0,64,
+          czyli wszystkie cztery okręgi procesu i głowa mężczyzny.
+          DUOTONE (`brand`): to jedyny bursztynowo-pomarańczowy plik w zestawie,
+          czyli jedyny, który łamie paletę marki. mix-blend-mode:color bierze
+          barwę z gradientu, a jasność zostawia ze zdjęcia — bursztyn schodzi w
+          niebiesko-fiolet, twarz nie robi się sina. */}
+      <Reveal delay={0.08} className="mx-auto mt-12 max-w-container md:mt-16">
+        <SectionImage
+          src="/img/automatyzacja-procesow-krok-po-kroku.webp"
+          alt="Etapy automatyzacji procesu w firmie połączone świetlistą linią danych"
+          ratio="wide"
+          ratioMd="ribbon"
+          focus="50% 36%"
+          brand
+          sizes="(min-width: 1240px) 1200px, 100vw"
+          className="md:rounded-b-none"
+        />
       </Reveal>
 
-      <ol className="mt-8 grid gap-6 md:grid-cols-3">
-        {KROKI.map((k, i) => (
-          <Reveal as="li" key={k.n} delay={i * 0.06}>
-            <Card as="article" className="h-full">
-              <span className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-accent-soft font-display text-h3 font-semibold text-accent-hover">
-                {k.n}
-              </span>
-              <h3 className="text-h3 mt-4">{k.t}</h3>
-              <p className="mt-2 text-body-sm text-fg-muted">{k.d}</p>
-            </Card>
-          </Reveal>
+      <Reveal
+        as="ol"
+        className="sf-stagger mx-auto mt-6 grid max-w-container gap-6 md:mt-0 md:grid-cols-3 md:gap-0 md:divide-x md:divide-border md:overflow-hidden md:rounded-b-xl md:border md:border-t-0 md:border-hairline md:bg-surface"
+      >
+        {KROKI.map((k) => (
+          <li key={k.n} className="md:p-8">
+            {/* Numer kroku JEST grafiką sekcji: 52px cyfra w --border-strong.
+                Kółko bg-accent-soft pod cyfrą to najbardziej rozpoznawalna
+                pigułka landing page'a z szablonu — wypadło. */}
+            <span className="block font-display text-[3.25rem] font-bold leading-none text-border-strong">
+              {k.n}
+            </span>
+            <h3 className="text-h3 mt-4">{k.t}</h3>
+            <p className="mt-2 text-body-sm text-fg-muted">{k.d}</p>
+          </li>
         ))}
-      </ol>
+      </Reveal>
 
       <Reveal delay={0.1}>
-        <p className="mx-auto mt-7 max-w-narrow text-body-sm text-fg-muted">
+        <p className="mx-auto mt-10 max-w-narrow text-body-sm text-fg-muted">
           Cały czas widzisz, co Agent robi, i w każdej chwili możesz go zatrzymać. To Ty jesteś szefem, on tylko
           zdejmuje robotę.
         </p>
@@ -81,7 +95,7 @@ export function JakToDziala() {
         wstawić ją tu zamiast samej mikrokopii.
       */}
       <Reveal delay={0.15}>
-        <div className="mt-6 flex flex-col items-start gap-2">
+        <div className="mt-12 flex flex-col items-start gap-2">
           <Button variant="primary" href={HOME_CTA.href}>
             Umów bezpłatną diagnozę
           </Button>

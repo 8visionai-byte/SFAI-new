@@ -252,7 +252,7 @@ export function ChatAgent() {
           onKeyDown={handleKeyDown}
           disabled={loading}
           placeholder="Napisz pytanie albo zostaw imię i e-mail"
-          className="min-h-[48px] w-full rounded-sm border-[1.5px] border-border bg-surface-sunken px-4 text-body-sm text-fg placeholder:text-fg-subtle focus:border-accent focus:bg-surface focus:outline-none focus:ring-[3px] focus:ring-accent-soft disabled:opacity-60"
+          className="min-h-[48px] w-full rounded-sm border-[1.5px] border-border-control bg-surface-sunken px-4 text-body-sm text-fg placeholder:text-fg-subtle focus:border-accent focus:bg-surface focus:outline-none focus:ring-[3px] focus:ring-accent-soft disabled:opacity-60"
           autoComplete="off"
           maxLength={2000}
         />

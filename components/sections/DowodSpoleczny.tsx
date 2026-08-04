@@ -60,7 +60,7 @@ const OPINIE: readonly Opinia[] = [
 
 export function DowodSpoleczny() {
   return (
-    <Section tone="subtle">
+    <Section tone="subtle" space="lg">
       <div className="mx-auto max-w-narrow">
         <Reveal>
           <h2 className="text-h2">Komu już postawiliśmy AI Agentów?</h2>
@@ -78,18 +78,24 @@ export function DowodSpoleczny() {
         </Reveal>
       </div>
 
-      {/* Opinie — renderujemy TYLKO realne. Brak realnych = uczciwy stan (else). */}
+      {/* Opinie — renderujemy TYLKO realne. Brak realnych = uczciwy stan (else).
+          ŚCIANA CYTATÓW w kolumnach CSS: nierówna długość jest tu ZALETĄ, a nie
+          dziurą pustki (h-full rozciągało wszystkie karty do najwyższej, więc przy
+          cytacie 90 słów obok 40 słów w połowie kart siedziało 100-150px pustki).
+          `gap-10` to column-gap; odstęp pionowy niesie `mb-10` na elemencie.
+          Przy `columns` dzieci nie są w flow siatki, więc .sf-stagger nie zadziała —
+          tu ZOSTAJE per-item delay z sufitem 4 kroków. */}
       {OPINIE.length > 0 ? (
-        <div className="mx-auto mt-8 grid max-w-wide gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto mt-12 max-w-wide columns-1 gap-10 md:mt-16 md:columns-2 lg:columns-3">
           {OPINIE.map((o, i) => (
-            <Reveal key={i} delay={i * 0.06} className="h-full">
-              <Card as="figure" className="flex h-full flex-col">
-                <blockquote className="text-body text-fg">„{o.cytat}”</blockquote>
-                <figcaption className="mt-auto pt-5">
-                  <span className="block font-semibold text-fg">{o.branza}</span>
-                  <span className="mt-1 block text-caption text-fg-muted">{o.podpis}</span>
+            <Reveal key={i} delay={Math.min(i, 4) * 0.06} className="mb-10 break-inside-avoid">
+              <figure>
+                <blockquote className="text-body-sm leading-[1.7] text-fg">„{o.cytat}”</blockquote>
+                <figcaption className="mt-5 border-t border-border pt-4">
+                  <span className="block text-ui font-semibold text-fg">{o.branza}</span>
+                  <span className="mt-1 block text-caption text-fg-subtle">{o.podpis}</span>
                 </figcaption>
-              </Card>
+              </figure>
             </Reveal>
           ))}
         </div>
@@ -106,7 +112,7 @@ export function DowodSpoleczny() {
 
       {/* Kto za tym stoi — autorytet dwóch founderów (E-E-A-T) */}
       <Reveal delay={0.1}>
-        <div className="mx-auto mt-8 max-w-narrow rounded-lg border border-border bg-surface p-6 shadow-xs">
+        <div className="mx-auto mt-12 max-w-narrow border-t border-border pt-6">
           <h3 className="text-h3">Kto stawia te Agenty?</h3>
           <p className="mt-3 text-body-sm text-fg-muted">
             Dwóch founderów. {SITE.founders[0].name}, {SITE.founders[0].jobTitle}, prowadzi budowę: strony,
@@ -126,7 +132,10 @@ export function DowodSpoleczny() {
         (konkretna liczba wdrożeń/mc), wpisać ją. Do tego czasu bez zmyślonej liczby.
       */}
       <Reveal delay={0.12}>
-        <div className="mx-auto mt-6 max-w-narrow rounded-lg border border-border-accent bg-accent-soft p-6">
+        {/* Jedyny kolorowy moment sekcji, ale jako cytat marginesowy, nie prostokąt
+            zalany cyjanem — wtedy naprawdę wybija (cyjan przestał znaczyć „akcja",
+            bo pracował w sześciu rolach naraz). */}
+        <div className="mx-auto mt-8 max-w-narrow border-l-2 border-border-accent bg-transparent py-2 pl-6">
           <p className="text-body text-fg">
             Bierzemy tylko tyle wdrożeń naraz, ile jesteśmy w stanie zrobić dobrze. Po to, żeby każde
             dopilnować, a nie po to, żeby naciskać. Jak jest komplet, mówimy wprost i umawiamy na kolejny
@@ -136,8 +145,8 @@ export function DowodSpoleczny() {
       </Reveal>
 
       <Reveal delay={0.15}>
-        <div className="mx-auto mt-9 flex max-w-narrow flex-col items-start gap-2">
-          <MagneticButton variant="primary" size="lg" href={HOME_CTA.href}>
+        <div className="mx-auto mt-12 flex max-w-narrow flex-col items-start gap-2 md:mt-16">
+          <MagneticButton variant="primary" size="lg" trailing href={HOME_CTA.href}>
             {HOME_CTA.label}
           </MagneticButton>
           <span className="text-caption text-fg-subtle">Bez zobowiązań. Sprawdzimy, czy w ogóle warto.</span>

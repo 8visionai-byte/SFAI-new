@@ -125,7 +125,7 @@ export function BranzeDemo() {
   }, [reduce]);
 
   return (
-    <Section tone="subtle" id="branze">
+    <Section tone="subtle" space="md" id="branze">
       <div className="mx-auto max-w-narrow">
         <Reveal>
           <h2 className="text-h2">Powtarzalna robota wygląda inaczej w każdej branży</h2>
@@ -141,18 +141,19 @@ export function BranzeDemo() {
 
       {/* OKNO AGENTA — terminal/czat. Sama warstwa wizualna typewritera. */}
       <Reveal delay={0.1}>
-        <div className="mx-auto mt-8 max-w-narrow overflow-hidden rounded-lg border border-border bg-surface shadow-xs">
-          {/* Pasek okna: kropki + etykieta + status */}
-          <div className="flex items-center gap-2 border-b border-border px-4 py-3 sm:px-5">
-            <span className="flex items-center gap-1.5" aria-hidden="true">
-              <span className="inline-block h-3 w-3 rounded-full bg-border-strong" />
-              <span className="inline-block h-3 w-3 rounded-full bg-border-strong" />
-              <span className="inline-block h-3 w-3 rounded-full bg-accent" />
-            </span>
-            <span className="ml-2 text-ui font-semibold text-fg">Agent SimpleFast</span>
-            <span className="ml-auto inline-flex items-center gap-1.5 text-caption text-fg-subtle">
+        {/* .sf-window = 1px metaliczna krawędź górna zamiast atrapy okna systemowego
+            (trzy kropki macOS to jeden z najczęściej wytykanych sygnałów „to generował
+            model"). shadow-md, bo to najbardziej efektowny element sekcji. */}
+        <div className="sf-window mx-auto mt-8 max-w-narrow overflow-hidden rounded-lg border border-border bg-surface shadow-md">
+          {/* Pasek okna: etykieta + status */}
+          <div className="flex items-center gap-3 border-b border-border bg-bg-subtle px-5 py-3.5">
+            <span className="text-ui font-semibold text-fg">Agent SimpleFast</span>
+            <span className="ml-auto inline-flex items-center gap-2 text-caption text-fg-subtle">
+              {/* Statyczny pierścień zamiast animate-pulse: ten sam sygnał „live" przy
+                  zerowym koszcie na klatkę. Kontrakt: max 1 pętla ambient na viewport,
+                  a tu biegły dwie (kropka + kursor). */}
               <span
-                className="inline-block h-2 w-2 rounded-full bg-success motion-safe:animate-pulse"
+                className="inline-block h-2 w-2 rounded-full bg-success ring-2 ring-[color:var(--success-bg)]"
                 aria-hidden="true"
               />
               działa
@@ -160,14 +161,14 @@ export function BranzeDemo() {
           </div>
 
           {/* Ciało okna: linia "prompt" + pisany tekst. */}
-          <div className="px-4 py-6 sm:px-6 sm:py-8">
+          <div className="px-5 py-12 sm:px-10 sm:py-16">
             {/*
               Wysokość zarezerwowana (min-h) na 2 linie tekstu, żeby kasowanie/pisanie
               nie skakało layoutem na mobile. Tekst typewritera oznaczony aria-hidden —
               pełną treść dla czytników i botów niesie lista poniżej.
             */}
             <p
-              className="flex min-h-[3.5em] items-start font-mono text-body-sm leading-relaxed text-fg sm:min-h-[3em] sm:text-body"
+              className="flex min-h-[3.5em] items-start font-mono text-[clamp(1.0625rem,2.4vw,1.5rem)] leading-[1.5] tracking-[-0.01em] text-fg sm:min-h-[3em]"
               aria-hidden={!reduce}
             >
               <span className="mr-2 select-none text-accent" aria-hidden="true">
@@ -180,8 +181,10 @@ export function BranzeDemo() {
               ) : (
                 <span>
                   {text}
+                  {/* Prawdziwy blink kursora (sfCaretBlink, ten sam keyframe co .sf-caret
+                      w H1) zamiast animate-pulse, czyli oddychającej kropki. */}
                   <span
-                    className="ml-0.5 inline-block w-[0.6ch] -translate-y-[1px] animate-pulse text-accent"
+                    className="sf-demo-caret ml-0.5 inline-block w-[0.6ch] -translate-y-[1px] text-accent"
                     aria-hidden="true"
                   >
                     ▌

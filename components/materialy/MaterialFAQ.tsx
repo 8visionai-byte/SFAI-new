@@ -24,16 +24,16 @@ export function MaterialFAQ({ faq }: { faq: MaterialFaq[] }) {
         <div className="mt-8 divide-y divide-border border-y border-border">
           {faq.map((item, i) => (
             <Reveal key={item.pytanie} delay={Math.min(i * 0.03, 0.15)}>
-              <details className="group py-2">
-                <summary className="-mx-2 flex cursor-pointer list-none items-center justify-between gap-4 rounded-sm px-2 py-3 text-h3 font-medium text-fg transition-colors duration-fast hover:bg-bg-subtle [&::-webkit-details-marker]:hidden">
-                  <span>{item.pytanie}</span>
+              <details className="sf-faq group py-2">
+                <summary className="-mx-2 flex cursor-pointer list-none items-center justify-between gap-4 rounded-sm px-2 py-4 text-body font-semibold text-fg transition-colors duration-fast hover:bg-bg-subtle [&::-webkit-details-marker]:hidden">
+                  <span className="group-open:text-accent">{item.pytanie}</span>
                   <svg
-                    width="22"
-                    height="22"
+                    width="18"
+                    height="18"
                     viewBox="0 0 24 24"
                     fill="none"
                     aria-hidden="true"
-                    className="shrink-0 text-accent transition-transform duration-base group-hover:scale-110 group-open:rotate-45"
+                    className="shrink-0 text-fg-subtle transition-transform duration-base ease-spring group-hover:scale-105 group-open:rotate-45 group-open:text-accent"
                   >
                     <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                   </svg>

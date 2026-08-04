@@ -391,7 +391,7 @@ export default function ArchitekciWartosciAiPage() {
           <div className="mt-8 divide-y divide-border border-y border-border">
             {FAQ.map((item, i) => (
               <Reveal key={item.pytanie} delay={Math.min(i * 0.03, 0.15)}>
-                <details className="group py-2">
+                <details className="sf-faq group py-2">
                   <summary className="-mx-2 flex cursor-pointer list-none items-center justify-between gap-4 rounded-sm px-2 py-3 text-h3 font-medium text-fg transition-colors duration-fast hover:bg-bg-subtle [&::-webkit-details-marker]:hidden">
                     <span>{item.pytanie}</span>
                     <svg
