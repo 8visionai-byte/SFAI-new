@@ -3,11 +3,14 @@ import { Container } from './Container';
 
 /**
  * Section — pionowy rytm strony + opcjonalne tło.
- * `theme="dark"` ustawia data-theme="dark" strefowo (sekcje tech: bezpieczeństwo,
- * "agent działa nie gada", /dowod, demo, stopka — spec 02 §7). Kolory komponentów
- * są semantyczne, więc sekcja "po prostu działa" na ciemnym.
+ * ŚWIAT B (ciemna pracownia): tokeny GLOBALNE są ciemne — tone base = navy-950
+ * (#0b1220, baza kadru z makiet), subtle = navy-900 (#101a30). `theme="dark"`
+ * (strefowo) zostaje dla zagnieżdżeń i nic nie zmienia na domyślnym ciemnym;
+ * `theme="light"` włącza JASNĄ strefę-akcent (np. biała karta cytatu z makiety 2).
+ * Kolory komponentów są semantyczne, więc sekcja "po prostu działa" w obu motywach.
  *
  * `tone` przełącza tło między bazowym a subtelnym (przeplatanie sekcji).
+ * `seam` (.sf-rule) to po redesignie BIAŁY WŁOS (var(--hairline)) — patrz globals.
  *
  * `space` — TRZY rejestry pionowe zamiast jednego metronomu:
  *   sm (48-80px)  = przypis, pasek, domknięcie

@@ -34,12 +34,14 @@ const securityHeaders = [
           //   Opcja B (zostając przy SSG): policzyć SHA-256 inline-bootstrapu w buildzie
           //     i wstrzyknąć hashe + 'strict-dynamic' (wymaga kroku w pipeline build).
           // Przy podłączaniu GA4/Cal.com/Make dodać KONKRETNE domeny (nie wildcard).
-          "script-src 'self' 'unsafe-inline'",
+          // Umami Cloud (cookieless analytics) — KONKRETNA domena, nie wildcard.
+          "script-src 'self' 'unsafe-inline' https://cloud.umami.is",
           // img-src bez globalnego 'https:' (wildcard) — tylko własne + data:.
           // Gdy dojdzie CDN/og z innej domeny, dodać tę KONKRETNĄ domenę.
           "img-src 'self' data:",
           "font-src 'self'",
-          "connect-src 'self'",
+          // Beacony Umami Cloud (api-gateway = endpoint zbierania zdarzen).
+          "connect-src 'self' https://cloud.umami.is https://api-gateway.umami.dev",
           "frame-src 'self'",
           "object-src 'none'",
           "base-uri 'self'",

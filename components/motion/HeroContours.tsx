@@ -14,15 +14,16 @@
  */
 
 /** Warstwice: (rx, ry, rotate, strokeOpacity) — środek 720,340 (za H1).
- *  Krycie podniesione o ~60% (0,16-0,06 -> 0,26-0,10): na ciepłym paperze
- *  poprzednie wartości były praktycznie niewidoczne, więc sygnaturowe tło hero
- *  nie istniało. To dekoracja (aria-hidden) — kontrast tekstu bez zmian. */
+ *  ŚWIAT B (ciemna pracownia, makieta zrodla/makiety-b/1-hero.png): na navy-950
+ *  linie mają ŚWIECIĆ — krycie x3 (0,26-0,10 -> 0,78-0,30) + mix-blend screen
+ *  na .sf-hero-svg (globals.css). To dekoracja (aria-hidden) — kontrast tekstu
+ *  bez zmian (screen tylko rozjaśnia tło pod treścią). */
 const CONTOURS = [
-  { rx: 180, ry: 96, rotate: -8, opacity: 0.26 },
-  { rx: 260, ry: 142, rotate: 5, opacity: 0.21 },
-  { rx: 350, ry: 196, rotate: -4, opacity: 0.16 },
-  { rx: 450, ry: 258, rotate: 7, opacity: 0.13 },
-  { rx: 560, ry: 330, rotate: -2, opacity: 0.1 },
+  { rx: 180, ry: 96, rotate: -8, opacity: 0.78 },
+  { rx: 260, ry: 142, rotate: 5, opacity: 0.63 },
+  { rx: 350, ry: 196, rotate: -4, opacity: 0.48 },
+  { rx: 450, ry: 258, rotate: 7, opacity: 0.39 },
+  { rx: 560, ry: 330, rotate: -2, opacity: 0.3 },
 ] as const;
 
 export function HeroContours() {
@@ -37,7 +38,8 @@ export function HeroContours() {
         fill="none"
       >
         <defs>
-          {/* Gradient przez cały kadr — kolory łagodzone pod jasny paper. */}
+          {/* Gradient przez cały kadr — TRASA świata B 1:1 z makiet:
+              #2B7CFF → #7A3CF0 → #22E06B (fiolet pogłębiony wg makiety 1). */}
           <linearGradient
             id="sfHeroGrad"
             gradientUnits="userSpaceOnUse"
@@ -47,7 +49,7 @@ export function HeroContours() {
             y2="690"
           >
             <stop offset="0%" stopColor="#2B7CFF" />
-            <stop offset="50%" stopColor="#8B5CF6" />
+            <stop offset="50%" stopColor="#7A3CF0" />
             <stop offset="100%" stopColor="#22E06B" />
           </linearGradient>
         </defs>
@@ -69,7 +71,8 @@ export function HeroContours() {
           />
         ))}
 
-        {/* Pierścień miarki — jedyna pętla ambient hero (120 s; mobile: ukryty). */}
+        {/* Pierścień miarki — jedyna pętla ambient hero (120 s; mobile: ukryty).
+            Świat B: krycie x3 (0.1 -> 0.3), jak warstwice. */}
         <g className="sf-tickring" style={{ transformOrigin: '720px 340px' }}>
           <circle
             cx={720}
@@ -77,14 +80,15 @@ export function HeroContours() {
             r={470}
             stroke="url(#sfHeroGrad)"
             strokeWidth={1}
-            strokeOpacity={0.1}
+            strokeOpacity={0.3}
             strokeDasharray="2 44"
           />
         </g>
 
-        {/* Igła cyrkla — STATYCZNA (budżet ruchu). */}
-        <circle cx={720} cy={340} r={3} fill="#8B5CF6" fillOpacity={0.35} />
-        <circle cx={720} cy={340} r={9} stroke="#8B5CF6" strokeOpacity={0.18} />
+        {/* Igła cyrkla — STATYCZNA (budżet ruchu); fiolet trasy, krycie podbite
+            na ciemny kadr. */}
+        <circle cx={720} cy={340} r={3} fill="#7A3CF0" fillOpacity={0.6} />
+        <circle cx={720} cy={340} r={9} stroke="#7A3CF0" strokeOpacity={0.35} />
       </svg>
     </div>
   );

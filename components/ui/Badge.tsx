@@ -6,20 +6,24 @@ import { cn } from '@/lib/cn';
  *  - neutral : kategorie, daty
  *  - success : sygnały zaufania (dane w UE, CWV zielone, RODO)
  *  - metric  : liczba-dowód inline ("-40%")
+ *  - outline : ŚWIAT B (makieta 1) — pill konturowy na ciemnym (badge hero)
  */
-export type BadgeVariant = 'accent' | 'neutral' | 'success' | 'metric';
+export type BadgeVariant = 'accent' | 'neutral' | 'success' | 'metric' | 'outline';
 
 const base =
   'inline-flex items-center gap-1 font-sans font-semibold text-caption rounded-full px-3 py-1';
 
 const variantClass: Record<BadgeVariant, string> = {
-  // accent: ciemny cyjan (--accent-hover = cyan-800) na soft (cyan-100) = 6.14:1 (AA ✓).
-  // text-accent (cyan-700) na cyan-100 dałby tylko 4.30:1 — dlatego hover-wariant.
+  // accent: na ciemnym (świat B) --accent-hover = cyan-300 na soft (teal 14%) —
+  // jasny tekst na granacie ~12:1 (AA ✓); w strefie light: cyan-800 na cyan-100 = 6.14:1.
   accent: 'bg-accent-soft text-accent-hover',
   neutral: 'bg-bg-subtle text-fg-muted border border-border',
   success: 'bg-success-bg text-success',
-  // metric: cyan-700 na białym/paper tle sekcji = 4.95:1 (AA ✓).
+  // metric: --accent theme-aware (cyan-400 na ciemnym 9.71:1 / cyan-700 na jasnym 4.95:1).
   metric: 'bg-transparent text-accent px-0 py-0 tabular-nums',
+  // outline: przezroczysty pill z konturem (biel 18% na ciemnym — dekoracyjna
+  // krawędź, nie kontrolka) i pełnym --fg na tekście (16.35:1 AA ✓).
+  outline: 'bg-transparent text-fg border border-border-strong',
 };
 
 type BadgeProps = {

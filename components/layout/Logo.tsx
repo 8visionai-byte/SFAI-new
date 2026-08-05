@@ -64,8 +64,15 @@ export function LogoImage({
 }
 
 /**
- * Logo — przezroczysty poziomy lockup w linku do strony głównej (nagłówek/stopka).
- * Wariant 'mark' = sam znak (kwadrat) do bardzo wąskich miejsc.
+ * Logo — link do strony głównej (nagłówek/stopka).
+ *
+ * ŚWIAT B (ciemna pracownia, makieta zrodla/makiety-b/1-hero.png): oficjalny
+ * poziomy PNG (grafitowy metal + nasycone granatowe litery) GINIE na navy-950,
+ * więc pasek renderuje WORDMARK TEKSTOWY — „SimpleFast" w bieli (--fg) i „.ai"
+ * w gradiencie trasy z solidnym fallbackiem AA (.sf-wordmark / .sf-wordmark-ai
+ * w globals.css). aria-label bez zmian; marka zostaje realnym tekstem w DOM
+ * (cytowalność #1), a LCP zyskuje: zero obrazka do pobrania w nagłówku.
+ * Wariant 'mark' (sam znak, kwadrat) zostaje OBRAZKIEM do wąskich miejsc.
  */
 export function Logo({
   className,
@@ -76,25 +83,31 @@ export function Logo({
   variant?: RenderVariant;
   priority?: boolean;
 }) {
-  const isMark = variant === 'mark';
+  if (variant === 'mark') {
+    return (
+      <Link
+        href="/"
+        aria-label={`${LABEL} — strona główna`}
+        className={cn('inline-flex items-center', className)}
+      >
+        <LogoImage
+          variant="mark"
+          priority={priority}
+          sizes="40px"
+          className="h-[34px] w-[34px] sm:h-[40px] sm:w-[40px]"
+        />
+      </Link>
+    );
+  }
   return (
     <Link
       href="/"
       aria-label={`${LABEL} — strona główna`}
       className={cn('inline-flex items-center', className)}
     >
-      <LogoImage
-        variant={isMark ? 'mark' : 'full'}
-        priority={priority}
-        // WYDAJNOŚĆ: bez `sizes` next/image serwował logo w 3840px (~55 KiB) na realne
-        // ~170px w nagłówku. Podpowiadamy faktyczną szerokość renderu → ~256-384px (~8 KiB).
-        sizes={isMark ? '40px' : '(min-width: 640px) 170px, 135px'}
-        className={
-          isMark
-            ? 'h-[34px] w-[34px] sm:h-[40px] sm:w-[40px]'
-            : 'h-[44px] w-auto sm:h-[56px]'
-        }
-      />
+      <span className="sf-wordmark text-[1.3rem] leading-none sm:text-[1.5rem]">
+        SimpleFast<span className="sf-wordmark-ai">.ai</span>
+      </span>
     </Link>
   );
 }

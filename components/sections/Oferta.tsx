@@ -45,80 +45,93 @@ const POZIOMY = [
 
 export function Oferta() {
   return (
-    /* AKT III otwiera się rysowaną kreską rozdziału (seam), nie pasem tła. */
-    <Section tone="base" space="lg" seam>
-      <div className="mx-auto max-w-narrow">
-        <Reveal>
-          <h2 className="text-h2">Ile kosztuje wdrożenie AI Agenta dla firmy?</h2>
-        </Reveal>
-        <Reveal delay={0.05}>
-          <p className="text-lead mt-5 text-fg-muted">
-            Koszt wdrożenia AI Agenta zależy od zakresu. Inaczej wycenia się pojedynczy, gotowy proces (na
-            przykład chatbot odpowiadający na pytania klientów), inaczej pełnego Agenta obsługującego telefon
-            i kalendarz, a inaczej rozwiązanie szyte na miarę. Dokładne widełki podajemy na bezpłatnej diagnozie,
-            kiedy znamy już Twój proces. Diagnoza i wstępna wycena nic nie kosztują.
-          </p>
+    /* AKT III otwiera się rysowaną kreską rozdziału (seam), nie pasem tła.
+       overflow-x-clip: poświata .sf-rim-gradient::before (inset -34px w poziomie)
+       wystaje poza kartę i na 375px rozpychała dokument o 14px (poziomy scroll). */
+    <Section tone="base" space="lg" seam className="overflow-x-clip">
+      {/* ŚWIAT B (makieta 4-oferta): lewa trzecia = nagłówek + sub, prawe 2/3 =
+          trzy SZKLANE karty (.sf-glass, fundament partii A). Środkowa karta jest
+          FIZYCZNIE wyższa (md:-my-5 md:py-11, bez scale) i dostaje gradientowy
+          rim (.sf-rim-gradient) + badge teal + JEDYNY przycisk w rzędzie kart.
+          Poniżej 1024px nagłówek wraca nad karty (jedna kolumna). Teksty 1:1. */}
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:items-center lg:gap-16">
+        <div className="max-w-narrow">
+          <Reveal>
+            <h2 className="text-h2">Ile kosztuje wdrożenie AI Agenta dla firmy?</h2>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <p className="text-lead mt-5 text-fg-muted">
+              Koszt wdrożenia AI Agenta zależy od zakresu. Inaczej wycenia się pojedynczy, gotowy proces (na
+              przykład chatbot odpowiadający na pytania klientów), inaczej pełnego Agenta obsługującego telefon
+              i kalendarz, a inaczej rozwiązanie szyte na miarę. Dokładne widełki podajemy na bezpłatnej diagnozie,
+              kiedy znamy już Twój proces. Diagnoza i wstępna wycena nic nie kosztują.
+            </p>
+          </Reveal>
+        </div>
+
+        {/* items-center (nie stretch), żeby wyróżniony plan nie rozjechał rzędu.
+            Kaskadę robi .sf-stagger — per-item delaye zniknęły. UWAGA: żaden
+            kontener wokół kart nie może mieć overflow:hidden (utnie badge na
+            -top-3) — kontrakt obowiązuje też .sf-glass/.sf-rim-gradient. */}
+        <Reveal className="sf-stagger grid items-center gap-6 md:grid-cols-3">
+          {POZIOMY.map((p) => (
+            <div key={p.name}>
+              {/* Aura .card-aura zeszła z cennika (język świata B: rim zamiast
+                  neonowej pętli) — jedyna aura home zostaje na AgentDemo. */}
+              <Card
+                variant="quiet"
+                as="article"
+                className={
+                  p.highlight
+                    ? 'sf-glass sf-rim-gradient relative flex h-full flex-col rounded-lg p-6 shadow-md md:-my-5 md:py-11'
+                    : 'sf-glass relative flex h-full flex-col rounded-lg p-6'
+                }
+              >
+                {p.highlight && (
+                  <span className="absolute -top-3 left-6 rounded-full bg-accent px-3 py-1 text-caption font-semibold text-accent-contrast shadow-sm">
+                    Najczęściej wybierane
+                  </span>
+                )}
+                <h3 className="text-h3">{p.name}</h3>
+                <p className="mt-1 text-body-sm text-fg-muted">{p.forWho}</p>
+
+                {/* SLOT CENY: gdy Paweł poda realne widełki „od X zł", wróć do
+                    text-h2 font-semibold tabular-nums text-brand — ten slot jest
+                    zaprojektowany pod LICZBĘ. Dopóki stoi tu fraza, liczbowa skala
+                    i tabular-nums (bez ani jednej cyfry) tylko psują typografię. */}
+                <p className="mt-6 max-w-[16ch] font-display text-h3 font-medium leading-[1.25] text-fg">{p.price}</p>
+
+                {/* Etykiety <dt> 1:1 co do znaku — ginie wyłącznie uppercase i tracking
+                    (limit anty-slop: max 1 eyebrow na 3 sekcje, a tu było ich 9). */}
+                <dl className="mt-5 space-y-3 border-t border-border pt-5 text-body-sm">
+                  <div>
+                    <dt className="text-caption font-medium normal-case text-fg-subtle">Co dostajesz</dt>
+                    <dd className="text-fg">{p.get}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-caption font-medium normal-case text-fg-subtle">Oszczędza</dt>
+                    <dd className="text-fg">{p.saves}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-caption font-medium normal-case text-fg-subtle">Czas wdrożenia</dt>
+                    <dd className="text-fg">{p.time}</dd>
+                  </div>
+                </dl>
+
+                {/* TYLKO środkowa karta ma przycisk (makieta 4). Etykieta =
+                    istniejący string CTA diagnozy (bez nowej kopii). */}
+                {p.highlight && (
+                  <div className="mt-7">
+                    <MagneticButton variant="primary" href={HOME_CTA.href}>
+                      Umów bezpłatną diagnozę
+                    </MagneticButton>
+                  </div>
+                )}
+              </Card>
+            </div>
+          ))}
         </Reveal>
       </div>
-
-      {/* items-center (nie stretch), żeby wypustka wyróżnionego planu nie rozjechała
-          rzędu. Kaskadę robi .sf-stagger — per-item delaye zniknęły. */}
-      <Reveal className="sf-stagger mt-12 grid items-center gap-6 md:mt-16 md:grid-cols-3 md:gap-8">
-        {POZIOMY.map((p) => (
-          <div key={p.name}>
-            {/* BUDŻET KOLORU (redesign): aura marki TYLKO na wyróżnionym planie —
-                1 z DOKŁADNIE 2 aur na home (druga: AgentDemo). Pozostałe karty
-                cennika stoją cicho. Bez .card-glossy: jego overflow:hidden ucinał
-                badge wystający nad górną krawędź (zgłoszenie Pawła: napis ucięty).
-                Wyróżniony plan podniesiony FIZYCZNIE (md:-my-5 md:py-11 + shadow-md),
-                bez scale — scale rozmywa tekst. Żaden kontener wokół nie może mieć
-                overflow:hidden, bo utnie badge na -top-3. */}
-            <Card
-              variant={p.highlight ? 'highlight' : 'base'}
-              as="article"
-              className={
-                p.highlight
-                  ? 'card-aura card-aura-bold flex h-full flex-col shadow-md md:-my-5 md:py-11'
-                  : 'flex h-full flex-col'
-              }
-            >
-              {p.highlight && (
-                <span
-                  className="absolute -top-3 left-6 rounded-full px-3 py-1 text-caption font-semibold text-white shadow-sm"
-                  style={{ background: 'linear-gradient(90deg, #007BFF, #7A35FF, #2FA500)' }}
-                >
-                  Najczęściej wybierane
-                </span>
-              )}
-              <h3 className="text-h3">{p.name}</h3>
-              <p className="mt-1 text-body-sm text-fg-muted">{p.forWho}</p>
-
-              {/* SLOT CENY: gdy Paweł poda realne widełki „od X zł", wróć do
-                  text-h2 font-semibold tabular-nums text-brand — ten slot jest
-                  zaprojektowany pod LICZBĘ. Dopóki stoi tu fraza, liczbowa skala
-                  i tabular-nums (bez ani jednej cyfry) tylko psują typografię. */}
-              <p className="mt-6 max-w-[16ch] font-display text-h3 font-medium leading-[1.25] text-fg">{p.price}</p>
-
-              {/* Etykiety <dt> 1:1 co do znaku — ginie wyłącznie uppercase i tracking
-                  (limit anty-slop: max 1 eyebrow na 3 sekcje, a tu było ich 9). */}
-              <dl className="mt-5 space-y-3 border-t border-border pt-5 text-body-sm">
-                <div>
-                  <dt className="text-caption font-medium normal-case text-fg-subtle">Co dostajesz</dt>
-                  <dd className="text-fg">{p.get}</dd>
-                </div>
-                <div>
-                  <dt className="text-caption font-medium normal-case text-fg-subtle">Oszczędza</dt>
-                  <dd className="text-fg">{p.saves}</dd>
-                </div>
-                <div>
-                  <dt className="text-caption font-medium normal-case text-fg-subtle">Czas wdrożenia</dt>
-                  <dd className="text-fg">{p.time}</dd>
-                </div>
-              </dl>
-            </Card>
-          </div>
-        ))}
-      </Reveal>
 
       <Reveal delay={0.1}>
         <p className="mx-auto mt-6 max-w-narrow text-caption text-fg-subtle">

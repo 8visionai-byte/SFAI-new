@@ -156,9 +156,140 @@
     --z-toast: 600;
   }
 
-  /* ===== TOKENY SEMANTYCZNE — TRYB JASNY (domyślny) ===== */
+  /* ===== TOKENY SEMANTYCZNE — TRYB CIEMNY (DOMYŚLNY) =====
+     Redesign „ŚWIAT B — Ciemna pracownia" (2026-08, decyzja Pawła): CAŁA strona
+     jest ciemnym kinem (wzorzec = makiety zrodla/makiety-b). :root niesie
+     wartości CIEMNE; [data-theme='dark'] zostaje jako selektor STREFOWY dla
+     zagnieżdżeń (np. treść na zdjęciu w SectionImage wewnątrz jasnej strefy) —
+     te same wartości, więc dark-w-light dalej działa.
+     Kontrasty (policzone, WCAG AA):
+       --fg #eaf0fa na navy-950 = 16.35:1 (AAA)
+       --fg-muted navy-300      =  6.64:1 (AA)
+       --fg-subtle #6f7e9e      =  4.62:1 (AA — tekst pomocniczy)
+       --accent cyan-400        =  9.71:1 (AA — tekst-akcje na ciemnym)
+       --ring cyan-400          =  >3:1  (WCAG 1.4.11 — wskaźnik fokusa) */
   :root,
+  [data-theme='dark'] {
+    color-scheme: dark;
+
+    --bg: var(--sf-navy-950); /* #0b1220 — baza kadru (makieta 1) */
+    --bg-subtle: var(--sf-navy-900); /* #101a30 — sekcja „subtle" */
+    /* Powierzchnie SOLIDNE (dropdown, skip-link, panel menu — muszą kryć treść
+       pod spodem; szkło rgba to OSOBNA klasa .sf-glass, nie token --surface). */
+    --surface: var(--sf-navy-800);
+    --surface-raised: var(--sf-navy-700);
+    --surface-sunken: var(--sf-navy-900);
+
+    --fg: #eaf0fa;
+    --fg-muted: var(--sf-navy-300);
+    --fg-subtle: #6f7e9e;
+    --fg-on-accent: var(--sf-navy-950);
+
+    /* Brand / akcent — teal marki w wersji NA CIEMNYM: na tekst-akcje idą
+       JAŚNIEJSZE stopnie (cyan-400 = 9.71:1 na navy-950); cyan-500 zostaje
+       dekoracją (glow/border), cyan-700 z jasnego motywu tu nie wraca (byłby
+       za ciemny na granacie). */
+    --brand: #ffffff;
+    --accent: var(--sf-cyan-400);
+    --accent-hover: var(--sf-cyan-300);
+    --accent-decor: var(--sf-cyan-500);
+    --accent-soft: rgba(20, 184, 196, 0.14);
+    --accent-contrast: var(--sf-navy-950); /* tekst na CTA: 9.71:1 na cyan-400 (AA ✓) */
+
+    /* Linie: włos = biel o niskim kryciu (kładzie się na każdym ciemnym tle). */
+    --border: rgba(255, 255, 255, 0.1);
+    --border-strong: rgba(255, 255, 255, 0.18);
+    --hairline: rgba(255, 255, 255, 0.12);
+    --border-control: rgba(255, 255, 255, 0.55); /* obrys kontrolki >3:1 (1.4.11) */
+    --border-accent: var(--sf-cyan-400);
+    --ring: var(--sf-cyan-400);
+
+    /* Szkło świata B (makieta 4): tło biel 3–6%, włos ~10%, światło od góry.
+       Używane przez .sf-glass i mapy Tailwinda (bg-glass, border-glass-hairline). */
+    --glass-bg: rgba(255, 255, 255, 0.04);
+    --glass-bg-strong: rgba(255, 255, 255, 0.06);
+    --glass-hairline: rgba(255, 255, 255, 0.1);
+    --glass-inner-light: rgba(255, 255, 255, 0.08);
+
+    --success: #4cc57e;
+    --success-bg: rgba(76, 197, 126, 0.12);
+    --warning: #e0a445;
+    --warning-bg: rgba(224, 164, 69, 0.12);
+    --error: #e36a6a;
+    --error-bg: rgba(227, 106, 106, 0.12);
+    --info: #5ea0dc;
+    --info-bg: rgba(94, 160, 220, 0.12);
+
+    /* Cienie ciemne z WEWNĘTRZNYM ŚWIATŁEM (wzór .sf-plate): czarny cień ginie
+       na navy, więc krawędź elewacji rysuje górna kreska bieli. */
+    --shadow-xs: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-sm: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 2px 10px rgba(0, 0, 0, 0.45);
+    --shadow-md: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 10px 30px rgba(0, 0, 0, 0.5);
+    --shadow-lg: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 50px rgba(0, 0, 0, 0.6);
+    --shadow-accent: 0 8px 28px rgba(20, 184, 196, 0.35);
+
+    /* METAL na ciemnym: JASNE stopnie tekstowe (AA na navy-950), dekoracja =
+       oficjalne kolory marki (jaskrawy ai-green świeci dobrze na ciemnym). */
+    --metal-blue: #93c5fd; /* blue-300 — 10.38:1 na navy-950 (TEKST) */
+    --metal-violet: #c4b5fd; /* violet-300 — 10.14:1 na navy-950 (TEKST) */
+    --metal-green: #34d399; /* emerald-400 — 9.74:1 na navy-950 (TEKST) */
+    --metal-blue-decor: #007bff; /* brand blue */
+    --metal-violet-decor: #7a35ff; /* brand violet */
+    --metal-green-decor: #63f000; /* brand ai-green */
+    --metal-fg: var(--metal-violet); /* fallback .text-metal: 10.14:1 (AA ✓) */
+  }
+
+  /* ===== TOKENY WSPÓLNE OBU MOTYWÓW (budowane z var → theme-aware) ===== */
+  :root {
+    /* ---- Oficjalne kolory marki (brandbook) — tokeny pomocnicze ---- */
+    --sfai-cyan: #00d8ff;
+    --sfai-magenta-violet: #c238ff;
+    --sfai-emerald: #00b894;
+    --sfai-glow: #7debff;
+
+    /* Srebro marki (brandbook): steel + steel-highlight */
+    --metal-silver: #aeb8c3; /* brand steel — 9.55:1 na navy-950 */
+    --metal-silver-hi: #e7edf5; /* brand steel-highlight */
+
+    /* Gradient pod tekst .text-metal (stopnie per-theme przez var). */
+    --metal-gradient: linear-gradient(
+      120deg,
+      var(--metal-blue) 0%,
+      var(--metal-violet) 50%,
+      var(--metal-green) 100%
+    );
+    /* GŁÓWNY GRADIENT MARKI (brandbook) — dekoracja/sheen. */
+    --metal-gradient-decor: linear-gradient(
+      90deg,
+      var(--metal-blue-decor) 0%,
+      var(--metal-violet-decor) 62%,
+      var(--metal-green-decor) 100%
+    );
+    /* TRASA ŚWIATA B (makiety 1/5): świetlista linia niebieski→fiolet→zieleń.
+       Kolory 1:1 z zatwierdzonych makiet. WYŁĄCZNIE dekoracja — nie pod tekst. */
+    --route-gradient: linear-gradient(90deg, #2b7cff 0%, #7a3cf0 50%, #22e06b 100%);
+    /* Sheen — wąski pas połysku (glossy), przesuwany animacją sfMetalSheen */
+    --metal-sheen: linear-gradient(
+      105deg,
+      transparent 0%,
+      transparent 38%,
+      rgba(255, 255, 255, 0.05) 46%,
+      rgba(255, 255, 255, 0.55) 50%,
+      rgba(255, 255, 255, 0.05) 54%,
+      transparent 62%,
+      transparent 100%
+    );
+
+    /* Pierścień focus (alternatywa box-shadow) */
+    --shadow-focus: 0 0 0 3px var(--ring);
+  }
+
+  /* ===== TOKENY SEMANTYCZNE — TRYB JASNY (STREFOWY, nieużywany domyślnie) =====
+     Świat B: jasna strefa to celowy AKCENT (np. biała karta cytatu z makiety 2).
+     Sekcja/karta dostaje data-theme="light" i cały system semantyczny przeskakuje
+     — wartości sprzed redesignu, kontrasty AA policzone jak niżej w komentarzach. */
   [data-theme='light'] {
+    color-scheme: light;
     /* Tła */
     --bg: var(--sf-paper);
     /* Subtle pogłębione (redesign): gray-50 #f5f4f1 był nieodróżnialny od paperu
@@ -281,69 +412,25 @@
        fiolet, który zdaje AA (6.81:1 na paper). To jest realny kolor tekstu,
        gdy clip-text nie działa LUB w narzędziach kontrastu. */
     --metal-fg: var(--metal-violet);
+
+    /* Cienie jasne (dwuwarstwowe: kontakt + ambient — jak przed redesignem).
+       Muszą wrócić strefowo, bo :root niesie teraz ciemne wartości. */
+    --shadow-xs: 0 1px 1px rgba(16, 26, 48, 0.04), 0 2px 6px -2px rgba(16, 26, 48, 0.06);
+    --shadow-sm: 0 1px 2px rgba(16, 26, 48, 0.05), 0 8px 18px -8px rgba(16, 26, 48, 0.09);
+    --shadow-md: 0 2px 4px rgba(16, 26, 48, 0.05), 0 18px 36px -14px rgba(16, 26, 48, 0.13);
+    --shadow-lg: 0 4px 8px rgba(16, 26, 48, 0.06), 0 36px 68px -22px rgba(16, 26, 48, 0.17);
+    --shadow-accent: 0 8px 24px rgba(20, 184, 196, 0.28);
+
+    /* Szkło w jasnej strefie: odwrócone (granat o niskim kryciu) — parytet,
+       gdyby strefa light użyła .sf-glass / bg-glass. */
+    --glass-bg: rgba(16, 26, 48, 0.03);
+    --glass-bg-strong: rgba(16, 26, 48, 0.05);
+    --glass-hairline: rgba(16, 26, 48, 0.1);
+    --glass-inner-light: rgba(255, 255, 255, 0.7);
   }
 
-  /* ===== TOKENY SEMANTYCZNE — TRYB CIEMNY (strefowo: sekcje tech) ===== */
-  [data-theme='dark'] {
-    --bg: var(--sf-navy-950);
-    --bg-subtle: var(--sf-navy-900);
-    --surface: var(--sf-navy-800);
-    --surface-raised: var(--sf-navy-700);
-    --surface-sunken: var(--sf-navy-900);
-
-    --fg: #eaf0fa;
-    --fg-muted: var(--sf-navy-300);
-    --fg-subtle: #6f7e9e;
-    --fg-on-accent: var(--sf-navy-950);
-
-    --brand: #ffffff;
-    --accent: var(--sf-cyan-400); /* na ciemnym jaśniejszy cyjan: 7.38:1 na navy-700 (AA ✓) */
-    --accent-hover: var(--sf-cyan-300);
-    --accent-decor: var(--sf-cyan-500); /* dekoracja (glow/border) — spójnie z light */
-    --accent-soft: rgba(20, 184, 196, 0.14);
-    --accent-contrast: var(--sf-navy-950); /* tekst na CTA: 9.71:1 na cyan-400 (AA ✓) */
-
-    --border: rgba(255, 255, 255, 0.1);
-    --border-strong: rgba(255, 255, 255, 0.18);
-    /* Odpowiedniki jasnych tokenów krawędzi na ciemnym (parytet A11y: obrys
-       kontrolki musi zdać 3:1 także w ciemnej strefie). */
-    --hairline: rgba(255, 255, 255, 0.12);
-    --border-control: rgba(255, 255, 255, 0.55);
-    --border-accent: var(--sf-cyan-400);
-    --ring: var(--sf-cyan-400);
-
-    --success: #4cc57e;
-    --success-bg: rgba(76, 197, 126, 0.12);
-    --warning: #e0a445;
-    --warning-bg: rgba(224, 164, 69, 0.12);
-    --error: #e36a6a;
-    --error-bg: rgba(227, 106, 106, 0.12);
-    --info: #5ea0dc;
-    --info-bg: rgba(94, 160, 220, 0.12);
-
-    /* Cienie dla ciemnego tła */
-    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.45);
-    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.6);
-    --shadow-accent: 0 8px 28px rgba(20, 184, 196, 0.35);
-
-    /* ---- METAL na ciemnym (sekcje tech) ----
-       Na navy-950 (#0b1220) JAŚNIEJSZE stopnie zdają AA jako tekst:
-       blue-500 10.38:1 · violet-400 10.14:1 · emerald-400 9.74:1.
-       Dlatego na dark gradient i fallback budujemy z hue „decor”/jasnych,
-       a fallback koloru .text-metal przeskakuje na jasny fiolet (czytelny). */
-    --metal-blue: #93c5fd; /* blue-300  — 10.38:1 na navy-950 (TEKST, nietknięty) */
-    --metal-violet: #c4b5fd; /* violet-300 — 10.14:1 na navy-950 (TEKST, nietknięty) */
-    --metal-green: #34d399; /* emerald-400 — 9.74:1 na navy-950 (TEKST, nietknięty) */
-    /* Dekoracja = oficjalne kolory marki (na ciemnym jaskrawy ai-green świeci dobrze) */
-    --metal-blue-decor: #007bff; /* brand blue */
-    --metal-violet-decor: #7a35ff; /* brand violet */
-    --metal-green-decor: #63f000; /* brand ai-green */
-    --metal-silver: #aeb8c3; /* brand steel — 9.55:1 na navy-950 */
-    --metal-silver-hi: #e7edf5; /* brand steel-highlight */
-    --metal-fg: var(--metal-violet); /* jasny fiolet: 10.14:1 na navy-950 (AA ✓) */
-  }
+  /* (Blok [data-theme='dark'] SCALONY z :root wyżej — świat B: ciemny jest
+     domyślny, a selektor strefowy dark dzieli te same deklaracje.) */
 
   /* ==========================================================================
      RESET / BAZA
@@ -450,17 +537,16 @@
     outline-offset: 2px;
   }
 
-  /* Selekcja tekstu w kolorach brandu (jasny cyjan + granat). */
+  /* Selekcja tekstu: DOMYŚLNIE ciemno (świat B) — półprzezroczysty cyjan nie
+     gasi jasnego tekstu na granacie. */
   ::selection {
-    background: var(--sf-cyan-300);
-    color: var(--sf-navy-900);
-  }
-  /* Na ciemnych pasmach (surface-tech / data-theme=dark) selekcja nie może
-     gasić jasnego tekstu — półprzezroczysty cyjan + jasny fg. */
-  .surface-tech ::selection,
-  [data-theme='dark'] ::selection {
     background: rgba(20, 184, 196, 0.4);
     color: #eaf0fa;
+  }
+  /* Jasne strefy (data-theme=light): jasny cyjan + granat — jak przed redesignem. */
+  [data-theme='light'] ::selection {
+    background: var(--sf-cyan-300);
+    color: var(--sf-navy-900);
   }
 
   /* Karetka i natywne kontrolki formularzy w kolorze akcji (detal drogości). */
@@ -700,22 +786,21 @@
   }
   /* Nagłówki/linki dziedziczą --accent ciemny — bez dodatkowych reguł. */
 
-  /* .surface-aurora — JASNA sekcja premium (życzenie Pawła: tła jasne, kolor i
-     „iluminacje" tylko na napisach). W odróżnieniu od .surface-tech NIE przełącza
-     tokenów na ciemne — --bg zostaje jasny. „Smaczek" daje JEDEN niebieski glow
-     o niskim kryciu od góry + metaliczny hairline u góry w ryzach kontenera
-     (redesign: trzy kolory w trzech rogach = sygnatura AI-generic, wypadły).
-     Zostawia oddech pod przyszłe wideo/zdjęcia (tło pozostaje jasne i czyste).
-     Kontrast treści bez zmian — tekst liczony na jasnym tle (tokeny semantyczne). */
+  /* .surface-aurora — sekcja premium z „iluminacją". ŚWIAT B: --bg jest teraz
+     ciemny globalnie, więc aurora działa jak w kinie — jeden niebieski glow od
+     góry na granacie + metaliczny hairline w ryzach kontenera. NIE przełącza
+     tokenów (dziedziczy motyw otoczenia), więc w strefie data-theme=light dalej
+     zadziała jako jasna. Krycie glow podbite (.06→.10) — na navy-950 stara
+     wartość była niewidoczna. Kontrast treści bez zmian (tokeny semantyczne). */
   .surface-aurora {
     position: relative;
     isolation: isolate;
     background-color: var(--bg);
     background-image:
-      radial-gradient(80% 60% at 50% 0%, rgba(0, 123, 255, 0.06), transparent 60%);
+      radial-gradient(80% 60% at 50% 0%, rgba(0, 123, 255, 0.1), transparent 60%);
   }
   /* Hairline w ryzach kontenera — linia kończy się z treścią, nie jak szew
-     renderowania na pełną szerokość viewportu. */
+     renderowania na pełną szerokość viewportu. Na ciemnym lekko mocniej (0.3→0.45). */
   .surface-aurora::before {
     content: '';
     position: absolute;
@@ -725,7 +810,7 @@
     width: min(100% - 2 * var(--gutter), var(--container-max));
     height: 1px;
     background: var(--metal-gradient-decor);
-    opacity: 0.3;
+    opacity: 0.45;
     pointer-events: none;
     z-index: -1;
   }
@@ -746,10 +831,11 @@
     inset: 0;
     overflow: hidden;
     pointer-events: none;
-    /* Miękkie światło marki za H1 (niebieski + fiolet, bardzo niskie krycie). */
+    /* Miękkie światło marki za H1 (niebieski + fiolet). Świat B: na navy-950
+       krycie podbite (.07/.05 → .11/.08), inaczej poświata ginęła w czerni. */
     background:
-      radial-gradient(75rem 40rem at 50% 34%, rgba(43, 124, 255, 0.07), transparent 62%),
-      radial-gradient(60rem 34rem at 50% 30%, rgba(139, 92, 246, 0.05), transparent 60%);
+      radial-gradient(75rem 40rem at 50% 34%, rgba(43, 124, 255, 0.11), transparent 62%),
+      radial-gradient(60rem 34rem at 50% 30%, rgba(139, 92, 246, 0.08), transparent 60%);
     -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 96%);
     mask-image: linear-gradient(to bottom, #000 62%, transparent 96%);
   }
@@ -758,6 +844,10 @@
     inset: 0;
     width: 100%;
     height: 100%;
+    /* Świat B: na ciemnym kadrze linie mają ŚWIECIĆ — screen działa addytywnie
+       (tylko rozjaśnia), więc trasa/kontury dostają neonowy blask bez utraty
+       czytelności treści nad nimi. */
+    mix-blend-mode: screen;
   }
   /* Warstwice: rysowanie konturu (pathLength=1 → dasharray/dashoffset w ułamkach). */
   .sf-contour {
@@ -1327,10 +1417,12 @@ button:hover .sf-arrow {
   }
 }
 
-/* Wąski, brandowy scrollbar wewnętrznych paneli (czat, menu mobile). */
+/* Wąski, brandowy scrollbar wewnętrznych paneli (czat, menu mobile).
+   Świat B: kolor z tokenu (--border-strong = biel 18% na ciemnym, theme-aware)
+   zamiast sztywnego jasnego gray-300, który świecił na granacie. */
 .sf-scroll-slim {
   scrollbar-width: thin;
-  scrollbar-color: var(--sf-gray-300) transparent;
+  scrollbar-color: var(--border-strong) transparent;
 }
 .sf-scroll-slim::-webkit-scrollbar {
   width: 8px;
@@ -1339,7 +1431,7 @@ button:hover .sf-arrow {
   background: transparent;
 }
 .sf-scroll-slim::-webkit-scrollbar-thumb {
-  background: var(--sf-gray-300);
+  background: var(--border-strong);
   border-radius: 999px;
 }
 
@@ -1408,8 +1500,10 @@ button:hover .sf-arrow {
        jest ignorowana i zostaje inline hex. Baseline 2023 (Chrome/Edge 111, Safari
        16.2, Firefox 113) — w starszych po prostu twardy hex.
 
-   Stopy: brand-blue #007BFF → brand-violet #7A35FF → zieleń POGŁĘBIONA #2FA500
-   (tło hero jest jasne na stałe; jaskrawy ai-green #63F000 miał ~1.4:1 na paperze).
+   Stopy (świat B — hero wróciło na CIEMNE tło): brand-blue #007BFF →
+   brand-violet #7A35FF → brand ai-green #63F000, czyli gradient marki 1:1
+   (na navy-950: 4.7:1 / 3.4:1 / 12.5:1 — H1 to tekst DUŻY, próg AA = 3:1).
+   Pogłębiona zieleń #2FA500 była korektą pod stary JASNY hero — wycofana.
    Te same stopy w inline hex (WritingHeadline) i w color-mix niżej.
 
    ARCHITEKTURA (jak reszta metalu): @supports / @media / @keyframes POZA @layer,
@@ -1463,9 +1557,9 @@ button:hover .sf-arrow {
    -------------------------------------------------------------------------- */
 @supports (color: color-mix(in oklab, red, blue)) {
   .sf-write-letter {
-    /* Stopy SPÓJNE z inline hex w WritingHeadline: brand-blue #007BFF,
-       brand-violet #7A35FF, zieleń POGŁĘBIONA #2FA500 (kontrast na jasnym
-       paperze; jaskrawy ai-green #63F000 miał ~1.4:1 — patrz nagłówek sekcji). */
+    /* Stopy SPÓJNE z inline hex w WritingHeadline (świat B, ciemne hero):
+       brand-blue #007BFF, brand-violet #7A35FF, brand ai-green #63F000 —
+       gradient marki 1:1 (patrz nagłówek sekcji: AA dla dużego tekstu). */
     /* p = i/(n-1), clamp na wypadek n=1 (mianownik 0 → 1) */
     --p: calc(var(--i) / max(var(--n) - 1, 1));
     /* segment 0 (p≤0.5): blue→violet, seg = p/0.5 = p*2 */
@@ -1478,7 +1572,7 @@ button:hover .sf-arrow {
     --c1: color-mix(
       in oklab,
       #7a35ff,
-      #2fa500 calc(var(--p) * 200% - 100%)
+      #63f000 calc(var(--p) * 200% - 100%)
     );
     /* wybór segmentu bez @container/if: gdy p≤0.5 użyj --c0, inaczej --c1.
        --pick = 0 dla p≤0.5, 1 dla p>0.5 (round to-zero przez clamp+sign trick):
@@ -1563,11 +1657,13 @@ body {
   isolation: isolate;
   overflow: hidden;
   background-color: var(--sf-navy-950);
+  /* Świat B: sekcje są ciemne, więc rim płyty MOCNIEJSZY (0.16→0.22 / 0.09→0.14),
+     a masę niesie głębsza czerń — inaczej płyta zlewała się z navy-950 tła. */
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.16),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
-    0 2px 6px -2px rgba(11, 18, 32, 0.2),
-    0 40px 70px -32px rgba(11, 18, 32, 0.55);
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 2px 6px -2px rgba(0, 0, 0, 0.45),
+    0 40px 70px -32px rgba(0, 0, 0, 0.75);
 }
 /* Promień w :where() = specyficzność 0, więc utility Tailwinda (rounded-none,
    md:rounded-b-none) i .sf-bleed* wygrywają mimo że stoją WYŻEJ w arkuszu.
@@ -1694,22 +1790,26 @@ body {
 
 /* Rysowana kreska rozdziału (sygnatura „cyrkiel kreśli stronę"). Stan bazowy =
    kreska PEŁNA, więc starsze silniki i reduced-motion dostają statyczną linię.
-   Kolor --border-strong, NIE gradient marki (budżet 4 miejsc nietknięty). */
+   ŚWIAT B: seam = BIAŁY WŁOS (var(--hairline), biel ~8–12% na ciemnym; w strefie
+   light granatowy włos) — --border-strong robił z szwu za ciężką kreskę na kinie.
+   NIE gradient marki (budżet miejsc gradientu nietknięty). */
 .sf-rule {
   height: 1px;
   width: 100%;
   background: linear-gradient(
     to right,
     transparent,
-    var(--border-strong) 14%,
-    var(--border-strong) 86%,
+    var(--hairline) 14%,
+    var(--hairline) 86%,
     transparent
   );
   transform-origin: center;
   transform: scaleX(1);
 }
 
-/* Kreska bazowa hero — JEDNORAZOWA (nie pętla, budżet ruchu nietknięty). */
+/* Kreska bazowa hero — JEDNORAZOWA (nie pętla, budżet ruchu nietknięty).
+   LEGACY po świecie B: hero home używa teraz .sf-route (trasa gradientowa,
+   sekcja ŚWIAT B na końcu pliku); klasa zostaje dla ewentualnych podstron. */
 .sf-hero-rule {
   background: linear-gradient(
     to right,
@@ -2114,4 +2214,202 @@ html.lenis body {
 }
 .lenis.lenis-stopped {
   overflow: hidden;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ŚWIAT B — „CIEMNA PRACOWNIA" (PARTIA A: fundament; wzorzec = makiety
+   zrodla/makiety-b/1-hero.png, 4-oferta.png, 5-final.png).
+   Klasy do użycia przez partię B: .sf-route (+ -dot, -enter), .sf-glass,
+   .sf-rim-gradient, .sf-wordmark(-ai), .sf-header, .sf-hero-cta.
+   ARCHITEKTURA (konwencja pliku): bazowe klasy w @layer components — utilities
+   Tailwinda mogą je nadpisać na tym samym elemencie; @supports/@media/@keyframes
+   POZA @layer (Tailwind v3 + autoprefixer gubi ciało at-rule w @layer).
+   KAŻDA nowa animacja ma jawną bramkę prefers-reduced-motion na końcu sekcji.
+   UWAGA: .sf-glass i .sf-rim-gradient definiują własne tło/ramkę — NIE łączyć
+   z utility tła (bg-…) ani ramki (border-…) na tym samym elemencie.
+   ══════════════════════════════════════════════════════════════════════════ */
+@layer components {
+  /* ── .sf-route — trasa gradientowa (makiety 1/5): cienka linia 2px w kolorach
+     trasy #2B7CFF→#7A3CF0→#22E06B (token --route-gradient). DEKORACJA
+     (aria-hidden u użycia); w spoczynku STATYCZNA (budżet ruchu). */
+  .sf-route {
+    position: relative;
+    height: 2px;
+    width: 100%;
+    border-radius: 999px;
+    background: var(--route-gradient);
+  }
+  /* Świecący punkt końcowy trasy (makieta 5): zielona kropka z aurą. Glow robi
+     STATYCZNY box-shadow — zero pętli animacji (budżet ruchu: max 1 ambient). */
+  .sf-route-dot::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    transform: translateY(-50%);
+    border-radius: 999px;
+    background: #22e06b;
+    box-shadow:
+      0 0 0 4px rgba(34, 224, 107, 0.18),
+      0 0 18px 2px rgba(34, 224, 107, 0.55);
+  }
+  /* Wejście trasy: linia „dojeżdża" od lewej do punktu — JEDNORAZOWO (nie pętla).
+     Bramka reduced-motion na końcu sekcji. */
+  .sf-route-enter {
+    transform-origin: left center;
+    animation: sfRouteDraw 900ms var(--ease-out) 420ms both;
+  }
+
+  /* ── .sf-glass — szklana karta (makieta 4): biel 4% na granacie + włos +
+     światło od góry (krawędź elewacji). backdrop-blur dokłada WYŁĄCZNIE media
+     query desktopowa niżej — mobile zostaje matowa tafla (LCP święte). */
+  .sf-glass {
+    position: relative;
+    background-color: var(--glass-bg);
+    border: 1px solid var(--glass-hairline);
+    box-shadow:
+      inset 0 1px 0 var(--glass-inner-light),
+      0 10px 30px -18px rgba(0, 0, 0, 0.6);
+  }
+
+  /* ── .sf-rim-gradient — karta WYRÓŻNIONA (makieta 4, środkowa): obrys
+     gradientem trasy (maska padding-box/border-box zachowuje promień rogów)
+     na SOLIDNYM granacie + miękka AURA za kartą (::before). Aura celowo BEZ
+     filter:blur — miękkość dają same radial-gradienty (zero kosztu rastra). */
+  .sf-rim-gradient {
+    position: relative;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(var(--sf-navy-900), var(--sf-navy-900)) padding-box,
+      var(--route-gradient) border-box;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 12px 40px -18px rgba(0, 0, 0, 0.65);
+  }
+  /* Aura marki ZA kartą: fiolet/zieleń/niebieski jak poświata na makiecie 4.
+     z-index:-1 = pod tłem karty, wystaje poza jej krawędzie (inset ujemny). */
+  .sf-rim-gradient::before {
+    content: '';
+    position: absolute;
+    inset: -28px -34px;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+      radial-gradient(55% 70% at 18% 30%, rgba(122, 60, 240, 0.3), transparent 70%),
+      radial-gradient(55% 70% at 84% 38%, rgba(34, 224, 107, 0.22), transparent 70%),
+      radial-gradient(50% 65% at 50% 92%, rgba(43, 124, 255, 0.2), transparent 70%);
+  }
+
+  /* ── .sf-header — pasek świata B (makieta 1): przezroczysty nad ciemnym hero;
+     po scrollu (.is-scrolled z JS Headera) SOLIDNY granat + hairline dołem.
+     Desktop ≥1024px dokłada półprzezroczystą taflę + blur (media query niżej);
+     mobile NIGDY nie dostaje backdrop-blur (perf/LCP). */
+  .sf-header {
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
+    transition:
+      background-color var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
+  }
+  .sf-header.is-scrolled {
+    background-color: var(--sf-navy-950);
+    border-bottom-color: var(--glass-hairline);
+  }
+
+  /* ── .sf-wordmark — TEKSTOWE logo nagłówka/stopki. Oficjalny PNG (grafitowy
+     metal + nasycone granaty) ginie na navy-950, więc pasek renderuje wordmark:
+     „SimpleFast" biel (--fg), „.ai" gradient trasy z SOLIDNYM fallbackiem AA
+     (reguły @supports/@media poza @layer, niżej). Zero obrazka = zero wagi LCP. */
+  .sf-wordmark {
+    font-family: var(--font-jakarta), system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+    white-space: nowrap;
+  }
+  .sf-wordmark-ai {
+    /* Solidny kolor NAJPIERW (wzór .text-metal): cyan-400 = 9.71:1 na navy-950. */
+    color: var(--accent);
+  }
+}
+
+/* Promień karty wyróżnionej w :where() (specyficzność 0 — utilities rounded-*
+   wygrywają mimo pozycji w arkuszu; ten sam wzorzec co .sf-plate). */
+:where(.sf-rim-gradient) {
+  border-radius: var(--radius-lg);
+}
+
+/* CTA hero jako podkreślony link ze strzałką (makieta 1): większy stopień niż
+   bazowy text-ui Buttona. POZA @layer ŚWIADOMIE — ma wygrać z utility rozmiaru
+   zapisanym w wariancie przycisku. */
+.sf-hero-cta {
+  font-size: var(--fs-lead);
+  text-underline-offset: 7px;
+  text-decoration-thickness: 2px;
+}
+
+/* Rysowanie trasy: dojazd linii do świecącego punktu (jednorazowe wejście). */
+@keyframes sfRouteDraw {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+/* Szkło TYLKO desktop (mobile perf: backdrop-filter to najdroższy filtr
+   kompozytora; na telefonach matowa tafla biel-4%-na-granacie wygląda niemal
+   identycznie). Blur paska także tylko desktop i tylko po scrollu. */
+@media (min-width: 1024px) {
+  .sf-glass {
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+  .sf-header.is-scrolled {
+    /* color-mix: Chrome/Edge 111+, Safari 16.2+; starsze silniki odrzucą tę
+       deklarację i zostaje SOLIDNY granat z reguły bazowej (fallback pancerny). */
+    background-color: color-mix(in srgb, var(--sf-navy-950) 82%, transparent);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+}
+
+/* Gradient na glifach „.ai" wordmarka — progresywne ulepszenie; bez wsparcia
+   clip-text zostaje solidny cyjan AA (reguła w @layer wyżej). */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .sf-wordmark-ai {
+    /* autoprefixer: off */
+    background-image: var(--route-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+}
+/* Forced-colors (Windows High Contrast): kolor systemowy zamiast gradientu. */
+@media (forced-colors: active) {
+  .sf-wordmark-ai {
+    background-image: none;
+    -webkit-text-fill-color: CanvasText;
+    color: CanvasText;
+  }
+}
+
+/* Bramka reduced-motion świata B — JAWNA dla każdej nowej animacji/przejścia. */
+@media (prefers-reduced-motion: reduce) {
+  .sf-route-enter {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .sf-header {
+    transition: none !important;
+  }
 }

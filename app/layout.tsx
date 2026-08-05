@@ -65,10 +65,9 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#fbfaf8' },
-    { media: '(prefers-color-scheme: dark)', color: '#0b1220' },
-  ],
+  // ŚWIAT B: cała strona jest ciemna — pasek przeglądarki zawsze w granacie
+  // kadru (navy-950), niezależnie od systemowego schematu kolorów.
+  themeColor: '#0b1220',
   width: 'device-width',
   initialScale: 1,
 };
@@ -105,6 +104,17 @@ export default function RootLayout({
             window.load, TYLKO desktop ≥1024px, nigdy przy reduced-motion ani
             Save-Data — mobile nie ładuje ani bajta bibliotek (budżet PageSpeed). */}
         <MotionGate />
+
+        {/* Umami (cookieless analytics, RODO bez banera) — renderuje się TYLKO gdy
+            NEXT_PUBLIC_UMAMI_WEBSITE_ID ustawione w Vercelu. defer + koniec body:
+            zero wpływu na LCP. Skrypt ~2KB z cloud.umami.is. */}
+        {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
+          <script
+            defer
+            src="https://cloud.umami.is/script.js"
+            data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+          />
+        )}
 
         {/* Schema globalna — Organization + WebSite na każdej stronie (spec 04 §6.2–6.3) */}
         <JsonLd data={organizationSchema()} />

@@ -16,6 +16,9 @@ import { USLUGI } from '@/lib/uslugi';
  * Linki = anchor po H1 usługi (= money query) — linkowanie wewnętrzne pod GEO
  * (fix SEO 05 §2.4). Lista z rejestru USLUGI (single source, zero rozjazdu slugów).
  * Linki są w HTML (bot je widzi); JS obsługuje tylko otwieranie/zamykanie.
+ *
+ * ŚWIAT B: dropdown jest CIEMNY przez tokeny (bg-surface = SOLIDNY navy-800,
+ * border biel 10%, shadow-md z wewnętrznym światłem) — zero zmian klas tutaj.
  */
 export function ServicesMenu() {
   const [open, setOpen] = useState(false);

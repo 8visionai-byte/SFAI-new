@@ -33,38 +33,45 @@ import { HeroPersonaCycler } from './HeroPersonaCycler';
 export function Hero() {
   return (
     /*
+      ŚWIAT B — CIEMNA PRACOWNIA (wzorzec = zrodla/makiety-b/1-hero.png):
+      pełnoekranowy ciemny kadr (navy-950 z tokenów), treść osadzona DOŁEM-LEWO
+      (na lg: min-h ekranu minus pasek 64px + flex justify-end; na mobile normalny
+      przepływ — zero ryzyka dla LCP). KOLEJNOŚĆ i TREŚĆ sekcji NIETKNIĘTE:
+      badge → H1 (maszyna do pisania) → kapsuła → persona → CTA → linki → trasa.
+      Caption „Dane w UE · RODO · AI Act" z makiety POMINIĘTY świadomie: ten zapis
+      (z kropkami środkowymi) nie istnieje w treściach repo, a treści są nietykalne.
+
       WARSTWA PREMIUM (czysto dekoracyjna, nie rusza treści/H1/CTA):
-      HeroContours = sygnaturowe tło hero (cyrkiel z loga kreśli warstwice, inline
-      SVG, zero JS) w absolutnej warstwie -z-10 pod treścią (aria-hidden u źródła
-      i tu). Section ma `relative isolate`, więc warstwa -z-10 maluje się NAD tłem
-      sekcji (bg-bg), a POD treścią — bez wymuszania przezroczystości.
-      Treść (Badge/H1/kapsuła/CTA) jest w surowym HTML nad tłem — cytowalna 1:1.
+      HeroContours = sygnaturowe tło hero (cyrkiel kreśli warstwice, inline SVG,
+      zero JS; świat B: krycie x3 + mix-blend screen — linie świecą na ciemnym)
+      w absolutnej warstwie -z-10 pod treścią (aria-hidden u źródła i tu).
     */
     <Section
       tone="base"
       space="lg"
       containerWidth="default"
-      className="relative isolate overflow-hidden text-center"
+      className="relative isolate overflow-hidden lg:flex lg:min-h-[calc(100svh-4rem)] lg:flex-col lg:justify-end"
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
         <HeroContours />
       </div>
       <Reveal eager>
-          <Badge variant="accent" className="mb-5">
+          {/* Badge OUTLINE (makieta 1: pill konturowy na ciemnym) — treść bez zmian. */}
+          <Badge variant="outline" className="mb-5">
             {POSITIONING.subClaim}
           </Badge>
         </Reveal>
 
         {/* H1 — hasło kategorii (north star #3): litery kolorowane per-glif gradientem
-            marki (WritingHeadline), wejście = czysto CSS-owa kaskada słów (sfWordIn,
-            <1.2s, zero JS). BEZ <Reveal> — kaskada JEST revealem. Tekst H1 zostaje
-            realnym tekstem w DOM (boty czytają; aria-label daje czytnikom pełne
-            zdanie jednym ciągiem). Po wejściu H1 stoi NIERUCHOMO (budżet ruchu). */}
-        <WritingHeadline text={POSITIONING.claim} className="text-display mx-auto max-w-[18ch]" />
+            marki (WritingHeadline; świat B: stopy brand 1:1 z jaskrawą zielenią —
+            na ciemnym świecą). MECHANIZM MASZYNY DO PISANIA NIETKNIĘTY. Tekst H1
+            zostaje realnym tekstem w DOM (boty czytają; aria-label daje czytnikom
+            pełne zdanie jednym ciągiem). Po wejściu H1 stoi NIERUCHOMO. */}
+        <WritingHeadline text={POSITIONING.claim} className="text-display max-w-[18ch]" />
 
       {/* Kapsuła answer-first — surowy HTML, cytat dla LLM. Analogia w 1. zdaniu. */}
       <Reveal eager delay={0.07}>
-        <p className="text-lead mx-auto mt-6 max-w-measure-lead text-fg-muted">
+        <p className="text-lead mt-6 max-w-measure-lead text-fg-muted">
           Chatbot odpowiada na pytania. AI Agent wykonuje pracę: odbiera telefony, odpisuje klientom,
           umawia spotkania i pilnuje faktur. Nie sprzedajemy narzędzi AI. Projektujemy systemy, które
           zdejmują z polskiej firmy powtarzalną robotę, w dni, nie w miesiące. Twoje dane zostają w Unii
@@ -73,12 +80,11 @@ export function Hero() {
       </Reveal>
 
       {/* Dynamiczny odbiorca (personalizacja językiem, RODO-safe).
-          Pudełko -> kreska: wyśrodkowany prostokąt w środku typograficznego hero
-          czytał się jak baner cookies i psuł ciszę folda. Hero jest teraz czystą
-          kolumną: H1 -> kapsuła -> kreska z personą -> CTA -> linki.
-          `Reveal eager` ZOSTAJE (LCP: maluje się na starcie animacji CSS). */}
+          Świat B: blok jedzie na lewą oś razem z resztą hero (makieta 1 —
+          kolumna dołem-lewo). `Reveal eager` ZOSTAJE (LCP: maluje się na
+          starcie animacji CSS). */}
       <Reveal eager delay={0.14}>
-        <div className="mx-auto mt-9 max-w-[46ch] border-t border-border pt-5 text-center">
+        <div className="mt-9 max-w-[46ch] border-t border-border pt-5">
           <p className="text-overline uppercase tracking-[0.14em] text-fg-subtle">
             Powtarzalna robota wygląda inaczej w każdej branży. Pokaż mi swoją.
           </p>
@@ -106,11 +112,16 @@ export function Hero() {
         </Reveal>
       */}
 
-      {/* CTA główne + mikrokopia */}
+      {/* CTA główne + mikrokopia. ŚWIAT B (wierność makiecie 1): CTA hero =
+          PODKREŚLONY link ze strzałką w tealu (wariant `link` Buttona + .sf-hero-cta
+          podbija stopień do leadu). MagneticButton ZOSTAJE (magnetyzm nietknięty),
+          etykieta = HOME_CTA.label — dokładnie tekst z makiety, zero nowych treści.
+          Strzałka = dekoracja aria-hidden (.sf-arrow, mikro-przesuw na hover). */}
       <Reveal eager delay={0.21}>
-        <div className="mt-9 flex flex-col items-center gap-3">
-          <MagneticButton variant="primary" size="lg" href={HOME_CTA.href}>
-            {HOME_CTA.label}
+        <div className="mt-9 flex flex-col items-start gap-3">
+          <MagneticButton variant="link" href={HOME_CTA.href} className="sf-hero-cta">
+            {HOME_CTA.label}{' '}
+            <span aria-hidden="true" className="sf-arrow">→</span>
           </MagneticButton>
           <span className="text-caption max-w-[44ch] text-fg-subtle">{HOME_CTA.microcopy}</span>
 
@@ -123,9 +134,9 @@ export function Hero() {
         </div>
       </Reveal>
 
-      {/* Linki drugorzędne — NIE konkurują z CTA */}
+      {/* Linki drugorzędne — NIE konkurują z CTA (świat B: lewa oś kolumny) */}
       <Reveal eager delay={0.28}>
-        <p className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-caption text-fg-subtle">
+        <p className="mt-6 flex flex-wrap items-center justify-start gap-x-6 gap-y-2 text-caption text-fg-subtle">
           <a href="#problem" className="underline decoration-1 underline-offset-2 hover:text-fg">
             Zobacz, jak liczę oszczędność <span aria-hidden="true" className="sf-arrow">→</span>
           </a>
@@ -135,9 +146,11 @@ export function Hero() {
         </p>
       </Reveal>
 
-      {/* KRESKA BAZOWA — cyrkiel domyka hero jedną, JEDNORAZOWĄ linią (900ms,
-          bez pętli; budżet ruchu nienaruszony). Czysta dekoracja. */}
-      <div aria-hidden="true" className="sf-hero-rule mx-auto mt-12 h-px w-full max-w-wide" />
+      {/* TRASA GRADIENTOWA (makiety 1/5) — domyka hero: cienka świetlista linia
+          brandu ze świecącym punktem końcowym (.sf-route w globals.css). Wejście
+          JEDNORAZOWE (dojazd 900ms, bramka reduced-motion); glow punktu jest
+          statycznym box-shadow — zero pętli (budżet ruchu). Czysta dekoracja. */}
+      <div aria-hidden="true" className="sf-route sf-route-dot sf-route-enter mt-12 w-full" />
     </Section>
   );
 }

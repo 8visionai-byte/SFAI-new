@@ -11,9 +11,10 @@ import { SocialIcon, BRAND_COLORS } from './SocialIcon';
 const FOOTER_NAV_REST = NAV_LINKS.filter((l) => l.href !== '/uslugi');
 
 /**
- * Footer — JASNA stopka (życzenie Pawła: spójne jasne tła), NAP spójny + świeżość +
- * encja. Subtelne tło `bg-bg-subtle` + górna linia oddzielają ją od treści bez
- * ciemnego bloku. Wszystko w HTML (sygnały zaufania cytowalne). Data = bramkarz GEO.
+ * Footer — CIEMNA stopka (świat B: tokeny globalne są ciemne, zero zmian klas
+ * tonów). `bg-bg-subtle` = navy-900 (stopień jaśniej od bazy) + górna linia
+ * (biały włos) oddzielają ją od treści. Wszystko w HTML (sygnały zaufania
+ * cytowalne). Data = bramkarz GEO.
  *
  * NAP bierzemy z SITE (single source of truth). Telefon/adres pokazujemy TYLKO
  * gdy realne (pole SITE.contact.phone puste -> nie renderujemy fałszywej danej).
@@ -33,9 +34,10 @@ export function Footer() {
             </p>
             {/*
               Profile społecznościowe — oryginalne ikony marek, otwierane w nowej
-              karcie. W spoczynku subtelne (mono), na hover/focus: kolor marki +
-              powiększenie + delikatny lift. Płynna animacja czystym CSS (bez
-              biblioteki, zgodnie z decyzją perf). Kolor per marka przez --brand.
+              karcie. Świat B: w spoczynku JAŚNIEJSZE (fg-muted, 6.64:1 — fg-subtle
+              gasł na granacie), na hover/focus: kolor marki + powiększenie +
+              delikatny lift. Płynna animacja czystym CSS (bez biblioteki, zgodnie
+              z decyzją perf). Kolor per marka przez --brand.
             */}
             <ul className="mt-5 flex items-center gap-3.5">
               {SOCIALS.map((s) => (
@@ -46,7 +48,7 @@ export function Footer() {
                     rel="noopener noreferrer"
                     aria-label={`SimpleFast.ai na ${s.name}`}
                     style={{ '--brand': BRAND_COLORS[s.name] } as React.CSSProperties}
-                    className="inline-flex text-fg-subtle transition-[color,transform] duration-base ease-out hover:-translate-y-0.5 hover:scale-110 hover:text-[color:var(--brand)] focus-visible:-translate-y-0.5 focus-visible:scale-110 focus-visible:text-[color:var(--brand)] motion-reduce:transform-none motion-reduce:transition-colors"
+                    className="inline-flex text-fg-muted transition-[color,transform] duration-base ease-out hover:-translate-y-0.5 hover:scale-110 hover:text-[color:var(--brand)] focus-visible:-translate-y-0.5 focus-visible:scale-110 focus-visible:text-[color:var(--brand)] motion-reduce:transform-none motion-reduce:transition-colors"
                   >
                     <SocialIcon name={s.name} />
                   </a>

@@ -95,7 +95,9 @@ export function AgentDemo() {
       </div>
 
       {/* ── PRAWO: Agent SimpleFast (animowany) ── */}
-      <div className="card-aura card-aura-bold rounded-lg border border-border-accent bg-surface p-5">
+      {/* ŚWIAT B: panel zwycięzcy na szkle (.sf-glass) zamiast pełnej powierzchni
+          — aura zostaje (jedyna aura home po zejściu z cennika). */}
+      <div className="card-aura card-aura-bold sf-glass rounded-lg border border-border-accent p-5">
         <DemoHeader label="Agent SimpleFast" tone="accent" />
         <div className="mt-4 min-h-[16rem] space-y-3">
           <Bubble side="user" className={at(0)}>

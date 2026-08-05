@@ -41,14 +41,15 @@ import { WritingTrigger } from './WritingTrigger';
 type RGB = readonly [number, number, number];
 
 /* Stopy interpolacji: brand-blue #007BFF i brand-violet #7A35FF 1:1 z logo.
-   ZIELEŃ POGŁĘBIONA #2FA500 (redesign „Precyzja cyrkla"): tło hero zostało JASNE
-   na stałe (film usunięty), a ai-green #63F000 na paperze miał ~1.4:1 — nieczytelny.
-   #2FA500 trzyma charakter zieleni marki i kontrast na jasnym tle (własna zasada
-   tego pliku: przy jasnym tle pogłębiona zieleń). Ta sama wartość co w badge
-   „Najczęściej wybierane" (Oferta) i w color-mix w globals.css — jedno źródło tonu. */
+   ZIELEŃ = brand ai-green #63F000 (ŚWIAT B „Ciemna pracownia": hero wróciło na
+   CIEMNE tło — makieta zrodla/makiety-b/1-hero.png; jaskrawa zieleń marki na
+   navy-950 daje 12.5:1, a pogłębiona #2FA500 była korektą pod stary JASNY hero
+   i na ciemnym gasła). Kontrasty na navy-950: blue 4.7:1, violet 3.4:1 — H1 to
+   tekst DUŻY (display, bold), próg AA = 3:1 (✓). Te same stopy w color-mix
+   w globals.css — jedno źródło tonu. MECHANIZM pisania NIETKNIĘTY. */
 const STOP_BLUE: RGB = [0x00, 0x7b, 0xff];
 const STOP_VIOLET: RGB = [0x7a, 0x35, 0xff];
-const STOP_GREEN: RGB = [0x2f, 0xa5, 0x00];
+const STOP_GREEN: RGB = [0x63, 0xf0, 0x00];
 
 function mix(a: RGB, b: RGB, t: number): string {
   const ch = (i: 0 | 1 | 2) => Math.round(a[i] + (b[i] - a[i]) * t);

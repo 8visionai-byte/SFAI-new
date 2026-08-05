@@ -22,13 +22,13 @@ const NAV_LINKS_REST = NAV_LINKS.filter((l) => l.href !== '/uslugi');
  *
  * Nawigacja w HTML (linki widoczne dla botów); klient tylko obsługuje toggle/scroll.
  *
- * JASNY GLASS (życzenie Pawła: spójne jasne tła w całej stronie, kolor tylko na
- * napisach). Pasek to jasne, matowe szkło: baza paper z przezroczystością +
- * backdrop-blur. OFICJALNE logo (ciemny metaliczny znak cyrkla + nasycony gradient
- * „SimpleFast.ai") ma świetny kontrast na jasnym, a przezroczyste „dziury" po
- * keyingu znikają na jasnym tle (nie widać artefaktów). Tokeny semantyczne są jasne
- * (domyślne), więc nawigacja jest ciemnym tekstem na jasnym pasku — WCAG AA:
- *   --fg navy-900 · --fg-muted gray-600 · --accent cyan-700 (4.95:1 na bieli).
+ * ŚWIAT B — CIEMNY PASEK (makieta zrodla/makiety-b/1-hero.png): nad hero pasek
+ * jest PRZEZROCZYSTY (kadr kina bez ramki), po scrollu dostaje ciemną taflę
+ * z hairline dołem (.sf-header/.is-scrolled w globals.css — mobile SOLIDNY granat
+ * bez backdrop-blur ze względu na perf, desktop ≥1024px półprzezroczysta tafla
+ * + blur). Logo = wordmark TEKSTOWY (PNG ginął na ciemnym — patrz Logo.tsx).
+ * Tokeny semantyczne są ciemne (domyślne), więc nawigacja to jasny tekst — AA:
+ *   --fg #eaf0fa (16.35:1) · --fg-muted navy-300 (6.64:1) · --accent cyan-400 (9.71:1).
  */
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -60,13 +60,12 @@ export function Header() {
   return (
     <>
     <header
+      // Tło/hairline/blur robi .sf-header (globals.css): przezroczysty nad hero,
+      // po scrollu granat + hairline; blur wyłącznie desktop (mobile perf).
       className={
-        'sticky top-0 z-nav border-b border-border text-fg backdrop-blur-md transition-shadow duration-base ' +
-        (scrolled ? 'shadow-md' : '')
+        'sf-header sticky top-0 z-nav text-fg ' +
+        (scrolled ? 'is-scrolled shadow-md' : '')
       }
-      // Jasny frosted glass = baza paper z przezroczystością, by backdrop-blur prześwitywał.
-      // Logo siada czysto na jasnym; przezroczyste „dziury" po keyingu znikają na bieli.
-      style={{ background: 'color-mix(in srgb, var(--sf-paper) 82%, transparent)' }}
     >
       <nav className="mx-auto flex h-16 w-full max-w-container items-center gap-4 px-gutter" aria-label="Główna">
         <Logo priority />
@@ -119,8 +118,9 @@ export function Header() {
       {open && (
         <div
           className="fixed inset-0 z-overlay flex flex-col text-fg lg:hidden"
-          // Jasne tło panelu = spójne z paskiem i resztą strony; logo siada czysto na jasnym.
-          style={{ background: 'var(--sf-paper)' }}
+          // Świat B: SOLIDNE ciemne tło panelu (token --bg = navy-950) — pełne
+          // krycie treści pod spodem, spójne z kinem całej strony.
+          style={{ background: 'var(--bg)' }}
         >
           <div className="flex h-16 shrink-0 items-center gap-4 px-gutter">
             <Logo priority />

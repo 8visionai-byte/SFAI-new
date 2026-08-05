@@ -161,9 +161,13 @@ export function ChatAgent() {
   );
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-lg border border-border bg-surface shadow-sm">
+    /* SWIAT B: panel czatu = ciemne szklo (.sf-glass) na wlosie (hairline).
+       Panel plywa NAD trescia strony (ChatLauncher), wiec dostaje bg-bg jako
+       podklad pod polprzezroczyste szklo — czytelnosc niezalezna od tego, co
+       jest pod spodem. */
+    <div className="sf-glass flex flex-col overflow-hidden rounded-lg border border-hairline bg-bg shadow-md">
       {/* Naglowek */}
-      <div className="flex items-center gap-2 border-b border-border px-5 py-4">
+      <div className="flex items-center gap-2 border-b border-hairline px-5 py-4">
         <span
           className="inline-block h-2.5 w-2.5 rounded-full bg-accent"
           aria-hidden="true"

@@ -39,8 +39,9 @@ export function ChatDemo() {
   }
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-lg border border-border bg-surface shadow-sm">
-      <div className="flex items-center gap-2 border-b border-border px-5 py-4">
+    /* ŚWIAT B: panel czatu = ciemne szkło (.sf-glass) na włosie (hairline). */
+    <div className="sf-glass flex flex-col overflow-hidden rounded-lg border border-hairline shadow-sm">
+      <div className="flex items-center gap-2 border-b border-hairline px-5 py-4">
         <span
           className="inline-block h-2.5 w-2.5 rounded-full bg-accent"
           aria-hidden="true"

@@ -53,43 +53,46 @@ export function Problem() {
         />
       </Reveal>
 
-      {/* Pięć osobnych ramek -> JEDNA płyta z pięcioma wierszami, wjeżdżająca na
-          dolną krawędź panoramy: biała płyta na czarnym kadrze robi realną
-          warstwę Z (kolaż), a nie kolejny wiersz siatki. Kaskadę niesie
-          .sf-stagger na kontenerze (jeden obserwator zamiast pięciu). */}
-      <Reveal
-        as="ul"
-        className="sf-stagger relative z-raised mx-auto -mt-10 max-w-narrow divide-y divide-border rounded-lg border border-hairline bg-surface px-6 shadow-md md:-mt-20"
-      >
-        {BOLE.map((bol, i) => (
-          <li key={i} className="flex gap-4 py-5">
-            <span
-              aria-hidden="true"
-              className="select-none font-display text-[2.5rem] leading-[0.6] text-accent-decor"
-            >
-              „
-            </span>
-            <p className="text-body-sm text-fg">{bol}</p>
-          </li>
-        ))}
-      </Reveal>
+      {/* ŚWIAT B (makieta 2-problem): karta bólów to CELOWO BIAŁA wyspa światła
+          na ciemnej stronie, nachodząca na dolną krawędź panoramy (warstwa Z /
+          kolaż). data-theme="light" przełącza tokeny semantyczne strefowo, więc
+          wnętrze karty (tekst, kreski, tealowe „ , przycisk outline) liczy
+          kontrast na bieli — zero ręcznych HEX-ów. Kaskadę wierszy dalej niesie
+          .sf-stagger (selektor [data-reveal-shown] .sf-stagger > * z globals).
+          Teksty 1:1; mostek do diagnozy wchodzi DO karty (makieta: cytaty +
+          przycisk w jednej bryle). */}
+      <Reveal className="relative z-raised mx-auto -mt-10 max-w-narrow md:-mt-20">
+        <div data-theme="light" className="rounded-lg bg-surface px-6 shadow-lg md:px-8">
+          <ul className="sf-stagger divide-y divide-border">
+            {BOLE.map((bol, i) => (
+              <li key={i} className="flex gap-4 py-5">
+                <span
+                  aria-hidden="true"
+                  className="select-none font-display text-[2.5rem] leading-[0.6] text-accent-decor"
+                >
+                  „
+                </span>
+                <p className="text-body-sm text-fg">{bol}</p>
+              </li>
+            ))}
+          </ul>
 
-      {/*
-        Mostek do diagnozy (CTA wtórne -> główny flow). UWAGA: przycisk prowadzi do
-        formularza diagnozy, NIE do kalkulatora — dlatego mikrokopia nie obiecuje
-        "policz sam". Gdyby powstał realny kalkulator (godziny x stawka), wpiąć go
-        jako krok 1 flow i wtedy można wrócić do słowa "policz".
-      */}
-      <Reveal delay={0.1}>
-        <div className="mx-auto mt-12 max-w-narrow border-t border-border pt-6">
-          <p className="text-body text-fg">
-            Nie zgaduj. Na bezpłatnej diagnozie pokażę Ci, ile godzin i złotych miesięcznie zjada
-            powtarzalna robota w Twojej firmie. Konkretne liczby z Twoich procesów, nie ogólniki.
-          </p>
-          <div className="mt-4">
-            <Button variant="secondary" href={HOME_CTA.href}>
-              Pokaż mi, ile tracę
-            </Button>
+          {/*
+            Mostek do diagnozy (CTA wtórne -> główny flow). UWAGA: przycisk prowadzi do
+            formularza diagnozy, NIE do kalkulatora — dlatego mikrokopia nie obiecuje
+            "policz sam". Gdyby powstał realny kalkulator (godziny x stawka), wpiąć go
+            jako krok 1 flow i wtedy można wrócić do słowa "policz".
+          */}
+          <div className="border-t border-border py-6">
+            <p className="text-body text-fg">
+              Nie zgaduj. Na bezpłatnej diagnozie pokażę Ci, ile godzin i złotych miesięcznie zjada
+              powtarzalna robota w Twojej firmie. Konkretne liczby z Twoich procesów, nie ogólniki.
+            </p>
+            <div className="mt-4">
+              <Button variant="secondary" href={HOME_CTA.href}>
+                Pokaż mi, ile tracę
+              </Button>
+            </div>
           </div>
         </div>
       </Reveal>

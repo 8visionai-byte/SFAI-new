@@ -37,6 +37,12 @@ const config: Config = {
         // hairline = włos karty premium; border-control = obrys KONTROLKI
         // (WCAG 1.4.11 wymaga 3:1 — border-strong tego nie spełnia).
         hairline: 'var(--hairline)',
+        // ŚWIAT B (ciemna pracownia): szkło kart — tło biel 3-6% + włos biel 10%.
+        // Klasa-komponent .sf-glass składa całość; te mapy są dla przypadków,
+        // gdy partia B potrzebuje pojedynczej warstwy (bg-glass, border-glass-hairline).
+        glass: 'var(--glass-bg)',
+        'glass-strong': 'var(--glass-bg-strong)',
+        'glass-hairline': 'var(--glass-hairline)',
         'border-control': 'var(--border-control)',
         'border-accent': 'var(--border-accent)',
         ring: 'var(--ring)',
@@ -61,6 +67,8 @@ const config: Config = {
         metal: 'var(--metal-gradient)',
         'metal-decor': 'var(--metal-gradient-decor)',
         'metal-sheen': 'var(--metal-sheen)',
+        // ŚWIAT B: trasa gradientowa z makiet (#2B7CFF→#7A3CF0→#22E06B) — dekoracja.
+        route: 'var(--route-gradient)',
       },
       fontFamily: {
         display: ['var(--font-jakarta)', 'system-ui', 'sans-serif'],

@@ -143,10 +143,12 @@ export function BranzeDemo() {
       <Reveal delay={0.1}>
         {/* .sf-window = 1px metaliczna krawędź górna zamiast atrapy okna systemowego
             (trzy kropki macOS to jeden z najczęściej wytykanych sygnałów „to generował
-            model"). shadow-md, bo to najbardziej efektowny element sekcji. */}
-        <div className="sf-window mx-auto mt-8 max-w-narrow overflow-hidden rounded-lg border border-border bg-surface shadow-md">
+            model"). shadow-md, bo to najbardziej efektowny element sekcji.
+            ŚWIAT B: korpus okna to szkło (.sf-glass) na włosie (hairline) —
+            terminal wtapia się w ciemną pracownię zamiast stać jako jasna karta. */}
+        <div className="sf-window sf-glass mx-auto mt-8 max-w-narrow overflow-hidden rounded-lg border border-hairline shadow-md">
           {/* Pasek okna: etykieta + status */}
-          <div className="flex items-center gap-3 border-b border-border bg-bg-subtle px-5 py-3.5">
+          <div className="flex items-center gap-3 border-b border-hairline bg-bg-subtle px-5 py-3.5">
             <span className="text-ui font-semibold text-fg">Agent SimpleFast</span>
             <span className="ml-auto inline-flex items-center gap-2 text-caption text-fg-subtle">
               {/* Statyczny pierścień zamiast animate-pulse: ten sam sygnał „live" przy
