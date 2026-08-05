@@ -9,7 +9,7 @@ import { Footer } from '@/components/layout/Footer';
 import { ChatLauncher } from '@/components/demo/ChatLauncher';
 import { FaviconPulse } from '@/components/effects/FaviconPulse';
 import { AuraDesync } from '@/components/effects/AuraDesync';
-import { MotionOrchestrator } from '@/components/motion/MotionOrchestrator';
+import { MotionGate } from '@/components/motion/MotionGate';
 
 /**
  * Fonty self-host przez next/font/google (zero requestów do fonts.googleapis.com,
@@ -104,7 +104,7 @@ export default function RootLayout({
         {/* Warstwa „świeżości": Lenis + GSAP ScrollTrigger. Import DYNAMICZNY po
             window.load, TYLKO desktop ≥1024px, nigdy przy reduced-motion ani
             Save-Data — mobile nie ładuje ani bajta bibliotek (budżet PageSpeed). */}
-        <MotionOrchestrator />
+        <MotionGate />
 
         {/* Schema globalna — Organization + WebSite na każdej stronie (spec 04 §6.2–6.3) */}
         <JsonLd data={organizationSchema()} />
