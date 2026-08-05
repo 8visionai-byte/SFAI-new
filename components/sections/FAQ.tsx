@@ -22,9 +22,11 @@ export function FAQ() {
 
         <div>
           {/* Jeden obserwator na kontenerze (.sf-stagger) zamiast <Reveal> wokół
-              każdego <details>. Klasa .sf-faq dokłada natywną animację wysokości
-              (::details-content + interpolate-size) i kreskę otwarcia. */}
-          <div className="sf-stagger divide-y divide-border border-y border-border">
+              każdego <details>. UWAGA: .sf-stagger MUSI siedzieć na <Reveal> —
+              goły div nigdy nie dostaje data-reveal-shown i dzieci zostają
+              opacity:0 NA ZAWSZE (bug: pusta kolumna FAQ, zrzut Pawła 2026-08-05).
+              Klasa .sf-faq dokłada natywną animację wysokości (::details-content). */}
+          <Reveal className="sf-stagger divide-y divide-border border-y border-border">
             {FAQ_ITEMS.map((item, i) => (
               <details key={i} className="sf-faq group py-2">
                 <summary className="-mx-2 flex cursor-pointer list-none items-center justify-between gap-4 rounded-sm px-2 py-4 text-body font-semibold text-fg transition-colors duration-fast hover:bg-bg-subtle [&::-webkit-details-marker]:hidden">
@@ -43,7 +45,7 @@ export function FAQ() {
                 <p className="pb-4 pr-9 text-body-sm text-fg-muted">{item.a}</p>
               </details>
             ))}
-          </div>
+          </Reveal>
 
           {/*
             DOWÓD przy CTA (north star #5). Uczciwy sygnał oferty zamiast zmyślonej liczby.

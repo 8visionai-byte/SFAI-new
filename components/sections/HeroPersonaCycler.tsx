@@ -33,12 +33,14 @@ export function HeroPersonaCycler() {
     return () => clearInterval(id);
   }, []);
 
+  // INLINE, nie inline-block: atomowy inline-block spychał CAŁĄ frazę do nowej
+  // linii („…dla" zostawało samo), a kropka po komponencie łamała się do trzeciej
+  // (zrzut Pawła 2026-08-05). Zwykły inline płynie ze zdaniem i łamie się po
+  // słowach jak tekst. Animacja wejścia zostaje na opacity (transform i tak nie
+  // działa na inline — sfPersonaIn degraduje się do czystego fade, to wystarcza).
   return (
-    <span className="relative inline-block align-bottom">
-      <span
-        key={index}
-        className={animate ? 'sf-persona-swap inline-block text-fg' : 'inline-block text-fg'}
-      >
+    <span className="relative">
+      <span key={index} className={animate ? 'sf-persona-swap text-fg' : 'text-fg'}>
         {PERSONAS[index]}
       </span>
     </span>

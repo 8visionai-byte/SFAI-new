@@ -46,13 +46,14 @@ export function Dowod() {
             </p>
           </Reveal>
         </div>
+        {/* focus y=40%: przy 50% kwadratowy kadr ucinał czubek głowy (zrzut Pawła 2026-08-05). */}
         <Reveal delay={0.1}>
           <SectionImage
             src="/img/rozmowa-o-wdrozeniu-ai.webp"
             alt="Dwie osoby analizują wyniki wdrożenia AI na tablecie w nocnym biurze"
             ratio="wide"
             ratioMd="square"
-            focus="76% 50%"
+            focus="76% 40%"
             hover
             className="sf-bleed-r"
             sizes="(min-width: 1240px) 620px, (min-width: 768px) 54vw, 100vw"
