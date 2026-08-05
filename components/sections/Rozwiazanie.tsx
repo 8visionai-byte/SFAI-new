@@ -140,9 +140,13 @@ export function Rozwiazanie() {
 
       {/* Fraza cytowalna — celowy soundbite dla LLM i DRUGI moment display na
           stronie (jedyne miejsce poza hero, gdzie strona podnosi głos).
-          Tekst 1:1, ginie wyłącznie kolorowa krawędź boczna. */}
+          Tekst 1:1, ginie wyłącznie kolorowa krawędź boczna.
+          data-scrub-text = hak MotionOrchestratora (desktop ≥1024px po load):
+          tekst dzielony na słowa DOPIERO klientowo, oryginał w aria-label —
+          prerender/SEO/A11y bez zmian; słowa wypełniają się scrollem. */}
       <Reveal delay={0.1}>
         <blockquote
+          data-scrub-text
           className="mx-auto mt-16 max-w-[24ch] text-balance text-center font-display font-semibold tracking-[-0.028em] text-fg"
           style={{ fontSize: 'clamp(1.875rem, 4.2vw, 3.25rem)', lineHeight: 1.08 }}
         >

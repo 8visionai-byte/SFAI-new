@@ -26,7 +26,10 @@ const KROKI = [
 
 export function JakToDziala() {
   return (
-    <Section tone="subtle" space="md">
+    /* id = hak choreografii PIN (MotionOrchestrator, desktop ≥1024px po load):
+       sekcja przypinana na 140% scrolla, kroki li wchodzą kolejno, wstęga-płyta
+       (.sf-plate wewnątrz) dryfuje -4%. Bez GSAP wszystko działa jak dotąd (CSS). */
+    <Section tone="subtle" space="md" id="jak-to-dziala-pin">
       <div className="mx-auto max-w-narrow">
         <Reveal variant="header">
           <h2 className="text-h2">Jak wygląda wdrożenie AI Agenta krok po kroku?</h2>

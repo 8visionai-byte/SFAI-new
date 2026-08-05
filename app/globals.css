@@ -2084,3 +2084,34 @@ body {
     opacity: 1 !important;
   }
 }
+
+/* ==========================================================================
+   WARSTWA GSAP/LENIS (MotionOrchestrator) — POZA @layer, jak reszta animacji.
+   Klasy poniżej dotyczą WYŁĄCZNIE desktopu ≥1024px po window.load (bramki w
+   components/motion/MotionOrchestrator.tsx); mobile / reduced-motion /
+   Save-Data nigdy nie dostają .has-gsap ani .lenis, więc nic się nie zmienia.
+   ========================================================================== */
+
+/* GSAP przejmuje element: gasimy CSS-owe przejścia, żeby scrub nie walczył
+   z transition (reveal/stagger zostają nietknięte tam, gdzie GSAP nie sięga). */
+html.has-gsap .gsap-owned {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Scrub-tekst: słowa animują wyłącznie opacity — podpowiedź kompozytora. */
+[data-scrub-text] .word {
+  will-change: opacity;
+}
+
+/* Zalecane style Lenis (dokumentacja lenis 1.x) — klasy dokłada sam Lenis. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}

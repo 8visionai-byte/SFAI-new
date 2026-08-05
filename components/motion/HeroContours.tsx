@@ -27,7 +27,9 @@ const CONTOURS = [
 
 export function HeroContours() {
   return (
-    <div className="sf-hero-field" aria-hidden="true">
+    /* data-hero-field = hak scrub-paralaksy MotionOrchestratora (desktop po
+       load): pole odpływa y 0 → -60px przy scrollu hero. Dekoracja bez zmian. */
+    <div className="sf-hero-field" data-hero-field aria-hidden="true">
       <svg
         className="sf-hero-svg"
         viewBox="0 0 1440 810"
