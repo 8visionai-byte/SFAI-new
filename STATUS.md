@@ -1,4 +1,15 @@
-# STATUS — REDESIGN "INFINITY" (2026-08-06) — W TOKU
+# STATUS — REDESIGN "INFINITY" (2026-08-06) — WDROŻONY NA PRODUKCJĘ
+
+WYNIK: commit 16c25bd (29 plików, +2007/-265) wypchnięty, Vercel LIVE
+(potwierdzone markerami inf-pill-nav/mark/inf-ask w produkcyjnym HTML
++ zrzut hero z produkcji). Weryfikacja przeglądarką: desktop sekcja po
+sekcji (pigułka nav + ring gradientu po moim fixie przebicia poświaty,
+dropdown kafelkowy, particles+wstęga działają, terminal, tabela równa,
+zdjęcia w kadrach bez upscale, cennik, cytaty, formularz, czat mono),
+mobile 375: overflow 0, canvasy 0, blur 0. Konsola 0 błędów.
+PSI live po wdrożeniu: MOBILE 90 (było 73! LCP 7,5→3,6 s, TBT 40 ms,
+CLS 0), desktop 82 (TBT 240 ms od canvasów po load — świadomy koszt),
+A11y 100/97, SEO 100. Warunek "bez pogorszenia" przebity o +17 pkt.
 
 Paweł ocenił ŚWIAT B na 0/10. Nowy wzorzec: infinitytechstack.uk ("chcę dokładnie
 tak jak ta"). Spec ekstrakcji: scratchpad/spec-infinity.md (zmierzone wartości:
