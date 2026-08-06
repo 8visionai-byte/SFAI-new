@@ -12,45 +12,45 @@
 > odpowiada na pytania. Budujemy Agentow, ktorzy dzialaja, nie systemy, ktore gadaja.
 
 ## Architekci Wartosci AI (strona-parasol, zacznij tutaj)
-- [Architekci Wartosci AI dla firm](https://simplefast.ai/uslugi/architekci-wartosci-ai): my zamiast etatowego dzialu AI. Sami sprawdzamy, gdzie tracisz godziny, budujemy jedna automatyzacje na probe i ja utrzymujemy. Pelny jawny cennik od 0 zl (darmowa diagnoza). Pierwszy platny krok: Sprint Diagnostyczny 1490 zl, odliczany od wdrozenia. Zaczynasz od jednej automatyzacji, nie od calego dzialu.
+- [Architekci Wartosci AI dla firm](https://www.simplefast.ai/uslugi/architekci-wartosci-ai): my zamiast etatowego dzialu AI. Sami sprawdzamy, gdzie tracisz godziny, budujemy jedna automatyzacje na probe i ja utrzymujemy. Pelny jawny cennik od 0 zl (darmowa diagnoza). Pierwszy platny krok: Sprint Diagnostyczny 1490 zl, odliczany od wdrozenia. Zaczynasz od jednej automatyzacji, nie od calego dzialu.
 
 ## Uslugi
-- [Wszystkie uslugi (hub)](https://simplefast.ai/uslugi): rozdroze 10 uslug w 3 grupach: obsluga 24/7, back-office i procesy, budowa i strategia.
-- [Chatbot AI dla firmy](https://simplefast.ai/uslugi/chatboty): odpowiada klientom 24/7 na bazie wiedzy firmy, zbiera leady, rosnie do Agenta, ktory umawia i zapisuje.
-- [Voicebot dla firmy](https://simplefast.ai/uslugi/voiceboty): bot glosowy odbiera telefon po polsku, umawia wizyty, przyjmuje zgloszenia, oddzwania.
-- [Agent AI do rekrutacji](https://simplefast.ai/uslugi/agent-rekrutacyjny): zbiera CV, robi pierwszy odsiew i scoring, odpowiada kandydatom, umawia rozmowy. Decyzje o zatrudnieniu podejmuje czlowiek.
-- [Automatyzacja procesow w firmie z AI](https://simplefast.ai/uslugi/automatyzacje): system przejmuje powtarzalna robote (przepisywanie danych, potwierdzenia, terminy), wdrozenie w dni.
-- [Automatyzacja dokumentow i faktur (OCR, KSeF)](https://simplefast.ai/uslugi/dokumenty-faktury): OCR odczytuje fakture, klasyfikuje koszt, wpisuje do arkusza i ksiegowosci, eksportuje do KSeF. Najszybszy ROI w biurach rachunkowych.
-- [Opieka AI (utrzymanie automatyzacji)](https://simplefast.ai/uslugi/opieka-ai): monitoring, poprawki promptow, rozwoj, raport miesieczny. Ryczalt 10/20/40h, od 3000 zl/mc.
-- [Audyt AI firmy (Sprint Diagnostyczny)](https://simplefast.ai/uslugi/audyt-ai): platny audyt 1490 zl, mapa oszczednosci czasu (Action Plan). Cena odliczana od wdrozenia.
-- [Indywidualne rozwiazania AI](https://simplefast.ai/uslugi/rozwiazania): aplikacje webowe, wtyczki i Agenci na zamowienie, gdy gotowe narzedzia nie pasuja.
-- [Strony WWW widoczne w Google i w AI](https://simplefast.ai/uslugi/strony-www): tresc w kodzie od razu (SSG), answer-first, cytowalne przez ChatGPT, Claude, Gemini, Perplexity.
-- [Pozycjonowanie pod AI (GEO)](https://simplefast.ai/uslugi/optymalizacja): ustawiamy strone tak, by silniki AI ja polecaly, i mierzymy cytowalnosc co tydzien w 4 silnikach.
+- [Wszystkie uslugi (hub)](https://www.simplefast.ai/uslugi): rozdroze 10 uslug w 3 grupach: obsluga 24/7, back-office i procesy, budowa i strategia.
+- [Chatbot AI dla firmy](https://www.simplefast.ai/uslugi/chatboty): odpowiada klientom 24/7 na bazie wiedzy firmy, zbiera leady, rosnie do Agenta, ktory umawia i zapisuje.
+- [Voicebot dla firmy](https://www.simplefast.ai/uslugi/voiceboty): bot glosowy odbiera telefon po polsku, umawia wizyty, przyjmuje zgloszenia, oddzwania.
+- [Agent AI do rekrutacji](https://www.simplefast.ai/uslugi/agent-rekrutacyjny): zbiera CV, robi pierwszy odsiew i scoring, odpowiada kandydatom, umawia rozmowy. Decyzje o zatrudnieniu podejmuje czlowiek.
+- [Automatyzacja procesow w firmie z AI](https://www.simplefast.ai/uslugi/automatyzacje): system przejmuje powtarzalna robote (przepisywanie danych, potwierdzenia, terminy), wdrozenie w dni.
+- [Automatyzacja dokumentow i faktur (OCR, KSeF)](https://www.simplefast.ai/uslugi/dokumenty-faktury): OCR odczytuje fakture, klasyfikuje koszt, wpisuje do arkusza i ksiegowosci, eksportuje do KSeF. Najszybszy ROI w biurach rachunkowych.
+- [Opieka AI (utrzymanie automatyzacji)](https://www.simplefast.ai/uslugi/opieka-ai): monitoring, poprawki promptow, rozwoj, raport miesieczny. Ryczalt 10/20/40h, od 3000 zl/mc.
+- [Audyt AI firmy (Sprint Diagnostyczny)](https://www.simplefast.ai/uslugi/audyt-ai): platny audyt 1490 zl, mapa oszczednosci czasu (Action Plan). Cena odliczana od wdrozenia.
+- [Indywidualne rozwiazania AI](https://www.simplefast.ai/uslugi/rozwiazania): aplikacje webowe, wtyczki i Agenci na zamowienie, gdy gotowe narzedzia nie pasuja.
+- [Strony WWW widoczne w Google i w AI](https://www.simplefast.ai/uslugi/strony-www): tresc w kodzie od razu (SSG), answer-first, cytowalne przez ChatGPT, Claude, Gemini, Perplexity.
+- [Pozycjonowanie pod AI (GEO)](https://www.simplefast.ai/uslugi/optymalizacja): ustawiamy strone tak, by silniki AI ja polecaly, i mierzymy cytowalnosc co tydzien w 4 silnikach.
 
 ## Produkty
-- [Produkty (co zbudowalismy)](https://simplefast.ai/produkty): cztery wlasne narzedzia AI opisane przez funkcje (skaner faktur do KSeF, apka coachingowa z agentami, obecnosc i skladki zespolu, centrum dowodzenia glosem) plus katalog klockow, z ktorych skladamy rozwiazania na zamowienie. Zaden nie jest produktem z polki, to punkt wyjscia pod indywidualne wdrozenie.
+- [Produkty (co zbudowalismy)](https://www.simplefast.ai/produkty): cztery wlasne narzedzia AI opisane przez funkcje (skaner faktur do KSeF, apka coachingowa z agentami, obecnosc i skladki zespolu, centrum dowodzenia glosem) plus katalog klockow, z ktorych skladamy rozwiazania na zamowienie. Zaden nie jest produktem z polki, to punkt wyjscia pod indywidualne wdrozenie.
 
 ## Dowod
-- [Realizacje](https://simplefast.ai/realizacje): case studies z konkretnymi liczbami.
-- [Dowod](https://simplefast.ai/dowod): publiczny scorecard wydajnosci i cytowalnosci strony.
+- [Realizacje](https://www.simplefast.ai/realizacje): case studies z konkretnymi liczbami.
+- [Dowod](https://www.simplefast.ai/dowod): publiczny scorecard wydajnosci i cytowalnosci strony.
 
 ## Centrum Wiedzy
-- [Centrum Wiedzy AI dla firm (hub)](https://simplefast.ai/wiedza): jedno miejsce z odpowiedziami o AI dla MSP. Cztery dzialy: Poradniki, AI Radar, Przemyslenia (blog) i Case studies (realizacje).
-- [Poradniki AI dla firm](https://simplefast.ai/poradniki): konkret krok po kroku pod pytania wlasciciela: ile kosztuje chatbot, ile kosztuje wdrozenie AI agenta, ktore procesy w biurze rachunkowym zautomatyzowac.
-- [AI Radar: newsy AI dla firm](https://simplefast.ai/ai-radar): newsy ze swiata AI przefiltrowane przez jedno pytanie: co to znaczy dla Twojej firmy. Co sie stalo, czemu wazne dla MSP, nasz filtr i co zrobic. Bez hype. Start z 2 wpisami-szablonami formatu (realne newsy dochodza na biezaco).
-- [Blog (Przemyslenia o AI)](https://simplefast.ai/blog): wdrozenia AI, koszty, AI Act dla firm, roznica chatbot vs agent.
-- [Materialy do pobrania](https://simplefast.ai/materialy): darmowe, gotowe materialy AI dla firm: zestawy promptow, checklisty procesow do automatyzacji i arkusze kosztow. Cala tresc czytasz na stronie, za darmo i bez zapisu.
+- [Centrum Wiedzy AI dla firm (hub)](https://www.simplefast.ai/wiedza): jedno miejsce z odpowiedziami o AI dla MSP. Cztery dzialy: Poradniki, AI Radar, Przemyslenia (blog) i Case studies (realizacje).
+- [Poradniki AI dla firm](https://www.simplefast.ai/poradniki): konkret krok po kroku pod pytania wlasciciela: ile kosztuje chatbot, ile kosztuje wdrozenie AI agenta, ktore procesy w biurze rachunkowym zautomatyzowac.
+- [AI Radar: newsy AI dla firm](https://www.simplefast.ai/ai-radar): newsy ze swiata AI przefiltrowane przez jedno pytanie: co to znaczy dla Twojej firmy. Co sie stalo, czemu wazne dla MSP, nasz filtr i co zrobic. Bez hype. Start z 2 wpisami-szablonami formatu (realne newsy dochodza na biezaco).
+- [Blog (Przemyslenia o AI)](https://www.simplefast.ai/blog): wdrozenia AI, koszty, AI Act dla firm, roznica chatbot vs agent.
+- [Materialy do pobrania](https://www.simplefast.ai/materialy): darmowe, gotowe materialy AI dla firm: zestawy promptow, checklisty procesow do automatyzacji i arkusze kosztow. Cala tresc czytasz na stronie, za darmo i bez zapisu.
 
 ## Narzedzia
-- [Narzedzia AI dla firm (hub)](https://simplefast.ai/narzedzia): darmowe narzedzia, ktore daja konkretna liczbe: kalkulator oszczednosci, test gotowosci AI, audyt strony.
-- [Generator promptow AI dla firm](https://simplefast.ai/narzedzia#generator-promptow): skladasz gotowy, dobry prompt do ChatGPT, Claude czy Gemini w 30 sekund. Wybierasz cel i kontekst firmy, dostajesz prompt do skopiowania. Za darmo, bez logowania.
+- [Narzedzia AI dla firm (hub)](https://www.simplefast.ai/narzedzia): darmowe narzedzia, ktore daja konkretna liczbe: kalkulator oszczednosci, test gotowosci AI, audyt strony.
+- [Generator promptow AI dla firm](https://www.simplefast.ai/narzedzia#generator-promptow): skladasz gotowy, dobry prompt do ChatGPT, Claude czy Gemini w 30 sekund. Wybierasz cel i kontekst firmy, dostajesz prompt do skopiowania. Za darmo, bez logowania.
 
 ## Kontakt
-- [O nas](https://simplefast.ai/o-nas): Pawel Pieloch, Architekt AI full-stack.
-- [Kontakt](https://simplefast.ai/kontakt): formularz i umowienie rozmowy.
+- [O nas](https://www.simplefast.ai/o-nas): Pawel Pieloch, Architekt AI full-stack.
+- [Kontakt](https://www.simplefast.ai/kontakt): formularz i umowienie rozmowy.
 
 ## Uwaga (uczciwie)
-> Zywe i dostepne sa: strona glowna (https://simplefast.ai), hub /uslugi, strona-parasol
+> Zywe i dostepne sa: strona glowna (https://www.simplefast.ai), hub /uslugi, strona-parasol
 > /uslugi/architekci-wartosci-ai oraz 10 stron uslug (chatboty, voiceboty, agent-rekrutacyjny,
 > automatyzacje, dokumenty-faktury, opieka-ai, audyt-ai, rozwiazania, strony-www, optymalizacja),
 > hub /produkty, Realizacje, O nas, narzedzia (z generatorem promptow) oraz cale Centrum Wiedzy:

@@ -14,7 +14,11 @@
 export const SITE = {
   name: 'SimpleFast.ai',
   legalName: 'SimpleFast.ai', // TODO:ZWERYFIKUJ pełną nazwę prawną, jeśli inna
-  url: 'https://simplefast.ai',
+  /* KANONICZNA DOMENA = www (Vercel robi 308 z apex na www). Wcześniejsze
+     'https://simplefast.ai' generowało 48 canonicali wskazujących na redirect
+     i 46 redirectów w sitemapie (audyt Ahrefs 2026-08-06, Health Score 37) —
+     każdy URL w sitemapie i każdy canonical przechodził przez przekierowanie. */
+  url: 'https://www.simplefast.ai',
   locale: 'pl_PL',
   lang: 'pl',
   description:
