@@ -1,4 +1,24 @@
-# STATUS — INFINITY v3 „kopia" (2026-08-06 noc) — W TOKU (wf_7931ba3c)
+# STATUS — INFINITY v3 „kopia" — NA PRODUKCJI (commit 924803c, 58 plików)
+
+Zweryfikowane live: lemniskata ∞ przeplata się (fix mojego autorstwa: nitka
+przesunięta o π pokrywała TEN SAM zbiór punktów środkowosymetrycznego toru —
+dodany oplot ±9px·sin(3t) w przeciwfazie, SVG i canvas), dropdowny hover
+z ikonami SVG dla 5 pozycji nav, liczniki 10/4/8/5/14 (prawdziwe .length),
+zdjęcia OUT (zero <img> w main poza logo), voicebot → druga strona Pawła
+(target=_blank), kratka OUT. Mobile 375: overflow 0, canvas 0, blur 0
+(lemniskata = statyczny SVG z buildu).
+SEO wdrożone i wysłane: FAQ chatboty (frazy „ile kosztuje chatbot AI dla
+firmy"), „bot telefoniczny" w voicebotach, meta descriptions ≤155, linki
+wewnętrzne blog→usługi, IndexNow PING wykonany: HTTP 202, 46 adresów.
+PSI live po v3: mobile 82 / SEO 100 / A11y 100 / Best Practices 100
+(FCP 1,3 s, LCP 4,0 s, TBT 160 ms, CLS 0). Względem warunku (baza 73) +9;
+względem v2 (90) −8 (LCP +0,4 s przez większy hero — kandydat na szlif:
+content-visibility/rozmiar SVG lemniskaty; NIE blokuje).
+UWAGA weryfikacyjna: karta Chrome potrafi zawiesić mostek rozszerzenia
+(injection timeout mimo żywej strony) — test w NOWEJ karcie przed diagnozą.
+
+--- (plan rundy niżej, wykonany)
+# STATUS — INFINITY v3 „kopia" (2026-08-06 noc) — plan (wf_7931ba3c)
 
 Decyzje Pawła po v2 (WPROST): ZDJĘCIA WYLATUJĄ z całej strony („nie są nam
 potrzebne"); KRATKA .inf-grid WYLATUJE („background spierdolony, jakaś
