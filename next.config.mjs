@@ -40,8 +40,11 @@ const securityHeaders = [
           // Gdy dojdzie CDN/og z innej domeny, dodać tę KONKRETNĄ domenę.
           "img-src 'self' data:",
           "font-src 'self'",
-          // Beacony Umami Cloud (api-gateway = endpoint zbierania zdarzen).
-          "connect-src 'self' https://cloud.umami.is https://api-gateway.umami.dev",
+          // Beacony Umami Cloud: skrypt realnie wysyla na gateway.umami.is
+          // (zmierzone na produkcji 2026-08-05: securitypolicyviolation, stary
+          // api-gateway.umami.dev NIE jest uzywany). Wildcard *.umami.is celowo:
+          // konto EU moze routowac na regionalna bramke tej samej rodziny domen.
+          "connect-src 'self' https://*.umami.is",
           "frame-src 'self'",
           "object-src 'none'",
           "base-uri 'self'",
