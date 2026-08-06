@@ -1,4 +1,23 @@
-# STATUS — REDESIGN "INFINITY" (2026-08-06) — WDROŻONY NA PRODUKCJĘ
+# STATUS — INFINITY v2 (2026-08-06 wieczór) — NA PRODUKCJI
+
+Punch list Pawła po v1 wdrożony (commit a574555 + fix logo):
+płynąca obwódka paska (magenta→violet→cyjan, 3 s pętla), linki wyszarzone
+z cyjanowym hover, dropdown na HOVER jednym przyciskiem (chevron 180°,
+"Wszystkie usługi" w DOM, "Architekci" usunięci, NATYWNE EMOJI w kaflach),
+paleta Infinity 1:1 (bg #06060c, surface #111127, accent #22d3ee/+#8b5cf6),
+błysk + spotlight na kartach, glow kursora w tle (kropki rozświetlają się),
+stare warstwice hero usunięte, logo 36 px (UWAGA: h-9 w tym repo = 96 px,
+spacing ma własne tokeny!), podstrony w języku INFINITY (Section
+tone="transparent", karty z lib/inf-kategorie.ts). Mobile: 0 canvas/blur/
+overflow, animacja obwódki wyłączona. Równolegle: fix SEO kanonicznej domeny
+www (e5a8b39) + raport raporty/raport-seo-2026-08-06.md (GSC/Bing/Ahrefs/
+Umami; 7 rekomendacji czeka na zgodę Pawła).
+LEKCJA WERYFIKACJI: uśpiona karta Chrome mrozi IO/transitions — listingi
+wyglądają na "puste" na zrzutach z ukrytej karty; sprawdzać na wysuniętej.
+
+---
+
+# STATUS — REDESIGN "INFINITY" v1 (2026-08-06) — zastąpiony przez v2
 
 WYNIK: commit 16c25bd (29 plików, +2007/-265) wypchnięty, Vercel LIVE
 (potwierdzone markerami inf-pill-nav/mark/inf-ask w produkcyjnym HTML
