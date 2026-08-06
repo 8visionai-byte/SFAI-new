@@ -22,7 +22,7 @@ export const automatTresciSocial: Realizacja = {
 
   metaTitle: 'Automat treści na social media',
   metaDescription:
-    'Case study: automat agreguje newsy z branży, dobiera grafikę i przygotowuje gotowy post do publikacji jednym kliknięciem. Mniej godzin na przygotowanie treści (szac.).',
+    'Automat treści do social media: agreguje newsy z branży, dobiera grafikę i przygotowuje gotowy post do publikacji jednym kliknięciem. Case study.',
 
   kontekst: {
     h2: 'Z czym przyszedł klient?',

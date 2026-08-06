@@ -23,7 +23,7 @@ export const stronyWww: Usluga = {
 
   metaTitle: 'Tworzenie stron WWW pod Google i AI',
   metaDescription:
-    'Budujemy strony z treścią w kodzie od razu, szybkie i ułożone pod cytowanie w ChatGPT, Claude, Gemini i Perplexity. Widoczność w Google i w AI naraz, mierzona na żywo.',
+    'Strony www pod AI: treść w kodzie od razu, szybkie i ułożone pod cytowanie w ChatGPT, Claude, Gemini i Perplexity. Widoczność w Google i AI naraz.',
 
   problem: {
     h2: 'Dlaczego Twojej strony nie widać w AI?',

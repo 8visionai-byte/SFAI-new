@@ -1,9 +1,12 @@
 'use client';
 
+import type { CSSProperties } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from '@/components/motion/hooks';
 import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
+import { InfIcon } from '@/components/ui/InfIcons';
+import type { InfIconName } from '@/components/ui/InfIcons';
 
 /**
  * SEKCJA — BRANŻE / OKNO TYPEWRITER (dodatek do strony głównej).
@@ -31,13 +34,17 @@ type Branza = {
   label: string;
   /** Co Agent robi, w 1. osobie — np. "umawiam spotkania i pilnuję kalendarza". */
   action: string;
+  /** INFINITY v3: UNIKALNA ikona InfIcons karty reduced-motion (dekoracja aria-hidden). */
+  ikona: InfIconName;
+  /** Kolor kafelka --tile-c (paleta trasy marki; wyłącznie dekoracja). */
+  c: string;
 };
 
 const BRANZE: readonly Branza[] = [
-  { label: 'dla biura', action: 'umawiam spotkania i pilnuję kalendarza' },
-  { label: 'dla salonu', action: 'odbieram telefon, gdy strzyżesz klienta' },
-  { label: 'dla budowlanki', action: 'składam wyceny z maila' },
-  { label: 'dla e-commerce', action: 'odpowiadam na pytania o zamówienia 24/7' },
+  { label: 'dla biura', action: 'umawiam spotkania i pilnuję kalendarza', ikona: 'kalendarz-check', c: '#2b7cff' },
+  { label: 'dla salonu', action: 'odbieram telefon, gdy strzyżesz klienta', ikona: 'sluchawka-fala', c: '#8b5cf6' },
+  { label: 'dla budowlanki', action: 'składam wyceny z maila', ikona: 'dokument-skan', c: '#f59e0b' },
+  { label: 'dla e-commerce', action: 'odpowiadam na pytania o zamówienia 24/7', ikona: 'chat-dymek', c: '#22d3ee' },
 ] as const;
 
 /** Pełne zdanie jednej branży (spójne źródło dla typewritera i listy GEO). */
@@ -227,8 +234,19 @@ export function BranzeDemo() {
             }
           >
             {reduce ? (
-              <span className="text-body-sm text-fg">
-                <span className="font-semibold text-accent">{b.label}:</span> {b.action}
+              // INFINITY v3 (spec §KARTY): karta branży z kafelkiem UNIKALNEJ
+              // ikony InfIcons (dekoracja aria-hidden) — treść tekstowa 1:1.
+              <span className="flex items-start gap-3">
+                <span
+                  aria-hidden="true"
+                  className="inf-tile"
+                  style={{ '--tile-c': b.c } as CSSProperties}
+                >
+                  <InfIcon name={b.ikona} />
+                </span>
+                <span className="text-body-sm text-fg">
+                  <span className="font-semibold text-accent">{b.label}:</span> {b.action}
+                </span>
               </span>
             ) : (
               // W trybie animacji: czysty tekst pełnego zdania dla botów/czytników.

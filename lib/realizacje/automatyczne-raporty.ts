@@ -22,7 +22,7 @@ export const automatyczneRaporty: Realizacja = {
 
   metaTitle: 'Automatyczne raporty zamiast ręcznych arkuszy',
   metaDescription:
-    'Case study: automat spina dane z kilku źródeł i co rano dostarcza gotowy raport. Koniec ręcznego sklejania arkuszy. Mniej godzin na raportowanie tygodniowo (szac.).',
+    'Automatyczne raporty: automat spina dane z kilku źródeł i co rano dostarcza gotowy raport. Koniec ręcznego sklejania arkuszy. Case study wdrożenia.',
 
   kontekst: {
     h2: 'Z czym przyszedł klient?',

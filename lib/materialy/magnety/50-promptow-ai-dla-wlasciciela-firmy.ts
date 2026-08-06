@@ -21,7 +21,7 @@ export const promptyDlaWlasciciela: Material = {
     'Nie wiesz, o co pytać AI? Masz 50 gotowych promptów na maile, oferty, social media i obsługę klienta. Kopiujesz i używasz.',
   metaTitle: '50 promptów AI dla właściciela firmy (do skopiowania)',
   metaDescription:
-    '50 gotowych promptów AI dla właściciela firmy: sprzedaż, marketing, obsługa klienta, treści i finanse. Kopiujesz, podmieniasz dane i wklejasz do ChatGPT. Za darmo.',
+    '50 gotowych promptów AI dla właściciela firmy: sprzedaż, marketing, obsługa klienta i finanse. Kopiujesz, podmieniasz dane, wklejasz do ChatGPT. Za darmo.',
   data: '2026-06-16',
   dataAktualizacji: '2026-06-16',
   queries: [

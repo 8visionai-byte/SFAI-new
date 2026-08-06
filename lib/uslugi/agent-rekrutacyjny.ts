@@ -25,7 +25,7 @@ export const agentRekrutacyjny: Usluga = {
 
   metaTitle: 'Agent rekrutacyjny AI: automatyzacja rekrutacji',
   metaDescription:
-    'Agent rekrutacyjny AI zbiera CV, robi pierwszy odsiew i scoring, odpowiada kandydatom i umawia rozmowy. Automatyzacja rekrutacji, która odciąża pierwszą linię. Decyzja zostaje u Ciebie.',
+    'Agent rekrutacyjny AI zbiera CV, robi pierwszy odsiew i scoring, odpowiada kandydatom i umawia rozmowy. Automatyzacja rekrutacji, decyzja zostaje u Ciebie.',
 
   problem: {
     h2: 'Na czym naprawdę tracisz czas w rekrutacji?',

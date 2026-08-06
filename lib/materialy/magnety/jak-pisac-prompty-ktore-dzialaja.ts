@@ -19,7 +19,7 @@ export const jakPisacPrompty: Material = {
     'AI daje słabe odpowiedzi? Problem jest zwykle w pytaniu. Ten poradnik pokazuje prostą strukturę dobrego promptu, na przykładach z firmy.',
   metaTitle: 'Jak pisać prompty, które działają (mini poradnik)',
   metaDescription:
-    'Jak pisać dobre prompty: 6 zasad z przykładami przed i po. Zamień ogólne polecenie w precyzyjny prompt, który daje powtarzalny wynik. Prompt engineering po polsku.',
+    'Jak pisać dobre prompty: 6 zasad z przykładami przed i po. Zamień ogólne polecenie w prompt, który daje powtarzalny wynik. Prompt engineering po polsku.',
   data: '2026-06-16',
   dataAktualizacji: '2026-06-16',
   queries: [

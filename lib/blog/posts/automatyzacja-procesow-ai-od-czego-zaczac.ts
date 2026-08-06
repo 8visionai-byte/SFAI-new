@@ -20,7 +20,7 @@ export const automatyzacjaProcesowAi: Post = {
 
   metaTitle: 'Automatyzacja procesów AI: od czego zacząć w MŚP',
   metaDescription:
-    'Czym jest automatyzacja procesów AI i od czego zacząć w MŚP. Które procesy automatyzować najpierw, jak wybrać pierwszy krok i jak szybko zobaczyć efekt bez ryzyka.',
+    'Automatyzacja procesów AI: od czego zacząć w małej firmie, co automatyzować najpierw, jak wybrać pierwszy krok i szybko zobaczyć efekt bez ryzyka.',
 
   data: '2026-06-15',
   dataAktualizacji: '2026-06-15',

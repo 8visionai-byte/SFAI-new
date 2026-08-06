@@ -21,7 +21,7 @@ export const transkrypcjaRozmow: Realizacja = {
 
   metaTitle: 'Aplikacja do transkrypcji i analizy rozmów',
   metaDescription:
-    'Case study: aplikacja do automatycznej transkrypcji i kategoryzacji rozmów. Wyłapuje kluczowe ustalenia biznesowe w lot, bez ręcznego odsłuchiwania i przepisywania.',
+    'Transkrypcja rozmów AI: aplikacja spisuje i kategoryzuje rozmowy oraz wyłapuje kluczowe ustalenia bez ręcznego odsłuchiwania. Case study wdrożenia.',
 
   kontekst: {
     h2: 'Z czym przyszedł klient?',

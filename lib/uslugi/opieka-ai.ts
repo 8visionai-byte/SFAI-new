@@ -28,7 +28,7 @@ export const opiekaAi: Usluga = {
 
   metaTitle: 'Opieka AI: utrzymanie automatyzacji',
   metaDescription:
-    'Opieka AI: stałe utrzymanie i rozwój automatyzacji. Monitoring, poprawki promptów, raport miesięczny. Abonament AI dla firmy w ryczałcie 10/20/40h, od 3000 zł.',
+    'Opieka AI: stałe utrzymanie i rozwój automatyzacji. Monitoring, poprawki promptów, raport miesięczny. Abonament w ryczałcie 10/20/40h, od 3000 zł.',
 
   problem: {
     h2: 'Co się dzieje z automatyzacją, gdy nikt jej nie pilnuje?',

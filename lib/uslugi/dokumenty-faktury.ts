@@ -25,7 +25,7 @@ export const dokumentyFaktury: Usluga = {
 
   metaTitle: 'Automatyzacja faktur: OCR faktur AI i KSeF',
   metaDescription:
-    'Automatyzacja dokumentów i faktur: OCR odczytuje fakturę, klasyfikuje koszt, wpisuje do arkusza i księgowości, eksportuje do KSeF. Bez ręcznego przepisywania. Najszybszy ROI w biurach rachunkowych.',
+    'Automatyzacja dokumentów i faktur: OCR odczytuje fakturę, klasyfikuje koszt, wpisuje do arkusza i księgowości, eksportuje do KSeF. Bez przepisywania.',
 
   problem: {
     h2: 'Ile godzin miesięcznie przepisujesz faktury z ręki?',

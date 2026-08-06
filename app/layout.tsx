@@ -104,6 +104,12 @@ export default function RootLayout({
             tłem kryją go naturalnie. Drift tylko desktop (bramka w CSS). */}
         <div aria-hidden="true" className="inf-stars" />
 
+        {/* INFINITY v3: mgławicowe plamy (violet/cyan/magenta) — ta sama
+            ścieżka montażu co starfield (fixed, z-index:-1, pointer-events
+            none); w DOM PO .inf-stars, więc malują się nad gwiazdami. Czysty
+            CSS; blur i wolny dryf 60s tylko desktop (bramki w CSS). */}
+        <div aria-hidden="true" className="inf-nebula" />
+
         <Header />
         {children}
         <Footer />

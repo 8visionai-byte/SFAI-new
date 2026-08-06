@@ -22,7 +22,7 @@ export const chatbotEdukacyjnyKursy: Realizacja = {
 
   metaTitle: 'Chatbot edukacyjny do kursów online',
   metaDescription:
-    'Case study: chatbot edukacyjny dla Instytutu Kryptografii. Kursanci natychmiast znajdują właściwą lekcję w setkach materiałów VOD, bez ręcznego przeszukiwania.',
+    'Chatbot edukacyjny dla Instytutu Kryptografii: kursanci natychmiast znajdują właściwą lekcję w setkach materiałów VOD, bez przeszukiwania. Case study.',
 
   kontekst: {
     h2: 'Z czym przyszedł klient?',

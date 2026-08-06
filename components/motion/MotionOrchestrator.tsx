@@ -40,7 +40,7 @@ type MotionLayer = {
 /** Wysokość sticky headera — offset kotwic (spójny z lądowaniem pod nav). */
 const ANCHOR_OFFSET = -96;
 
-/* Dekoracje canvas 2D (INFINITY): particles tła + wstęga hero. next/dynamic =
+/* Dekoracje canvas 2D (INFINITY): particles tła + lemniskata hero. next/dynamic =
    OSOBNE lazy chunki, których pobranie wyzwala DOPIERO render (stan decorOn
    ustawiany w start(), czyli za bramkami + po window.load + idle). Mobile /
    reduced-motion / Save-Data nigdy nie renderuje orkiestratora (MotionGate),
@@ -240,8 +240,10 @@ export function MotionOrchestrator() {
   }, [pathname]);
 
   /* Dekoracje INFINITY: ParticlesField zawsze (desktop, fixed pod treścią);
-     HeroRibbon sam znajduje sekcję hero (h1[data-writing]) i portaluje do niej
-     canvas — na podstronach bez hero nic nie robi. */
+     HeroRibbon (v3: animowana lemniskata) znajduje slot [data-hero-loop]
+     renderowany przez Hero.tsx i portaluje do niego canvas, który płynnie
+     nakrywa statyczny SVG (InfinityLoopStatic) — na podstronach bez hero
+     nic nie robi. */
   if (!decorOn) return null;
   return (
     <>

@@ -18,7 +18,7 @@ export const tanszyModelAiAutomatyzacjaMaili: RadarNews = {
 
   metaTitle: 'AI Radar: tańszy model AI a koszt automatyzacji (szablon)',
   metaDescription:
-    'Przykładowy wpis AI Radar w formacie SimpleFast.ai: jak tańszy model AI zmienia koszt automatyzacji maili w małej firmie. Treść to szablon formatu, realne newsy dodaje redakcja.',
+    'Tańszy model AI a koszt automatyzacji maili w małej firmie: przykładowy wpis AI Radar w formacie SimpleFast.ai. Treść to szablon, newsy doda redakcja.',
 
   data: '2026-06-16',
   dataAktualizacji: '2026-06-16',

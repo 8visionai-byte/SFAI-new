@@ -1,4 +1,27 @@
-# STATUS — INFINITY v2 (2026-08-06 wieczór) — NA PRODUKCJI
+# STATUS — INFINITY v3 „kopia" (2026-08-06 noc) — W TOKU (wf_7931ba3c)
+
+Decyzje Pawła po v2 (WPROST): ZDJĘCIA WYLATUJĄ z całej strony („nie są nam
+potrzebne"); KRATKA .inf-grid WYLATUJE („background spierdolony, jakaś
+kratka") — to zamyka finding impeccable codex-grid-background (usunięcie =
+fix); hero WYŚRODKOWANE z wielką animacją POD paskiem (lemniskata ∞ z kropek
+cyan/magenta + linie łączące, mobile = statyczny SVG); emoji → UNIKALNE SVG
+ikony w kaflach (InfIcons ~24 szt.); dropdowny z kaflami dla WSZYSTKICH
+pozycji nav; karty w stylu /produkty wszędzie (pełne podświetlenie + błysk +
+ikona scale/brightness + strzałka pojawia się na hover); CTA hover = BIAŁE
+podświetlenie; pasek PRAWDZIWYCH liczników z rejestrów (.length — zero
+zmyślonych liczb); voicebot → link na drugą stronę Pawła
+https://sfai-webseite-10k-look.vercel.app/ (żywy voicebot); SEO: Paweł
+ZATWIERDZIŁ wdrożenie WSZYSTKICH rekomendacji raportu (FAQ chatboty, fraza
+„bot telefoniczny", meta descriptions ≤155, linkowanie wewnętrzne, IndexNow).
+Spec: scratchpad/spec-infinity-v3.md. 4 partie: A fundament+nav (ikony,
+dropdowny, karty v3, grid-out, mgławice), B hero (centered + lemniskata +
+liczniki), C sekcje (zdjęcia-out + voicebot link), D SEO-treści (lib/**,
+IndexNow). Po nich: scalenie, build, weryfikacja przeglądarką (KARTA NA
+WIERZCHU!), deploy, PSI, ping IndexNow + sitemapa w Bing.
+
+---
+
+# STATUS — INFINITY v2 (2026-08-06 wieczór) — zastąpiony przez v3
 
 Punch list Pawła po v1 wdrożony (commit a574555 + fix logo):
 płynąca obwódka paska (magenta→violet→cyjan, 3 s pętla), linki wyszarzone

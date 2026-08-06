@@ -17,11 +17,11 @@ export const voiceboty: Usluga = {
   slug: 'voiceboty',
   h1: 'Voicebot dla firmy, który odbiera telefon za Ciebie',
   kapsula:
-    'Voicebot to bot głosowy, który odbiera telefon, rozmawia po polsku i załatwia sprawę: umawia wizytę, przyjmuje zgłoszenie, odpowiada na pytanie albo oddzwania do klienta, który nie dodzwonił się za pierwszym razem. Działa 24/7, nawet gdy jesteś u klienta. To nie nagranie ani „wciśnij jeden”. To Agent, który rozmawia i wykonuje zadanie, a potem przekazuje Ci tylko to, co ważne.',
+    'Voicebot, nazywany też botem telefonicznym, to bot głosowy, który odbiera telefon, rozmawia po polsku i załatwia sprawę: umawia wizytę, przyjmuje zgłoszenie, odpowiada na pytanie albo oddzwania do klienta, który nie dodzwonił się za pierwszym razem. Działa 24/7, nawet gdy jesteś u klienta. To nie nagranie ani „wciśnij jeden”. To Agent, który rozmawia i wykonuje zadanie, a potem przekazuje Ci tylko to, co ważne.',
 
   metaTitle: 'Voicebot dla firmy, który odbiera telefon 24/7',
   metaDescription:
-    'Voicebot odbiera telefon 24/7, rozmawia po polsku, umawia wizyty i oddzwania do nieodebranych. To nie nagranie, tylko Agent, który załatwia sprawę. Dane w UE.',
+    'Voicebot, czyli bot telefoniczny: odbiera telefon 24/7, rozmawia po polsku, umawia wizyty i oddzwania do nieodebranych. Agent, który załatwia sprawę.',
 
   problem: {
     h2: 'Ile telefonów dziennie nie odbierasz?',
@@ -30,7 +30,7 @@ export const voiceboty: Usluga = {
   },
 
   rozwiazanie: {
-    h2: 'Co robi voicebot, gdy nie możesz odebrać?',
+    h2: 'Co robi bot telefoniczny, gdy nie możesz odebrać?',
     tresc:
       'Voicebot odbiera każde połączenie, rozmawia naturalnie po polsku i robi to, co trzeba: umawia termin i zapisuje go w kalendarzu, przyjmuje zgłoszenie z konkretami, odpowiada na częste pytania. Jeśli sprawa jest trudna, bierze kontakt i mówi, że oddzwonisz. Po rozmowie dostajesz krótkie podsumowanie, więc wiesz, co się działo. Klient zawsze słyszy, że rozmawia z asystentem AI, a Ty ustawiasz, co bot może, a czego nie.',
   },
@@ -118,5 +118,11 @@ export const voiceboty: Usluga = {
       'Każde wdrożenie zaczynamy od bezpłatnej diagnozy. Najpierw liczby, potem decyzja.',
   },
 
-  queries: ['voicebot dla firmy', 'bot głosowy', 'czym jest voicebot', 'AI odbiera telefon'],
+  queries: [
+    'voicebot dla firmy',
+    'bot telefoniczny',
+    'bot głosowy',
+    'czym jest voicebot',
+    'AI odbiera telefon',
+  ],
 };

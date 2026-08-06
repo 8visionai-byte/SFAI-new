@@ -21,7 +21,7 @@ export const agenciAi247: Realizacja = {
 
   metaTitle: 'Firmowi Agenci AI 24/7 na stronie',
   metaDescription:
-    'Case study: Agenci AI osadzeni na firmowej stronie. Znają strukturę firmy i odpowiadają nowym leadom całą dobę, bez nadzoru. Żaden lead nie zostaje bez odpowiedzi.',
+    'Agenci AI na firmowej stronie: znają strukturę firmy i odpowiadają nowym leadom całą dobę, bez nadzoru. Case study: żaden lead nie zostaje bez odpowiedzi.',
 
   kontekst: {
     h2: 'Z czym przyszedł klient?',

@@ -19,7 +19,7 @@ export const dziesiecBledow: Material = {
     'Większość wdrożeń AI nie pada przez technologię. Pada przez te 10 błędów. Sprawdź je, zanim wydasz pierwszą złotówkę. Oszczędzisz czas i nerwy.',
   metaTitle: '10 błędów przy wdrażaniu AI w firmie (i jak ich uniknąć)',
   metaDescription:
-    '10 błędów przy wdrażaniu AI w firmie i jak ich uniknąć: od startu od narzędzia zamiast od problemu po brak opieki po wdrożeniu. Przy każdym jak go poznać i antidotum.',
+    '10 błędów przy wdrażaniu AI w firmie i jak ich uniknąć: od startu od narzędzia zamiast od problemu po brak opieki po wdrożeniu. Przy każdym antidotum.',
   data: '2026-06-16',
   dataAktualizacji: '2026-06-16',
   queries: [

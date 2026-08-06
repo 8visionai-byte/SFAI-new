@@ -3,6 +3,8 @@ import { Section, MagneticButton, Card } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HOME_CTA } from '@/lib/site';
 import { USLUGI } from '@/lib/uslugi';
+import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { InfIcon } from '@/components/ui/InfIcons';
 
 /**
  * SEKCJA 7 — OFERTA + ramy cen (spec 03 §7). Emocja: pewność, brak ukrytych kosztów.
@@ -13,23 +15,10 @@ import { USLUGI } from '@/lib/uslugi';
  * przez Google. Dopóki Paweł nie poda realnych widełek, kolumna ceny kieruje na diagnozę,
  * a nie pokazuje zmyślonej kwoty. INPUT PAWŁA: realne "od X zł", oszczędność/mc, dni.
  */
-/* INFINITY: rejestr kolorów kategorii (spec HERO+NAV): chatboty blue #2b7cff,
-   voiceboty violet #8b5cf6, automatyzacje green #22e06b, strony/SEO cyan #22d3ee,
-   dokumenty amber #f59e0b. Kolor i glif są WYŁĄCZNIE dekoracją (aria-hidden /
+/* INFINITY v3: lokalna mapa emoji WYPADŁA — dekorację (kolor + UNIKALNA ikona
+   SVG per slug) niesie single source lib/inf-kategorie (INF_KATEGORIA,
+   fundament partii A). Kolor i ikona są WYŁĄCZNIE dekoracją (aria-hidden /
    custom property --tile-c, --card-c) — treść i kontrast tekstu niosą tokeny. */
-const KATEGORIA: Record<string, { c: string; glif: string }> = {
-  chatboty: { c: '#2b7cff', glif: '💬' },
-  voiceboty: { c: '#8b5cf6', glif: '🎙️' },
-  'agent-rekrutacyjny': { c: '#2b7cff', glif: '🤝' },
-  automatyzacje: { c: '#22e06b', glif: '⚙️' },
-  'dokumenty-faktury': { c: '#f59e0b', glif: '📄' },
-  'opieka-ai': { c: '#22e06b', glif: '🛡️' },
-  'audyt-ai': { c: '#f59e0b', glif: '🔍' },
-  rozwiazania: { c: '#8b5cf6', glif: '🧩' },
-  'strony-www': { c: '#22d3ee', glif: '🌐' },
-  optymalizacja: { c: '#22d3ee', glif: '📈' },
-};
-const KATEGORIA_DEFAULT = { c: 'var(--accent-decor)', glif: '→' } as const;
 
 /* Tonacja dekoracyjna kart cennika = trzy stopnie trasy marki (krok po kroku). */
 const POZIOM_TON = ['#2b7cff', '#8b5cf6', '#22e06b'] as const;
@@ -186,12 +175,13 @@ export function Oferta() {
               identycznymi pudełkami cennika. Anchor = H1 usługi (SEO 1:1).
               Mikrokopia „Zobacz, jak to działa" nie ginie z treści — schodzi do
               sr-only, glif → to dekoracja aria-hidden.
-              INFINITY: wiersz jak w dropdownie wzorca — kafelek .inf-tile w
-              kolorze kategorii (rejestr KATEGORIA) + tytuł bold + opis muted +
-              strzałka .inf-arrow dojeżdżająca na hover wiersza. Teksty 1:1. */}
+              INFINITY v3: wiersz jak w dropdownie wzorca — kafelek .inf-tile w
+              kolorze kategorii z UNIKALNĄ ikoną SVG (rejestr INF_KATEGORIA,
+              zero emoji) + tytuł bold + opis muted + strzałka .inf-arrow
+              dojeżdżająca na hover wiersza. Teksty 1:1. */}
           <ul className="mx-auto mt-8 max-w-wide divide-y divide-border border-y border-border">
             {USLUGI.map((u) => {
-              const kat = KATEGORIA[u.slug] ?? KATEGORIA_DEFAULT;
+              const kat = INF_KATEGORIA[u.slug] ?? INF_KATEGORIA_DEFAULT;
               return (
                 <li key={u.slug}>
                   <Link
@@ -204,7 +194,7 @@ export function Oferta() {
                       className="inf-tile"
                       style={{ '--tile-c': kat.c } as React.CSSProperties}
                     >
-                      {kat.glif}
+                      <InfIcon name={kat.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-body font-semibold text-fg transition-colors duration-fast group-hover:text-accent">

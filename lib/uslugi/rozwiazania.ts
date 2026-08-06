@@ -24,7 +24,7 @@ export const rozwiazania: Usluga = {
 
   metaTitle: 'Indywidualne rozwiązania AI: aplikacje i wtyczki dla firm',
   metaDescription:
-    'Budujemy aplikacje AI dla firm, wtyczki i Agentów na zamówienie, gdy gotowe narzędzia nie pasują. Zaczynamy od najmniejszej działającej wersji. Dane i kod po Twojej stronie, w UE.',
+    'Aplikacje AI dla firm, wtyczki i Agenci na zamówienie, gdy gotowe narzędzia nie pasują. Zaczynamy od najmniejszej działającej wersji. Dane i kod w UE.',
 
   problem: {
     h2: 'Gotowe narzędzia nie pasują do Twojego procesu?',

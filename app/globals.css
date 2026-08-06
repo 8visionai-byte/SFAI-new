@@ -2593,6 +2593,7 @@ html.lenis body {
     background-color: var(--surface-hover);
   }
   .inf-dd-title {
+    display: block;
     font-size: var(--fs-body-sm);
     font-weight: 600;
     color: var(--fg);
@@ -2600,6 +2601,15 @@ html.lenis body {
   }
   .inf-dd-row:hover .inf-dd-title {
     color: var(--accent);
+  }
+  /* v3: krótki opis muted pod tytułem wiersza (tylko gdy rejestr ma krótkie
+     pole: nazwa robocza produktu, etykieta narzędzia, kategoria case'a). */
+  .inf-dd-desc {
+    display: block;
+    margin-top: 1px;
+    font-size: 0.75rem; /* 12px */
+    line-height: 1.35;
+    color: var(--fg-muted);
   }
   .inf-dd-row .inf-tile {
     transition: transform var(--dur-fast) var(--ease-out);
@@ -2680,7 +2690,10 @@ html.lenis body {
   }
 
   /* ── .inf-tile — kafelek ikony 40x40 (dropdown/karty): tło i obwódka w
-     kolorze kategorii (--tile-c) + statyczna poświata. Glif/emoji w środku. */
+     kolorze kategorii (--tile-c) + statyczna poświata. W środku glif SVG
+     <InfIcon> (currentColor = --tile-c przez color niżej) lub — przejściowo,
+     u konsumentów partii C — emoji. v3: hover karty rozświetla i powiększa
+     kafelek (reguły w media hover; transition tu, RM: bez transformów). */
   .inf-tile {
     --tile-c: var(--accent);
     display: inline-flex;
@@ -2692,12 +2705,23 @@ html.lenis body {
     border-radius: 12px;
     font-size: 1.125rem;
     line-height: 1;
+    color: var(--tile-c);
     background-color: var(--surface);
     background-color: color-mix(in srgb, var(--tile-c) 16%, transparent);
     border: 1px solid var(--border-strong);
     border-color: color-mix(in srgb, var(--tile-c) 35%, transparent);
     box-shadow: 0 0 18px -2px rgba(20, 184, 196, 0.2);
     box-shadow: 0 0 18px -2px color-mix(in srgb, var(--tile-c) 25%, transparent);
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      filter var(--dur-base) var(--ease-out);
+  }
+  /* Ikona SVG w kafelku — osobna warstwa hoveru wierszy dropdownu
+     (scale + brightness na samym glifie, kafelek tylko „pływa"). */
+  .inf-tile svg {
+    transition:
+      transform var(--dur-fast) var(--ease-out),
+      filter var(--dur-fast) var(--ease-out);
   }
 
   /* ── .inf-card — karta wzorca: ciemna, cienka obwódka, LEWA krawędź akcentowa
@@ -2713,6 +2737,7 @@ html.lenis body {
     transition:
       transform var(--dur-base) var(--ease-out),
       border-color var(--dur-base) var(--ease-out),
+      background-color var(--dur-base) var(--ease-out),
       box-shadow var(--dur-base) var(--ease-out);
   }
   .inf-card::before {
@@ -2728,11 +2753,17 @@ html.lenis body {
     transition: opacity var(--dur-base) var(--ease-out);
     pointer-events: none;
   }
-  /* Strzałka karty — dojeżdża w prawo na hover karty (reguła w media query). */
+  /* Strzałka karty — v3: WEWNĄTRZ .inf-card na desktopie POJAWIA SIĘ dopiero
+     na hover karty (opacity 0 → 1 + dojazd; reguły w media hover niżej,
+     scope .inf-card .inf-arrow — strzałki POZA kartami, np. wiersze listy
+     Oferty, zostają widoczne jak dotąd). Mobile/dotyk: zawsze widoczna. */
   .inf-arrow {
     display: inline-block;
     color: var(--fg-subtle);
-    transition: transform var(--dur-base) var(--ease-out);
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      opacity var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out);
   }
 
   /* ── .inf-shine — BŁYSK karty: WEWNĘTRZNY div (inset 0, overflow:hidden TU,
@@ -2840,8 +2871,12 @@ html.lenis body {
       box-shadow var(--dur-base) var(--ease-out),
       color var(--dur-base) var(--ease-out);
   }
+  /* v3 (wzorzec "Hire Me"): hover = BIAŁE podświetlenie — tło #fff, tekst
+     ciemny #06060c (kontrast ~20:1), glow zostaje. Płynność niesie transition
+     bazowe (--dur-base 220ms). */
   .inf-glow-cta:hover {
-    background-color: var(--accent-hover);
+    background-color: #fff;
+    color: #06060c;
     box-shadow: 0 0 32px -2px rgba(20, 184, 196, 0.6);
     box-shadow:
       0 0 0 1px color-mix(in srgb, var(--accent) 70%, transparent),
@@ -2895,18 +2930,25 @@ html.lenis body {
     background-repeat: repeat;
   }
 
-  /* ── .inf-grid — subtelna siatka TYLKO w hero (rodzic: position:relative).
-     Maska rozpływa siatkę ku dołowi — zero twardego szwu z sekcją niżej. */
-  .inf-grid {
-    position: absolute;
+  /* ── .inf-nebula — mgławicowe plamy tła (spec v3 §TŁO; ZASTĄPIŁY siatkę
+     .inf-grid — usunięta na wprost polecenie Pawła). Warstwa FIXED pod całą
+     treścią, ta sama ścieżka montażu co .inf-stars (layout: <div aria-hidden
+     class="inf-nebula"> zaraz PO starfieldzie — maluje się nad gwiazdami,
+     a sekcje z solidnym tłem kryją ją naturalnie). 3 radialne plamy:
+     violet #8b5cf6 / cyan #22d3ee / magenta #ff007f, opacity .05-.08.
+     Mobile: statyczne miękkie gradienty, ZERO filter i zero animacji.
+     Desktop (media niżej): blur(90px, rastrowany raz — animacja wyłącznie
+     na transformie) + wolny dryf 60s przy no-preference. */
+  .inf-nebula {
+    position: fixed;
     inset: 0;
+    z-index: -1;
     pointer-events: none;
     background-image:
-      linear-gradient(to right, rgba(234, 240, 250, 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(234, 240, 250, 0.04) 1px, transparent 1px);
-    background-size: 56px 56px;
-    -webkit-mask-image: radial-gradient(90% 70% at 50% 28%, #000 25%, transparent 78%);
-    mask-image: radial-gradient(90% 70% at 50% 28%, #000 25%, transparent 78%);
+      radial-gradient(560px 420px at 16% 22%, rgba(139, 92, 246, 0.08), transparent 70%),
+      radial-gradient(640px 460px at 84% 30%, rgba(34, 211, 238, 0.06), transparent 70%),
+      radial-gradient(520px 400px at 55% 88%, rgba(255, 0, 127, 0.05), transparent 70%);
+    background-repeat: no-repeat;
   }
 }
 
@@ -2927,11 +2969,14 @@ html.lenis body {
   }
 }
 @media (hover: hover) and (pointer: fine) {
-  /* Hover karty wg wzorca (.lp-promo-card): lift -3px, obwódka i poświata w
-     kolorze karty, inset highlight od góry; accent-bar 0.5→1; błysk .inf-shine
-     przelatuje; spotlight się zapala. */
+  /* Hover karty v3 (wzorzec .lp-promo-card + spec v3 §KARTY): lift -3px,
+     TŁO ROZJAŚNIONE --surface-hover, obwódka i poświata w kolorze karty,
+     inset highlight od góry; accent-bar 0.5→1; błysk .inf-shine przelatuje;
+     spotlight się zapala; kafelek ikony rozświetla się i rośnie; strzałka
+     POJAWIA SIĘ (opacity 0→1 + dojazd -4px→0). */
   .inf-card:hover {
     transform: translateY(-3px);
+    background-color: var(--surface-hover);
     border-color: var(--border-strong);
     border-color: color-mix(in srgb, var(--card-c) 50%, transparent);
     box-shadow:
@@ -2944,9 +2989,22 @@ html.lenis body {
   .inf-card:hover::before {
     opacity: 1;
   }
+  /* Strzałka karty ukryta do hoveru — scope .inf-card, żeby strzałki poza
+     kartami (wiersze listy usług w Ofercie) zostały widoczne jak dotąd. */
+  .inf-card .inf-arrow {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
   .inf-card:hover .inf-arrow {
-    transform: translateX(4px);
+    opacity: 1;
+    transform: translateX(0);
     color: var(--fg-muted);
+  }
+  /* Kafelek ikony karty: jaśnieje i rośnie (spec v3: brightness 1.3 + scale
+     1.12; transition niesie baza .inf-tile, RM: transform zdejmowany niżej). */
+  .inf-card:hover .inf-tile {
+    filter: brightness(1.3);
+    transform: scale(1.12);
   }
   .inf-card:hover .inf-shine::after {
     left: 120%;
@@ -2955,11 +3013,16 @@ html.lenis body {
     opacity: 1;
   }
 }
-/* Emoji „pływa": kafel wiersza dropdownu unosi się na hover wiersza —
-   tylko realny hover i tylko bez reduced-motion. */
+/* Kafel wiersza dropdownu „pływa" (translateY -2px), a ikona SVG w środku
+   jaśnieje i rośnie (spec v3: scale 1.12 + brightness 1.3) — tylko realny
+   hover i tylko bez reduced-motion. */
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .inf-dd-row:hover .inf-tile {
     transform: translateY(-2px);
+  }
+  .inf-dd-row:hover .inf-tile svg {
+    transform: scale(1.12);
+    filter: brightness(1.3);
   }
 }
 /* Pętla ringu pigułki: background-position 0→300% (gradient 300% szerokości
@@ -2992,6 +3055,31 @@ html.lenis body {
   }
 }
 
+/* ── INFINITY v3: mgławice — blur TYLKO desktop (mobile <1024px: zero filter,
+   miękkość dają same gradienty). Element powiększony (inset ujemny), żeby
+   dryf ani rozmycie nie odsłoniły krawędzi warstwy. */
+@media (min-width: 1024px) {
+  .inf-nebula {
+    inset: -120px;
+    filter: blur(90px);
+  }
+}
+/* Dryf mgławic: TYLKO desktop + no-preference, wyłącznie na transformie
+   (kompozytor; blur rastrowany raz, zero repaintów). 60s = ambient. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .inf-nebula {
+    animation: infNebulaDrift 60s var(--ease-in-out, ease-in-out) infinite alternate;
+  }
+}
+@keyframes infNebulaDrift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(60px, -40px, 0);
+  }
+}
+
 /* ── INFINITY: focus na .inf-glow-cta — tło = kolor ringu, sam outline by
    zginął; podwójny pierścień jak w .sf-cta (jedyny system focusa, wyjątek 2). */
 .inf-glow-cta:focus-visible {
@@ -3003,7 +3091,8 @@ html.lenis body {
 
 /* ── INFINITY: bramka reduced-motion — JAWNA dla każdej animacji/przejścia. */
 @media (prefers-reduced-motion: reduce) {
-  .inf-stars {
+  .inf-stars,
+  .inf-nebula {
     animation: none !important;
     transform: none !important;
   }
@@ -3013,6 +3102,8 @@ html.lenis body {
   .inf-card,
   .inf-card::before,
   .inf-arrow,
+  .inf-tile,
+  .inf-tile svg,
   .inf-glow-cta,
   .inf-nav-link,
   .inf-nav-chevron,
@@ -3027,14 +3118,23 @@ html.lenis body {
   .inf-card:hover {
     transform: none !important;
   }
+  /* v3, RM = bez transformów: strzałka karty bez dojazdu (pokazuje/chowa ją
+     samo opacity, skokowo), kafelki i ikony bez scale/translate. */
+  .inf-card .inf-arrow,
   .inf-card:hover .inf-arrow {
     transform: none !important;
   }
-  /* Błysk stoi (spec: RM bez zmiany left); kafel emoji nie „pływa". */
+  .inf-card:hover .inf-tile {
+    transform: none !important;
+  }
+  /* Błysk stoi (spec: RM bez zmiany left); kafel ikony nie „pływa". */
   .inf-card:hover .inf-shine::after {
     left: -40% !important;
   }
   .inf-dd-row:hover .inf-tile {
+    transform: none !important;
+  }
+  .inf-dd-row:hover .inf-tile svg {
     transform: none !important;
   }
 }
@@ -3048,7 +3148,7 @@ html.lenis body {
     animation: none;
   }
   .inf-stars,
-  .inf-grid,
+  .inf-nebula,
   .inf-shine::after,
   .inf-spotlight {
     background-image: none;
@@ -3239,6 +3339,10 @@ html.lenis body {
     0 0 24px -4px color-mix(in srgb, var(--accent) 65%, transparent);
 }
 .sf-magnetic .inf-glow-cta:hover {
+  /* v3: białe podświetlenie także gdy utilities Buttona ustawiają tło/tekst
+     (specyficzność 2-klasowa bije utility hover:*). Spójne z bazą wyżej. */
+  background-color: #fff;
+  color: #06060c;
   box-shadow: 0 0 32px -2px rgba(20, 184, 196, 0.6);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--accent) 70%, transparent),
@@ -3305,4 +3409,12 @@ html.lenis body {
    specyficzności — ciemna strefa wewnątrz jasnej wraca na guard. */
 [data-theme='dark'] .text-fg-subtle {
   color: var(--fg-muted);
+}
+
+/* INFINITY v3 (kontrakt partii B): slot lemniskaty hero znika w Windows High
+   Contrast jak pozostałe dekoracyjne canvasy. */
+@media (forced-colors: active) {
+  [data-hero-loop] {
+    display: none;
+  }
 }

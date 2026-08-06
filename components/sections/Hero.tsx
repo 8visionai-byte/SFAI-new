@@ -2,16 +2,22 @@ import type { CSSProperties } from 'react';
 import { Section, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { WritingHeadline } from '@/components/motion/WritingHeadline';
+import { InfinityLoopStatic } from '@/components/motion/InfinityLoopStatic';
 // import { AnimatedMetric } from '@/components/motion/AnimatedMetric'; // wróci z realnymi metrykami
 import { POSITIONING, HOME_CTA } from '@/lib/site';
 import { HeroPersonaCycler } from './HeroPersonaCycler';
+import { HeroLiczniki } from './HeroLiczniki';
 
 /**
  * SEKCJA 1 — HERO (spec 06 §"CZĘŚĆ 1", WARIANT A "Działa, nie gada" — REKOMENDOWANY).
- * Emocja: ulga + kompetencja. Pozycjonowanie kategorii prowadzi H1 (north star #3):
- * "Budujemy AI Agentów, nie chatboty". Analogia "chatbot odpowiada / Agent działa"
- * jest w PIERWSZYM zdaniu kapsuły — to jest cytat, który zabierze LLM.
- * Jeden H1, jedna kapsuła answer-first w surowym HTML, jedno CTA (magnetyczne).
+ * INFINITY v3 (decyzja Pawła): layout WYŚRODKOWANY, wzorzec 1:1, nasza treść.
+ * Kolejność pionowa (spec v3 §HERO): slot WIELKIEJ animacji ∞ pod paskiem nav →
+ * overline mono z liniami → H1 (maszyna pisania NIETYKALNA, tylko wyśrodkowana) →
+ * lead → chipy zaufania → CTA-pigułki → pasek liczników z rejestrów → persona →
+ * trasa. Desktop i mobile symetryczne (jedna oś środka, zero osobnych layoutów).
+ *
+ * TREŚCI 1:1 — zero zmian tekstów (partia B nie ma zgody na treści). Zmiana jest
+ * WYŁĄCZNIE w układzie i dekoracji. Liczniki = zliczenia rejestrów (HeroLiczniki).
  *
  * METRYKI i DOWÓD przy CTA są CELOWO wyłączone do czasu realnych danych.
  * Zasada (north star #5, #6): zero zmyślonych liczb — red team rozwali w 30 s.
@@ -33,49 +39,51 @@ import { HeroPersonaCycler } from './HeroPersonaCycler';
 export function Hero() {
   return (
     /*
-      ŚWIAT B — CIEMNA PRACOWNIA (wzorzec = zrodla/makiety-b/1-hero.png):
-      pełnoekranowy ciemny kadr (navy-950 z tokenów), treść osadzona DOŁEM-LEWO
-      (na lg: min-h ekranu minus pasek 64px + flex justify-end; na mobile normalny
-      przepływ — zero ryzyka dla LCP). KOLEJNOŚĆ i TREŚĆ sekcji NIETKNIĘTE:
-      badge → H1 (maszyna do pisania) → kapsuła → persona → CTA → linki → trasa.
-      Caption „Dane w UE · RODO · AI Act" z makiety POMINIĘTY świadomie: ten zapis
-      (z kropkami środkowymi) nie istnieje w treściach repo, a treści są nietykalne.
-
-      WARSTWA DEKORACYJNA (spec INFINITY v2, „HERO — SPRZĄTANIE"): HeroContours
-      (stare elipsy warstwic) USUNIĘTY z renderu na wprost polecenie Pawła —
-      plik zostaje na dysku. Tło hero robią teraz: siatka .inf-grid (niżej),
-      starfield/particles globalne oraz HeroRibbon (wstrzykiwany przez
-      MotionOrchestrator do tej sekcji po h1[data-writing] — zero zmian tutaj).
+      INFINITY v3 — hero CENTERED: text-center na sekcji = jedna oś dla całej
+      kolumny; elementy blokowe centruje mx-auto + max-w. Poprzedni układ
+      „dołem-lewo" (świat B) wyleciał na wprost polecenie Pawła („hero
+      wyśrodkowane z wielką animacją pod paskiem"). overflow-hidden ZDJĘTY
+      (żelazna zasada v3: zero clippingu wokół elementów z poświatą — glow
+      lemniskaty i CTA mogą wystawać). Tło robią globalne starfield/particles/
+      mgławice (layout) — sekcja nie ma już własnych warstw dekoracyjnych.
     */
-    <Section
-      tone="base"
-      space="lg"
-      containerWidth="default"
-      className="relative isolate overflow-hidden lg:flex lg:min-h-[calc(100svh-4rem)] lg:flex-col lg:justify-end"
-    >
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        {/* INFINITY: subtelna siatka hero (.inf-grid, fundament) — maska
-            rozpływa ją ku dołowi, zero twardego szwu. Czysta dekoracja. */}
-        <div className="inf-grid" />
+    <Section tone="base" space="lg" containerWidth="default" className="relative isolate text-center">
+      {/* SLOT ANIMACJI ∞ (spec v3 §HERO pkt 2) — WIELKA lemniskata pod paskiem
+          nav, ~420px wysokości na desktopie (aspect 940/420, skaluje się w dół).
+          W HTML zawsze STATYCZNY SVG (mobile + reduced-motion + pierwszy paint
+          desktopu). Na desktopie HeroRibbon (przez MotionGate, długo po load)
+          portaluje TU canvas [data-hero-loop] i płynnie nakrywa SVG (opacity
+          swap inline w JS — zero migniecia). Czysta dekoracja: aria-hidden,
+          pointer-events-none, BEZ overflow-hidden (glow może wystawać). */}
+      <div
+        id="hero-loop"
+        data-hero-loop
+        aria-hidden="true"
+        className="pointer-events-none relative mx-auto flex aspect-[940/420] w-full max-w-[940px] items-center justify-center"
+      >
+        <InfinityLoopStatic />
       </div>
+
+      {/* INFINITY: badge → mono overline z liniami po bokach (.inf-overline
+          + .inf-overline-lines, fundament). Treść 1:1 (POSITIONING.subClaim);
+          linie gradientowe fundamentu centrują tekst same (flex 1 po bokach). */}
       <Reveal eager>
-          {/* INFINITY: badge → mono overline z liniami po bokach (.inf-overline
-              + .inf-overline-lines, fundament). Treść 1:1 (POSITIONING.subClaim). */}
-          <p className="inf-overline inf-overline-lines mb-5">
-            {POSITIONING.subClaim}
-          </p>
-        </Reveal>
+        <p className="inf-overline inf-overline-lines mx-auto mb-5 mt-6 max-w-[640px]">
+          {POSITIONING.subClaim}
+        </p>
+      </Reveal>
 
-        {/* H1 — hasło kategorii (north star #3): litery kolorowane per-glif gradientem
-            marki (WritingHeadline; świat B: stopy brand 1:1 z jaskrawą zielenią —
-            na ciemnym świecą). MECHANIZM MASZYNY DO PISANIA NIETKNIĘTY. Tekst H1
-            zostaje realnym tekstem w DOM (boty czytają; aria-label daje czytnikom
-            pełne zdanie jednym ciągiem). Po wejściu H1 stoi NIERUCHOMO. */}
-        <WritingHeadline text={POSITIONING.claim} className="text-display max-w-[18ch]" />
+      {/* H1 — hasło kategorii (north star #3): litery kolorowane per-glif gradientem
+          marki (WritingHeadline). MECHANIZM MASZYNY DO PISANIA NIETKNIĘTY — zmiana
+          v3 to WYŁĄCZNIE oś: text-center (dziedziczone z sekcji) + mx-auto na max-w.
+          Tekst H1 zostaje realnym tekstem w DOM (boty czytają; aria-label daje
+          czytnikom pełne zdanie jednym ciągiem). Po wejściu H1 stoi NIERUCHOMO. */}
+      <WritingHeadline text={POSITIONING.claim} className="text-display mx-auto max-w-[18ch]" />
 
-      {/* Kapsuła answer-first — surowy HTML, cytat dla LLM. Analogia w 1. zdaniu. */}
+      {/* Kapsuła answer-first — surowy HTML, cytat dla LLM. Analogia w 1. zdaniu.
+          v3: wyśrodkowana, max-w ~640px (spec §HERO pkt 5). */}
       <Reveal eager delay={0.07}>
-        <p className="text-lead mt-6 max-w-measure-lead text-fg-muted">
+        <p className="text-lead mx-auto mt-6 max-w-[640px] text-fg-muted">
           Chatbot odpowiada na pytania. AI Agent wykonuje pracę: odbiera telefony, odpisuje klientom,
           umawia spotkania i pilnuje faktur. Nie sprzedajemy narzędzi AI. Projektujemy systemy, które
           zdejmują z polskiej firmy powtarzalną robotę, w dni, nie w miesiące. Twoje dane zostają w Unii
@@ -88,7 +96,7 @@ export function Hero() {
           tytuł filaru 3) — ZERO nowych treści. Kolory obwódek = trasa marki
           (dekoracja przez --chip-c; tekst chipa = --fg-muted, AA bez zmian). */}
       <Reveal eager delay={0.1}>
-        <ul className="mt-6 flex flex-wrap gap-2">
+        <ul className="mt-6 flex flex-wrap justify-center gap-2">
           <li className="inf-chip" style={{ '--chip-c': '#2B7CFF' } as CSSProperties}>
             Twoje dane zostają w UE
           </li>
@@ -101,12 +109,46 @@ export function Hero() {
         </ul>
       </Reveal>
 
-      {/* Dynamiczny odbiorca (personalizacja językiem, RODO-safe).
-          Świat B: blok jedzie na lewą oś razem z resztą hero (makieta 1 —
-          kolumna dołem-lewo). `Reveal eager` ZOSTAJE (LCP: maluje się na
-          starcie animacji CSS). */}
+      {/* CTA-PIGUŁKI OBOK SIEBIE (spec v3 §HERO pkt 7) + mikrokopia pod spodem.
+          Primary = istniejący CTA (HOME_CTA.label 1:1) jako .inf-glow-cta na
+          MagneticButton (magnetyzm NIETKNIĘTY; kontrakt .sf-magnetic .inf-glow-cta
+          scalony w globals). Obok — DWA istniejące linki hero 1:1 jako pigułki
+          ghost (teksty i kotwice bez zmian; diff treści = 0, więc oba zostają
+          w tym samym rzędzie). Strzałki = dekoracje aria-hidden (.sf-arrow). */}
       <Reveal eager delay={0.14}>
-        <div className="mt-9 max-w-[46ch] border-t border-border pt-5">
+        <div className="mt-9 flex flex-col items-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <MagneticButton variant="primary" href={HOME_CTA.href} className="inf-glow-cta">
+              {HOME_CTA.label}{' '}
+              <span aria-hidden="true" className="sf-arrow">→</span>
+            </MagneticButton>
+            <a href="#problem" className="inf-glow-cta inf-glow-cta-ghost">
+              Zobacz, jak liczę oszczędność <span aria-hidden="true" className="sf-arrow">→</span>
+            </a>
+            <a href="#demo" className="inf-glow-cta inf-glow-cta-ghost">
+              Zobacz, jak rozmawia nasz Agent <span aria-hidden="true" className="sf-arrow">→</span>
+            </a>
+          </div>
+          <span className="text-caption max-w-[44ch] text-fg-subtle">{HOME_CTA.microcopy}</span>
+
+          {/*
+            DOWÓD przy CTA — usunięto zmyśloną referencję "−40%, Anna K." (niefalsyfikowalna,
+            łamała north star #5/#13 i miała em-dash). INPUT PAWŁA: wstawić JEDEN realny
+            dowód: case z liczbą + imię + firma (za zgodą klienta) ALBO jedną prawdziwą
+            liczbę operacyjną (np. "voicebot obsłużył X połączeń w miesiącu").
+          */}
+        </div>
+      </Reveal>
+
+      {/* PASEK LICZNIKÓW (spec v3 §HERO pkt 8) — liczby PRAWDZIWE: zliczenia
+          rejestrów przy buildzie (HeroLiczniki, server). Zero zmyślonych liczb. */}
+      <HeroLiczniki />
+
+      {/* Dynamiczny odbiorca (personalizacja językiem, RODO-safe) — zostaje
+          PONIŻEJ liczników (spec v3 §HERO pkt 9), treść bez zmian; v3 tylko
+          centruje blok (mx-auto, text-center dziedziczone z sekcji). */}
+      <Reveal eager delay={0.24}>
+        <div className="mx-auto mt-9 max-w-[46ch] border-t border-border pt-5">
           <p className="text-overline uppercase tracking-[0.14em] text-fg-subtle">
             Powtarzalna robota wygląda inaczej w każdej branży. Pokaż mi swoją.
           </p>
@@ -133,44 +175,6 @@ export function Hero() {
           </dl>
         </Reveal>
       */}
-
-      {/* CTA główne + mikrokopia. INFINITY: CTA hero = pigułka z neonową obwódką
-          i glow (.inf-glow-cta, fundament) na wariancie primary Buttona.
-          MagneticButton ZOSTAJE (magnetyzm nietknięty), etykieta = HOME_CTA.label
-          — zero nowych treści. Utilities Buttona (font-sans/rounded-sm/
-          shadow-accent) wygrywałyby z @layer components, stąd kontrakt CSS
-          `.sf-magnetic .inf-glow-cta` (koniec pliku — do globals.css).
-          Strzałka = dekoracja aria-hidden (.sf-arrow, mikro-przesuw na hover). */}
-      <Reveal eager delay={0.21}>
-        <div className="mt-9 flex flex-col items-start gap-3">
-          <MagneticButton variant="primary" href={HOME_CTA.href} className="inf-glow-cta">
-            {HOME_CTA.label}{' '}
-            <span aria-hidden="true" className="sf-arrow">→</span>
-          </MagneticButton>
-          <span className="text-caption max-w-[44ch] text-fg-subtle">{HOME_CTA.microcopy}</span>
-
-          {/*
-            DOWÓD przy CTA — usunięto zmyśloną referencję "−40%, Anna K." (niefalsyfikowalna,
-            łamała north star #5/#13 i miała em-dash). INPUT PAWŁA: wstawić JEDEN realny
-            dowód: case z liczbą + imię + firma (za zgodą klienta) ALBO jedną prawdziwą
-            liczbę operacyjną (np. "voicebot obsłużył X połączeń w miesiącu").
-          */}
-        </div>
-      </Reveal>
-
-      {/* Linki drugorzędne — NIE konkurują z CTA. INFINITY: przestylizowane na
-          pigułki GHOST (.inf-glow-cta-ghost, fundament) — outline w akcencie,
-          teksty i cele kotwic 1:1, strzałki-dekoracje zostają. */}
-      <Reveal eager delay={0.28}>
-        <p className="mt-6 flex flex-wrap items-center justify-start gap-3">
-          <a href="#problem" className="inf-glow-cta inf-glow-cta-ghost">
-            Zobacz, jak liczę oszczędność <span aria-hidden="true" className="sf-arrow">→</span>
-          </a>
-          <a href="#demo" className="inf-glow-cta inf-glow-cta-ghost">
-            Zobacz, jak rozmawia nasz Agent <span aria-hidden="true" className="sf-arrow">→</span>
-          </a>
-        </p>
-      </Reveal>
 
       {/* TRASA GRADIENTOWA (makiety 1/5) — domyka hero: cienka świetlista linia
           brandu ze świecącym punktem końcowym (.sf-route w globals.css). Wejście
@@ -216,36 +220,25 @@ export function Hero() {
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/* CSS DO DOPISANIA (partia HERO+NAV) — do przeniesienia do globals.css przez
-   fundament/scalającego, POZA @layer (na końcu pliku, sekcja INFINITY):
+/* CSS DO DOPISANIA (partia B — HERO): gotowe reguły do globals.css (właściciel:
+   partia A; konwencja pliku: media poza @layer, sekcja INFINITY).
 
-   DLACZEGO: CTA hero to Button variant="primary" wewnątrz .sf-magnetic
-   (magnetyzm nietykalny). Bazowe utilities Buttona (font-sans, rounded-sm,
-   shadow-accent) leżą w warstwie utilities, która nadpisuje @layer components
-   z .inf-glow-cta. Selektor 2-klasowy (specyficzność 0,2,0) bije utility
-   (0,1,0) niezależnie od kolejności w arkuszu — pigułka odzyskuje mono,
-   radius 999px i neonowy glow. Focus robi istniejący .sf-cta:focus-visible
-   (podwójny pierścień — bez zmian). Reduced-motion: brak nowych animacji.
+   1) KONTRAKT JUŻ SCALONY (v2, zostaje bez zmian): .sf-magnetic .inf-glow-cta
+      (+ :hover/:focus-visible) — pigułka CTA wewnątrz magnetyzmu. Nie ruszać.
 
-.sf-magnetic .inf-glow-cta {
-  border-radius: 999px;
-  font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
-  letter-spacing: 0.04em;
-  box-shadow: 0 0 24px -4px rgba(20, 184, 196, 0.45);
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent),
-    0 0 24px -4px color-mix(in srgb, var(--accent) 65%, transparent);
+   2) NOWE (v3, slot lemniskaty) — slot #hero-loop jest samowystarczalny na
+      utilities (aspect-[940/420], max-w-[940px], relative), a podmianę
+      SVG↔canvas HeroRibbon robi INLINE w JS (zero zależności od tych reguł).
+      CSS potrzebny wyłącznie dla Windows High Contrast (jak .inf-particles):
+
+@media (forced-colors: active) {
+  [data-hero-loop] {
+    display: none;
+  }
 }
-.sf-magnetic .inf-glow-cta:hover {
-  box-shadow: 0 0 32px -2px rgba(20, 184, 196, 0.6);
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--accent) 70%, transparent),
-    0 0 32px -2px color-mix(in srgb, var(--accent) 80%, transparent);
-}
-.sf-magnetic .inf-glow-cta:focus-visible {
-  outline: none;
-  box-shadow:
-    0 0 0 2px var(--bg),
-    0 0 0 5px var(--ring);
-}
+
+   3) SPRZĄTANIE (v3): reguły .inf-ribbon-slot i .inf-ribbon (+ ich wpis w
+      forced-colors) są MARTWE — HeroRibbon nie wstrzykuje już własnego slotu
+      (portaluje do [data-hero-loop] z tego pliku) i nie używa klasy .inf-ribbon.
+      Można je usunąć przy scalaniu.
 */

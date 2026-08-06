@@ -17,7 +17,7 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
 
   metaTitle: 'Ile kosztuje chatbot dla firmy w 2026? Widełki i cena',
   metaDescription:
-    'Ile kosztuje chatbot dla firmy w 2026? Widełki rynkowe setupu i opieki, pięć rzeczy, które windują cenę, i jak policzyć zwrot, zanim zamówisz. Konkret, bez żargonu.',
+    'Ile kosztuje chatbot dla firmy w 2026? Widełki rynkowe setupu i opieki, co winduje cenę i jak policzyć zwrot, zanim zamówisz. Konkret, bez żargonu.',
 
   data: '2026-06-15',
   dataAktualizacji: '2026-06-15',
@@ -166,6 +166,11 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
       etykieta: 'Chatboty dla firm',
       href: '/uslugi/chatboty',
       opis: 'Zobacz, jak budujemy chatboty, które kwalifikują leady i odpowiadają 24/7.',
+    },
+    {
+      etykieta: 'Audyt AI: mapa oszczędności czasu',
+      href: '/uslugi/audyt-ai',
+      opis: 'Zanim zamówisz chatbota, zobacz, gdzie AI da w Twojej firmie największy zwrot.',
     },
   ],
 

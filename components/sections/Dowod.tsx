@@ -1,4 +1,4 @@
-import { Section, MagneticButton, Card, Badge, SectionImage } from '@/components/ui';
+import { Section, MagneticButton, Card, Badge } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HOME_CTA } from '@/lib/site';
 
@@ -25,45 +25,23 @@ const CASE: CaseStudy | null = null;
 
 export function Dowod() {
   return (
-    <Section tone="base" space="md" className="overflow-x-clip">
-      {/* FRAME: kwadrat 1:1 z pliku 16:9 pokazuje 56,25% szerokości; focus 76%
-          -> okno x 0,33-0,90, czyli obie twarze (mężczyzna 0,62-0,76, kobieta
-          0,77-0,88) i świetliste smugi danych. W kadrze 16:9 połowa powierzchni
-          była pustą czernią i zdjęcie wyglądało na niedoświetlone. INFINITY:
-          płyta już NIE wychodzi do prawej krawędzi (bleed = upscale i rozmycie,
-          bug od Pawła) — siedzi w kolumnie, z rogami jak karty wzorca. */}
-      <div className="grid items-center gap-10 md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] md:gap-14">
-        <div className="max-w-narrow">
-          <Reveal variant="header">
-            <h2 className="text-h2">Co konkretnie zmienia się w firmie po wdrożeniu Agenta?</h2>
-          </Reveal>
+    <Section tone="base" space="md">
+      {/* INFINITY v3 (decyzja Pawła: zdjęcia WYLATUJĄ): kadr FRAME usunięty
+          z renderu (webp zostaje w /public). Nagłówek + kapsuła answer-first
+          jadą na karcie wzorca (.inf-card) pełnej szerokości kontenera —
+          spec §ZDJĘCIA: „tekst + liczby na pełną szerokość karty". Treść 1:1.
+          Karta NIEklikalna — bez błysku/strzałki (konwencja ProduktCard). */}
+      <Reveal variant="header">
+        <div className="inf-card mx-auto max-w-wide p-6 md:p-10">
+          <h2 className="text-h2">Co konkretnie zmienia się w firmie po wdrożeniu Agenta?</h2>
           {/* Kapsuła answer-first — uczciwa, bez zmyślonego case'a (INPUT PAWŁA na realny). */}
-          <Reveal delay={0.05}>
-            <p className="text-lead mt-5 text-fg-muted">
-              Po wdrożeniu Agenta firma przestaje gubić telefony i powtarzać tę samą robotę. Voicebot odbiera, gdy
-              Ty nie możesz, chatbot odpowiada klientom o każdej porze, a dane same przechodzą między systemami.
-              Twarde liczby z konkretnych wdrożeń publikujemy tutaj, gdy klient da zielone światło.
-            </p>
-          </Reveal>
+          <p className="text-lead mt-5 max-w-measure-lead text-fg-muted">
+            Po wdrożeniu Agenta firma przestaje gubić telefony i powtarzać tę samą robotę. Voicebot odbiera, gdy
+            Ty nie możesz, chatbot odpowiada klientom o każdej porze, a dane same przechodzą między systemami.
+            Twarde liczby z konkretnych wdrożeń publikujemy tutaj, gdy klient da zielone światło.
+          </p>
         </div>
-        {/* focus y=40%: przy 50% kwadratowy kadr ucinał czubek głowy (zrzut Pawła 2026-08-05).
-            INFINITY (bugfix „rozmazane zdjęcia"): .sf-bleed-r rozciągał kwadrat
-            poza kolumnę do krawędzi viewportu (upscale źródła 1400x788 przy
-            kadrze 1:1). Kadr wraca w ryzy kolumny z rogami i cienką obwódką
-            (język kart wzorca); sizes = realna szerokość kolumny. */}
-        <Reveal delay={0.1}>
-          <SectionImage
-            src="/img/rozmowa-o-wdrozeniu-ai.webp"
-            alt="Dwie osoby analizują wyniki wdrożenia AI na tablecie w nocnym biurze"
-            ratio="wide"
-            ratioMd="square"
-            focus="76% 40%"
-            hover
-            className="rounded-xl border border-border"
-            sizes="(min-width: 1240px) 640px, (min-width: 768px) 54vw, 100vw"
-          />
-        </Reveal>
-      </div>
+      </Reveal>
 
       <div className={`mx-auto mt-12 grid max-w-narrow gap-10 md:mt-16 ${CASE ? 'md:grid-cols-2' : ''}`}>
         {/* Karta case study — TYLKO gdy jest realny case (CASE !== null). */}

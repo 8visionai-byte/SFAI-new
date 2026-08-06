@@ -20,7 +20,7 @@ export const leadGenerator: Realizacja = {
 
   metaTitle: 'Błyskawiczny generator leadów',
   metaDescription:
-    'Case study: automat do pozyskiwania leadów. 1000 rekordów potencjalnych klientów w 40 minut zamiast 2 tygodni ręcznej pracy. Gotowa lista do kontaktu dla sprzedaży.',
+    'Automat do pozyskiwania leadów: 1000 rekordów potencjalnych klientów w 40 minut zamiast 2 tygodni ręcznej pracy. Case study, gotowa lista dla sprzedaży.',
 
   kontekst: {
     h2: 'Z czym przyszedł klient?',

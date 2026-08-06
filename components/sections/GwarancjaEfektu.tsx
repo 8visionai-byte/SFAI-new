@@ -1,4 +1,4 @@
-import { Section, MagneticButton, SectionImage } from '@/components/ui';
+import { Section, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HOME_CTA } from '@/lib/site';
 
@@ -32,37 +32,22 @@ const FILARY = [
 export function GwarancjaEfektu() {
   return (
     <Section tone="base" space="md">
-      {/* CANVAS: to JEDYNE zdjęcie brandowe w zestawie (metalowy cyrkiel z
-          pierścieniami w kolorach marki). Pierścienie zaczynają się na x~0,62,
-          a lewe 55-60% kadru to zaprojektowana, gładka czerń — ta pustka istnieje
-          po to, żeby leżał na niej tekst. Płyta z `children` sama ustawia
-          data-theme="dark", więc kontrast robią TOKENY SEMANTYCZNE, bez ani
-          jednego ręcznie dobranego HEX-a (H2 15:1, kapsuła 6,6:1 — AA).
-          Rola `auto` = wysokość niesie treść, nie sztywna proporcja, więc tekst
-          nigdy nie zostanie ucięty, a płyta i tak rezerwuje miejsce (CLS 0).
-          Teksty H2 i kapsuły co do znaku bez zmian. */}
+      {/* INFINITY v3 (decyzja Pawła: zdjęcia WYLATUJĄ): płyta z cyrklem usunięta
+          z renderu (webp zostaje w /public). Nagłówek + kapsuła answer-first
+          jadą na karcie wzorca (.inf-card) pełnej szerokości kontenera — spec
+          §ZDJĘCIA: „karta z treścią". Teksty H2 i kapsuły co do znaku bez
+          zmian; kontrast robią tokeny semantyczne na --surface. Karta
+          NIEklikalna — bez błysku/strzałki (konwencja ProduktCard). */}
       <Reveal>
-        <SectionImage
-          src="/img/precyzja-cyrkla-marka-simplefast.webp"
-          alt="Metalowy cyrkiel kreślarski na ciemnym tle z pierścieniami w kolorach marki SimpleFast"
-          ratio="auto"
-          ratioMd="auto"
-          focus="50% 52%"
-          sizes="100vw"
-          className="mx-auto max-w-container"
-        >
-          {/* Kolumna tekstu max 52% szerokości płyty na desktopie — dalej
-              zaczynają się pierścienie. */}
-          <div className="w-full px-6 py-12 sm:px-10 md:w-[52%] md:py-20 md:pl-14 md:pr-8">
-            <h2 className="text-h2 text-fg">Co jeśli nie zadziała? Kto bierze na siebie ryzyko?</h2>
-            {/* Kapsuła answer-first — cytowalna dla LLM przy "co jak AI nie zadziała" */}
-            <p className="text-lead mt-5 text-fg-muted">
-              Ryzyko bierzemy na siebie tam, gdzie to my decydujemy o efekcie. Zaczynasz od bezpłatnej diagnozy
-              i małego kroku, płacisz dopiero za działające rozwiązanie, a rozliczamy się za wynik, nie za
-              obietnice. Dokładne warunki gwarancji ustalamy na diagnozie i zapisujemy w umowie.
-            </p>
-          </div>
-        </SectionImage>
+        <div className="inf-card mx-auto max-w-wide p-6 md:p-10">
+          <h2 className="text-h2 text-fg">Co jeśli nie zadziała? Kto bierze na siebie ryzyko?</h2>
+          {/* Kapsuła answer-first — cytowalna dla LLM przy "co jak AI nie zadziała" */}
+          <p className="text-lead mt-5 max-w-measure-lead text-fg-muted">
+            Ryzyko bierzemy na siebie tam, gdzie to my decydujemy o efekcie. Zaczynasz od bezpłatnej diagnozy
+            i małego kroku, płacisz dopiero za działające rozwiązanie, a rozliczamy się za wynik, nie za
+            obietnice. Dokładne warunki gwarancji ustalamy na diagnozie i zapisujemy w umowie.
+          </p>
+        </div>
       </Reveal>
 
       {/* Trzy karty w równym rzędzie -> lista na kreskach: tytuł i opis stoją

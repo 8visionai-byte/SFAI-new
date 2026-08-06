@@ -18,7 +18,7 @@ export const aiWBiurzeRachunkowym: Poradnik = {
 
   metaTitle: 'AI w biurze rachunkowym: 12 procesów do automatyzacji',
   metaDescription:
-    'AI w biurze rachunkowym: lista 12 procesów do automatyzacji uszeregowanych od najszybszego zwrotu. Odczyt faktur, segregacja maili, przypomnienia. Konkret, bez żargonu.',
+    'AI w biurze rachunkowym: 12 procesów do automatyzacji od najszybszego zwrotu. Odczyt faktur, segregacja maili, przypomnienia. Konkret, bez żargonu.',
 
   data: '2026-06-15',
   dataAktualizacji: '2026-06-15',
@@ -164,6 +164,16 @@ export const aiWBiurzeRachunkowym: Poradnik = {
       etykieta: 'Dokumenty i faktury',
       href: '/uslugi/dokumenty-faktury',
       opis: 'Odczyt i wpinanie faktur bez ręcznego przepisywania.',
+    },
+    {
+      etykieta: 'Chatboty dla firm',
+      href: '/uslugi/chatboty',
+      opis: 'Chatbot bierze na siebie powtarzalne pytania klientów biura, też po godzinach.',
+    },
+    {
+      etykieta: 'Audyt AI: mapa oszczędności czasu',
+      href: '/uslugi/audyt-ai',
+      opis: 'Mapa procesów Twojego biura z zaznaczonym miejscem, gdzie automatyzacja zwróci się najszybciej.',
     },
   ],
 

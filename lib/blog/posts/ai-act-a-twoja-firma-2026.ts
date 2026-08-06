@@ -16,7 +16,7 @@ export const aiActATwojaFirma: Post = {
 
   metaTitle: 'AI Act a Twoja firma: co wiedzieć (2026)',
   metaDescription:
-    'AI Act a Twoja firma w 2026: co realnie oznaczają kategorie ryzyka, jakie obowiązki dotyczą wdrożeń w MŚP i o co zadbać, zanim wdrożysz chatbota lub automatyzację.',
+    'AI Act a Twoja firma w 2026: co oznaczają kategorie ryzyka, jakie obowiązki dotyczą MŚP i o co zadbać, zanim wdrożysz chatbota lub automatyzację.',
 
   data: '2026-06-15',
   dataAktualizacji: '2026-06-15',

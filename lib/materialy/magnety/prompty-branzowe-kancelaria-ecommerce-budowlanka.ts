@@ -22,7 +22,7 @@ export const promptyBranzowe: Material = {
     'Ogólne prompty nie pasują do Twojej branży? Tu masz gotowe zestawy pod kancelarię, e-commerce i budowlankę. Konkretne zadania, konkretny język branży.',
   metaTitle: 'Prompty branżowe AI: kancelaria, e-commerce, budowlanka',
   metaDescription:
-    'Gotowe prompty AI dla trzech branż: kancelaria, e-commerce i budowlanka. Pismo, opis produktu, kosztorys i więcej. Kopiujesz, podmieniasz dane i wklejasz do ChatGPT.',
+    'Gotowe prompty AI dla trzech branż: kancelaria, e-commerce i budowlanka. Pismo, opis produktu, kosztorys. Kopiujesz, podmieniasz dane, wklejasz do ChatGPT.',
   data: '2026-06-16',
   dataAktualizacji: '2026-06-16',
   queries: [

@@ -16,7 +16,7 @@ export const jakVoicebotOdbieraTelefony: Post = {
 
   metaTitle: 'Jak voicebot odbiera telefony, gdy pracujesz',
   metaDescription:
-    'Jak voicebot odbiera telefony, gdy pracujesz, i czy klienci to akceptują. Jak działa, kiedy łączy z człowiekiem i co zrobić, żeby brzmiał naturalnie po polsku.',
+    'Jak voicebot odbiera telefony, gdy pracujesz, i czy klienci to akceptują. Kiedy łączy z człowiekiem i co zrobić, żeby brzmiał naturalnie po polsku.',
 
   data: '2026-06-15',
   dataAktualizacji: '2026-06-15',

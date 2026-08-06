@@ -3,79 +3,46 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { USLUGI } from '@/lib/uslugi';
+import { InfIcon } from '@/components/ui/InfIcons';
+import type { NavDropdownData, NavDropdownItem } from './nav-data';
 
 /**
- * Menu "Usługi" w nagłówku (desktop) — INFINITY v2 (przebudowa wg Pawła):
- * JEDEN przycisk "Usługi" z chevronem W ŚRODKU (bez osobnego linku + ptaszka).
+ * NavDropdown — WSPÓLNY dropdown nawigacji desktop (INFINITY v3, partia A).
+ * Przemianowany wewnętrznie z ServicesMenu (v2 obsługiwał tylko "Usługi");
+ * teraz JEDEN komponent renderuje każdy z 5 dropdownów (Usługi / Produkty /
+ * Realizacje / Narzędzia / Wiedza) z danych `NavDropdownData` liczonych
+ * SERWEROWO w nav-data.ts (rejestry treści nie wchodzą do bundla klienta).
  *
- * Interakcja (spec v2 §Dropdown):
+ * Interakcja (mechanizm 1:1 z v2 — spec: hover-intent 180ms + klik toggle):
  *  - desktop: otwiera się na MOUSEENTER wrappera, zamyka po mouseleave
  *    z opóźnieniem ~180ms (hover-intent) — tylko pointerType 'mouse',
  *  - klik toggluje (także klawiatura: Enter/Spacja na buttonie),
  *  - Escape zamyka i oddaje fokus przyciskowi,
  *  - focus-within trzyma otwarte (zamknięcie z opóźnienia sprawdza fokus;
- *    blur poza wrapper zamyka od razu).
+ *    blur poza wrapper zamyka od razu),
+ *  - chevron w przycisku obraca się 180° przy otwartym (CSS .inf-nav-chevron).
  *
  * SEO: dropdown jest ZAWSZE w DOM (ukrywany CSS-em .inf-dd, NIE unmountowany),
- * więc linki /uslugi (wiersz "Wszystkie usługi") i /uslugi/<slug> są w HTML
- * dla botów. Pozycja "Architekci Wartości AI" WYPADŁA z dropdownu (decyzja
- * Pawła); jej link wewnętrzny żyje na hubie /uslugi (MagneticButton) i w menu
- * mobilnym Headera — SEO nie traci.
+ * więc link huba ("Wszystkie …" — pierwszy wiersz) i linki pozycji są w HTML
+ * dla botów przy pierwszym żądaniu.
  *
- * Wiersze: kafel 44px (.inf-tile .inf-tile-lg) z NATYWNYM emoji (dekoracja,
- * aria-hidden) w kolorze kategorii + tytuł 1:1 z rejestru (u.h1). Hover
- * wiersza: tło --surface-hover, tytuł cyjan, kafel translateY(-2px) — całość
- * w CSS (.inf-dd-row, globals.css; RM: bez ruchu).
+ * Wiersze v3: kafel 44px (.inf-tile .inf-tile-lg) z UNIKALNĄ ikoną SVG
+ * <InfIcon> w kolorze kategorii (dekoracja aria-hidden — etykietę niesie
+ * tytuł) + tytuł 1:1 z rejestru + krótki opis muted (.inf-dd-desc), jeśli
+ * rejestr ma krótkie pole. Hover wiersza: tło --surface-hover, kafelek
+ * translateY(-2px), ikona scale(1.12)+brightness(1.3) — całość w CSS
+ * (globals.css, partia A; RM: bez transformów).
  */
 
-/**
- * STAŁE kolory kategorii (spec-infinity v2 §Dropdown — zmierzone ze wzorca):
- * kolor jest WYŁĄCZNIE dekoracją kafelka (--tile-c: tło/obwódka/poświata) —
- * tekst wiersza jedzie na tokenach semantycznych (AA bez zmian).
- */
-const KATEGORIA_KOLOR: Record<string, string> = {
-  chatboty: '#22d3ee',
-  voiceboty: '#8b5cf6',
-  'agent-rekrutacyjny': '#a78bfa',
-  automatyzacje: '#10b981',
-  'dokumenty-faktury': '#f59e0b',
-  'opieka-ai': '#10b981',
-  'audyt-ai': '#f59e0b',
-  rozwiazania: '#8b5cf6',
-  'strony-www': '#22d3ee',
-  optymalizacja: '#22d3ee',
-};
-const KOLOR_POZOSTALE = '#8b5cf6';
-
-/** NATYWNE emoji kategorii (spec v2 — mapa Pawła). Czysta dekoracja: kafelek
- *  ma aria-hidden, etykietę niesie tytuł wiersza. */
-const EMOJI: Record<string, string> = {
-  chatboty: '💬',
-  voiceboty: '🎙️',
-  'agent-rekrutacyjny': '🤝',
-  automatyzacje: '⚡',
-  'dokumenty-faktury': '📄',
-  'opieka-ai': '🛡️',
-  'audyt-ai': '🔍',
-  rozwiazania: '🧩',
-  'strony-www': '🌐',
-  optymalizacja: '📈',
-};
-/** Fallback emoji — dla usług spoza mapy (nowe wpisy rejestru). */
-const EMOJI_DOMYSLNE = '✨';
-
-/** Kafelek kategorii — .inf-tile 44px (fundament): tło/obwódka/poświata w
- *  --tile-c, w środku natywne emoji 20px. */
-function KafelekUslugi({ slug }: { slug: string }) {
-  const kolor = KATEGORIA_KOLOR[slug] ?? KOLOR_POZOSTALE;
+/** Kafelek 44px z ikoną SVG w kolorze kategorii (czysta dekoracja). */
+function KafelekIkony({ item }: { item: NavDropdownItem }) {
   return (
     <span
       aria-hidden="true"
       className="inf-tile inf-tile-lg"
-      style={{ '--tile-c': kolor } as CSSProperties}
+      style={{ '--tile-c': item.c } as CSSProperties}
     >
-      {EMOJI[slug] ?? EMOJI_DOMYSLNE}
+      <InfIcon name={item.ikona} size={20} />
     </span>
   );
 }
@@ -83,15 +50,17 @@ function KafelekUslugi({ slug }: { slug: string }) {
 /** Opóźnienie zamknięcia po mouseleave (hover-intent, spec: ~180ms). */
 const CLOSE_DELAY_MS = 180;
 
-export function ServicesMenu() {
+export function NavDropdown({ data }: { data: NavDropdownData }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLLIElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const closeTimer = useRef<number | null>(null);
-  // Aktywna sekcja usług (hub i podstrony): aria-current="true" na przycisku
-  // (globalny stan ARIA) zapala stan aktywny .inf-nav-link[aria-current].
+  // Stan aktywny przycisku: hub, jego podstrony oraz dodatkowe prefiksy
+  // (Wiedza: /blog, /poradniki, /materialy, /ai-radar). aria-current="true"
+  // (globalny stan ARIA) zapala też stan .inf-nav-link[aria-current].
   const pathname = usePathname();
-  const uslugiActive = pathname === '/uslugi' || pathname.startsWith('/uslugi/');
+  const prefixes = [data.href, ...(data.activePrefixes ?? [])];
+  const active = prefixes.some((p) => pathname === p || pathname.startsWith(p + '/'));
 
   const cancelClose = () => {
     if (closeTimer.current !== null) {
@@ -151,17 +120,17 @@ export function ServicesMenu() {
         if (!e.currentTarget.contains(e.relatedTarget as Node)) setOpen(false);
       }}
     >
-      {/* JEDEN przycisk "Usługi" + chevron w środku (spec v2). Tekst 1:1. */}
+      {/* JEDEN przycisk kategorii + chevron w środku. Etykieta 1:1 z NAV_LINKS. */}
       <button
         ref={buttonRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-haspopup="true"
-        aria-current={uslugiActive ? 'true' : undefined}
+        aria-current={active ? 'true' : undefined}
         className="inf-nav-link"
       >
-        Usługi
+        {data.label}
         <svg
           width="14"
           height="14"
@@ -176,16 +145,16 @@ export function ServicesMenu() {
 
       {/* Dropdown ZAWSZE w DOM (SEO) — pokazuje/ukrywa go klasa .is-open. */}
       <ul className={'inf-dd' + (open ? ' is-open' : '')} role="menu">
-        {/* Pierwszy wiersz = link do huba /uslugi (nie może zniknąć z DOM).
-            Strzałka to dekoracja (aria-hidden), tekst 1:1. */}
+        {/* Pierwszy wiersz = link do huba (nie może zniknąć z DOM).
+            Strzałka to dekoracja (aria-hidden). */}
         <li role="none">
           <Link
             role="menuitem"
-            href="/uslugi"
+            href={data.href}
             onClick={() => setOpen(false)}
             className="inf-dd-row"
           >
-            <span className="inf-dd-title">Wszystkie usługi</span>
+            <span className="inf-dd-title">{data.hubLabel}</span>
             <span aria-hidden="true" className="sf-arrow ml-auto text-fg-muted">
               →
             </span>
@@ -194,16 +163,19 @@ export function ServicesMenu() {
 
         <li role="separator" className="my-1 border-t border-border" />
 
-        {USLUGI.map((u) => (
-          <li key={u.slug} role="none">
+        {data.items.map((item) => (
+          <li key={item.href} role="none">
             <Link
               role="menuitem"
-              href={`/uslugi/${u.slug}`}
+              href={item.href}
               onClick={() => setOpen(false)}
               className="inf-dd-row"
             >
-              <KafelekUslugi slug={u.slug} />
-              <span className="inf-dd-title">{u.h1}</span>
+              <KafelekIkony item={item} />
+              <span className="min-w-0 flex-1">
+                <span className="inf-dd-title">{item.tytul}</span>
+                {item.opis ? <span className="inf-dd-desc">{item.opis}</span> : null}
+              </span>
             </Link>
           </li>
         ))}

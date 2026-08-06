@@ -1,4 +1,4 @@
-import { Section, Button, SectionImage } from '@/components/ui';
+import { Section, Button } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HOME_CTA } from '@/lib/site';
 
@@ -17,9 +17,10 @@ const BOLE = [
 
 export function Problem() {
   return (
-    <Section tone="base" id="problem" space="md" className="overflow-x-clip">
-      {/* Tekst wraca do JEDNEJ kolumny — kadr „przed i po" nie jest ilustracją
-          obok akapitu, tylko osobnym aktem pod nim. Teksty i hierarchia
+    <Section tone="base" id="problem" space="md">
+      {/* INFINITY v3 (decyzja Pawła: zdjęcia WYLATUJĄ z całej strony): panorama
+          „przed i po" usunięta z renderu (plik webp zostaje w /public). Sekcja
+          to teraz nagłówek + jasna karta cytatów solo. Teksty i hierarchia
           nagłówków bez zmian. */}
       <div className="mx-auto max-w-narrow">
         <Reveal variant="header">
@@ -35,37 +36,17 @@ export function Problem() {
         </Reveal>
       </div>
 
-      {/* Plik to DYPTYK ze świetlistą linią w osi 50% („przed" po lewej,
-          „po" po prawej) — kolumna 460px zabijała narrację. 21:9 z 16:9 pokazuje
-          76% wysokości; focus y 42% -> okno 0,10-0,86, czyli obie twarze i
-          papiery zostają w kadrze. Na mobile wraca 16:9 (21:9 przy 375px to
-          pasek 160px).
-          INFINITY (bugfix „rozmazane zdjęcia"): pełny bleed .sf-bleed renderował
-          kadr szerzej niż źródło 1400px (upscale i rozmycie na >1400px viewport).
-          Panorama wraca w ryzy kontenera (max 1200px) z rogami i cienką obwódką
-          w języku kart wzorca; sizes odzwierciedla realną szerokość renderu. */}
-      <Reveal delay={0.1} className="mx-auto mt-12 max-w-[1400px] md:mt-16">
-        <SectionImage
-          src="/img/powtarzalna-robota-przed-i-po.webp"
-          alt="Przedsiębiorca zasypany papierami nocą i ten sam człowiek pracujący spokojnie z asystentem AI"
-          ratio="wide"
-          ratioMd="panorama"
-          focus="50% 42%"
-          hover
-          className="rounded-xl border border-border"
-          sizes="(min-width: 1240px) 1200px, 100vw"
-        />
-      </Reveal>
-
       {/* ŚWIAT B (makieta 2-problem): karta bólów to CELOWO BIAŁA wyspa światła
-          na ciemnej stronie, nachodząca na dolną krawędź panoramy (warstwa Z /
-          kolaż). data-theme="light" przełącza tokeny semantyczne strefowo, więc
+          na ciemnej stronie — po v3 stoi SOLO, wyśrodkowana (max-w-narrow =
+          760px, token repo najbliższy „~720px" ze spec), bez nachodzenia na
+          usuniętą panoramę (ujemne marginesy kolażu wypadły razem ze zdjęciem).
+          data-theme="light" przełącza tokeny semantyczne strefowo, więc
           wnętrze karty (tekst, kreski, tealowe „ , przycisk outline) liczy
           kontrast na bieli — zero ręcznych HEX-ów. Kaskadę wierszy dalej niesie
           .sf-stagger (selektor [data-reveal-shown] .sf-stagger > * z globals).
           Teksty 1:1; mostek do diagnozy wchodzi DO karty (makieta: cytaty +
           przycisk w jednej bryle). */}
-      <Reveal className="relative z-raised mx-auto -mt-10 max-w-narrow md:-mt-20">
+      <Reveal delay={0.1} className="mx-auto mt-12 max-w-narrow md:mt-16">
         <div data-theme="light" className="rounded-lg bg-surface px-6 shadow-lg md:px-8">
           <ul className="sf-stagger divide-y divide-border">
             {BOLE.map((bol, i) => (

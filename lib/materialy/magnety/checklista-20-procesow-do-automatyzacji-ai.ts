@@ -19,7 +19,7 @@ export const checklista20Procesow: Material = {
     'Nie widzisz, co da się zautomatyzować? Ta checklista pokazuje 20 powtarzalnych procesów, które AI zdejmuje z Twoich ludzi. Zaznaczasz swoje i wiesz, od czego zacząć.',
   metaTitle: 'Checklista: 20 procesów w firmie do automatyzacji AI',
   metaDescription:
-    'Checklista 20 procesów w firmie do automatyzacji AI: od maili i ofert po faktury i raporty. Przy każdym kryterium, czy to Twój przypadek, i pierwszy krok. Za darmo.',
+    'Checklista 20 procesów do automatyzacji AI: od maili i ofert po faktury i raporty. Przy każdym kryterium, czy to Twój przypadek, i pierwszy krok. Za darmo.',
   data: '2026-06-16',
   dataAktualizacji: '2026-06-16',
   queries: [

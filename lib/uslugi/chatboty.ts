@@ -22,7 +22,7 @@ export const chatboty: Usluga = {
 
   metaTitle: 'Chatbot AI dla firmy: wdrożenie 24/7',
   metaDescription:
-    'Wdrożenie chatbota AI dla firmy: odpowiada klientom 24/7, zbiera leady i uczy się na Twojej wiedzy. W dni, nie miesiące. Pierwszy krok do Agenta, który działa.',
+    'Chatbot AI dla firmy: odpowiada klientom 24/7, zbiera leady i uczy się na Twojej wiedzy. Wdrożenie w dni, nie miesiące. Pierwszy krok do Agenta.',
 
   problem: {
     h2: 'Ile razy dziennie odpowiadasz na to samo pytanie?',
@@ -80,9 +80,9 @@ export const chatboty: Usluga = {
 
   faq: [
     {
-      pytanie: 'Ile kosztuje chatbot dla firmy?',
+      pytanie: 'Ile kosztuje chatbot AI dla firmy?',
       odpowiedz:
-        'Koszt zależy od tego, co bot ma robić. Prosty chatbot odpowiadający na pytania to inna półka niż Agent umawiający wizyty z integracją kalendarza i CRM. Cenę liczymy od wartości, jaką daje, i podajemy ją na bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów i bez abonamentu na siłę.',
+        'Na pytanie, ile kosztuje chatbot dla firmy, odpowiadamy wprost: to zależy od zakresu. Gotowy chatbot odpowiadający na pytania z Twojej wiedzy to inna półka niż pełny Agent, który umawia wizyty i łączy się z kalendarzem czy CRM. Cenę liczymy od wartości, jaką bot daje, a dokładne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów i bez abonamentu na siłę.',
     },
     {
       pytanie: 'Czym chatbot różni się od AI Agenta?',
@@ -100,9 +100,9 @@ export const chatboty: Usluga = {
         'Na Twojej stronie i tam, gdzie piszą Twoi klienci: w popularnych komunikatorach i na profilach firmy. Jedna wiedza, ten sam bot, wiele kanałów. Klient pisze tam, gdzie mu wygodnie, a Ty masz to w jednym miejscu.',
     },
     {
-      pytanie: 'Ile trwa wdrożenie chatbota?',
+      pytanie: 'Ile trwa wdrożenie chatbota AI dla firmy?',
       odpowiedz:
-        'Prosty chatbot na stronie potrafi działać w kilka dni. Bot z integracjami i umawianiem wizyt zajmuje trochę dłużej, bo dochodzi łączenie z kalendarzem czy CRM. Dokładny termin podajemy na bezpłatnej diagnozie.',
+        'Wdrożenie liczymy w dniach, nie miesiącach. Prosty chatbot na stronie potrafi działać w kilka dni, więc pierwszy działający krok widzisz szybko. Bot z integracjami i umawianiem wizyt zajmuje trochę dłużej, bo dochodzi łączenie z kalendarzem czy CRM. Dokładny termin podajemy na bezpłatnej diagnozie.',
     },
     {
       pytanie: 'Czy chatbot zastąpi moją obsługę klienta?',
@@ -124,6 +124,7 @@ export const chatboty: Usluga = {
     'chatbot dla firmy',
     'wdrożenie chatbota',
     'ile kosztuje chatbot',
+    'ile kosztuje chatbot dla firmy',
     'chatbot AI dla firmy',
     'chatbot na stronę www',
   ],

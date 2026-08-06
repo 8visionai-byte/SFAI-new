@@ -18,7 +18,7 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
 
   metaTitle: 'Ile kosztuje wdrożenie AI agenta dla firmy? Cena i zwrot',
   metaDescription:
-    'Ile kosztuje wdrożenie AI agenta dla firmy? Czym agent różni się od chatbota, od czego zależy koszt, jak policzyć zwrot i po czym poznać, że wdrożenie się spina.',
+    'Ile kosztuje wdrożenie AI agenta dla firmy? Czym agent różni się od chatbota, od czego zależy koszt i jak policzyć zwrot, zanim zamówisz wdrożenie.',
 
   data: '2026-06-15',
   dataAktualizacji: '2026-06-15',
@@ -178,6 +178,21 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
       etykieta: 'Agent rekrutacyjny',
       href: '/uslugi/agent-rekrutacyjny',
       opis: 'Przykład agenta w akcji: odsiewa CV i umawia rozmowy bez Twojego udziału.',
+    },
+    {
+      etykieta: 'Chatboty dla firm',
+      href: '/uslugi/chatboty',
+      opis: 'Tańszy pierwszy krok: chatbot, który odpowiada klientom i rośnie do Agenta.',
+    },
+    {
+      etykieta: 'Voiceboty: bot telefoniczny',
+      href: '/uslugi/voiceboty',
+      opis: 'Agent w akcji na telefonie: odbiera połączenia, umawia wizyty i oddzwania.',
+    },
+    {
+      etykieta: 'Audyt AI: mapa oszczędności czasu',
+      href: '/uslugi/audyt-ai',
+      opis: 'Zanim wydasz na agenta, zobacz mapę procesów z największym zwrotem.',
     },
   ],
 

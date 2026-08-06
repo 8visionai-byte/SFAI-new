@@ -21,7 +21,7 @@ export const autoEmailBok: Realizacja = {
 
   metaTitle: 'Auto-email dla biura obsługi klienta',
   metaDescription:
-    'Case study: system AI dla biura obsługi klienta Instytutu Kryptografii. 75% maili wymaga już tylko drobnej korekty przed wysłaniem, drafty gotowe do jednego kliknięcia.',
+    'System AI dla biura obsługi klienta Instytutu Kryptografii: 75% maili wymaga tylko drobnej korekty, drafty gotowe do jednego kliknięcia. Case study.',
 
   kontekst: {
     h2: 'Z czym przyszedł klient?',

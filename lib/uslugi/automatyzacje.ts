@@ -22,7 +22,7 @@ export const automatyzacje: Usluga = {
 
   metaTitle: 'Automatyzacja procesów AI dla firm',
   metaDescription:
-    'Automatyzacja procesów AI: przepisywanie danych, potwierdzenia, przypomnienia przejmuje system. Wdrażamy w dni, nie w miesiące, dane zostają w UE. Zaczynasz od jednego procesu.',
+    'Automatyzacja procesów AI: przepisywanie danych, potwierdzenia i przypomnienia przejmuje system. Wdrażamy w dni, nie miesiące, a dane zostają w UE.',
 
   problem: {
     h2: 'Na czym naprawdę tracisz czas każdego dnia?',

@@ -2,12 +2,14 @@ import { Section, Button } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HOME_CTA } from '@/lib/site';
 import { ChatDemo } from '@/components/demo/ChatDemo';
+import { InfIcon } from '@/components/ui/InfIcons';
 
 /**
  * SEKCJA 10 — DEMO POKAZOWE (spec 03 §10). Emocja: kompetencja (szewc w butach).
  * Jasna sekcja domykająca akt III (rejestr pionowy sm). Kapsuła + opis w HTML
  * (nie blokuje indeksacji).
- * Czat = ChatDemo (STUB, atrapa). Voicebot = przycisk-stub. Backend = security layer.
+ * Czat = ChatDemo (STUB, atrapa). Voicebot = AKTYWNY link do żywego demo
+ * (druga strona Pawła: sfai-webseite-10k-look.vercel.app — spec v3 §VOICEBOT).
  *
  * UWAGA SPÓJNOŚCI: dopóki czat to atrapa (bez /api/chat), tekst sekcji NIE może
  * twierdzić, że to żywy Agent ("nie nagranie ani makieta") — bo ChatDemo odpowiada
@@ -44,11 +46,15 @@ export function ZyweDemo() {
           </p>
         </Reveal>
 
-        {/* Voicebot (stub).
-            INFINITY: neutralna kreska-przegroda ustępuje karcie wzorca (.inf-card)
-            z lewą krawędzią w kolorze kategorii voicebotów (violet #8b5cf6, rejestr
-            kolorów ze spec) i kafelkiem ikony .inf-tile (dekoracja aria-hidden).
-            Teksty, disabled przycisk i mikrokopia 1:1. */}
+        {/* Voicebot — ŻYWE demo (spec v3 §VOICEBOT, decyzja Pawła): martwy
+            disabled przycisk-stub zamieniony na AKTYWNY link zewnętrzny do
+            drugiej strony Pawła z działającym voicebotem, w stylu pigułki
+            .inf-glow-cta. Tekst przycisku 1:1; mikrokopia „uruchamiamy
+            wkrótce" USUNIĘTA (już nieprawdziwa — jedyna dozwolona zmiana
+            treści tej partii, zamówiona wprost). Karta wzorca (.inf-card)
+            z lewą krawędzią i kafelkiem w kolorze kategorii voicebotów
+            (violet #8b5cf6); emoji w kafelku ustąpiło ikonie SVG z InfIcons
+            (glif voicebotów 1:1 z rejestrem inf-kategorie). */}
         <Reveal delay={0.06}>
           <div
             className="inf-card flex h-full flex-col justify-center p-6"
@@ -60,21 +66,22 @@ export function ZyweDemo() {
               className="inf-tile mb-4"
               style={{ '--tile-c': '#8b5cf6' } as React.CSSProperties}
             >
-              🎙️
+              <InfIcon name="sluchawka-fala" />
             </span>
             <h3 className="text-h3">Wolisz posłuchać?</h3>
             <p className="mt-2 text-body-sm text-fg-muted">
               Voicebot odbierze, porozmawia po polsku i pokaże, jak brzmi obsługa telefonu bez Twojego udziału.
             </p>
             <div className="mt-5">
-              {/* STUB — voicebot demo. TODO: podłączyć numer/voice */}
-              <Button variant="secondary" disabled>
+              <a
+                href="https://sfai-webseite-10k-look.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inf-glow-cta"
+              >
                 Zadzwoń do Agenta i posłuchaj
-              </Button>
+              </a>
             </div>
-            <p className="mt-3 text-caption text-fg-subtle">
-              Voicebot demo uruchamiamy wkrótce. Chcesz usłyszeć go już teraz? Umów diagnozę, włączę na rozmowie.
-            </p>
           </div>
         </Reveal>
       </div>

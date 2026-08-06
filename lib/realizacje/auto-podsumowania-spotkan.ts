@@ -23,7 +23,7 @@ export const autoPodsumowaniaSpotkan: Realizacja = {
 
   metaTitle: 'Auto-podsumowania spotkań na Meet, Zoom i Teams',
   metaDescription:
-    'Case study: agent AI dołącza do spotkania na Meet, Zoom lub Teams, spisuje je i wysyła raport plus zadania per uczestnik. Mniej godzin na ręczne notatki (szac.).',
+    'Agent AI dołącza do spotkań na Meet, Zoom lub Teams, spisuje je i wysyła raport z zadaniami per uczestnik. Case study: mniej godzin na ręczne notatki.',
 
   kontekst: {
     h2: 'Z czym przyszedł klient?',

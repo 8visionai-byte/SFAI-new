@@ -17,7 +17,7 @@ export const zmianaPrzepisowAiUe: RadarNews = {
 
   metaTitle: 'AI Radar: zmiana przepisów o AI w UE a Twoja firma (szablon)',
   metaDescription:
-    'Przykładowy wpis AI Radar: jak tłumaczymy zmianę w unijnych przepisach o AI na konkret dla małej firmy. Kogo dotyczy, od kiedy, co zrobić. Treść to szablon formatu, nie porada prawna.',
+    'Zmiana przepisów o AI w UE na konkret dla małej firmy: kogo dotyczy, od kiedy, co zrobić. Przykładowy wpis AI Radar, szablon formatu, nie porada prawna.',
 
   data: '2026-06-16',
   dataAktualizacji: '2026-06-16',

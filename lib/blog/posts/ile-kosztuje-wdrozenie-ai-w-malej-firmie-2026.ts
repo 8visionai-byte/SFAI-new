@@ -16,7 +16,7 @@ export const ileKosztujeWdrozenieAi: Post = {
 
   metaTitle: 'Ile kosztuje wdrożenie AI w małej firmie w 2026?',
   metaDescription:
-    'Ile kosztuje wdrożenie AI w małej firmie w 2026? Co realnie wpływa na cenę chatbota, voicebota i automatyzacji, jak liczyć zwrot i od czego zacząć bez ryzyka.',
+    'Ile kosztuje wdrożenie AI w małej firmie w 2026? Co wpływa na cenę chatbota, voicebota i automatyzacji, jak liczyć zwrot i od czego zacząć bez ryzyka.',
 
   data: '2026-06-15',
   dataAktualizacji: '2026-06-15',

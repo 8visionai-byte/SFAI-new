@@ -28,7 +28,7 @@ export const optymalizacja: Usluga = {
 
   metaTitle: 'Pozycjonowanie pod AI: cytowanie w ChatGPT i Perplexity',
   metaDescription:
-    'Pozycjonowanie pod AI (GEO): sprawiamy, że ChatGPT, Claude, Gemini i Perplexity polecają Twoją firmę w odpowiedziach. Mierzymy cytowalność co tydzień w czterech silnikach.',
+    'Pozycjonowanie pod AI (GEO): sprawiamy, że ChatGPT, Claude, Gemini i Perplexity polecają Twoją firmę. Cytowalność mierzymy co tydzień w czterech silnikach.',
 
   problem: {
     h2: 'Klienci pytają AI, a AI poleca kogoś innego?',
