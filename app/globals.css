@@ -2139,14 +2139,16 @@ body {
   left: -10px;
   top: 50%;
   width: 2px;
-  height: 0;
+  height: 60%;
   border-radius: 999px;
   background: var(--accent);
-  transform: translateY(-50%);
-  transition: height 220ms var(--ease-out);
+  /* Kreska rośnie od środka: scaleY (kompozytor), nie height — identyczny
+     wygląd (translateY(-50%) centruje, origin domyślnie w środku). */
+  transform: translateY(-50%) scaleY(0);
+  transition: transform 220ms var(--ease-out);
 }
 .sf-faq[open] > summary::before {
-  height: 60%;
+  transform: translateY(-50%) scaleY(1);
 }
 
 /* Reakcje na hover TYLKO na wskaźniku precyzyjnym (na dotyku hover „przykleja
