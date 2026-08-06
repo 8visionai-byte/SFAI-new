@@ -37,12 +37,21 @@ Maszyna do pisania H1 = NIETYKALNA (sygnatura Pawła).
      litery przy pierwszym paintcie, typing po hydracji — LCP spada do ~1,5s,
      kosztem mignięcia pełnego H1 na wolnych telefonach) — DECYZJA PAWŁA.
 
+7. [DONE 2026-08-05] GSC przez konto usługi DZIAŁA (API włączone przez Pawła):
+   pierwszy raport oddany — 28 dni: 18 klik / 1139 wyśw / CTR 1,6% / śr. poz. 22,7.
+8. [DONE 2026-08-05] Umami live i ZBIERA (dowód: gateway.umami.is/api/send → 200).
+   Po drodze złapany bug: beacony szły na gateway.umami.is, a CSP przepuszczał
+   tylko api-gateway.umami.dev (nieaktualne) → fix connect-src *.umami.is
+   (commit 8be66f5). Website ID jest z założenia publiczne (i tak siedzi w HTML).
+9. [DONE 2026-08-05] Kreska FAQ na scaleY zamiast height (hook impeccable),
+   commit 1883e0d; zweryfikowane w realnym Chrome (uwaga: ukryta karta mrozi
+   DocumentTimeline — transition wisi na 0; weryfikować na wysunietej karcie).
+
 ## Czeka na Pawła
-- GSC: włączyć API Search Console w projekcie GCP (link podany) → wtedy
-  odpalam tools/gsc-raport.js i oddaję pierwszy raport.
-- Umami: rejestracja na umami.is → Website ID → env NEXT_PUBLIC_UMAMI_WEBSITE_ID
-  w Vercelu → redeploy (kod + CSP gotowe).
 - Decyzja: fix LCP maszyny pisania (opcja B powyżej) — tak/nie.
+- Ahrefs Webmaster Tools: wybrać "Import from GSC" (instrukcja podana).
+- "Pandy → robociki pixel-art z uściskiem dłoni": NIE ZNALEZIONE w żadnym repo
+  (SF WWW, KNF, Fizjoplan, Papi) — czekam na wskazanie, gdzie ta animacja jest.
 
 ## Otwarte drobiazgi (nie blokują)
 - PNG logo 1.4-1.8MB w public/brand (kandydat do kompresji)
