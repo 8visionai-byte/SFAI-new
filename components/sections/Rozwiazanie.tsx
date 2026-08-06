@@ -104,15 +104,25 @@ export function Rozwiazanie() {
 
       {/* Tabela porównawcza (HTML) — karta katalogowa, nie arkusz zaznaczony
           zakreślaczem: wygraną kolumnę trzyma 1px kreska akcentowa i font-medium,
-          nie plama bg-accent-soft. Treść komórek 1:1. */}
+          nie plama bg-accent-soft. Treść komórek 1:1.
+          INFINITY (bugfix „rozjechana tabela"): mobile jedzie w overflow-x-auto
+          na min-w-[36rem]; desktop (md+) przechodzi na table-fixed z twardymi
+          szerokościami kolumn 18/38/44% (colgroup), więc nagłówki nie nachodzą
+          na siebie w paśmie 768-1280px. Nagłówki kolumn w mono .inf-overline
+          (utility koloru bije warstwę components — akcent zostaje akcentem). */}
       <Reveal delay={0.1}>
         <div className="mx-auto mt-12 max-w-wide overflow-x-auto md:mt-16">
-          <table className="w-full min-w-[36rem] border-collapse text-left text-body-sm">
+          <table className="w-full min-w-[36rem] border-collapse text-left text-body-sm md:table-fixed">
+            <colgroup>
+              <col className="md:w-[18%]" />
+              <col className="md:w-[38%]" />
+              <col className="md:w-[44%]" />
+            </colgroup>
             <thead>
               <tr className="border-b border-border-strong">
                 <th scope="col" className="py-3 pr-4"> </th>
-                <th scope="col" className="px-4 py-3 text-overline font-semibold uppercase tracking-[0.12em] text-fg-subtle">Zwykły chatbot</th>
-                <th scope="col" className="border-l border-border-accent px-4 py-3 text-overline font-semibold uppercase tracking-[0.12em] text-accent">AI Agent od SimpleFast.ai</th>
+                <th scope="col" className="inf-overline px-4 py-3 align-bottom">Zwykły chatbot</th>
+                <th scope="col" className="inf-overline border-l border-border-accent px-4 py-3 align-bottom text-accent">AI Agent od SimpleFast.ai</th>
               </tr>
             </thead>
             <tbody>

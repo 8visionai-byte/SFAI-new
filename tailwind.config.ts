@@ -73,6 +73,8 @@ const config: Config = {
       fontFamily: {
         display: ['var(--font-jakarta)', 'system-ui', 'sans-serif'],
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        // INFINITY: mono-akcent (JetBrains Mono z next/font w layout.tsx).
+        mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       fontSize: {
         // [rozmiar, { lineHeight, letterSpacing }]

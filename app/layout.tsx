@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
+import { Inter, JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { SITE } from '@/lib/site';
 import { JsonLd } from '@/components/seo/JsonLd';
@@ -29,6 +29,15 @@ const jakarta = Plus_Jakarta_Sans({
   variable: '--font-jakarta',
   display: 'swap',
   weight: ['400', '500', '600', '700', '800'],
+});
+
+/* INFINITY: mono-akcent wzorca (overline'y, chipy, tagi, liczniki, CTA).
+   Tylko 2 wagi — mono to przyprawa, nie font treści. */
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-mono',
+  display: 'swap',
+  weight: ['400', '700'],
 });
 
 export const metadata: Metadata = {
@@ -65,9 +74,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  // ŚWIAT B: cała strona jest ciemna — pasek przeglądarki zawsze w granacie
-  // kadru (navy-950), niezależnie od systemowego schematu kolorów.
-  themeColor: '#0b1220',
+  // ŚWIAT B / INFINITY: cała strona jest ciemna — pasek przeglądarki zawsze
+  // w pogłębionej czerni kadru (--bg #06070d), niezależnie od systemowego
+  // schematu kolorów.
+  themeColor: '#06070d',
   width: 'device-width',
   initialScale: 1,
 };
@@ -78,12 +88,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pl" className={`${inter.variable} ${jakarta.variable}`}>
+    <html
+      lang="pl"
+      className={`${inter.variable} ${jakarta.variable} ${jetbrainsMono.variable}`}
+    >
       <body>
         {/* Skip-link — pierwsza rzecz w tab order (bramka A11y) */}
         <a href="#main" className="skip-link">
           Przejdź do treści
         </a>
+
+        {/* INFINITY: starfield strony — dekoracja FIXED pod całą treścią
+            (wzór .bg-metal-decor w ScrollMetalProgress: fixed + pointer-events
+            none; tu z-index:-1). Czysty CSS, zero JS; sekcje z własnym solidnym
+            tłem kryją go naturalnie. Drift tylko desktop (bramka w CSS). */}
+        <div aria-hidden="true" className="inf-stars" />
 
         <Header />
         {children}

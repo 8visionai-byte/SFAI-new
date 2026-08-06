@@ -66,13 +66,17 @@ export function LogoImage({
 /**
  * Logo — link do strony głównej (nagłówek/stopka).
  *
- * ŚWIAT B (ciemna pracownia, makieta zrodla/makiety-b/1-hero.png): oficjalny
- * poziomy PNG (grafitowy metal + nasycone granatowe litery) GINIE na navy-950,
- * więc pasek renderuje WORDMARK TEKSTOWY — „SimpleFast" w bieli (--fg) i „.ai"
- * w gradiencie trasy z solidnym fallbackiem AA (.sf-wordmark / .sf-wordmark-ai
- * w globals.css). aria-label bez zmian; marka zostaje realnym tekstem w DOM
- * (cytowalność #1), a LCP zyskuje: zero obrazka do pobrania w nagłówku.
- * Wariant 'mark' (sam znak, kwadrat) zostaje OBRAZKIEM do wąskich miejsc.
+ * INFINITY (spec-infinity §adaptacja, „LOGO WRACA"): Paweł zażądał powrotu
+ * OFICJALNEGO ZNAKU graficznego (cyrkiel, public/brand/mark-t.png — kwadrat
+ * z prawdziwą alfą) do nagłówka. Układ: znak ~28px z delikatnym drop-shadow
+ * w violecie marki (#7A3CF0) + istniejący WORDMARK TEKSTOWY „SimpleFast" w
+ * bieli (--fg) i „.ai" w gradiencie trasy z solidnym fallbackiem AA
+ * (.sf-wordmark / .sf-wordmark-ai w globals.css) — .sf-wordmark NIE znika.
+ * Znak jest dekoracyjny (alt="" + aria-hidden), etykietę niesie aria-label
+ * linku; marka zostaje realnym tekstem w DOM (cytowalność #1). next/image
+ * serwuje mark-t.png przeskalowany do 28px (avif/webp), więc waga w nagłówku
+ * jest pomijalna; priority/fetchpriority przechodzi jak dotąd.
+ * Wariant 'mark' (sam znak, kwadrat) bez zmian — do wąskich miejsc.
  */
 export function Logo({
   className,
@@ -103,8 +107,16 @@ export function Logo({
     <Link
       href="/"
       aria-label={`${LABEL} — strona główna`}
-      className={cn('inline-flex items-center', className)}
+      className={cn('inline-flex items-center gap-2', className)}
     >
+      {/* Znak cyrkla ~28px z poświatą violet marki (dekoracja — alt=""). */}
+      <LogoImage
+        variant="mark"
+        decorative
+        priority={priority}
+        sizes="28px"
+        className="h-7 w-7 [filter:drop-shadow(0_2px_10px_rgba(122,60,240,0.5))]"
+      />
       <span className="sf-wordmark text-[1.3rem] leading-none sm:text-[1.5rem]">
         SimpleFast<span className="sf-wordmark-ai">.ai</span>
       </span>

@@ -139,18 +139,24 @@ export function BranzeDemo() {
         </Reveal>
       </div>
 
-      {/* OKNO AGENTA — terminal/czat. Sama warstwa wizualna typewritera. */}
+      {/* OKNO AGENTA — terminal/czat. Sama warstwa wizualna typewritera.
+          INFINITY (spec, zadanie 7): ramka terminala w języku wzorca — solidne
+          tło --surface (#0d1018), obwódka accent, kropki okna w kolorach trasy
+          marki (dekoracja aria-hidden, wzorzec infinitytechstack ma je jawnie),
+          pasek i status w mono. Treść pisana i wszystkie stringi 1:1.
+          overflow-hidden zostaje (w środku nic nie wystaje poza kadr). */}
       <Reveal delay={0.1}>
-        {/* .sf-window = 1px metaliczna krawędź górna zamiast atrapy okna systemowego
-            (trzy kropki macOS to jeden z najczęściej wytykanych sygnałów „to generował
-            model"). shadow-md, bo to najbardziej efektowny element sekcji.
-            ŚWIAT B: korpus okna to szkło (.sf-glass) na włosie (hairline) —
-            terminal wtapia się w ciemną pracownię zamiast stać jako jasna karta. */}
-        <div className="sf-window sf-glass mx-auto mt-8 max-w-narrow overflow-hidden rounded-lg border border-hairline shadow-md">
-          {/* Pasek okna: etykieta + status */}
-          <div className="flex items-center gap-3 border-b border-hairline bg-bg-subtle px-5 py-3.5">
-            <span className="text-ui font-semibold text-fg">Agent SimpleFast</span>
-            <span className="ml-auto inline-flex items-center gap-2 text-caption text-fg-subtle">
+        <div className="mx-auto mt-8 max-w-narrow overflow-hidden rounded-lg border border-border-accent bg-surface shadow-md">
+          {/* Pasek okna: kropki + etykieta + status */}
+          <div className="flex items-center gap-3 border-b border-hairline bg-surface-sunken px-5 py-3.5">
+            {/* Kropki okna terminala — trasa marki zamiast semaforu macOS. */}
+            <span aria-hidden="true" className="flex items-center gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-[#2b7cff]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#8b5cf6]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#22e06b]" />
+            </span>
+            <span className="font-mono text-ui font-semibold text-fg">Agent SimpleFast</span>
+            <span className="ml-auto inline-flex items-center gap-2 font-mono text-caption text-fg-subtle">
               {/* Statyczny pierścień zamiast animate-pulse: ten sam sygnał „live" przy
                   zerowym koszcie na klatkę. Kontrakt: max 1 pętla ambient na viewport,
                   a tu biegły dwie (kropka + kursor). */}
@@ -216,7 +222,7 @@ export function BranzeDemo() {
             key={b.label}
             className={
               reduce
-                ? 'rounded-lg border border-border bg-surface px-5 py-4'
+                ? 'inf-card px-5 py-4'
                 : undefined
             }
           >

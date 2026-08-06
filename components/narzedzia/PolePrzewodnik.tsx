@@ -1,18 +1,21 @@
 'use client';
 
-import { useId } from 'react';
+import { useId, type CSSProperties } from 'react';
 
 /**
  * PolePrzewodnik — sprzężony suwak + pole numeryczne z opisem-przewodnikiem
  * (spec 07 §1.2). Jeden stan, dwie kontrolki edytujące tę samą liczbę.
  *
- * A11y: <label> spięty z OBOMA inputami (suwak ma własne id, pole własne id, oba
- * opisuje ten sam tekst pod polem przez aria-describedby). Suwak i pole mają
- * min/max/step, więc klawiatura i czytnik dostają pełny kontekst. Cel dotykowy
- * suwaka >=44px (track h-[44px] z grubym kciukiem). Liczby w tabular-nums.
+ * INFINITY (język CostForge): suwak dostaje KOLOROWY kciuk (kolor trasy marki
+ * per suwak — prop `akcent` ustawia --range-c: accent-color + tło kciuka przez
+ * klasę .inf-range), a wartość bieżąca siedzi w MONO PIGUŁCE POD suwakiem
+ * (.inf-range-pill). Pigułka to wciąż EDYTOWALNE pole numeryczne (funkcja 1:1,
+ * zmieniona tylko skórka i pozycja). Mobile: suwak pełna szerokość, jak był.
  *
- * Mobile-first: kciukiem działa suwak, palcem klawiatury pole. Wartość zawsze
- * widoczna jako liczba (nie tylko pozycja kciuka).
+ * A11y: <label> spięty z suwakiem; pole numeryczne ma własny aria-label i
+ * aria-describedby (ten sam opis). Min/max/step na obu kontrolkach. Cel dotykowy
+ * suwaka >=44px. Focus pigułki = focus-within (ring na kontenerze). Liczby w
+ * tabular-nums (mono).
  */
 type PolePrzewodnikProps = {
   label: string;
@@ -25,6 +28,12 @@ type PolePrzewodnikProps = {
   step?: number;
   /** Sufiks w polu (np. "zł", "h", "%") — czysto wizualny, wartość to liczba. */
   suffix?: string;
+  /**
+   * Kolor akcentu suwaka (hex z trasy marki, np. '#2b7cff') — per instancja
+   * przez custom property --range-c (konwencja utilities .inf-* z globals.css).
+   * Brak = akcent domyślny (cyjan).
+   */
+  akcent?: string;
 };
 
 export function PolePrzewodnik({
@@ -36,10 +45,15 @@ export function PolePrzewodnik({
   max,
   step = 1,
   suffix,
+  akcent,
 }: PolePrzewodnikProps) {
   const sliderId = useId();
   const numberId = useId();
   const opisId = useId();
+
+  const akcentStyle = akcent
+    ? ({ '--range-c': akcent } as CSSProperties)
+    : undefined;
 
   // Twarde domknięcie do zakresu (pole numeryczne pozwala wpisać spoza zakresu).
   function clamp(n: number): number {
@@ -49,11 +63,26 @@ export function PolePrzewodnik({
 
   return (
     <div>
-      <div className="mb-2 flex items-end justify-between gap-3">
-        <label htmlFor={sliderId} className="text-body-sm font-medium text-fg">
-          {label}
-        </label>
-        <div className="flex shrink-0 items-center gap-1.5">
+      <label htmlFor={sliderId} className="mb-1 block text-body-sm font-medium text-fg">
+        {label}
+      </label>
+
+      <input
+        id={sliderId}
+        type="range"
+        value={value}
+        min={min}
+        max={max}
+        step={step}
+        aria-describedby={opisId}
+        onChange={(e) => onChange(clamp(parseFloat(e.target.value)))}
+        style={akcentStyle}
+        className="sf-range inf-range h-[44px] w-full cursor-pointer appearance-none bg-transparent focus-visible:outline-none"
+      />
+
+      {/* Wartość bieżąca — mono pigułka pod suwakiem (edytowalna). */}
+      <div className="mt-1 flex items-center justify-between gap-3">
+        <span style={akcentStyle} className="inf-range-pill">
           <input
             id={numberId}
             type="number"
@@ -65,29 +94,74 @@ export function PolePrzewodnik({
             aria-label={`${label} (wartość liczbowa)`}
             aria-describedby={opisId}
             onChange={(e) => onChange(clamp(parseFloat(e.target.value)))}
-            className="w-20 rounded-sm border-[1.5px] border-border bg-surface px-2.5 py-1.5 text-right text-body-sm font-semibold tabular-nums text-fg focus:border-accent focus:outline-none focus:ring-[3px] focus:ring-accent-soft"
+            className="w-16 border-0 bg-transparent p-0 text-right font-mono text-body-sm font-bold tabular-nums text-fg focus:outline-none"
           />
           {suffix ? (
-            <span className="text-body-sm font-medium text-fg-muted">{suffix}</span>
+            <span className="font-mono text-caption text-fg-muted">{suffix}</span>
           ) : null}
-        </div>
+        </span>
+
+        <p id={opisId} className="text-caption text-fg-subtle">
+          {opis}
+        </p>
       </div>
-
-      <input
-        id={sliderId}
-        type="range"
-        value={value}
-        min={min}
-        max={max}
-        step={step}
-        aria-describedby={opisId}
-        onChange={(e) => onChange(clamp(parseFloat(e.target.value)))}
-        className="sf-range h-[44px] w-full cursor-pointer appearance-none bg-transparent focus-visible:outline-none"
-      />
-
-      <p id={opisId} className="mt-1 text-caption text-fg-subtle">
-        {opis}
-      </p>
     </div>
   );
 }
+
+/* CSS DO DOPISANIA (partia CHAT+TOOLS): pełne reguły — kolorowy suwak CostForge
+   (.inf-range) + mono pigułka wartości (.inf-range-pill). Kolor per instancja:
+   --range-c (fallback = akcent marki). Reguły muszą trafić PO .sf-range w
+   kolejności źródła (ta sama specyficzność pseudo-elementów — wygrywa późniejsza);
+   focus kciuka zostaje z .sf-range:focus-visible (wyższa specyficzność, bez zmian).
+   Bazowe klasy do @layer components; color-mix z pancernym fallbackiem.
+
+@layer components {
+  .inf-range {
+    --range-c: var(--accent);
+    accent-color: var(--range-c);
+  }
+  .inf-range::-webkit-slider-thumb {
+    background: var(--range-c);
+    box-shadow: var(--shadow-sm);
+    box-shadow:
+      var(--shadow-sm),
+      0 0 14px -2px color-mix(in srgb, var(--range-c) 60%, transparent);
+  }
+  .inf-range::-moz-range-thumb {
+    background: var(--range-c);
+  }
+  .inf-range::-moz-range-progress {
+    background: var(--range-c);
+    background: color-mix(in srgb, var(--range-c) 70%, transparent);
+  }
+
+  .inf-range-pill {
+    --range-c: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    min-height: 36px;
+    padding: 0.25rem 0.875rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    border-color: color-mix(in srgb, var(--range-c) 45%, transparent);
+    background-color: rgba(255, 255, 255, 0.04);
+    background-color: color-mix(in srgb, var(--range-c) 10%, transparent);
+    transition:
+      border-color var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out);
+  }
+  .inf-range-pill:focus-within {
+    border-color: var(--range-c);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--range-c) 25%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inf-range-pill {
+    transition: none !important;
+  }
+}
+*/

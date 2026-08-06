@@ -13,6 +13,27 @@ import { USLUGI } from '@/lib/uslugi';
  * przez Google. Dopóki Paweł nie poda realnych widełek, kolumna ceny kieruje na diagnozę,
  * a nie pokazuje zmyślonej kwoty. INPUT PAWŁA: realne "od X zł", oszczędność/mc, dni.
  */
+/* INFINITY: rejestr kolorów kategorii (spec HERO+NAV): chatboty blue #2b7cff,
+   voiceboty violet #8b5cf6, automatyzacje green #22e06b, strony/SEO cyan #22d3ee,
+   dokumenty amber #f59e0b. Kolor i glif są WYŁĄCZNIE dekoracją (aria-hidden /
+   custom property --tile-c, --card-c) — treść i kontrast tekstu niosą tokeny. */
+const KATEGORIA: Record<string, { c: string; glif: string }> = {
+  chatboty: { c: '#2b7cff', glif: '💬' },
+  voiceboty: { c: '#8b5cf6', glif: '🎙️' },
+  'agent-rekrutacyjny': { c: '#2b7cff', glif: '🤝' },
+  automatyzacje: { c: '#22e06b', glif: '⚙️' },
+  'dokumenty-faktury': { c: '#f59e0b', glif: '📄' },
+  'opieka-ai': { c: '#22e06b', glif: '🛡️' },
+  'audyt-ai': { c: '#f59e0b', glif: '🔍' },
+  rozwiazania: { c: '#8b5cf6', glif: '🧩' },
+  'strony-www': { c: '#22d3ee', glif: '🌐' },
+  optymalizacja: { c: '#22d3ee', glif: '📈' },
+};
+const KATEGORIA_DEFAULT = { c: 'var(--accent-decor)', glif: '→' } as const;
+
+/* Tonacja dekoracyjna kart cennika = trzy stopnie trasy marki (krok po kroku). */
+const POZIOM_TON = ['#2b7cff', '#8b5cf6', '#22e06b'] as const;
+
 const POZIOMY = [
   {
     name: 'Start',
@@ -74,21 +95,33 @@ export function Oferta() {
             kontener wokół kart nie może mieć overflow:hidden (utnie badge na
             -top-3) — kontrakt obowiązuje też .sf-glass/.sf-rim-gradient. */}
         <Reveal className="sf-stagger grid items-center gap-6 md:grid-cols-3">
-          {POZIOMY.map((p) => (
+          {POZIOMY.map((p, i) => (
             <div key={p.name}>
               {/* Aura .card-aura zeszła z cennika (język świata B: rim zamiast
-                  neonowej pętli) — jedyna aura home zostaje na AgentDemo. */}
+                  neonowej pętli) — jedyna aura home zostaje na AgentDemo.
+                  INFINITY: karty boczne przechodzą na .inf-card (ciemna karta
+                  wzorca z lewą krawędzią w stopniu trasy marki). Wyróżniony plan
+                  ZOSTAJE na .sf-rim-gradient (obrys trasą + aura, makieta 4) —
+                  NIE łączyć z .inf-card: obie klasy zajmują ::before. */}
               <Card
                 variant="quiet"
                 as="article"
                 className={
                   p.highlight
                     ? 'sf-glass sf-rim-gradient relative flex h-full flex-col rounded-lg p-6 shadow-md md:-my-5 md:py-11'
-                    : 'sf-glass relative flex h-full flex-col rounded-lg p-6'
+                    : 'inf-card relative flex h-full flex-col p-6'
+                }
+                style={
+                  p.highlight
+                    ? undefined
+                    : ({ '--card-c': POZIOM_TON[i] ?? 'var(--accent-decor)' } as React.CSSProperties)
                 }
               >
+                {/* Badge planu — mono .inf-tag na tle akcentu (utilities biją
+                    warstwę components: bg/tekst/border z utility). Rodzice NIE
+                    mają overflow:hidden — badge na -top-3 nie może być ucięty. */}
                 {p.highlight && (
-                  <span className="absolute -top-3 left-6 rounded-full bg-accent px-3 py-1 text-caption font-semibold text-accent-contrast shadow-sm">
+                  <span className="inf-tag absolute -top-3 left-6 rounded-full border-transparent bg-accent px-3 py-1 text-accent-contrast shadow-sm">
                     Najczęściej wybierane
                   </span>
                 )}
@@ -101,19 +134,20 @@ export function Oferta() {
                     i tabular-nums (bez ani jednej cyfry) tylko psują typografię. */}
                 <p className="mt-6 max-w-[16ch] font-display text-h3 font-medium leading-[1.25] text-fg">{p.price}</p>
 
-                {/* Etykiety <dt> 1:1 co do znaku — ginie wyłącznie uppercase i tracking
-                    (limit anty-slop: max 1 eyebrow na 3 sekcje, a tu było ich 9). */}
+                {/* Etykiety <dt> 1:1 co do znaku — INFINITY: mono micro-caps
+                    .inf-overline (język etykiet wzorca; transform to prezentacja,
+                    string w DOM bez zmian). */}
                 <dl className="mt-5 space-y-3 border-t border-border pt-5 text-body-sm">
                   <div>
-                    <dt className="text-caption font-medium normal-case text-fg-subtle">Co dostajesz</dt>
+                    <dt className="inf-overline">Co dostajesz</dt>
                     <dd className="text-fg">{p.get}</dd>
                   </div>
                   <div>
-                    <dt className="text-caption font-medium normal-case text-fg-subtle">Oszczędza</dt>
+                    <dt className="inf-overline">Oszczędza</dt>
                     <dd className="text-fg">{p.saves}</dd>
                   </div>
                   <div>
-                    <dt className="text-caption font-medium normal-case text-fg-subtle">Czas wdrożenia</dt>
+                    <dt className="inf-overline">Czas wdrożenia</dt>
                     <dd className="text-fg">{p.time}</dd>
                   </div>
                 </dl>
@@ -151,23 +185,39 @@ export function Oferta() {
           {/* Lista katalogowa zamiast sześciu identycznych pudełek pod trzema
               identycznymi pudełkami cennika. Anchor = H1 usługi (SEO 1:1).
               Mikrokopia „Zobacz, jak to działa" nie ginie z treści — schodzi do
-              sr-only, glif → to dekoracja aria-hidden. */}
+              sr-only, glif → to dekoracja aria-hidden.
+              INFINITY: wiersz jak w dropdownie wzorca — kafelek .inf-tile w
+              kolorze kategorii (rejestr KATEGORIA) + tytuł bold + opis muted +
+              strzałka .inf-arrow dojeżdżająca na hover wiersza. Teksty 1:1. */}
           <ul className="mx-auto mt-8 max-w-wide divide-y divide-border border-y border-border">
-            {USLUGI.map((u) => (
-              <li key={u.slug}>
-                <Link
-                  href={`/uslugi/${u.slug}`}
-                  className="group grid items-baseline gap-x-8 gap-y-1 py-5 transition-colors duration-fast hover:bg-bg-subtle md:grid-cols-[minmax(0,26ch)_minmax(0,1fr)_auto] md:px-3"
-                >
-                  <span className="text-body font-semibold text-fg transition-colors duration-fast group-hover:text-accent">
-                    {u.h1}
-                  </span>
-                  <span className="text-body-sm text-fg-muted">{u.metaDescription}</span>
-                  <span aria-hidden="true" className="sf-arrow hidden text-accent md:block">→</span>
-                  <span className="sr-only">Zobacz, jak to działa</span>
-                </Link>
-              </li>
-            ))}
+            {USLUGI.map((u) => {
+              const kat = KATEGORIA[u.slug] ?? KATEGORIA_DEFAULT;
+              return (
+                <li key={u.slug}>
+                  <Link
+                    href={`/uslugi/${u.slug}`}
+                    className="group flex items-center gap-4 py-4 transition-colors duration-fast hover:bg-bg-subtle md:gap-5 md:px-3"
+                  >
+                    {/* Kafelek ikony kategorii (dekoracja aria-hidden). */}
+                    <span
+                      aria-hidden="true"
+                      className="inf-tile"
+                      style={{ '--tile-c': kat.c } as React.CSSProperties}
+                    >
+                      {kat.glif}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-body font-semibold text-fg transition-colors duration-fast group-hover:text-accent">
+                        {u.h1}
+                      </span>
+                      <span className="mt-0.5 block text-body-sm text-fg-muted">{u.metaDescription}</span>
+                    </span>
+                    <span aria-hidden="true" className="inf-arrow hidden text-accent group-hover:translate-x-1 md:inline-block">→</span>
+                    <span className="sr-only">Zobacz, jak to działa</span>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
       </Reveal>

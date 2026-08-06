@@ -166,14 +166,11 @@ export function AgentDemo() {
 function DemoHeader({ label, tone }: { label: string; tone: 'muted' | 'accent' }) {
   return (
     /* Atrapa kropek okna macOS usunięta (na stronie było ich sześć). Zamiast niej
-       miarka w języku cyrkla: 12px kreska dociągnięta do prawej krawędzi. */
+       miarka w języku cyrkla: 12px kreska dociągnięta do prawej krawędzi.
+       INFINITY: etykieta panelu w mono micro-caps (.inf-overline) — język
+       overline'ów wzorca; kolor akcentu dokłada utility (bije warstwę components). */
     <div className="flex items-center gap-2 border-b border-border pb-3">
-      <span
-        className={cn(
-          'text-caption font-semibold',
-          tone === 'accent' ? 'text-accent' : 'text-fg-subtle'
-        )}
-      >
+      <span className={cn('inf-overline', tone === 'accent' && 'text-accent')}>
         {label}
       </span>
       <span className="ml-auto h-px w-12 bg-border" aria-hidden="true" />

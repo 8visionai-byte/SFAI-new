@@ -39,15 +39,19 @@ export function ChatDemo() {
   }
 
   return (
-    /* ŚWIAT B: panel czatu = ciemne szkło (.sf-glass) na włosie (hairline). */
-    <div className="sf-glass flex flex-col overflow-hidden rounded-lg border border-hairline shadow-sm">
-      <div className="flex items-center gap-2 border-b border-hairline px-5 py-4">
-        <span
-          className="inline-block h-2.5 w-2.5 rounded-full bg-accent"
-          aria-hidden="true"
-        />
-        <span className="text-ui font-semibold text-fg">Zapytaj naszego Agenta</span>
-        <span className="ml-auto text-caption text-fg-subtle">demo</span>
+    /* INFINITY: ramka okna czatu = .inf-card (lewa krawędź akcentowa, ciemna
+       karta wzorca). BEZ overflow-hidden — ::before karty siedzi NA krawędzi
+       (kontrakt .inf-card w globals.css). Treść 1:1. */
+    <div className="inf-card flex flex-col shadow-sm">
+      {/* Nagłówek — mono caps + zielona kropka statusu (.inf-ask-dot). */}
+      <div className="flex items-center gap-2.5 border-b border-hairline px-5 py-4">
+        <span className="inf-ask-dot" aria-hidden="true" />
+        <span className="font-mono text-caption font-bold uppercase tracking-[0.12em] text-fg">
+          Zapytaj naszego Agenta
+        </span>
+        <span className="ml-auto font-mono text-overline uppercase tracking-[0.14em] text-fg-subtle">
+          demo
+        </span>
       </div>
 
       <div

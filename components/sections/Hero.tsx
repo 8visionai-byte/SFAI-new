@@ -1,4 +1,5 @@
-import { Section, MagneticButton, Badge } from '@/components/ui';
+import type { CSSProperties } from 'react';
+import { Section, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HeroContours } from '@/components/motion/HeroContours';
 import { WritingHeadline } from '@/components/motion/WritingHeadline';
@@ -53,13 +54,17 @@ export function Hero() {
       className="relative isolate overflow-hidden lg:flex lg:min-h-[calc(100svh-4rem)] lg:flex-col lg:justify-end"
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        {/* INFINITY: subtelna siatka hero (.inf-grid, fundament) POD konturami —
+            maska rozpływa ją ku dołowi, zero twardego szwu. Czysta dekoracja. */}
+        <div className="inf-grid" />
         <HeroContours />
       </div>
       <Reveal eager>
-          {/* Badge OUTLINE (makieta 1: pill konturowy na ciemnym) — treść bez zmian. */}
-          <Badge variant="outline" className="mb-5">
+          {/* INFINITY: badge → mono overline z liniami po bokach (.inf-overline
+              + .inf-overline-lines, fundament). Treść 1:1 (POSITIONING.subClaim). */}
+          <p className="inf-overline inf-overline-lines mb-5">
             {POSITIONING.subClaim}
-          </Badge>
+          </p>
         </Reveal>
 
         {/* H1 — hasło kategorii (north star #3): litery kolorowane per-glif gradientem
@@ -77,6 +82,24 @@ export function Hero() {
           zdejmują z polskiej firmy powtarzalną robotę, w dni, nie w miesiące. Twoje dane zostają w Unii
           Europejskiej, zaczynasz od małego kroku, płacisz za efekt.
         </p>
+      </Reveal>
+
+      {/* INFINITY: rząd mono-chipów zaufania (.inf-chip, fundament) pod leadem.
+          Frazy 1:1 z sekcji PasekZaufania (tytuł filaru 1, fragment opisu filaru 1,
+          tytuł filaru 3) — ZERO nowych treści. Kolory obwódek = trasa marki
+          (dekoracja przez --chip-c; tekst chipa = --fg-muted, AA bez zmian). */}
+      <Reveal eager delay={0.1}>
+        <ul className="mt-6 flex flex-wrap gap-2">
+          <li className="inf-chip" style={{ '--chip-c': '#2B7CFF' } as CSSProperties}>
+            Twoje dane zostają w UE
+          </li>
+          <li className="inf-chip" style={{ '--chip-c': '#7A3CF0' } as CSSProperties}>
+            RODO i AI Act
+          </li>
+          <li className="inf-chip" style={{ '--chip-c': '#22E06B' } as CSSProperties}>
+            Płacisz za efekt
+          </li>
+        </ul>
       </Reveal>
 
       {/* Dynamiczny odbiorca (personalizacja językiem, RODO-safe).
@@ -112,14 +135,16 @@ export function Hero() {
         </Reveal>
       */}
 
-      {/* CTA główne + mikrokopia. ŚWIAT B (wierność makiecie 1): CTA hero =
-          PODKREŚLONY link ze strzałką w tealu (wariant `link` Buttona + .sf-hero-cta
-          podbija stopień do leadu). MagneticButton ZOSTAJE (magnetyzm nietknięty),
-          etykieta = HOME_CTA.label — dokładnie tekst z makiety, zero nowych treści.
+      {/* CTA główne + mikrokopia. INFINITY: CTA hero = pigułka z neonową obwódką
+          i glow (.inf-glow-cta, fundament) na wariancie primary Buttona.
+          MagneticButton ZOSTAJE (magnetyzm nietknięty), etykieta = HOME_CTA.label
+          — zero nowych treści. Utilities Buttona (font-sans/rounded-sm/
+          shadow-accent) wygrywałyby z @layer components, stąd kontrakt CSS
+          `.sf-magnetic .inf-glow-cta` (koniec pliku — do globals.css).
           Strzałka = dekoracja aria-hidden (.sf-arrow, mikro-przesuw na hover). */}
       <Reveal eager delay={0.21}>
         <div className="mt-9 flex flex-col items-start gap-3">
-          <MagneticButton variant="link" href={HOME_CTA.href} className="sf-hero-cta">
+          <MagneticButton variant="primary" href={HOME_CTA.href} className="inf-glow-cta">
             {HOME_CTA.label}{' '}
             <span aria-hidden="true" className="sf-arrow">→</span>
           </MagneticButton>
@@ -134,13 +159,15 @@ export function Hero() {
         </div>
       </Reveal>
 
-      {/* Linki drugorzędne — NIE konkurują z CTA (świat B: lewa oś kolumny) */}
+      {/* Linki drugorzędne — NIE konkurują z CTA. INFINITY: przestylizowane na
+          pigułki GHOST (.inf-glow-cta-ghost, fundament) — outline w akcencie,
+          teksty i cele kotwic 1:1, strzałki-dekoracje zostają. */}
       <Reveal eager delay={0.28}>
-        <p className="mt-6 flex flex-wrap items-center justify-start gap-x-6 gap-y-2 text-caption text-fg-subtle">
-          <a href="#problem" className="underline decoration-1 underline-offset-2 hover:text-fg">
+        <p className="mt-6 flex flex-wrap items-center justify-start gap-3">
+          <a href="#problem" className="inf-glow-cta inf-glow-cta-ghost">
             Zobacz, jak liczę oszczędność <span aria-hidden="true" className="sf-arrow">→</span>
           </a>
-          <a href="#demo" className="underline decoration-1 underline-offset-2 hover:text-fg">
+          <a href="#demo" className="inf-glow-cta inf-glow-cta-ghost">
             Zobacz, jak rozmawia nasz Agent <span aria-hidden="true" className="sf-arrow">→</span>
           </a>
         </p>
@@ -189,3 +216,37 @@ export function Hero() {
  *    Wychodzisz z konkretną listą, nawet jeśli nic u nas nie zamówisz."
  * ─────────────────────────────────────────────────────────────────────────────
  */
+
+/* CSS DO DOPISANIA (partia HERO+NAV) — do przeniesienia do globals.css przez
+   fundament/scalającego, POZA @layer (na końcu pliku, sekcja INFINITY):
+
+   DLACZEGO: CTA hero to Button variant="primary" wewnątrz .sf-magnetic
+   (magnetyzm nietykalny). Bazowe utilities Buttona (font-sans, rounded-sm,
+   shadow-accent) leżą w warstwie utilities, która nadpisuje @layer components
+   z .inf-glow-cta. Selektor 2-klasowy (specyficzność 0,2,0) bije utility
+   (0,1,0) niezależnie od kolejności w arkuszu — pigułka odzyskuje mono,
+   radius 999px i neonowy glow. Focus robi istniejący .sf-cta:focus-visible
+   (podwójny pierścień — bez zmian). Reduced-motion: brak nowych animacji.
+
+.sf-magnetic .inf-glow-cta {
+  border-radius: 999px;
+  font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
+  letter-spacing: 0.04em;
+  box-shadow: 0 0 24px -4px rgba(20, 184, 196, 0.45);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent),
+    0 0 24px -4px color-mix(in srgb, var(--accent) 65%, transparent);
+}
+.sf-magnetic .inf-glow-cta:hover {
+  box-shadow: 0 0 32px -2px rgba(20, 184, 196, 0.6);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 70%, transparent),
+    0 0 32px -2px color-mix(in srgb, var(--accent) 80%, transparent);
+}
+.sf-magnetic .inf-glow-cta:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--bg),
+    0 0 0 5px var(--ring);
+}
+*/

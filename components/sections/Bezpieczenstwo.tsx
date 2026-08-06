@@ -49,13 +49,19 @@ export function Bezpieczenstwo() {
           = 5,2:1 (AA), nagłówek #eaf0fa > 15:1. Warunek: żaden akapit nie sięga
           dalej niż 62% szerokości sekcji (max-w-narrow w kontenerze 1200px =
           63%), bo świecące panele leżą w pasie 60-90% kadru. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+      {/* INFINITY (bugfix „rozmazane zdjęcia"): źródło ma 1400px szerokości, a
+          pełny bleed sekcji na viewportach >1400px wymuszał upscale i rozmycie.
+          Warstwa tła jest teraz centrowana i ograniczona do max-w-[1400px];
+          od 2xl (1536px) dostaje rogi i cienką obwódkę w języku kart wzorca
+          (overflow-hidden dopiero tu — wewnątrz tylko zdjęcie i scrimy, nic nie
+          wystaje). sizes odzwierciedla realny sufit renderu. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-1/2 -z-10 w-full max-w-[1400px] -translate-x-1/2 2xl:overflow-hidden 2xl:rounded-xl 2xl:border 2xl:border-border">
         <Image
           src="/img/bezpieczenstwo-danych-nowoczesna-firma.webp"
           alt="Nowoczesne szklane biuro nocą, kontrola dostępu i bezpieczeństwo danych"
           width={1400}
           height={788}
-          sizes="100vw"
+          sizes="(min-width: 1400px) 1400px, 100vw"
           loading="lazy"
           className="h-full w-full object-cover object-[58%_46%] opacity-[0.34]"
         />
@@ -78,11 +84,13 @@ export function Bezpieczenstwo() {
         </Reveal>
       </div>
 
-      {/* Białe pudełka na zdjęciu zawsze zabijają zdjęcie — włos 1px daje
-          strukturę i przepuszcza obraz. */}
-      <Reveal as="ul" className="sf-stagger mt-12 grid max-w-wide gap-x-12 gap-y-8 sm:grid-cols-2 md:mt-16">
+      {/* INFINITY: pary punktów przechodzą z kresek-włosów na karty wzorca
+          (.inf-card): solidne tło --surface kotwiczy tekst nad zdjęciem, lewa
+          krawędź w akcencie marki. Teksty 1:1. .sf-stagger ZOSTAJE na <Reveal>
+          (kontrakt: goły div = dzieci opacity:0 na zawsze). */}
+      <Reveal as="ul" className="sf-stagger mt-12 grid max-w-wide gap-6 sm:grid-cols-2 md:mt-16">
         {PUNKTY.map((p) => (
-          <li key={p.t} className="border-t border-white/20 pt-5">
+          <li key={p.t} className="inf-card p-6">
             <h3 className="text-ui font-semibold text-fg">{p.t}</h3>
             <p className="mt-2 text-body-sm text-fg-muted">{p.d}</p>
           </li>

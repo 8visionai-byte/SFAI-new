@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type CSSProperties } from 'react';
 import { AnimatedMetric } from '@/components/motion/AnimatedMetric';
 import { PolePrzewodnik } from './PolePrzewodnik';
 import { WykresSlupkowy } from './WykresSlupkowy';
@@ -81,6 +81,8 @@ export function KalkulatorOszczednosci() {
           Domyślne wartości to typowe założenie. Zmień każde na swoje.
         </p>
 
+        {/* INFINITY (CostForge): każdy suwak ma inny kolor trasy marki
+            (blue / violet / green) — kolor kciuka + pigułki wartości. */}
         <div className="mt-6 space-y-6">
           <PolePrzewodnik
             label="Ile osób robi to zadanie"
@@ -89,6 +91,7 @@ export function KalkulatorOszczednosci() {
             onChange={setOsoby}
             min={1}
             max={100}
+            akcent="#2b7cff"
           />
           <PolePrzewodnik
             label="Godziny tygodniowo na osobę"
@@ -99,6 +102,7 @@ export function KalkulatorOszczednosci() {
             max={40}
             step={0.5}
             suffix="h"
+            akcent="#8b5cf6"
           />
           <PolePrzewodnik
             label="Stawka godzinowa"
@@ -108,6 +112,7 @@ export function KalkulatorOszczednosci() {
             min={30}
             max={300}
             suffix="zł"
+            akcent="#22e06b"
           />
 
           {/* Presety % + suwak */}
@@ -150,7 +155,7 @@ export function KalkulatorOszczednosci() {
               step={5}
               aria-label="Procent automatyzacji (precyzyjnie)"
               onChange={(e) => setProcAuto(parseInt(e.target.value, 10) / 100)}
-              className="sf-range mt-3 h-[44px] w-full cursor-pointer appearance-none bg-transparent focus-visible:outline-none"
+              className="sf-range inf-range mt-3 h-[44px] w-full cursor-pointer appearance-none bg-transparent focus-visible:outline-none"
             />
             <p className="mt-1 text-caption text-fg-subtle">
               Im bardziej schematyczne zadanie, tym wyższy procent.
@@ -179,14 +184,24 @@ export function KalkulatorOszczednosci() {
         </div>
       </div>
 
-      {/* KOLUMNA WYNIKU */}
+      {/* KOLUMNA WYNIKU — INFINITY: karta wyniku = .inf-card z ZIELONĄ lewą
+          krawędzią (oszczędność = green trasy), wartości pieniężne w mono.
+          BEZ overflow-hidden (::before karty siedzi na krawędzi). Formuły i
+          teksty 1:1. */}
       <div>
-        <div className="rounded-xl border border-border bg-bg-subtle p-6 shadow-xs sm:p-7">
-          <p className="text-caption font-semibold uppercase tracking-[0.08em] text-fg-subtle">
+        <div
+          className="inf-card p-6 shadow-xs sm:p-7"
+          style={{ '--card-c': '#22e06b' } as CSSProperties}
+        >
+          <p className="font-mono text-overline font-bold uppercase tracking-[0.14em] text-fg-subtle">
             Odzyskujesz rocznie
           </p>
-          {/* Hero wyniku — wartość finalna w HTML (AnimatedMetric animuje od 0) */}
-          <p className="mt-1 text-metric font-display font-semibold tabular-nums text-fg">
+          {/* Hero wyniku — wartość finalna w HTML (AnimatedMetric animuje od 0).
+              Mono + zieleń oszczędności (#22e06b na --surface: kontrast ~10:1). */}
+          <p
+            className="mt-1 font-mono text-metric font-bold tabular-nums"
+            style={{ color: '#22e06b' }}
+          >
             <AnimatedMetric value={zl(w.oszczednoscRok)} />
           </p>
           <p className="mt-2 text-body-sm text-fg-muted">
@@ -202,11 +217,18 @@ export function KalkulatorOszczednosci() {
           <dl className="mt-5 grid grid-cols-2 gap-3 border-t border-border pt-5 text-body-sm">
             <div>
               <dt className="text-caption text-fg-subtle">Miesięcznie</dt>
-              <dd className="font-semibold tabular-nums text-fg">{zl(w.oszczednoscMc)}</dd>
+              <dd
+                className="font-mono font-bold tabular-nums"
+                style={{ color: '#22e06b' }}
+              >
+                {zl(w.oszczednoscMc)}
+              </dd>
             </div>
             <div>
               <dt className="text-caption text-fg-subtle">Tygodniowo</dt>
-              <dd className="font-semibold tabular-nums text-fg">{godziny(w.godzinyTydzien)}</dd>
+              <dd className="font-mono font-bold tabular-nums text-fg">
+                {godziny(w.godzinyTydzien)}
+              </dd>
             </div>
           </dl>
 

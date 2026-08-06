@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import dynamic from 'next/dynamic';
 
 /**
  * MotionOrchestrator — warstwa „świeżości" (Lenis + GSAP ScrollTrigger),
@@ -39,11 +40,28 @@ type MotionLayer = {
 /** Wysokość sticky headera — offset kotwic (spójny z lądowaniem pod nav). */
 const ANCHOR_OFFSET = -96;
 
+/* Dekoracje canvas 2D (INFINITY): particles tła + wstęga hero. next/dynamic =
+   OSOBNE lazy chunki, których pobranie wyzwala DOPIERO render (stan decorOn
+   ustawiany w start(), czyli za bramkami + po window.load + idle). Mobile /
+   reduced-motion / Save-Data nigdy nie renderuje orkiestratora (MotionGate),
+   więc nie pobiera ani bajta tych chunków. Istniejąca choreografia (Lenis,
+   pin, scrub-text, hero drift) NIETKNIĘTA. */
+const ParticlesField = dynamic(
+  () => import('./ParticlesField').then((m) => m.ParticlesField),
+  { ssr: false }
+);
+const HeroRibbon = dynamic(
+  () => import('./HeroRibbon').then((m) => m.HeroRibbon),
+  { ssr: false }
+);
+
 export function MotionOrchestrator() {
   const pathname = usePathname();
   const layerRef = useRef<MotionLayer | null>(null);
   const ctxRef = useRef<GsapContext | null>(null);
   const firstPathRef = useRef(true);
+  // Dekoracje canvas (particles + wstęga) — true dopiero w start(), za bramkami.
+  const [decorOn, setDecorOn] = useState(false);
 
   /* ── Inicjalizacja warstwy (raz, za bramkami) ─────────────────────────── */
   useEffect(() => {
@@ -59,6 +77,9 @@ export function MotionOrchestrator() {
     let dispose: (() => void) | null = null;
 
     const start = async () => {
+      // Dekoracje canvas: render → dopiero teraz next/dynamic pobiera ich chunki
+      // (jesteśmy już PO bramkach, PO window.load i w slocie idle).
+      setDecorOn(true);
       // Lazy chunki: lenis + gsap + ScrollTrigger równolegle, poza main bundle.
       const [{ default: Lenis }, gsapMod, stMod] = await Promise.all([
         import('lenis'),
@@ -180,7 +201,16 @@ export function MotionOrchestrator() {
     });
   }, [pathname]);
 
-  return null;
+  /* Dekoracje INFINITY: ParticlesField zawsze (desktop, fixed pod treścią);
+     HeroRibbon sam znajduje sekcję hero (h1[data-writing]) i portaluje do niej
+     canvas — na podstronach bez hero nic nie robi. */
+  if (!decorOn) return null;
+  return (
+    <>
+      <ParticlesField />
+      <HeroRibbon />
+    </>
+  );
 }
 
 /* ══════════════════════════════════════════════════════════════════════════

@@ -19,6 +19,19 @@ import { HOME_CTA, SITE } from '@/lib/site';
  */
 type Opinia = { cytat: string; branza: string; podpis: string };
 
+/* INFINITY: tonacja dekoracyjna kart cytatów — lewa krawędź .inf-card w kolorze
+   kategorii usługi, o której mówi dana opinia (rejestr kolorów ze spec:
+   chatboty blue, automatyzacje green, www cyan, dokumenty amber). Kolejność
+   1:1 z tablicą OPINIE. Wyłącznie dekoracja — tekst niosą tokeny. */
+const OPINIA_TON = [
+  '#f59e0b', // kancelaria: raporty/dokumenty
+  '#2b7cff', // turystyka: chatbot
+  '#22e06b', // budowlanka: automatyzacja maili
+  '#f59e0b', // hotel: faktury/dokumenty
+  '#22d3ee', // agencja: narzędzia/www
+  '#2b7cff', // edukacja: chatbot
+] as const;
+
 const OPINIE: readonly Opinia[] = [
   {
     cytat:
@@ -89,7 +102,12 @@ export function DowodSpoleczny() {
         <div className="mx-auto mt-12 max-w-wide columns-1 gap-10 md:mt-16 md:columns-2 lg:columns-3">
           {OPINIE.map((o, i) => (
             <Reveal key={i} delay={Math.min(i, 4) * 0.06} className="mb-10 break-inside-avoid">
-              <figure>
+              {/* INFINITY: cytat na karcie wzorca (.inf-card) z lewą krawędzią
+                  w kolorze kategorii (OPINIA_TON). Treść cytatu i podpisów 1:1. */}
+              <figure
+                className="inf-card p-6"
+                style={{ '--card-c': OPINIA_TON[i] ?? 'var(--accent-decor)' } as React.CSSProperties}
+              >
                 <blockquote className="text-body-sm leading-[1.7] text-fg">„{o.cytat}”</blockquote>
                 <figcaption className="mt-5 border-t border-border pt-4">
                   <span className="block text-ui font-semibold text-fg">{o.branza}</span>

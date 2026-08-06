@@ -71,7 +71,10 @@ export function WykresSlupkowy({ slupki, opis }: WykresSlupkowyProps) {
           const h = (s.value / max) * usable;
           const x = startX + i * (barW + gap);
           const y = H - padBottom - h;
-          const fill = s.ton === 'akcent' ? 'var(--accent)' : 'var(--brand)';
+          // INFINITY (CostForge): koszt = amber, wynik po automatyzacji = green
+          // trasy marki (kolory kategorii wzorca). Kolor słupka = dekoracja,
+          // liczby są w tekście nad słupkiem i w <desc> (a11y bez zmian).
+          const fill = s.ton === 'akcent' ? '#22e06b' : '#f59e0b';
           return (
             <g key={s.label}>
               <rect
@@ -92,14 +95,15 @@ export function WykresSlupkowy({ slupki, opis }: WykresSlupkowyProps) {
                       }
                 }
               />
-              {/* Wartość nad słupkiem */}
+              {/* Wartość nad słupkiem — mono (język liczb wzorca) */}
               <text
                 x={x + barW / 2}
                 y={y - 6}
                 textAnchor="middle"
                 className="tabular-nums"
                 fontSize={13}
-                fontWeight={600}
+                fontWeight={700}
+                fontFamily="var(--font-mono), ui-monospace, monospace"
                 fill="var(--fg)"
               >
                 {s.display}

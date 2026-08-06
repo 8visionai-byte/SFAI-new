@@ -1,3 +1,20 @@
+# STATUS — REDESIGN "INFINITY" (2026-08-06) — W TOKU
+
+Paweł ocenił ŚWIAT B na 0/10. Nowy wzorzec: infinitytechstack.uk ("chcę dokładnie
+tak jak ta"). Spec ekstrakcji: scratchpad/spec-infinity.md (zmierzone wartości:
+tło #06060c, Inter 900, mono-akcenty, pigułka nav blur+glow, 2 canvasy:
+interaktywne kropki tła + wstęga hero). Adaptacja: NASZE kolory marki (trasa
+blue→violet→green), NASZE treści 1:1, logo graficzne WRACA do headera.
+Bugfixy zgłoszone: rozmazane zdjęcia (upscale >1400px), rozjechana tabela,
+brak logo. Perf: canvasy tylko desktop-lazy przez MotionGate; mobile czysty CSS.
+
+Workflow wf_24843045-b98: FUNDAMENT (globals/layout/tailwind) → równolegle
+HERO+NAV / SEKCJE / MOTION / CHAT+TOOLS. Po ich raportach: scalenie kontraktów
+CSS, build, weryfikacja przeglądarką sekcja po sekcji, mobile 375, commit, push,
+live + Lighthouse.
+
+---
+
 # STATUS — ŚWIAT B "Ciemna pracownia": pełny redesign (2026-08-05)
 
 Zlecenie Pawła: wdrożyć koncept B (ciemna pracownia) z zaakceptowanych makiet

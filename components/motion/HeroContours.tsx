@@ -14,10 +14,17 @@
  */
 
 /** Warstwice: (rx, ry, rotate, strokeOpacity) — środek 720,340 (za H1).
- *  ŚWIAT B (ciemna pracownia, makieta zrodla/makiety-b/1-hero.png): na navy-950
+ *  ŚWIAT B (ciemna pracownia, makieta zrodla/makiety-b/1-hero.png): na ciemnym
  *  linie mają ŚWIECIĆ — krycie x3 (0,26-0,10 -> 0,78-0,30) + mix-blend screen
  *  na .sf-hero-svg (globals.css). To dekoracja (aria-hidden) — kontrast tekstu
- *  bez zmian (screen tylko rozjaśnia tło pod treścią). */
+ *  bez zmian (screen tylko rozjaśnia tło pod treścią).
+ *  INFINITY (partia HERO+NAV): komponent zostaje CSS-owym FALLBACKIEM tła hero
+ *  pod przyszły canvas wstęgi (HeroRibbon, partia MOTION — desktop ≥1024px po
+ *  load); mobile/reduced-motion widzi wyłącznie ten SVG. Krycia zweryfikowane
+ *  na POGŁĘBIONYM tle #06070d: screen działa addytywnie, więc na ciemniejszej
+ *  bazie linie świecą MOCNIEJ, nie słabiej — wartości celowo bez zmian
+ *  (podbijanie dałoby neon konkurujący ze starfieldem .inf-stars i siatką
+ *  .inf-grid fundamentu). */
 const CONTOURS = [
   { rx: 180, ry: 96, rotate: -8, opacity: 0.78 },
   { rx: 260, ry: 142, rotate: 5, opacity: 0.63 },

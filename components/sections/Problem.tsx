@@ -35,12 +35,16 @@ export function Problem() {
         </Reveal>
       </div>
 
-      {/* BLEED: plik to DYPTYK ze świetlistą linią w osi 50% („przed" po lewej,
+      {/* Plik to DYPTYK ze świetlistą linią w osi 50% („przed" po lewej,
           „po" po prawej) — kolumna 460px zabijała narrację. 21:9 z 16:9 pokazuje
           76% wysokości; focus y 42% -> okno 0,10-0,86, czyli obie twarze i
           papiery zostają w kadrze. Na mobile wraca 16:9 (21:9 przy 375px to
-          pasek 160px). */}
-      <Reveal delay={0.1} className="sf-bleed mt-12 md:mt-16">
+          pasek 160px).
+          INFINITY (bugfix „rozmazane zdjęcia"): pełny bleed .sf-bleed renderował
+          kadr szerzej niż źródło 1400px (upscale i rozmycie na >1400px viewport).
+          Panorama wraca w ryzy kontenera (max 1200px) z rogami i cienką obwódką
+          w języku kart wzorca; sizes odzwierciedla realną szerokość renderu. */}
+      <Reveal delay={0.1} className="mx-auto mt-12 max-w-[1400px] md:mt-16">
         <SectionImage
           src="/img/powtarzalna-robota-przed-i-po.webp"
           alt="Przedsiębiorca zasypany papierami nocą i ten sam człowiek pracujący spokojnie z asystentem AI"
@@ -48,8 +52,8 @@ export function Problem() {
           ratioMd="panorama"
           focus="50% 42%"
           hover
-          className="rounded-none"
-          sizes="100vw"
+          className="rounded-xl border border-border"
+          sizes="(min-width: 1240px) 1200px, 100vw"
         />
       </Reveal>
 

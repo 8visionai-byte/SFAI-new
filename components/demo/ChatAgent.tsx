@@ -15,19 +15,101 @@
  */
 
 import {
+  Fragment,
   useCallback,
   useEffect,
   useRef,
   useState,
+  type CSSProperties,
   type FormEvent,
   type KeyboardEvent,
   type ReactNode,
 } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui';
+import { USLUGI } from '@/lib/uslugi';
+import { NARZEDZIA } from '@/lib/narzedzia';
 
 type Role = 'user' | 'assistant';
 type Msg = { role: Role; content: string };
+
+/**
+ * INFINITY: karty-odnośniki pod odpowiedzią bota. Mapa ścieżka -> {badge, tytuł,
+ * opis, kolor} budowana z rejestrów USLUGI/NARZEDZIA (single source of truth,
+ * zero duplikowania treści). Kolory = STAŁE kolory kategorii z palety trasy
+ * marki (blue/violet/green + cyan/amber pomocniczo) — per instancja przez
+ * custom property --card-c (konwencja utilities .inf-* z globals.css).
+ * Rejestry trafiają do LENIWEGO chunku ChatAgent (dynamic, ssr:false) — poza
+ * ścieżką krytyczną strony.
+ */
+type KartaOdnosnik = {
+  href: string;
+  badge: string;
+  tytul: string;
+  opis: string;
+  kolor: string;
+};
+
+const KOLORY_USLUG: Record<string, string> = {
+  chatboty: '#2b7cff',
+  voiceboty: '#8b5cf6',
+  'agent-rekrutacyjny': '#8b5cf6',
+  automatyzacje: '#22e06b',
+  'dokumenty-faktury': '#f59e0b',
+  'opieka-ai': '#22e06b',
+  'audyt-ai': '#22d3ee',
+  rozwiazania: '#2b7cff',
+  'strony-www': '#22d3ee',
+  optymalizacja: '#22d3ee',
+};
+
+const KOLORY_NARZEDZI: Record<string, string> = {
+  'kalkulator-oszczednosci': '#22e06b',
+  'kalkulator-procesu': '#22e06b',
+  'test-gotowosci-ai': '#8b5cf6',
+  'audyt-strony-ai': '#22d3ee',
+  'generator-promptow': '#2b7cff',
+};
+
+const KARTY: ReadonlyMap<string, KartaOdnosnik> = new Map([
+  ...USLUGI.map((u): [string, KartaOdnosnik] => [
+    `/uslugi/${u.slug}`,
+    {
+      href: `/uslugi/${u.slug}`,
+      badge: 'Usługa',
+      tytul: u.h1,
+      opis: u.metaDescription,
+      kolor: KOLORY_USLUG[u.slug] ?? '#22d3ee',
+    },
+  ]),
+  ...NARZEDZIA.map((n): [string, KartaOdnosnik] => [
+    `/narzedzia/${n.slug}`,
+    {
+      href: `/narzedzia/${n.slug}`,
+      badge: n.etykieta,
+      tytul: n.tytul,
+      opis: n.opis,
+      kolor: KOLORY_NARZEDZI[n.slug] ?? '#22d3ee',
+    },
+  ]),
+]);
+
+/**
+ * Dopasowanie kart do odpowiedzi bota: po wystąpieniu ścieżki (/uslugi/...,
+ * /narzedzia/...) LUB pełnej frazy tytułu strony w tekście. Max 3 karty,
+ * bez duplikatów (mapa iterowana raz).
+ */
+function znajdzKarty(text: string): KartaOdnosnik[] {
+  const lower = text.toLowerCase();
+  const out: KartaOdnosnik[] = [];
+  for (const [sciezka, karta] of KARTY) {
+    if (lower.includes(sciezka) || lower.includes(karta.tytul.toLowerCase())) {
+      out.push(karta);
+      if (out.length >= 3) break;
+    }
+  }
+  return out;
+}
 
 const WELCOME: Msg = {
   role: 'assistant',
@@ -166,16 +248,14 @@ export function ChatAgent() {
        podklad pod polprzezroczyste szklo — czytelnosc niezalezna od tego, co
        jest pod spodem. */
     <div className="sf-glass flex flex-col overflow-hidden rounded-lg border border-hairline bg-bg shadow-md">
-      {/* Naglowek */}
-      <div className="flex items-center gap-2 border-b border-hairline px-5 py-4">
-        <span
-          className="inline-block h-2.5 w-2.5 rounded-full bg-accent"
-          aria-hidden="true"
-        />
-        <span className="text-ui font-semibold text-fg">
+      {/* Naglowek — INFINITY: mono caps + zielona kropka statusu (.inf-ask-dot,
+          pulsacja tylko desktop przez CSS). Teksty 1:1, zmiana czysto wizualna. */}
+      <div className="flex items-center gap-2.5 border-b border-hairline px-5 py-4">
+        <span className="inf-ask-dot" aria-hidden="true" />
+        <span className="font-mono text-caption font-bold uppercase tracking-[0.12em] text-fg">
           Agent SimpleFast.ai
         </span>
-        <span className="ml-auto text-caption text-fg-subtle">
+        <span className="ml-auto font-mono text-overline uppercase tracking-[0.14em] text-fg-subtle">
           odpowiada o firmie
         </span>
       </div>
@@ -187,19 +267,44 @@ export function ChatAgent() {
         aria-live="polite"
         aria-busy={loading}
       >
-        {messages.map((m, i) => (
-          <div
-            key={i}
-            ref={i === lastUserIndex ? lastUserRef : undefined}
-            className={
-              m.role === 'assistant'
-                ? 'max-w-[88%] self-start rounded-lg rounded-bl-xs bg-bg-subtle px-4 py-3 text-body-sm text-fg'
-                : 'max-w-[88%] self-end rounded-lg rounded-br-xs bg-accent px-4 py-3 text-body-sm text-accent-contrast'
-            }
-          >
-            {m.role === 'assistant' ? <RichText text={m.content} /> : m.content}
-          </div>
-        ))}
+        {messages.map((m, i) => {
+          // INFINITY: karty-odnośniki pod odpowiedzią bota (z rejestrów).
+          const karty = m.role === 'assistant' ? znajdzKarty(m.content) : [];
+          return (
+            <Fragment key={i}>
+              <div
+                ref={i === lastUserIndex ? lastUserRef : undefined}
+                className={
+                  m.role === 'assistant'
+                    ? 'max-w-[88%] self-start rounded-lg rounded-bl-xs bg-bg-subtle px-4 py-3 text-body-sm text-fg'
+                    : 'max-w-[88%] self-end rounded-lg rounded-br-xs bg-accent px-4 py-3 text-body-sm text-accent-contrast'
+                }
+              >
+                {m.role === 'assistant' ? <RichText text={m.content} /> : m.content}
+              </div>
+              {karty.length > 0 && (
+                <div className="flex w-full max-w-[88%] flex-col gap-2 self-start">
+                  {karty.map((k) => (
+                    <Link
+                      key={k.href}
+                      href={k.href}
+                      className="inf-card block p-3 pl-4"
+                      style={{ '--card-c': k.kolor } as CSSProperties}
+                    >
+                      <span className="inf-ref-badge">{k.badge}</span>
+                      <span className="mt-0.5 block text-body-sm font-semibold leading-snug text-fg">
+                        {k.tytul}
+                      </span>
+                      <span className="mt-0.5 block truncate text-caption text-fg-subtle">
+                        {k.opis}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </Fragment>
+          );
+        })}
 
         {/* Wskaznik pisania */}
         {loading && (
@@ -223,21 +328,6 @@ export function ChatAgent() {
           </div>
         )}
 
-        {/* Podpowiedzi (tylko na starcie rozmowy) */}
-        {messages.length === 1 && !loading && (
-          <div className="mt-1 flex flex-wrap gap-2">
-            {SUGGESTIONS.map((s) => (
-              <button
-                key={s}
-                type="button"
-                onClick={() => void send(s)}
-                className="rounded-full border border-border bg-surface px-3 py-1.5 text-caption text-fg-muted transition-colors hover:border-accent hover:text-fg"
-              >
-                {s}
-              </button>
-            ))}
-          </div>
-        )}
       </div>
 
       {/* Formularz */}
@@ -270,6 +360,23 @@ export function ChatAgent() {
           Wyslij
         </Button>
       </form>
+
+      {/* Podpowiedzi (tylko na starcie rozmowy) — INFINITY: mono chipy POD
+          inputem (wzorzec ASK). Teksty sugestii 1:1, zmiana pozycji + skórki. */}
+      {messages.length === 1 && !loading && (
+        <div className="flex flex-wrap gap-2 px-3 pb-3">
+          {SUGGESTIONS.map((s) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => void send(s)}
+              className="inf-chip cursor-pointer transition-colors duration-fast ease-out hover:border-accent hover:text-fg"
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Nota RODO — widoczna od startu rozmowy (art. 13). Link do pełnej polityki. */}
       <p className="px-3 pb-3 text-[0.68rem] leading-snug text-fg-subtle">
@@ -359,3 +466,24 @@ function parseRich(text: string): ReactNode[] {
   if (lastIndex < text.length) out.push(text.slice(lastIndex));
   return out;
 }
+
+/* CSS DO DOPISANIA (partia CHAT+TOOLS): pełne reguły — badge kategorii na
+   karcie-odnośniku czatu. Dziedziczy --card-c z rodzica .inf-card; kolor tekstu
+   ROZJAŚNIONY color-mix-em z bielą, żeby 11px mono zdawało AA na --surface
+   (czysty #8b5cf6 miał ~4.4:1 — za mało na drobny tekst). Pancerny fallback
+   (var(--accent)) linijkę wyżej — stare silniki zostają na cyjanie AA.
+   Do @layer components (konwencja pliku).
+
+@layer components {
+  .inf-ref-badge {
+    display: inline-block;
+    font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    color: color-mix(in srgb, var(--card-c, var(--accent)) 72%, white);
+  }
+}
+*/

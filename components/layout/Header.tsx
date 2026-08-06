@@ -18,33 +18,28 @@ const NAV_LINKS_REST = NAV_LINKS.filter((l) => l.href !== '/uslugi');
 /**
  * Header — sticky nav, mobile-first (spec 02 §6.5).
  * JEDEN przycisk primary = to samo główne CTA strony ("Umów diagnozę" -> #diagnoza).
- * Cień pojawia się po scrollu. Mobile: hamburger -> pełny panel, zamykanie ESC.
+ * Mobile: hamburger -> pełny panel (SOLIDNE tło), zamykanie ESC.
  *
- * Nawigacja w HTML (linki widoczne dla botów); klient tylko obsługuje toggle/scroll.
+ * Nawigacja w HTML (linki widoczne dla botów); klient tylko obsługuje toggle.
  *
- * ŚWIAT B — CIEMNY PASEK (makieta zrodla/makiety-b/1-hero.png): nad hero pasek
- * jest PRZEZROCZYSTY (kadr kina bez ramki), po scrollu dostaje ciemną taflę
- * z hairline dołem (.sf-header/.is-scrolled w globals.css — mobile SOLIDNY granat
- * bez backdrop-blur ze względu na perf, desktop ≥1024px półprzezroczysta tafla
- * + blur). Logo = wordmark TEKSTOWY (PNG ginął na ciemnym — patrz Logo.tsx).
+ * INFINITY (spec-infinity, partia HERO+NAV): pasek = PŁYWAJĄCA PIGUŁKA
+ * .inf-pill-nav (globals.css, partia FUNDAMENT) — max-w 1180px, mx-auto,
+ * sticky top-3, radius 999px, świecąca obwódka trasy przez ::before. Mobile:
+ * pigułka na pełną szerokość minus marginesy (px-3 na <header>), tło SOLIDNE
+ * (zero backdrop-blur <1024px — robi to media query fundamentu). Poprzedni
+ * mechanizm .sf-header/.is-scrolled (przezroczysty nad hero + scroll listener)
+ * ZDJĘTY: pigułka niesie własne tło zawsze, więc nasłuch scrolla był martwym JS.
+ * CTA "Umów diagnozę" (tekst 1:1) = pigułka .inf-glow-cta (neonowa obwódka).
  * Tokeny semantyczne są ciemne (domyślne), więc nawigacja to jasny tekst — AA:
- *   --fg #eaf0fa (16.35:1) · --fg-muted navy-300 (6.64:1) · --accent cyan-400 (9.71:1).
+ *   --fg #eaf0fa (~17.9:1) · --fg-muted navy-300 (~7.2:1) · --accent cyan-400 (~10.4:1).
  */
 export function Header() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   // Aktywna strona w nav desktop: aria-current="page" (semantyka) steruje też
   // podkreśleniem .nav-link (underline-slide w globals.css).
   const pathname = usePathname();
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(href + '/');
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -60,14 +55,15 @@ export function Header() {
   return (
     <>
     <header
-      // Tło/hairline/blur robi .sf-header (globals.css): przezroczysty nad hero,
-      // po scrollu granat + hairline; blur wyłącznie desktop (mobile perf).
-      className={
-        'sf-header sticky top-0 z-nav text-fg ' +
-        (scrolled ? 'is-scrolled shadow-md' : '')
-      }
+      // Pigułka nie dotyka krawędzi: px-3 = margines mobile (pełna szerokość
+      // minus marginesy), top-3 = pływanie nad treścią. Tło/blur/obwódkę trasy
+      // robi .inf-pill-nav (fundament); blur wyłącznie desktop (mobile perf).
+      className="sticky top-3 z-nav px-3 text-fg sm:px-4"
     >
-      <nav className="mx-auto flex h-16 w-full max-w-container items-center gap-4 px-gutter" aria-label="Główna">
+      <nav
+        className="inf-pill-nav mx-auto flex h-16 w-full max-w-[1180px] items-center gap-4 px-4 sm:px-6"
+        aria-label="Główna"
+      >
         <Logo priority />
 
         {/* Desktop nav — "Usługi" = ServicesMenu (6 realnych stron), reszta = linki */}
@@ -87,9 +83,11 @@ export function Header() {
         </ul>
 
         <div className="ml-auto lg:ml-3">
-          <Button variant="primary" size="sm" href={HOME_CTA.href} className="hidden sm:inline-flex">
+          {/* CTA nagłówka = pigułka z neonową obwódką (.inf-glow-cta, fundament).
+              Tekst 1:1, cel bez zmian (HOME_CTA.href = trasa, więc next/link). */}
+          <Link href={HOME_CTA.href} className="inf-glow-cta hidden sm:inline-flex">
             Umów diagnozę
-          </Button>
+          </Link>
         </div>
 
         {/* Mobile hamburger */}

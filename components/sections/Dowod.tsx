@@ -29,9 +29,9 @@ export function Dowod() {
       {/* FRAME: kwadrat 1:1 z pliku 16:9 pokazuje 56,25% szerokości; focus 76%
           -> okno x 0,33-0,90, czyli obie twarze (mężczyzna 0,62-0,76, kobieta
           0,77-0,88) i świetliste smugi danych. W kadrze 16:9 połowa powierzchni
-          była pustą czernią i zdjęcie wyglądało na niedoświetlone. Płyta wychodzi
-          do PRAWEJ krawędzi ekranu (prawe rogi wyprostowane) — obiekt ucięty
-          kadrem czyta się jak fragment większej sceny. */}
+          była pustą czernią i zdjęcie wyglądało na niedoświetlone. INFINITY:
+          płyta już NIE wychodzi do prawej krawędzi (bleed = upscale i rozmycie,
+          bug od Pawła) — siedzi w kolumnie, z rogami jak karty wzorca. */}
       <div className="grid items-center gap-10 md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] md:gap-14">
         <div className="max-w-narrow">
           <Reveal variant="header">
@@ -46,7 +46,11 @@ export function Dowod() {
             </p>
           </Reveal>
         </div>
-        {/* focus y=40%: przy 50% kwadratowy kadr ucinał czubek głowy (zrzut Pawła 2026-08-05). */}
+        {/* focus y=40%: przy 50% kwadratowy kadr ucinał czubek głowy (zrzut Pawła 2026-08-05).
+            INFINITY (bugfix „rozmazane zdjęcia"): .sf-bleed-r rozciągał kwadrat
+            poza kolumnę do krawędzi viewportu (upscale źródła 1400x788 przy
+            kadrze 1:1). Kadr wraca w ryzy kolumny z rogami i cienką obwódką
+            (język kart wzorca); sizes = realna szerokość kolumny. */}
         <Reveal delay={0.1}>
           <SectionImage
             src="/img/rozmowa-o-wdrozeniu-ai.webp"
@@ -55,8 +59,8 @@ export function Dowod() {
             ratioMd="square"
             focus="76% 40%"
             hover
-            className="sf-bleed-r"
-            sizes="(min-width: 1240px) 620px, (min-width: 768px) 54vw, 100vw"
+            className="rounded-xl border border-border"
+            sizes="(min-width: 1240px) 640px, (min-width: 768px) 54vw, 100vw"
           />
         </Reveal>
       </div>

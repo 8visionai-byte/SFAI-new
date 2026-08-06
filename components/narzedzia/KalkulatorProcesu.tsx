@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type CSSProperties } from 'react';
 import { AnimatedMetric } from '@/components/motion/AnimatedMetric';
 import { PolePrzewodnik } from './PolePrzewodnik';
 import { OsCzasu } from './OsCzasu';
@@ -136,6 +136,8 @@ export function KalkulatorProcesu() {
             />
           </div>
 
+          {/* INFINITY (CostForge): każdy suwak inny kolor — trasa marki
+              (blue / violet / green) + amber pomocniczo dla stawki (koszt). */}
           <PolePrzewodnik
             label="Ile razy w tygodniu"
             opis="Łącznie w całej firmie."
@@ -143,6 +145,7 @@ export function KalkulatorProcesu() {
             onChange={setRazyTydzien}
             min={1}
             max={500}
+            akcent="#2b7cff"
           />
           <PolePrzewodnik
             label="Ile minut za jednym razem"
@@ -152,6 +155,7 @@ export function KalkulatorProcesu() {
             min={1}
             max={240}
             suffix="min"
+            akcent="#8b5cf6"
           />
           <PolePrzewodnik
             label="Ile osób to robi"
@@ -160,6 +164,7 @@ export function KalkulatorProcesu() {
             onChange={setOsoby}
             min={1}
             max={50}
+            akcent="#22e06b"
           />
           <PolePrzewodnik
             label="Stawka godzinowa"
@@ -169,6 +174,7 @@ export function KalkulatorProcesu() {
             min={30}
             max={300}
             suffix="zł"
+            akcent="#f59e0b"
           />
 
           {/* Powtarzalność -> proc_auto */}
@@ -239,9 +245,23 @@ export function KalkulatorProcesu() {
         </div>
       </div>
 
-      {/* WYNIK */}
+      {/* WYNIK — INFINITY: karta wyniku = .inf-card, lewa krawędź akcentowa w
+          kolorze werdyktu (sukces=green, uwaga=amber, neutralny=cyan). BEZ
+          overflow-hidden (::before karty na krawędzi). Formuły i teksty 1:1. */}
       <div>
-        <div className="rounded-xl border border-border bg-bg-subtle p-6 shadow-xs sm:p-7">
+        <div
+          className="inf-card p-6 shadow-xs sm:p-7"
+          style={
+            {
+              '--card-c':
+                werdykt.ton === 'sukces'
+                  ? '#22e06b'
+                  : werdykt.ton === 'uwaga'
+                    ? '#f59e0b'
+                    : '#22d3ee',
+            } as CSSProperties
+          }
+        >
           {/* Werdykt */}
           <div className={`rounded-lg border-[1.5px] px-4 py-3 ${tonClass[werdykt.ton]}`}>
             <p className="text-caption font-semibold uppercase tracking-[0.08em] opacity-80">Werdykt</p>
@@ -251,28 +271,46 @@ export function KalkulatorProcesu() {
 
           {/* Liczby */}
           <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-4 border-t border-border pt-5">
+            {/* INFINITY: wartości pieniężne mono w kolorach kategorii —
+                oszczędność = green trasy, koszt = amber (dekoracyjny język
+                CostForge; liczby i etykiety 1:1). */}
             <div className="col-span-2">
               <dt className="text-caption text-fg-subtle">Ten proces oddaje rocznie</dt>
-              <dd className="text-metric font-display font-semibold tabular-nums text-fg">
+              <dd
+                className="font-mono text-metric font-bold tabular-nums"
+                style={{ color: '#22e06b' }}
+              >
                 <AnimatedMetric value={zl(w.oszczednoscRok)} />
               </dd>
             </div>
             <div>
               <dt className="text-caption text-fg-subtle">Kosztuje dziś</dt>
-              <dd className="font-semibold tabular-nums text-fg">{zl(w.kosztRok)}/rok</dd>
+              <dd
+                className="font-mono font-bold tabular-nums"
+                style={{ color: '#f59e0b' }}
+              >
+                {zl(w.kosztRok)}/rok
+              </dd>
             </div>
             <div>
               <dt className="text-caption text-fg-subtle">Czas zajęty</dt>
-              <dd className="font-semibold tabular-nums text-fg">{godziny(w.godzinyRok)}/rok</dd>
+              <dd className="font-mono font-bold tabular-nums text-fg">
+                {godziny(w.godzinyRok)}/rok
+              </dd>
             </div>
             <div>
               <dt className="text-caption text-fg-subtle">Oszczędność</dt>
-              <dd className="font-semibold tabular-nums text-fg">{zl(w.oszczednoscMc)}/mc</dd>
+              <dd
+                className="font-mono font-bold tabular-nums"
+                style={{ color: '#22e06b' }}
+              >
+                {zl(w.oszczednoscMc)}/mc
+              </dd>
             </div>
             {w.paybackMc !== null ? (
               <div>
                 <dt className="text-caption text-fg-subtle">Zwrot po</dt>
-                <dd className="font-semibold tabular-nums text-fg">
+                <dd className="font-mono font-bold tabular-nums text-fg">
                   {liczba(w.paybackMc, 1)} mc
                 </dd>
               </div>

@@ -44,9 +44,24 @@ export function ZyweDemo() {
           </p>
         </Reveal>
 
-        {/* Voicebot (stub) */}
+        {/* Voicebot (stub).
+            INFINITY: neutralna kreska-przegroda ustępuje karcie wzorca (.inf-card)
+            z lewą krawędzią w kolorze kategorii voicebotów (violet #8b5cf6, rejestr
+            kolorów ze spec) i kafelkiem ikony .inf-tile (dekoracja aria-hidden).
+            Teksty, disabled przycisk i mikrokopia 1:1. */}
         <Reveal delay={0.06}>
-          <div className="flex h-full flex-col justify-center border-t border-border pt-6 md:border-l md:border-t-0 md:pl-10 md:pt-0">
+          <div
+            className="inf-card flex h-full flex-col justify-center p-6"
+            style={{ '--card-c': '#8b5cf6' } as React.CSSProperties}
+          >
+            {/* Kafelek ikony w kolorze kategorii (czysta dekoracja). */}
+            <span
+              aria-hidden="true"
+              className="inf-tile mb-4"
+              style={{ '--tile-c': '#8b5cf6' } as React.CSSProperties}
+            >
+              🎙️
+            </span>
             <h3 className="text-h3">Wolisz posłuchać?</h3>
             <p className="mt-2 text-body-sm text-fg-muted">
               Voicebot odbierze, porozmawia po polsku i pokaże, jak brzmi obsługa telefonu bez Twojego udziału.
