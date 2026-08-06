@@ -162,52 +162,60 @@
      wartości CIEMNE; [data-theme='dark'] zostaje jako selektor STREFOWY dla
      zagnieżdżeń (np. treść na zdjęciu w SectionImage wewnątrz jasnej strefy) —
      te same wartości, więc dark-w-light dalej działa.
-     INFINITY (2026-08-06): tło POGŁĘBIONE z navy-950 #0b1220 do czerni z
-     granatowym nalotem #06070d (wzorzec infinitytechstack.uk) — starfield
-     i neonowe akcenty potrzebują głębszej bazy. Kontrasty na NOWYM tle
-     (policzone, WCAG AA — ciemniejsze tło = kontrast tylko rośnie):
-       --fg #eaf0fa na #06070d  = ~17.9:1 (AAA)
-       --fg-muted navy-300      =  ~7.2:1 (AA)
-       --fg-subtle #6f7e9e      =  ~4.9:1 (AA — tekst pomocniczy)
-       --accent cyan-400        = ~10.4:1 (AA — tekst-akcje na ciemnym)
-       --ring cyan-400          =  >3:1   (WCAG 1.4.11 — wskaźnik fokusa) */
+     INFINITY v2 (2026-08-06, Paweł: „użyj dokładnie tych kolorów"): paleta 1:1
+     ze ZMIERZONYCH root vars wzorca infinitytechstack.uk — czerń z fioletowym
+     nalotem #06060c, powierzchnie #111127/#181840, tekst #e4e4f0/#7a7a9e,
+     akcent interakcji cyjan #22d3ee, akcent pomocniczy violet #8b5cf6.
+     KONTRASTY na nowej palecie (WCAG, policzone):
+       --fg #e4e4f0 na #06060c  = ~16.0:1 (AAA); na --surface #111127 ~14.7:1
+       --fg-muted #7a7a9e       =  ~4.9:1 na bg (AA); ~4.5:1 na surface (AA na
+                                   styk — caption/body-sm OK, nie ściemniać)
+       --fg-subtle #4e4e6e      =  ~2.5:1 — WYŁĄCZNIE DEKORACJA (glify, kreski);
+                                   mały CZYTELNY tekst jedzie na --fg-muted
+                                   (AA-guard .text-fg-subtle na końcu pliku)
+       --accent #22d3ee         = ~11.2:1 na bg (AA tekst-akcja); tekst #06060c
+                                   na tle #22d3ee = ~11.2:1 (AA — CTA)
+       --success #10b981 ~8.0:1 · --warning #f59e0b ~9.4:1 · --error #ef4444 ~5.4:1
+       --border-strong #2a2a50  =  ~1.5:1 — kreska DEKORACYJNA; obrys KONTROLEK
+                                   dalej --border-control (biel 55%, >3:1, 1.4.11)
+       --ring #22d3ee           = ~11.2:1 (1.4.11 — wskaźnik fokusa ✓) */
   :root,
   [data-theme='dark'] {
     color-scheme: dark;
 
-    --bg: #06070d; /* INFINITY: czerń z granatowym nalotem (baza starfield) */
-    --bg-subtle: #0a0c14; /* sekcja „subtle" — krok tonu nad --bg */
+    --bg: #06060c; /* INFINITY 1:1: --bg-primary wzorca */
+    --bg-subtle: #0c0c18; /* INFINITY 1:1: --bg-secondary — krok tonu nad --bg */
     /* Powierzchnie SOLIDNE (dropdown, skip-link, panel menu — muszą kryć treść
        pod spodem; szkło rgba to OSOBNA klasa .sf-glass, nie token --surface). */
-    --surface: #0d1018; /* INFINITY: karta ciemna (#0b0b14-ish wzorca, w granacie marki) */
-    --surface-raised: var(--sf-navy-700);
-    /* Sunken MUSI być ciemniejszy niż --surface (inputy „zapadnięte" w karcie);
-       po pogłębieniu surface stary navy-900 byłby JAŚNIEJSZY — stąd #0a0c14. */
-    --surface-sunken: #0a0c14;
+    --surface: #111127; /* INFINITY 1:1: --bg-card */
+    --surface-hover: #181840; /* INFINITY 1:1: --bg-card-hover (NOWY token — hover wierszy/kart) */
+    --surface-raised: #181840; /* stary navy-700 gryzł się z fioletową rodziną — krok nad surface */
+    /* Sunken MUSI być ciemniejszy niż --surface (inputy „zapadnięte" w karcie). */
+    --surface-sunken: #0e0e22; /* INFINITY 1:1: --bg-input */
 
-    --fg: #eaf0fa;
-    --fg-muted: var(--sf-navy-300);
-    --fg-subtle: #6f7e9e;
-    --fg-on-accent: var(--sf-navy-950);
+    --fg: #e4e4f0; /* INFINITY 1:1: --text-primary */
+    --fg-muted: #7a7a9e; /* INFINITY 1:1: --text-secondary */
+    --fg-subtle: #4e4e6e; /* INFINITY 1:1: --text-muted — TYLKO dekoracja (~2.5:1!) */
+    --fg-on-accent: #06060c; /* ciemny tekst na cyjanie ~11.2:1 (AA) */
 
-    /* Brand / akcent — teal marki w wersji NA CIEMNYM: na tekst-akcje idą
-       JAŚNIEJSZE stopnie (cyan-400 = 9.71:1 na navy-950); cyan-500 zostaje
-       dekoracją (glow/border), cyan-700 z jasnego motywu tu nie wraca (byłby
-       za ciemny na granacie). */
+    /* Brand / akcent — INFINITY: cyjan interakcji #22d3ee (hover nav, tekst-akcje,
+       CTA). Violet wzorca żyje w --accent-2 (kafle/dekoracja/druga barwa). */
     --brand: #ffffff;
-    --accent: var(--sf-cyan-400);
-    --accent-hover: var(--sf-cyan-300);
-    --accent-decor: var(--sf-cyan-500);
-    --accent-soft: rgba(20, 184, 196, 0.14);
-    --accent-contrast: var(--sf-navy-950); /* tekst na CTA: 9.71:1 na cyan-400 (AA ✓) */
+    --accent: #22d3ee;
+    --accent-hover: #67e8f9; /* stopień jaśniejszy (na ciemnym hover idzie W GÓRĘ) */
+    --accent-decor: #22d3ee;
+    --accent-soft: rgba(34, 211, 238, 0.14);
+    --accent-contrast: #06060c; /* tekst na CTA: ~11.2:1 na #22d3ee (AA ✓) */
+    --accent-2: #8b5cf6; /* NOWY (INFINITY 1:1: --accent wzorca) — violet pomocniczy */
 
-    /* Linie: włos = biel o niskim kryciu (kładzie się na każdym ciemnym tle). */
-    --border: rgba(255, 255, 255, 0.1);
-    --border-strong: rgba(255, 255, 255, 0.18);
+    /* Linie: INFINITY 1:1 — granatowo-fioletowe kreski wzorca (DEKORACYJNE,
+       ~1.2-1.5:1); obrys kontrolek (1.4.11, >3:1) zostaje na --border-control. */
+    --border: #1e1e3a;
+    --border-strong: #2a2a50;
     --hairline: rgba(255, 255, 255, 0.12);
     --border-control: rgba(255, 255, 255, 0.55); /* obrys kontrolki >3:1 (1.4.11) */
-    --border-accent: var(--sf-cyan-400);
-    --ring: var(--sf-cyan-400);
+    --border-accent: #22d3ee;
+    --ring: #22d3ee;
 
     /* Szkło świata B (makieta 4): tło biel 3–6%, włos ~10%, światło od góry.
        Używane przez .sf-glass i mapy Tailwinda (bg-glass, border-glass-hairline). */
@@ -216,12 +224,13 @@
     --glass-hairline: rgba(255, 255, 255, 0.1);
     --glass-inner-light: rgba(255, 255, 255, 0.08);
 
-    --success: #4cc57e;
-    --success-bg: rgba(76, 197, 126, 0.12);
-    --warning: #e0a445;
-    --warning-bg: rgba(224, 164, 69, 0.12);
-    --error: #e36a6a;
-    --error-bg: rgba(227, 106, 106, 0.12);
+    /* Semantyka statusu — INFINITY 1:1 (kontrasty w komentarzu bloku wyżej). */
+    --success: #10b981;
+    --success-bg: rgba(16, 185, 129, 0.12);
+    --warning: #f59e0b;
+    --warning-bg: rgba(245, 158, 11, 0.12);
+    --error: #ef4444;
+    --error-bg: rgba(239, 68, 68, 0.12);
     --info: #5ea0dc;
     --info-bg: rgba(94, 160, 220, 0.12);
 
@@ -231,7 +240,7 @@
     --shadow-sm: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 2px 10px rgba(0, 0, 0, 0.45);
     --shadow-md: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 10px 30px rgba(0, 0, 0, 0.5);
     --shadow-lg: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 50px rgba(0, 0, 0, 0.6);
-    --shadow-accent: 0 8px 28px rgba(20, 184, 196, 0.35);
+    --shadow-accent: 0 8px 28px rgba(34, 211, 238, 0.35); /* INFINITY: glow w cyjanie akcentu */
 
     /* METAL na ciemnym: JASNE stopnie tekstowe (AA na navy-950), dekoracja =
        oficjalne kolory marki (jaskrawy ai-green świeci dobrze na ciemnym). */
@@ -273,6 +282,10 @@
     /* TRASA ŚWIATA B (makiety 1/5): świetlista linia niebieski→fiolet→zieleń.
        Kolory 1:1 z zatwierdzonych makiet. WYŁĄCZNIE dekoracja — nie pod tekst. */
     --route-gradient: linear-gradient(90deg, #2b7cff 0%, #7a3cf0 50%, #22e06b 100%);
+    /* RING NAV „INFINITY" (ZMIERZONY ze wzorca): magenta→violet→cyan→magenta
+       (końce równe = pętla bez szwu). WYŁĄCZNIE płynąca obwódka pigułki
+       nawigacji (.inf-pill-nav::before) + jej halo — nie pod tekst. */
+    --ring-gradient: linear-gradient(90deg, #ff007f, #7928ca, #00f0ff, #ff007f);
     /* Sheen — wąski pas połysku (glossy), przesuwany animacją sfMetalSheen */
     --metal-sheen: linear-gradient(
       105deg,
@@ -302,6 +315,10 @@
        (dark: --bg-subtle = navy-900, nietknięte). */
     --bg-subtle: #f2f0ea;
     --surface: var(--sf-white);
+    /* NOWY token (INFINITY): odpowiednik hoveru powierzchni na jasnym — bez
+       tego wyspa light dziedziczyłaby ciemne #181840 z :root. Wartości wyspy
+       BEZ ZMIAN (to dodatek, nie zmiana istniejących). */
+    --surface-hover: var(--sf-gray-50);
     --surface-raised: var(--sf-white);
     --surface-sunken: var(--sf-gray-50);
 
@@ -321,6 +338,9 @@
     --brand: var(--sf-navy-700);
     --accent-soft: var(--sf-cyan-100);
     --accent-contrast: var(--sf-white);
+    /* NOWY token (INFINITY): violet pomocniczy — na jasnym TYLKO dekoracja
+       (~3.9:1 na bieli, poniżej AA dla tekstu). Dodatek, wyspa bez zmian. */
+    --accent-2: #8b5cf6;
 
     /* Linie / obramowania
        Redesign „Płyta na kalce": kreska ma być WŁOSEM rysunku technicznego, a
@@ -2428,8 +2448,9 @@ html.lenis body {
 /* ══════════════════════════════════════════════════════════════════════════
    REDESIGN „INFINITY" (wzorzec infinitytechstack.uk, partia FUNDAMENT).
    Język: mono-akcenty (JetBrains Mono przez --font-mono z next/font), pigułki,
-   neonowe obwódki w palecie TRASY marki (#2B7CFF/#7A3CF0/#22E06B + cyan/amber
-   pomocniczo), starfield na pogłębionej czerni #06070d. Zero magenty.
+   neonowe obwódki, starfield na czerni #06060c. Paleta v2 = 1:1 ze wzorca
+   (cyjan #22d3ee interakcje, violet #8b5cf6 pomocniczo). Magenta WYŁĄCZNIE
+   w płynącym ringu pigułki nawigacji (--ring-gradient, zmierzony ze wzorca).
    ARCHITEKTURA (konwencja pliku): bazowe klasy w @layer components;
    @media/@keyframes/@supports POZA @layer (Tailwind v3 gubi ciało at-rule).
    KOLORY WEJŚCIOWE per instancja przez custom properties: --chip-c, --tile-c,
@@ -2440,37 +2461,28 @@ html.lenis body {
    i szkło TYLKO w media query desktopowej niżej.
    ══════════════════════════════════════════════════════════════════════════ */
 @layer components {
-  /* ── .inf-pill-nav — pływająca pigułka nawigacji. Mobile: SOLIDNE tło (kryje
-     treść pod spodem, zero blur). Desktop dokłada półprzezroczystość + blur
-     (media query poza layer). Świecąca poświata trasy = ::before (statyczny
-     blur rastrowany raz — nie animować!). */
+  /* ── .inf-pill-nav — pływająca pigułka nawigacji (konstrukcja .gnav wzorca
+     1:1). Mobile: SOLIDNE tło (kryje treść, zero blur) + STATYCZNY gradient
+     obwódki. Desktop (media poza layer): szkło rgba(10,10,16,.65) + blur(32)
+     saturate(1.5) i ANIMACJA płynięcia obwódki (background-position).
+     ::before = PŁYNĄCA obwódka: gradient --ring-gradient 300% szerokości,
+     maska ring (content-box exclude) zostawia 2px obrączkę.
+     ::after = miękkie halo pod pigułką (delikatna aura, statyczny blur —
+     rastrowany raz, NIE animować!). */
   .inf-pill-nav {
     position: relative;
     isolation: isolate;
     border-radius: 999px;
-    background-color: var(--bg);
-    border: 1px solid var(--border-strong);
+    background-color: #0a0a10;
+    border: 1px solid rgba(139, 92, 246, 0.2);
   }
   .inf-pill-nav::before {
     content: '';
     position: absolute;
-    inset: -3px;
-    z-index: -1;
+    inset: -2px;
     border-radius: inherit;
-    background: var(--route-gradient);
-    filter: blur(14px);
-    opacity: 0.3;
-    pointer-events: none;
-  }
-  /* Ostry gradientowy RING na krawędzi (wzorzec: ciemna pigułka + świecąca
-     obwódka, NIE wypełnienie) — gradient przycięty maską do 1px obrączki. */
-  .inf-pill-nav::after {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    padding: 1px;
-    background: var(--route-gradient);
+    padding: 2px;
+    background: var(--ring-gradient) 0 0 / 300% 100%;
     -webkit-mask:
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
@@ -2479,8 +2491,126 @@ html.lenis body {
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
     mask-composite: exclude;
-    opacity: 0.75;
     pointer-events: none;
+  }
+  .inf-pill-nav::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--ring-gradient);
+    filter: blur(14px);
+    opacity: 0.25;
+    pointer-events: none;
+  }
+
+  /* ── .inf-nav-link — link/przycisk nawigacji (stany .gnav-cat-btn wzorca 1:1):
+     spoczynek #a0a0c0 (~7.6:1 na pigułce — AA); hover / otwarty dropdown /
+     strona aktywna: biel + mgiełka cyjanu + obwódka + glow inset/out.
+     [aria-current] łapie i 'page' (linki), i 'true' (przycisk "Usługi"). */
+  .inf-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 100px;
+    font-size: 0.8125rem; /* 13px, jak wzorzec */
+    font-weight: 600;
+    line-height: 1.4;
+    color: #a0a0c0;
+    border: 1px solid transparent;
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out);
+  }
+  .inf-nav-link:hover,
+  .inf-nav-link[aria-expanded='true'],
+  .inf-nav-link[aria-current] {
+    color: #fff;
+    background-color: rgba(0, 240, 255, 0.05);
+    border-color: rgba(0, 240, 255, 0.3);
+    box-shadow:
+      inset 0 0 12px rgba(0, 240, 255, 0.15),
+      0 0 12px rgba(0, 240, 255, 0.2);
+  }
+  /* Chevron WEWNĄTRZ przycisku "Usługi": przygaszony; przy otwartym dropdownie
+     obrót 180° i pełne krycie (wzorzec). */
+  .inf-nav-chevron {
+    opacity: 0.5;
+    transition:
+      transform 0.25s var(--ease-out),
+      opacity 0.25s var(--ease-out);
+  }
+  .inf-nav-link[aria-expanded='true'] .inf-nav-chevron {
+    transform: rotate(180deg);
+    opacity: 1;
+  }
+
+  /* ── .inf-dd — dropdown "Usługi": ZAWSZE w DOM (SEO — linki w HTML dla
+     botów), ukrywany CSS-em (visibility+opacity); .is-open pokazuje. Tło
+     SOLIDNE (--surface kryje treść pod spodem). */
+  .inf-dd {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 0.625rem;
+    width: min(92vw, 26rem);
+    padding: 0.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-strong);
+    background-color: var(--surface);
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition:
+      opacity var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out),
+      visibility 0s linear var(--dur-fast);
+  }
+  .inf-dd.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition:
+      opacity var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
+  }
+  /* Wiersz dropdownu (wzorzec): hover = tło --surface-hover #181840 + tytuł
+     cyjan + kafel emoji „pływa" (translateY w media hover+no-RM niżej). */
+  .inf-dd-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-md);
+    transition: background-color var(--dur-fast) var(--ease-out);
+  }
+  .inf-dd-row:hover {
+    background-color: var(--surface-hover);
+  }
+  .inf-dd-title {
+    font-size: var(--fs-body-sm);
+    font-weight: 600;
+    color: var(--fg);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .inf-dd-row:hover .inf-dd-title {
+    color: var(--accent);
+  }
+  .inf-dd-row .inf-tile {
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  /* Kafel 44px dropdownu (NATYWNE emoji 20px) — modyfikator .inf-tile.
+     Selektor 2-klasowy: bazowy .inf-tile stoi NIŻEJ w pliku i przy pojedynczej
+     klasie wygrywałby kolejnością. */
+  .inf-tile.inf-tile-lg {
+    width: 44px;
+    height: 44px;
+    font-size: 1.25rem;
   }
 
   /* ── .inf-overline — mono etykieta sekcji („// TYTUŁ • LICZBA").
@@ -2491,7 +2621,9 @@ html.lenis body {
     font-weight: 400;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--fg-subtle);
+    /* INFINITY v2: --fg-subtle spadł do dekoracyjnego #4e4e6e (~2.5:1) —
+       mały CZYTELNY tekst (etykieta sekcji) jedzie na --fg-muted (AA). */
+    color: var(--fg-muted);
   }
   .inf-overline-lines {
     display: flex;
@@ -2541,7 +2673,9 @@ html.lenis body {
     line-height: 1.3;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--fg-subtle);
+    /* INFINITY v2: mono tag 11px = czytelny tekst → --fg-muted (AA), nie
+       dekoracyjny --fg-subtle (~2.5:1). */
+    color: var(--fg-muted);
     background-color: rgba(255, 255, 255, 0.03);
   }
 
@@ -2590,7 +2724,8 @@ html.lenis body {
     width: 2px;
     border-radius: 999px;
     background: var(--card-c);
-    opacity: 0.9;
+    opacity: 0.5;
+    transition: opacity var(--dur-base) var(--ease-out);
     pointer-events: none;
   }
   /* Strzałka karty — dojeżdża w prawo na hover karty (reguła w media query). */
@@ -2598,6 +2733,54 @@ html.lenis body {
     display: inline-block;
     color: var(--fg-subtle);
     transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  /* ── .inf-shine — BŁYSK karty: WEWNĘTRZNY div (inset 0, overflow:hidden TU,
+     NIE na karcie — badge cennika -top-3 musi wystawać poza kartę, a ::before
+     karty siedzi na krawędzi). ::after = pas 38% skewX(-18deg), na hover karty
+     przelatuje left -40% → 120% (reguła w media hover niżej; RM: stoi). */
+  .inf-shine {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  .inf-shine::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -40%;
+    width: 38%;
+    height: 100%;
+    transform: skewX(-18deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+    transition: left 0.6s var(--ease-out);
+  }
+
+  /* ── .inf-spotlight — poświata podążająca za kursorem na karcie: radial w
+     kolorze karty (--card-c dziedziczone z .inf-card) w punkcie --mx/--my (%).
+     JS (partia MOTION): JEDEN delegowany pointermove ustawia --mx/--my na
+     hoverowanej .inf-card — desktop-only przez orchestrator. Bez JS zostaje
+     środek karty (fallback 50%/50%). */
+  .inf-spotlight {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-out);
+    background: radial-gradient(
+      320px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(34, 211, 238, 0.12),
+      transparent 70%
+    );
+    background: radial-gradient(
+      320px circle at var(--mx, 50%) var(--my, 50%),
+      color-mix(in srgb, var(--card-c, var(--accent)) 12%, transparent),
+      transparent 70%
+    );
   }
 
   /* ── .inf-counter — pozycja paska liczników (hero wzorca): liczba mono 700
@@ -2626,7 +2809,8 @@ html.lenis body {
     font-size: 0.6875rem; /* 11px micro-caps */
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--fg-subtle);
+    /* INFINITY v2: micro-caps to czytelny opis licznika → --fg-muted (AA). */
+    color: var(--fg-muted);
   }
 
   /* ── .inf-glow-cta — pigułka CTA z neonową obwódką i glow.
@@ -2726,29 +2910,66 @@ html.lenis body {
   }
 }
 
-/* ── INFINITY: desktop ≥1024px — szkło pigułki nawigacji (backdrop-blur NIGDY
-   na mobile) + hover kart (tylko urządzenia z realnym hoverem). */
+/* ── INFINITY: desktop ≥1024px — szkło pigułki nawigacji 1:1 ze wzorca .gnav
+   (backdrop-blur NIGDY na mobile) + hover kart (tylko realny hover). */
 @media (min-width: 1024px) {
   .inf-pill-nav {
-    background-color: color-mix(in srgb, var(--bg) 93%, transparent);
-    -webkit-backdrop-filter: blur(24px) saturate(1.2);
-    backdrop-filter: blur(24px) saturate(1.2);
+    background-color: rgba(10, 10, 16, 0.65);
+    -webkit-backdrop-filter: blur(32px) saturate(1.5);
+    backdrop-filter: blur(32px) saturate(1.5);
+  }
+}
+/* Płynięcie obwódki TYLKO desktop i TYLKO bez reduced-motion (mobile: statyczny
+   gradient z reguły bazowej — GPU-cheap i tak przez maskę). */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .inf-pill-nav::before {
+    animation: infRingFlow 3s linear infinite;
   }
 }
 @media (hover: hover) and (pointer: fine) {
+  /* Hover karty wg wzorca (.lp-promo-card): lift -3px, obwódka i poświata w
+     kolorze karty, inset highlight od góry; accent-bar 0.5→1; błysk .inf-shine
+     przelatuje; spotlight się zapala. */
   .inf-card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     border-color: var(--border-strong);
+    border-color: color-mix(in srgb, var(--card-c) 50%, transparent);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 12px 36px -16px rgba(20, 184, 196, 0.4);
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 12px 40px -12px rgba(34, 211, 238, 0.4);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 12px 36px -16px color-mix(in srgb, var(--card-c) 45%, transparent);
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 12px 40px -12px color-mix(in srgb, var(--card-c) 40%, transparent);
+  }
+  .inf-card:hover::before {
+    opacity: 1;
   }
   .inf-card:hover .inf-arrow {
     transform: translateX(4px);
     color: var(--fg-muted);
+  }
+  .inf-card:hover .inf-shine::after {
+    left: 120%;
+  }
+  .inf-card:hover .inf-spotlight {
+    opacity: 1;
+  }
+}
+/* Emoji „pływa": kafel wiersza dropdownu unosi się na hover wiersza —
+   tylko realny hover i tylko bez reduced-motion. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .inf-dd-row:hover .inf-tile {
+    transform: translateY(-2px);
+  }
+}
+/* Pętla ringu pigułki: background-position 0→300% (gradient 300% szerokości
+   z równymi końcami = płynięcie bez szwu). */
+@keyframes infRingFlow {
+  from {
+    background-position: 0% 0;
+  }
+  to {
+    background-position: 300% 0;
   }
 }
 
@@ -2786,15 +3007,34 @@ html.lenis body {
     animation: none !important;
     transform: none !important;
   }
+  .inf-pill-nav::before {
+    animation: none !important;
+  }
   .inf-card,
+  .inf-card::before,
   .inf-arrow,
-  .inf-glow-cta {
+  .inf-glow-cta,
+  .inf-nav-link,
+  .inf-nav-chevron,
+  .inf-dd,
+  .inf-dd-row,
+  .inf-dd-title,
+  .inf-dd-row .inf-tile,
+  .inf-shine::after,
+  .inf-spotlight {
     transition: none !important;
   }
   .inf-card:hover {
     transform: none !important;
   }
   .inf-card:hover .inf-arrow {
+    transform: none !important;
+  }
+  /* Błysk stoi (spec: RM bez zmiany left); kafel emoji nie „pływa". */
+  .inf-card:hover .inf-shine::after {
+    left: -40% !important;
+  }
+  .inf-dd-row:hover .inf-tile {
     transform: none !important;
   }
 }
@@ -2805,10 +3045,18 @@ html.lenis body {
   .inf-pill-nav::before,
   .inf-pill-nav::after {
     background: none;
+    animation: none;
   }
   .inf-stars,
-  .inf-grid {
+  .inf-grid,
+  .inf-shine::after,
+  .inf-spotlight {
     background-image: none;
+  }
+  .inf-nav-link:hover,
+  .inf-nav-link[aria-expanded='true'],
+  .inf-nav-link[aria-current] {
+    box-shadow: none;
   }
 }
 
@@ -3036,4 +3284,25 @@ html.lenis body {
   .inf-ask {
     box-shadow: none;
   }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   INFINITY v2 — AA-GUARD dla utility .text-fg-subtle (POZA @layer, na końcu
+   pliku: ta sama specyficzność co utility Tailwinda, wygrywa kolejnością).
+   Paleta 1:1 ze wzorca zrzuca --fg-subtle do dekoracyjnego #4e4e6e (~2.5:1),
+   a repo używa text-fg-subtle w ~80 miejscach na małym CZYTELNYM tekście
+   (caption/label w app/ i components/). Do czasu migracji per-użycie tekst na
+   ciemnym jedzie na --fg-muted (AA ~4.9:1); dekoracje w CSS (np. .inf-arrow)
+   dalej biorą var(--fg-subtle) bezpośrednio. Jasne wyspy: przywrócony
+   ich własny --fg-subtle (gray-500, AA na paper) — wyspy BEZ ZMIAN. */
+.text-fg-subtle {
+  color: var(--fg-muted);
+}
+[data-theme='light'] .text-fg-subtle {
+  color: var(--fg-subtle);
+}
+/* Zagnieżdżenie dark-w-light (SectionImage): reguła PÓŹNIEJSZA o tej samej
+   specyficzności — ciemna strefa wewnątrz jasnej wraca na guard. */
+[data-theme='dark'] .text-fg-subtle {
+  color: var(--fg-muted);
 }

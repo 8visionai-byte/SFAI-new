@@ -1,6 +1,21 @@
-import { Card, Badge } from '@/components/ui';
+import type { CSSProperties } from 'react';
+import { Card } from '@/components/ui';
 import { DOJRZALOSC_LABEL } from '@/lib/produkty/types';
 import type { Produkt } from '@/lib/produkty/types';
+import type { InfDekor } from '@/lib/inf-kategorie';
+import { INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+
+/**
+ * INFINITY v2 — dekoracja kafelka per produkt (emoji + kolor z palety kategorii
+ * spec; przypisanie do produktów = decyzja dekoracyjna, aria-hidden). Klucz =
+ * slug z rejestru lib/produkty.
+ */
+const PRODUKT_DEKOR: Record<string, InfDekor> = {
+  'skaner-faktur-ksef': { c: '#f59e0b', emoji: '📄' },
+  'app-coachingowa-z-agentami': { c: '#a78bfa', emoji: '🤝' },
+  'apka-obecnosci-skladek': { c: '#10b981', emoji: '⚡' },
+  'centrum-dowodzenia': { c: '#8b5cf6', emoji: '🎙️' },
+};
 
 /**
  * ProduktCard — karta JEDNEGO własnego produktu (opis przez funkcję).
@@ -13,14 +28,34 @@ import type { Produkt } from '@/lib/produkty/types';
  * opis funkcji -> "Dla kogo" -> "Co daje" (oszczędność szac.) -> nuta customu ->
  * slot poglądowy na zrzut/demo (INPUT PAWŁA, NIGDY atrapa obrazka 404).
  *
- * Karta jest NIEklikalna (variant="base") — uczciwa afordancja: produkt nie ma
- * jeszcze osobnej podstrony, jedyne CTA strony prowadzi do #diagnoza.
+ * Karta jest NIEklikalna — uczciwa afordancja: produkt nie ma jeszcze osobnej
+ * podstrony, jedyne CTA strony prowadzi do #diagnoza.
+ * INFINITY v2 (sama prezentacja, treść 1:1): Card variant="quiet" + .inf-card
+ * (ciemna karta wzorca, lewa krawędź --card-c), kafelek emoji aria-hidden,
+ * badge dojrzałości → mono .inf-tag. BEZ błysku/strzałki (karta nieinteraktywna).
  */
 export function ProduktCard({ produkt }: { produkt: Produkt }) {
+  const dekor = PRODUKT_DEKOR[produkt.slug] ?? INF_KATEGORIA_DEFAULT;
   return (
-    <Card as="article" variant="base" className="flex h-full flex-col" id={produkt.slug}>
+    <Card
+      as="article"
+      variant="quiet"
+      className="inf-card flex h-full flex-col p-6"
+      id={produkt.slug}
+      style={{ '--card-c': dekor.c } as CSSProperties}
+    >
       <div className="flex items-center justify-between gap-3">
-        <Badge variant="neutral">{DOJRZALOSC_LABEL[produkt.dojrzalosc]}</Badge>
+        <span className="flex items-center gap-3">
+          {/* Kafelek emoji produktu — dekoracja aria-hidden (jak dropdown). */}
+          <span
+            aria-hidden="true"
+            className="inf-tile"
+            style={{ '--tile-c': dekor.c } as CSSProperties}
+          >
+            {dekor.emoji}
+          </span>
+          <span className="inf-tag">{DOJRZALOSC_LABEL[produkt.dojrzalosc]}</span>
+        </span>
         {produkt.nazwaRobocza && (
           <span className="text-caption text-fg-subtle">
             rob. {produkt.nazwaRobocza}

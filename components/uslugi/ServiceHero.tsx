@@ -1,4 +1,5 @@
-import { Section, Badge, MagneticButton, SectionImage } from '@/components/ui';
+import type { CSSProperties } from 'react';
+import { Section, MagneticButton, SectionImage } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { POSITIONING } from '@/lib/site';
 import { Breadcrumbs } from './Breadcrumbs';
@@ -7,12 +8,22 @@ import { USLUGA_OBRAZY } from '@/lib/uslugi/obrazy';
 
 /**
  * ServiceHero — SEKCJA 1 szablonu usługi (answer-first).
- * Struktura: breadcrumbs + badge (sub-claim kategorii) + H1 (= money query)
+ * Struktura: breadcrumbs + overline (sub-claim kategorii) + H1 (= money query)
  * + kapsuła answer-first (surowy HTML = cytat dla LLM) + główne CTA + mikrokopia.
  *
  * KPI #1: H1 i kapsuła są w HTML przy 1. żądaniu (Reveal tylko wzbogaca, a przy
  * prefers-reduced-motion pokazuje treść natychmiast). Lewostronne wyrównanie
  * (czytelność długiej kapsuły), spójne z rytmem strony.
+ *
+ * INFINITY v2 (spec §PODSTRONY — sama prezentacja, treści i kolejność 1:1):
+ *  - tone="transparent": hero bez solidnego tła, globalne .inf-stars/particles
+ *    prześwitują (fix „całe na czarno");
+ *  - Badge sub-claimu → mono overline z liniami (.inf-overline-lines) jak home;
+ *  - rząd mono-chipów zaufania (.inf-chip) pod kapsułą — frazy 1:1 z hero home
+ *    (PasekZaufania: tytuł filaru 1, fragment opisu filaru 1, tytuł filaru 3),
+ *    kolory obwódek = trasa marki (dekoracja przez --chip-c);
+ *  - CTA = pigułka z glow (.inf-glow-cta na MagneticButton — kontrakt
+ *    `.sf-magnetic .inf-glow-cta` już w globals.css, spójnie z home).
  *
  * ZDJĘCIE HERO (mapa USLUGA_OBRAZY): płyta w roli FRAME (kwadrat na desktopie),
  * wychodząca do prawej krawędzi ekranu (.sf-bleed-r). Na mobile leży POD treścią
@@ -33,9 +44,9 @@ export function ServiceHero({ usluga }: { usluga: Usluga }) {
       />
 
       <Reveal eager>
-        <Badge variant="accent" className="mt-6">
+        <p className="inf-overline inf-overline-lines mt-6">
           {POSITIONING.subClaim}
-        </Badge>
+        </p>
       </Reveal>
 
       <Reveal eager delay={0.05}>
@@ -47,9 +58,30 @@ export function ServiceHero({ usluga }: { usluga: Usluga }) {
         <p className="text-lead mt-6 text-fg-muted">{usluga.kapsula}</p>
       </Reveal>
 
+      {/* Chipy zaufania — frazy 1:1 z hero home (zero nowych treści marki);
+          kolor obwódki to czysta dekoracja (--chip-c, trasa marki jak home). */}
+      <Reveal eager delay={0.12}>
+        <ul className="mt-6 flex flex-wrap gap-2">
+          <li className="inf-chip" style={{ '--chip-c': '#2B7CFF' } as CSSProperties}>
+            Twoje dane zostają w UE
+          </li>
+          <li className="inf-chip" style={{ '--chip-c': '#7A3CF0' } as CSSProperties}>
+            RODO i AI Act
+          </li>
+          <li className="inf-chip" style={{ '--chip-c': '#22E06B' } as CSSProperties}>
+            Płacisz za efekt
+          </li>
+        </ul>
+      </Reveal>
+
       <Reveal eager delay={0.15}>
         <div className="mt-9 flex flex-col items-start gap-3">
-          <MagneticButton variant="primary" size="lg" href={usluga.cta.href}>
+          <MagneticButton
+            variant="primary"
+            size="lg"
+            href={usluga.cta.href}
+            className="inf-glow-cta"
+          >
             {usluga.cta.label}
           </MagneticButton>
           <span className="text-caption max-w-[52ch] text-fg-subtle">
@@ -62,14 +94,14 @@ export function ServiceHero({ usluga }: { usluga: Usluga }) {
 
   if (!obraz) {
     return (
-      <Section tone="base" containerWidth="default" space="lg">
+      <Section tone="transparent" containerWidth="default" space="lg">
         {tresc}
       </Section>
     );
   }
 
   return (
-    <Section tone="base" containerWidth="default" space="lg" className="overflow-x-clip">
+    <Section tone="transparent" containerWidth="default" space="lg" className="overflow-x-clip">
       <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] md:gap-14">
         {tresc}
         {/* ZDJĘCIE JEST TEŻ NA MOBILE: `hidden md:block` zostawiało dziesięć podstron

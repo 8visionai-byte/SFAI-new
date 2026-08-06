@@ -44,8 +44,9 @@ export default function ProduktyPage() {
   return (
     <main id="main">
       {/* ───────────────────────────────────────────────────────────────
-          (1) HERO — answer-first: co zbudowaliśmy i co z tego możesz mieć. */}
-      <Section tone="base">
+          (1) HERO — answer-first: co zbudowaliśmy i co z tego możesz mieć.
+          INFINITY v2: tone="transparent" — globalne tło prześwituje. */}
+      <Section tone="transparent">
         <div className="mx-auto max-w-narrow">
           <Reveal>
             <h1 className="text-display">

@@ -18,7 +18,8 @@ import { usePathname } from 'next/navigation';
  * nie robi. Zmiana ścieżki (template.tsx re-montuje treść) → re-injekcja.
  *
  * WARSTWA: slot inset-0, z-index:-1 → ZA treścią H1/CTA (sekcja ma isolate),
- * NAD tłem sekcji i warstwicami HeroContours (-z-10). pointer-events:none.
+ * NAD tłem sekcji i siatką .inf-grid (-z-10; HeroContours usunięty z renderu
+ * w spec v2). pointer-events:none.
  *
  * KONTRAKT PERF: montowany wyłącznie przez MotionOrchestrator (osobny lazy
  * chunk) za bramką MotionGate; bramki zdublowane niżej. DPR cap 1.5, pauza

@@ -1,7 +1,6 @@
 import type { CSSProperties } from 'react';
 import { Section, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
-import { HeroContours } from '@/components/motion/HeroContours';
 import { WritingHeadline } from '@/components/motion/WritingHeadline';
 // import { AnimatedMetric } from '@/components/motion/AnimatedMetric'; // wróci z realnymi metrykami
 import { POSITIONING, HOME_CTA } from '@/lib/site';
@@ -42,10 +41,11 @@ export function Hero() {
       Caption „Dane w UE · RODO · AI Act" z makiety POMINIĘTY świadomie: ten zapis
       (z kropkami środkowymi) nie istnieje w treściach repo, a treści są nietykalne.
 
-      WARSTWA PREMIUM (czysto dekoracyjna, nie rusza treści/H1/CTA):
-      HeroContours = sygnaturowe tło hero (cyrkiel kreśli warstwice, inline SVG,
-      zero JS; świat B: krycie x3 + mix-blend screen — linie świecą na ciemnym)
-      w absolutnej warstwie -z-10 pod treścią (aria-hidden u źródła i tu).
+      WARSTWA DEKORACYJNA (spec INFINITY v2, „HERO — SPRZĄTANIE"): HeroContours
+      (stare elipsy warstwic) USUNIĘTY z renderu na wprost polecenie Pawła —
+      plik zostaje na dysku. Tło hero robią teraz: siatka .inf-grid (niżej),
+      starfield/particles globalne oraz HeroRibbon (wstrzykiwany przez
+      MotionOrchestrator do tej sekcji po h1[data-writing] — zero zmian tutaj).
     */
     <Section
       tone="base"
@@ -54,10 +54,9 @@ export function Hero() {
       className="relative isolate overflow-hidden lg:flex lg:min-h-[calc(100svh-4rem)] lg:flex-col lg:justify-end"
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        {/* INFINITY: subtelna siatka hero (.inf-grid, fundament) POD konturami —
-            maska rozpływa ją ku dołowi, zero twardego szwu. Czysta dekoracja. */}
+        {/* INFINITY: subtelna siatka hero (.inf-grid, fundament) — maska
+            rozpływa ją ku dołowi, zero twardego szwu. Czysta dekoracja. */}
         <div className="inf-grid" />
-        <HeroContours />
       </div>
       <Reveal eager>
           {/* INFINITY: badge → mono overline z liniami po bokach (.inf-overline

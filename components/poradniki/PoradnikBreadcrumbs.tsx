@@ -12,8 +12,9 @@ import Link from 'next/link';
 type Crumb = { name: string; href?: string };
 
 export function PoradnikBreadcrumbs({ items }: { items: Crumb[] }) {
+  // INFINITY v2: breadcrumb w mono (sama klasa font-mono — treść 1:1).
   return (
-    <nav aria-label="Ścieżka nawigacji" className="text-caption text-fg-subtle">
+    <nav aria-label="Ścieżka nawigacji" className="font-mono text-caption text-fg-subtle">
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
         {items.map((item, i) => {
           const isLast = i === items.length - 1;

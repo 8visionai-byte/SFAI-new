@@ -36,12 +36,14 @@ export default function KontaktPage() {
         ])}
       />
 
-      <Section tone="base">
+      {/* INFINITY v2: hero bez solidnego tła (globalny starfield prześwituje);
+          eyebrow → mono .inf-overline (treść 1:1). */}
+      <Section tone="transparent">
         <div className="mx-auto grid max-w-container gap-10 lg:grid-cols-2">
           {/* Lewa: zaproszenie + NAP */}
           <div>
             <Reveal>
-              <p className="text-overline uppercase tracking-[0.12em] text-accent">Kontakt</p>
+              <p className="inf-overline text-accent">Kontakt</p>
               <h1 className="text-h1 mt-2">Zacznijmy od bezpłatnej diagnozy</h1>
             </Reveal>
             <Reveal delay={0.05}>

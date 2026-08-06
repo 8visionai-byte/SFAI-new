@@ -22,7 +22,7 @@ import { Container } from './Container';
  * border-y przy każdej zmianie tonu: 9 zmian tonu na 14 sekcji robiło z home
  * stos pasów jak w motywie WordPressa. Kreska jest DEKORACJĄ (aria-hidden).
  */
-type Tone = 'base' | 'subtle' | 'surface';
+type Tone = 'base' | 'subtle' | 'surface' | 'transparent';
 type Theme = 'light' | 'dark';
 type Space = 'sm' | 'md' | 'lg';
 
@@ -30,6 +30,11 @@ const toneClass: Record<Tone, string> = {
   base: 'bg-bg',
   subtle: 'bg-bg-subtle',
   surface: 'bg-surface',
+  // INFINITY v2 (podstrony): hero podstrony BEZ solidnego tła — globalne
+  // .inf-stars/particles prześwitują (diagnoza „całe na czarno": sekcje kryły
+  // fixed tło własnym bg-bg). Tone emituje dokładnie jedną klasę, więc
+  // bg-transparent nie konkuruje z niczym (cn to goły join, bez merge).
+  transparent: 'bg-transparent',
 };
 
 const spaceClass: Record<Space, string> = {

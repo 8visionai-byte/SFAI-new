@@ -4,7 +4,7 @@ import { buildMetadata } from '@/lib/metadata';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { breadcrumbSchema } from '@/components/seo/schemas';
 import { SITE, HOME_CTA } from '@/lib/site';
-import { Section, Badge, MagneticButton } from '@/components/ui';
+import { Section, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { Breadcrumbs } from '@/components/uslugi/Breadcrumbs';
 import { MaterialCard, MaterialCardWkrotce } from '@/components/materialy';
@@ -39,8 +39,10 @@ export default function MaterialyHubPage() {
   return (
     <main id="main">
       {/* ───────────────────────────────────────────────────────────────
-          (1) HERO HUBU — answer-first: co tu znajdziesz, jedna obietnica. */}
-      <Section tone="base">
+          (1) HERO HUBU — answer-first: co tu znajdziesz, jedna obietnica.
+          INFINITY v2: hero bez solidnego tła (globalny starfield prześwituje);
+          badge-eyebrow → mono overline .inf-overline (treść 1:1). */}
+      <Section tone="transparent">
         <div className="mx-auto max-w-narrow">
           <Breadcrumbs
             items={[
@@ -51,9 +53,9 @@ export default function MaterialyHubPage() {
           />
 
           <Reveal>
-            <Badge variant="accent" className="mt-6">
+            <p className="inf-overline inf-overline-lines mt-6">
               Darmowe do pobrania
-            </Badge>
+            </p>
           </Reveal>
 
           <Reveal delay={0.05}>

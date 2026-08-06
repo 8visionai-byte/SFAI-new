@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
+import type { CSSProperties } from 'react';
 import Link from 'next/link';
+import type { InfDekor } from '@/lib/inf-kategorie';
 
 import { buildMetadata } from '@/lib/metadata';
 import { JsonLd } from '@/components/seo/JsonLd';
@@ -102,18 +104,34 @@ const KATEGORIE: Kategoria[] = [
   },
 ];
 
-/** Karta kategorii — klikalna gdy trasa live, inaczej „Wkrótce" (zero martwych linków). */
+/**
+ * INFINITY v2 — dekoracja kafelka per dział Centrum Wiedzy (emoji + kolor;
+ * ai-radar 📡 spoza mapy usług spec — decyzja dekoracyjna, aria-hidden).
+ */
+const KATEGORIA_DEKOR: Record<string, InfDekor> = {
+  poradniki: { c: '#22d3ee', emoji: '📚' },
+  'ai-radar': { c: '#8b5cf6', emoji: '📡' },
+  przemyslenia: { c: '#a78bfa', emoji: '📝' },
+  'case-studies': { c: '#10b981', emoji: '📈' },
+};
+const KATEGORIA_DEKOR_DEFAULT: InfDekor = { c: 'var(--accent)', emoji: '✨' };
+
+/** Karta kategorii — klikalna gdy trasa live, inaczej „Wkrótce" (zero martwych linków).
+    INFINITY v2 (sama prezentacja, treść 1:1): .inf-card + kafelek emoji działu
+    (aria-hidden), strzałka .inf-arrow, błysk .inf-shine + spotlight .inf-spotlight. */
 function KategoriaKafel({ kategoria }: { kategoria: Kategoria }) {
+  const dekor = KATEGORIA_DEKOR[kategoria.id] ?? KATEGORIA_DEKOR_DEFAULT;
+
   if (!kategoria.live) {
     return (
       <Card
         as="article"
-        variant="base"
-        className="flex h-full flex-col opacity-80"
+        variant="quiet"
+        className="inf-card flex h-full flex-col p-6 opacity-80"
         aria-disabled="true"
       >
         <div className="flex items-center gap-2">
-          <Badge variant="accent">Wkrótce</Badge>
+          <span className="inf-tag text-accent">Wkrótce</span>
         </div>
         <h3 className="text-h3 mt-4 text-fg-muted">{kategoria.tytul}</h3>
         <p className="mt-3 text-body-sm text-fg-muted">{kategoria.opis}</p>
@@ -125,7 +143,22 @@ function KategoriaKafel({ kategoria }: { kategoria: Kategoria }) {
   }
 
   return (
-    <Card as="article" variant="interactive" className="relative flex h-full flex-col">
+    <Card
+      as="article"
+      variant="quiet"
+      className="inf-card relative flex h-full flex-col p-6"
+      style={{ '--card-c': dekor.c } as CSSProperties}
+    >
+      <div aria-hidden="true" className="inf-shine" />
+      <div aria-hidden="true" className="inf-spotlight" />
+      {/* Kafelek emoji działu — dekoracja aria-hidden (jak dropdown). */}
+      <span
+        aria-hidden="true"
+        className="inf-tile mb-4"
+        style={{ '--tile-c': dekor.c } as CSSProperties}
+      >
+        {dekor.emoji}
+      </span>
       <h3 className="text-h3">
         <Link
           href={kategoria.href}
@@ -137,7 +170,14 @@ function KategoriaKafel({ kategoria }: { kategoria: Kategoria }) {
       <p className="mt-3 text-body-sm text-fg-muted">{kategoria.opis}</p>
       <span className="mt-4 inline-flex items-center gap-1 text-caption font-semibold text-accent">
         {kategoria.cta}
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+          className="inf-arrow text-accent"
+        >
           <path
             d="M5 12h14M13 6l6 6-6 6"
             stroke="currentColor"
@@ -159,8 +199,10 @@ export default function WiedzaPage() {
   return (
     <main id="main">
       {/* ───────────────────────────────────────────────────────────────
-          (1) HERO — kapsuła answer-first: czym jest Centrum Wiedzy, 4 działy. */}
-      <Section tone="base">
+          (1) HERO — kapsuła answer-first: czym jest Centrum Wiedzy, 4 działy.
+          INFINITY v2: hero bez solidnego tła (globalny starfield prześwituje);
+          badge-eyebrow → mono overline .inf-overline (treść 1:1). */}
+      <Section tone="transparent">
         <div className="mx-auto max-w-narrow">
           <PoradnikBreadcrumbs
             items={[
@@ -170,9 +212,9 @@ export default function WiedzaPage() {
           />
 
           <Reveal>
-            <Badge variant="accent" className="mt-6">
+            <p className="inf-overline inf-overline-lines mt-6">
               Wiedza o AI dla firm
-            </Badge>
+            </p>
           </Reveal>
 
           <Reveal delay={0.05}>

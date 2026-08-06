@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
+import type { CSSProperties } from 'react';
 import Link from 'next/link';
+import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
 
 import { buildMetadata } from '@/lib/metadata';
 import { JsonLd } from '@/components/seo/JsonLd';
@@ -79,23 +81,39 @@ const KLASTRY: Klaster[] = [
   },
 ];
 
-/** Kafel usługi — link po H1 (= money query), kapsuła skrócona do dowodu wartości. */
+/** Kafel usługi — link po H1 (= money query), kapsuła skrócona do dowodu wartości.
+    INFINITY v2 (sama prezentacja, treść 1:1): .inf-card na Card variant="quiet"
+    (lewa krawędź w kolorze kategorii przez --card-c), kafelek emoji kategorii
+    (aria-hidden, mapa lib/inf-kategorie jak dropdown), strzałka .inf-arrow,
+    błysk .inf-shine + spotlight .inf-spotlight jako wewnętrzne divy aria-hidden. */
 function UslugaKafel({ usluga }: { usluga: Usluga }) {
+  const dekor = INF_KATEGORIA[usluga.slug] ?? INF_KATEGORIA_DEFAULT;
   return (
     <Card
       as="article"
-      variant="interactive"
-      className="h-full"
+      variant="quiet"
+      className="inf-card h-full"
+      style={{ '--card-c': dekor.c } as CSSProperties}
     >
+      <div aria-hidden="true" className="inf-shine" />
+      <div aria-hidden="true" className="inf-spotlight" />
       <Link
         href={`/uslugi/${usluga.slug}`}
-        className="flex h-full flex-col rounded-sm"
+        className="flex h-full flex-col rounded-lg p-6"
       >
+        {/* Kafelek emoji kategorii — dekoracja aria-hidden (jak dropdown). */}
+        <span
+          aria-hidden="true"
+          className="inf-tile mb-4"
+          style={{ '--tile-c': dekor.c } as CSSProperties}
+        >
+          {dekor.emoji}
+        </span>
         <h3 className="text-h3 text-fg">{usluga.h1}</h3>
         <p className="mt-3 text-body-sm text-fg-muted">{usluga.problem.h2}</p>
         <span className="mt-4 inline-flex items-center gap-1 text-body-sm font-semibold text-accent-hover">
           Zobacz usługę
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="inf-arrow text-accent-hover">
             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </span>
@@ -108,8 +126,10 @@ export default function UslugiHubPage() {
   return (
     <main id="main">
       {/* ───────────────────────────────────────────────────────────────
-          (1) HERO HUBU — answer-first: co tu znajdziesz, jedno zdanie różnicy. */}
-      <Section tone="base">
+          (1) HERO HUBU — answer-first: co tu znajdziesz, jedno zdanie różnicy.
+          INFINITY v2: tone="transparent" — globalne tło (starfield/particles)
+          prześwituje, hero bez solidnego bg. */}
+      <Section tone="transparent">
         <div className="mx-auto max-w-narrow">
           <Breadcrumbs
             items={[

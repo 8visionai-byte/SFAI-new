@@ -4,7 +4,7 @@ import { buildMetadata } from '@/lib/metadata';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { breadcrumbSchema } from '@/components/seo/schemas';
 import { SITE } from '@/lib/site';
-import { Section, Badge } from '@/components/ui';
+import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { PoradnikBreadcrumbs, PoradnikCard } from '@/components/poradniki';
 import { PORADNIKI } from '@/lib/poradniki';
@@ -43,7 +43,9 @@ export default function PoradnikiPage() {
 
   return (
     <main id="main">
-      <Section tone="base">
+      {/* INFINITY v2: hero bez solidnego tła (globalny starfield prześwituje);
+          badge-eyebrow → mono overline .inf-overline (treść 1:1). */}
+      <Section tone="transparent">
         <div className="mx-auto max-w-narrow">
           <PoradnikBreadcrumbs
             items={[
@@ -54,9 +56,9 @@ export default function PoradnikiPage() {
           />
 
           <Reveal>
-            <Badge variant="accent" className="mt-6">
+            <p className="inf-overline inf-overline-lines mt-6">
               Konkret krok po kroku
-            </Badge>
+            </p>
           </Reveal>
 
           <Reveal delay={0.05}>

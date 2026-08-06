@@ -37,8 +37,10 @@ export const metadata: Metadata = buildMetadata({
 export default function RealizacjePage() {
   return (
     <main id="main">
-      {/* Hero hubu — answer-first, co tu znajdziesz */}
-      <Section tone="base">
+      {/* Hero hubu — answer-first, co tu znajdziesz.
+          INFINITY v2: tone="transparent" — globalne tło prześwituje (karty .inf-card
+          mają własne solidne powierzchnie, więc lista zostaje czytelna). */}
+      <Section tone="transparent">
         <div className="mx-auto max-w-narrow">
           <Reveal>
             <h1 className="text-display">Realizacje</h1>

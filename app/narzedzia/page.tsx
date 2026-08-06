@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import type { ComponentType } from 'react';
+import type { ComponentType, CSSProperties } from 'react';
+import type { InfDekor } from '@/lib/inf-kategorie';
 
 import { buildMetadata } from '@/lib/metadata';
 import { JsonLd } from '@/components/seo/JsonLd';
@@ -37,6 +38,19 @@ export const metadata: Metadata = buildMetadata({
   path: '/narzedzia',
 });
 
+/**
+ * INFINITY v2 — dekoracja kafelka per narzędzie (emoji + kolor z palety
+ * kategorii spec; przypisanie do narzędzi = decyzja dekoracyjna, aria-hidden).
+ */
+const NARZEDZIE_DEKOR: Record<string, InfDekor> = {
+  'kalkulator-oszczednosci': { c: '#22d3ee', emoji: '📈' },
+  'kalkulator-procesu': { c: '#10b981', emoji: '⚡' },
+  'test-gotowosci-ai': { c: '#f59e0b', emoji: '🔍' },
+  'audyt-strony-ai': { c: '#22d3ee', emoji: '🌐' },
+  'generator-promptow': { c: '#8b5cf6', emoji: '💬' },
+};
+const NARZEDZIE_DEKOR_DEFAULT: InfDekor = { c: 'var(--accent)', emoji: '✨' };
+
 /** Mapa slug -> wyspa narzędzia. Slug zgodny z rejestrem lib/narzedzia. */
 const WYSPY: Record<string, ComponentType> = {
   'kalkulator-oszczednosci': KalkulatorOszczednosci,
@@ -49,8 +63,9 @@ const WYSPY: Record<string, ComponentType> = {
 export default function NarzedziaPage() {
   return (
     <main id="main">
-      {/* Hero hubu — answer-first: co tu jest i po co */}
-      <Section tone="base">
+      {/* Hero hubu — answer-first: co tu jest i po co.
+          INFINITY v2: tone="transparent" — globalne tło prześwituje. */}
+      <Section tone="transparent">
         <div className="mx-auto max-w-narrow">
           <Reveal>
             <h1 className="text-display">Darmowe narzędzia AI</h1>
@@ -64,25 +79,44 @@ export default function NarzedziaPage() {
             </p>
           </Reveal>
 
-          {/* Spis narzędzi — kotwice w HTML (linki dla botów i ludzi) */}
+          {/* Spis narzędzi — kotwice w HTML (linki dla botów i ludzi).
+              INFINITY v2 (sama prezentacja, treść 1:1): kafle na .inf-card
+              z kafelkiem emoji (aria-hidden), etykieta → mono .inf-overline,
+              błysk .inf-shine + spotlight .inf-spotlight. */}
           <Reveal delay={0.1}>
             <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-              {NARZEDZIA.map((n) => (
-                <li key={n.slug}>
-                  <a
-                    href={`#${n.slug}`}
-                    className="group flex h-full flex-col rounded-lg border border-border bg-surface p-4 transition-colors duration-fast hover:border-border-strong"
-                  >
-                    <span className="text-overline uppercase tracking-[0.08em] text-accent">
-                      {n.etykieta}
-                    </span>
-                    <span className="mt-1 text-body font-semibold text-fg group-hover:text-accent">
-                      {n.tytul}
-                    </span>
-                    <span className="mt-1 text-caption text-fg-subtle">{n.korzysc}</span>
-                  </a>
-                </li>
-              ))}
+              {NARZEDZIA.map((n) => {
+                const dekor = NARZEDZIE_DEKOR[n.slug] ?? NARZEDZIE_DEKOR_DEFAULT;
+                return (
+                  <li key={n.slug}>
+                    <a
+                      href={`#${n.slug}`}
+                      className="inf-card group flex h-full flex-col p-4"
+                      style={{ '--card-c': dekor.c } as CSSProperties}
+                    >
+                      <div aria-hidden="true" className="inf-shine" />
+                      <div aria-hidden="true" className="inf-spotlight" />
+                      <span className="flex items-center gap-3">
+                        {/* Kafelek emoji narzędzia — dekoracja aria-hidden. */}
+                        <span
+                          aria-hidden="true"
+                          className="inf-tile"
+                          style={{ '--tile-c': dekor.c } as CSSProperties}
+                        >
+                          {dekor.emoji}
+                        </span>
+                        <span className="inf-overline text-accent">
+                          {n.etykieta}
+                        </span>
+                      </span>
+                      <span className="mt-3 text-body font-semibold text-fg group-hover:text-accent">
+                        {n.tytul}
+                      </span>
+                      <span className="mt-1 text-caption text-fg-subtle">{n.korzysc}</span>
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </Reveal>
         </div>
@@ -95,7 +129,8 @@ export default function NarzedziaPage() {
           <Section key={n.slug} id={n.slug} tone="base">
             <div className="mx-auto max-w-narrow">
               <Reveal>
-                <span className="text-overline uppercase tracking-[0.08em] text-accent">
+                {/* INFINITY v2: etykieta sekcji → mono .inf-overline (treść 1:1). */}
+                <span className="inf-overline text-accent">
                   {n.etykieta}
                   {n.flagowiec ? ' · flagowe' : ''}
                 </span>

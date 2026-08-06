@@ -17,6 +17,15 @@ import { useEffect, useRef } from 'react';
  * opacity .2-.5) z wolnym dryfem (zawijanie na krawędziach). Mysz odpycha kropki
  * w promieniu ~140px; przemieszczenie dochodzi/wraca przez lerp — efekt „po wodzie".
  *
+ * V2 (spec INFINITY v2, „Tło pływające + kursor"):
+ *  • GLOW KURSORA — radialny blask ~260px (cyan #22d3ee → violet #8b5cf6,
+ *    alpha ~.12 w centrum) rysowany na canvasie w pozycji myszy; pozycja glow
+ *    płynie za kursorem przez lerp 0.08 („pipek" dogania mysz).
+ *  • ROZŚWIETLANIE KROPEK — kropki w promieniu 180px od glow zwiększają
+ *    płynnie (smoothstep po odległości) alpha ×do 2.5 (cap 1) i rozmiar ×do 1.6.
+ *  • GLOBALNY DRYF POLA — wspólny, wolno obracający się wektor przepływu
+ *    dodawany do dryfu własnego kropek (wrażenie płynięcia całej wody).
+ *
  * WARSTWA: canvas fixed inset-0, z-index:-1, pointer-events:none (.inf-particles);
  * w DOM ląduje PO .inf-stars (MotionGate montowany na końcu body), więc maluje się
  * NAD starfieldem, a POD sekcjami z własnym tłem — jak w spec („nad tłem body").
@@ -42,6 +51,15 @@ const DPR_CAP = 1.5;
 const IDLE_AFTER_MS = 2000;
 const IDLE_FRAME_MS = 1000 / 24;
 const TAU = Math.PI * 2;
+
+/* V2 — glow kursora + rozświetlanie + dryf globalny (wartości ze spec v2). */
+const GLOW_RADIUS = 260; // promień radialnego blasku „pipka"
+const GLOW_LERP = 0.08; // glow płynie za kursorem (lerp per klatka)
+const LIGHT_RADIUS = 180; // w tym promieniu kropki się rozświetlają
+const LIGHT_ALPHA_X = 2.5; // mnożnik alpha tuż przy centrum glow (cap 1)
+const LIGHT_SIZE_X = 1.6; // mnożnik promienia kropki tuż przy centrum
+const DRIFT_SPEED = 0.005; // px/ms (~5 px/s) — wspólny przepływ pola
+const DRIFT_TURN = 0.00006; // rad/ms — kierunek przepływu wolno się obraca
 
 function pickColor(): string {
   const roll = Math.random();
@@ -75,6 +93,13 @@ export function ParticlesField() {
     let mouseY = -1e4;
     let lastMove = -1e9;
     let lastFrame = 0;
+    // V2: glow rysujemy dopiero po PIERWSZYM ruchu myszy (snap → potem lerp) —
+    // bez tego „pipek" wjeżdżałby z (-1e4,-1e4) przez cały ekran.
+    let hasMouse = false;
+    let glowX = 0;
+    let glowY = 0;
+    // V2: globalny dryf pola — wspólny kąt przepływu, wolno obracany w czasie.
+    let driftAngle = Math.random() * TAU;
 
     const seed = () => {
       particles = [];
@@ -123,9 +148,28 @@ export function ParticlesField() {
       lastFrame = now;
 
       ctx.clearRect(0, 0, w, h);
+
+      // V2: glow kursora — pozycja dogania mysz lerpem, blask malowany POD
+      // kropkami (rozświetlone kropki mają czytelnie „pływać" nad światłem).
+      if (hasMouse) {
+        glowX += (mouseX - glowX) * GLOW_LERP;
+        glowY += (mouseY - glowY) * GLOW_LERP;
+        const glow = ctx.createRadialGradient(glowX, glowY, 0, glowX, glowY, GLOW_RADIUS);
+        glow.addColorStop(0, 'rgba(34, 211, 238, 0.12)'); // cyan #22d3ee
+        glow.addColorStop(0.45, 'rgba(139, 92, 246, 0.07)'); // violet #8b5cf6
+        glow.addColorStop(1, 'rgba(139, 92, 246, 0)');
+        ctx.fillStyle = glow;
+        ctx.fillRect(glowX - GLOW_RADIUS, glowY - GLOW_RADIUS, GLOW_RADIUS * 2, GLOW_RADIUS * 2);
+      }
+
+      // V2: globalny dryf pola — jeden wektor na klatkę, wspólny dla wszystkich.
+      driftAngle += DRIFT_TURN * dt;
+      const flowX = Math.cos(driftAngle) * DRIFT_SPEED * dt;
+      const flowY = Math.sin(driftAngle) * DRIFT_SPEED * dt;
+
       for (const p of particles) {
-        p.x += p.vx * dt;
-        p.y += p.vy * dt;
+        p.x += p.vx * dt + flowX;
+        p.y += p.vy * dt + flowY;
         // Zawijanie na krawędziach (margines 4px — kropka znika zanim skoczy).
         if (p.x < -4) p.x = w + 4;
         else if (p.x > w + 4) p.x = -4;
@@ -147,10 +191,28 @@ export function ParticlesField() {
         p.ox += (tx - p.ox) * LERP;
         p.oy += (ty - p.oy) * LERP;
 
-        ctx.globalAlpha = p.alpha;
+        // V2: rozświetlanie kropek w promieniu glow — smoothstep po odległości
+        // od (lerpowanego) centrum światła: alpha ×do 2.5 (cap 1), rozmiar ×do 1.6.
+        const drawX = p.x + p.ox;
+        const drawY = p.y + p.oy;
+        let alpha = p.alpha;
+        let radius = p.r;
+        if (hasMouse) {
+          const gdx = drawX - glowX;
+          const gdy = drawY - glowY;
+          const gd2 = gdx * gdx + gdy * gdy;
+          if (gd2 < LIGHT_RADIUS * LIGHT_RADIUS) {
+            const t = 1 - Math.sqrt(gd2) / LIGHT_RADIUS;
+            const s = t * t * (3 - 2 * t); // smoothstep — zero „skoku" na brzegu
+            alpha = Math.min(1, p.alpha * (1 + s * (LIGHT_ALPHA_X - 1)));
+            radius = p.r * (1 + s * (LIGHT_SIZE_X - 1));
+          }
+        }
+
+        ctx.globalAlpha = alpha;
         ctx.fillStyle = p.color;
         ctx.beginPath();
-        ctx.arc(p.x + p.ox, p.y + p.oy, p.r, 0, TAU);
+        ctx.arc(drawX, drawY, radius, 0, TAU);
         ctx.fill();
       }
       ctx.globalAlpha = 1;
@@ -160,6 +222,12 @@ export function ParticlesField() {
       mouseX = e.clientX;
       mouseY = e.clientY;
       lastMove = performance.now();
+      if (!hasMouse) {
+        // Pierwszy ruch: snap glow do kursora (dalej już tylko lerp w frame()).
+        hasMouse = true;
+        glowX = mouseX;
+        glowY = mouseY;
+      }
     };
     const onResize = () => size();
     const onVisibility = () => {

@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/metadata';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { breadcrumbSchema } from '@/components/seo/schemas';
-import { Section, Badge } from '@/components/ui';
+import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { BlogBreadcrumbs, PostCard, PostCardWkrotce } from '@/components/blog';
 import { POSTS, POSTS_WKROTCE } from '@/lib/blog';
@@ -36,7 +36,9 @@ export default function BlogPage() {
 
   return (
     <main id="main">
-      <Section tone="base">
+      {/* INFINITY v2: hero bez solidnego tła (globalny starfield prześwituje);
+          badge-eyebrow → mono overline .inf-overline (treść 1:1). */}
+      <Section tone="transparent">
         <div className="mx-auto max-w-narrow">
           <BlogBreadcrumbs
             items={[
@@ -46,9 +48,9 @@ export default function BlogPage() {
           />
 
           <Reveal>
-            <Badge variant="accent" className="mt-6">
+            <p className="inf-overline inf-overline-lines mt-6">
               Wiedza bez żargonu
-            </Badge>
+            </p>
           </Reveal>
 
           <Reveal delay={0.05}>

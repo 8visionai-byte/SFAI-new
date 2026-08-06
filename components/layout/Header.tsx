@@ -30,13 +30,17 @@ const NAV_LINKS_REST = NAV_LINKS.filter((l) => l.href !== '/uslugi');
  * mechanizm .sf-header/.is-scrolled (przezroczysty nad hero + scroll listener)
  * ZDJĘTY: pigułka niesie własne tło zawsze, więc nasłuch scrolla był martwym JS.
  * CTA "Umów diagnozę" (tekst 1:1) = pigułka .inf-glow-cta (neonowa obwódka).
- * Tokeny semantyczne są ciemne (domyślne), więc nawigacja to jasny tekst — AA:
- *   --fg #eaf0fa (~17.9:1) · --fg-muted navy-300 (~7.2:1) · --accent cyan-400 (~10.4:1).
+ *
+ * INFINITY v2: linki desktop = .inf-nav-link (stany .gnav-cat-btn wzorca:
+ * spoczynek #a0a0c0 ~7.8:1 na pigułce; hover/aktywna biel + cyjanowy glow —
+ * padding/rozmiar niesie klasa, nie utilities). Obwódka pigułki PŁYNIE
+ * (--ring-gradient, ::before w globals.css; mobile/RM: statyczna). AA:
+ *   --fg #e4e4f0 (~16:1 na #06060c) · --fg-muted #7a7a9e (~4.9:1) · --accent #22d3ee (~11.2:1).
  */
 export function Header() {
   const [open, setOpen] = useState(false);
-  // Aktywna strona w nav desktop: aria-current="page" (semantyka) steruje też
-  // podkreśleniem .nav-link (underline-slide w globals.css).
+  // Aktywna strona w nav desktop: aria-current="page" (semantyka) zapala też
+  // stan aktywny .inf-nav-link[aria-current] (biel + cyjanowy glow).
   const pathname = usePathname();
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(href + '/');
@@ -74,7 +78,7 @@ export function Header() {
               <Link
                 href={link.href}
                 aria-current={isActive(link.href) ? 'page' : undefined}
-                className="nav-link rounded-sm px-3 py-2 text-ui font-medium text-fg-muted transition-colors duration-fast hover:text-fg"
+                className="inf-nav-link"
               >
                 {link.label}
               </Link>

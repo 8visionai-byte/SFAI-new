@@ -71,6 +71,42 @@ export function MotionOrchestrator() {
     const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
     if (nav.connection?.saveData) return;
 
+    /* SPOTLIGHT KART (spec INFINITY v2): JEDEN delegowany pointermove ustawia
+       --mx/--my (w %) na najbliższej hoverowanej .inf-card — radial maluje CSS
+       fundamentu (.inf-spotlight, var(--mx,50%)/var(--my,50%)). Siedzimy już ZA
+       twardymi bramkami (desktop, bez RM/Save-Data), więc mobile nie płaci nic.
+       Throttle rAF: zapisujemy ostatnie współrzędne, getBoundingClientRect i
+       zapis stylu liczone maks. raz na klatkę. */
+    let spotRaf = 0;
+    let spotCard: HTMLElement | null = null;
+    let spotX = 0;
+    let spotY = 0;
+    const spotFrame = () => {
+      spotRaf = 0;
+      const card = spotCard;
+      if (!card) return;
+      const rect = card.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
+      const mx = ((spotX - rect.left) / rect.width) * 100;
+      const my = ((spotY - rect.top) / rect.height) * 100;
+      card.style.setProperty('--mx', `${mx.toFixed(2)}%`);
+      card.style.setProperty('--my', `${my.toFixed(2)}%`);
+    };
+    const onSpotMove = (e: PointerEvent) => {
+      const target = e.target instanceof Element ? e.target : null;
+      const card = target?.closest<HTMLElement>('.inf-card') ?? null;
+      if (!card) {
+        // Poza kartą nic nie liczymy (opacity spotlightu i tak gasi :hover CSS).
+        spotCard = null;
+        return;
+      }
+      spotCard = card;
+      spotX = e.clientX;
+      spotY = e.clientY;
+      if (spotRaf === 0) spotRaf = requestAnimationFrame(spotFrame);
+    };
+    document.addEventListener('pointermove', onSpotMove, { passive: true });
+
     let cancelled = false;
     let idleId: number | null = null;
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -167,6 +203,8 @@ export function MotionOrchestrator() {
 
     return () => {
       cancelled = true;
+      document.removeEventListener('pointermove', onSpotMove);
+      if (spotRaf !== 0) cancelAnimationFrame(spotRaf);
       window.removeEventListener('load', whenIdle);
       if (idleId !== null) window.cancelIdleCallback(idleId);
       if (timeoutId !== null) clearTimeout(timeoutId);
@@ -292,6 +330,9 @@ function initScrubText(gsap: GsapType) {
 /**
  * c) HERO głębia: tło warstwic ([data-hero-field], aria-hidden) odpływa w górę
  * wolniej niż treść — y 0 → -60px między 'top top' a 'bottom top' sekcji hero.
+ * UWAGA (spec v2): HeroContours wyleciał z renderu Hero.tsx, więc selektor nic
+ * nie znajduje i funkcja jest bezpiecznym no-opem; zostaje jako hak, gdyby
+ * [data-hero-field] wrócił na innej warstwie.
  */
 function initHeroDepth(gsap: GsapType) {
   const field = document.querySelector<HTMLElement>('[data-hero-field]');

@@ -68,13 +68,14 @@ export function LogoImage({
  *
  * INFINITY (spec-infinity §adaptacja, „LOGO WRACA"): Paweł zażądał powrotu
  * OFICJALNEGO ZNAKU graficznego (cyrkiel, public/brand/mark-t.png — kwadrat
- * z prawdziwą alfą) do nagłówka. Układ: znak ~28px z delikatnym drop-shadow
- * w violecie marki (#7A3CF0) + istniejący WORDMARK TEKSTOWY „SimpleFast" w
- * bieli (--fg) i „.ai" w gradiencie trasy z solidnym fallbackiem AA
- * (.sf-wordmark / .sf-wordmark-ai w globals.css) — .sf-wordmark NIE znika.
+ * z prawdziwą alfą) do nagłówka. INFINITY v2 („logo wyraźniejsze"): znak
+ * 36px (h-9) z MOCNIEJSZYM, dwuwarstwowym drop-shadow (violet #8b5cf6 +
+ * cyjan #22d3ee — para akcentów palety) + WORDMARK TEKSTOWY text-lg bold:
+ * „SimpleFast" w bieli (--fg) i „.ai" w gradiencie trasy z solidnym
+ * fallbackiem AA (.sf-wordmark / .sf-wordmark-ai w globals.css).
  * Znak jest dekoracyjny (alt="" + aria-hidden), etykietę niesie aria-label
  * linku; marka zostaje realnym tekstem w DOM (cytowalność #1). next/image
- * serwuje mark-t.png przeskalowany do 28px (avif/webp), więc waga w nagłówku
+ * serwuje mark-t.png przeskalowany do 36px (avif/webp), więc waga w nagłówku
  * jest pomijalna; priority/fetchpriority przechodzi jak dotąd.
  * Wariant 'mark' (sam znak, kwadrat) bez zmian — do wąskich miejsc.
  */
@@ -109,15 +110,18 @@ export function Logo({
       aria-label={`${LABEL} — strona główna`}
       className={cn('inline-flex items-center gap-2', className)}
     >
-      {/* Znak cyrkla ~28px z poświatą violet marki (dekoracja — alt=""). */}
+      {/* Znak cyrkla 36px, WYRAZISTY na ciemnym pasku: dwie warstwy poświaty
+          (violet + cyjan akcentów INFINITY) — dekoracja, alt="". */}
       <LogoImage
         variant="mark"
         decorative
         priority={priority}
-        sizes="28px"
-        className="h-7 w-7 [filter:drop-shadow(0_2px_10px_rgba(122,60,240,0.5))]"
+        sizes="36px"
+        // h-9 NIE znaczy tu 36px: spacing repo to własne tokeny (--space-9 = 6rem
+        // = 96px) i znak rozsadzał pasek. Sztywne 36px arbitralnie.
+        className="h-[36px] w-[36px] [filter:drop-shadow(0_2px_12px_rgba(139,92,246,0.65))_drop-shadow(0_0_18px_rgba(34,211,238,0.4))]"
       />
-      <span className="sf-wordmark text-[1.3rem] leading-none sm:text-[1.5rem]">
+      <span className="sf-wordmark text-lg font-bold leading-none">
         SimpleFast<span className="sf-wordmark-ai">.ai</span>
       </span>
     </Link>
