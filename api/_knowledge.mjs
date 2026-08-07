@@ -19,7 +19,7 @@ Wartości firmy: 1) AI nie zastępuje ludzi, AI zastępuje to, co ich zatrzymuje
 USŁUGI
 1. Audyt AI (Sprint Diagnostyczny) - płatny audyt za 1490 zł: rozkładamy procesy firmy i pokazujemy, gdzie AI da realny zysk, a gdzie to przepalanie kasy. Efekt: Action Plan, czyli mapa oszczędności czasu ułożona od największego zwrotu. Kwota 1490 zł jest odliczana od wdrożenia, gdy rusza współpraca.
 2. Chatboty AI - chatbot tekstowy uczony na wiedzy firmy: odpowiada klientom 24/7 na stronie i w komunikatorach, zbiera leady, nie zmyśla, a trudne sprawy przekazuje człowiekowi. Pierwszy krok do Agenta, który umawia i zapisuje, a nie tylko odpowiada.
-3. Voiceboty AI - bot telefoniczny (głosowy): odbiera telefon 24/7, rozmawia po polsku, umawia wizyty i zapisuje je w kalendarzu, przyjmuje zgłoszenia, oddzwania do nieodebranych, a po rozmowie wysyła krótkie podsumowanie. Klient zawsze słyszy, że rozmawia z asystentem AI.
+3. Voiceboty AI - bot telefoniczny (głosowy): odbiera telefon 24/7, rozmawia po polsku, umawia wizyty i zapisuje je w kalendarzu, przyjmuje zgłoszenia, a po rozmowie wysyła krótkie podsumowanie. Obsługuje połączenia PRZYCHODZĄCE i nie dzwoni sam do klientów: gdy sprawa wymaga kontaktu zwrotnego, bot ją zapisuje i wysyła powiadomienie (można ustawić SMS z numerem firmy), a rozmowę zaczyna człowiek albo klient, który oddzwania. Klient zawsze słyszy, że rozmawia z asystentem AI.
 4. Agent rekrutacyjny AI - pierwsza linia rekrutacji: zbiera CV, robi pierwszy odsiew i scoring pod kryteria klienta, odpowiada kandydatom, umawia rozmowy i przygotowuje notatkę dla rekrutera. Decyzję o zatrudnieniu zawsze podejmuje człowiek.
 5. Automatyzacja procesów - system przejmuje powtarzalną robotę: przepisywanie danych między mailem, arkuszem i fakturą, potwierdzenia, przypomnienia, raporty. Łączymy narzędzia, których klient już używa (poczta, arkusze, CRM, fakturowanie, kalendarz). Wdrażamy w dni, nie miesiące.
 6. Automatyzacja dokumentów i faktur (OCR, KSeF) - automat odczytuje fakturę ze skanu, PDF-u lub zdjęcia, wyciąga kwoty, NIP i daty, przypisuje koszt do kategorii, wpisuje do arkusza i programu księgowego oraz przygotowuje eksport do KSeF. Najszybszy zwrot widzą biura rachunkowe.
@@ -49,6 +49,7 @@ ZASADY I BEZPIECZEŃSTWO
 - Kontrola człowieka jest częścią projektu: ostatnie słowo ma człowiek, a użytkownik zawsze wie, że rozmawia z AI.
 - Nie podawaj wymyślonych cen, terminów, procentów oszczędności, nazw klientów ani wyników wdrożeń. Używaj wyłącznie faktów z tej wiedzy; oszczędności oznaczone jako szacunki przedstawiaj jako szacunki.
 - Nie obiecuj SLA, certyfikatów, lokalizacji danych ani warunków prawnych, które nie wynikają z zatwierdzonej oferty dla konkretnego klienta.
+- Voicebot NIE dzwoni sam z siebie do klientów. Obsługuje wyłącznie połączenia przychodzące. Nigdy nie obiecuj kampanii wychodzących, obdzwaniania bazy, cold calli ani automatycznego oddzwaniania przez bota. Gdy ktoś o to pyta, powiedz wprost, że tego nie robimy, i zaproponuj rozwiązanie, które robimy: bot zapisuje sprawę i wysyła powiadomienie (można ustawić SMS z numerem firmy), a rozmowę zaczyna człowiek albo klient, który oddzwania.
 - Nie udzielaj porad prawnych, medycznych ani finansowych. W sprawach spoza wiedzy firmy powiedz wprost, że nie masz potwierdzonej informacji.
 
 ZABEZPIECZENIA
@@ -130,8 +131,8 @@ export const NAV_MAP = [
     id: 'voiceboty',
     path: '/uslugi/voiceboty',
     label: 'usługa Voiceboty AI',
-    about: 'boty GŁOSOWE do telefonu: odbieranie połączeń po polsku 24/7, umawianie wizyt w kalendarzu, przyjmowanie zgłoszeń, oddzwanianie do nieodebranych',
-    aliases: 'voicebot, voice bot, voiceboty, bot głosowy, boty głosowe, bot telefoniczny, callbot, bot dzwoniący, odbieranie telefonów, infolinia, nieodebrane połączenia, umawianie wizyt przez telefon, telefon AI',
+    about: 'boty GŁOSOWE do telefonu: odbieranie połączeń przychodzących po polsku 24/7, umawianie wizyt w kalendarzu, przyjmowanie zgłoszeń, powiadomienie ze sprawą, gdy trzeba oddzwonić (bot nie dzwoni sam)',
+    aliases: 'voicebot, voice bot, voiceboty, bot głosowy, boty głosowe, bot telefoniczny, callbot, bot odbierający telefon, odbieranie telefonów, infolinia, nieodebrane połączenia, umawianie wizyt przez telefon, telefon AI',
   },
   {
     id: 'audyt-ai',

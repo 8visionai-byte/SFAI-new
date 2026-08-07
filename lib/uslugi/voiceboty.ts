@@ -17,11 +17,11 @@ export const voiceboty: Usluga = {
   slug: 'voiceboty',
   h1: 'Voicebot dla firmy, który odbiera telefon za Ciebie',
   kapsula:
-    'Voicebot, nazywany też botem telefonicznym, to bot głosowy, który odbiera telefon, rozmawia po polsku i załatwia sprawę: umawia wizytę, przyjmuje zgłoszenie, odpowiada na pytanie albo oddzwania do klienta, który nie dodzwonił się za pierwszym razem. Działa 24/7, nawet gdy jesteś u klienta. To nie nagranie ani „wciśnij jeden”. To Agent, który rozmawia i wykonuje zadanie, a potem przekazuje Ci tylko to, co ważne.',
+    'Voicebot, nazywany też botem telefonicznym, to bot głosowy, który odbiera telefon, rozmawia po polsku i załatwia sprawę: umawia wizytę, przyjmuje zgłoszenie, odpowiada na pytanie. Gdy sprawa wymaga człowieka, zapisuje ją i wysyła Ci powiadomienie, żebyś oddzwonił przygotowany. Działa 24/7, nawet gdy jesteś u klienta. To nie nagranie ani „wciśnij jeden”. To Agent, który rozmawia i wykonuje zadanie, a potem przekazuje Ci tylko to, co ważne.',
 
   metaTitle: 'Voicebot dla firmy, który odbiera telefon 24/7',
   metaDescription:
-    'Voicebot, czyli bot telefoniczny: odbiera telefon 24/7, rozmawia po polsku, umawia wizyty i oddzwania do nieodebranych. Agent, który załatwia sprawę.',
+    'Voicebot, czyli bot telefoniczny dla firm: odbiera telefon 24/7, rozmawia po polsku i umawia wizyty. Żaden telefon nie zostaje bez odpowiedzi.',
 
   problem: {
     h2: 'Ile telefonów dziennie nie odbierasz?',
@@ -43,7 +43,7 @@ export const voiceboty: Usluga = {
       { cecha: 'Nieodebrane połączenia', bez: 'Połowa, gdy jesteś zajęty', zNami: 'Odbiera, gdy Ty nie możesz' },
       { cecha: 'Godziny', bez: 'Tylko gdy ktoś jest przy telefonie', zNami: '24/7, też wieczorem i w weekend' },
       { cecha: 'Umawianie wizyt', bez: 'Ręcznie, w przerwie', zNami: 'Sam zapisuje w kalendarzu' },
-      { cecha: 'Oddzwanianie', bez: 'Jak ktoś zdąży', zNami: 'Sam oddzwania do nieodebranych' },
+      { cecha: 'Oddzwanianie', bez: 'Na ślepo, jeśli ktoś zdąży', zNami: 'Oddzwaniasz z gotową notatką ze sprawy' },
       { cecha: 'Koszt', bez: 'Etat albo Twój czas', zNami: 'Bot, bez etatu na odbieranie' },
       { cecha: 'Po rozmowie', bez: 'Pamiętasz albo nie', zNami: 'Krótkie podsumowanie do Ciebie' },
     ],
@@ -73,14 +73,19 @@ export const voiceboty: Usluga = {
   ramaCeny: {
     h2: 'Ile kosztuje voicebot dla firmy?',
     tresc:
-      'Voicebot ma zwykle dwie części kosztu: jednorazowe wdrożenie (scenariusze, podłączenie numeru i kalendarza) oraz koszt działania zależny od liczby rozmów. Cenę liczymy od wartości: ile umówionych wizyt i odzyskanych połączeń to da. Inaczej wycenia się bota tylko do umawiania, inaczej takiego, który obsługuje zgłoszenia i oddzwania. Dokładne widełki podajemy na bezpłatnej diagnozie. Bez ukrytych kosztów.',
+      'Voicebot ma zwykle dwie części kosztu: jednorazowe wdrożenie (scenariusze, podłączenie numeru i kalendarza) oraz koszt działania zależny od liczby rozmów. Cenę liczymy od wartości: ile umówionych wizyt i odebranych połączeń to da. Inaczej wycenia się bota tylko do umawiania, inaczej takiego, który obsługuje zgłoszenia i przekazuje je dalej z powiadomieniem. Dokładne widełki podajemy na bezpłatnej diagnozie. Bez ukrytych kosztów.',
   },
 
   faq: [
     {
       pytanie: 'Czym jest voicebot?',
       odpowiedz:
-        'Voicebot to bot głosowy, który odbiera telefon i rozmawia po polsku jak asystent: umawia wizyty, przyjmuje zgłoszenia, odpowiada na pytania i oddzwania. Działa 24/7. To nie nagranie ani menu „wciśnij jeden”, tylko rozmowa, która kończy się załatwioną sprawą.',
+        'Voicebot to bot głosowy, który odbiera telefon i rozmawia po polsku jak asystent: umawia wizyty, przyjmuje zgłoszenia i odpowiada na pytania. Działa 24/7. To nie nagranie ani menu „wciśnij jeden”, tylko rozmowa, która kończy się załatwioną sprawą.',
+    },
+    {
+      pytanie: 'Czy voicebot dzwoni sam do klientów?',
+      odpowiedz:
+        'Nie. Nasz voicebot obsługuje połączenia przychodzące: odbiera telefon i prowadzi rozmowę. Nie robimy botów, które same wydzwaniają do ludzi, bo to psuje zaufanie do firmy. Gdy sprawa wymaga kontaktu zwrotnego, bot ją zapisuje i wysyła powiadomienie, można też ustawić SMS z numerem firmy. Rozmowę zaczyna człowiek albo klient, który oddzwania.',
     },
     {
       pytanie: 'Czy klient pozna, że rozmawia z botem?',
@@ -100,7 +105,7 @@ export const voiceboty: Usluga = {
     {
       pytanie: 'Ile kosztuje voicebot?',
       odpowiedz:
-        'Zwykle to jednorazowe wdrożenie plus koszt działania zależny od liczby rozmów. Inaczej wyceniamy bota tylko do umawiania, inaczej takiego, który obsługuje zgłoszenia i oddzwania. Dokładne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
+        'Zwykle to jednorazowe wdrożenie plus koszt działania zależny od liczby rozmów. Inaczej wyceniamy bota tylko do umawiania, inaczej takiego, który obsługuje zgłoszenia i przekazuje je dalej z powiadomieniem. Dokładne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
     },
     {
       pytanie: 'Czy moje rozmowy i dane będą bezpieczne?',
@@ -124,5 +129,6 @@ export const voiceboty: Usluga = {
     'bot głosowy',
     'czym jest voicebot',
     'AI odbiera telefon',
+    'czy voicebot dzwoni sam do klientów',
   ],
 };

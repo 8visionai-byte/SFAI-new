@@ -7,6 +7,16 @@ import { OsCzasu } from './OsCzasu';
 import { CaptureMaila } from './CaptureMaila';
 import { WynikCTA } from './WynikCTA';
 import { TYG_NA_MC, MIESIACE, DISCLAIMER, zl, godziny, liczba } from '@/lib/narzedzia/stale';
+import { INF_NARZEDZIE, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+
+/* INFINITY v7 (audyt --card-c): kolor sekcji tego narzędzia z single source
+   lib/inf-kategorie — ten sam, którym świeci jego kafel na liście hubu. Bez
+   niego panele wyspy spadały na fallbackowy akcent. Sama dekoracja. */
+const DEKOR = INF_NARZEDZIE['kalkulator-procesu'] ?? INF_KATEGORIA_DEFAULT;
+const TON = {
+  '--card-c': DEKOR.c,
+  '--card-c-l': DEKOR.odcien ?? DEKOR.c,
+} as CSSProperties;
 
 /**
  * KalkulatorProcesu — SATELITA 1 (spec 07 §2). Liczy JEDEN proces + payback.
@@ -116,8 +126,16 @@ export function KalkulatorProcesu() {
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-10">
       {/* WEJŚCIE */}
       {/* INFINITY v5 (spec §4): shell wyspy na .inf-card (ciemna karta wzorca
-          z narożnikami i sweepem z globals) — kontrolki zostają na tokenach. */}
-      <div className="inf-card p-6 shadow-xs sm:p-7">
+          z narożnikami i sweepem z globals) — kontrolki zostają na tokenach.
+          INFINITY v8 „naczynia połączone" (audyt kart /narzedzia): obie karty
+          tej wyspy dostają reflektor .inf-spotlight jako PIERWSZE dziecko — ta
+          sama poświata za kursorem co na kartach usług. Reflektor jest absolutny
+          (inset:0) i `pointer-events:none`: stoi poza flow, więc pola tekstowe,
+          suwaki, fieldset powtarzalności i siatka kosztów zachowują się 1:1 jak
+          wcześniej (odstępy niesie wewnętrzny `space-y-6`, nie karta). */}
+      <div className="inf-card p-6 shadow-xs sm:p-7" style={TON}>
+        <div aria-hidden="true" className="inf-spotlight" />
+
         <h3 className="text-h3">Opisz ten proces</h3>
         <p className="mt-1 text-caption text-fg-subtle">
           Koszt wdrożenia i opiekę podajesz Ty. My nie zgadujemy cen.
@@ -264,6 +282,10 @@ export function KalkulatorProcesu() {
             } as CSSProperties
           }
         >
+          {/* Reflektor dziedziczy --card-c karty, więc świeci kolorem WERDYKTU
+              (green / amber / cyan) i zmienia się razem z nim. */}
+          <div aria-hidden="true" className="inf-spotlight" />
+
           {/* Werdykt */}
           <div className={`rounded-lg border-[1.5px] px-4 py-3 ${tonClass[werdykt.ton]}`}>
             <p className="text-caption font-semibold uppercase tracking-[0.08em] opacity-80">Werdykt</p>
@@ -344,7 +366,7 @@ export function KalkulatorProcesu() {
           />
         </div>
 
-        <WynikCTA mikrokopia={werdykt.cta} />
+        <WynikCTA mikrokopia={werdykt.cta} kolor={DEKOR.c} odcien={DEKOR.odcien} />
       </div>
     </div>
   );

@@ -60,7 +60,7 @@ export const jakVoicebotOdbieraTelefony: Post = {
         'Rozpoznaje, w jakiej sprawie dzwoni klient, i prowadzi rozmowę.',
         'Odpowiada na proste pytania z Twojej wiedzy: godziny, dojazd, zakres usług, ceny jeśli je podajesz.',
         'Zapisuje kontakt i notatkę ze sprawy, wysyła Ci powiadomienie.',
-        'Umawia termin w kalendarzu albo przekazuje sprawę do oddzwonienia.',
+        'Umawia termin w kalendarzu albo przekazuje Ci sprawę do oddzwonienia.',
         'Gdy trzeba, łączy z żywym człowiekiem od razu.',
       ],
     },
@@ -186,6 +186,11 @@ export const jakVoicebotOdbieraTelefony: Post = {
       pytanie: 'Co się dzieje, gdy sprawa jest zbyt trudna dla bota?',
       odpowiedz:
         'Voicebot łączy z żywym człowiekiem albo zapisuje kontakt i notatkę, żebyś oddzwonił. Nie zostawia klienta bez odpowiedzi. Ty dostajesz powiadomienie ze sprawą i oddzwaniasz z pełnym kontekstem, a nie na ślepo.',
+    },
+    {
+      pytanie: 'Czy voicebot sam dzwoni do klientów?',
+      odpowiedz:
+        'Nie. Voicebot odbiera połączenia przychodzące i na tym się skupia. Nie robimy botów, które same wydzwaniają do ludzi. Gdy sprawa wymaga kontaktu zwrotnego, bot ją zapisuje i wysyła powiadomienie, można też ustawić SMS z numerem firmy. Rozmowę zaczyna człowiek albo klient, który oddzwania.',
     },
     {
       pytanie: 'Gdzie trafiają nagrania i dane z rozmów?',

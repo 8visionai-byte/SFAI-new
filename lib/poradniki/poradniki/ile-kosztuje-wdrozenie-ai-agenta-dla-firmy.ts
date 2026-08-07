@@ -187,7 +187,7 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
     {
       etykieta: 'Voiceboty: bot telefoniczny',
       href: '/uslugi/voiceboty',
-      opis: 'Agent w akcji na telefonie: odbiera połączenia, umawia wizyty i oddzwania.',
+      opis: 'Agent w akcji na telefonie: odbiera połączenia 24/7 i umawia wizyty w kalendarzu.',
     },
     {
       etykieta: 'Audyt AI: mapa oszczędności czasu',

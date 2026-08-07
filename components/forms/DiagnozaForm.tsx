@@ -118,6 +118,9 @@ export function DiagnozaForm() {
         className="inf-card bg-success-bg p-7 text-center"
         style={{ '--card-c': '#22e06b' } as React.CSSProperties}
       >
+        {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
+            pointermove z MotionOrchestrator (desktop). Dekoracja aria-hidden. */}
+        <div aria-hidden="true" className="inf-spotlight" />
         <h3 className="text-h3 mb-2">Mam to.</h3>
         <p className="text-body text-fg-muted">
           Dziękuję, zgłoszenie do mnie dotarło. Odezwę się w kilka minut na podany kontakt.
@@ -134,6 +137,7 @@ export function DiagnozaForm() {
         className="inf-card border-error bg-error-bg p-7 text-center"
         style={{ '--card-c': 'var(--error)' } as React.CSSProperties}
       >
+        <div aria-hidden="true" className="inf-spotlight" />
         <h3 className="text-h3 mb-2">Coś nie zadziałało z wysyłką.</h3>
         <p className="text-body text-fg-muted">
           Najszybciej złap mnie wprost: napisz na{' '}
@@ -172,8 +176,21 @@ export function DiagnozaForm() {
           powierzchnię/obwódkę/promień + narożniki [ ] i sweep z globals (zamiast
           gołego border+bg-surface). Pola zostają na ciemnych tokenach kontrolek
           (surface-sunken + text-fg = czytelność AA). Honeypot jest h-0 w-0, więc
-          overflow:hidden karty niczego nie ucina (kontrakt v4). */}
-      <form onSubmit={handleSubmit} className="inf-card p-6 shadow-md sm:p-7">
+          overflow:hidden karty niczego nie ucina (kontrakt v4).
+          v7 audyt: karta formularza dostaje WŁASNY odcień (--card-c) — bez
+          niego hover świecił domyślnym cyjanem akcentu. Violet #8b5cf6 z
+          lib/inf-kategorie (ton „rozwiązań"), świadomie NIE kolor statusu:
+          zielony i czerwony są zarezerwowane dla stanu sukcesu i błędu niżej,
+          a amber czytałby się jak ostrzeżenie na polu do wypełnienia. */}
+      <form
+        onSubmit={handleSubmit}
+        className="inf-card p-6 shadow-md sm:p-7"
+        style={{ '--card-c': '#8b5cf6' } as React.CSSProperties}
+      >
+      {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
+          pointermove z MotionOrchestrator (desktop). Dekoracja aria-hidden. */}
+      <div aria-hidden="true" className="inf-spotlight" />
+
       {/* Pasek postępu */}
       <div className="mb-6">
         <div className="mb-2 flex items-center justify-between">

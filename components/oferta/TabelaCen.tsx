@@ -95,12 +95,29 @@ export function TabelaCen() {
             .inf-overline, kolumnę kluczową (Cena) trzyma 1px kreska akcentowa
             i mono nagłówek w akcencie, wiersze z hoverem bg-bg-subtle.
             Mobile bez zmian: overflow-x-auto na min-w-[36rem]. Treść 1:1. */}
+        {/* INFINITY v7 (spec §PARTIA E pkt 1-3): (1) `align-top` wróciło z <tr>
+            na td/th — na wierszu trzymało się tylko dziedziczenia z arkusza
+            przeglądarki, a to ono ustawia wiersz „nazwa + badge" równo z ceną;
+            (2) colgroup daje kolumnom stałe proporcje, więc cena nie skacze
+            w bok przy pozycji z długim opisem (układ zostaje AUTO, bo kolumna
+            ceny ma whitespace-nowrap i musi móc urosnąć ponad procent);
+            (3) scroll tylko w opakowaniu, dostępny z klawiatury. */}
         <Reveal delay={0.1}>
-          <div className="mt-8 overflow-x-auto">
+          <div
+            className="mt-8 overflow-x-auto"
+            tabIndex={0}
+            role="region"
+            aria-label="Pełny cennik usług, od najtańszej do najdroższej"
+          >
             <table className="w-full min-w-[36rem] border-collapse text-left text-body-sm">
               <caption className="sr-only">
                 Pełny cennik usług, od najtańszej do najdroższej
               </caption>
+              <colgroup>
+                <col className="md:w-[30%]" />
+                <col className="md:w-[18%]" />
+                <col className="md:w-[52%]" />
+              </colgroup>
               <thead>
                 <tr className="border-b border-border-strong">
                   <th scope="col" className="inf-overline py-3 pr-4 align-bottom">
@@ -121,9 +138,9 @@ export function TabelaCen() {
                 {POZYCJE.map((p) => (
                   <tr
                     key={p.nazwa}
-                    className="border-b border-border align-top transition-colors duration-fast last:border-b-0 hover:bg-bg-subtle"
+                    className="border-b border-border transition-colors duration-fast last:border-b-0 hover:bg-bg-subtle"
                   >
-                    <th scope="row" className="py-4 pr-4 font-semibold text-fg">
+                    <th scope="row" className="py-4 pr-4 align-top font-semibold text-fg">
                       <span className="block">{p.nazwa}</span>
                       {p.tag ? (
                         <Badge variant="neutral" className="mt-2">
@@ -131,10 +148,10 @@ export function TabelaCen() {
                         </Badge>
                       ) : null}
                     </th>
-                    <td className="whitespace-nowrap border-l border-border-accent px-4 py-4 font-semibold tabular-nums text-fg">
+                    <td className="whitespace-nowrap border-l border-border-accent px-4 py-4 align-top font-semibold tabular-nums text-fg">
                       {p.cena}
                     </td>
-                    <td className="px-4 py-4 text-fg-muted">{p.cofazwiera}</td>
+                    <td className="px-4 py-4 align-top text-fg-muted">{p.cofazwiera}</td>
                   </tr>
                 ))}
               </tbody>

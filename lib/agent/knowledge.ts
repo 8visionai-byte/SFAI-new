@@ -101,7 +101,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Uslugi',
     title: 'Voicebot dla firmy, ktory odbiera telefon za Ciebie',
     summary:
-      'Voicebot to bot glosowy, ktory odbiera telefon, rozmawia po polsku i zalatwia sprawe: umawia wizyte, przyjmuje zgloszenie, odpowiada na pytanie albo oddzwania do klienta, ktory nie dodzwonil sie za pierwszym razem. Dziala 24/7, tez gdy jestes u klienta, i to nie nagranie ani menu wcisnij jeden. Klient zawsze slyszy, ze rozmawia z asystentem AI, a po rozmowie dostajesz krotkie podsumowanie.',
+      'Voicebot to bot glosowy, ktory odbiera telefon, rozmawia po polsku i zalatwia sprawe: umawia wizyte, przyjmuje zgloszenie, odpowiada na pytanie. Gdy sprawa wymaga czlowieka, zapisuje ja i wysyla powiadomienie, zebys oddzwonil przygotowany. Voicebot obsluguje polaczenia przychodzace i nie dzwoni sam do klientow. Dziala 24/7, tez gdy jestes u klienta, i to nie nagranie ani menu wcisnij jeden. Klient zawsze slyszy, ze rozmawia z asystentem AI, a po rozmowie dostajesz krotkie podsumowanie.',
     url: '/uslugi/voiceboty',
     intents: [
       'voicebot dla firmy',
@@ -109,7 +109,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
       'czym jest voicebot',
       'AI odbiera telefon',
       'automatyczne odbieranie telefonu',
-      'bot ktory dzwoni',
+      'bot telefoniczny',
       'umawianie wizyt przez telefon',
     ],
   },

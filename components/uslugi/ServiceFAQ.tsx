@@ -1,6 +1,8 @@
+import type { CSSProperties } from 'react';
 import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import type { Usluga } from '@/lib/uslugi/types';
+import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
 
 /**
  * ServiceFAQ — SEKCJA 7 szablonu (5–6 pytań, answer-first).
@@ -11,8 +13,18 @@ import type { Usluga } from '@/lib/uslugi/types';
  * tym samym stringiem, który page.tsx wkłada do FAQPage JSON-LD (przez
  * uslugaSchemas). Jedno źródło = `usluga.faq`, więc rozjazd schema<->treść
  * jest niemożliwy.
+ *
+ * INFINITY v7 „NACZYNIA POŁĄCZONE" (audyt kart, partia H1): karta sekcji miała
+ * ten sam .inf-card co hub, ale BEZ tonu (spadała na fallbackowy akcent) i BEZ
+ * reflektora, więc na hubie świeciła kolorem kategorii, a na podstronie jednym
+ * cyjanem i bez poświaty. Stąd `slug` w propsach: ton bierzemy z kategorii TEJ
+ * usługi (lib/inf-kategorie), żeby cała podstrona miała jeden ton, a reflektor
+ * .inf-spotlight wchodzi PIERWSZYM dzieckiem karty (wzorzec z app/uslugi).
+ * `divide-y` zeszło na wewnętrzny wrapper — reflektor jest dzieckiem karty, więc
+ * na liście dzielonej kreską dokładałby linię nad pierwszym pytaniem.
  */
-export function ServiceFAQ({ faq }: { faq: Usluga['faq'] }) {
+export function ServiceFAQ({ faq, slug }: { faq: Usluga['faq']; slug: Usluga['slug'] }) {
+  const dekor = INF_KATEGORIA[slug] ?? INF_KATEGORIA_DEFAULT;
   return (
     <Section tone="subtle">
       <div className="mx-auto max-w-narrow">
@@ -22,33 +34,46 @@ export function ServiceFAQ({ faq }: { faq: Usluga['faq'] }) {
 
         {/* INFINITY v5 (spec §4 — sekcja FAQ NA KARTĘ, treść 1:1): akordeon
             w ciemnej karcie .inf-card (narożniki + sweep z globals); wewnątrz
-            wzorzec details/summary 1:1 z home FAQ. */}
-        <div className="inf-card mt-8 divide-y divide-border p-6">
-          {faq.map((item, i) => (
-            <Reveal key={item.pytanie} delay={Math.min(i * 0.03, 0.15)}>
-              <details className="sf-faq group py-2">
-                <summary className="-mx-2 flex cursor-pointer list-none items-center justify-between gap-4 rounded-sm px-2 py-4 text-body font-semibold text-fg transition-colors duration-fast hover:bg-bg-subtle [&::-webkit-details-marker]:hidden">
-                  <span className="group-open:text-accent">{item.pytanie}</span>
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    aria-hidden="true"
-                    className="shrink-0 text-fg-subtle transition-transform duration-base ease-out group-hover:scale-105 group-open:rotate-45 group-open:text-accent"
-                  >
-                    <path
-                      d="M12 5v14M5 12h14"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </summary>
-                <p className="pb-4 pr-9 text-body-sm text-fg-muted">{item.odpowiedz}</p>
-              </details>
-            </Reveal>
-          ))}
+            wzorzec details/summary 1:1 z home FAQ. v7: ton karty = kolor
+            kategorii usługi + reflektor jak na hubie. */}
+        <div
+          className="inf-card mt-8 p-6"
+          style={
+            {
+              '--card-c': dekor.c,
+              '--card-c-l': dekor.odcien ?? dekor.c,
+            } as CSSProperties
+          }
+        >
+          <div aria-hidden="true" className="inf-spotlight" />
+
+          <div className="divide-y divide-border">
+            {faq.map((item, i) => (
+              <Reveal key={item.pytanie} delay={Math.min(i * 0.03, 0.15)}>
+                <details className="sf-faq group py-2">
+                  <summary className="-mx-2 flex cursor-pointer list-none items-center justify-between gap-4 rounded-sm px-2 py-4 text-body font-semibold text-fg transition-colors duration-fast hover:bg-bg-subtle [&::-webkit-details-marker]:hidden">
+                    <span className="group-open:text-accent">{item.pytanie}</span>
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                      className="shrink-0 text-fg-subtle transition-transform duration-base ease-out group-hover:scale-105 group-open:rotate-45 group-open:text-accent"
+                    >
+                      <path
+                        d="M12 5v14M5 12h14"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </summary>
+                  <p className="pb-4 pr-9 text-body-sm text-fg-muted">{item.odpowiedz}</p>
+                </details>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </Section>

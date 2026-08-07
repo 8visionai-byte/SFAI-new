@@ -51,6 +51,10 @@ export function NarzedziaTeaser() {
                 } as CSSProperties
               }
             >
+              {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
+                  delegowany pointermove z MotionOrchestrator (desktop).
+                  Dekoracja aria-hidden. */}
+              <div aria-hidden="true" className="inf-spotlight" />
               <Link href={`/narzedzia#${n.slug}`} className="group flex h-full flex-col p-6">
                 {/* Mono kolorowy podtytuł wzorca („85K+ monthly searches") =
                     etykieta narzędzia z rejestru; kolor niesie --card-c-l. */}

@@ -66,12 +66,28 @@ export function ObiekcjeOdpowiedzi() {
             nagłówki mono .inf-overline, kolumnę „jak jest naprawdę" trzyma
             1px kreska akcentowa + nagłówek w akcencie, wiersze z hoverem.
             Mobile: overflow-x-auto na min-w-[36rem]. Treść 1:1. */}
+        {/* INFINITY v7 (spec §PARTIA E pkt 1-3): (1) `align-top` wróciło z <tr>
+            na td/th (na wierszu trzymało się tylko dziedziczenia z arkusza
+            przeglądarki), więc krótka obiekcja stoi równo z górą długiej
+            odpowiedzi; (2) szerokość kolumny obiekcji przeniesiona z komórki
+            jednego wiersza do <colgroup> — sterowanie szerokością z poziomu
+            kolumny, nie przypadkowej komórki; (3) scroll tylko w opakowaniu,
+            dostępny z klawiatury (WCAG 2.1.1). */}
         <Reveal delay={0.1}>
-          <div className="mt-8 overflow-x-auto">
+          <div
+            className="mt-8 overflow-x-auto"
+            tabIndex={0}
+            role="region"
+            aria-label="Najczęstsze obiekcje i odpowiedzi"
+          >
             <table className="w-full min-w-[36rem] border-collapse text-left text-body-sm">
               <caption className="sr-only">
                 Najczęstsze obiekcje i odpowiedzi
               </caption>
+              <colgroup>
+                <col className="w-[14rem]" />
+                <col />
+              </colgroup>
               <thead>
                 <tr className="border-b border-border-strong">
                   <th scope="col" className="inf-overline py-3 pr-4 align-bottom">
@@ -89,17 +105,17 @@ export function ObiekcjeOdpowiedzi() {
                 {WIERSZE.map((w) => (
                   <tr
                     key={w.obiekcja}
-                    className="border-b border-border align-top transition-colors duration-fast last:border-b-0 hover:bg-bg-subtle"
+                    className="border-b border-border transition-colors duration-fast last:border-b-0 hover:bg-bg-subtle"
                   >
                     <th
                       scope="row"
-                      className="w-[14rem] py-4 pr-4 font-semibold text-fg"
+                      className="py-4 pr-4 align-top font-semibold text-fg"
                     >
                       „{w.obiekcja}”
                     </th>
                     {/* Kolumna „wygrana" 1:1 jak na home: font-medium + --fg
                        (nie muted) — to ona niesie odpowiedź, nie obiekcję. */}
-                    <td className="border-l border-border-accent px-4 py-4 font-medium text-fg">
+                    <td className="border-l border-border-accent px-4 py-4 align-top font-medium text-fg">
                       {w.odpowiedz}
                     </td>
                   </tr>

@@ -53,11 +53,20 @@ const ARCHITEKCI = {
 function PromoKarta({ usluga, full = false }: { usluga: Usluga; full?: boolean }) {
   const kat = INF_KATEGORIA[usluga.slug] ?? INF_KATEGORIA_DEFAULT;
   const odcien = kat.odcien ?? kat.c;
+  /* v7 audyt H3 (MINOR-2): kontrakt w app/globals.css (reguła .inf-card-lg)
+     wymienia „promo usług" wprost jako KARTY-BOHATERÓW, a tu stało samo
+     .inf-card — hover szedł liczbami lżejszego wariantu (-4px zamiast -5px
+     + scale). Modyfikator dostają WSZYSTKIE kafelki tej sekcji, nie tylko
+     `full`: siedzą w jednym gridzie, więc różne liczby hoveru czytałyby się
+     jako niedoróbka („naczynia połączone"). */
   return (
     <li
-      className={full ? 'inf-card md:col-span-2' : 'inf-card'}
+      className={full ? 'inf-card inf-card-lg md:col-span-2' : 'inf-card inf-card-lg'}
       style={{ '--card-c': kat.c, '--card-c-l': odcien } as CSSProperties}
     >
+      {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
+          pointermove z MotionOrchestrator (desktop). Dekoracja aria-hidden. */}
+      <div aria-hidden="true" className="inf-spotlight" />
       <Link
         href={`/uslugi/${usluga.slug}`}
         className={`group flex h-full flex-col ${full ? 'p-6 md:p-8' : 'p-6'}`}
@@ -112,9 +121,11 @@ export function PromoUslugi() {
         ))}
 
         {/* CIENKA karta full: Architekci Wartości AI (parasol do promowania).
-            Dekor spoza rejestru kategorii -> fallback akcentu (INF_KATEGORIA_DEFAULT). */}
+            Dekor spoza rejestru kategorii -> fallback akcentu (INF_KATEGORIA_DEFAULT).
+            v7 audyt H3 (MINOR-2): .inf-card-lg jak reszta kafelków tej sekcji —
+            to nadal karta pełnej szerokości w tym samym gridzie. */}
         <li
-          className="inf-card md:col-span-2"
+          className="inf-card inf-card-lg md:col-span-2"
           style={
             {
               '--card-c': INF_KATEGORIA_DEFAULT.c,
@@ -122,6 +133,7 @@ export function PromoUslugi() {
             } as CSSProperties
           }
         >
+          <div aria-hidden="true" className="inf-spotlight" />
           <Link
             href={ARCHITEKCI.href}
             className="group flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:gap-5"

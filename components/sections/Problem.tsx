@@ -1,6 +1,9 @@
+import type { CSSProperties } from 'react';
 import { Section, Button } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { CytatyWalec } from '@/components/sections/CytatyWalec';
+import { InfIcon } from '@/components/ui/InfIcons';
+import type { InfIconName } from '@/components/ui/InfIcons';
 import { HOME_CTA } from '@/lib/site';
 
 /**
@@ -15,7 +18,32 @@ import { HOME_CTA } from '@/lib/site';
  *   obracający się bęben ~260 px z kropkami-nawigacją (RM/mobile: crossfade).
  * - Mostek do diagnozy ZOSTAJE w sekcji (treść 1:1), schodzi POD walec jako
  *   własny, wyśrodkowany blok — walec ma być zwarty, „nie zapełniać strony".
+ *
+ * INFINITY v7 (spec §PARTIA D pkt 2, zrzuty Pawła „Ile czasu w tygodniu zjada
+ * Ci robota" + blok „Nie zgaduj"): ŚCIANA AKAPITÓW ROZBITA NA KAFELKI.
+ * - GŁÓWNE ZDANIE zostaje dużym nagłówkiem (H2 bez zmian).
+ * - Lead urywa się na dwukropku, a jego wyliczenie („odbieranie tych samych
+ *   pytań / przepisywanie danych / oddzwanianie do klientów") jedzie w TRZECH
+ *   kartach .inf-card z kafelkiem ikony. Zdania POCIĘTE, nie napisane od nowa:
+ *   treść co do znaku ta sama, zmienia się wyłącznie opakowanie.
+ * - Domknięcie leadu („To nie jest praca, która rozwija firmę...") = karta
+ *   pełnej szerokości; mostek do diagnozy („Nie zgaduj...") = karta z CTA.
+ * - Każda karta ma własny odcień (--card-c) — sekcja przestaje być bezbarwna.
  */
+
+/* Trzy rzeczy, które zjadają tydzień — fragmenty JEDNEGO istniejącego zdania
+   leadu. Kolor + glif to WYŁĄCZNIE dekoracja (kafelek aria-hidden), odcienie
+   z fluorescencyjnej palety v4, każdy inny w obrębie siatki. */
+const ZJADACZE: ReadonlyArray<{ t: string; ikona: InfIconName; c: string }> = [
+  { t: 'odbieranie tych samych pytań', ikona: 'chat-dymek', c: '#67e8f9' },
+  { t: 'przepisywanie danych między systemami', ikona: 'dokument-skan', c: '#fbbf24' },
+  {
+    t: 'oddzwanianie do klientów, którzy nie dodzwonili się za pierwszym razem',
+    ikona: 'sluchawka-fala',
+    c: '#a78bfa',
+  },
+] as const;
+
 export function Problem() {
   return (
     <Section tone="base" id="problem" space="md">
@@ -28,13 +56,53 @@ export function Problem() {
         </Reveal>
         <Reveal delay={0.05}>
           <p className="text-lead mt-5 text-fg-muted">
-            Większość małych firm traci kilkanaście godzin tygodniowo na to samo: odbieranie tych samych
-            pytań, przepisywanie danych między systemami, oddzwanianie do klientów, którzy nie dodzwonili
-            się za pierwszym razem. To nie jest praca, która rozwija firmę. To praca, która ją tylko utrzymuje
-            na powierzchni. I to właśnie ją zdejmuje AI Agent.
+            Większość małych firm traci kilkanaście godzin tygodniowo na to samo:
           </p>
         </Reveal>
       </div>
+
+      {/* Wyliczenie z leadu jako trzy kafelki (v7). Kaskadę niesie .sf-stagger
+          na <Reveal> (kontrakt: goły div = dzieci opacity:0 na zawsze). */}
+      <Reveal as="ul" className="sf-stagger mx-auto mt-10 grid max-w-wide gap-6 md:grid-cols-3">
+        {ZJADACZE.map((z) => (
+          <li key={z.t} className="inf-card p-6" style={{ '--card-c': z.c } as CSSProperties}>
+            {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
+                delegowany pointermove z MotionOrchestrator (desktop).
+                Dekoracja aria-hidden. */}
+            <div aria-hidden="true" className="inf-spotlight" />
+            <span
+              aria-hidden="true"
+              className="inf-tile mb-4"
+              style={{ '--tile-c': z.c } as CSSProperties}
+            >
+              <InfIcon name={z.ikona} />
+            </span>
+            <p className="text-body text-fg">{z.t}</p>
+          </li>
+        ))}
+      </Reveal>
+
+      {/* Domknięcie leadu — karta pełnej szerokości (ta sama myśl, co wcześniej
+          trzy ostatnie zdania akapitu; treść 1:1). */}
+      <Reveal delay={0.05} className="mx-auto mt-6 max-w-wide">
+        <div
+          className="inf-card flex items-start gap-4 p-6 md:p-8"
+          style={{ '--card-c': '#4ade80' } as CSSProperties}
+        >
+          <div aria-hidden="true" className="inf-spotlight" />
+          <span
+            aria-hidden="true"
+            className="inf-tile"
+            style={{ '--tile-c': '#4ade80' } as CSSProperties}
+          >
+            <InfIcon name="robot" />
+          </span>
+          <p className="text-body text-fg-muted">
+            To nie jest praca, która rozwija firmę. To praca, która ją tylko utrzymuje na powierzchni.
+            I to właśnie ją zdejmuje AI Agent.
+          </p>
+        </div>
+      </Reveal>
 
       {/* WALEC 3D cytatów (v5): karta .inf-card z bębnem 5 bólów — cytaty,
           odcienie i mechanika opisane w CytatyWalec.tsx (wyspa kliencka;
@@ -44,21 +112,32 @@ export function Problem() {
       </Reveal>
 
       {/*
-        Mostek do diagnozy (CTA wtórne -> główny flow) — treść 1:1 z v4, od v5
-        pod walcem, wyśrodkowany (symetria sekcji). UWAGA: przycisk prowadzi do
-        formularza diagnozy, NIE do kalkulatora — dlatego mikrokopia nie obiecuje
-        "policz sam". Gdyby powstał realny kalkulator (godziny x stawka), wpiąć go
-        jako krok 1 flow i wtedy można wrócić do słowa "policz".
+        Mostek do diagnozy (CTA wtórne -> główny flow) — treść 1:1 z v4, od v7
+        na KARCIE z kafelkiem ikony (zrzut Pawła: ten blok był luźnym tekstem
+        na środku sekcji). UWAGA: przycisk prowadzi do formularza diagnozy, NIE
+        do kalkulatora — dlatego mikrokopia nie obiecuje "policz sam". Gdyby
+        powstał realny kalkulator (godziny x stawka), wpiąć go jako krok 1 flow
+        i wtedy można wrócić do słowa "policz".
       */}
-      <Reveal delay={0.15} className="mx-auto mt-10 max-w-narrow text-center">
-        <p className="text-body text-fg">
-          Nie zgaduj. Na bezpłatnej diagnozie pokażę Ci, ile godzin i złotych miesięcznie zjada
-          powtarzalna robota w Twojej firmie. Konkretne liczby z Twoich procesów, nie ogólniki.
-        </p>
-        <div className="mt-4">
-          <Button variant="secondary" href={HOME_CTA.href}>
-            Pokaż mi, ile tracę
-          </Button>
+      <Reveal delay={0.15} className="mx-auto mt-10 max-w-wide">
+        <div className="inf-card p-6 md:p-8" style={{ '--card-c': '#60a5fa' } as CSSProperties}>
+          <div aria-hidden="true" className="inf-spotlight" />
+          <span
+            aria-hidden="true"
+            className="inf-tile mb-4"
+            style={{ '--tile-c': '#60a5fa' } as CSSProperties}
+          >
+            <InfIcon name="lupa-wykres" />
+          </span>
+          <p className="text-body text-fg">
+            Nie zgaduj. Na bezpłatnej diagnozie pokażę Ci, ile godzin i złotych miesięcznie zjada
+            powtarzalna robota w Twojej firmie. Konkretne liczby z Twoich procesów, nie ogólniki.
+          </p>
+          <div className="mt-5">
+            <Button variant="secondary" href={HOME_CTA.href}>
+              Pokaż mi, ile tracę
+            </Button>
+          </div>
         </div>
       </Reveal>
     </Section>

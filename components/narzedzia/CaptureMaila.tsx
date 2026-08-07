@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useState, type CSSProperties, type FormEvent } from 'react';
 import { Button } from '@/components/ui';
 import { LEGAL_ROUTES } from '@/lib/site';
 
@@ -64,8 +64,19 @@ export function CaptureMaila({
 
   if (status === 'success') {
     // INFINITY v5: stan sukcesu w karcie .inf-card (spójnie z DiagnozaForm).
+    // v7 (audyt --card-c): krawędź karty niesie STATUS, więc idzie w tokenie
+    // sukcesu, a nie w fallbackowym akcencie (tło bg-success-bg już tam jest).
+    // v8 „naczynia połączone" (audyt kart /narzedzia): reflektor .inf-spotlight
+    // jako PIERWSZE dziecko, jak w każdej innej karcie strony. Świeci tokenem
+    // sukcesu (dziedziczy --card-c), a `text-center` zostaje nietknięty —
+    // reflektor jest absolutny, więc nie jest tekstem do wyśrodkowania.
     return (
-      <div className="inf-card bg-success-bg p-5 text-center">
+      <div
+        className="inf-card bg-success-bg p-5 text-center"
+        style={{ '--card-c': 'var(--success)' } as CSSProperties}
+      >
+        <div aria-hidden="true" className="inf-spotlight" />
+
         <p className="text-body-sm font-medium text-fg">Raport jedzie na maila.</p>
         <p className="mt-1 text-caption text-fg-muted">
           Sprawdź skrzynkę za chwilę. Gdyby nie dotarł, zajrzyj do spamu.

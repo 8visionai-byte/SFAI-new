@@ -30,6 +30,29 @@ export function MaterialBody({ tresc }: { tresc: Blok[] }) {
   );
 }
 
+/**
+ * INFINITY v7 (spec §PARTIA E pkt 1 i 3): minimalna szerokość tabeli rośnie
+ * z LICZBĄ KOLUMN (wzorzec 1:1 z components/blog/PostBody). W materiałach to
+ * najbardziej bolało: arkusz kosztów ma 6 kolumn, a sztywne `min-w-[36rem]`
+ * zostawiało ~96px na kolumnę, więc nagłówki i liczby łamały się po jednym
+ * słowie. Przy 2 kolumnach (przed/po) ta sama wartość wymuszała zbędny scroll.
+ * Klasy MUSZĄ być literałami — Tailwind skanuje pliki, nie liczy w locie.
+ */
+const MIN_W_TABELI: Record<number, string> = {
+  2: 'min-w-[28rem]',
+  3: 'min-w-[36rem]',
+  4: 'min-w-[46rem]',
+  5: 'min-w-[54rem]',
+};
+/** 6 kolumn i więcej — jeden wspólny sufit (scroll w opakowaniu, nie w body). */
+const MIN_W_TABELI_SZEROKA = 'min-w-[62rem]';
+
+function minWTabeli(kolumny: number): string {
+  // 0-1 kolumn (dane awaryjne) — żadnego wymuszonego scrolla.
+  if (kolumny <= 1) return 'min-w-0';
+  return MIN_W_TABELI[kolumny] ?? MIN_W_TABELI_SZEROKA;
+}
+
 function BlokRender({ blok }: { blok: Blok }) {
   switch (blok.typ) {
     case 'naglowek':
@@ -49,14 +72,37 @@ function BlokRender({ blok }: { blok: Blok }) {
 
     case 'tabela': {
       const [naglowekWiersz, ...wierszeDanych] = [blok.naglowki, ...blok.wiersze];
+      // Liczba kolumn = najszerszy wiersz (nagłówek albo dane) — steruje min-w.
+      const kolumny = Math.max(
+        naglowekWiersz?.length ?? 0,
+        ...wierszeDanych.map((w) => w.length)
+      );
+      /* INFINITY v7 (audyt dostępności): opakowanie ze scrollem jest punktem
+         tabulacji, więc MUSI mieć rolę i nazwę — inaczej czytnik ekranu ogłasza
+         puste zatrzymanie. Wzorzec 1:1 z TabelaCen / ObiekcjeOdpowiedzi /
+         PorownanieTabela (tabIndex + role="region" + aria-label). Nazwa
+         POCHODZI z wiersza nagłówkowego TEJ tabeli (materiał może mieć ich
+         kilka), więc rozróżnia tabele i nie wnosi nowej treści. */
+      const nazwaTabeli = (naglowekWiersz ?? []).filter(Boolean).join(', ');
       return (
         /* INFINITY v6 (spec §PARTIA D zad. 2): tabela materiału w tym samym
            języku co tabele home i usług — bez pudełka z ramką, nagłówki mono
            .inf-overline (AA: --fg-muted zamiast dekoracyjnego --fg-subtle),
            kreska rozdziału border-strong, wiersze z hoverem. Struktura
-           semantyczna i treść komórek 1:1 (wzorzec: components/blog/PostBody). */
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[36rem] border-collapse text-left text-body-sm">
+           semantyczna i treść komórek 1:1 (wzorzec: components/blog/PostBody).
+           INFINITY v7 (spec §PARTIA E): min-w liczone z liczby kolumn (wyżej),
+           `align-top` z powrotem na td/th (na <tr> działało tylko dzięki
+           dziedziczeniu z arkusza przeglądarki), a poziomy scroll siedzi
+           wyłącznie w opakowaniu i da się go przewinąć klawiaturą (WCAG 2.1.1). */
+        <div
+          className="overflow-x-auto"
+          tabIndex={0}
+          role={nazwaTabeli ? 'region' : undefined}
+          aria-label={nazwaTabeli || undefined}
+        >
+          <table
+            className={`w-full ${minWTabeli(kolumny)} border-collapse text-left text-body-sm`}
+          >
             <thead>
               <tr className="border-b border-border-strong">
                 {(naglowekWiersz ?? []).map((komorka, i) => (
@@ -78,15 +124,19 @@ function BlokRender({ blok }: { blok: Blok }) {
               {wierszeDanych.map((wiersz, ri) => (
                 <tr
                   key={ri}
-                  className="border-b border-border align-top transition-colors duration-fast last:border-b-0 hover:bg-bg-subtle"
+                  className="border-b border-border transition-colors duration-fast last:border-b-0 hover:bg-bg-subtle"
                 >
                   {wiersz.map((komorka, ci) =>
                     ci === 0 ? (
-                      <th key={ci} scope="row" className="py-4 pr-4 font-semibold text-fg">
+                      <th
+                        key={ci}
+                        scope="row"
+                        className="py-4 pr-4 align-top font-semibold text-fg"
+                      >
                         {komorka}
                       </th>
                     ) : (
-                      <td key={ci} className="px-4 py-4 text-fg-muted">
+                      <td key={ci} className="px-4 py-4 align-top text-fg-muted">
                         {komorka}
                       </td>
                     )

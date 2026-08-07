@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { Section, Button } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HOME_CTA } from '@/lib/site';
@@ -35,6 +36,13 @@ const KROKI = [
    niebieski -> fiolet -> zielony). Tokeny metal-* są theme-aware i zdają AA
    jako tekst na ciemnym tle (globals.css). */
 const NODE_TONE = ['text-metal-blue', 'text-metal-violet', 'text-metal-green'] as const;
+
+/* INFINITY v7 (spec §PARTIA D pkt 3: „każda karta na home ma --card-c"):
+   karta opisu kroku przechodzi z bezbarwnej .sf-glass na kartę wzorca
+   .inf-card w odcieniu SWOJEGO węzła (te same trzy stopnie co NODE_TONE, w
+   fluorescencyjnej palecie v4: blue -> violet -> green). Bez tego hover karty
+   był bezbarwny, a sekcja „nieuzupełniona kolorystyką". Treść kroków 1:1. */
+const KROK_C = ['#60a5fa', '#a78bfa', '#4ade80'] as const;
 
 export function JakToDziala() {
   return (
@@ -81,7 +89,10 @@ export function JakToDziala() {
           className="sf-stagger relative grid gap-12 md:grid-cols-3 md:gap-8"
         >
           {KROKI.map((k, i) => (
-            <li key={k.n} className="text-center">
+            /* v7: kolumna flex + karta flex-1 — trzy karty opisu kończą się na
+               TEJ SAMEJ wysokości mimo różnej długości tekstu (dawniej
+               .sf-glass stała na własnej wysokości i rząd się rozjeżdżał). */
+            <li key={k.n} className="flex h-full flex-col text-center">
               {/* Węzeł-kompas: realny numer kroku w dekoracyjnym pierścieniu.
                   Tło węzła = tło sekcji (bg-bg-subtle), żeby trasa nie
                   przecinała wnętrza pierścienia. */}
@@ -96,8 +107,16 @@ export function JakToDziala() {
 
               <h3 className="text-h3 mt-5">{k.t}</h3>
 
-              {/* Szklana karta opisu (fundament .sf-glass, partia A). */}
-              <div className="sf-glass mt-4 rounded-lg p-6 text-left">
+              {/* Karta opisu kroku — v7: .inf-card w odcieniu węzła (dawniej
+                  bezbarwna .sf-glass). Tekst kroku bez zmian. */}
+              <div
+                className="inf-card mt-4 flex-1 p-6 text-left"
+                style={{ '--card-c': KROK_C[i] ?? '#60a5fa' } as CSSProperties}
+              >
+                {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
+                    delegowany pointermove z MotionOrchestrator (desktop).
+                    Dekoracja aria-hidden. */}
+                <div aria-hidden="true" className="inf-spotlight" />
                 <p className="text-body-sm text-fg-muted">{k.d}</p>
               </div>
             </li>

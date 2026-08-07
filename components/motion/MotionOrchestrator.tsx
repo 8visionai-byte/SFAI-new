@@ -23,6 +23,11 @@ import dynamic from 'next/dynamic';
  *
  * Choreografie (funkcje po komponencie): pin „Jak to działa", scrub-tekst
  * soundbite'u, głębia hero. Paralaksa płyt CSS — NIE dublowana (pkt d spec).
+ *
+ * Orkiestrator jest też JEDYNYM właścicielem dwóch delegacji dla całej strony
+ * (tanio, bo obie działają za tymi samymi bramkami): reflektor kart
+ * (--mx/--my na .inf-card z jednego pointermove) oraz PAUZA iskier separatorów
+ * poza kadrem (jeden IntersectionObserver przełącza .is-paused na .inf-divider).
  */
 
 /* Typy WYŁĄCZNIE type-level (erasowane w kompilacji — zero kodu w bundlu). */
@@ -211,6 +216,58 @@ export function MotionOrchestrator() {
       dispose?.();
     };
   }, []);
+
+  /* ── PAUZA ISKIER SEPARATORÓW poza kadrem (audyt H3 pkt 1 / MINOR-5) ───── */
+  useEffect(() => {
+    /* Na home stoi ~15 separatorów x 2 linie = do 30 nieskończonych pętli.
+       Są transform-only (kompozytor), więc nie widać ich w TBT, ale tykają
+       też wtedy, gdy pasek jest kilka ekranów poza widokiem — czysta strata
+       baterii. JEDEN obserwator na wszystkie separatory przełącza klasę
+       `is-paused` na `.inf-divider`, a CSS w globals gasi nią `animation-
+       play-state` obu linii. Zero nowych komponentów, zero nowej pętli rAF.
+
+       BRAMKI 1:1 z regułą, która w ogóle uruchamia iskrę (globals.css:
+       @media (min-width:1024px) and (prefers-reduced-motion: no-preference)).
+       ŚWIADOMIE BEZ bramki Save-Data: dla tych użytkowników MotionGate nie
+       montuje orkiestratora, więc iskry biegną bez pauzy jak dotąd (żadnej
+       regresji, ale i żadnego zysku — do raportu). */
+    if (!window.matchMedia('(min-width: 1024px)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (typeof IntersectionObserver === 'undefined') return;
+
+    let io: IntersectionObserver | null = null;
+    const observed: HTMLElement[] = [];
+
+    // Klatka zwłoki: przy nawigacji SPA template.tsx dopiero montuje nową
+    // treść — bez rAF querySelectorAll trafiłby w stary albo pusty DOM.
+    const raf = requestAnimationFrame(() => {
+      const dividers = document.querySelectorAll<HTMLElement>('.inf-divider');
+      if (dividers.length === 0) return; // podstrony bez separatorów: no-op
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            entry.target.classList.toggle('is-paused', !entry.isIntersecting);
+          }
+        },
+        // Margines 200px: iskra rozpędza się tuż PRZED wejściem paska w kadr,
+        // więc użytkownik nigdy nie widzi momentu startu animacji.
+        { rootMargin: '200px 0px' }
+      );
+      for (const el of dividers) {
+        observed.push(el);
+        observer.observe(el);
+      }
+      io = observer;
+    });
+
+    return () => {
+      cancelAnimationFrame(raf);
+      io?.disconnect();
+      // Klasa to stan JS: po odpięciu obserwatora separator musi wrócić do
+      // domyślnego „animacja gra", inaczej zostałby zamrożony na stałe.
+      for (const el of observed) el.classList.remove('is-paused');
+    };
+  }, [pathname]);
 
   /* ── Nawigacja SPA: template.tsx re-montuje treść przy każdej ścieżce ──── */
   useEffect(() => {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type CSSProperties } from 'react';
 import Link from 'next/link';
 import { WynikCTA } from './WynikCTA';
 import {
@@ -16,6 +16,16 @@ import {
   getStyl,
   type Opcja,
 } from '@/lib/narzedzia/generator-promptow';
+import { INF_NARZEDZIE, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+
+/* INFINITY v7 (audyt --card-c): kolor sekcji tego narzędzia z single source
+   lib/inf-kategorie — ten sam, którym świeci jego kafel na liście hubu. Bez
+   niego panele wyspy spadały na fallbackowy akcent. Sama dekoracja. */
+const DEKOR = INF_NARZEDZIE['generator-promptow'] ?? INF_KATEGORIA_DEFAULT;
+const TON = {
+  '--card-c': DEKOR.c,
+  '--card-c-l': DEKOR.odcien ?? DEKOR.c,
+} as CSSProperties;
 
 /**
  * GeneratorPromptow — 5. narzędzie huba /narzedzia. Wyspa 'use client'.
@@ -77,8 +87,15 @@ export function GeneratorPromptow() {
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-10">
       {/* KOLUMNA WYBORÓW */}
       {/* INFINITY v5 (spec §4): shell wyspy na .inf-card (ciemna karta wzorca
-          z narożnikami i sweepem z globals) — kontrolki zostają na tokenach. */}
-      <div className="inf-card p-6 shadow-xs sm:p-7">
+          z narożnikami i sweepem z globals) — kontrolki zostają na tokenach.
+          INFINITY v8 „naczynia połączone" (audyt kart /narzedzia): obie karty
+          .inf-card tej wyspy dostają reflektor .inf-spotlight jako PIERWSZE
+          dziecko. Reflektor jest absolutny (inset:0) i `pointer-events:none`,
+          więc selecty zostają w pełni klikalne, a odstępy niesie wewnętrzny
+          `space-y-5`, nie sama karta. */}
+      <div className="inf-card p-6 shadow-xs sm:p-7" style={TON}>
+        <div aria-hidden="true" className="inf-spotlight" />
+
         <h3 className="text-h3">Złóż swój prompt</h3>
         <p className="mt-1 text-caption text-fg-subtle">
           Wybierz cztery rzeczy. Prompt złoży się sam, na bieżąco.
@@ -163,7 +180,9 @@ export function GeneratorPromptow() {
 
         {/* Bridge do magnetów (realna wartość) */}
         {/* Panel wyniku — .inf-card (spec §4). */}
-        <div className="inf-card mt-4 p-5 shadow-xs">
+        <div className="inf-card mt-4 p-5 shadow-xs" style={TON}>
+          <div aria-hidden="true" className="inf-spotlight" />
+
           <p className="text-body-sm text-fg">
             Chcesz więcej gotowców? Mamy zestawy promptów do skopiowania.
           </p>
@@ -183,7 +202,11 @@ export function GeneratorPromptow() {
           </div>
         </div>
 
-        <WynikCTA mikrokopia="Gotowy prompt to dobry start. Gotowy system, który robi to za Ciebie codziennie, to coś więcej. Pokażę Ci, gdzie tracisz czas." />
+        <WynikCTA
+          mikrokopia="Gotowy prompt to dobry start. Gotowy system, który robi to za Ciebie codziennie, to coś więcej. Pokażę Ci, gdzie tracisz czas."
+          kolor={DEKOR.c}
+          odcien={DEKOR.odcien}
+        />
       </div>
     </div>
   );

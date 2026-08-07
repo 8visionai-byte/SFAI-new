@@ -60,6 +60,10 @@ export function ZyweDemo() {
             className="inf-card flex h-full flex-col justify-center p-6"
             style={{ '--card-c': '#8b5cf6' } as React.CSSProperties}
           >
+            {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
+                delegowany pointermove z MotionOrchestrator (desktop).
+                Dekoracja aria-hidden. */}
+            <div aria-hidden="true" className="inf-spotlight" />
             <h3 className="text-h3">Wolisz posłuchać?</h3>
             <p className="mt-2 text-body-sm text-fg-muted">
               Voicebot odbierze, porozmawia po polsku i pokaże, jak brzmi obsługa telefonu bez Twojego udziału.

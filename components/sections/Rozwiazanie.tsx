@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { Section, Button } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { InfIcon } from '@/components/ui/InfIcons';
+import type { InfIconName } from '@/components/ui/InfIcons';
 import { AgentDemo } from './AgentDemo';
 
 /** Styl frazowego linku w treści — sygnał SEO/AEO do podstron usług. */
@@ -23,24 +25,37 @@ const POROWNANIE = [
   ['Efekt', 'Mniej maili', 'Mniej roboty i więcej obsłużonych klientów'],
 ] as const;
 
+/* INFINITY v7 (spec §PARTIA D pkt 2): „co potrafi Agent" przestaje być listą na
+   kreskach i wchodzi na KARTY .inf-card z kafelkiem ikony. Teksty t/d 1:1 co do
+   znaku — dochodzi wyłącznie dekoracja: glif InfIcons + odcień kategorii usługi
+   (voiceboty violet, chatboty cyan, automatyzacje green, dokumenty amber
+   z lib/inf-kategorie), każda karta w siatce innym tonem. */
 const POTRAFI = [
   {
     t: 'Odbiera telefon, kiedy Ty nie możesz.',
     d: 'Voicebot rozmawia po polsku, umawia wizyty i przekazuje Ci tylko to, co ważne.',
+    ikona: 'sluchawka-fala',
+    c: '#a78bfa',
   },
   {
     t: 'Odpisuje klientom w minuty, o każdej porze.',
     d: 'Chatbot na stronie i w komunikatorach odpowiada na pytania i zbiera leady, nawet o 22:00.',
+    ikona: 'chat-dymek',
+    c: '#67e8f9',
   },
   {
     t: 'Przepisuje dane za Ciebie.',
     d: 'Automatyzacja przenosi informacje między mailem, systemem i fakturą, bez ręcznej roboty.',
+    ikona: 'blyskawica',
+    c: '#4ade80',
   },
   {
     t: 'Pilnuje, żeby nic nie wypadło.',
     d: 'Przypomnienia, follow-upy, oddzwonienia. Klient nie zostaje bez odpowiedzi.',
+    ikona: 'kalendarz-check',
+    c: '#fbbf24',
   },
-] as const;
+] as const satisfies ReadonlyArray<{ t: string; d: string; ikona: InfIconName; c: string }>;
 
 export function Rozwiazanie() {
   return (
@@ -86,6 +101,10 @@ export function Rozwiazanie() {
               } as CSSProperties
             }
           >
+            {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
+                delegowany pointermove z MotionOrchestrator (desktop).
+                Dekoracja aria-hidden. */}
+            <div aria-hidden="true" className="inf-spotlight" />
             {/* Overline mono wzorca — numeracja dekoracyjna w odcieniu karty. */}
             <span aria-hidden="true" className="inf-overline" style={{ color: 'var(--card-c-l)' }}>
               {karta.nr}
@@ -153,11 +172,15 @@ export function Rozwiazanie() {
               </tr>
             </thead>
             <tbody>
+              {/* v7 (kontrakt partii E, „tabele bez rozjazdu"): align-top wraca
+                  z <tr> na KOMÓRKI — na wierszu działało tylko dzięki
+                  dziedziczeniu z UA stylesheet i przy komórkach o różnej
+                  wysokości potrafiło się rozjechać. */}
               {POROWNANIE.map(([label, chatbot, agent]) => (
-                <tr key={label} className="border-b border-border align-top transition-colors duration-fast hover:bg-bg-subtle">
-                  <th scope="row" className="py-4 pr-4 font-semibold text-fg">{label}</th>
-                  <td className="px-4 py-4 text-fg-subtle">{chatbot}</td>
-                  <td className="border-l border-border-accent px-4 py-4 font-medium text-fg">{agent}</td>
+                <tr key={label} className="border-b border-border transition-colors duration-fast hover:bg-bg-subtle">
+                  <th scope="row" className="py-4 pr-4 align-top font-semibold text-fg">{label}</th>
+                  <td className="px-4 py-4 align-top text-fg-subtle">{chatbot}</td>
+                  <td className="border-l border-border-accent px-4 py-4 align-top font-medium text-fg">{agent}</td>
                 </tr>
               ))}
             </tbody>
@@ -165,10 +188,21 @@ export function Rozwiazanie() {
         </div>
       </Reveal>
 
-      {/* Co potrafi Agent — kreski zamiast czterech pudełek; kaskadę robi .sf-stagger */}
-      <Reveal as="ul" className="sf-stagger mx-auto mt-12 grid max-w-wide gap-x-12 gap-y-8 sm:grid-cols-2">
+      {/* Co potrafi Agent — v7: KARTY wzorca zamiast listy na kreskach (spec
+          §PARTIA D pkt 2: „szczegóły rozbić na kafelki"). Kaskadę robi
+          .sf-stagger; karty NIEklikalne, więc bez strzałki (konwencja
+          ProduktCard). Treść 1:1. */}
+      <Reveal as="ul" className="sf-stagger mx-auto mt-12 grid max-w-wide gap-6 sm:grid-cols-2">
         {POTRAFI.map((item) => (
-          <li key={item.t} className="border-t border-border pt-5">
+          <li key={item.t} className="inf-card p-6" style={{ '--card-c': item.c } as CSSProperties}>
+            <div aria-hidden="true" className="inf-spotlight" />
+            <span
+              aria-hidden="true"
+              className="inf-tile mb-4"
+              style={{ '--tile-c': item.c } as CSSProperties}
+            >
+              <InfIcon name={item.ikona} />
+            </span>
             <span className="block text-ui font-semibold text-fg">{item.t}</span>
             <span className="mt-2 block text-body-sm text-fg-muted">{item.d}</span>
           </li>

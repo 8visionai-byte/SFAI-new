@@ -17,7 +17,7 @@
 ## Uslugi
 - [Wszystkie uslugi (hub)](https://www.simplefast.ai/uslugi): rozdroze 10 uslug w 3 grupach: obsluga 24/7, back-office i procesy, budowa i strategia.
 - [Chatbot AI dla firmy](https://www.simplefast.ai/uslugi/chatboty): odpowiada klientom 24/7 na bazie wiedzy firmy, zbiera leady, rosnie do Agenta, ktory umawia i zapisuje.
-- [Voicebot dla firmy](https://www.simplefast.ai/uslugi/voiceboty): bot glosowy odbiera telefon po polsku, umawia wizyty, przyjmuje zgloszenia, oddzwania.
+- [Voicebot dla firmy](https://www.simplefast.ai/uslugi/voiceboty): bot telefoniczny odbiera polaczenia przychodzace po polsku 24/7, umawia wizyty, przyjmuje zgloszenia. Nie dzwoni sam: sprawe do oddzwonienia zapisuje i wysyla powiadomienie, a kontakt zaczyna czlowiek.
 - [Agent AI do rekrutacji](https://www.simplefast.ai/uslugi/agent-rekrutacyjny): zbiera CV, robi pierwszy odsiew i scoring, odpowiada kandydatom, umawia rozmowy. Decyzje o zatrudnieniu podejmuje czlowiek.
 - [Automatyzacja procesow w firmie z AI](https://www.simplefast.ai/uslugi/automatyzacje): system przejmuje powtarzalna robote (przepisywanie danych, potwierdzenia, terminy), wdrozenie w dni.
 - [Automatyzacja dokumentow i faktur (OCR, KSeF)](https://www.simplefast.ai/uslugi/dokumenty-faktury): OCR odczytuje fakture, klasyfikuje koszt, wpisuje do arkusza i ksiegowosci, eksportuje do KSeF. Najszybszy ROI w biurach rachunkowych.

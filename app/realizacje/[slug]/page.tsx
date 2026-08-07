@@ -86,14 +86,15 @@ export default async function RealizacjaPage({
         id="rozwiazanie"
       />
 
-      {/* Sekcja 4 — EFEKT z liczbą (twardy dowód, bramka GEO) */}
-      <RealizacjaEfekt efekt={r.efekt} />
+      {/* Sekcja 4 — EFEKT z liczbą (twardy dowód, bramka GEO)
+          v7 „naczynia połączone": `kategoria` = ton kart metryk (jak na hubie). */}
+      <RealizacjaEfekt efekt={r.efekt} kategoria={r.kategoria} />
 
       {/* Sekcja 5 — link do powiązanej usługi (linkowanie wewnętrzne GEO) */}
       <PowiazanaUsluga kategoria={r.kategoria} />
 
       {/* Sekcja 7 — FAQ (opcjonalne; tekst 1:1 z FAQPage JSON-LD niżej) */}
-      {r.faq && r.faq.length > 0 && <RealizacjaFAQ faq={r.faq} />}
+      {r.faq && r.faq.length > 0 && <RealizacjaFAQ faq={r.faq} kategoria={r.kategoria} />}
 
       {/* Sekcja 6 — jedno główne CTA (bezpłatna diagnoza) */}
       <RealizacjaCTA />

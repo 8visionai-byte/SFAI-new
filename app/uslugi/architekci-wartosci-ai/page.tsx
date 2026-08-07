@@ -19,6 +19,7 @@ import {
   ObiekcjeOdpowiedzi,
   TabelaCen,
 } from '@/components/oferta';
+import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
 
 /**
  * FLAGOWA STRONA-PARASOL „Architekci Wartości AI" (/uslugi/architekci-wartosci-ai).
@@ -95,8 +96,42 @@ const FAQ: { pytanie: string; odpowiedz: string }[] = [
   },
 ];
 
-/** „Dla kogo" — nisze. Pierwsza nisza (biura rachunkowe) wyróżniona. */
-const NISZE: { branza: string; opis: string; pierwsza?: boolean }[] = [
+/**
+ * TONY KART TEJ STRONY (INFINITY v7 „NACZYNIA POŁĄCZONE", audyt kart partia H1).
+ *
+ * Problem z audytu: 6 z 9 kart .inf-card na tej stronie nie miało własnego
+ * --card-c, więc spadały na fallbackowy akcent i cała strona świeciła jednym
+ * cyjanem, a żadna karta nie miała reflektora, który karty mają na hubie.
+ *
+ * Strona-parasol CELOWO nie jest w rejestrze lib/uslugi (patrz komentarz na
+ * górze pliku), więc nie ma własnej kategorii. Kolory bierzemy WYŁĄCZNIE z
+ * lib/inf-kategorie (zero nowych barw) i przypisujemy je po tym, o czym karta
+ * mówi w swojej WŁASNEJ treści:
+ *  - Paweł „prowadzi diagnozę, Sprint"          -> audyt-ai      (#f59e0b),
+ *  - Marcin „buduje automatyzacje, integracje"  -> automatyzacje (#10b981),
+ *  - nisza  -> usługa, która w tej branży wchodzi pierwsza (pole `kategoria`).
+ * Karty w JEDNYM gridzie mają dzięki temu RÓŻNE tony (zasada spec §C pkt 5),
+ * a trzy filary wyżej zostają na stopniach trasy marki (jak cennik home).
+ * Karta FAQ (jedna, pełna szerokość) idzie tonem parasola, czyli tym samym
+ * INF_KATEGORIA_DEFAULT, którym ta strona świeci na home (PromoUslugi).
+ * To DEKORACJA: kolor nie niesie treści i nie trafia do czytników ekranu.
+ */
+const TON_PAWEL = INF_KATEGORIA['audyt-ai'] ?? INF_KATEGORIA_DEFAULT;
+const TON_MARCIN = INF_KATEGORIA['automatyzacje'] ?? INF_KATEGORIA_DEFAULT;
+
+/** Styl tonu karty: --card-c (kolor kategorii) + --card-c-l (jaśniejszy odcień). */
+function tonKarty(dekor: { c: string; odcien?: string }): CSSProperties {
+  return { '--card-c': dekor.c, '--card-c-l': dekor.odcien ?? dekor.c } as CSSProperties;
+}
+
+/** „Dla kogo" — nisze. Pierwsza nisza (biura rachunkowe) wyróżniona.
+    `kategoria` = slug z lib/inf-kategorie, czyli ton karty (dekoracja). */
+const NISZE: {
+  branza: string;
+  opis: string;
+  pierwsza?: boolean;
+  kategoria?: string;
+}[] = [
   {
     branza: 'Biura rachunkowe',
     opis:
@@ -107,16 +142,22 @@ const NISZE: { branza: string; opis: string; pierwsza?: boolean }[] = [
     branza: 'Kancelarie',
     opis:
       'Porządkowanie spraw, szablony pism, wyłapywanie terminów i pierwsza obsługa zapytań, zanim trafią do prawnika.',
+    // pisma, terminy, papier -> dokumenty-faktury
+    kategoria: 'dokumenty-faktury',
   },
   {
     branza: 'E-commerce',
     opis:
       'Obsługa pytań „gdzie moja paczka", opisy produktów, sortowanie zgłoszeń reklamacyjnych i odpowiedzi na maile po zakupie.',
+    // pierwsza linia w sklepie -> chatboty
+    kategoria: 'chatboty',
   },
   {
     branza: 'Firmy usługowe',
     opis:
       'Generowanie ofert, umawianie terminów, podsumowania rozmów i raporty, które dziś ktoś klepie ręcznie po godzinach.',
+    // umawianie terminów i podsumowania rozmów -> voiceboty
+    kategoria: 'voiceboty',
   },
 ];
 
@@ -232,7 +273,8 @@ export default function ArchitekciWartosciAiPage() {
 
           {/* INFINITY v5 (spec §4): trzy filary na kartach .inf-card (narożniki +
               sweep z globals) w stopniach trasy marki (jak cennik home) — pełna
-              spójność mechanizmów z home, treść 1:1. */}
+              spójność mechanizmów z home, treść 1:1. v7: ton zostaje (trasa
+              marki), dochodzi reflektor .inf-spotlight jak na kartach huba. */}
           <ul className="mt-9 grid gap-6 sm:grid-cols-3">
             <Reveal as="li" delay={0.05}>
               <Card
@@ -241,6 +283,8 @@ export default function ArchitekciWartosciAiPage() {
                 className="inf-card h-full p-6"
                 style={{ '--card-c': '#2b7cff' } as CSSProperties}
               >
+                <div aria-hidden="true" className="inf-spotlight" />
+
                 <h3 className="text-h3">Najpierw liczymy</h3>
                 <p className="mt-3 text-body-sm text-fg-muted">
                   Ile godzin i złotówek zjada dany proces dziś. To jest punkt
@@ -256,6 +300,8 @@ export default function ArchitekciWartosciAiPage() {
                 className="inf-card h-full p-6"
                 style={{ '--card-c': '#8b5cf6' } as CSSProperties}
               >
+                <div aria-hidden="true" className="inf-spotlight" />
+
                 <h3 className="text-h3">Płacisz za efekt</h3>
                 <p className="mt-3 text-body-sm text-fg-muted">
                   Pakiet dobieramy tak, by zwracał się oszczędnością, którą realnie
@@ -271,6 +317,8 @@ export default function ArchitekciWartosciAiPage() {
                 className="inf-card h-full p-6"
                 style={{ '--card-c': '#22e06b' } as CSSProperties}
               >
+                <div aria-hidden="true" className="inf-spotlight" />
+
                 <h3 className="text-h3">Sprawdzasz na swoich danych</h3>
                 <p className="mt-3 text-body-sm text-fg-muted">
                   Zaczynasz od jednego procesu na próbę. Najpierw widzisz efekt,
@@ -324,10 +372,19 @@ export default function ArchitekciWartosciAiPage() {
           </Reveal>
 
           {/* INFINITY v5 (spec §4): sylwetki zespołu na kartach .inf-card
-              (mechanizmy home; akcent domyślny), treść 1:1. */}
+              (mechanizmy home), treść 1:1. v7: ton z rejestru kategorii wg roli
+              (TON_PAWEL/TON_MARCIN wyżej) zamiast domyślnego akcentu
+              + reflektor jak na kartach huba. */}
           <div className="mt-9 grid gap-6 md:grid-cols-2">
             <Reveal delay={0.05}>
-              <Card as="article" variant="quiet" className="inf-card h-full p-6">
+              <Card
+                as="article"
+                variant="quiet"
+                className="inf-card h-full p-6"
+                style={tonKarty(TON_PAWEL)}
+              >
+                <div aria-hidden="true" className="inf-spotlight" />
+
                 <h3 className="text-h3">Paweł Pieloch</h3>
                 <p className="mt-1 text-body-sm font-semibold text-accent-hover">
                   Strateg, integrator, twarz
@@ -345,7 +402,14 @@ export default function ArchitekciWartosciAiPage() {
             </Reveal>
 
             <Reveal delay={0.1}>
-              <Card as="article" variant="quiet" className="inf-card h-full p-6">
+              <Card
+                as="article"
+                variant="quiet"
+                className="inf-card h-full p-6"
+                style={tonKarty(TON_MARCIN)}
+              >
+                <div aria-hidden="true" className="inf-spotlight" />
+
                 <h3 className="text-h3">Marcin Karpeta</h3>
                 <p className="mt-1 text-body-sm font-semibold text-accent-hover">
                   Inżynier, wdrożeniowiec
@@ -381,27 +445,38 @@ export default function ArchitekciWartosciAiPage() {
 
           {/* INFINITY v5 (spec §4): nisze na kartach .inf-card; pierwsza nisza
               ZOSTAJE wyróżniona mechanizmem home (.sf-rim-gradient, jak plan
-              cennika) + badge mono na akcencie. Treść 1:1. */}
+              cennika) + badge mono na akcencie. Treść 1:1. v7: każda .inf-card
+              w tym gridzie ma ton usługi wchodzącej w tej branży (pole
+              `kategoria` w NISZE) i reflektor jak karty huba. */}
           <ul className="mt-9 grid gap-6 sm:grid-cols-2">
-            {NISZE.map((n, i) => (
-              <Reveal as="li" key={n.branza} delay={Math.min(i * 0.05, 0.2)}>
-                <Card
-                  as="article"
-                  variant={n.pierwsza ? 'highlight' : 'quiet'}
-                  className={n.pierwsza ? 'h-full' : 'inf-card h-full p-6'}
-                >
-                  <div className="flex items-center gap-3">
-                    <h3 className="text-h3">{n.branza}</h3>
-                    {n.pierwsza ? (
-                      <span className="inf-tag rounded-full border-transparent bg-accent px-3 py-1 text-accent-contrast">
-                        Pierwsza nisza
-                      </span>
-                    ) : null}
-                  </div>
-                  <p className="mt-3 text-body-sm text-fg-muted">{n.opis}</p>
-                </Card>
-              </Reveal>
-            ))}
+            {NISZE.map((n, i) => {
+              // Ton bierze tylko .inf-card; karta wyróżniona ma własną aurę rim.
+              const dekor = n.kategoria
+                ? (INF_KATEGORIA[n.kategoria] ?? INF_KATEGORIA_DEFAULT)
+                : null;
+              return (
+                <Reveal as="li" key={n.branza} delay={Math.min(i * 0.05, 0.2)}>
+                  <Card
+                    as="article"
+                    variant={n.pierwsza ? 'highlight' : 'quiet'}
+                    className={n.pierwsza ? 'h-full' : 'inf-card h-full p-6'}
+                    style={dekor ? tonKarty(dekor) : undefined}
+                  >
+                    {dekor ? <div aria-hidden="true" className="inf-spotlight" /> : null}
+
+                    <div className="flex items-center gap-3">
+                      <h3 className="text-h3">{n.branza}</h3>
+                      {n.pierwsza ? (
+                        <span className="inf-tag rounded-full border-transparent bg-accent px-3 py-1 text-accent-contrast">
+                          Pierwsza nisza
+                        </span>
+                      ) : null}
+                    </div>
+                    <p className="mt-3 text-body-sm text-fg-muted">{n.opis}</p>
+                  </Card>
+                </Reveal>
+              );
+            })}
           </ul>
         </div>
       </Section>
@@ -415,35 +490,43 @@ export default function ArchitekciWartosciAiPage() {
           </Reveal>
 
           {/* INFINITY v5 (spec §4): FAQ w ciemnej karcie .inf-card — spójnie
-              z ServiceFAQ szablonu usług (mechanizmy home, treść 1:1). */}
-          <div className="inf-card mt-8 divide-y divide-border p-6">
-            {FAQ.map((item, i) => (
-              <Reveal key={item.pytanie} delay={Math.min(i * 0.03, 0.15)}>
-                <details className="sf-faq group py-2">
-                  <summary className="-mx-2 flex cursor-pointer list-none items-center justify-between gap-4 rounded-sm px-2 py-3 text-h3 font-medium text-fg transition-colors duration-fast hover:bg-bg-subtle [&::-webkit-details-marker]:hidden">
-                    <span>{item.pytanie}</span>
-                    <svg
-                      width="22"
-                      height="22"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      aria-hidden="true"
-                      className="shrink-0 text-accent transition-transform duration-base group-hover:scale-110 group-open:rotate-45"
-                    >
-                      <path
-                        d="M12 5v14M5 12h14"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  </summary>
-                  <p className="pb-4 pr-9 text-body-sm text-fg-muted">
-                    {item.odpowiedz}
-                  </p>
-                </details>
-              </Reveal>
-            ))}
+              z ServiceFAQ szablonu usług (mechanizmy home, treść 1:1). v7: ton
+              parasola (ten sam INF_KATEGORIA_DEFAULT co karta tej strony na
+              home) podany JAWNIE + reflektor; `divide-y` zeszło na wewnętrzny
+              wrapper, żeby reflektor nie dokładał kreski nad pierwszym
+              pytaniem. */}
+          <div className="inf-card mt-8 p-6" style={tonKarty(INF_KATEGORIA_DEFAULT)}>
+            <div aria-hidden="true" className="inf-spotlight" />
+
+            <div className="divide-y divide-border">
+              {FAQ.map((item, i) => (
+                <Reveal key={item.pytanie} delay={Math.min(i * 0.03, 0.15)}>
+                  <details className="sf-faq group py-2">
+                    <summary className="-mx-2 flex cursor-pointer list-none items-center justify-between gap-4 rounded-sm px-2 py-3 text-h3 font-medium text-fg transition-colors duration-fast hover:bg-bg-subtle [&::-webkit-details-marker]:hidden">
+                      <span>{item.pytanie}</span>
+                      <svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        aria-hidden="true"
+                        className="shrink-0 text-accent transition-transform duration-base group-hover:scale-110 group-open:rotate-45"
+                      >
+                        <path
+                          d="M12 5v14M5 12h14"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    </summary>
+                    <p className="pb-4 pr-9 text-body-sm text-fg-muted">
+                      {item.odpowiedz}
+                    </p>
+                  </details>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </div>
       </Section>

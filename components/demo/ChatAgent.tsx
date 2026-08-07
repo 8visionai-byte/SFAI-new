@@ -291,6 +291,10 @@ export function ChatAgent() {
                       className="inf-card block p-3 pl-4"
                       style={{ '--card-c': k.kolor } as CSSProperties}
                     >
+                      {/* Reflektor jak w pozostałych kartach; te karty powstają
+                          dopiero w odpowiedzi agenta, więc nie widać ich
+                          w prerenderze i przy przeglądzie łatwo je pominąć. */}
+                      <span aria-hidden="true" className="inf-spotlight" />
                       <span className="inf-ref-badge">{k.badge}</span>
                       <span className="mt-0.5 block text-body-sm font-semibold leading-snug text-fg">
                         {k.tytul}

@@ -1,5 +1,8 @@
+import type { CSSProperties } from 'react';
 import { Section, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
+import { InfIcon } from '@/components/ui/InfIcons';
+import type { InfIconName } from '@/components/ui/InfIcons';
 import { HOME_CTA } from '@/lib/site';
 
 /**
@@ -14,20 +17,29 @@ import { HOME_CTA } from '@/lib/site';
  * INPUT PAWŁA: gdy zapadnie decyzja o modelu (np. konkretny success-fee albo zwrot
  * X% przy niespełnieniu celu), wpisać go w trzeci filar zamiast ogólnej obietnicy.
  */
+/* INFINITY v7 (spec §PARTIA D pkt 2): trzy filary przestają być listą na
+   kreskach i wchodzą na KARTY .inf-card z kafelkiem ikony, każda w innym
+   odcieniu (fluorescencyjna paleta v4). Teksty t/d 1:1 co do znaku. */
 const FILARY = [
   {
     t: 'Najpierw diagnoza, potem decyzja',
     d: 'Bezpłatna diagnoza i wstępna wycena, zanim wydasz złotówkę. Jak wyjdzie, że się nie opłaca, powiem to wprost.',
+    ikona: 'lupa-wykres',
+    c: '#67e8f9',
   },
   {
     t: 'Mały, odwracalny krok',
     d: 'Zaczynamy od jednego procesu, nie od wielkiej umowy. Testujesz na żywo, Ty ustawiasz granice, w każdej chwili możesz Agenta zatrzymać.',
+    ikona: 'puzzle',
+    c: '#a78bfa',
   },
   {
     t: 'Rozliczenie za efekt',
     d: 'Umawiamy się na konkretny wynik. Dokładne warunki, co dzieje się, gdy Agent go nie dowozi, ustalamy na diagnozie i zapisujemy w umowie.',
+    ikona: 'wykres-strzalka',
+    c: '#fbbf24',
   },
-] as const;
+] as const satisfies ReadonlyArray<{ t: string; d: string; ikona: InfIconName; c: string }>;
 
 export function GwarancjaEfektu() {
   return (
@@ -38,8 +50,25 @@ export function GwarancjaEfektu() {
           §ZDJĘCIA: „karta z treścią". Teksty H2 i kapsuły co do znaku bez
           zmian; kontrast robią tokeny semantyczne na --surface. Karta
           NIEklikalna — bez błysku/strzałki (konwencja ProduktCard). */}
+      {/* v7 (spec §PARTIA D pkt 3): karta nagłówka dostaje własny odcień
+          (--card-c) i kafelek ikony — hover przestaje być bezbarwny.
+          v7 audyt: karta-bohater bierze modyfikator .inf-card-lg (mocniejszy
+          hover wzorca: -5px + scale, obwódka 65%) — kontrakt z globals. */}
       <Reveal>
-        <div className="inf-card mx-auto max-w-wide p-6 md:p-10">
+        <div
+          className="inf-card inf-card-lg mx-auto max-w-wide p-6 md:p-10"
+          style={{ '--card-c': '#4ade80' } as CSSProperties}
+        >
+          {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
+              pointermove z MotionOrchestrator (desktop). Dekoracja aria-hidden. */}
+          <div aria-hidden="true" className="inf-spotlight" />
+          <span
+            aria-hidden="true"
+            className="inf-tile mb-4"
+            style={{ '--tile-c': '#4ade80' } as CSSProperties}
+          >
+            <InfIcon name="tarcza-serce" />
+          </span>
           <h2 className="text-h2 text-fg">Co jeśli nie zadziała? Kto bierze na siebie ryzyko?</h2>
           {/* Kapsuła answer-first — cytowalna dla LLM przy "co jak AI nie zadziała" */}
           <p className="text-lead mt-5 max-w-measure-lead text-fg-muted">
@@ -50,19 +79,22 @@ export function GwarancjaEfektu() {
         </div>
       </Reveal>
 
-      {/* Trzy karty w równym rzędzie -> lista na kreskach: tytuł i opis stoją
-          obok siebie, więc filary czytają się jak karta katalogowa. */}
-      <Reveal
-        as="ul"
-        className="sf-stagger mx-auto mt-12 max-w-wide divide-y divide-border border-y border-border md:mt-16"
-      >
+      {/* v7: filary wracają na KARTY wzorca (kafelek ikony + odcień), zamiast
+          listy na kreskach — „szczegóły rozbić na kafelki". Kaskadę niesie
+          .sf-stagger na <Reveal>. */}
+      <Reveal as="ul" className="sf-stagger mx-auto mt-12 grid max-w-wide gap-6 md:mt-16 md:grid-cols-3">
         {FILARY.map((f) => (
-          <li
-            key={f.t}
-            className="grid gap-2 py-7 md:grid-cols-[minmax(0,24ch)_minmax(0,1fr)] md:gap-10"
-          >
+          <li key={f.t} className="inf-card p-6" style={{ '--card-c': f.c } as CSSProperties}>
+            <div aria-hidden="true" className="inf-spotlight" />
+            <span
+              aria-hidden="true"
+              className="inf-tile mb-4"
+              style={{ '--tile-c': f.c } as CSSProperties}
+            >
+              <InfIcon name={f.ikona} />
+            </span>
             <h3 className="text-h3">{f.t}</h3>
-            <p className="text-body-sm text-fg-muted">{f.d}</p>
+            <p className="mt-2 text-body-sm text-fg-muted">{f.d}</p>
           </li>
         ))}
       </Reveal>

@@ -85,8 +85,13 @@ export default async function PoradnikPage({
       {/* Treść poradnika — bloki renderowane serwerowo (reużyty PostBody bloga) */}
       <PostBody tresc={poradnik.tresc} />
 
-      {/* Opcjonalne FAQ — 1:1 z FAQPage JSON-LD (reużyty PostFAQ bloga) */}
-      {poradnik.faq && poradnik.faq.length > 0 && <PostFAQ faq={poradnik.faq} />}
+      {/* Opcjonalne FAQ — 1:1 z FAQPage JSON-LD (reużyty PostFAQ bloga).
+          INFINITY v7 („naczynia połączone"): `typ` daje karcie FAQ ton
+          PORADNIKA (cyjan z INF_TYP), ten sam co karta poradnika na liście —
+          bez tego wspólny komponent świeciłby tu kolorem wpisu bloga. */}
+      {poradnik.faq && poradnik.faq.length > 0 && (
+        <PostFAQ faq={poradnik.faq} typ="poradnik" />
+      )}
 
       {/* Linkowanie krzyżowe do oferty: powiązane usługi + narzędzia (realne trasy) */}
       <LinkiKrzyzowe

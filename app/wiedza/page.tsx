@@ -145,7 +145,12 @@ function KategoriaKafel({ kategoria }: { kategoria: Kategoria }) {
         variant="quiet"
         className="inf-card flex h-full flex-col p-6 opacity-80"
         aria-disabled="true"
+        style={{ '--card-c': 'var(--accent-2)' } as CSSProperties}
       >
+        {/* Reflektor jak w każdej innej karcie (spójność „naczyń połączonych"):
+            ta gałąź renderuje się tylko dla kategorii jeszcze niepublikowanych,
+            więc łatwo o niej zapomnieć przy przeglądzie prerenderu. */}
+        <div aria-hidden="true" className="inf-spotlight" />
         <div className="flex items-center gap-2">
           <span className="inf-tag text-accent">Wkrótce</span>
         </div>

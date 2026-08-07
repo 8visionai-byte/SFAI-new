@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useState, type CSSProperties, type FormEvent } from 'react';
 import { Button } from '@/components/ui';
 
 /**
@@ -41,8 +41,19 @@ export function ChatDemo() {
   return (
     /* INFINITY: ramka okna czatu = .inf-card (lewa krawędź akcentowa, ciemna
        karta wzorca). BEZ overflow-hidden — ::before karty siedzi NA krawędzi
-       (kontrakt .inf-card w globals.css). Treść 1:1. */
-    <div className="inf-card flex flex-col shadow-sm">
+       (kontrakt .inf-card w globals.css). Treść 1:1.
+       v7 audyt: karta dostaje WŁASNY odcień (--card-c) — bez niego hover
+       świecił domyślnym cyjanem akcentu. #67e8f9 to jaśniejszy odcień
+       kategorii „chatboty" z lib/inf-kategorie (okno czatu = chatbot), przez
+       co para demo w tej sekcji gra dwoma tonami: czat cyjan, voice violet. */
+    <div
+      className="inf-card flex flex-col shadow-sm"
+      style={{ '--card-c': '#67e8f9' } as CSSProperties}
+    >
+      {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
+          pointermove z MotionOrchestrator (desktop). Dekoracja aria-hidden. */}
+      <div aria-hidden="true" className="inf-spotlight" />
+
       {/* Nagłówek — mono caps + zielona kropka statusu (.inf-ask-dot). */}
       <div className="flex items-center gap-2.5 border-b border-hairline px-5 py-4">
         <span className="inf-ask-dot" aria-hidden="true" />

@@ -100,11 +100,12 @@ export default async function UslugaPage({
       {/* (5) Jak to działa — 3 kroki */}
       <KrokiJakToDziala kroki={usluga.kroki} />
 
-      {/* (6) Rama ceny (value-based, bez zmyślonej kwoty) */}
-      <RamaCeny ramaCeny={usluga.ramaCeny} />
+      {/* (6) Rama ceny (value-based, bez zmyślonej kwoty)
+          v7 „naczynia połączone": `slug` = ton kategorii dla karty sekcji. */}
+      <RamaCeny ramaCeny={usluga.ramaCeny} slug={usluga.slug} />
 
-      {/* (7) FAQ — 5–6 pytań, 1:1 z FAQPage JSON-LD */}
-      <ServiceFAQ faq={usluga.faq} />
+      {/* (7) FAQ — 5–6 pytań, 1:1 z FAQPage JSON-LD (slug jw. — ton karty) */}
+      <ServiceFAQ faq={usluga.faq} slug={usluga.slug} />
 
       {/* (8) CTA — jedno główne, z dowodem */}
       <ServiceCTA cta={usluga.cta} />

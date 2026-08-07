@@ -14,10 +14,16 @@ import { HeroLiczniki } from './HeroLiczniki';
 /**
  * SEKCJA 1 — HERO (spec 06 §"CZĘŚĆ 1", WARIANT A "Działa, nie gada" — REKOMENDOWANY).
  * INFINITY v3 (decyzja Pawła): layout WYŚRODKOWANY, wzorzec 1:1, nasza treść.
- * Kolejność pionowa (spec v3 §HERO): slot WIELKIEJ animacji ∞ pod paskiem nav →
- * overline mono z liniami → H1 (maszyna pisania NIETYKALNA, tylko wyśrodkowana) →
- * lead → chipy zaufania → CTA-pigułki → pasek liczników z rejestrów → persona →
- * trasa. Desktop i mobile symetryczne (jedna oś środka, zero osobnych layoutów).
+ * Kolejność pionowa (spec v3 §HERO) = KOLEJNOŚĆ W DOM, niezmieniona do dziś:
+ * slot wielkiej animacji (dziś blob voice agenta) pod paskiem nav → overline
+ * mono z liniami → H1 (maszyna pisania NIETYKALNA, tylko wyśrodkowana) → lead →
+ * chipy zaufania → CTA-pigułki → pasek liczników z rejestrów → persona → trasa.
+ *
+ * INFINITY v7 §PARTIA C pkt 1: od 1024px ta sama kolejność DOM jest złożona
+ * w PAS TRÓJDZIELNY — chipy | blob | liczniki w jednym rzędzie gridu, reszta
+ * przez całą szerokość. Powód: dwa wielkie puste pola po bokach bloba
+ * (czerwone ramki na zrzucie Pawła). Poniżej 1024px grid jest wyłączony, więc
+ * mobile zostaje jedną kolumną w dotychczasowej kolejności (zero regresji).
  *
  * TREŚCI 1:1 — zero zmian tekstów (partia B nie ma zgody na treści). Zmiana jest
  * WYŁĄCZNIE w układzie i dekoracji. Liczniki = zliczenia rejestrów (HeroLiczniki).
@@ -51,136 +57,175 @@ export function Hero() {
       mgławice (layout) — sekcja nie ma już własnych warstw dekoracyjnych.
     */
     <Section tone="base" space="lg" containerWidth="default" className="relative isolate text-center">
-      {/* SLOT BLOBA VOICE AGENTA (spec v5 §1, decyzja Pawła: „zamiast tej
-          wizualizacji 3D wrzucasz tutaj naszego bota") — FlowCore 1:1 z 10K
-          (VoiceAura): canvas WebGL + statyczna aura fallback + PRZYCISK
-          „Zapytaj AI / Voice agent" (data-agent-open="voice" otwiera konsolę
-          agenta zamontowaną globalnie w layout). Rozmiar wg spec: ~420px
-          desktop / ~300px mobile — wymiary px ARBITRALNIE (pułapka tokenów
-          spacingu repo: h-9 = 96px!). BEZ aria-hidden i pointer-events-none
-          (w środku jest interaktywny przycisk); BEZ overflow-hidden (glow
-          bloba może wystawać — żelazna zasada v3). */}
-      <div className="relative mx-auto h-[300px] w-[300px] max-w-full lg:h-[420px] lg:w-[420px]">
-        <VoiceAura />
-      </div>
-
-      {/* INFINITY: badge → mono overline z liniami po bokach (.inf-overline
-          + .inf-overline-lines, fundament). Treść 1:1 (POSITIONING.subClaim);
-          linie gradientowe fundamentu centrują tekst same (flex 1 po bokach). */}
-      <Reveal eager>
-        <p className="inf-overline inf-overline-lines mx-auto mb-5 mt-6 max-w-[640px]">
-          {POSITIONING.subClaim}
-        </p>
-      </Reveal>
-
-      {/* H1 — hasło kategorii (north star #3): litery kolorowane per-glif gradientem
-          marki (WritingHeadline). MECHANIZM MASZYNY DO PISANIA NIETKNIĘTY — zmiana
-          v3 to WYŁĄCZNIE oś: text-center (dziedziczone z sekcji) + mx-auto na max-w.
-          Tekst H1 zostaje realnym tekstem w DOM (boty czytają; aria-label daje
-          czytnikom pełne zdanie jednym ciągiem). Po wejściu H1 stoi NIERUCHOMO. */}
-      <WritingHeadline text={POSITIONING.claim} className="text-display mx-auto max-w-[18ch]" />
-
-      {/* Kapsuła answer-first — surowy HTML, cytat dla LLM. Analogia w 1. zdaniu.
-          v3: wyśrodkowana, max-w ~640px (spec §HERO pkt 5). */}
-      <Reveal eager delay={0.07}>
-        <p className="text-lead mx-auto mt-6 max-w-[640px] text-fg-muted">
-          Chatbot odpowiada na pytania. AI Agent wykonuje pracę: odbiera telefony, odpisuje klientom,
-          umawia spotkania i pilnuje faktur. Nie sprzedajemy narzędzi AI. Projektujemy systemy, które
-          zdejmują z polskiej firmy powtarzalną robotę, w dni, nie w miesiące. Twoje dane zostają w Unii
-          Europejskiej, zaczynasz od małego kroku, płacisz za efekt.
-        </p>
-      </Reveal>
-
-      {/* INFINITY: rząd mono-chipów zaufania (.inf-chip, fundament) pod leadem.
-          Frazy 1:1 z sekcji PasekZaufania (tytuł filaru 1, fragment opisu filaru 1,
-          tytuł filaru 3) — ZERO nowych treści. Kolory obwódek = trasa marki
-          (dekoracja przez --chip-c; tekst chipa = --fg-muted, AA bez zmian). */}
-      <Reveal eager delay={0.1}>
-        <ul className="mt-6 flex flex-wrap justify-center gap-2">
-          <li className="inf-chip" style={{ '--chip-c': '#2B7CFF' } as CSSProperties}>
-            Twoje dane zostają w UE
-          </li>
-          <li className="inf-chip" style={{ '--chip-c': '#7A3CF0' } as CSSProperties}>
-            RODO i AI Act
-          </li>
-          <li className="inf-chip" style={{ '--chip-c': '#22E06B' } as CSSProperties}>
-            Płacisz za efekt
-          </li>
-        </ul>
-      </Reveal>
-
-      {/* CTA-PIGUŁKI OBOK SIEBIE (spec v3 §HERO pkt 7) + mikrokopia pod spodem.
-          Primary = istniejący CTA (HOME_CTA.label 1:1) jako .inf-glow-cta na
-          MagneticButton (magnetyzm NIETKNIĘTY; kontrakt .sf-magnetic .inf-glow-cta
-          scalony w globals). Obok — DWA istniejące linki hero 1:1 jako pigułki
-          ghost (teksty i kotwice bez zmian; diff treści = 0, więc oba zostają
-          w tym samym rzędzie). Strzałki = dekoracje aria-hidden (.sf-arrow). */}
-      <Reveal eager delay={0.14}>
-        <div className="mt-9 flex flex-col items-center gap-3">
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <MagneticButton variant="primary" href={HOME_CTA.href} className="inf-glow-cta">
-              {HOME_CTA.label}{' '}
-              <span aria-hidden="true" className="sf-arrow">→</span>
-            </MagneticButton>
-            <a href="#problem" className="inf-glow-cta inf-glow-cta-ghost">
-              Zobacz, jak liczę oszczędność <span aria-hidden="true" className="sf-arrow">→</span>
-            </a>
-            <a href="#demo" className="inf-glow-cta inf-glow-cta-ghost">
-              Zobacz, jak rozmawia nasz Agent <span aria-hidden="true" className="sf-arrow">→</span>
-            </a>
-          </div>
-          <span className="text-caption max-w-[44ch] text-fg-subtle">{HOME_CTA.microcopy}</span>
-
-          {/*
-            DOWÓD przy CTA — usunięto zmyśloną referencję "−40%, Anna K." (niefalsyfikowalna,
-            łamała north star #5/#13 i miała em-dash). INPUT PAWŁA: wstawić JEDEN realny
-            dowód: case z liczbą + imię + firma (za zgodą klienta) ALBO jedną prawdziwą
-            liczbę operacyjną (np. "voicebot obsłużył X połączeń w miesiącu").
-          */}
-        </div>
-      </Reveal>
-
-      {/* PASEK LICZNIKÓW (spec v3 §HERO pkt 8) — liczby PRAWDZIWE: zliczenia
-          rejestrów przy buildzie (HeroLiczniki, server). Zero zmyślonych liczb. */}
-      <HeroLiczniki />
-
-      {/* Dynamiczny odbiorca (personalizacja językiem, RODO-safe) — zostaje
-          PONIŻEJ liczników (spec v3 §HERO pkt 9), treść bez zmian; v3 tylko
-          centruje blok (mx-auto, text-center dziedziczone z sekcji). */}
-      <Reveal eager delay={0.24}>
-        <div className="mx-auto mt-9 max-w-[46ch] border-t border-border pt-5">
-          <p className="text-overline uppercase tracking-[0.14em] text-fg-subtle">
-            Powtarzalna robota wygląda inaczej w każdej branży. Pokaż mi swoją.
-          </p>
-          <p className="mt-2 text-body text-fg-muted">
-            …dla <HeroPersonaCycler />.
-          </p>
-        </div>
-      </Reveal>
-
       {/*
-        METRYKI hero — WYŁĄCZONE do czasu realnych liczb (patrz komentarz przy METRICS).
-        INPUT PAWŁA: odkomentować blok i wstawić realne, weryfikowalne metryki.
-        <Reveal delay={0.2}>
-          <dl className="mx-auto mt-9 grid max-w-narrow grid-cols-1 gap-6 sm:grid-cols-3">
-            {METRICS.map((m) => (
-              <div key={m.label}>
-                <dt className="sr-only">{m.label}</dt>
-                <dd>
-                  <AnimatedMetric value={m.value} className="text-metric block font-display font-semibold tabular-nums text-brand" />
-                  <span className="mt-1 block text-caption text-fg-subtle">{m.label}</span>
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </Reveal>
+        INFINITY v7 §PARTIA C pkt 1 — PAS TRÓJDZIELNY HERO (desktop ≥1024px).
+        Skarga Pawła (czerwone ramki na zrzucie): po LEWEJ i po PRAWEJ stronie
+        bloba stały dwa wielkie puste pola, a nad overline pas pustki. Fix BEZ
+        dokładania treści: jeden grid [1fr | auto (blob) | 1fr], a skrzydła
+        dostają ISTNIEJĄCE elementy hero, które dotąd leżały pod spodem —
+        chipy zaufania po lewej, pasek liczników po prawej. Blob zostaje na
+        środku (spec: „Blob zostaje na środku"), reszta kolumny (overline, H1,
+        lead, CTA, persona, trasa) jedzie przez wszystkie trzy kolumny, więc oś
+        środka i szerokość H1 są jak dotąd.
+        KOLEJNOŚĆ W DOM BEZ ZMIAN: skrzydła stoją na JAWNYCH współrzędnych
+        (lg:col-start/lg:row-start), nie na przestawionym markupie. Dzięki temu
+        poniżej 1024px (grid nieaktywny) układ pionowy czyta dokładnie jak
+        dotąd: blob → overline → H1 → lead → chipy → CTA → liczniki → persona,
+        czyli mobile bez regresji, a czytnik ekranu dostaje H1 tak wcześnie
+        jak przed zmianą.
       */}
+      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-x-[32px]">
+        {/* SLOT BLOBA VOICE AGENTA (spec v5 §1, decyzja Pawła: „zamiast tej
+            wizualizacji 3D wrzucasz tutaj naszego bota") — FlowCore 1:1 z 10K
+            (VoiceAura): canvas WebGL + statyczna aura fallback + PRZYCISK
+            „Zapytaj AI / Voice agent" (data-agent-open="voice" otwiera konsolę
+            agenta zamontowaną globalnie w layout). Rozmiar wg spec: ~420px
+            desktop / ~300px mobile — wymiary px ARBITRALNIE (pułapka tokenów
+            spacingu repo: h-9 = 96px!). BEZ aria-hidden i pointer-events-none
+            (w środku jest interaktywny przycisk); BEZ overflow-hidden (glow
+            bloba może wystawać — żelazna zasada v3).
+            v7: środkowa kolumna pasa (auto = dokładnie szerokość bloba). */}
+        <div className="relative mx-auto h-[300px] w-[300px] max-w-full lg:col-start-2 lg:row-start-1 lg:h-[420px] lg:w-[420px]">
+          <VoiceAura />
+        </div>
 
-      {/* TRASA GRADIENTOWA (makiety 1/5) — domyka hero: cienka świetlista linia
-          brandu ze świecącym punktem końcowym (.sf-route w globals.css). Wejście
-          JEDNORAZOWE (dojazd 900ms, bramka reduced-motion); glow punktu jest
-          statycznym box-shadow — zero pętli (budżet ruchu). Czysta dekoracja. */}
-      <div aria-hidden="true" className="sf-route sf-route-dot sf-route-enter mt-12 w-full" />
+        {/* INFINITY: badge → mono overline z liniami po bokach (.inf-overline
+            + .inf-overline-lines, fundament). Treść 1:1 (POSITIONING.subClaim);
+            linie gradientowe fundamentu centrują tekst same (flex 1 po bokach).
+            v7: odstęp NAD overline ścięty (mt-6 → mt-3, mb-5 → mb-4) — to jest
+            ten „pas pustki" z czerwonej ramki Pawła. */}
+        <Reveal eager className="lg:col-span-3">
+          <p className="inf-overline inf-overline-lines mx-auto mb-4 mt-3 max-w-[640px]">
+            {POSITIONING.subClaim}
+          </p>
+        </Reveal>
+
+        {/* H1 — hasło kategorii (north star #3): litery kolorowane per-glif gradientem
+            marki (WritingHeadline). MECHANIZM MASZYNY DO PISANIA NIETKNIĘTY — zmiana
+            v3 to WYŁĄCZNIE oś: text-center (dziedziczone z sekcji) + mx-auto na max-w;
+            v7 dokłada wyłącznie rozpiętość na 3 kolumny pasa (zero zmian w animacji).
+            Tekst H1 zostaje realnym tekstem w DOM (boty czytają; aria-label daje
+            czytnikom pełne zdanie jednym ciągiem). Po wejściu H1 stoi NIERUCHOMO. */}
+        <WritingHeadline text={POSITIONING.claim} className="text-display mx-auto max-w-[18ch] lg:col-span-3" />
+
+        {/* Kapsuła answer-first — surowy HTML, cytat dla LLM. Analogia w 1. zdaniu.
+            v3: wyśrodkowana, max-w ~640px (spec §HERO pkt 5). */}
+        <Reveal eager delay={0.07} className="lg:col-span-3">
+          <p className="text-lead mx-auto mt-6 max-w-[640px] text-fg-muted">
+            Chatbot odpowiada na pytania. AI Agent wykonuje pracę: odbiera telefony, odpisuje klientom,
+            umawia spotkania i pilnuje faktur. Nie sprzedajemy narzędzi AI. Projektujemy systemy, które
+            zdejmują z polskiej firmy powtarzalną robotę, w dni, nie w miesiące. Twoje dane zostają w Unii
+            Europejskiej, zaczynasz od małego kroku, płacisz za efekt.
+          </p>
+        </Reveal>
+
+        {/* LEWE SKRZYDŁO PASA (v7): mono-chipy zaufania (.inf-chip, fundament).
+            Frazy 1:1 z sekcji PasekZaufania (tytuł filaru 1, fragment opisu filaru 1,
+            tytuł filaru 3) — ZERO nowych treści. Kolory obwódek = trasa marki
+            (dekoracja przez --chip-c; tekst chipa = --fg-muted, AA bez zmian).
+            ≥1024px: kolumna 1 pasa, wyśrodkowana pionowo względem bloba (self-center)
+            i ustawiona w słupek (flex-col). Poniżej 1024px: rząd pod leadem jak dotąd. */}
+        <Reveal eager delay={0.1} className="lg:col-start-1 lg:row-start-1 lg:self-center">
+          <ul className="mt-6 flex flex-wrap justify-center gap-2 lg:mt-0 lg:flex-col lg:items-center lg:gap-3">
+            <li className="inf-chip" style={{ '--chip-c': '#2B7CFF' } as CSSProperties}>
+              Twoje dane zostają w UE
+            </li>
+            <li className="inf-chip" style={{ '--chip-c': '#7A3CF0' } as CSSProperties}>
+              RODO i AI Act
+            </li>
+            <li className="inf-chip" style={{ '--chip-c': '#22E06B' } as CSSProperties}>
+              Płacisz za efekt
+            </li>
+          </ul>
+        </Reveal>
+
+        {/* CTA-PIGUŁKI OBOK SIEBIE (spec v3 §HERO pkt 7) + mikrokopia pod spodem.
+            Primary = istniejący CTA (HOME_CTA.label 1:1) jako .inf-glow-cta na
+            MagneticButton (magnetyzm NIETKNIĘTY; kontrakt .sf-magnetic .inf-glow-cta
+            scalony w globals). Obok — DWA istniejące linki hero 1:1 jako pigułki
+            ghost (teksty i kotwice bez zmian; diff treści = 0, więc oba zostają
+            w tym samym rzędzie). Strzałki = dekoracje aria-hidden (.sf-arrow).
+            v7: liczniki wyjechały na prawe skrzydło, więc CTA nie potrzebuje już
+            96px oddechu pod spodem — mt-9 → mt-7 (48px). */}
+        <Reveal eager delay={0.14} className="lg:col-span-3">
+          <div className="mt-7 flex flex-col items-center gap-3">
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <MagneticButton variant="primary" href={HOME_CTA.href} className="inf-glow-cta">
+                {HOME_CTA.label}{' '}
+                <span aria-hidden="true" className="sf-arrow">→</span>
+              </MagneticButton>
+              <a href="#problem" className="inf-glow-cta inf-glow-cta-ghost">
+                Zobacz, jak liczę oszczędność <span aria-hidden="true" className="sf-arrow">→</span>
+              </a>
+              <a href="#demo" className="inf-glow-cta inf-glow-cta-ghost">
+                Zobacz, jak rozmawia nasz Agent <span aria-hidden="true" className="sf-arrow">→</span>
+              </a>
+            </div>
+            <span className="text-caption max-w-[44ch] text-fg-subtle">{HOME_CTA.microcopy}</span>
+
+            {/*
+              DOWÓD przy CTA — usunięto zmyśloną referencję "−40%, Anna K." (niefalsyfikowalna,
+              łamała north star #5/#13 i miała em-dash). INPUT PAWŁA: wstawić JEDEN realny
+              dowód: case z liczbą + imię + firma (za zgodą klienta) ALBO jedną prawdziwą
+              liczbę operacyjną (np. "voicebot obsłużył X połączeń w miesiącu").
+            */}
+          </div>
+        </Reveal>
+
+        {/* PRAWE SKRZYDŁO PASA (v7): PASEK LICZNIKÓW (spec v3 §HERO pkt 8) —
+            liczby PRAWDZIWE: zliczenia rejestrów przy buildzie (HeroLiczniki,
+            server). Zero zmyślonych liczb.
+            HeroLiczniki NIE należy do tej partii (zero zmian w tamtym pliku),
+            więc przestawienie rzędu na słupek robi opakowanie: wariantami
+            arbitralnymi zdejmujemy z listy odstęp górny (mt-9 = 96px) i kładziemy
+            ją w kolumnie, a poszczególnym pozycjom zdejmujemy PIONOWY separator
+            .inf-counter + .inf-counter (border-left + padding-left z globals) —
+            w słupku kreska z lewej nie ma sensu, pozycje rozdziela gap-y listy.
+            Warstwa utilities Tailwinda jest emitowana PO @layer components,
+            więc przy równej specyficzności te nadpisania wygrywają. */}
+        <div className="lg:col-start-3 lg:row-start-1 lg:self-center lg:[&_.inf-counter]:border-l-0 lg:[&_.inf-counter]:pl-0 lg:[&_ul]:mt-0 lg:[&_ul]:flex-col lg:[&_ul]:items-center">
+          <HeroLiczniki />
+        </div>
+
+        {/* Dynamiczny odbiorca (personalizacja językiem, RODO-safe) — zostaje
+            PONIŻEJ liczników (spec v3 §HERO pkt 9), treść bez zmian; v3 tylko
+            centruje blok (mx-auto, text-center dziedziczone z sekcji).
+            v7: mt-9 → mt-7, bo pas liczników nie stoi już nad tym blokiem. */}
+        <Reveal eager delay={0.24} className="lg:col-span-3">
+          <div className="mx-auto mt-7 max-w-[46ch] border-t border-border pt-5">
+            <p className="text-overline uppercase tracking-[0.14em] text-fg-subtle">
+              Powtarzalna robota wygląda inaczej w każdej branży. Pokaż mi swoją.
+            </p>
+            <p className="mt-2 text-body text-fg-muted">
+              …dla <HeroPersonaCycler />.
+            </p>
+          </div>
+        </Reveal>
+
+        {/*
+          METRYKI hero — WYŁĄCZONE do czasu realnych liczb (patrz komentarz przy METRICS).
+          INPUT PAWŁA: odkomentować blok i wstawić realne, weryfikowalne metryki.
+          <Reveal delay={0.2}>
+            <dl className="mx-auto mt-9 grid max-w-narrow grid-cols-1 gap-6 sm:grid-cols-3">
+              {METRICS.map((m) => (
+                <div key={m.label}>
+                  <dt className="sr-only">{m.label}</dt>
+                  <dd>
+                    <AnimatedMetric value={m.value} className="text-metric block font-display font-semibold tabular-nums text-brand" />
+                    <span className="mt-1 block text-caption text-fg-subtle">{m.label}</span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
+        */}
+
+        {/* TRASA GRADIENTOWA (makiety 1/5) — domyka hero: cienka świetlista linia
+            brandu ze świecącym punktem końcowym (.sf-route w globals.css). Wejście
+            JEDNORAZOWE (dojazd 900ms, bramka reduced-motion); glow punktu jest
+            statycznym box-shadow — zero pętli (budżet ruchu). Czysta dekoracja. */}
+        <div aria-hidden="true" className="sf-route sf-route-dot sf-route-enter mt-12 w-full lg:col-span-3" />
+      </div>
     </Section>
   );
 }
@@ -220,13 +265,26 @@ export function Hero() {
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/* CSS DO DOPISANIA (dla partii B — właściciela globals.css w tej rundzie):
+/* CSS DO DOPISANIA (dla partii A — właściciela app/globals.css w tej rundzie):
 
-   1) KONTRAKT JUŻ SCALONY (v2, zostaje bez zmian): .sf-magnetic .inf-glow-cta
+   1) NIC NIE JEST WYMAGANE do pasa trójdzielnego v7. Cały układ stoi na
+      utilities Tailwinda w tym pliku (grid + jawne współrzędne skrzydeł +
+      warianty arbitralne zdejmujące mt-9 i separator .inf-counter w słupku).
+      Świadomie bez nowej klasy w globals: pas jest jednorazową geometrią
+      hero, nie tokenem języka.
+
+   2) KONTRAKT JUŻ SCALONY (v2, zostaje bez zmian): .sf-magnetic .inf-glow-cta
       (+ :hover/:focus-visible) — pigułka CTA wewnątrz magnetyzmu. Nie ruszać.
 
-   2) SPRZĄTANIE (v5): slot [data-hero-loop] ZNIKNĄŁ z hero (blob voice agenta
+   3) SPRZĄTANIE (v5): slot [data-hero-loop] ZNIKNĄŁ z hero (blob voice agenta
       go zastąpił — style bloba żyją w components/agent/flow-core.css, poza
       globals). Jeśli w globals są reguły [data-hero-loop] / .inf-ribbon-slot /
       .inf-ribbon (+ wpisy forced-colors), są MARTWE — można usunąć przy scalaniu.
+
+   4) OBSERWACJA DLA PARTII B (nie ruszam, to nie mój plik): w flow-core.css
+      `.flow-core canvas` i `.flow-metal-fallback` mają
+      mask-image: linear-gradient(90deg, transparent 0, #000 28%, ...) — maska
+      z szerokiego hero 10K zjada LEWE 28% bloba. W kwadratowym slocie 420px
+      wygląda to jak ścięty bok. Do rozważenia zdjęcie maski w wariancie
+      .voice-aura (u nas blob jest centrowany, nie doklejony do krawędzi).
 */

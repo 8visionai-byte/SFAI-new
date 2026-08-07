@@ -6,13 +6,20 @@ import { useEffect, useState, type CSSProperties } from 'react';
  * CytatyWalec — WALEC 3D cytatów bólu (INFINITY v5, spec §3 PARTIA C).
  *
  * Pionowy obracający się „bęben": kontener z CSS perspective, itemy rozłożone
- * rotateX na kole (5 cytatów co 72°), JS przełącza aktywny co ~4 s płynną
+ * rotateX na kole (5 cytatów co 72°), JS przełącza aktywny co ~2,2 s płynną
  * rotacją całego koła. Pauza na hover (desktop) i focus (kropki). Kropki =
  * nawigacja bezpośrednia. Wysokość zwarta ~260 px (spec: „nie zapełniać całej
  * strony").
  *
+ * INFINITY v7 §PARTIA C pkt 3 (feedback Pawła: „dużo, dużo za wolno, powinno
+ * lecieć szybciej"): okres 4000 → 2200 ms, a razem z nim PROPORCJONALNIE czasy
+ * przejść (2200/4000 = 0,55): obrót bębna 0,7 s → 0,4 s, przygaszanie sąsiadów
+ * 0,7 s → 0,4 s, crossfade w trybie lite 0,5 s → 0,3 s. Bez skrócenia przejść
+ * kolejny obrót startowałby, zanim poprzedni dojedzie. Kierunek obrotu BEZ
+ * ZMIAN (Paweł potwierdził: „leci do tyłu, jest włączone").
+ *
  * TRYB LITE (reduced-motion LUB mobile ≤760 px, spójnie z VoiceAura/Scramble):
- * crossfade bez 3D — itemy w stosie, aktywny opacity 1, reszta 0. Auto ~4 s
+ * crossfade bez 3D — itemy w stosie, aktywny opacity 1, reszta 0. Auto ~2,2 s
  * zostaje (spec v5 explicite: „RM i mobile-lite: crossfade bez 3D").
  *
  * CAŁA geometria 3D inline w JSX — globals.css w tej rundzie należy do
@@ -41,7 +48,11 @@ const ODCIENIE = ['#67e8f9', '#a78bfa', '#f472b6', '#4ade80', '#fbbf24'] as cons
 
 const N = CYTATY.length; // 5
 const KROK = 360 / N; // 72° na cytat
-const OKRES_MS = 4000; // auto-przełączenie ~4 s (spec)
+const OKRES_MS = 2200; // auto-przełączenie ~2,2 s (spec v7 §C pkt 3; było 4000)
+/* Czasy przejść przeskalowane tym samym współczynnikiem co okres (0,55):
+   obrót bębna i przygaszanie sąsiadów 0,4 s, crossfade trybu lite 0,3 s. */
+const OBROT_S = '0.4s';
+const FADE_LITE_S = '0.3s';
 const PROMIEN = 130; // px — promień bębna (sąsiedzi wychodzą za kadr 260 px)
 
 /** Aktywny indeks z licznika obrotów (turn rośnie w nieskończoność — zawsze kręcimy do przodu). */
@@ -67,8 +78,8 @@ export function CytatyWalec() {
     return () => mq.removeEventListener('change', apply);
   }, []);
 
-  // Auto ~4 s. setTimeout zależny od `turn`: każdy klik kropki / auto-krok
-  // resetuje odliczanie (użytkownik dostaje pełne 4 s na czytanie).
+  // Auto ~2,2 s. setTimeout zależny od `turn`: każdy klik kropki / auto-krok
+  // resetuje odliczanie (użytkownik dostaje pełne 2,2 s na czytanie).
   useEffect(() => {
     if (paused) return;
     const t = window.setTimeout(() => setTurn((v) => v + 1), OKRES_MS);
@@ -87,9 +98,13 @@ export function CytatyWalec() {
       „przykleić" pauzę po tapnięciu — stąd tylko gdy !lite) + focus w środku
       (kropki). overflow:hidden karty jest tu CELOWY: przycina sąsiednie
       cytaty bębna na krawędzi kadru (nic dekoracyjnego nie ma wystawać).
+      v7 audyt: karta dostaje WŁASNY odcień (--card-c) — bez niego hover świecił
+      domyślnym cyjanem. Magenta #f472b6 to jedyny ton z palety cytatów
+      (ODCIENIE), którego nie zajęła żadna inna karta sekcji Problem.
     */
     <div
       className="inf-card px-6 md:px-8"
+      style={{ '--card-c': '#f472b6' } as CSSProperties}
       onMouseEnter={lite ? undefined : () => setPaused(true)}
       onMouseLeave={lite ? undefined : () => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
@@ -97,6 +112,10 @@ export function CytatyWalec() {
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setPaused(false);
       }}
     >
+      {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
+          pointermove z MotionOrchestrator (desktop). Dekoracja aria-hidden. */}
+      <div aria-hidden="true" className="inf-spotlight" />
+
       {/* Kadr bębna: zwarta wysokość ~260 px (px ARBITRALNIE — spacing repo to
           własne tokeny, h-9 = 96 px, pułapka!). perspective tylko w trybie 3D. */}
       <div
@@ -114,7 +133,7 @@ export function CytatyWalec() {
                 className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 gap-4"
                 style={{
                   opacity: k === aktywny ? 1 : 0,
-                  transition: 'opacity 0.5s var(--ease-out)',
+                  transition: `opacity ${FADE_LITE_S} var(--ease-out)`,
                 }}
               >
                 {/* Dekoracyjny glif „ w odcieniu cytatu (paleta jak dotąd). */}
@@ -139,7 +158,7 @@ export function CytatyWalec() {
             style={{
               transformStyle: 'preserve-3d',
               transform: `rotateX(${-turn * KROK}deg)`,
-              transition: 'transform 0.7s var(--ease-out)',
+              transition: `transform ${OBROT_S} var(--ease-out)`,
             }}
           >
             {CYTATY.map((cytat, k) => (
@@ -150,7 +169,7 @@ export function CytatyWalec() {
                   transform: `translateY(-50%) rotateX(${k * KROK}deg) translateZ(${PROMIEN}px)`,
                   backfaceVisibility: 'hidden',
                   opacity: k === aktywny ? 1 : 0.25,
-                  transition: 'opacity 0.7s var(--ease-out)',
+                  transition: `opacity ${OBROT_S} var(--ease-out)`,
                 }}
               >
                 {/* Dekoracyjny glif „ w odcieniu cytatu (paleta jak dotąd). */}
@@ -171,7 +190,11 @@ export function CytatyWalec() {
       {/* Kropki-nawigacja (spec): przycisk = cel dotykowy 32 px, wizualna
           kropka 8 px w odcieniu swojego cytatu (aktywna: pełny kolor + glow;
           reszta: border-strong). Focus ring robi globalny :focus-visible.
-          aria-label to instrumentacja a11y (nazwa kontrolki), nie treść marki. */}
+          aria-label to instrumentacja a11y (nazwa kontrolki), nie treść marki.
+          v7 audyt: cel dotykowy jedzie na wymiarze ARBITRALNYM h-[32px]
+          w-[32px] — h-8 w tym repo to var(--space-8) = 64 px (pułapka
+          własnych tokenów spacingu), więc rząd kropek zjadał dwa razy tyle
+          wysokości, ile mówił komentarz. Kropka h-2 w-2 = 8 px i zostaje. */}
       <div
         role="group"
         aria-label="Wybór cytatu"
@@ -187,7 +210,7 @@ export function CytatyWalec() {
               onClick={() => goTo(k)}
               aria-label={`Cytat ${k + 1} z ${N}`}
               aria-current={on || undefined}
-              className="flex h-8 w-8 items-center justify-center"
+              className="flex h-[32px] w-[32px] items-center justify-center"
             >
               <span
                 aria-hidden="true"
@@ -207,3 +230,13 @@ export function CytatyWalec() {
     </div>
   );
 }
+
+/* CSS DO DOPISANIA (dla partii A — właściciela app/globals.css):
+   NIC. Cała geometria i wszystkie czasy walca siedzą inline w tym komponencie
+   (jednorazowa geometria, nie token języka), a karta korzysta z gotowej
+   .inf-card (razem z .inf-spotlight, który dostaje pozycję z orkiestratora).
+   Zmiana v7 dotknęła liczb czasu, odcienia karty i rozmiaru kropek.
+
+   ZAMKNIĘTE w rundzie audytu v7: kropki-nawigacja miały `h-8 w-8`, a w tym
+   repo h-8 = var(--space-8) = 64px, nie 32px jak mówił komentarz obok. Cel
+   dotykowy jedzie teraz na h-[32px] w-[32px] (wymiar arbitralny). */

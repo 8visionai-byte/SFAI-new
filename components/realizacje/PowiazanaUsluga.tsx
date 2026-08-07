@@ -35,7 +35,10 @@ export function PowiazanaUsluga({ kategoria }: { kategoria: RealizacjaKategoria 
 
         {/* INFINITY v5 (spec §4): link do usługi jako karta .inf-card w kolorze
             kategorii (narożniki + sweep z globals) z kafelkiem ikony kategorii
-            i strzałką .inf-arrow — wiersz jak w dropdownie wzorca. Treść 1:1. */}
+            i strzałką .inf-arrow — wiersz jak w dropdownie wzorca. Treść 1:1.
+            v7 „naczynia połączone": karta miała ton, ale nie miała reflektora —
+            .inf-spotlight wchodzi PIERWSZYM dzieckiem (jest absolutny, więc nie
+            staje się kolumną tego flexa). */}
         <Reveal delay={0.1}>
           <Link
             href={`/uslugi/${usluga.slug}`}
@@ -46,6 +49,8 @@ export function PowiazanaUsluga({ kategoria }: { kategoria: RealizacjaKategoria 
               } as CSSProperties
             }
           >
+            <div aria-hidden="true" className="inf-spotlight" />
+
             {/* Kafelek ikony kategorii — dekoracja aria-hidden. */}
             <span
               aria-hidden="true"

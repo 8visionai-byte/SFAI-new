@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type CSSProperties } from 'react';
 import { AnimatedMetric } from '@/components/motion/AnimatedMetric';
 import { CaptureMaila } from './CaptureMaila';
 import { WynikCTA } from './WynikCTA';
@@ -10,6 +10,19 @@ import {
   PRZYKLAD_KAPSULY,
   progAudytu,
 } from '@/lib/narzedzia/audyt-strony';
+import { INF_NARZEDZIE, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+
+/* INFINITY v7 (audyt --card-c): kolor sekcji tego narzędzia z single source
+   lib/inf-kategorie — ten sam, którym świeci jego kafel na liście hubu. Bez
+   niego cztery panele wyspy spadały na fallbackowy akcent. Sama dekoracja. */
+const DEKOR = INF_NARZEDZIE['audyt-strony-ai'] ?? INF_KATEGORIA_DEFAULT;
+const TON = {
+  '--card-c': DEKOR.c,
+  '--card-c-l': DEKOR.odcien ?? DEKOR.c,
+} as CSSProperties;
+/* Panel „wszystko spełnione" niesie STATUS, nie kategorię — jego krawędź idzie
+   w tokenie sukcesu (spójnie z bg-success-bg, którym już stoi). */
+const TON_SUKCES = { '--card-c': 'var(--success)' } as CSSProperties;
 
 /**
  * AudytStronyAI — SATELITA 3 (spec 07 §4). Samoocena checklist, ZERO fetchu cudzej
@@ -63,8 +76,17 @@ export function AudytStronyAI() {
     <div className="mx-auto max-w-narrow">
       {/* Pole URL — tylko etykieta w raporcie, NIE fetchowane (uczciwie zakomunikowane).
           INFINITY v5 (spec §4): panele wyspy na .inf-card (ciemna karta wzorca
-          z narożnikami i sweepem z globals) — pola kontrolne zostają na tokenach. */}
-      <div className="inf-card p-5 shadow-xs sm:p-6">
+          z narożnikami i sweepem z globals) — pola kontrolne zostają na tokenach.
+          INFINITY v8 „naczynia połączone" (audyt kart /narzedzia): KAŻDY panel
+          tego narzędzia dostaje reflektor .inf-spotlight jako PIERWSZE dziecko —
+          ta sama reakcja na kursor co karty usług i hubu. Reflektor jest
+          absolutny (inset:0) i `pointer-events:none`, więc stoi POZA flow: nie
+          rusza układu paneli, nie łapie kliknięć pól i przycisków, a fieldsety
+          i listy zostają nietknięte (żaden panel nie stoi na space-y/divide-y
+          ani na :first-child, więc dodatkowe dziecko niczego nie przesuwa). */}
+      <div className="inf-card p-5 shadow-xs sm:p-6" style={TON}>
+        <div aria-hidden="true" className="inf-spotlight" />
+
         <label htmlFor="au-url" className="mb-1 block text-body-sm font-medium text-fg">
           Adres Twojej strony (opcjonalnie)
         </label>
@@ -83,7 +105,9 @@ export function AudytStronyAI() {
       </div>
 
       {/* Checklista 10 pozycji — panel .inf-card (spec §4). */}
-      <div className="inf-card mt-4 p-5 shadow-xs sm:p-6">
+      <div className="inf-card mt-4 p-5 shadow-xs sm:p-6" style={TON}>
+        <div aria-hidden="true" className="inf-spotlight" />
+
         <h3 className="text-h3">Odpowiedz na 10 pytań o swojej stronie</h3>
         <ul className="mt-5 space-y-5">
           {POZYCJE.map((p, i) => (
@@ -132,7 +156,9 @@ export function AudytStronyAI() {
       {pokazWynik && wszystkieOdp ? (
         <>
           {/* Panel wyniku — .inf-card (spec §4). */}
-          <div className="inf-card mt-4 p-6 shadow-xs sm:p-7">
+          <div className="inf-card mt-4 p-6 shadow-xs sm:p-7" style={TON}>
+            <div aria-hidden="true" className="inf-spotlight" />
+
             <div className="flex items-center justify-between gap-4">
               <div>
                 <p className="text-caption font-semibold uppercase tracking-[0.08em] text-fg-subtle">
@@ -175,9 +201,12 @@ export function AudytStronyAI() {
           </div>
 
           {/* TOP 3 do naprawy — wyróżniony panel na .inf-card; wyróżnienie
-              niesie akcentowa krawędź karty (--card-c domyślnie akcent). */}
+              niesie krawędź karty w kolorze narzędzia (v7: jawne --card-c
+              zamiast fallbackowego akcentu). */}
           {wynik.doNaprawy.length > 0 ? (
-            <div className="inf-card mt-4 p-5 shadow-xs sm:p-6">
+            <div className="inf-card mt-4 p-5 shadow-xs sm:p-6" style={TON}>
+              <div aria-hidden="true" className="inf-spotlight" />
+
               <h3 className="text-h3">Napraw to najpierw</h3>
               <p className="mt-1 text-caption text-fg-subtle">
                 Posortowane wg wpływu na cytowalność. Góra = największy efekt.
@@ -194,13 +223,19 @@ export function AudytStronyAI() {
               </ol>
             </div>
           ) : (
-            <div className="inf-card mt-4 bg-success-bg p-5 text-body-sm text-fg">
+            <div className="inf-card mt-4 bg-success-bg p-5 text-body-sm text-fg" style={TON_SUKCES}>
+              {/* Jedyny panel z gołym tekstem zamiast elementów — reflektor jest
+                  absolutny, więc zdanie zostaje na swoim miejscu (tekst nie
+                  dostaje żadnego marginesu ani nowej linii). */}
+              <div aria-hidden="true" className="inf-spotlight" />
               Twoja strona spełnia wszystkie 10 punktów. Solidna baza pod cytowalność w AI.
             </div>
           )}
 
           {/* Fragment "tak by to wyglądało poprawione" (pozycja #2) — .inf-card. */}
-          <div className="inf-card mt-4 p-5 shadow-xs sm:p-6">
+          <div className="inf-card mt-4 p-5 shadow-xs sm:p-6" style={TON}>
+            <div aria-hidden="true" className="inf-spotlight" />
+
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-fg-subtle">
               Tak wygląda dobra kapsuła odpowiedzi
             </p>
@@ -226,7 +261,7 @@ export function AudytStronyAI() {
             />
           </div>
 
-          <WynikCTA mikrokopia={ctaMikro} />
+          <WynikCTA mikrokopia={ctaMikro} kolor={DEKOR.c} odcien={DEKOR.odcien} />
         </>
       ) : null}
     </div>

@@ -87,15 +87,24 @@ export function MaterialCard({ material }: { material: Material }) {
  * powstanie pełna treść. `aria-disabled` dla czytników.
  * INFINITY v2: .inf-card bez błysku/strzałki (karta nieinteraktywna — bez
  * fałszywej afordancji), badge'e → mono .inf-tag (teksty 1:1).
+ * INFINITY v7 (audyt „naczynia połączone"): karta szła bez --card-c (fallback
+ * na akcent = jeden cyjan dla całej siatki) i bez reflektora. To TEN SAM typ
+ * treści co opublikowany magnet (INF_TYP.material), tylko zaplanowany, więc
+ * bierze tę samą parę kolor/odcień co MaterialCard i ten sam .inf-spotlight
+ * jako PIERWSZE dziecko. Wyciszenie niesie dalej opacity-80.
  */
 export function MaterialCardWkrotce({ temat }: { temat: MaterialWkrotce }) {
+  const dekor = INF_TYP.material;
   return (
     <Card
       as="article"
       variant="quiet"
-      className="inf-card flex h-full flex-col p-6 opacity-80"
+      className="inf-card relative flex h-full flex-col p-6 opacity-80"
+      style={{ '--card-c': dekor.c, '--card-c-l': dekor.odcien ?? dekor.c } as CSSProperties}
       aria-disabled="true"
     >
+      <div aria-hidden="true" className="inf-spotlight" />
+
       <div className="flex items-center gap-2">
         <span className="inf-tag">{temat.etykieta}</span>
         <span className="inf-tag text-accent">Wkrótce</span>

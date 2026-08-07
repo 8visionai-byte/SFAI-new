@@ -1,7 +1,9 @@
+import type { CSSProperties } from 'react';
 import Image from 'next/image';
 import { Card } from '@/components/ui';
 import { SITE } from '@/lib/site';
 import { FOUNDER_PHOTOS, type FounderProfil } from '@/lib/o-nas/content';
+import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
 
 /**
  * FounderCard — sylwetka jednego foundera (E-E-A-T). Twarde dane (imię, rola,
@@ -18,15 +20,38 @@ import { FOUNDER_PHOTOS, type FounderProfil } from '@/lib/o-nas/content';
  */
 const AVATAR = 72; // px — wspólny rozmiar zdjęcia i placeholdera inicjałów
 
+/**
+ * INFINITY v7 (audyt: obie karty founderów szły bez --card-c i spadały na
+ * fallbackowy akcent, więc siatka 2 sylwetek świeciła jednym cyjanem).
+ * Sylwetka nie ma kategorii w rejestrze, więc bierzemy dwa sąsiadujące tony
+ * palety kategorii (cyjan / fiolet z lib/inf-kategorie) i rozdajemy je po
+ * `founderIndex` — te same dwa kolory otwierają trasę marki w krokach sekcji
+ * niżej. Kolor to WYŁĄCZNIE dekoracja karty, nie treść.
+ */
+const FOUNDER_TON = ['chatboty', 'voiceboty'].map(
+  (slug) => INF_KATEGORIA[slug] ?? INF_KATEGORIA_DEFAULT
+);
+
 export function FounderCard({ profil }: { profil: FounderProfil }) {
   const f = SITE.founders[profil.founderIndex];
   const photo = FOUNDER_PHOTOS.find((p) => p.name === f.name);
   const showPhoto = SITE.assetsReady && Boolean(photo);
+  const dekor =
+    FOUNDER_TON[profil.founderIndex % FOUNDER_TON.length] ?? INF_KATEGORIA_DEFAULT;
 
   return (
     /* INFINITY v5 (spec §4): sylwetka foundera na karcie .inf-card (narożniki +
-       sweep robi karta z globals, akcent domyślny) — mechanizmy home, treść 1:1. */
-    <Card as="article" variant="quiet" className="inf-card h-full p-6">
+       sweep robi karta z globals) — mechanizmy home, treść 1:1.
+       v7 (audyt „naczynia połączone"): reflektor .inf-spotlight jako PIERWSZE
+       dziecko — ta sama reakcja na kursor co karty na hubach. */
+    <Card
+      as="article"
+      variant="quiet"
+      className="inf-card relative h-full p-6"
+      style={{ '--card-c': dekor.c, '--card-c-l': dekor.odcien ?? dekor.c } as CSSProperties}
+    >
+      <div aria-hidden="true" className="inf-spotlight" />
+
       <div className="flex items-center gap-4">
         {showPhoto && photo ? (
           <Image

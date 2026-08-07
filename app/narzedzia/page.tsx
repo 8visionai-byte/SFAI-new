@@ -177,43 +177,64 @@ export default function NarzedziaPage() {
                       INFINITY v5 (spec §4): tabela porównania w stylu home
                       (Rozwiazanie) — nagłówki kolumn mono .inf-overline, wygraną
                       kolumnę trzyma 1px kreska akcentowa i font-medium, wiersze
-                      z hoverem. Treść komórek 1:1. */}
-                  <div className="mt-8 overflow-x-auto">
+                      z hoverem. Treść komórek 1:1.
+                      INFINITY v7 (spec §PARTIA E pkt 1-3): `align-top` wróciło
+                      z <tr> na td (na wierszu trzymało się tylko dziedziczenia
+                      z arkusza przeglądarki, a kolumny mają skrajnie różne
+                      wysokości: jedno zdanie vs trzy), colgroup daje kolumnom
+                      stałe proporcje 38/62 zamiast losowych z auto-layoutu,
+                      a scroll siedzi w opakowaniu i idzie z klawiatury.
+                      INFINITY v7 (audyt dostępności): sam tabIndex robił z tego
+                      opakowania punkt tabulacji, który czytnik ekranu ogłaszał
+                      jako nic. Rola + nazwa wyrównują je do TabelaCen /
+                      ObiekcjeOdpowiedzi / PorownanieTabela, a nazwę składamy
+                      przez aria-labelledby z ISTNIEJĄCYCH nagłówków kolumn —
+                      zero powtórzonej i zero nowej treści. */}
+                  <div
+                    className="mt-8 overflow-x-auto"
+                    tabIndex={0}
+                    role="region"
+                    aria-labelledby="gp-tabela-zly gp-tabela-dobry"
+                  >
                     <table className="w-full min-w-[28rem] border-collapse text-left text-body-sm">
+                      <colgroup>
+                        <col className="md:w-[38%]" />
+                        <col className="md:w-[62%]" />
+                      </colgroup>
                       <thead>
                         <tr className="border-b border-border-strong">
-                          <th scope="col" className="inf-overline py-3 pr-4 align-bottom">
+                          <th id="gp-tabela-zly" scope="col" className="inf-overline py-3 pr-4 align-bottom">
                             Zły prompt
                           </th>
-                          <th scope="col" className="inf-overline border-l border-border-accent px-4 py-3 align-bottom text-accent">
+                          <th id="gp-tabela-dobry" scope="col" className="inf-overline border-l border-border-accent px-4 py-3 align-bottom text-accent">
                             Gotowy prompt z generatora
                           </th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr className="border-b border-border align-top transition-colors duration-fast hover:bg-bg-subtle">
-                          <td className="py-4 pr-4 text-fg-subtle">
+                        <tr className="border-b border-border transition-colors duration-fast hover:bg-bg-subtle">
+                          <td className="py-4 pr-4 align-top text-fg-subtle">
                             „Napisz mail do klienta.”
                           </td>
-                          <td className="border-l border-border-accent px-4 py-4 font-medium text-fg">
+                          <td className="border-l border-border-accent px-4 py-4 align-top font-medium text-fg">
                             Rola, kontekst branży, konkretne zadanie, cel, styl i format. AI
                             wie, kim być i co dokładnie napisać.
                           </td>
                         </tr>
-                        <tr className="border-b border-border align-top transition-colors duration-fast hover:bg-bg-subtle">
-                          <td className="py-4 pr-4 text-fg-subtle">
+                        <tr className="border-b border-border transition-colors duration-fast hover:bg-bg-subtle">
+                          <td className="py-4 pr-4 align-top text-fg-subtle">
                             Efekt: ogólny, bez tonu, trzeba poprawiać.
                           </td>
-                          <td className="border-l border-border-accent px-4 py-4 font-medium text-fg">
+                          <td className="border-l border-border-accent px-4 py-4 align-top font-medium text-fg">
                             Efekt: tekst w Twoim stylu, gotowy po uzupełnieniu danych w
                             nawiasach.
                           </td>
                         </tr>
-                        <tr className="border-b border-border align-top transition-colors duration-fast hover:bg-bg-subtle">
-                          <td className="py-4 pr-4 text-fg-subtle">
+                        <tr className="border-b border-border transition-colors duration-fast hover:bg-bg-subtle">
+                          <td className="py-4 pr-4 align-top text-fg-subtle">
                             AI zmyśla brakujące dane.
                           </td>
-                          <td className="border-l border-border-accent px-4 py-4 font-medium text-fg">
+                          <td className="border-l border-border-accent px-4 py-4 align-top font-medium text-fg">
                             AI najpierw pyta o brakujące informacje, dopiero potem pisze.
                           </td>
                         </tr>

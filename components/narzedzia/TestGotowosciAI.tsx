@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type CSSProperties } from 'react';
 import Link from 'next/link';
 import { AnimatedMetric } from '@/components/motion/AnimatedMetric';
 import { Radar } from './Radar';
@@ -14,6 +14,16 @@ import {
   progDla,
   type OsId,
 } from '@/lib/narzedzia/test-gotowosci';
+import { INF_NARZEDZIE, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+
+/* INFINITY v7 (audyt --card-c): kolor sekcji tego narzędzia z single source
+   lib/inf-kategorie — ten sam, którym świeci jego kafel na liście hubu. Bez
+   niego shell quizu spadał na fallbackowy akcent. Sama dekoracja. */
+const DEKOR = INF_NARZEDZIE['test-gotowosci-ai'] ?? INF_KATEGORIA_DEFAULT;
+const TON = {
+  '--card-c': DEKOR.c,
+  '--card-c-l': DEKOR.odcien ?? DEKOR.c,
+} as CSSProperties;
 
 /**
  * TestGotowosciAI — SATELITA 2 (spec 07 §3). Quiz 8 pytań -> poziom + radar +
@@ -70,8 +80,14 @@ export function TestGotowosciAI() {
     if (!p) return null;
     // INFINITY v5 (spec §4): shell wyspy na .inf-card (ciemna karta wzorca
     // z narożnikami i sweepem z globals) — kontrolki zostają na tokenach.
+    // INFINITY v8 „naczynia połączone" (audyt kart /narzedzia): karta quizu
+    // dostaje reflektor .inf-spotlight jako PIERWSZE dziecko. Reflektor jest
+    // absolutny i `pointer-events:none`, więc nie łapie kliknięć odpowiedzi
+    // ani nie rusza paska postępu stojącego nad fieldsetem.
     return (
-      <div className="inf-card mx-auto max-w-narrow p-6 shadow-xs sm:p-7">
+      <div className="inf-card mx-auto max-w-narrow p-6 shadow-xs sm:p-7" style={TON}>
+        <div aria-hidden="true" className="inf-spotlight" />
+
         {/* pasek postępu */}
         <div className="mb-6">
           <div className="mb-2 flex items-center justify-between">
@@ -202,7 +218,7 @@ export function TestGotowosciAI() {
         />
       </div>
 
-      <WynikCTA mikrokopia={ctaMikro} />
+      <WynikCTA mikrokopia={ctaMikro} kolor={DEKOR.c} odcien={DEKOR.odcien} />
 
       <button
         type="button"

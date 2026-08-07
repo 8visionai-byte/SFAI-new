@@ -128,7 +128,9 @@ export default function ProduktyPage() {
               delay={Math.min(i * 0.04, 0.2)}
               className="h-full"
             >
-              <KlocekCard klocek={klocek} />
+              {/* INFINITY v7 (audyt --card-c): indeks steruje tonacją karty
+                  (paleta kategorii cyklowana po siatce) — sama dekoracja. */}
+              <KlocekCard klocek={klocek} indeks={i} />
             </Reveal>
           ))}
         </ul>

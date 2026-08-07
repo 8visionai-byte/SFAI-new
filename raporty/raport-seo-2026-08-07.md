@@ -232,6 +232,13 @@ oceny wizualnej.
 
 ### 3.3 `/uslugi/voiceboty` (plik `lib/uslugi/voiceboty.ts`)
 
+> **STOP, NIEAKTUALNE (decyzja D11 z 2026-08-07, PARTIA G1).** Propozycja opisu
+> zawiera „oddzwania do nieodebranych" i „potwierdza wizyty". Właściciel firmy
+> zabronił obu: voicebot NIE dzwoni sam, nie dopisujemy też potwierdzania wizyt
+> telefonicznie przez bota. Nie kopiuj tych zdań do kodu. Rekomendacje SEO co do
+> fraz „voicebot" i „bot telefoniczny" oraz liczby mnogiej „dla firm" zostają
+> w mocy.
+
 | Element | Obecnie | Propozycja | Znaki |
 |---|---|---|---|
 | Title (metaTitle) | Voicebot dla firmy, który odbiera telefon 24/7 | Voicebot i bot telefoniczny dla firm 24/7 | 62 na 57 z sufiksem |

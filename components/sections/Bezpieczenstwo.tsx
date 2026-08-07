@@ -98,6 +98,10 @@ export function Bezpieczenstwo() {
             className="inf-card p-6"
             style={{ '--card-c': p.c } as CSSProperties}
           >
+            {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
+                delegowany pointermove z MotionOrchestrator (desktop).
+                Dekoracja aria-hidden. */}
+            <div aria-hidden="true" className="inf-spotlight" />
             {/* Kafelek ikony kategorii (czysta dekoracja). */}
             <span
               aria-hidden="true"

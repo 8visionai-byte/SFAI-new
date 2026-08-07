@@ -5,6 +5,7 @@ import { faqSchema, serviceSchema } from '@/components/seo/schemas';
 import { FAQ_ITEMS } from '@/components/sections/faqData';
 
 import { ScrollMetalProgress } from '@/components/motion/ScrollMetalProgress';
+import { SekcjaSeparator } from '@/components/ui/SekcjaSeparator';
 import { Hero } from '@/components/sections/Hero';
 import { PromoUslugi } from '@/components/sections/PromoUslugi';
 import { PasekZaufania } from '@/components/sections/PasekZaufania';
@@ -78,24 +79,54 @@ export default function HomePage() {
           spójnych z opowieścią: BranzeDemo tuż za Problemem (język bólu per
           branża), ZyweDemo przed FinalneCTA (kotwica #demo z ghost CTA hero
           + konsola agenta partii A). */}
+      {/* INFINITY v7 (spec §PARTIA D pkt 1): między sekcjami stoi SEPARATOR
+          wzorca — cienka linia z przebiegającą iskrą i mono etykietą
+          „NN · TYTUŁ" (SekcjaSeparator, dekoracja aria-hidden). Odpowiedź na
+          skargę Pawła „podział sekcji za wyraźny": twardą krawędź zmiany tonu
+          zastępuje miękkie, ciągle animowane przejście.
+          ETYKIETY = wielkie litery ISTNIEJĄCYCH nazw/kotwic sekcji (usługi,
+          problem, branze, jak-to-dziala, narzedzia, faq, demo, diagnoza...) —
+          ZERO nowych stringów treści. Numeracja rośnie 01..15 w kolejności
+          opowieści; przed hero separatora NIE MA (spec).
+          NUMERY `nr` są podawane RĘCZNIE — przy dodaniu/usunięciu sekcji
+          trzeba przenumerować całą listę w dół (świadomy kompromis: numer
+          jest częścią wyglądu, nie liczy się sam).
+          ODSTĘP PIONOWY separatora (fix v7): siedzi w komponencie
+          components/ui/SekcjaSeparator.tsx (my-6 md:my-7), NIE tutaj — jedno
+          źródło rytmu dla wszystkich 15 sztuk. */}
       <Hero />
+      <SekcjaSeparator nr="01" etykieta="USŁUGI" />
       {/* v4: kafelki głównych usług (chatboty full + voiceboty/audyt połówki
           + Architekci cienka full) ZARAZ po hero — treść 1:1 z rejestru USLUGI. */}
       <PromoUslugi />
+      <SekcjaSeparator nr="02" etykieta="ZAUFANIE" />
       <PasekZaufania />
+      <SekcjaSeparator nr="03" etykieta="PROBLEM" />
       <Problem />
+      <SekcjaSeparator nr="04" etykieta="BRANŻE" />
       <BranzeDemo />
+      <SekcjaSeparator nr="05" etykieta="ROZWIĄZANIE" />
       <Rozwiazanie />
+      <SekcjaSeparator nr="06" etykieta="JAK TO DZIAŁA" />
       <JakToDziala />
+      <SekcjaSeparator nr="07" etykieta="OFERTA" />
       <Oferta />
+      <SekcjaSeparator nr="08" etykieta="NARZĘDZIA" />
       {/* v4: teaser 5 narzędzi (rejestr NARZEDZIA 1:1) między Ofertą a gwarancją. */}
       <NarzedziaTeaser />
+      <SekcjaSeparator nr="09" etykieta="BEZPIECZEŃSTWO" />
       <Bezpieczenstwo />
+      <SekcjaSeparator nr="10" etykieta="DOWÓD" />
       <Dowod />
+      <SekcjaSeparator nr="11" etykieta="GWARANCJA" />
       <GwarancjaEfektu />
+      <SekcjaSeparator nr="12" etykieta="OPINIE" />
       <DowodSpoleczny />
+      <SekcjaSeparator nr="13" etykieta="FAQ" />
       <FAQ />
+      <SekcjaSeparator nr="14" etykieta="DEMO" />
       <ZyweDemo />
+      <SekcjaSeparator nr="15" etykieta="DIAGNOZA" />
       <FinalneCTA />
 
       {/*

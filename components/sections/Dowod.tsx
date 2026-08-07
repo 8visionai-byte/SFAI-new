@@ -1,5 +1,7 @@
+import type { CSSProperties } from 'react';
 import { Section, MagneticButton, Card, Badge } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
+import { InfIcon } from '@/components/ui/InfIcons';
 import { HOME_CTA } from '@/lib/site';
 
 /**
@@ -31,8 +33,26 @@ export function Dowod() {
           jadą na karcie wzorca (.inf-card) pełnej szerokości kontenera —
           spec §ZDJĘCIA: „tekst + liczby na pełną szerokość karty". Treść 1:1.
           Karta NIEklikalna — bez błysku/strzałki (konwencja ProduktCard). */}
+      {/* v7 (spec §PARTIA D pkt 3): karta nagłówka dostaje WŁASNY odcień
+          (--card-c) i kafelek ikony — bez tego hover był bezbarwny, a sekcja
+          „nieuzupełniona kolorystyką". Teksty 1:1.
+          v7 audyt: karta-bohater bierze modyfikator .inf-card-lg (mocniejszy
+          hover wzorca: -5px + scale, obwódka 65%) — kontrakt z globals. */}
       <Reveal variant="header">
-        <div className="inf-card mx-auto max-w-wide p-6 md:p-10">
+        <div
+          className="inf-card inf-card-lg mx-auto max-w-wide p-6 md:p-10"
+          style={{ '--card-c': '#67e8f9' } as CSSProperties}
+        >
+          {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
+              pointermove z MotionOrchestrator (desktop). Dekoracja aria-hidden. */}
+          <div aria-hidden="true" className="inf-spotlight" />
+          <span
+            aria-hidden="true"
+            className="inf-tile mb-4"
+            style={{ '--tile-c': '#67e8f9' } as CSSProperties}
+          >
+            <InfIcon name="wykres-strzalka" />
+          </span>
           <h2 className="text-h2">Co konkretnie zmienia się w firmie po wdrożeniu Agenta?</h2>
           {/* Kapsuła answer-first — uczciwa, bez zmyślonego case'a (INPUT PAWŁA na realny). */}
           <p className="text-lead mt-5 max-w-measure-lead text-fg-muted">
@@ -66,12 +86,23 @@ export function Dowod() {
           </Reveal>
         )}
 
-        {/* Uczciwy stan: pierwsze wdrożenia (zawsze). Samotny prostokąt z ramką
-            na środku sekcji czytał się jak stan błędu — zostaje oświadczenie na
-            kresce akcentowej 1,5px NAD nagłówkiem (kolorowy border-left czyta
-            się jak alert Bootstrapa). Logika CASE NIETKNIĘTA. */}
+        {/* Uczciwy stan: pierwsze wdrożenia (zawsze). v7: oświadczenie schodzi
+            z bezbarwnej karty .quiet na KARTĘ WZORCA .inf-card w odcieniu
+            amber + kafelek ikony (spec §PARTIA D pkt 2/3). Logika CASE
+            NIETKNIĘTA, teksty 1:1. */}
         <Reveal delay={0.05}>
-          <Card as="article" variant="quiet" className="h-full border-t-[1.5px] border-border-accent pt-6">
+          <article
+            className="inf-card h-full p-6 md:p-8"
+            style={{ '--card-c': '#fbbf24' } as CSSProperties}
+          >
+            <div aria-hidden="true" className="inf-spotlight" />
+            <span
+              aria-hidden="true"
+              className="inf-tile mb-4"
+              style={{ '--tile-c': '#fbbf24' } as CSSProperties}
+            >
+              <InfIcon name="lupa-wykres" />
+            </span>
             <h3 className="text-h3">Pierwsze wdrożenia mówią same za siebie.</h3>
             <p className="mt-3 text-body-sm text-fg-muted">
               Zbieramy twarde liczby z bieżących wdrożeń i publikujemy je tutaj, gdy tylko klient da zielone
@@ -80,7 +111,7 @@ export function Dowod() {
             <p className="mt-4 text-caption text-fg-subtle">
               Nie wstawiamy zmyślonych liczb. To kwestia zasad.
             </p>
-          </Card>
+          </article>
         </Reveal>
       </div>
 

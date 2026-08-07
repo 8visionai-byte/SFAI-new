@@ -105,10 +105,12 @@ const RATE_WINDOW_MS = 10 * 60 * 1_000;
  * (2026-08-07): przy 6 zwykłe testowanie strony (kilka kliknięć „Rozpocznij
  * rozmowę", odświeżenia po redeployu) wyczerpywało pulę i front pokazywał
  * „LIMIT ROZMÓW" zamiast realnego błędu, co maskowało diagnozę uruchomienia.
- * 30 dalej chroni przed nadużyciem (koszt minut ElevenLabs), a nie przeszkadza
- * ani nam, ani odwiedzającemu, który po prostu ogląda stronę.
+ * 15 dalej chroni przed nadużyciem (rozmowa głosowa to płatne minuty
+ * ElevenLabs, a limit liczony jest na adres), a nie przeszkadza ani nam przy
+ * testach, ani odwiedzającemu, który po prostu ogląda stronę. Podniesione było
+ * przejściowo do 30 na czas uruchamiania; po starcie schodzimy do 15.
  */
-const MAX_SESSIONS_PER_WINDOW = 30;
+const MAX_SESSIONS_PER_WINDOW = 15;
 const sessionBuckets = new Map();
 
 // Klucz wg ustaleń: na Vercelu zmienna nazywa się dokładnie `Elevenlabs`.
@@ -166,10 +168,10 @@ const elevenFetch = async (apiKey, path, { method = 'GET', body } = {}) => {
     console.error('ElevenLabs API error', method, path.split('?')[0], upstream.status, JSON.stringify(data)?.slice(0, 500));
     const error = new Error(`ElevenLabs ${method} ${path.split('?')[0]} -> HTTP ${upstream.status}`);
     error.status = upstream.status;
-    // DIAGNOSTYKA (tymczasowa, patrz endpoint 502 niżej): treść odpowiedzi
-    // ElevenLabs bez klucza i bez payloadu żądania. Potrzebna, bo logi Vercela
-    // nie są dostępne z tej strony, a bez powodu odmowy naprawa to zgadywanie.
-    error.detail = (JSON.stringify(data) || '').slice(0, 300);
+    // Powód odmowy zostaje na błędzie WYŁĄCZNIE do logu serwera (wyżej).
+    // Na zewnątrz nie wychodzi: endpoint zwraca sam kod błędu, bez wnętrza
+    // integracji. Diagnostyka publiczna z 2026-08-07 (znalazła podmienione ID
+    // klucza zamiast klucza) spełniła swoje zadanie i została zdjęta.
     error.upstreamPath = path.split('?')[0];
     throw error;
   }
@@ -725,15 +727,6 @@ export default async function handler(request, response) {
       return writeJson(response, 502, {
         error: 'Agent głosowy jest chwilowo niedostępny.',
         code: 'elevenlabs_provisioning_failed',
-        /* DIAGNOSTYKA URUCHOMIENIA (do USUNIĘCIA po naprawie głosu):
-           który endpoint ElevenLabs odmówił, z jakim kodem i co odpowiedział.
-           Zero sekretów: klucz nie jest tu nigdzie używany ani logowany. */
-        diag: {
-          sciezka: error?.upstreamPath || null,
-          status: error?.status || null,
-          komunikat: String(error?.message || '').slice(0, 200),
-          odpowiedz: error?.detail || null,
-        },
       });
     }
   }

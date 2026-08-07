@@ -25,6 +25,10 @@ import '@/components/agent/flow-core.css';
  *     odpalał się od razu). Bramki reduced-motion / Save-Data są 1:1.
  *  4. Cleanup dodatkowo spięty z unmountem (SPA: zejście ze strony głównej
  *     musi zwolnić kontekst WebGL; w MPA 10K robił to pagehide).
+ *  5. PALETA shadera (spec INFINITY v7, partia B): limonka 10K zamieniona na
+ *     kolory TEJ strony — spectrum idzie różem #ff007f -> fioletem #8b5cf6,
+ *     rdzeń i blask w bieli różowej. Zmieniona jest WYŁĄCZNIE barwa: wszystkie
+ *     mnożniki, alfy i progi zostają 1:1 (moc świecenia bez zmian).
  */
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
@@ -37,8 +41,9 @@ const vertexSource = `
   }
 `;
 
-/* Fragment 1:1 ze źródła; JEDYNA zmiana: center 0.56 → 0.50 (adaptacja #2/#3,
-   patrz nagłówek i flow-core.css — musi być równe --flow-object-x). */
+/* Fragment 1:1 ze źródła; dwie zmiany: center 0.56 → 0.50 (różnica #2/#3, patrz
+   nagłówek i flow-core.css — musi być równe --flow-object-x) oraz barwy bloba
+   róż/fiolet zamiast limonki (różnica #5). Reszta matematyki nietknięta. */
 const fragmentSource = `
   precision highp float;
 
@@ -120,15 +125,15 @@ const fragmentSource = `
     signalRing *= 1.0 - smoothstep(boundary + .03, boundary + .12, radius);
 
     float pulse = 0.75 + sin(time * 1.35 + radius * 18.0) * 0.07 + u_energy * 0.24;
-    vec3 deepLime = vec3(0.17, 0.23, 0.018);
-    vec3 softWhite = vec3(0.97, 1.0, 0.82);
-    vec3 lime = vec3(0.80, 1.0, 0.20);
-    vec3 citron = vec3(0.94, 1.0, 0.54);
+    vec3 deepViolet = vec3(0.14, 0.05, 0.24);
+    vec3 softWhite = vec3(1.0, 0.93, 0.98);
+    vec3 rose = vec3(1.0, 0.0, 0.50);
+    vec3 violet = vec3(0.545, 0.361, 0.965);
     float chroma = sin(angle + time * .31) * .5 + .5;
-    vec3 spectrum = mix(lime, citron, chroma);
-    vec3 edgeColor = mix(deepLime, spectrum, .68 + u_energy * .10);
+    vec3 spectrum = mix(rose, violet, chroma);
+    vec3 edgeColor = mix(deepViolet, spectrum, .68 + u_energy * .10);
     edgeColor = mix(edgeColor, softWhite, innerGlow * .38 + outerGlow * .13);
-    vec3 coreColor = mix(lime, softWhite, .47);
+    vec3 coreColor = mix(rose, softWhite, .47);
 
     float halo = exp(-max(0.0, radius - boundary) * 9.0) * (1.0 - smoothstep(boundary - .01, boundary + .22, radius));
     float alpha = (outerGlow * .4 + innerGlow * .2 + veil * .25 + ribbon * .1 + signalRing * .075 + halo * .065 + core * .11) * pulse;
@@ -137,7 +142,7 @@ const fragmentSource = `
 
     vec3 rgb = edgeColor * (outerGlow * .48 + innerGlow * .29 + veil * .23 + ribbon * .10);
     rgb += coreColor * core * (.24 + u_energy * .1);
-    rgb += lime * innerMist * .062;
+    rgb += rose * innerMist * .062;
     rgb += spectrum * (ribbon * .05 + signalRing * .065 + outerGlow * .03);
     rgb += (hash(gl_FragCoord.xy + u_time) - .5) / 255.0;
     alpha = clamp(alpha, 0.0, .82);

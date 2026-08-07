@@ -1,5 +1,6 @@
 import { Section, MagneticButton, Card, Button } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
+import { InfIcon } from '@/components/ui/InfIcons';
 import { HOME_CTA, SITE } from '@/lib/site';
 
 /**
@@ -108,6 +109,10 @@ export function DowodSpoleczny() {
                 className="inf-card p-6"
                 style={{ '--card-c': OPINIA_TON[i] ?? 'var(--accent-decor)' } as React.CSSProperties}
               >
+                {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
+                    delegowany pointermove z MotionOrchestrator (desktop).
+                    Dekoracja aria-hidden. */}
+                <div aria-hidden="true" className="inf-spotlight" />
                 <blockquote className="text-body-sm leading-[1.7] text-fg">„{o.cytat}”</blockquote>
                 <figcaption className="mt-5 border-t border-border pt-4">
                   <span className="block text-ui font-semibold text-fg">{o.branza}</span>
@@ -128,9 +133,22 @@ export function DowodSpoleczny() {
         </Reveal>
       )}
 
-      {/* Kto za tym stoi — autorytet dwóch founderów (E-E-A-T) */}
+      {/* Kto za tym stoi — autorytet dwóch founderów (E-E-A-T).
+          v7 (spec §PARTIA D pkt 2): blok schodzi z luźnego akapitu na kresce
+          na KARTĘ .inf-card z kafelkiem ikony i odcieniem violet. Treść 1:1. */}
       <Reveal delay={0.1}>
-        <div className="mx-auto mt-12 max-w-narrow border-t border-border pt-6">
+        <div
+          className="inf-card mx-auto mt-12 max-w-wide p-6 md:p-8"
+          style={{ '--card-c': '#a78bfa' } as React.CSSProperties}
+        >
+          <div aria-hidden="true" className="inf-spotlight" />
+          <span
+            aria-hidden="true"
+            className="inf-tile mb-4"
+            style={{ '--tile-c': '#a78bfa' } as React.CSSProperties}
+          >
+            <InfIcon name="osoba-check" />
+          </span>
           <h3 className="text-h3">Kto stawia te Agenty?</h3>
           <p className="mt-3 text-body-sm text-fg-muted">
             Dwóch founderów. {SITE.founders[0].name}, {SITE.founders[0].jobTitle}, prowadzi budowę: strony,

@@ -18,6 +18,17 @@ import {
   godziny,
   liczba,
 } from '@/lib/narzedzia/stale';
+import { INF_NARZEDZIE, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+
+/* INFINITY v7 (audyt: 10 z 17 kart /narzedzia szło bez --card-c, więc wszystkie
+   panele wysp świeciły w hoverze jednym fallbackowym cyjanem). Kolor sekcji =
+   ten sam wpis rejestru, z którego kafel tego narzędzia bierze kolor na liście
+   hubu — single source lib/inf-kategorie. Sama dekoracja (custom property). */
+const DEKOR = INF_NARZEDZIE['kalkulator-oszczednosci'] ?? INF_KATEGORIA_DEFAULT;
+const TON = {
+  '--card-c': DEKOR.c,
+  '--card-c-l': DEKOR.odcien ?? DEKOR.c,
+} as CSSProperties;
 
 /**
  * KalkulatorOszczednosci — FLAGOWIEC (spec 07 §1). Wyspa 'use client'.
@@ -76,8 +87,17 @@ export function KalkulatorOszczednosci() {
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-10">
       {/* KOLUMNA WEJŚCIA */}
       {/* INFINITY v5 (spec §4): shell wyspy na .inf-card (ciemna karta wzorca
-          z narożnikami i sweepem z globals) — kontrolki zostają na tokenach. */}
-      <div className="inf-card p-6 shadow-xs sm:p-7">
+          z narożnikami i sweepem z globals) — kontrolki zostają na tokenach.
+          INFINITY v8 „naczynia połączone" (audyt kart /narzedzia): obie karty
+          tej wyspy dostają reflektor .inf-spotlight jako PIERWSZE dziecko — ta
+          sama poświata za kursorem co na kartach usług. Reflektor jest absolutny
+          (inset:0) i `pointer-events:none`: nie wchodzi w flow karty, więc
+          suwaki, presety i select działają jak wcześniej, a odstępy niesie
+          wewnętrzny `space-y-6`, nie sama karta (dodatkowe dziecko nic nie
+          przesuwa). */}
+      <div className="inf-card p-6 shadow-xs sm:p-7" style={TON}>
+        <div aria-hidden="true" className="inf-spotlight" />
+
         <h3 className="text-h3">Wpisz swoje liczby</h3>
         <p className="mt-1 text-caption text-fg-subtle">
           Domyślne wartości to typowe założenie. Zmień każde na swoje.
@@ -195,6 +215,11 @@ export function KalkulatorOszczednosci() {
           className="inf-card p-6 shadow-xs sm:p-7"
           style={{ '--card-c': '#22e06b' } as CSSProperties}
         >
+          {/* Reflektor dziedziczy --card-c karty, więc tu świeci ZIELENIĄ
+              oszczędności, a nie kolorem narzędzia. Tak ma być: poświata idzie
+              za krawędzią karty. */}
+          <div aria-hidden="true" className="inf-spotlight" />
+
           <p className="font-mono text-overline font-bold uppercase tracking-[0.14em] text-fg-subtle">
             Odzyskujesz rocznie
           </p>
@@ -277,7 +302,7 @@ export function KalkulatorOszczednosci() {
         </div>
 
         {/* CTA z dowodem, mikrokopia personalizowana wynikiem */}
-        <WynikCTA mikrokopia={mikrokopia} />
+        <WynikCTA mikrokopia={mikrokopia} kolor={DEKOR.c} odcien={DEKOR.odcien} />
       </div>
     </div>
   );

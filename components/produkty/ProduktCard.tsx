@@ -24,6 +24,11 @@ import { InfIcon } from '@/components/ui/InfIcons';
  * — v5: emoji tylko w dropdownach nav), --card-c-l = jasny odcień, badge mono
  * po prawej = ISTNIEJĄCE pole `nazwaRobocza` (jak w dropdownie Produkty, spec §2),
  * badge dojrzałości → mono .inf-tag. BEZ strzałki (karta nieinteraktywna).
+ * INFINITY v7 (audyt „naczynia połączone": 0 z 14 kart /produkty miało
+ * reflektor): .inf-spotlight jako PIERWSZE dziecko karty — ta sama reakcja na
+ * kursor co karty usług na hubie. Strzałki dalej nie ma (karta nieklikalna),
+ * a poświata nie tworzy afordancji: ma pointer-events:none i tylko podąża
+ * kolorem karty za kursorem.
  */
 export function ProduktCard({ produkt }: { produkt: Produkt }) {
   const dekor = INF_PRODUKT[produkt.slug] ?? INF_KATEGORIA_DEFAULT;
@@ -32,10 +37,12 @@ export function ProduktCard({ produkt }: { produkt: Produkt }) {
     <Card
       as="article"
       variant="quiet"
-      className="inf-card flex h-full flex-col p-6"
+      className="inf-card relative flex h-full flex-col p-6"
       id={produkt.slug}
       style={{ '--card-c': dekor.c, '--card-c-l': odcien } as CSSProperties}
     >
+      <div aria-hidden="true" className="inf-spotlight" />
+
       <div className="flex items-center justify-between gap-3">
         <span className="flex items-center gap-3">
           {/* Kafelek ikony produktu — dekoracja aria-hidden (jak dropdown). */}

@@ -1,5 +1,6 @@
 'use client';
 
+import type { CSSProperties } from 'react';
 import { MagneticButton } from '@/components/ui';
 import { HOME_CTA } from '@/lib/site';
 
@@ -23,12 +24,33 @@ export const DOWOD_PRZY_CTA =
 type WynikCTAProps = {
   /** Mikrokopia personalizowana wynikiem (zdanie nad/pod przyciskiem). */
   mikrokopia: string;
+  /**
+   * INFINITY v7 (audyt --card-c): kolor sekcji narzędzia, w której stoi ten
+   * blok (z rejestru INF_NARZEDZIE, podaje go wyspa). Bez niego karta spadała
+   * na fallbackowy akcent i cztery bloki CTA na /narzedzia świeciły identycznym
+   * cyjanem, zamiast trzymać kolor swojego narzędzia. Sama dekoracja.
+   */
+  kolor?: string;
+  /** Jaśniejszy odcień tego samego koloru (pole `odcien` rejestru). */
+  odcien?: string;
 };
 
-export function WynikCTA({ mikrokopia }: WynikCTAProps) {
+export function WynikCTA({ mikrokopia, kolor, odcien }: WynikCTAProps) {
   // INFINITY v5 (spec §4): blok wyniku/CTA na .inf-card (mechanizmy home).
+  // INFINITY v8 „naczynia połączone" (audyt kart /narzedzia): reflektor
+  // .inf-spotlight jako PIERWSZE dziecko — ten blok zamyka KAŻDE z pięciu
+  // narzędzi, więc bez niego pięć ostatnich kart strony gasło pod kursorem.
+  // Reflektor jest absolutny i `pointer-events:none`, więc magnetyczny przycisk
+  // CTA łapie kursor tak samo jak wcześniej (poświata go nie przykrywa).
   return (
-    <div className="inf-card mt-8 p-6 shadow-xs">
+    <div
+      className="inf-card mt-8 p-6 shadow-xs"
+      style={
+        kolor ? ({ '--card-c': kolor, '--card-c-l': odcien ?? kolor } as CSSProperties) : undefined
+      }
+    >
+      <div aria-hidden="true" className="inf-spotlight" />
+
       <p className="text-body font-medium text-fg">{mikrokopia}</p>
       <div className="mt-4 flex flex-col items-start gap-3">
         <MagneticButton variant="primary" size="lg" href={HOME_CTA.href}>

@@ -91,15 +91,27 @@ export function PostCard({ post }: { post: Post }) {
  * zanim powstanie pełny wpis. `aria-disabled` dla czytników.
  * INFINITY v2: .inf-card bez błysku/strzałki (karta nieinteraktywna — bez
  * fałszywej afordancji), badge'e → mono .inf-tag (teksty 1:1).
+ * INFINITY v7 (audyt: karta bez --card-c spadała na fallbackowy akcent, więc
+ * cały hover świecił jednym cyjanem): ta karta to TEN SAM typ treści co wpis
+ * (INF_TYP.wpis), tylko zaplanowany — bierze więc tę samą parę kolor/odcień
+ * z lib/inf-kategorie co PostCard. Wyciszenie niesie dalej opacity-80.
+ * v7 „naczynia połączone": reflektor .inf-spotlight jako PIERWSZE dziecko —
+ * karta ma reagować na kursor tak samo jak sąsiadka w tej samej siatce.
+ * Afordancji to nie zmienia (poświata nie łapie kliknięć, nie ma linku ani
+ * strzałki), a bez niej połowa listy /blog gasła pod kursorem.
  */
 export function PostCardWkrotce({ temat }: { temat: PostWkrotce }) {
+  const dekor = INF_TYP.wpis;
   return (
     <Card
       as="article"
       variant="quiet"
-      className="inf-card flex h-full flex-col p-6 opacity-80"
+      className="inf-card relative flex h-full flex-col p-6 opacity-80"
+      style={{ '--card-c': dekor.c, '--card-c-l': dekor.odcien ?? dekor.c } as CSSProperties}
       aria-disabled="true"
     >
+      <div aria-hidden="true" className="inf-spotlight" />
+
       <div className="flex items-center gap-2">
         <span className="inf-tag">{temat.kategoria}</span>
         <span className="inf-tag text-accent">Wkrótce</span>

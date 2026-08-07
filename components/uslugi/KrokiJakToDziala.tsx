@@ -13,6 +13,12 @@ import type { Usluga } from '@/lib/uslugi/types';
  * variant="quiet" + .inf-card (narożniki [ ] + sweep robi karta z globals),
  * --card-c = trzy stopnie trasy marki (niebieski -> fiolet -> zielony, jak
  * POZIOM_TON cennika home) — numer kroku w kolorze karty.
+ *
+ * INFINITY v7 „NACZYNIA POŁĄCZONE" (audyt kart, partia H1): karty kroków miały
+ * już własny ton (trasa marki ZOSTAJE — to celowe różnicowanie w jednym
+ * gridzie), brakowało im WYŁĄCZNIE reflektora, przez co ta sama .inf-card
+ * świeciła za kursorem na hubie, a na podstronie nie. Reflektor wchodzi
+ * PIERWSZYM dzieckiem karty (wzorzec z app/uslugi).
  */
 
 /* Tonacja dekoracyjna kart kroków = trzy stopnie trasy marki (jak cennik home). */
@@ -38,6 +44,8 @@ export function KrokiJakToDziala({ kroki }: { kroki: Usluga['kroki'] }) {
               className="inf-card h-full p-6"
               style={{ '--card-c': KROK_TON[i] ?? 'var(--accent)' } as CSSProperties}
             >
+              <div aria-hidden="true" className="inf-spotlight" />
+
               <span
                 className="inf-tile font-display text-h3 font-semibold"
                 style={{ '--tile-c': KROK_TON[i] ?? 'var(--accent)' } as CSSProperties}

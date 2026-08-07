@@ -216,6 +216,11 @@
     --border-control: rgba(255, 255, 255, 0.55); /* obrys kontrolki >3:1 (1.4.11) */
     --border-accent: #22d3ee;
     --ring: #22d3ee;
+    /* NOWY token v7 (partia A, separator sekcji): DRUGA barwa iskry — magenta
+       #ff00e5 zmierzona we wzorcu (`.lp-divider-line::after`, rgba(255,0,229,.3)).
+       Rodzina --ring-gradient (róż/magenta pigułki nawigacji). WYŁĄCZNIE
+       dekoracja: cienka kreska separatora, nigdy pod tekst. */
+    --ring-2: #ff00e5;
 
     /* Szkło świata B (makieta 4): tło biel 3–6%, włos ~10%, światło od góry.
        Używane przez .sf-glass i mapy Tailwinda (bg-glass, border-glass-hairline). */
@@ -250,7 +255,7 @@
     --metal-blue-decor: #007bff; /* brand blue */
     --metal-violet-decor: #7a35ff; /* brand violet */
     --metal-green-decor: #63f000; /* brand ai-green */
-    --metal-fg: var(--metal-violet); /* fallback .text-metal: 10.14:1 (AA ✓) */
+    --metal-fg: var(--metal-violet); /* ostatni fallback koloru: 10.14:1 (AA ✓) */
   }
 
   /* ===== TOKENY WSPÓLNE OBU MOTYWÓW (budowane z var → theme-aware) ===== */
@@ -265,7 +270,7 @@
     --metal-silver: #aeb8c3; /* brand steel — 9.55:1 na navy-950 */
     --metal-silver-hi: #e7edf5; /* brand steel-highlight */
 
-    /* Gradient pod tekst .text-metal (stopnie per-theme przez var). */
+    /* Gradient metalu — .border-metal / utility `bg-metal` (stopnie per-theme). */
     --metal-gradient: linear-gradient(
       120deg,
       var(--metal-blue) 0%,
@@ -376,14 +381,14 @@
 
     /* ---- 6. METAL — warstwa AKCENTÓW (spec 03-metal) ----
        Reguła nadrzędna: metal = DEKORACJA (gradient/sheen/border). Treść NIGDY
-       nie zależy od gradientu — .text-metal ma zawsze solidny --metal-fg jako
+       nie zależy od gradientu — tekst ma zawsze solidny --metal-fg jako
        fallback koloru, który SAM zdaje AA. Stopnie „decor” są jaśniejsze i bywają
        < 3:1 na jasnym tle, więc służą wyłącznie do połysku/tła, nie pod tekst
        ani jako krawędź niosąca znaczenie. Kolejność stopni = „krok po kroku”
        (cyrkiel architekta): niebieski -> fiolet -> zielony (akcent „AI”). */
 
     /* Stopnie TEKSTOWE (AA na paper #fbfaf8): blue-700 6.42 · violet-700 6.81 · emerald-700 5.26.
-       NIETKNIĘTE — to fallback AA na jasnym tle (.text-metal solidny color). */
+       NIETKNIĘTE — to fallback AA na jasnym tle (solidny color pod tekstem). */
     --metal-blue: #1d4ed8;
     --metal-violet: #6d28d9;
     --metal-green: #047857;
@@ -405,7 +410,7 @@
     --metal-silver: #aeb8c3; /* brand steel */
     --metal-silver-hi: #e7edf5; /* brand steel-highlight */
 
-    /* Gradient marki (pod tekst .text-metal, gdy background-clip:text wspierany) */
+    /* Gradient marki (krawędź .border-metal / utility `bg-metal`) */
     --metal-gradient: linear-gradient(
       120deg,
       var(--metal-blue) 0%,
@@ -433,9 +438,9 @@
       transparent 100%
     );
 
-    /* Solidny fallback koloru dla .text-metal (tryb jasny). Środek gradientu =
-       fiolet, który zdaje AA (6.81:1 na paper). To jest realny kolor tekstu,
-       gdy clip-text nie działa LUB w narzędziach kontrastu. */
+    /* Solidny fallback koloru metalu (tryb jasny) — dziś nosi go .sf-write jako
+       ostatni stopień. Środek gradientu = fiolet, który zdaje AA (6.81:1 na
+       paper). To jest realny kolor tekstu w narzędziach kontrastu. */
     --metal-fg: var(--metal-violet);
 
     /* Cienie jasne (dwuwarstwowe: kontakt + ambient — jak przed redesignem).
@@ -694,25 +699,21 @@
    ========================================================================== */
 
 /* ==========================================================================
-   METAL — UTILITY AKCENTÓW (.text-metal / .border-metal / .surface-tech)
+   METAL — UTILITY AKCENTÓW (.border-metal / .surface-tech)
    Zasada AA: gradient = dekoracja. Treść nigdy nie zależy od clip-text.
-   ========================================================================== */
+   (v7: .text-metal USUNIĘTE — klasa nie stała na żadnym elemencie w repo,
+   a Tailwind i tak wycinał ją z @layer; zostały tylko martwe bloki @supports
+   i forced-colors w zbudowanym CSS. Tokeny --metal-gradient i --metal-fg
+   ZOSTAJĄ: gradient nosi .border-metal / .border-metal-rounded oraz utility
+   `bg-metal` z tailwind.config.ts, a --metal-fg jest ostatnim fallbackiem
+   koloru w .sf-write. Klasy .text-metal-blue/violet/green to CO INNEGO —
+   zwykłe utilities koloru z konfigu, nietknięte.) */
 /* UWAGA architektoniczna: at-rule'y zależne od warunku (@supports / @media)
    ORAZ @keyframes trzymamy POZA @layer components. Tailwind v3 (bez pluginu
    nestingu) przy zagnieżdżeniu @supports/@media w @layer potrafi zgubić ich
    ciało w buildzie produkcyjnym — zweryfikowane przez realny pipeline
    (postcss: tailwindcss + autoprefixer). Bazowe klasy mogą zostać w @layer. */
 @layer components {
-  /* .text-metal — metaliczny gradient NA TEKŚCIE.
-     KRYTYCZNE dla AA i cytowalności: najpierw SOLIDNY color (--metal-fg, zdaje
-     AA: 6.81:1 na paper / 10.14:1 na navy-950). Gradient clip-text dokładany jest
-     w regule @supports niżej. Gdy clip-text nie działa (stare silniki, wymuszone
-     kolory, narzędzia kontrastu) — zostaje czytelny color. Tekst jest realnym
-     tekstem w DOM (SSG, boty czytają normalnie — cytowalność #1). */
-  .text-metal {
-    color: var(--metal-fg);
-  }
-
   /* .border-metal — metaliczna krawędź (gradient przez border-image).
      Dekoracja: krawędź NIE niesie znaczenia. Fallback to jednolity --border,
      więc bez border-image (np. forced-colors) dalej widać ramkę. */
@@ -968,37 +969,12 @@
   }
 }
 
-/* ==========================================================================
-   METAL — clip-text gradient (POZA @layer, by build nie zgubił @supports).
-   Prefiks -webkit- jest OBOWIĄZKOWY: background-clip:text w Blink/WebKit działa
-   tylko z -webkit-. Komentarz kontrolny wyłącza „czyszczenie” przez autoprefixer,
-   który inaczej usuwa nasz -webkit-background-clip (i efekt znika w Safari).
-   ========================================================================== */
-@supports ((-webkit-background-clip: text) or (background-clip: text)) {
-  .text-metal {
-    /* autoprefixer: off */
-    background-image: var(--metal-gradient);
-    background-size: 100% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-    /* BUDŻET RUCHU (redesign): STATYCZNY gradient — bez pętli sfTextGlow.
-       Klasa zostaje dla podstron; na home H2 są granatowe (jeden system). */
-  }
-  /* (.text-metal-sheen USUNIĘTE — redesign „Precyzja cyrkla": klasa nieużywana
-     w markupie po przejściu H1 na .sf-write; razem z nią keyframes
-     sfTextMetalSheen i sfTextGlow — martwe pętle dekoracji.) */
-}
-
-/* Forced-colors (Windows High Contrast): porzuć gradient, oddaj kolor systemowi. */
-@media (forced-colors: active) {
-  .text-metal {
-    background-image: none;
-    -webkit-text-fill-color: CanvasText;
-    color: CanvasText;
-  }
-}
+/* (v7: blok @supports z clip-textem dla .text-metal ORAZ jego reguła
+   forced-colors USUNIĘTE razem z klasą — nic w repo jej nie nosiło, a oba bloki
+   stały POZA @layer, więc jako jedyne resztki .text-metal jechały do produkcji.
+   Gradient metalu żyje dalej pod .border-metal / bg-metal — patrz nota wyżej.
+   Wcześniej tą samą drogą poszło .text-metal-sheen z keyframes sfTextMetalSheen
+   i sfTextGlow.) */
 
 /* ==========================================================================
    SUWAKI NARZĘDZI (.sf-range) — spójne z tokenami, WCAG focus (spec 07)
@@ -2406,7 +2382,7 @@ html.lenis body {
     white-space: nowrap;
   }
   .sf-wordmark-ai {
-    /* Solidny kolor NAJPIERW (wzór .text-metal): cyan-400 = 9.71:1 na navy-950. */
+    /* Solidny kolor NAJPIERW (konwencja pliku): cyan-400 = 9.71:1 na navy-950. */
     color: var(--accent);
   }
 }
@@ -2471,18 +2447,23 @@ html.lenis body {
    (border-color + box-shadow) — ZERO nowych animacji, bramka reduced-motion
    bloku B obowiązuje bez zmian. */
 @media (hover: hover) and (pointer: fine) {
+  /* v7 (spec §PARTIA A pkt 1-2): liczby zrównane z lżejszym wariantem wzorca
+     (`.lp-learn-card:hover`) — obwódka 55% -> 60%, glow 22% -> 12% (Paweł:
+     „u nich delikatniejsze, u nas za mocne"), rozrzut w kolorze karty zamiast
+     czarnego cienia. TŁA DALEJ NIE RUSZAMY: `.sf-glass` nie miało i nie ma
+     żadnej deklaracji `background*` na hover. */
   .sf-glass.card-live:hover,
   .sf-glass.card-lift:hover {
-    border-color: rgba(34, 211, 238, 0.55);
-    border-color: color-mix(in srgb, var(--card-c, var(--accent)) 55%, transparent);
+    border-color: rgba(34, 211, 238, 0.6);
+    border-color: color-mix(in srgb, var(--card-c, var(--accent)) 60%, transparent);
     box-shadow:
-      inset 0 1px 0 var(--glass-inner-light),
-      0 0 20px rgba(34, 211, 238, 0.22),
-      0 12px 32px -16px rgba(0, 0, 0, 0.6);
+      0 18px 40px -18px rgba(34, 211, 238, 0.3),
+      0 0 20px rgba(34, 211, 238, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
     box-shadow:
-      inset 0 1px 0 var(--glass-inner-light),
-      0 0 20px color-mix(in srgb, var(--card-c, var(--accent)) 22%, transparent),
-      0 12px 32px -16px rgba(0, 0, 0, 0.6);
+      0 18px 40px -18px color-mix(in srgb, var(--card-c, var(--accent)) 30%, transparent),
+      0 0 20px color-mix(in srgb, var(--card-c, var(--accent)) 12%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 }
 
@@ -2850,7 +2831,12 @@ html.lenis body {
      („ikona rozświetlona"); glif zostaje w PEŁNYM kolorze wariantu (color).
      Fallbacki bez color-mix w cyjanie akcentu (te same procenty). */
   .inf-tile {
-    --tile-c: var(--accent);
+    /* v7 (partia A): domyślny kolor kafla = KOLOR KARTY, w której siedzi
+       (--card-c dziedziczy się przez custom property), a dopiero potem akcent.
+       Bez tego kafel w karcie, której konsument nie ustawił --tile-c, zostawał
+       cyjanowy i hover świecił „obok" odcienia karty. Poza kartami (wiersze
+       dropdownu) --card-c nie istnieje, więc fallback = --accent jak dotąd. */
+    --tile-c: var(--card-c, var(--accent));
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -2869,7 +2855,10 @@ html.lenis body {
     box-shadow: 0 0 18px -4px color-mix(in srgb, var(--tile-c) 55%, transparent);
     transition:
       transform var(--dur-base) var(--ease-out),
-      filter var(--dur-base) var(--ease-out);
+      filter var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      text-shadow var(--dur-base) var(--ease-out);
   }
   /* Ikona SVG w kafelku — osobna warstwa hoveru wierszy dropdownu
      (scale + brightness na samym glifie, kafelek tylko „pływa"). */
@@ -2906,55 +2895,72 @@ html.lenis body {
      .5 jest WPIECZONE w kolor (spec: color-mix 28% x opacity .5 = 14%). */
   .inf-card {
     --card-c: var(--accent);
+    /* v7 (spec §PARTIA A pkt 2, POMIARY WZORCA) — ALFY dekoracji jako zmienne.
+       Wzorzec trzyma narożniki i dolną łunę na OSOBNYCH elementach i zmienia
+       im samo `opacity` (.22 -> .6 oraz .04 -> .08). U nas oba pseudo-elementy
+       karty są zajęte (pasek akcentu + sweep), więc narożniki i łuna jadą jako
+       warstwy background-image, a hover zmienia WYŁĄCZNIE te dwie liczby —
+       nigdy `background-color` karty (skarga Pawła: „zmienia się jeszcze
+       odcień, przez co daje fałszywy widok"). Płynne przejście alfy daje
+       @property + transition custom property (blok POZA @layer niżej);
+       silniki bez @property przełączą je skokowo — wygląd docelowy ten sam. */
+    --inf-corner-a: 22%;
+    --inf-luna-a: 4%;
     position: relative;
     overflow: hidden;
     border-radius: var(--radius-lg);
     background-color: rgba(6, 6, 12, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.07);
     background-image:
-      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
-      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
-      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
-      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
-      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
-      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
-      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
-      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
-      linear-gradient(135deg, rgba(34, 211, 238, 0.14), transparent 55%);
+      linear-gradient(rgba(34, 211, 238, 0.22), rgba(34, 211, 238, 0.22)),
+      linear-gradient(rgba(34, 211, 238, 0.22), rgba(34, 211, 238, 0.22)),
+      linear-gradient(rgba(34, 211, 238, 0.22), rgba(34, 211, 238, 0.22)),
+      linear-gradient(rgba(34, 211, 238, 0.22), rgba(34, 211, 238, 0.22)),
+      linear-gradient(rgba(34, 211, 238, 0.22), rgba(34, 211, 238, 0.22)),
+      linear-gradient(rgba(34, 211, 238, 0.22), rgba(34, 211, 238, 0.22)),
+      linear-gradient(rgba(34, 211, 238, 0.22), rgba(34, 211, 238, 0.22)),
+      linear-gradient(rgba(34, 211, 238, 0.22), rgba(34, 211, 238, 0.22)),
+      linear-gradient(135deg, rgba(34, 211, 238, 0.14), transparent 55%),
+      radial-gradient(ellipse 80% 50% at 50% 120%, rgba(34, 211, 238, 0.04), transparent 70%);
     background-image:
       linear-gradient(
-        color-mix(in srgb, var(--card-c) 55%, transparent),
-        color-mix(in srgb, var(--card-c) 55%, transparent)
+        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
+        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, var(--card-c) 55%, transparent),
-        color-mix(in srgb, var(--card-c) 55%, transparent)
+        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
+        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, var(--card-c) 55%, transparent),
-        color-mix(in srgb, var(--card-c) 55%, transparent)
+        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
+        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, var(--card-c) 55%, transparent),
-        color-mix(in srgb, var(--card-c) 55%, transparent)
+        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
+        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, var(--card-c) 55%, transparent),
-        color-mix(in srgb, var(--card-c) 55%, transparent)
+        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
+        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, var(--card-c) 55%, transparent),
-        color-mix(in srgb, var(--card-c) 55%, transparent)
+        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
+        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, var(--card-c) 55%, transparent),
-        color-mix(in srgb, var(--card-c) 55%, transparent)
+        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
+        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, var(--card-c) 55%, transparent),
-        color-mix(in srgb, var(--card-c) 55%, transparent)
+        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
+        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
       ),
-      linear-gradient(135deg, color-mix(in srgb, var(--card-c) 14%, transparent), transparent 55%);
+      linear-gradient(135deg, color-mix(in srgb, var(--card-c) 14%, transparent), transparent 55%),
+      radial-gradient(
+        ellipse 80% 50% at 50% 120%,
+        color-mix(in srgb, var(--card-c) var(--inf-luna-a), transparent),
+        transparent 70%
+      );
     background-repeat: no-repeat;
     background-position:
       left 8px top 8px,
@@ -2965,6 +2971,7 @@ html.lenis body {
       left 8px bottom 8px,
       right 8px bottom 8px,
       right 8px bottom 8px,
+      left top,
       left top;
     background-size:
       10px 1px,
@@ -2975,12 +2982,15 @@ html.lenis body {
       1px 10px,
       10px 1px,
       1px 10px,
+      100% 100%,
       100% 100%;
+    /* v7: przejście 1:1 z pomiarów wzorca — `.4s cubic-bezier(.16,1,.3,1)`
+       (= --ease-out repo) na transformie, obwódce i cieniu. `background-color`
+       ZNIKA z listy, bo tło karty jest teraz IDENTYCZNE w spoczynku i na hover. */
     transition:
-      transform var(--dur-base) var(--ease-out),
-      border-color var(--dur-base) var(--ease-out),
-      background-color var(--dur-base) var(--ease-out),
-      box-shadow var(--dur-base) var(--ease-out);
+      transform 0.4s var(--ease-out),
+      border-color 0.4s var(--ease-out),
+      box-shadow 0.4s var(--ease-out);
   }
   .inf-card::before {
     content: '';
@@ -3089,7 +3099,30 @@ html.lenis body {
      kolorze karty (--card-c dziedziczone z .inf-card) w punkcie --mx/--my (%).
      JS (partia MOTION): JEDEN delegowany pointermove ustawia --mx/--my na
      hoverowanej .inf-card — desktop-only przez orchestrator. Bez JS zostaje
-     środek karty (fallback 50%/50%). */
+     środek karty (fallback 50%/50%).
+     KONTROLA v8 (audyt H3 pkt 4 — reflektor dokładany masowo na podstronach,
+     partie H1/H2): sprawdzone trzy wymagania.
+       • `pointer-events:none` JEST — poświata nigdy nie łapie kliknięcia ani
+         hoveru, więc rozciągnięty link karty (`after:inset-0`) zostaje klikalny
+         na całej powierzchni.
+       • `border-radius:inherit` JEST — radial nie wystaje poza zaokrąglone rogi.
+       • POZYCJONOWANIE: `inset:0` działa, bo KAŻDY konsument trzyma reflektor
+         jako dziecko `.inf-card`, a ta ma `position:relative` + `overflow:hidden`
+         (przeliczone: 43 wystąpienia .inf-spotlight, wszystkie wewnątrz .inf-card).
+         Poza taką kartą inset odniósłby się do przypadkowego przodka i poświata
+         zalałaby całą sekcję — to jedyny warunek, którego nowe miejsca muszą
+         pilnować.
+     WARSTWA — ŚWIADOME ODSTĘPSTWO od „warstwy pod treścią" (do decyzji Pawła,
+     nie w tej partii): `z-index:1` trzyma poświatę NAD tłem i washem karty, ale
+     w porządku malowania CSS także nad tekstem w flow (tekst = krok 5, elementy
+     pozycjonowane = krok 6). Zejście POD treść wymaga `z-index:-1`, a ten działa
+     wyłącznie wewnątrz kontekstu układania — .inf-card tworzy go TYLKO na hover
+     (transform), więc przy reduced-motion i przez 0,3 s wygaszania poświata
+     wpadłaby pod tło karty (mignięcie). Pełny fix to jedna linia `isolation:
+     isolate` na .inf-card, ale dotyka 159 kart i wymaga oględzin w przeglądarce.
+     Koszt odstępstwa dziś: warstwa ma krycie 8% koloru karty i zero mierzalnego
+     wpływu na kontrast treści — ta sama konwencja co pas .inf-shine::after
+     (biel 6% nad tekstem). */
   .inf-spotlight {
     position: absolute;
     inset: 0;
@@ -3098,14 +3131,23 @@ html.lenis body {
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s var(--ease-out);
+    /* v7 POMIARY WZORCA 1:1: promień 180px (było 320px) i krycie 8% (było 12%).
+       Paweł: „u nich kolor wyrazisty, ale delikatniejszy; u nas sztuczne
+       światło za mocne" -> mniejsze rozmycie, mniejsza alfa, ten sam kolor.
+       Pozycja: --mx/--my w % — ustawia je JEDEN delegowany pointermove z
+       MotionOrchestrator (desktop, po window.load) na hoverowanej .inf-card.
+       STAN FAKTYCZNY (audyt H3 pkt 3, martwa dokumentacja): komponent
+       KartaReflektor.tsx, który dawniej nadpisywał `background` inline w
+       pikselach, NIE ISTNIEJE w repo. Reflektor jest w całości delegowany, a
+       promień i krycie stoją WYŁĄCZNIE tutaj — jedno źródło prawdy. */
     background: radial-gradient(
-      320px circle at var(--mx, 50%) var(--my, 50%),
-      rgba(34, 211, 238, 0.12),
+      180px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(34, 211, 238, 0.08),
       transparent 70%
     );
     background: radial-gradient(
-      320px circle at var(--mx, 50%) var(--my, 50%),
-      color-mix(in srgb, var(--card-c, var(--accent)) 12%, transparent),
+      180px circle at var(--mx, 50%) var(--my, 50%),
+      color-mix(in srgb, var(--card-c, var(--accent)) 8%, transparent),
       transparent 70%
     );
   }
@@ -3208,7 +3250,10 @@ html.lenis body {
   .inf-glow-cta-ghost {
     background-color: transparent;
     color: var(--accent);
-    border-color: var(--border-strong);
+    /* Fallback literałem (ten sam bug co w .inf-card:hover): wersja z
+       var(--border-strong) wypadała przy minifikacji, więc bez color-mix ghost
+       CTA zostawał bez własnej obwódki. rgba = akcent jak w cieniu niżej. */
+    border-color: rgba(20, 184, 196, 0.55);
     border-color: color-mix(in srgb, var(--accent) 55%, transparent);
     box-shadow: 0 0 18px -6px rgba(20, 184, 196, 0.35);
     box-shadow: 0 0 18px -6px color-mix(in srgb, var(--accent) 45%, transparent);
@@ -3305,6 +3350,38 @@ html.lenis body {
   }
 }
 
+/* ── INFINITY v7 (partia A): PŁYNNA ALFA NAROŻNIKÓW I DOLNEJ ŁUNY karty.
+   Wzorzec animuje `opacity` osobnych elementów (.3s / .4s); u nas te dekoracje
+   są warstwami background-image, a background-image jest własnością DYSKRETNĄ
+   (skacze). Rejestracja @property zamienia --inf-corner-a/--inf-luna-a w realne
+   <percentage>, które przeglądarka potrafi interpolować — dzięki temu narożniki
+   rozjaśniają się płynnie 22% -> 60%, a łuna 4% -> 8%, tak jak we wzorcu.
+   Houdini: Chrome/Edge 85+, Safari 16.4+, Firefox 128+; starsze silniki
+   traktują je jak zwykłe custom properties (skok zamiast płynięcia — wygląd
+   docelowy identyczny, zero regresji). @supports pilnuje, żeby lista transition
+   z nazwami custom properties NIE wywaliła bazowego przejścia karty tam, gdzie
+   parser jej nie zna. POZA @layer (konwencja pliku: at-rule'y warunkowe). */
+@property --inf-corner-a {
+  syntax: '<percentage>';
+  initial-value: 22%;
+  inherits: false;
+}
+@property --inf-luna-a {
+  syntax: '<percentage>';
+  initial-value: 4%;
+  inherits: false;
+}
+@supports (transition-property: --inf-corner-a) {
+  .inf-card {
+    transition:
+      transform 0.4s var(--ease-out),
+      border-color 0.4s var(--ease-out),
+      box-shadow 0.4s var(--ease-out),
+      --inf-corner-a 0.3s var(--ease-out),
+      --inf-luna-a 0.4s var(--ease-out);
+  }
+}
+
 /* ── INFINITY: desktop ≥1024px — szkło pigułki nawigacji 1:1 ze wzorca .gnav
    (backdrop-blur NIGDY na mobile) + hover kart (tylko realny hover). */
 @media (min-width: 1024px) {
@@ -3322,30 +3399,58 @@ html.lenis body {
   }
 }
 @media (hover: hover) and (pointer: fine) {
-  /* Hover karty v3 (wzorzec .lp-promo-card + spec v3 §KARTY): lift -3px,
-     TŁO ROZJAŚNIONE --surface-hover, obwódka i poświata w kolorze karty,
-     inset highlight od góry; accent-bar 0.5→1; błysk .inf-shine przelatuje;
-     spotlight się zapala; kafelek ikony rozświetla się i rośnie; strzałka
-     POJAWIA SIĘ (opacity 0→1 + dojazd -4px→0). */
+  /* ══ HOVER KARTY v7 — 1:1 z POMIARAMI WZORCA (getComputedStyle + CSSOM) ══
+     ŻELAZNA zasada rundy (skarga Pawła): „u nich kafelek się podświetla, ale
+     NIE ZMIENIA KOLORU. Zmiana koloru odbywa się tylko na ramkę i dookoła
+     ramki." W CAŁYM arkuszu wzorca NIE MA `background-color` w żadnej regule
+     :hover karty — usunięte więc i u nas (było rgba(24,24,64,.45) w v6).
+     Zostaje WYŁĄCZNIE: obwódka, glow, uniesienie, narożniki, dolna łuna,
+     sweep, kafel ikony i strzałka.
+     Wartości = wariant lżejszy wzorca (`.lp-learn-card:hover`): obwódka 60%,
+     cień potrójny (rozrzut 30% + glow 12% + inset biel 8%), lift -4px.
+     Karty-bohaterowie biorą modyfikator .inf-card-lg (reguła niżej) z liczbami
+     `.lp-primary-card:hover` (65% / 35% / 14% / 9%, -5px + scale 1.008). */
   .inf-card:hover {
-    transform: translateY(-3px);
-    /* v6 „ROZŚWIETLENIE" (spec §A pkt 1): karta w spoczynku przypomina tło,
-       więc hover NIE wraca do solidnego --surface-hover (szary kafelek) —
-       ten sam ton #181840 w połowie krycia (efektywnie ~#0e0e23 na --bg:
-       rozjaśnienie widać, przezroczystość zostaje). */
-    background-color: rgba(24, 24, 64, 0.45);
-    /* v4 FLUORESCENCJA (spec §PARTIA A pkt 4): border 50% -> 70% + DODATKOWY
-       glow zewnętrzny 0 0 26px w kolorze karty (30%) obok liftowego cienia. */
-    border-color: var(--border-strong);
-    border-color: color-mix(in srgb, var(--card-c) 70%, transparent);
+    transform: translateY(-4px);
+    /* FALLBACK LITERAŁEM, nigdy zmienną (v7, audyt MINOR 5): przy dwóch
+       deklaracjach `border-color` minifikator (cssnano merge-longhand) kasował
+       wersję z var(--border-strong) i w zbudowanym CSS zostawał sam color-mix
+       — na silnikach z naszego browserslist bez color-mix (Chrome <111,
+       Safari <16.2) hover NIE dawał obwódki w ogóle. rgba(34,211,238) = ten
+       sam cyjan co fallbacki cienia dwie linijki niżej. */
+    border-color: rgba(34, 211, 238, 0.6);
+    border-color: color-mix(in srgb, var(--card-c) 60%, transparent);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      0 0 26px rgba(34, 211, 238, 0.3),
-      0 12px 40px -12px rgba(34, 211, 238, 0.4);
+      0 18px 40px -18px rgba(34, 211, 238, 0.3),
+      0 0 20px rgba(34, 211, 238, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      0 0 26px color-mix(in srgb, var(--card-c) 30%, transparent),
-      0 12px 40px -12px color-mix(in srgb, var(--card-c) 40%, transparent);
+      0 18px 40px -18px color-mix(in srgb, var(--card-c) 30%, transparent),
+      0 0 20px color-mix(in srgb, var(--card-c) 12%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    /* Narożniki [ ] .22 -> .6 i dolna łuna .04 -> .08 (pomiary wzorca).
+       Zmiana dotyczy WYŁĄCZNIE tych dwóch dekoracji — wash i kolor tła karty
+       stoją w miejscu, więc odcień karty się nie „przekręca". */
+    --inf-corner-a: 60%;
+    --inf-luna-a: 8%;
+  }
+  /* Wariant KART-BOHATERÓW (kontrakt dla partii C/D/E: dopisać `inf-card-lg`
+     obok `inf-card` na dużych kartach — cennik, promo usług, karty sekcji).
+     Liczby 1:1 z `.lp-primary-card:hover` wzorca. */
+  .inf-card-lg:hover {
+    transform: translateY(-5px) scale(1.008);
+    /* Fallback literałem (ta sama zasada co w .inf-card:hover wyżej): bez niego
+       karta-bohater na starym silniku traciłaby obwódkę hoveru. */
+    border-color: rgba(34, 211, 238, 0.65);
+    border-color: color-mix(in srgb, var(--card-c) 65%, transparent);
+    box-shadow:
+      0 22px 48px -20px rgba(34, 211, 238, 0.35),
+      0 0 28px rgba(34, 211, 238, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    box-shadow:
+      0 22px 48px -20px color-mix(in srgb, var(--card-c) 35%, transparent),
+      0 0 28px color-mix(in srgb, var(--card-c) 14%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.09);
   }
   .inf-card:hover::before {
     opacity: 1;
@@ -3368,12 +3473,36 @@ html.lenis body {
     text-shadow: 0 0 12px rgba(34, 211, 238, 0.45);
     text-shadow: 0 0 12px color-mix(in srgb, var(--card-c-l, var(--card-c, var(--accent))) 45%, transparent);
   }
-  /* Kafelek ikony karty: jaśnieje i rośnie (v4 fluorescencja: brightness
-     1.3 -> 1.35 + scale 1.12; transition niesie baza .inf-tile, RM: transform
-     zdejmowany niżej). */
+  /* Kafel ikony na hover — v7 1:1 z pomiarów (`.lp-primary-card:hover
+     .lp-tool-icon`): gradient 160deg kolor 22% -> 8%, obwódka 48%, inset biel
+     14% + glow 0 0 22px -4px w kolorze karty. `filter: brightness(1.35)` USUNIĘTY
+     (Paweł: „u nas sztuczne światło słabej jakości, za mocne" — brightness
+     rozjaśnia CAŁY kafel razem z glifem zamiast go nasycić).
+     Emoji w kafelku dostaje własny blask przez text-shadow (u wzorca to SVG
+     w currentColor; u nas natywne emoji, więc świeci glif, nie ścieżka).
+     Transform (obrót + powiększenie) zostaje w bloku RM-gated na końcu pliku. */
   .inf-card:hover .inf-tile {
-    filter: brightness(1.35);
-    transform: scale(1.12);
+    background-color: transparent;
+    background-image: linear-gradient(
+      160deg,
+      rgba(34, 211, 238, 0.22),
+      rgba(34, 211, 238, 0.08)
+    );
+    background-image: linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--tile-c) 22%, transparent),
+      color-mix(in srgb, var(--tile-c) 8%, transparent)
+    );
+    border-color: rgba(34, 211, 238, 0.48);
+    border-color: color-mix(in srgb, var(--tile-c) 48%, transparent);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 0 22px -4px rgba(34, 211, 238, 0.55);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 0 22px -4px color-mix(in srgb, var(--tile-c) 55%, transparent);
+    text-shadow: 0 0 10px rgba(34, 211, 238, 0.55);
+    text-shadow: 0 0 10px color-mix(in srgb, var(--tile-c) 55%, transparent);
   }
   .inf-card:hover .inf-shine::after {
     left: 120%;
@@ -3553,6 +3682,149 @@ html.lenis body {
   .inf-cta-ghost-green:hover {
     text-shadow: none;
     box-shadow: none;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   INFINITY v7 — SEPARATOR SEKCJI (spec §PARTIA A pkt 6, POMIARY WZORCA 1:1).
+   Paweł: „przejście z sekcji do sekcji u nich płynne, przechodzi
+   minimalistyczny pasek, dwie-trzy iskry rozdzielają sekcje, dzieje się
+   automatycznie cały czas. U nas podział sekcji za wyraźny."
+   Markup (kontrakt dla partii D — `components/ui/SekcjaSeparator.tsx`):
+     <div class="inf-divider">
+       <div class="inf-divider-line"></div>
+       <span class="inf-divider-label">01 · PROBLEM</span>
+       <div class="inf-divider-line"></div>
+     </div>
+   Wstawiać BEZPOŚREDNIO między sekcjami (jak wzorzec), nie wewnątrz kontenera
+   sekcji — klasa sama trzyma szerokość i rynny; odstęp pionowy dokłada
+   konsument (utility `my-*`), żeby rytm sekcji został u partii D.
+   POZA @layer ŚWIADOMIE: Tailwind v3 usuwa z @layer klasy, których nie widzi
+   w treści — separator powstaje RÓWNOLEGLE w innej partii, więc reguły nie
+   mogą zależeć od tego, czy markup zdążył wylądować w repo.
+   PALETA: linia = --accent-2 15% (wzorzec: rgba(139,92,246,.15) = ten sam
+   fiolet), iskra = --accent 40% + --ring-2 30% (wzorzec: cyjan .4 + magenta .3).
+   ODSTĘPSTWO ŚWIADOME (raport): etykieta wzorca ma rgba(139,92,246,.3) i
+   .55rem, czyli ~1,5:1 i 8,8px — poniżej ŻELAZNEGO progu 4.5:1. U nas jasny
+   fiolet (--accent-2 rozjaśniony bielą) przy opacity .8 = ~5,0:1 na --bg
+   i 11px (--fs-overline). Whisper zostaje, tekst jest czytelny. */
+.inf-divider {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  max-width: var(--container-max); /* wzorzec: 1120px = jego kontener */
+  margin: 0 auto;
+  padding: 0 var(--gutter); /* wzorzec: 0 1.5rem */
+}
+.inf-divider-line {
+  flex: 1;
+  height: 1px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.15), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--accent-2) 15%, transparent),
+    transparent
+  );
+}
+/* ISKRA — pas 40% szerokości przelatujący w kółko (jedyna pętla separatora).
+   BUDŻET WYDAJNOŚCI (v7, znalezisko nadzorcy): separatorów jest ~15, każdy ma
+   2 linie = do 30 pętli naraz. Dlatego:
+     • ruch idzie przez `transform: translate3d`, NIE przez `left` — animacja
+       układu strony (layout + paint w każdej klatce, główny wątek) zamieniona
+       na animację kompozytora (osobna warstwa GPU, zero rekalkulacji),
+     • pętla startuje DOPIERO od 1024px (reguła niżej) — na telefonie, gdzie
+       liczy się LCP/TBT, linia jest statyczna i iskra stoi poza kadrem.
+   Pozycja spoczynkowa = start przelotu: -250% WŁASNEJ szerokości = -100%
+   szerokości linii (bo pas ma 40% linii: 40% x 250% = 100%). overflow:hidden
+   rodzica ją przycina, więc na mobile jest niewidoczna. */
+.inf-divider-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  transform: translate3d(-250%, 0, 0);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(34, 211, 238, 0.4),
+    rgba(255, 0, 229, 0.3),
+    transparent
+  );
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--accent) 40%, transparent),
+    color-mix(in srgb, var(--ring-2) 30%, transparent),
+    transparent
+  );
+}
+.inf-divider-label {
+  font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
+  font-size: var(--fs-overline); /* 11px; wzorzec .55rem — patrz nota AA wyżej */
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-transform: uppercase;
+  color: rgba(174, 141, 249, 1);
+  color: color-mix(in srgb, var(--accent-2) 70%, white);
+  opacity: 0.8;
+  text-shadow: 0 0 10px rgba(139, 92, 246, 0.15);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--accent-2) 15%, transparent);
+}
+/* Przelot iskry: z lewej poza kadrem w prawo poza kadr, potem PAUZA do końca
+   cyklu. Pomiar wzorca dał tylko `4s ease-in-out infinite` (ciała keyframes
+   CSSOM nie oddaje), więc kształt jest wnioskiem: przelot 2,4 s + 1,6 s ciszy
+   czyta się jako „iskra przebiega co chwilę", a nie jako ciągły pasek światła.
+   Ten sam kształt założyła partia D w kontrakcie SekcjaSeparator.tsx.
+   Kadry w translate3d liczone na WŁASNEJ szerokości pasa (40% linii):
+   -100% linii = -250% pasa, 160% linii = 400% pasa — geometria 1:1 z wersją
+   na `left`, tylko bez dotykania układu strony. */
+@keyframes inf-divider-shimmer {
+  0% {
+    transform: translate3d(-250%, 0, 0);
+  }
+  60% {
+    transform: translate3d(400%, 0, 0);
+  }
+  100% {
+    transform: translate3d(400%, 0, 0);
+  }
+}
+/* Iskra rusza WYŁĄCZNIE na desktopie i bez reduced-motion (ta sama bramka co
+   .inf-pill-nav::before). Mobile: kreska stoi — to najtańsza forma tej
+   dekoracji, a przy ~15 separatorach na stronie to główny budżet TBT. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .inf-divider-line::after {
+    animation: inf-divider-shimmer 4s var(--ease-in-out) infinite;
+  }
+  /* PAUZA POZA KADREM (audyt H3 pkt 1 / MINOR-5): na home stoi ~15 separatorów
+     x 2 linie = do 30 pętli naraz, a nieskończona animacja tyka także wtedy, gdy
+     pasek jest 5 ekranów niżej — bateria płaci za niewidoczny ruch. Klasę
+     `is-paused` na `.inf-divider` przełącza JEDEN IntersectionObserver z
+     MotionOrchestrator (zero nowych komponentów i zero nowej pętli rAF).
+     `animation-play-state` zamiast `animation: none`: iskra wraca dokładnie
+     tam, gdzie stanęła, więc wejście separatora w kadr nie „przewija" cyklu.
+     DOMYŚLNIE ANIMACJA GRA — brak JS (Save-Data, chunk jeszcze przed
+     window.load) zostawia dzisiejsze zachowanie, nigdy martwy pasek. */
+  .inf-divider.is-paused .inf-divider-line::after {
+    animation-play-state: paused;
+  }
+}
+/* Forced-colors: gradienty i poświata znikają, zostaje systemowa kreska. */
+@media (forced-colors: active) {
+  .inf-divider-line,
+  .inf-divider-line::after {
+    background: none;
+  }
+  .inf-divider-label {
+    text-shadow: none;
+    opacity: 1;
   }
 }
 
@@ -3831,6 +4103,22 @@ html.lenis body {
   color: color-mix(in srgb, var(--fg-muted) 88%, white);
 }
 
+/* INFINITY v7 (spec §PARTIA A pkt 4, POMIARY WZORCA „Tytuł karty") — TYTUŁ
+   KARTY MOCNĄ BIELĄ. Wzorzec: rgb(242,244,251), BEZ text-shadow (świecą tylko
+   podtytuły/tagi w kolorze wariantu). U nas tytuły jechały na --fg #e4e4f0,
+   czyli o stopień przygaszone, przez co karta wyglądała „niekrystalicznie".
+   Kontrast #f2f4fb na tle karty rgba(6,6,12,.5) nad --bg ≈ 17,5:1 (AAA).
+   Wyjątki: tytuły JAWNIE wyciszone utility (karty „wkrótce" na .text-fg-muted
+   /.text-fg-subtle) zostają przygaszone — dlatego :not(). POZA @layer na końcu
+   pliku: selektor (0,1,1) bije utility koloru (0,1,0). */
+.inf-card h2:not(.text-fg-muted):not(.text-fg-subtle),
+.inf-card h3:not(.text-fg-muted):not(.text-fg-subtle),
+.inf-card h4:not(.text-fg-muted):not(.text-fg-subtle),
+.inf-card .inf-card-title {
+  color: #f2f4fb;
+  text-shadow: none;
+}
+
 /* INFINITY v3 (kontrakt partii B): slot lemniskaty hero znika w Windows High
    Contrast jak pozostałe dekoracyjne canvasy. */
 @media (forced-colors: active) {
@@ -3857,14 +4145,20 @@ html.lenis body {
   }
 }
 .inf-tile {
+  /* v7: do przejścia dochodzą obwódka, glow i blask emoji (hover kafla jedzie
+     teraz na pomiarach wzorca, nie na filtrze brightness). */
   transition:
     transform 0.3s var(--ease-out),
-    filter 0.3s var(--ease-out);
+    filter 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out),
+    box-shadow 0.3s var(--ease-out),
+    text-shadow 0.3s var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  /* v7: sam RUCH kafla (obrót + powiększenie, zamówione przez Pawła w v5).
+     Rozświetlenie robi reguła 1:1 z pomiarów wyżej — bez `brightness`. */
   .inf-card:hover .inf-tile {
     transform: rotate(-15deg) scale(1.15);
-    filter: brightness(1.35);
   }
   .inf-sub-dot {
     animation: infAskPulse 2.4s var(--ease-in-out) infinite;

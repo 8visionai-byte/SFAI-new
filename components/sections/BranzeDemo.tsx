@@ -56,6 +56,30 @@ function zdanie(b: Branza): string {
   return `${b.label}: ${b.action}`;
 }
 
+/* INFINITY v7 (spec §PARTIA D pkt 2, zrzut Pawła „Powtarzalna robota wygląda
+   inaczej w każdej branży"): akapity spod okna terminala jadą w KAFELKACH.
+   Zdania są ISTNIEJĄCE, tylko przeniesione i pocięte: pierwsza karta to
+   ostatnie zdanie dawnego leadu, dwie kolejne to rozbity akapit domykający.
+   Każda karta ma własny odcień (--card-c) i unikalny glif — sekcja przestaje
+   być „nieuzupełniona kolorystyką". */
+const DOMKNIECIE: ReadonlyArray<{ t: string; ikona: InfIconName; c: string }> = [
+  {
+    t: 'Agent SimpleFast przejmuje dokładnie tę część, w każdej branży po swojemu.',
+    ikona: 'robot',
+    c: '#a78bfa',
+  },
+  {
+    t: 'To nie rolka haseł. Każdy z tych przykładów to realne zadanie, które zdejmujemy z właściciela i jego zespołu.',
+    ikona: 'iskry',
+    c: '#67e8f9',
+  },
+  {
+    t: 'Twój proces wygląda inaczej? Tym lepiej. Agenta układamy pod to, co naprawdę zżera Ci czas.',
+    ikona: 'puzzle',
+    c: '#4ade80',
+  },
+] as const;
+
 /**
  * Pełne frazy policzone RAZ na poziomie modułu. Dzięki temu pętla typewritera indeksuje
  * zwykłą tablicę stringów, a `FIRST` jest gwarantowanym, nie-opcjonalnym stringiem (BRANZE
@@ -142,10 +166,11 @@ export function BranzeDemo() {
           <h2 className="text-h2">Powtarzalna robota wygląda inaczej w każdej branży</h2>
         </Reveal>
         <Reveal delay={0.05}>
+          {/* v7: lead skrócony do dwóch zdań — trzecie („Agent SimpleFast
+              przejmuje...") zeszło 1:1 do kafelka DOMKNIECIE pod oknem. */}
           <p className="text-lead mt-5 text-fg-muted">
             Inny telefon odbiera salon, inny mail przepisuje budowlanka, inne pytania wracają w
-            e-commerce. Robota jest jednak ta sama: powtarzalna i czasochłonna. Agent SimpleFast
-            przejmuje dokładnie tę część, w każdej branży po swojemu.
+            e-commerce. Robota jest jednak ta sama: powtarzalna i czasochłonna.
           </p>
         </Reveal>
       </div>
@@ -241,6 +266,10 @@ export function BranzeDemo() {
             // zmienna niczego nie maluje).
             style={{ '--card-c': b.c } as CSSProperties}
           >
+            {/* Reflektor za kursorem (--mx/--my z MotionOrchestrator) tylko tam,
+                gdzie <li> jest realną kartą — poza RM lista jest sr-only i nie
+                ma czego podświetlać. Dekoracja aria-hidden. */}
+            {reduce && <div aria-hidden="true" className="inf-spotlight" />}
             {reduce ? (
               // INFINITY v3 (spec §KARTY): karta branży z kafelkiem UNIKALNEJ
               // ikony InfIcons (dekoracja aria-hidden) — treść tekstowa 1:1.
@@ -264,13 +293,23 @@ export function BranzeDemo() {
         ))}
       </ul>
 
-      {/* Domknięcie wartości — "co to znaczy dla MŚP", bez obietnic liczbowych. */}
-      <Reveal delay={0.15}>
-        <p className="mx-auto mt-6 max-w-narrow text-body-sm text-fg-subtle">
-          To nie rolka haseł. Każdy z tych przykładów to realne zadanie, które zdejmujemy z
-          właściciela i jego zespołu. Twój proces wygląda inaczej? Tym lepiej. Agenta układamy
-          pod to, co naprawdę zżera Ci czas.
-        </p>
+      {/* Domknięcie wartości — "co to znaczy dla MŚP", bez obietnic liczbowych.
+          v7: trzy kafelki zamiast akapitu pod oknem (treść 1:1, patrz
+          DOMKNIECIE). Kaskadę niesie .sf-stagger na <Reveal>. */}
+      <Reveal as="ul" delay={0.15} className="sf-stagger mx-auto mt-8 grid max-w-wide gap-6 md:grid-cols-3">
+        {DOMKNIECIE.map((d) => (
+          <li key={d.ikona} className="inf-card p-6" style={{ '--card-c': d.c } as CSSProperties}>
+            <div aria-hidden="true" className="inf-spotlight" />
+            <span
+              aria-hidden="true"
+              className="inf-tile mb-4"
+              style={{ '--tile-c': d.c } as CSSProperties}
+            >
+              <InfIcon name={d.ikona} />
+            </span>
+            <p className="text-body-sm text-fg-muted">{d.t}</p>
+          </li>
+        ))}
       </Reveal>
     </Section>
   );
