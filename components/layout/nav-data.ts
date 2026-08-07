@@ -7,10 +7,11 @@ import {
   INF_KATEGORIA_DEFAULT,
   INF_PRODUKT,
   INF_NARZEDZIE,
-  INF_REALIZACJA_IKONA,
+  INF_REALIZACJA_EMOJI,
+  INF_USLUGA_BADGE,
   INF_WIEDZA,
+  INF_WIEDZA_BADGE,
 } from '@/lib/inf-kategorie';
-import type { InfIconName } from '@/components/ui/InfIcons';
 
 /**
  * INFINITY v3 — DANE dropdownów nawigacji (partia A, FUNDAMENT+NAV).
@@ -21,14 +22,17 @@ import type { InfIconName } from '@/components/ui/InfIcons';
  * treści (REALIZACJE/PRODUKTY z długimi tekstami case'ów) NIE wchodzą do
  * bundla klienta — HeaderClient dostaje tylko stringi potrzebne w menu.
  *
- * TREŚĆ 1:1 z rejestrów (żelazna zasada: diff treści = 0):
- *  - Usługi: u.h1 (jak dotychczasowy ServicesMenu),
- *  - Produkty: p.coRobi + nazwaRobocza (muted), link do kotwicy /produkty#slug
- *    (ProduktCard ma id={slug}),
- *  - Realizacje: r.h1 + etykieta kategorii (KATEGORIA_LABEL, muted),
- *  - Narzędzia: n.tytul + n.etykieta (muted),
+ * TREŚĆ 1:1 z rejestrów (żelazna zasada: diff treści = 0).
+ * v5 (spec §2) — wiersz wzorca: [NATYWNE emoji w kaflu 44px] [tytuł (+ opis
+ * muted, gdy rejestr ma krótkie pole)] [BADGE mono po prawej]:
+ *  - Usługi: u.h1 + badge pochodny sluga (INF_USLUGA_BADGE), BEZ opisu
+ *    (rejestr nie ma krótkiego pola — nie wymyślamy),
+ *  - Produkty: p.coRobi + badge p.nazwaRobocza (dawny opis wszedł na badge),
+ *    link do kotwicy /produkty#slug (ProduktCard ma id={slug}),
+ *  - Realizacje: r.h1 + badge KATEGORIA_LABEL[r.kategoria],
+ *  - Narzędzia: n.tytul + badge n.etykieta,
  *  - Wiedza: 4 działy (Blog / Poradniki / Materiały / AI Radar) — nazwy 1:1
- *    z istniejących tras; bez listy wpisów (spec v3 §NAWIGACJA).
+ *    z istniejących tras + badge typu (INF_WIEDZA_BADGE).
  * Pierwszy wiersz każdego dropdownu = link hub ("Wszystkie …") w DOM (SEO).
  */
 
@@ -40,8 +44,12 @@ export type NavDropdownItem = {
   opis?: string;
   /** Kolor kafelka (--tile-c). */
   c: string;
-  /** Unikalny glif z InfIcons (w obrębie jednego dropdownu bez powtórek). */
-  ikona: InfIconName;
+  /** v5: JASNY odcień kategorii — kolor badge'a (--badge-c). */
+  odcien?: string;
+  /** v5: NATYWNE emoji kafla (lista 1:1 ze spec v5 §2; dekoracja aria-hidden). */
+  emoji: string;
+  /** v5: BADGE mono po prawej — WYŁĄCZNIE istniejące krótkie pole rejestru. */
+  badge?: string;
 };
 
 /** Jeden dropdown nav: label przycisku (1:1 z NAV_LINKS) + hub + pozycje. */
@@ -70,7 +78,11 @@ export function getNavDropdowns(): NavDropdownData[] {
           href: `/uslugi/${u.slug}`,
           tytul: u.h1,
           c: dekor.c,
-          ikona: dekor.ikona ?? INF_KATEGORIA_DEFAULT.ikona,
+          odcien: dekor.odcien,
+          emoji: dekor.emoji,
+          // Badge pochodny sluga (spec v5: CHATBOT/VOICE/.../SEO); nowy slug
+          // spoza mapy = wiersz bez badge'a (undefined), zero zmyślania.
+          badge: INF_USLUGA_BADGE[u.slug],
         };
       }),
     },
@@ -84,9 +96,11 @@ export function getNavDropdowns(): NavDropdownData[] {
           // Strona /produkty to jeden listing z kotwicami (ProduktCard id={slug}).
           href: `/produkty#${p.slug}`,
           tytul: p.coRobi,
-          opis: p.nazwaRobocza,
           c: dekor.c,
-          ikona: dekor.ikona,
+          odcien: dekor.odcien,
+          emoji: dekor.emoji ?? INF_KATEGORIA_DEFAULT.emoji,
+          // v5: nazwaRobocza przeszła z opisu na BADGE (istniejące krótkie pole).
+          badge: p.nazwaRobocza,
         };
       }),
     },
@@ -99,9 +113,11 @@ export function getNavDropdowns(): NavDropdownData[] {
         return {
           href: `/realizacje/${r.slug}`,
           tytul: r.h1,
-          opis: KATEGORIA_LABEL[r.kategoria],
           c: kat.c,
-          ikona: INF_REALIZACJA_IKONA[r.slug] ?? INF_KATEGORIA_DEFAULT.ikona,
+          odcien: kat.odcien,
+          emoji: INF_REALIZACJA_EMOJI[r.slug] ?? INF_KATEGORIA_DEFAULT.emoji,
+          // v5: etykieta kategorii przeszła z opisu na BADGE (istniejące pole).
+          badge: KATEGORIA_LABEL[r.kategoria],
         };
       }),
     },
@@ -114,9 +130,11 @@ export function getNavDropdowns(): NavDropdownData[] {
         return {
           href: `/narzedzia/${n.slug}`,
           tytul: n.tytul,
-          opis: n.etykieta,
           c: dekor.c,
-          ikona: dekor.ikona,
+          odcien: dekor.odcien,
+          emoji: dekor.emoji ?? INF_KATEGORIA_DEFAULT.emoji,
+          // v5: etykieta narzędzia przeszła z opisu na BADGE (istniejące pole).
+          badge: n.etykieta,
         };
       }),
     },
@@ -126,25 +144,39 @@ export function getNavDropdowns(): NavDropdownData[] {
       hubLabel: 'Całe Centrum Wiedzy',
       // Stan aktywny także na trasach działów spoza /wiedza/*.
       activePrefixes: ['/blog', '/poradniki', '/materialy', '/ai-radar'],
+      // v5: emoji 1:1 ze spec (📰 📖 🧲 📡) + badge typu działu (INF_WIEDZA_BADGE).
       items: [
-        { href: '/blog', tytul: 'Blog', c: INF_WIEDZA.blog.c, ikona: INF_WIEDZA.blog.ikona },
+        {
+          href: '/blog',
+          tytul: 'Blog',
+          c: INF_WIEDZA.blog.c,
+          odcien: INF_WIEDZA.blog.odcien,
+          emoji: INF_WIEDZA.blog.emoji ?? INF_KATEGORIA_DEFAULT.emoji,
+          badge: INF_WIEDZA_BADGE.blog,
+        },
         {
           href: '/poradniki',
           tytul: 'Poradniki',
           c: INF_WIEDZA.poradniki.c,
-          ikona: INF_WIEDZA.poradniki.ikona,
+          odcien: INF_WIEDZA.poradniki.odcien,
+          emoji: INF_WIEDZA.poradniki.emoji ?? INF_KATEGORIA_DEFAULT.emoji,
+          badge: INF_WIEDZA_BADGE.poradniki,
         },
         {
           href: '/materialy',
           tytul: 'Materiały',
           c: INF_WIEDZA.materialy.c,
-          ikona: INF_WIEDZA.materialy.ikona,
+          odcien: INF_WIEDZA.materialy.odcien,
+          emoji: INF_WIEDZA.materialy.emoji ?? INF_KATEGORIA_DEFAULT.emoji,
+          badge: INF_WIEDZA_BADGE.materialy,
         },
         {
           href: '/ai-radar',
           tytul: 'AI Radar',
           c: INF_WIEDZA['ai-radar'].c,
-          ikona: INF_WIEDZA['ai-radar'].ikona,
+          odcien: INF_WIEDZA['ai-radar'].odcien,
+          emoji: INF_WIEDZA['ai-radar'].emoji ?? INF_KATEGORIA_DEFAULT.emoji,
+          badge: INF_WIEDZA_BADGE['ai-radar'],
         },
       ],
     },

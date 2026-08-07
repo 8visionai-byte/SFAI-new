@@ -2,20 +2,8 @@ import type { CSSProperties } from 'react';
 import { Card } from '@/components/ui';
 import { DOJRZALOSC_LABEL } from '@/lib/produkty/types';
 import type { Produkt } from '@/lib/produkty/types';
-import type { InfDekor } from '@/lib/inf-kategorie';
-import { INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
-
-/**
- * INFINITY v2 — dekoracja kafelka per produkt (emoji + kolor z palety kategorii
- * spec; przypisanie do produktów = decyzja dekoracyjna, aria-hidden). Klucz =
- * slug z rejestru lib/produkty.
- */
-const PRODUKT_DEKOR: Record<string, InfDekor> = {
-  'skaner-faktur-ksef': { c: '#f59e0b', emoji: '📄' },
-  'app-coachingowa-z-agentami': { c: '#a78bfa', emoji: '🤝' },
-  'apka-obecnosci-skladek': { c: '#10b981', emoji: '⚡' },
-  'centrum-dowodzenia': { c: '#8b5cf6', emoji: '🎙️' },
-};
+import { INF_PRODUKT, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { InfIcon } from '@/components/ui/InfIcons';
 
 /**
  * ProduktCard — karta JEDNEGO własnego produktu (opis przez funkcję).
@@ -30,35 +18,40 @@ const PRODUKT_DEKOR: Record<string, InfDekor> = {
  *
  * Karta jest NIEklikalna — uczciwa afordancja: produkt nie ma jeszcze osobnej
  * podstrony, jedyne CTA strony prowadzi do #diagnoza.
- * INFINITY v2 (sama prezentacja, treść 1:1): Card variant="quiet" + .inf-card
- * (ciemna karta wzorca, lewa krawędź --card-c), kafelek emoji aria-hidden,
- * badge dojrzałości → mono .inf-tag. BEZ błysku/strzałki (karta nieinteraktywna).
+ * INFINITY v5 (spec §4 — pełna spójność z home, treść 1:1): Card variant="quiet"
+ * + .inf-card (narożniki + sweep robi karta z globals), dekorację niesie single
+ * source INF_PRODUKT z lib/inf-kategorie (kafelek .inf-tile z UNIKALNĄ ikoną SVG
+ * — v5: emoji tylko w dropdownach nav), --card-c-l = jasny odcień, badge mono
+ * po prawej = ISTNIEJĄCE pole `nazwaRobocza` (jak w dropdownie Produkty, spec §2),
+ * badge dojrzałości → mono .inf-tag. BEZ strzałki (karta nieinteraktywna).
  */
 export function ProduktCard({ produkt }: { produkt: Produkt }) {
-  const dekor = PRODUKT_DEKOR[produkt.slug] ?? INF_KATEGORIA_DEFAULT;
+  const dekor = INF_PRODUKT[produkt.slug] ?? INF_KATEGORIA_DEFAULT;
+  const odcien = dekor.odcien ?? dekor.c;
   return (
     <Card
       as="article"
       variant="quiet"
       className="inf-card flex h-full flex-col p-6"
       id={produkt.slug}
-      style={{ '--card-c': dekor.c } as CSSProperties}
+      style={{ '--card-c': dekor.c, '--card-c-l': odcien } as CSSProperties}
     >
       <div className="flex items-center justify-between gap-3">
         <span className="flex items-center gap-3">
-          {/* Kafelek emoji produktu — dekoracja aria-hidden (jak dropdown). */}
+          {/* Kafelek ikony produktu — dekoracja aria-hidden (jak dropdown). */}
           <span
             aria-hidden="true"
             className="inf-tile"
             style={{ '--tile-c': dekor.c } as CSSProperties}
           >
-            {dekor.emoji}
+            <InfIcon name={dekor.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
           </span>
           <span className="inf-tag">{DOJRZALOSC_LABEL[produkt.dojrzalosc]}</span>
         </span>
+        {/* Badge mono nazwy roboczej w odcieniu karty (istniejące pole rejestru). */}
         {produkt.nazwaRobocza && (
-          <span className="text-caption text-fg-subtle">
-            rob. {produkt.nazwaRobocza}
+          <span className="inf-tag" style={{ color: odcien }}>
+            {produkt.nazwaRobocza}
           </span>
         )}
       </div>

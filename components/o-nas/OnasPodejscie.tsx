@@ -1,6 +1,11 @@
+import type { CSSProperties } from 'react';
 import { Section, Card } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { O_NAS } from '@/lib/o-nas/content';
+
+/* INFINITY v5: tonacja dekoracyjna kart kroków = trzy stopnie trasy marki
+   (jak cennik home i KrokiJakToDziala usług). */
+const KROK_TON = ['#2b7cff', '#8b5cf6', '#22e06b'] as const;
 
 /**
  * OnasPodejscie — SEKCJA 4: jak pracujemy (3 kroki). H2 jak pytanie.
@@ -20,11 +25,22 @@ export function OnasPodejscie() {
         </Reveal>
       </div>
 
+      {/* INFINITY v5 (spec §4 — kroki NA KARTY, treść 1:1): .inf-card w stopniach
+          trasy marki, numer w kafelku .inf-tile (numer to treść) — spójnie
+          z KrokiJakToDziala usług. */}
       <ol className="mt-8 grid gap-6 md:grid-cols-3">
         {O_NAS.podejscie.kroki.map((k, i) => (
           <Reveal as="li" key={k.tytul} delay={i * 0.06}>
-            <Card as="article" className="h-full">
-              <span className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-accent-soft font-display text-h3 font-semibold text-accent-hover">
+            <Card
+              as="article"
+              variant="quiet"
+              className="inf-card h-full p-6"
+              style={{ '--card-c': KROK_TON[i] ?? 'var(--accent)' } as CSSProperties}
+            >
+              <span
+                className="inf-tile font-display text-h3 font-semibold"
+                style={{ '--tile-c': KROK_TON[i] ?? 'var(--accent)' } as CSSProperties}
+              >
                 {i + 1}
               </span>
               <h3 className="text-h3 mt-4">{k.tytul}</h3>

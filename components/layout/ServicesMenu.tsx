@@ -3,7 +3,6 @@
 import { useEffect, useRef, type CSSProperties } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { InfIcon } from '@/components/ui/InfIcons';
 import type { NavDropdownData, NavDropdownItem } from './nav-data';
 
 /**
@@ -32,15 +31,16 @@ import type { NavDropdownData, NavDropdownItem } from './nav-data';
  * więc link huba ("Wszystkie …" — pierwszy wiersz) i linki pozycji są w HTML
  * dla botów przy pierwszym żądaniu.
  *
- * Wiersze v3: kafel 44px (.inf-tile .inf-tile-lg) z UNIKALNĄ ikoną SVG
- * <InfIcon> w kolorze kategorii (dekoracja aria-hidden — etykietę niesie
- * tytuł) + tytuł 1:1 z rejestru + krótki opis muted (.inf-dd-desc), jeśli
- * rejestr ma krótkie pole. Hover wiersza: tło --surface-hover, kafelek
- * translateY(-2px), ikona scale(1.12)+brightness(1.3) — całość w CSS
- * (globals.css, partia A; RM: bez transformów).
+ * Wiersze v5 (spec §2, wzorzec 1:1): [kafel 44px z NATYWNYM emoji 20px —
+ * dekoracja aria-hidden, etykietę niesie tytuł] [tytuł 1:1 z rejestru
+ * (+ opis muted .inf-dd-desc, gdy rejestr ma krótkie pole)] [BADGE mono
+ * .inf-dd-badge po prawej w jasnym odcieniu kategorii — treść z istniejących
+ * pól rejestrów, dekoracyjna pigułka]. Panel desktop PRZEZROCZYSTY
+ * (rgba(10,10,16,.72) + blur 24px — CSS w globals, partia B). Hover wiersza:
+ * tło --surface-hover, kafelek translateY(-2px) (RM: bez transformów).
  */
 
-/** Kafelek 44px z ikoną SVG w kolorze kategorii (czysta dekoracja). */
+/** Kafelek 44px z natywnym emoji kategorii (czysta dekoracja). */
 function KafelekIkony({ item }: { item: NavDropdownItem }) {
   return (
     <span
@@ -48,7 +48,7 @@ function KafelekIkony({ item }: { item: NavDropdownItem }) {
       className="inf-tile inf-tile-lg"
       style={{ '--tile-c': item.c } as CSSProperties}
     >
-      <InfIcon name={item.ikona} size={20} />
+      {item.emoji}
     </span>
   );
 }
@@ -192,6 +192,16 @@ export function NavDropdown({
                 <span className="inf-dd-title">{item.tytul}</span>
                 {item.opis ? <span className="inf-dd-desc">{item.opis}</span> : null}
               </span>
+              {/* v5: BADGE mono po prawej (pigułka w jasnym odcieniu kategorii;
+                  treść 1:1 z istniejącego pola rejestru, uppercase robi CSS). */}
+              {item.badge ? (
+                <span
+                  className="inf-dd-badge"
+                  style={{ '--badge-c': item.odcien ?? item.c } as CSSProperties}
+                >
+                  {item.badge}
+                </span>
+              ) : null}
             </Link>
           </li>
         ))}

@@ -9,7 +9,8 @@ import {
 } from '@/components/seo/schemas';
 import { SITE } from '@/lib/site';
 
-import { Section, Badge, MagneticButton, Card } from '@/components/ui';
+import type { CSSProperties } from 'react';
+import { Section, MagneticButton, Card } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { Breadcrumbs } from '@/components/uslugi/Breadcrumbs';
 import {
@@ -136,10 +137,10 @@ export default function ArchitekciWartosciAiPage() {
             ]}
           />
 
+          {/* INFINITY v5 (spec §4): badge-eyebrow hero → mono overline .inf-overline
+              (język etykiet wzorca jak ServiceHero/OnasHero; treść 1:1). */}
           <Reveal>
-            <Badge variant="accent" className="mt-6">
-              Architekci Wartości AI
-            </Badge>
+            <p className="inf-overline mt-6">Architekci Wartości AI</p>
           </Reveal>
 
           <Reveal delay={0.05}>
@@ -229,9 +230,17 @@ export default function ArchitekciWartosciAiPage() {
             </p>
           </Reveal>
 
+          {/* INFINITY v5 (spec §4): trzy filary na kartach .inf-card (narożniki +
+              sweep z globals) w stopniach trasy marki (jak cennik home) — pełna
+              spójność mechanizmów z home, treść 1:1. */}
           <ul className="mt-9 grid gap-6 sm:grid-cols-3">
             <Reveal as="li" delay={0.05}>
-              <Card as="article" variant="highlight" className="h-full">
+              <Card
+                as="article"
+                variant="quiet"
+                className="inf-card h-full p-6"
+                style={{ '--card-c': '#2b7cff' } as CSSProperties}
+              >
                 <h3 className="text-h3">Najpierw liczymy</h3>
                 <p className="mt-3 text-body-sm text-fg-muted">
                   Ile godzin i złotówek zjada dany proces dziś. To jest punkt
@@ -241,7 +250,12 @@ export default function ArchitekciWartosciAiPage() {
               </Card>
             </Reveal>
             <Reveal as="li" delay={0.1}>
-              <Card as="article" className="h-full">
+              <Card
+                as="article"
+                variant="quiet"
+                className="inf-card h-full p-6"
+                style={{ '--card-c': '#8b5cf6' } as CSSProperties}
+              >
                 <h3 className="text-h3">Płacisz za efekt</h3>
                 <p className="mt-3 text-body-sm text-fg-muted">
                   Pakiet dobieramy tak, by zwracał się oszczędnością, którą realnie
@@ -251,7 +265,12 @@ export default function ArchitekciWartosciAiPage() {
               </Card>
             </Reveal>
             <Reveal as="li" delay={0.15}>
-              <Card as="article" className="h-full">
+              <Card
+                as="article"
+                variant="quiet"
+                className="inf-card h-full p-6"
+                style={{ '--card-c': '#22e06b' } as CSSProperties}
+              >
                 <h3 className="text-h3">Sprawdzasz na swoich danych</h3>
                 <p className="mt-3 text-body-sm text-fg-muted">
                   Zaczynasz od jednego procesu na próbę. Najpierw widzisz efekt,
@@ -304,9 +323,11 @@ export default function ArchitekciWartosciAiPage() {
             </p>
           </Reveal>
 
+          {/* INFINITY v5 (spec §4): sylwetki zespołu na kartach .inf-card
+              (mechanizmy home; akcent domyślny), treść 1:1. */}
           <div className="mt-9 grid gap-6 md:grid-cols-2">
             <Reveal delay={0.05}>
-              <Card as="article" className="h-full">
+              <Card as="article" variant="quiet" className="inf-card h-full p-6">
                 <h3 className="text-h3">Paweł Pieloch</h3>
                 <p className="mt-1 text-body-sm font-semibold text-accent-hover">
                   Strateg, integrator, twarz
@@ -324,7 +345,7 @@ export default function ArchitekciWartosciAiPage() {
             </Reveal>
 
             <Reveal delay={0.1}>
-              <Card as="article" className="h-full">
+              <Card as="article" variant="quiet" className="inf-card h-full p-6">
                 <h3 className="text-h3">Marcin Karpeta</h3>
                 <p className="mt-1 text-body-sm font-semibold text-accent-hover">
                   Inżynier, wdrożeniowiec
@@ -358,18 +379,23 @@ export default function ArchitekciWartosciAiPage() {
             </p>
           </Reveal>
 
+          {/* INFINITY v5 (spec §4): nisze na kartach .inf-card; pierwsza nisza
+              ZOSTAJE wyróżniona mechanizmem home (.sf-rim-gradient, jak plan
+              cennika) + badge mono na akcencie. Treść 1:1. */}
           <ul className="mt-9 grid gap-6 sm:grid-cols-2">
             {NISZE.map((n, i) => (
               <Reveal as="li" key={n.branza} delay={Math.min(i * 0.05, 0.2)}>
                 <Card
                   as="article"
-                  variant={n.pierwsza ? 'highlight' : 'base'}
-                  className="h-full"
+                  variant={n.pierwsza ? 'highlight' : 'quiet'}
+                  className={n.pierwsza ? 'h-full' : 'inf-card h-full p-6'}
                 >
                   <div className="flex items-center gap-3">
                     <h3 className="text-h3">{n.branza}</h3>
                     {n.pierwsza ? (
-                      <Badge variant="accent">Pierwsza nisza</Badge>
+                      <span className="inf-tag rounded-full border-transparent bg-accent px-3 py-1 text-accent-contrast">
+                        Pierwsza nisza
+                      </span>
                     ) : null}
                   </div>
                   <p className="mt-3 text-body-sm text-fg-muted">{n.opis}</p>
@@ -388,7 +414,9 @@ export default function ArchitekciWartosciAiPage() {
             <h2 className="text-h2">Najczęstsze pytania</h2>
           </Reveal>
 
-          <div className="mt-8 divide-y divide-border border-y border-border">
+          {/* INFINITY v5 (spec §4): FAQ w ciemnej karcie .inf-card — spójnie
+              z ServiceFAQ szablonu usług (mechanizmy home, treść 1:1). */}
+          <div className="inf-card mt-8 divide-y divide-border p-6">
             {FAQ.map((item, i) => (
               <Reveal key={item.pytanie} delay={Math.min(i * 0.03, 0.15)}>
                 <details className="sf-faq group py-2">

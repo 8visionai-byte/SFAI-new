@@ -1,197 +1,436 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import '@/components/agent/flow-core.css';
 
 /**
- * VoiceAura — „oddychający" zielony blob głosowy (spec INFINITY v4 §PARTIA D
- * pkt 1). PORT z 10K FlowCore.astro (voice-aura): organiczny blob na canvasie
- * + ambientowa aura + orbitujące obręcze + etykieta „Zapytaj AI / Voice agent"
- * (teksty przycisku i aria-label 1:1 ze źródła).
+ * VoiceAura — FlowCore 1:1 z repo 10K (spec INFINITY v5 §1; decyzja Pawła:
+ * „przenieś CAŁĄ strukturę agenta głosowego jeden do jednego... Zamiast tej
+ * wizualizacji 3D wrzucasz tutaj naszego bota").
  *
- * RÓŻNICE względem źródła (świadome, wg spec):
- *  • WebGL shader ze źródła → canvas 2D (ta sama choreografia brzegu: fale
- *    sin(3a)/sin(6a) + oddech dwuczęstotliwościowy 1.18/0.43 — stałe 1:1
- *    z shadera; zero WebGL = mniejszy chunk i pewny fallback).
- *  • Kolory: limonka 10K → zieleń palety (#4ade80 / #10b981 — spec wprost).
- *  • CAŁY blob = <a target=_blank rel=noopener> na żywe demo voicebota
- *    (druga strona Pawła), nie <button data-agent-open>.
+ * PORT z src/components/FlowCore.astro: markup (klasy + data-atrybuty),
+ * shader WebGL (vertex + fragment), boot/render/cleanup — 1:1 ze źródłem.
+ * Środek sceny to PRZYCISK data-agent-open="voice" (NIE link) — otwiera
+ * konsolę agenta (delegacja kliku w agent-console-init.ts). Konsola nadaje
+ * blobom klasę .is-voice-open i wysyła zdarzenia 'sfai:voice-energy', na
+ * które shader reaguje energią (u_energy) — kontrakt zdarzeń 1:1 z 10K.
  *
- * KONTRAKT PERF (żelazne v4 — mobile dostaje 1 LEKKI canvas):
- *  • start silnika dopiero po window.load + requestIdleCallback (MotionGate-
- *    pattern), desktop (≥1024px): DPR cap 1.35 (jak źródło) + shadowBlur;
- *  • mobile lite: DPR 1, BEZ shadowBlur, ≤48 segmentów, 30 fps (frame-skip);
- *  • pauza gdy poza viewportem (IO, rootMargin 140px) i przy document.hidden;
- *  • reduced-motion / Save-Data: ZERO canvasa — statyczna aura CSS (fallback
- *    span/i/b portowany 1:1 z .voice-aura__fallback, animacje zgaszone przez RM).
- *
- * CSS: samowystarczalny <style> w komponencie (prefiks .sfai-voice — zero
- * kolizji, globals.css należy do partii A i NIE jest tu potrzebny).
- * MONTAŻ: ZyweDemo (prawa kolumna „Wolisz posłuchać?") w slocie o zadanej
- * wysokości — komponent wypełnia rodzica (absolute inset-0).
+ * RÓŻNICE względem źródła (wyłącznie techniczne, spójne z flow-core.css):
+ *  1. Boot per-instancja przez ref (React; dwa bloby na stronie = dwa
+ *     niezależne konteksty WebGL, jak querySelectorAll w 10K).
+ *  2. Środek shadera 0.56 → 0.50 (ADAPTACJA #3 w flow-core.css: blob
+ *     centrowany w dedykowanym slocie; --flow-object-x też 50%).
+ *  3. Start silnika po window.load + requestIdleCallback (żelazna zasada
+ *     perf repo: nic nie konkuruje z LCP maszyny pisania; w 10K skrypt
+ *     odpalał się od razu). Bramki reduced-motion / Save-Data są 1:1.
+ *  4. Cleanup dodatkowo spięty z unmountem (SPA: zejście ze strony głównej
+ *     musi zwolnić kontekst WebGL; w MPA 10K robił to pagehide).
  */
 
-/* Żywe demo voicebota — cel 1:1 z dotychczasowego CTA sekcji (spec v3 §VOICEBOT). */
-const DEMO_URL = 'https://sfai-webseite-10k-look.vercel.app/';
+const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
-/* Zieleń spec v4 (RGB do składania rgba() w gradientach canvasa). */
-const GREEN_A = '74, 222, 128'; // #4ade80
-const GREEN_B = '16, 185, 129'; // #10b981
-const GREEN_LIGHT = '220, 252, 231'; // rozświetlony środek (biel z zielenią)
-
-const TAU = Math.PI * 2;
-/* 30 fps — 1:1 z FlowCore (frameInterval 30 ms w stanie spoczynku). */
-const FRAME_MS = 33;
-
-/* ── CSS komponentu (aura ambient + fallback + orbit + label) ─────────────── */
-/* Wartości blur/rozmiarów/border-radius portowane z FlowCore.astro,
-   kolory przemapowane limonka→zieleń. */
-const CSS = `
-.sfai-voice { position: absolute; inset: 0; }
-.sfai-voice__link {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  border-radius: 18px;
-  text-decoration: none;
-}
-.sfai-voice__link:focus-visible {
-  outline: 2px solid rgba(${GREEN_A}, .9);
-  outline-offset: 4px;
-}
-.sfai-voice__ambient {
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  left: 50%;
-  width: min(88%, 300px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(${GREEN_LIGHT}, .12), transparent 35%),
-    radial-gradient(circle at 40% 64%, rgba(${GREEN_A}, .11), transparent 31%),
-    radial-gradient(circle at 68% 35%, rgba(${GREEN_B}, .09), transparent 29%);
-  filter: blur(24px);
-  opacity: .86;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-}
-.sfai-voice__fallback span,
-.sfai-voice__fallback i,
-.sfai-voice__fallback b {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: block;
-  aspect-ratio: 1;
-  border-radius: 45% 55% 52% 48% / 52% 43% 57% 48%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: opacity 1.2s ease;
-}
-.sfai-voice__fallback span {
-  z-index: 1;
-  width: min(72%, 240px);
-  background:
-    radial-gradient(circle at 35% 32%, rgba(${GREEN_LIGHT}, .40), transparent 17%),
-    radial-gradient(circle at 63% 65%, rgba(${GREEN_A}, .20), transparent 30%),
-    radial-gradient(circle at 67% 30%, rgba(${GREEN_B}, .18), transparent 28%),
-    radial-gradient(circle, rgba(${GREEN_A}, .18), rgba(${GREEN_B}, .07) 48%, transparent 70%);
-  box-shadow: 0 0 62px rgba(${GREEN_A}, .12), inset 0 0 44px rgba(${GREEN_LIGHT}, .10);
-  filter: blur(1px);
-  animation: sfaiVoiceBreathe 7s ease-in-out infinite alternate;
-}
-.sfai-voice__fallback i {
-  z-index: 1;
-  width: min(58%, 194px);
-  border: 1px solid rgba(${GREEN_A}, .22);
-  box-shadow: 0 0 42px rgba(${GREEN_A}, .08);
-  opacity: .72;
-  animation: sfaiVoiceOrbit 12s linear infinite;
-}
-.sfai-voice__fallback b {
-  z-index: 1;
-  width: min(41%, 136px);
-  border: 1px solid rgba(${GREEN_A}, .28);
-  box-shadow: 0 0 30px rgba(${GREEN_A}, .07);
-  opacity: .68;
-  animation: sfaiVoiceOrbit 9s linear infinite reverse;
-}
-/* Silnik żywy: statyczny blob gaśnie (crossfade z canvasem), obręcze zostają. */
-.sfai-voice.is-live .sfai-voice__fallback span { opacity: 0; }
-.sfai-voice__canvas {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 1.2s ease;
-}
-.sfai-voice.is-live .sfai-voice__canvas { opacity: 1; }
-.sfai-voice__core {
-  position: relative;
-  z-index: 3;
-  display: grid;
-  justify-items: center;
-  gap: 2px;
-  pointer-events: none;
-}
-.sfai-voice__label {
-  font-weight: 600;
-  font-size: 15px;
-  letter-spacing: .01em;
-  color: #eafff3;
-  text-shadow: 0 0 18px rgba(${GREEN_A}, .55);
-}
-.sfai-voice__caption {
-  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
-  font-size: 11px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: rgba(${GREEN_A}, .85);
-}
-.sfai-voice__link:hover .sfai-voice__label { color: #ffffff; }
-@keyframes sfaiVoiceBreathe {
-  0% { opacity: .78; transform: translate(-50%, -50%) scale(.96) rotate(-4deg); }
-  100% { opacity: 1; transform: translate(-50%, -50%) scale(1.045) rotate(6deg); }
-}
-@keyframes sfaiVoiceOrbit {
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .sfai-voice__fallback span,
-  .sfai-voice__fallback i,
-  .sfai-voice__fallback b { animation: none; }
-}
+/* Shader 1:1 z FlowCore.astro. */
+const vertexSource = `
+  attribute vec2 a_position;
+  void main() {
+    gl_Position = vec4(a_position, 0.0, 1.0);
+  }
 `;
 
+/* Fragment 1:1 ze źródła; JEDYNA zmiana: center 0.56 → 0.50 (adaptacja #2/#3,
+   patrz nagłówek i flow-core.css — musi być równe --flow-object-x). */
+const fragmentSource = `
+  precision highp float;
+
+  uniform vec2 u_resolution;
+  uniform vec2 u_pointer;
+  uniform float u_time;
+  uniform float u_energy;
+  uniform float u_progress;
+
+  float hash(vec2 p) {
+    p = fract(p * vec2(123.34, 456.21));
+    p += dot(p, p + 45.32);
+    return fract(p.x * p.y);
+  }
+
+  float noise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f);
+    return mix(
+      mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x),
+      mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x),
+      f.y
+    );
+  }
+
+  float fbm(vec2 p) {
+    float value = 0.0;
+    float amplitude = 0.5;
+    for (int i = 0; i < 4; i++) {
+      value += amplitude * noise(p);
+      p = p * 2.03 + vec2(4.7, 2.1);
+      amplitude *= 0.5;
+    }
+    return value;
+  }
+
+  void main() {
+    vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+    float aspect = u_resolution.x / max(1.0, u_resolution.y);
+    vec2 center = vec2(0.50, 0.50) + u_pointer * vec2(0.012, -0.010);
+    vec2 p = uv - center;
+    p.x *= aspect;
+
+    float time = u_time * (0.58 + u_energy * 0.18);
+    float baseRadius = length(p);
+    if (baseRadius > .52) {
+      gl_FragColor = vec4(0.0);
+      return;
+    }
+
+    float warpX = noise(p * 2.15 + vec2(time * .055, -time * .032));
+    float warpY = noise(p * 2.37 + vec2(-time * .041, time * .047) + 9.7);
+    vec2 q = p + (vec2(warpX, warpY) - .5) * (.038 + u_energy * .014);
+    float angle = atan(q.y, q.x);
+    float radius = length(q);
+    float grain = fbm(q * 3.5 + vec2(time * 0.075, -time * 0.052));
+    float breath = sin(time * 1.18) * 0.009 + sin(time * 0.43) * 0.006;
+    float voiceWave = sin(angle * 3.0 - time * 1.16) * 0.014;
+    voiceWave += sin(angle * 6.0 + time * 0.82) * 0.008;
+    voiceWave += (grain - 0.5) * (0.016 + u_energy * 0.012);
+
+    float boundary = 0.232 + breath * .82 + voiceWave;
+    float outerDistance = abs(radius - boundary);
+    float innerDistance = abs(radius - (boundary - 0.043 - sin(angle * 2.0 + time) * 0.007));
+    float outerGlow = exp(-outerDistance * (21.0 - u_energy * 2.2));
+    float innerGlow = exp(-innerDistance * 35.0);
+    float body = 1.0 - smoothstep(boundary - 0.09, boundary + 0.048, radius);
+    float veil = body * (0.15 + grain * 0.17);
+    float core = exp(-radius * radius * (34.0 - u_energy * 4.0));
+    float innerMist = exp(-radius * radius * 14.0) * (0.52 + grain * .42);
+
+    float ribbonPhase = angle * 2.0 + time * 0.75 + grain * 1.8;
+    float ribbon = exp(-abs(sin(ribbonPhase) - (radius / max(boundary, .01) - .52)) * 7.0);
+    ribbon *= 1.0 - smoothstep(boundary - .08, boundary + .02, radius);
+
+    float signalWave = sin(angle * 7.0 - time * (1.25 + u_energy * .28)) * (.003 + u_energy * .0025);
+    float signalRing = exp(-abs(radius - (boundary + .034 + signalWave)) * 62.0);
+    signalRing *= 1.0 - smoothstep(boundary + .03, boundary + .12, radius);
+
+    float pulse = 0.75 + sin(time * 1.35 + radius * 18.0) * 0.07 + u_energy * 0.24;
+    vec3 deepLime = vec3(0.17, 0.23, 0.018);
+    vec3 softWhite = vec3(0.97, 1.0, 0.82);
+    vec3 lime = vec3(0.80, 1.0, 0.20);
+    vec3 citron = vec3(0.94, 1.0, 0.54);
+    float chroma = sin(angle + time * .31) * .5 + .5;
+    vec3 spectrum = mix(lime, citron, chroma);
+    vec3 edgeColor = mix(deepLime, spectrum, .68 + u_energy * .10);
+    edgeColor = mix(edgeColor, softWhite, innerGlow * .38 + outerGlow * .13);
+    vec3 coreColor = mix(lime, softWhite, .47);
+
+    float halo = exp(-max(0.0, radius - boundary) * 9.0) * (1.0 - smoothstep(boundary - .01, boundary + .22, radius));
+    float alpha = (outerGlow * .4 + innerGlow * .2 + veil * .25 + ribbon * .1 + signalRing * .075 + halo * .065 + core * .11) * pulse;
+    alpha *= 1.0 - smoothstep(.16, .45, radius);
+    alpha *= .88 + u_progress * .08;
+
+    vec3 rgb = edgeColor * (outerGlow * .48 + innerGlow * .29 + veil * .23 + ribbon * .10);
+    rgb += coreColor * core * (.24 + u_energy * .1);
+    rgb += lime * innerMist * .062;
+    rgb += spectrum * (ribbon * .05 + signalRing * .065 + outerGlow * .03);
+    rgb += (hash(gl_FragCoord.xy + u_time) - .5) / 255.0;
+    alpha = clamp(alpha, 0.0, .82);
+    gl_FragColor = vec4(max(rgb, vec3(0.0)) * alpha, alpha);
+  }
+`;
+
+const compileShader = (gl: WebGLRenderingContext, type: number, source: string): WebGLShader => {
+  const shader = gl.createShader(type);
+  if (!shader) throw new Error('Shader unavailable');
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    const message = gl.getShaderInfoLog(shader) || 'Shader compilation failed';
+    gl.deleteShader(shader);
+    throw new Error(message);
+  }
+  return shader;
+};
+
+/* Boot silnika dla JEDNEJ instancji (1:1 z bootVoiceAura, bez querySelectorAll —
+   różnica #1). Zwraca cleanup albo undefined (tryb statyczny). */
+const bootVoiceAura = (container: HTMLElement): (() => void) | undefined => {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const canvas = container.querySelector('[data-voice-aura-canvas]');
+  const stateLabel = container.querySelector('[data-aura-state]');
+  if (!(canvas instanceof HTMLCanvasElement) || canvas.dataset.ready) return undefined;
+  canvas.dataset.ready = 'true';
+
+  const compactQuery = window.matchMedia('(max-width: 760px)');
+  let mobile = compactQuery.matches;
+  const nav = navigator as Navigator & {
+    connection?: { saveData?: boolean };
+    mozConnection?: { saveData?: boolean };
+    webkitConnection?: { saveData?: boolean };
+  };
+  const connection = nav.connection || nav.mozConnection || nav.webkitConnection;
+  const saveData = Boolean(connection?.saveData);
+
+  if (reduced || saveData) {
+    container.classList.remove('is-booting');
+    container.classList.add('is-static', 'is-ready');
+    return undefined;
+  }
+
+  const gl = canvas.getContext('webgl', {
+    alpha: true,
+    antialias: false,
+    depth: false,
+    stencil: false,
+    premultipliedAlpha: true,
+    powerPreference: 'high-performance',
+  });
+
+  if (!gl) {
+    container.classList.remove('is-booting');
+    container.classList.add('is-static', 'is-fallback', 'is-ready');
+    return undefined;
+  }
+
+  try {
+    const vertexShader = compileShader(gl, gl.VERTEX_SHADER, vertexSource);
+    const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, fragmentSource);
+    const program = gl.createProgram();
+    if (!program) throw new Error('Program unavailable');
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program) || 'Program link failed');
+    gl.useProgram(program);
+
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW);
+    const position = gl.getAttribLocation(program, 'a_position');
+    gl.enableVertexAttribArray(position);
+    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+
+    const uniforms = {
+      resolution: gl.getUniformLocation(program, 'u_resolution'),
+      pointer: gl.getUniformLocation(program, 'u_pointer'),
+      time: gl.getUniformLocation(program, 'u_time'),
+      energy: gl.getUniformLocation(program, 'u_energy'),
+      progress: gl.getUniformLocation(program, 'u_progress'),
+    };
+
+    let width = 1;
+    let height = 1;
+    let targetPointerX = 0;
+    let targetPointerY = 0;
+    let pointerX = 0;
+    let pointerY = 0;
+    let targetProgress = mobile ? .48 : 0;
+    let progress = targetProgress;
+    let energy = .26;
+    let targetVoiceEnergy = 0;
+    let voiceEnergy = 0;
+    let visible = false;
+    let running = false;
+    let frame = 0;
+    let disposed = false;
+    let lastFrame = 0;
+    let activeTime = 0;
+    let cachedRect = container.getBoundingClientRect();
+    const hero = container.closest('[data-hero]');
+    const stateNames = ['Słucha / 01', 'Rozumie / 02', 'Działa / 03', 'Dowozi / 04'];
+
+    const setProgress = (value: number) => {
+      targetProgress = mobile ? .48 : clamp(value, 0, 1);
+      container.style.setProperty('--metal-progress', String(targetProgress));
+      if (stateLabel) stateLabel.textContent = stateNames[Math.min(3, Math.floor(targetProgress * 4))] ?? '';
+    };
+
+    const onHeroProgress = (event: Event) => {
+      if (event instanceof CustomEvent && typeof (event as CustomEvent<{ progress?: unknown }>).detail?.progress === 'number') {
+        setProgress((event as CustomEvent<{ progress: number }>).detail.progress);
+      }
+    };
+    hero?.addEventListener('sfai:hero-progress', onHeroProgress);
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (mobile || !visible || event.pointerType === 'touch') return;
+      const rect = cachedRect;
+      const inside = event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom;
+      targetPointerX = inside ? clamp(((event.clientX - rect.left) / rect.width - .5) * 2, -1, 1) : 0;
+      targetPointerY = inside ? clamp(((event.clientY - rect.top) / rect.height - .5) * 2, -1, 1) : 0;
+    };
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+
+    const onVoiceEnergy = (event: Event) => {
+      if (!(event instanceof CustomEvent) || typeof (event as CustomEvent<{ energy?: unknown }>).detail?.energy !== 'number') return;
+      targetVoiceEnergy = clamp((event as CustomEvent<{ energy: number }>).detail.energy, 0, 1);
+    };
+    document.addEventListener('sfai:voice-energy', onVoiceEnergy);
+
+    const resize = () => {
+      mobile = compactQuery.matches;
+      cachedRect = container.getBoundingClientRect();
+      const rect = cachedRect;
+      const dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.15 : 1.35);
+      width = Math.max(1, Math.round(rect.width * dpr));
+      height = Math.max(1, Math.round(rect.height * dpr));
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+        gl.viewport(0, 0, width, height);
+      }
+    };
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(container);
+    resize();
+
+    const render = (time: number) => {
+      if (!running || disposed) return;
+      frame = requestAnimationFrame(render);
+      const voiceOpen = container.classList.contains('is-voice-open');
+      const activeVoice = voiceOpen || targetVoiceEnergy > .08;
+      const frameInterval = activeVoice ? (mobile ? 22 : 15) : 30;
+      if (time - lastFrame < frameInterval) return;
+      const delta = Math.min(.05, Math.max(.001, lastFrame ? (time - lastFrame) * .001 : .016));
+      lastFrame = time;
+      if (document.hidden || document.body.classList.contains('menu-open')) return;
+
+      activeTime += delta;
+      const pointerBlend = 1 - Math.exp(-4.8 * delta);
+      const motionBlend = 1 - Math.exp(-3.4 * delta);
+      const voiceBlend = 1 - Math.exp(-(targetVoiceEnergy > voiceEnergy ? 12 : 3.8) * delta);
+      pointerX += (targetPointerX - pointerX) * pointerBlend;
+      pointerY += (targetPointerY - pointerY) * pointerBlend;
+      progress += (targetProgress - progress) * motionBlend;
+      voiceEnergy += (targetVoiceEnergy - voiceEnergy) * voiceBlend;
+      const targetEnergy = Math.max(voiceOpen ? .58 : .26, .26 + voiceEnergy * .74);
+      energy += (targetEnergy - energy) * motionBlend;
+
+      gl.clearColor(0, 0, 0, 0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.uniform2f(uniforms.resolution, width, height);
+      gl.uniform2f(uniforms.pointer, pointerX, pointerY);
+      gl.uniform1f(uniforms.time, activeTime);
+      gl.uniform1f(uniforms.energy, energy);
+      gl.uniform1f(uniforms.progress, progress);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+    };
+
+    const start = () => {
+      if (running || disposed || !visible) return;
+      running = true;
+      frame = requestAnimationFrame(render);
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(frame);
+    };
+
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = Boolean(entry?.isIntersecting);
+      if (visible) start();
+      else stop();
+    }, { rootMargin: '140px' });
+    observer.observe(container);
+
+    const onVisibility = () => (document.hidden ? stop() : start());
+    document.addEventListener('visibilitychange', onVisibility);
+
+    const onContextLost = () => {
+      stop();
+      container.classList.remove('is-rendered');
+      container.classList.add('is-fallback');
+    };
+    canvas.addEventListener('webglcontextlost', onContextLost);
+
+    const cleanup = () => {
+      disposed = true;
+      stop();
+      observer.disconnect();
+      resizeObserver.disconnect();
+      window.removeEventListener('pointermove', onPointerMove);
+      document.removeEventListener('visibilitychange', onVisibility);
+      document.removeEventListener('sfai:voice-energy', onVoiceEnergy);
+      hero?.removeEventListener('sfai:hero-progress', onHeroProgress);
+      canvas.removeEventListener('webglcontextlost', onContextLost);
+      window.removeEventListener('pagehide', onPageHide);
+      window.removeEventListener('pageshow', onPageShow);
+      gl.deleteBuffer(buffer);
+      gl.deleteProgram(program);
+      gl.deleteShader(vertexShader);
+      gl.deleteShader(fragmentShader);
+      // Różnica #4: flaga boot-guard zdjęta, żeby remount (SPA/StrictMode)
+      // mógł zbudować silnik na nowo — w MPA 10K strona i tak ginęła.
+      delete canvas.dataset.ready;
+    };
+    const onPageHide = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        stop();
+        return;
+      }
+      cleanup();
+    };
+    const onPageShow = (event: PageTransitionEvent) => {
+      if (!event.persisted || disposed) return;
+      resize();
+      start();
+    };
+    window.addEventListener('pagehide', onPageHide);
+    window.addEventListener('pageshow', onPageShow);
+
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.uniform2f(uniforms.resolution, width, height);
+    gl.uniform2f(uniforms.pointer, 0, 0);
+    gl.uniform1f(uniforms.time, 0);
+    gl.uniform1f(uniforms.energy, energy);
+    gl.uniform1f(uniforms.progress, progress);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+    requestAnimationFrame(() => {
+      container.classList.remove('is-booting');
+      container.classList.add('is-ready', 'is-rendered');
+    });
+
+    return cleanup;
+  } catch (error) {
+    console.warn('Voice Aura fallback:', error);
+    container.classList.remove('is-booting', 'is-rendered');
+    container.classList.add('is-static', 'is-fallback', 'is-ready');
+    return undefined;
+  }
+};
+
 export function VoiceAura() {
-  /* static = pierwszy paint / RM / Save-Data; full = desktop; lite = mobile. */
-  const [mode, setMode] = useState<'static' | 'full' | 'lite'>('static');
-  const [live, setLive] = useState(false);
+  const rootRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (typeof window === 'undefined' || !('matchMedia' in window)) return;
-    // Bramki jak w źródle (reduced || saveData → statyczna aura CSS).
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
-    if (nav.connection?.saveData === true) return;
+    const container = rootRef.current;
+    if (!container) return undefined;
 
+    let engineCleanup: (() => void) | undefined;
     let disposed = false;
     let idleId = 0;
     let usedTimeout = false;
 
-    // MotionGate-pattern: silnik dopiero po window.load + idle (nie konkuruje
-    // z LCP; sekcja i tak jest głęboko pod foldem).
+    // Różnica #3: silnik startuje po window.load + idle (wzorzec MotionGate
+    // repo — LCP maszyny pisania jest święte). Do tego czasu widać statyczną
+    // aurę CSS (.voice-aura__fallback przez .is-booting nie jest jeszcze
+    // widoczna — jak w 10K przed startem skryptu; ambient działa od razu).
     const arm = () => {
       const kick = () => {
         if (disposed) return;
-        setMode(window.matchMedia('(min-width: 1024px)').matches ? 'full' : 'lite');
+        engineCleanup = bootVoiceAura(container);
       };
       // typeof zamiast `in`: lib.dom deklaruje requestIdleCallback zawsze,
-      // więc `in` zawęża gałąź else do never — a Safari realnie go nie ma.
+      // a Safari realnie go nie ma.
       const ric = window.requestIdleCallback as typeof window.requestIdleCallback | undefined;
       if (typeof ric === 'function') {
         idleId = ric(kick, { timeout: 1500 });
@@ -214,213 +453,45 @@ export function VoiceAura() {
         if (usedTimeout) window.clearTimeout(idleId);
         else if (typeof cic === 'function') cic(idleId);
       }
+      engineCleanup?.();
     };
   }, []);
 
+  /* Markup 1:1 z FlowCore.astro (te same klasy i data-atrybuty). */
   return (
-    <div className={`sfai-voice${live ? ' is-live' : ''}`}>
-      <style>{CSS}</style>
+    <div ref={rootRef} className="flow-core voice-aura is-booting" data-flow-core>
+      {/* Ambientowa poświata pod blobem (czysty CSS, działa od pierwszego paintu) */}
+      <div className="voice-aura__ambient" aria-hidden="true"></div>
 
-      {/* CAŁY blob klikalny — link do żywego demo voicebota (spec v4 §D pkt 1);
-          aria-label 1:1 z przycisku FlowCore. */}
-      <a
-        href={DEMO_URL}
-        target="_blank"
-        rel="noopener noreferrer"
+      {/* Statyczna aura fallback (reduced-motion / Save-Data / brak WebGL) */}
+      <div className="flow-metal-fallback voice-aura__fallback" data-flow-fallback aria-hidden="true">
+        <span></span><i></i><b></b>
+      </div>
+
+      {/* Canvas shadera WebGL (blob „żywej modulacji" 1:1 z 10K) */}
+      <canvas data-voice-aura-canvas aria-hidden="true"></canvas>
+
+      {/* HUD stanu agenta (mono, znika na mobile przez CSS) */}
+      <div className="flow-metal-hud" aria-hidden="true">
+        <span>[ Agent głosowy / realtime ]</span>
+        <span data-aura-state>Słucha / 01</span>
+      </div>
+
+      {/* PRZYCISK otwierający konsolę głosową (NIE link — spec v5 §1);
+          klik łapie delegacja w agent-console-init.ts */}
+      <button
+        className="voice-core-trigger"
+        type="button"
+        data-agent-open="voice"
         aria-label="Otwórz rozmowę głosową z Agentem SimpleFast.ai"
-        className="sfai-voice__link"
       >
-        {/* Ambientowa poświata (port .voice-aura__ambient, zieleń). */}
-        <span className="sfai-voice__ambient" aria-hidden="true" />
+        <span className="voice-core-orbit" aria-hidden="true"><i></i><b></b></span>
+        <span className="voice-core-label">Zapytaj AI</span>
+        <span className="voice-core-caption" aria-hidden="true">Voice agent</span>
+      </button>
 
-        {/* Statyczna aura (port .voice-aura__fallback): pierwszy paint, RM,
-            Save-Data; blob gaśnie w crossfade gdy wystartuje canvas. */}
-        <span className="sfai-voice__fallback" aria-hidden="true">
-          <span />
-          <i />
-          <b />
-        </span>
-
-        {/* Silnik canvas — montowany dopiero po bramkach (load + idle). */}
-        {mode !== 'static' && (
-          <AuraCanvas lite={mode === 'lite'} onLive={() => setLive(true)} />
-        )}
-
-        {/* Etykieta przycisku 1:1 z FlowCore („Zapytaj AI" / „Voice agent"). */}
-        <span className="sfai-voice__core">
-          <span className="sfai-voice__label">Zapytaj AI</span>
-          <span className="sfai-voice__caption" aria-hidden="true">
-            Voice agent
-          </span>
-        </span>
-      </a>
+      {/* Indeks postępu (mono; pasek skaluje --metal-progress) */}
+      <div className="flow-metal-index" aria-hidden="true"><i></i><span>Żywa modulacja</span><b>SF / AI</b></div>
     </div>
   );
-}
-
-/* ── Silnik: organiczny blob 2D (choreografia brzegu 1:1 z shadera 10K) ────── */
-
-function AuraCanvas({ lite, onLive }: { lite: boolean; onLive: () => void }) {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const onLiveRef = useRef(onLive);
-  onLiveRef.current = onLive;
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    /* Mobile lite: ≤48 segmentów (żelazne v4: ≤50 elementów), desktop 88. */
-    const SEG = lite ? 48 : 88;
-    let raf = 0;
-    let running = false;
-    let visible = false;
-    let w = 0;
-    let h = 0;
-    let last = 0;
-    let t = 0;
-
-    const size = () => {
-      const rect = canvas.getBoundingClientRect();
-      w = rect.width;
-      h = rect.height;
-      // DPR: lite = 1 (żelazne v4), desktop cap 1.35 (1:1 z FlowCore).
-      const dpr = lite ? 1 : Math.min(window.devicePixelRatio || 1, 1.35);
-      canvas.width = Math.max(1, Math.round(w * dpr));
-      canvas.height = Math.max(1, Math.round(h * dpr));
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-
-    /* Promień brzegu dla kąta a — fale kątowe i tempa 1:1 z shadera
-       (voiceWave: sin(3a−1.16t) + sin(6a+0.82t); breath: 1.18t/0.43t). */
-    const boundary = (a: number, base: number): number => {
-      const breath = Math.sin(t * 1.18) * 0.018 + Math.sin(t * 0.43) * 0.012;
-      const wave =
-        Math.sin(a * 3 - t * 1.16) * 0.045 +
-        Math.sin(a * 6 + t * 0.82) * 0.026 +
-        Math.sin(a * 2 + t * 0.55) * 0.02;
-      return base * (1 + breath + wave);
-    };
-
-    const blobPath = (cx: number, cy: number, base: number) => {
-      ctx.beginPath();
-      for (let i = 0; i <= SEG; i++) {
-        const a = (i / SEG) * TAU;
-        const r = boundary(a, base);
-        const x = cx + Math.cos(a) * r;
-        const y = cy + Math.sin(a) * r;
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.closePath();
-    };
-
-    const frame = (now: number) => {
-      if (!running) return;
-      raf = requestAnimationFrame(frame);
-      // 30 fps przez frame-skip (żelazne v4 dla mobile; desktop 1:1 ze źródłem).
-      if (now - last < FRAME_MS) return;
-      const dt = Math.min(0.05, last ? (now - last) * 0.001 : 0.016);
-      last = now;
-      if (document.hidden) return;
-      t += dt * 0.58; // globalne tempo 1:1 (u_time * 0.58 w shaderze)
-
-      ctx.clearRect(0, 0, w, h);
-      const cx = w / 2;
-      const cy = h / 2;
-      const R = Math.min(w, h) * 0.3;
-
-      // Miękka poświata pod blobem (odpowiednik halo/outerGlow shadera).
-      const glow = ctx.createRadialGradient(cx, cy, R * 0.2, cx, cy, R * 1.9);
-      glow.addColorStop(0, `rgba(${GREEN_A}, 0.16)`);
-      glow.addColorStop(0.55, `rgba(${GREEN_B}, 0.08)`);
-      glow.addColorStop(1, `rgba(${GREEN_B}, 0)`);
-      ctx.fillStyle = glow;
-      ctx.fillRect(0, 0, w, h);
-
-      // Ciało bloba: wypełnienie gradientem (veil/core/innerMist w jednym).
-      blobPath(cx, cy, R);
-      const body = ctx.createRadialGradient(cx - R * 0.25, cy - R * 0.25, R * 0.1, cx, cy, R * 1.15);
-      body.addColorStop(0, `rgba(${GREEN_LIGHT}, 0.26)`);
-      body.addColorStop(0.45, `rgba(${GREEN_A}, 0.15)`);
-      body.addColorStop(1, `rgba(${GREEN_B}, 0.02)`);
-      ctx.fillStyle = body;
-      ctx.fill();
-
-      // Brzeg z poświatą (outerGlow) — shadowBlur TYLKO desktop (żelazne v4).
-      if (!lite) {
-        ctx.shadowBlur = 16;
-        ctx.shadowColor = `rgba(${GREEN_A}, 0.8)`;
-      }
-      ctx.strokeStyle = `rgba(${GREEN_A}, 0.55)`;
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-
-      // Wewnętrzna obwódka (innerGlow shadera) — 82% promienia.
-      blobPath(cx, cy, R * 0.82);
-      ctx.strokeStyle = `rgba(${GREEN_LIGHT}, 0.3)`;
-      ctx.lineWidth = 1;
-      ctx.stroke();
-
-      // Pierścień sygnału na zewnątrz (signalRing: sin(7a−1.25t)).
-      ctx.beginPath();
-      for (let i = 0; i <= SEG; i++) {
-        const a = (i / SEG) * TAU;
-        const r = R * 1.14 + Math.sin(a * 7 - t * 1.25) * R * 0.014;
-        const x = cx + Math.cos(a) * r;
-        const y = cy + Math.sin(a) * r;
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.closePath();
-      ctx.strokeStyle = `rgba(${GREEN_A}, 0.16)`;
-      ctx.lineWidth = 1;
-      ctx.stroke();
-    };
-
-    const start = () => {
-      if (running || !visible) return;
-      running = true;
-      last = 0;
-      raf = requestAnimationFrame(frame);
-    };
-    const stop = () => {
-      running = false;
-      cancelAnimationFrame(raf);
-    };
-
-    // Pauza poza viewportem — 1:1 z FlowCore (rootMargin 140px).
-    const io = new IntersectionObserver(
-      (entries) => {
-        visible = entries.some((e) => e.isIntersecting);
-        if (visible) start();
-        else stop();
-      },
-      { rootMargin: '140px' }
-    );
-    io.observe(canvas);
-
-    const onVisibility = () => (document.hidden ? stop() : start());
-    document.addEventListener('visibilitychange', onVisibility);
-
-    const ro = new ResizeObserver(size);
-    ro.observe(canvas);
-    size();
-
-    // Crossfade: pierwszy narysowany kadr → rodzic dostaje .is-live
-    // (canvas wjeżdża 0→1, statyczny blob gaśnie — przez cały czas coś widać).
-    const liveRaf = requestAnimationFrame(() => onLiveRef.current());
-
-    return () => {
-      stop();
-      cancelAnimationFrame(liveRaf);
-      io.disconnect();
-      ro.disconnect();
-      document.removeEventListener('visibilitychange', onVisibility);
-    };
-  }, [lite]);
-
-  return <canvas ref={canvasRef} className="sfai-voice__canvas" aria-hidden="true" />;
 }

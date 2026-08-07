@@ -26,10 +26,14 @@ export function RealizacjaEfekt({ efekt }: { efekt: Realizacja['efekt'] }) {
           <h2 className="text-h2">{efekt.h2}</h2>
         </Reveal>
 
+        {/* INFINITY v5 (spec §4): kafle metryk na kartach .inf-card (narożniki +
+            sweep z globals, akcent domyślny). Etykieta zostaje czytelnym
+            body-sm (bywa pełnym zdaniem — micro-caps by ją zniekształcił).
+            Treść 1:1. */}
         <ul className={`mt-8 grid gap-6 ${cols}`}>
           {efekt.metryki.map((m, i) => (
             <Reveal as="li" key={m.etykieta} delay={i * 0.06}>
-              <Card as="article" className="h-full">
+              <Card as="article" variant="quiet" className="inf-card h-full p-6">
                 <p className="font-display text-metric font-semibold tabular-nums text-accent">
                   {m.wartosc}
                 </p>

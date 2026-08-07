@@ -1,8 +1,11 @@
-import { Section, Badge } from '@/components/ui';
+import type { CSSProperties } from 'react';
+import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { BlogBreadcrumbs } from './BlogBreadcrumbs';
 import { PostMeta } from './PostMeta';
 import type { Post } from '@/lib/blog/types';
+import { INF_TYP, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { InfIcon } from '@/components/ui/InfIcons';
 
 /**
  * PostHero — nagłówek artykułu (answer-first), wzorzec spójny z ServiceHero usług.
@@ -11,10 +14,15 @@ import type { Post } from '@/lib/blog/types';
  *
  * KPI #1: H1 i lead są w HTML przy 1. żądaniu (Reveal tylko wzbogaca; przy
  * prefers-reduced-motion treść pojawia się natychmiast). Wąska kolumna = czytelność.
+ *
+ * INFINITY v5 (spec §4 — treść artykułu zostaje typograficzna, HERO/META w języku
+ * inf, treść 1:1): tone="transparent" (globalne tło prześwituje), badge kategorii
+ * → kafelek .inf-tile z ikoną SVG typu treści + mono .inf-tag (jak karty listy).
  */
 export function PostHero({ post }: { post: Post }) {
+  const dekor = INF_TYP.wpis;
   return (
-    <Section tone="base" containerWidth="default">
+    <Section tone="transparent" containerWidth="default">
       <div className="mx-auto max-w-narrow">
         <BlogBreadcrumbs
           items={[
@@ -25,9 +33,19 @@ export function PostHero({ post }: { post: Post }) {
         />
 
         <Reveal>
-          <Badge variant="accent" className="mt-6">
-            {post.kategoria}
-          </Badge>
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            {/* Kafelek ikony typu treści — dekoracja aria-hidden (jak karty). */}
+            <span
+              aria-hidden="true"
+              className="inf-tile"
+              style={{ '--tile-c': dekor.c } as CSSProperties}
+            >
+              <InfIcon name={dekor.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
+            </span>
+            <span className="inf-tag" style={{ color: dekor.odcien ?? dekor.c }}>
+              {post.kategoria}
+            </span>
+          </div>
         </Reveal>
 
         <Reveal delay={0.05}>

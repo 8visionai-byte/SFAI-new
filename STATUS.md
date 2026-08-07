@@ -1,4 +1,30 @@
-# STATUS — INFINITY v4 — NA PRODUKCJI (commit 800a209, 21 plików)
+# STATUS — INFINITY v5 (2026-08-07) — W TOKU (wf_30a5e36f)
+
+Feedback Pawła po v4 (dyktando: JAKOŚĆ > TEMPO, sprawdzać przed wdrożeniem):
+1) VOICE AGENT z 10K przenieść 1:1 DO HERO zamiast lemniskaty (pełna
+   struktura: api/elevenlabs-session.mjs + _knowledge + agent-console.js
+   947 linii + AgentConsole/FlowCore; /api/*.mjs = vercelowe functions obok
+   Nexta; dep @elevenlabs/client 1.15.2; ENV do skopiowania w Vercelu
+   z projektu 10K: ELEVENLABS_API_KEY [+ opcjonalne VOICE_ID/AGENT_NAME/
+   LLM/KNOWLEDGE_DOC_URL]; „prompty dopracujemy później").
+2) Dropdowny PRZEZROCZYSTE (rgba .72 + blur), wiersze emoji NATYWNE +
+   opis + BADGE mono po prawej (istniejące pola), CTA: zielona obwódka +
+   niebieskie litery → hover białe świecące (nav i ghost).
+3) Home: symetria Problem, cytaty jako WALEC 3D (obracający się bęben,
+   ~260px, RM crossfade), sekcje AEO w dwóch kartach obok siebie,
+   tile hover rotate -15°+scale, pulsujące kropki statusów, kolejność
+   sekcji przemyślana (opowieść).
+4) PODSTRONY — pełna spójność z home (naczynia połączone): wszystkie
+   huby/wpisy/o-nas/kontakt na karty inf + mechanizmy + tabele.
+Spec: scratchpad/spec-infinity-v5.md. Partie: A voice (effort max) /
+B nav (właściciel globals w tej rundzie) / C home / D podstrony.
+Po merge: build, PEŁNA weryfikacja przeglądarką (desktop+mobile, dropdowny,
+walec, konsola agenta — lokalnie /api/*.mjs nie działa, test na Vercelu),
+deploy, PSI, instrukcja env dla Pawła.
+
+---
+
+# STATUS — INFINITY v4 — zastąpiony przez v5 (commit 800a209)
 
 Zweryfikowane live + lokalnie: lemniskata 3D „pływające DNA" (wspólny moduł
 lib/lemniskata.ts: z-oplot, tilt 18°, projekcja; desktop glow, MOBILE

@@ -54,11 +54,13 @@ export default function KontaktPage() {
               </p>
             </Reveal>
 
+            {/* INFINITY v5 (spec §4): etykiety NAP w mono .inf-overline (język
+                etykiet wzorca jak <dt> cennika home); treść 1:1. */}
             <Reveal delay={0.1}>
               <dl className="mt-8 space-y-4">
                 {SITE.contact.emailVerified && SITE.contact.email && (
                   <div>
-                    <dt className="text-caption uppercase tracking-[0.08em] text-fg-subtle">E-mail</dt>
+                    <dt className="inf-overline">E-mail</dt>
                     <dd className="mt-1 text-body text-fg">
                       <a
                         href={`mailto:${SITE.contact.email}`}
@@ -71,7 +73,7 @@ export default function KontaktPage() {
                 )}
                 {SITE.contact.phone && (
                   <div>
-                    <dt className="text-caption uppercase tracking-[0.08em] text-fg-subtle">Telefon</dt>
+                    <dt className="inf-overline">Telefon</dt>
                     <dd className="mt-1 text-body text-fg">
                       <a
                         href={`tel:${SITE.contact.phone}`}
@@ -83,11 +85,11 @@ export default function KontaktPage() {
                   </div>
                 )}
                 <div>
-                  <dt className="text-caption uppercase tracking-[0.08em] text-fg-subtle">Godziny</dt>
+                  <dt className="inf-overline">Godziny</dt>
                   <dd className="mt-1 text-body text-fg">{SITE.contact.hours}</dd>
                 </div>
                 <div>
-                  <dt className="text-caption uppercase tracking-[0.08em] text-fg-subtle">Zasięg</dt>
+                  <dt className="inf-overline">Zasięg</dt>
                   <dd className="mt-1 text-body text-fg">Obsługujemy całą Polskę. Twoje dane zostają w UE.</dd>
                 </div>
               </dl>

@@ -112,7 +112,12 @@ export function DiagnozaForm() {
 
   if (status === 'success') {
     return (
-      <div className="rounded-lg border border-border bg-success-bg p-7 text-center">
+      /* INFINITY v5: stan sukcesu w karcie .inf-card (zielona krawędź statusu
+         przez --card-c; tło sukcesu zostaje tokenem semantycznym). */
+      <div
+        className="inf-card bg-success-bg p-7 text-center"
+        style={{ '--card-c': '#22e06b' } as React.CSSProperties}
+      >
         <h3 className="text-h3 mb-2">Mam to.</h3>
         <p className="text-body text-fg-muted">
           Dziękuję, zgłoszenie do mnie dotarło. Odezwę się w kilka minut na podany kontakt.
@@ -123,7 +128,12 @@ export function DiagnozaForm() {
 
   if (status === 'error') {
     return (
-      <div className="rounded-lg border border-error bg-error-bg p-7 text-center">
+      /* INFINITY v5: stan błędu w karcie .inf-card — krawędź statusu w kolorze
+         błędu (token semantyczny przez --card-c), tło błędu zostaje. */
+      <div
+        className="inf-card border-error bg-error-bg p-7 text-center"
+        style={{ '--card-c': 'var(--error)' } as React.CSSProperties}
+      >
         <h3 className="text-h3 mb-2">Coś nie zadziałało z wysyłką.</h3>
         <p className="text-body text-fg-muted">
           Najszybciej złap mnie wprost: napisz na{' '}
@@ -157,8 +167,13 @@ export function DiagnozaForm() {
 
       {/* REGUŁA PROMIENIA: interakcja 8px, kontener 16px, element wewnątrz kontenera
           8px, pill = full. Cień: na home to JEDYNY formularz z shadow-md (fizyczny
-          cel konwersji, nie kolejne pudełko). */}
-      <form onSubmit={handleSubmit} className="rounded-lg border border-border bg-surface p-6 shadow-md sm:p-7">
+          cel konwersji, nie kolejne pudełko).
+          INFINITY v5 (spec §4 — formularz w CIEMNEJ karcie inf): .inf-card daje
+          powierzchnię/obwódkę/promień + narożniki [ ] i sweep z globals (zamiast
+          gołego border+bg-surface). Pola zostają na ciemnych tokenach kontrolek
+          (surface-sunken + text-fg = czytelność AA). Honeypot jest h-0 w-0, więc
+          overflow:hidden karty niczego nie ucina (kontrakt v4). */}
+      <form onSubmit={handleSubmit} className="inf-card p-6 shadow-md sm:p-7">
       {/* Pasek postępu */}
       <div className="mb-6">
         <div className="mb-2 flex items-center justify-between">

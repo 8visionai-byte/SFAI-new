@@ -1,13 +1,15 @@
 import type { Metadata } from 'next';
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
-import type { InfDekor } from '@/lib/inf-kategorie';
+import type { InfIkonaDekor } from '@/lib/inf-kategorie';
+import { INF_WIEDZA, INF_WIEDZA_BADGE, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { InfIcon } from '@/components/ui/InfIcons';
 
 import { buildMetadata } from '@/lib/metadata';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { breadcrumbSchema } from '@/components/seo/schemas';
 import { SITE } from '@/lib/site';
-import { Section, Card, Badge, MagneticButton } from '@/components/ui';
+import { Section, Card, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { PoradnikBreadcrumbs } from '@/components/poradniki';
 import { PoradnikCard } from '@/components/poradniki';
@@ -105,22 +107,36 @@ const KATEGORIE: Kategoria[] = [
 ];
 
 /**
- * INFINITY v2 — dekoracja kafelka per dział Centrum Wiedzy (emoji + kolor;
- * ai-radar 📡 spoza mapy usług spec — decyzja dekoracyjna, aria-hidden).
+ * INFINITY v5 (spec §4) — dekoracja kafelka per dział Centrum Wiedzy oparta o
+ * single source INF_WIEDZA (ta sama mapa co dropdown "Wiedza": kolor + jasny
+ * odcień + UNIKALNA ikona SVG). Mapowanie id strony -> klucz INF_WIEDZA:
+ * przemyslenia = blog. Case studies nie są działem dropdownu Wiedza (żyją pod
+ * /realizacje), więc dostają lokalny dekor w palecie kategorii (zieleń
+ * automatyzacji + glif wykresu — spójny z liczbami case'ów).
+ * BADGE mono po prawej = typ treści działu (INF_WIEDZA_BADGE — pochodna
+ * ISTNIEJĄCYCH kluczy typów, spec §2); case-studies bez badge (brak pola).
  */
-const KATEGORIA_DEKOR: Record<string, InfDekor> = {
-  poradniki: { c: '#22d3ee', emoji: '📚' },
-  'ai-radar': { c: '#8b5cf6', emoji: '📡' },
-  przemyslenia: { c: '#a78bfa', emoji: '📝' },
-  'case-studies': { c: '#10b981', emoji: '📈' },
+const KATEGORIA_DEKOR: Record<string, InfIkonaDekor> = {
+  poradniki: INF_WIEDZA.poradniki,
+  'ai-radar': INF_WIEDZA['ai-radar'],
+  przemyslenia: INF_WIEDZA.blog,
+  'case-studies': { c: '#10b981', odcien: '#4ade80', ikona: 'wykres-strzalka' },
 };
-const KATEGORIA_DEKOR_DEFAULT: InfDekor = { c: 'var(--accent)', emoji: '✨' };
+const KATEGORIA_BADGE: Record<string, string> = {
+  poradniki: INF_WIEDZA_BADGE.poradniki,
+  'ai-radar': INF_WIEDZA_BADGE['ai-radar'],
+  przemyslenia: INF_WIEDZA_BADGE.blog,
+};
 
 /** Karta kategorii — klikalna gdy trasa live, inaczej „Wkrótce" (zero martwych linków).
-    INFINITY v2 (sama prezentacja, treść 1:1): .inf-card + kafelek emoji działu
-    (aria-hidden), strzałka .inf-arrow, błysk .inf-shine + spotlight .inf-spotlight. */
+    INFINITY v5 (spec §4, treść 1:1): .inf-card (narożniki + sweep robi karta
+    z globals) + kafelek .inf-tile z ikoną SVG działu (aria-hidden), badge mono
+    typu treści po prawej w jasnym odcieniu, --card-c-l, strzałka .inf-arrow,
+    spotlight .inf-spotlight. */
 function KategoriaKafel({ kategoria }: { kategoria: Kategoria }) {
-  const dekor = KATEGORIA_DEKOR[kategoria.id] ?? KATEGORIA_DEKOR_DEFAULT;
+  const dekor = KATEGORIA_DEKOR[kategoria.id] ?? INF_KATEGORIA_DEFAULT;
+  const odcien = dekor.odcien ?? dekor.c;
+  const badge = KATEGORIA_BADGE[kategoria.id];
 
   if (!kategoria.live) {
     return (
@@ -147,17 +163,24 @@ function KategoriaKafel({ kategoria }: { kategoria: Kategoria }) {
       as="article"
       variant="quiet"
       className="inf-card relative flex h-full flex-col p-6"
-      style={{ '--card-c': dekor.c } as CSSProperties}
+      style={{ '--card-c': dekor.c, '--card-c-l': odcien } as CSSProperties}
     >
-      <div aria-hidden="true" className="inf-shine" />
       <div aria-hidden="true" className="inf-spotlight" />
-      {/* Kafelek emoji działu — dekoracja aria-hidden (jak dropdown). */}
-      <span
-        aria-hidden="true"
-        className="inf-tile mb-4"
-        style={{ '--tile-c': dekor.c } as CSSProperties}
-      >
-        {dekor.emoji}
+      {/* Wiersz dekoracji jak w dropdownie wzorca: kafelek ikony działu +
+          badge mono typu treści po prawej (pochodna istniejących kluczy). */}
+      <span className="mb-4 flex items-center justify-between gap-3">
+        <span
+          aria-hidden="true"
+          className="inf-tile"
+          style={{ '--tile-c': dekor.c } as CSSProperties}
+        >
+          <InfIcon name={dekor.ikona} />
+        </span>
+        {badge && (
+          <span className="inf-tag" style={{ color: odcien }}>
+            {badge}
+          </span>
+        )}
       </span>
       <h3 className="text-h3">
         <Link
@@ -300,8 +323,12 @@ export default function WiedzaPage() {
       <Section tone="subtle">
         <div className="mx-auto max-w-narrow">
           <Reveal>
+            {/* INFINITY v5: wyróżnienie zostaje na .sf-rim-gradient (mechanizm
+                home) — badge w języku inf (mono .inf-tag na akcencie). */}
             <Card variant="highlight" className="overflow-hidden">
-              <Badge variant="accent">Za darmo</Badge>
+              <span className="inf-tag rounded-full border-transparent bg-accent px-3 py-1 text-accent-contrast">
+                Za darmo
+              </span>
               <h2 className="text-h2 mt-4">Narzędzia i materiały do pobrania</h2>
               <p className="text-lead mt-4 text-fg-muted">
                 Wiedza to jedno, policzenie to drugie. W narzędziach sprawdzisz w

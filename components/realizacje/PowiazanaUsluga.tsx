@@ -1,8 +1,11 @@
+import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { getUslugaBySlug } from '@/lib/uslugi';
 import type { RealizacjaKategoria } from '@/lib/realizacje/types';
+import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { InfIcon } from '@/components/ui/InfIcons';
 
 /**
  * PowiazanaUsluga — SEKCJA 5 case'a: link wewnętrzny do powiązanej usługi
@@ -30,19 +33,46 @@ export function PowiazanaUsluga({ kategoria }: { kategoria: RealizacjaKategoria 
           </p>
         </Reveal>
 
+        {/* INFINITY v5 (spec §4): link do usługi jako karta .inf-card w kolorze
+            kategorii (narożniki + sweep z globals) z kafelkiem ikony kategorii
+            i strzałką .inf-arrow — wiersz jak w dropdownie wzorca. Treść 1:1. */}
         <Reveal delay={0.1}>
           <Link
             href={`/uslugi/${usluga.slug}`}
-            className="group mt-6 block rounded-lg border border-border bg-surface p-6 shadow-xs transition-colors hover:border-brand"
+            className="inf-card group mt-6 flex items-center gap-4 p-6 md:gap-5"
+            style={
+              {
+                '--card-c': (INF_KATEGORIA[usluga.slug] ?? INF_KATEGORIA_DEFAULT).c,
+              } as CSSProperties
+            }
           >
-            <span className="block text-body font-medium text-fg group-hover:text-brand">
-              {usluga.h1}
+            {/* Kafelek ikony kategorii — dekoracja aria-hidden. */}
+            <span
+              aria-hidden="true"
+              className="inf-tile shrink-0"
+              style={
+                {
+                  '--tile-c': (INF_KATEGORIA[usluga.slug] ?? INF_KATEGORIA_DEFAULT).c,
+                } as CSSProperties
+              }
+            >
+              <InfIcon
+                name={(INF_KATEGORIA[usluga.slug] ?? INF_KATEGORIA_DEFAULT).ikona ?? INF_KATEGORIA_DEFAULT.ikona}
+              />
             </span>
-            <span className="mt-2 block text-body-sm text-fg-muted">
-              {usluga.metaDescription}
+            <span className="min-w-0 flex-1">
+              <span className="block text-body font-medium text-fg group-hover:text-brand">
+                {usluga.h1}
+              </span>
+              <span className="mt-2 block text-body-sm text-fg-muted">
+                {usluga.metaDescription}
+              </span>
+              <span className="mt-3 block text-caption text-fg-subtle">
+                Zobacz, jak to działa
+              </span>
             </span>
-            <span className="mt-3 block text-caption text-fg-subtle">
-              Zobacz, jak to działa <span aria-hidden="true" className="sf-arrow">→</span>
+            <span aria-hidden="true" className="inf-arrow text-accent max-sm:hidden">
+              →
             </span>
           </Link>
         </Reveal>

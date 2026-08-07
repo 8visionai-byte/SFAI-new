@@ -65,10 +65,14 @@ export function LinkiKrzyzowe({
   );
 }
 
-/** Pojedynczy kafel linku krzyżowego — cała powierzchnia klikalna. */
+/** Pojedynczy kafel linku krzyżowego — cała powierzchnia klikalna.
+    INFINITY v5 (spec §4, treść 1:1): karta .inf-card (narożniki + sweep robi
+    karta z globals, akcent domyślny) + spotlight, strzałka → .inf-arrow
+    (dojeżdża na hover karty jak na kartach home). */
 function LinkKafel({ link, cta }: { link: LinkKrzyzowy; cta: string }) {
   return (
-    <Card as="article" variant="interactive" className="relative flex h-full flex-col">
+    <Card as="article" variant="quiet" className="inf-card relative flex h-full flex-col p-6">
+      <div aria-hidden="true" className="inf-spotlight" />
       <h4 className="text-h3">
         <Link
           href={link.href}
@@ -80,7 +84,14 @@ function LinkKafel({ link, cta }: { link: LinkKrzyzowy; cta: string }) {
       <p className="mt-2 text-body-sm text-fg-muted">{link.opis}</p>
       <span className="mt-4 inline-flex items-center gap-1 text-caption font-semibold text-accent">
         {cta}
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+          className="inf-arrow text-accent"
+        >
           <path
             d="M5 12h14M13 6l6 6-6 6"
             stroke="currentColor"

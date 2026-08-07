@@ -24,7 +24,9 @@ export function FounderCard({ profil }: { profil: FounderProfil }) {
   const showPhoto = SITE.assetsReady && Boolean(photo);
 
   return (
-    <Card as="article" className="h-full">
+    /* INFINITY v5 (spec §4): sylwetka foundera na karcie .inf-card (narożniki +
+       sweep robi karta z globals, akcent domyślny) — mechanizmy home, treść 1:1. */
+    <Card as="article" variant="quiet" className="inf-card h-full p-6">
       <div className="flex items-center gap-4">
         {showPhoto && photo ? (
           <Image

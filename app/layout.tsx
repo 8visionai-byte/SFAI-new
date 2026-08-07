@@ -6,7 +6,7 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { organizationSchema, websiteSchema } from '@/components/seo/schemas';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { ChatLauncher } from '@/components/demo/ChatLauncher';
+import { AgentConsole } from '@/components/agent/AgentConsole';
 import { FaviconPulse } from '@/components/effects/FaviconPulse';
 import { AuraDesync } from '@/components/effects/AuraDesync';
 import { MotionGate } from '@/components/motion/MotionGate';
@@ -114,8 +114,13 @@ export default function RootLayout({
         {children}
         <Footer />
 
-        {/* Pływający launcher czatu (STUB demo) — nie blokuje treści/indeksacji */}
-        <ChatLauncher />
+        {/* Konsola agenta 1:1 z 10K (spec v5 §1): overlay czat+głos oraz FAB
+            „Zapytaj AI" (prawy dolny róg). Zastępuje w montażu ChatLauncher
+            (STUB) — dwa pływające przyciski w tym samym rogu by się nakładały;
+            plik ChatLauncher/ChatAgent ZOSTAJE w repo nieużywany (zero
+            kasowania). Backend konsoli: /api/*.mjs (tylko Vercel; na next dev
+            konsola degraduje się grzecznie). */}
+        <AgentConsole />
 
         {/* Pulsujący favicon w karcie (efekt „live", canvas) — reduced-motion safe */}
         <FaviconPulse />

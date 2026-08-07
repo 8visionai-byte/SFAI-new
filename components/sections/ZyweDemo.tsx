@@ -8,8 +8,9 @@ import { VoiceAura } from '@/components/motion/VoiceAura';
  * SEKCJA 10 — DEMO POKAZOWE (spec 03 §10). Emocja: kompetencja (szewc w butach).
  * Jasna sekcja domykająca akt III (rejestr pionowy sm). Kapsuła + opis w HTML
  * (nie blokuje indeksacji).
- * Czat = ChatDemo (STUB, atrapa). Voicebot = AKTYWNY link do żywego demo
- * (druga strona Pawła: sfai-webseite-10k-look.vercel.app — spec v3 §VOICEBOT).
+ * Czat = ChatDemo (STUB, atrapa). Voicebot = blob FlowCore (VoiceAura) z
+ * przyciskiem otwierającym GLOBALNĄ konsolę agenta głosowego 1:1 z 10K
+ * (spec v5 §1 — zamiast linku zewnętrznego z v4).
  *
  * UWAGA SPÓJNOŚCI: dopóki czat to atrapa (bez /api/chat), tekst sekcji NIE może
  * twierdzić, że to żywy Agent ("nie nagranie ani makieta") — bo ChatDemo odpowiada
@@ -46,12 +47,11 @@ export function ZyweDemo() {
           </p>
         </Reveal>
 
-        {/* Voicebot — voice-blob „Zapytaj AI" (spec v4 §PARTIA D pkt 1, decyzja
-            Pawła): dotychczasowy kafelek ikony + pigułka .inf-glow-cta ustąpiły
-            miejsca VoiceAura — oddychającemu zielonemu blobowi z drugiej strony
-            Pawła (port FlowCore.astro). CAŁY blob jest linkiem do żywego demo
-            (ten sam URL co zdjęty przycisk — dlatego przycisk usunięty jako
-            zdublowany, zgodnie ze spec). Teksty sekcji (H3 + opis) zostają 1:1.
+        {/* Voicebot — blob FlowCore „Zapytaj AI" (spec v5 §1): VoiceAura to od
+            v5 port FlowCore 1:1 z 10K, a jego środek to PRZYCISK
+            data-agent-open="voice" otwierający globalną konsolę agenta
+            (zamiast linku zewnętrznego z v4 — klik łapie delegacja w
+            agent-console-init.ts). Teksty sekcji (H3 + opis) zostają 1:1.
             Karta w kolorze kategorii voicebotów (violet #8b5cf6) bez zmian.
             Slot bloba: wysokość w px ARBITRALNIE h-[Npx] (spacing repo to
             własne tokeny — h-9 = 96px, pułapka!). */}

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { ComponentType, CSSProperties } from 'react';
-import type { InfDekor } from '@/lib/inf-kategorie';
+import { INF_NARZEDZIE, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { InfIcon } from '@/components/ui/InfIcons';
 
 import { buildMetadata } from '@/lib/metadata';
 import { JsonLd } from '@/components/seo/JsonLd';
@@ -38,18 +39,10 @@ export const metadata: Metadata = buildMetadata({
   path: '/narzedzia',
 });
 
-/**
- * INFINITY v2 — dekoracja kafelka per narzędzie (emoji + kolor z palety
- * kategorii spec; przypisanie do narzędzi = decyzja dekoracyjna, aria-hidden).
- */
-const NARZEDZIE_DEKOR: Record<string, InfDekor> = {
-  'kalkulator-oszczednosci': { c: '#22d3ee', emoji: '📈' },
-  'kalkulator-procesu': { c: '#10b981', emoji: '⚡' },
-  'test-gotowosci-ai': { c: '#f59e0b', emoji: '🔍' },
-  'audyt-strony-ai': { c: '#22d3ee', emoji: '🌐' },
-  'generator-promptow': { c: '#8b5cf6', emoji: '💬' },
-};
-const NARZEDZIE_DEKOR_DEFAULT: InfDekor = { c: 'var(--accent)', emoji: '✨' };
+/* INFINITY v5 (spec §4): lokalna mapa dekoru WYPADŁA — dekorację (kolor +
+   jasny odcień + UNIKALNA ikona SVG per slug) niesie single source
+   lib/inf-kategorie (INF_NARZEDZIE — ta sama mapa co dropdown "Narzędzia").
+   Kolor i ikona to WYŁĄCZNIE dekoracja (aria-hidden / custom property). */
 
 /** Mapa slug -> wyspa narzędzia. Slug zgodny z rejestrem lib/narzedzia. */
 const WYSPY: Record<string, ComponentType> = {
@@ -80,33 +73,39 @@ export default function NarzedziaPage() {
           </Reveal>
 
           {/* Spis narzędzi — kotwice w HTML (linki dla botów i ludzi).
-              INFINITY v2 (sama prezentacja, treść 1:1): kafle na .inf-card
-              z kafelkiem emoji (aria-hidden), etykieta → mono .inf-overline,
-              błysk .inf-shine + spotlight .inf-spotlight. */}
+              INFINITY v5 (spec §4, treść 1:1): kafle na .inf-card (narożniki +
+              sweep robi karta z globals) z kafelkiem .inf-tile z UNIKALNĄ ikoną
+              SVG (single source INF_NARZEDZIE; v5: emoji tylko w dropdownach
+              nav), badge mono po prawej = ISTNIEJĄCE pole `etykieta` (jak
+              w dropdownie Narzędzia, spec §2) w jasnym odcieniu, --card-c-l,
+              strzałka .inf-arrow + spotlight. */}
           <Reveal delay={0.1}>
             <ul className="mt-8 grid gap-3 sm:grid-cols-2">
               {NARZEDZIA.map((n) => {
-                const dekor = NARZEDZIE_DEKOR[n.slug] ?? NARZEDZIE_DEKOR_DEFAULT;
+                const dekor = INF_NARZEDZIE[n.slug] ?? INF_KATEGORIA_DEFAULT;
+                const odcien = dekor.odcien ?? dekor.c;
                 return (
                   <li key={n.slug}>
                     <a
                       href={`#${n.slug}`}
                       className="inf-card group flex h-full flex-col p-4"
-                      style={{ '--card-c': dekor.c } as CSSProperties}
+                      style={{ '--card-c': dekor.c, '--card-c-l': odcien } as CSSProperties}
                     >
-                      <div aria-hidden="true" className="inf-shine" />
                       <div aria-hidden="true" className="inf-spotlight" />
                       <span className="flex items-center gap-3">
-                        {/* Kafelek emoji narzędzia — dekoracja aria-hidden. */}
+                        {/* Kafelek ikony narzędzia — dekoracja aria-hidden. */}
                         <span
                           aria-hidden="true"
                           className="inf-tile"
                           style={{ '--tile-c': dekor.c } as CSSProperties}
                         >
-                          {dekor.emoji}
+                          <InfIcon name={dekor.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
                         </span>
-                        <span className="inf-overline text-accent">
+                        <span className="inf-tag" style={{ color: odcien }}>
                           {n.etykieta}
+                        </span>
+                        <span aria-hidden="true" className="inf-arrow ml-auto text-accent">
+                          →
                         </span>
                       </span>
                       <span className="mt-3 text-body font-semibold text-fg group-hover:text-accent">
@@ -174,43 +173,47 @@ export default function NarzedziaPage() {
                     prompt i wklejasz do swojego AI.
                   </p>
 
-                  {/* Tabela: zły prompt vs gotowy prompt */}
-                  <div className="mt-8 overflow-hidden rounded-lg border border-border">
-                    <table className="w-full border-collapse text-left text-body-sm">
+                  {/* Tabela: zły prompt vs gotowy prompt.
+                      INFINITY v5 (spec §4): tabela porównania w stylu home
+                      (Rozwiazanie) — nagłówki kolumn mono .inf-overline, wygraną
+                      kolumnę trzyma 1px kreska akcentowa i font-medium, wiersze
+                      z hoverem. Treść komórek 1:1. */}
+                  <div className="mt-8 overflow-x-auto">
+                    <table className="w-full min-w-[28rem] border-collapse text-left text-body-sm">
                       <thead>
-                        <tr className="bg-bg-subtle">
-                          <th className="border-b border-border p-4 font-semibold text-fg">
+                        <tr className="border-b border-border-strong">
+                          <th scope="col" className="inf-overline py-3 pr-4 align-bottom">
                             Zły prompt
                           </th>
-                          <th className="border-b border-border p-4 font-semibold text-fg">
+                          <th scope="col" className="inf-overline border-l border-border-accent px-4 py-3 align-bottom text-accent">
                             Gotowy prompt z generatora
                           </th>
                         </tr>
                       </thead>
-                      <tbody className="text-fg-muted">
-                        <tr>
-                          <td className="border-b border-border p-4 align-top">
+                      <tbody>
+                        <tr className="border-b border-border align-top transition-colors duration-fast hover:bg-bg-subtle">
+                          <td className="py-4 pr-4 text-fg-subtle">
                             „Napisz mail do klienta.”
                           </td>
-                          <td className="border-b border-border p-4 align-top">
+                          <td className="border-l border-border-accent px-4 py-4 font-medium text-fg">
                             Rola, kontekst branży, konkretne zadanie, cel, styl i format. AI
                             wie, kim być i co dokładnie napisać.
                           </td>
                         </tr>
-                        <tr>
-                          <td className="border-b border-border p-4 align-top">
+                        <tr className="border-b border-border align-top transition-colors duration-fast hover:bg-bg-subtle">
+                          <td className="py-4 pr-4 text-fg-subtle">
                             Efekt: ogólny, bez tonu, trzeba poprawiać.
                           </td>
-                          <td className="border-b border-border p-4 align-top">
+                          <td className="border-l border-border-accent px-4 py-4 font-medium text-fg">
                             Efekt: tekst w Twoim stylu, gotowy po uzupełnieniu danych w
                             nawiasach.
                           </td>
                         </tr>
-                        <tr>
-                          <td className="p-4 align-top">
+                        <tr className="border-b border-border align-top transition-colors duration-fast hover:bg-bg-subtle">
+                          <td className="py-4 pr-4 text-fg-subtle">
                             AI zmyśla brakujące dane.
                           </td>
-                          <td className="p-4 align-top">
+                          <td className="border-l border-border-accent px-4 py-4 font-medium text-fg">
                             AI najpierw pyta o brakujące informacje, dopiero potem pisze.
                           </td>
                         </tr>

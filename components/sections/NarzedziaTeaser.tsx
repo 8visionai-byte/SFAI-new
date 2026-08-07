@@ -54,9 +54,24 @@ export function NarzedziaTeaser() {
               <Link href={`/narzedzia#${n.slug}`} className="group flex h-full flex-col p-6">
                 {/* Mono kolorowy podtytuł wzorca („85K+ monthly searches") =
                     etykieta narzędzia z rejestru; kolor niesie --card-c-l. */}
-                <span className="flex items-center gap-3">
+                <span className="flex items-center gap-2.5">
+                  {/* v5 (spec §3 KAFELKI): pulsująca kropka statusu PRZED
+                      .inf-card-sub, kolor odcienia karty (--card-c-l).
+                      CSS DO DOPISANIA (partia B, globals): .inf-sub-dot =
+                      kropka 8px (border-radius 999px, flex:none), background
+                      var(--card-c-l, var(--card-c, var(--accent))), glow +
+                      animacja pulsu jak .inf-ask-dot (infAskPulse w kolorze
+                      karty); RM: bez animacji. Bez CSS span jest pusty i
+                      niewidoczny — bezpieczna degradacja. */}
+                  <span aria-hidden="true" className="inf-sub-dot" />
                   <span className="inf-card-sub">{n.etykieta}</span>
-                  <span aria-hidden="true" className="inf-arrow ml-auto text-accent">
+                  {/* v5 (spec §3 KAFELKI): strzałka hover w KOLORZE karty —
+                      utility arbitralne (bije warstwę components, więc kolor
+                      nie wraca do accentu/fg-muted z reguł hover globals). */}
+                  <span
+                    aria-hidden="true"
+                    className="inf-arrow ml-auto text-[color:var(--card-c-l,var(--accent))]"
+                  >
                     →
                   </span>
                 </span>

@@ -36,7 +36,8 @@ import { ScrambleText } from '@/components/motion/ScrambleText';
  * Pasek = PŁYWAJĄCA PIGUŁKA .inf-pill-nav (globals.css): max-w 1180px,
  * sticky top-3, świecąca obwódka trasy przez ::before (mobile: statyczna,
  * tło solidne). CTA "Umów diagnozę" (tekst 1:1) = pigułka .inf-glow-cta
- * (v3: hover = BIAŁE podświetlenie, tekst ciemny — reguła w fundamencie).
+ * (v5, spec §2: ZIELONA obwódka + litery cyjan; hover = litery BIAŁE ze
+ * świeceniem text-shadow, obwódka jaśnieje — reguły w globals, partia B).
  */
 export function HeaderClient({ dropdowns }: { dropdowns: NavDropdownData[] }) {
   const [open, setOpen] = useState(false);
@@ -119,8 +120,9 @@ export function HeaderClient({ dropdowns }: { dropdowns: NavDropdownData[] }) {
         </ul>
 
         <div className="ml-auto lg:ml-3">
-          {/* CTA nagłówka = pigułka z neonową obwódką (.inf-glow-cta, fundament).
-              Tekst 1:1, cel bez zmian (HOME_CTA.href = trasa, więc next/link). */}
+          {/* CTA nagłówka = pigułka .inf-glow-cta (v5: zielona obwódka, litery
+              cyjan -> hover białe świecące). Tekst 1:1, cel bez zmian
+              (HOME_CTA.href = trasa, więc next/link). */}
           <Link href={HOME_CTA.href} className="inf-glow-cta hidden sm:inline-flex">
             Umów diagnozę
           </Link>

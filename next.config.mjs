@@ -12,7 +12,11 @@ const securityHeaders = [
       { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
       { key: 'X-Content-Type-Options', value: 'nosniff' },
       { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-      { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+      // VOICE AGENT (spec v5 §1): microphone=(self) — agent głosowy 1:1 z 10K
+      // używa getUserMedia na własnej domenie; poprzednie microphone=() blokowało
+      // mikrofon twardo (pusta allowlista = zakaz także dla self). Kamera i
+      // geolokalizacja dalej zablokowane.
+      { key: 'Permissions-Policy', value: 'camera=(), microphone=(self), geolocation=()' },
       { key: 'X-DNS-Prefetch-Control', value: 'on' },
       {
         key: 'Content-Security-Policy',
@@ -44,7 +48,18 @@ const securityHeaders = [
           // (zmierzone na produkcji 2026-08-05: securitypolicyviolation, stary
           // api-gateway.umami.dev NIE jest uzywany). Wildcard *.umami.is celowo:
           // konto EU moze routowac na regionalna bramke tej samej rodziny domen.
-          "connect-src 'self' https://*.umami.is",
+          //
+          // VOICE AGENT (spec v5 §1) — polaczenia klienta 1:1 z 10K:
+          //  - https://*.elevenlabs.io + wss://*.elevenlabs.io: SDK
+          //    @elevenlabs/client (token WebRTC przez api.elevenlabs.io,
+          //    sygnalizacja LiveKit na subdomenach *.rtc.elevenlabs.io,
+          //    fallback WebSocket przez signed URL wss://api.elevenlabs.io),
+          //  - https://api.openai.com: fallback OpenAI Realtime (POST SDP
+          //    na /v1/realtime/calls bezposrednio z przegladarki).
+          "connect-src 'self' https://*.umami.is https://*.elevenlabs.io wss://*.elevenlabs.io https://api.openai.com",
+          // AudioWorklet SDK ElevenLabs rejestrowany z blob: URL (tryb
+          // WebSocket); bez wpisu worker-src spada na script-src i blob: pada.
+          "worker-src 'self' blob:",
           "frame-src 'self'",
           "object-src 'none'",
           "base-uri 'self'",

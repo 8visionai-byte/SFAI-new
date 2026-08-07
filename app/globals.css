@@ -2577,9 +2577,10 @@ html.lenis body {
     opacity: 1;
   }
 
-  /* ── .inf-dd — dropdown "Usługi": ZAWSZE w DOM (SEO — linki w HTML dla
-     botów), ukrywany CSS-em (visibility+opacity); .is-open pokazuje. Tło
-     SOLIDNE (--surface kryje treść pod spodem). */
+  /* ── .inf-dd — dropdown nav: ZAWSZE w DOM (SEO — linki w HTML dla
+     botów), ukrywany CSS-em (visibility+opacity); .is-open pokazuje.
+     BAZA (mobile/fallback): tło SOLIDNE (--surface kryje treść pod spodem);
+     v5 desktop przezroczysty w @media niżej. */
   .inf-dd {
     position: absolute;
     right: 0;
@@ -2606,6 +2607,19 @@ html.lenis body {
     transition:
       opacity var(--dur-fast) var(--ease-out),
       transform var(--dur-fast) var(--ease-out);
+  }
+  /* v5 (spec §2): desktop — panel PRZEZROCZYSTY jak wzorzec (widać stronę
+     pod spodem, „przyciemnioną"): rgba(10,10,16,.72) + backdrop-blur 24px
+     + jasna obwódka (border-light wzorca = biel 10%). Blur WYŁĄCZNIE ≥1024px
+     (żelazna zasada perf mobile; poniżej dropdown i tak nie istnieje w DOM
+     nav mobile — pełny panel hamburgera ma solidne tło). */
+  @media (min-width: 1024px) {
+    .inf-dd {
+      background-color: rgba(10, 10, 16, 0.72);
+      -webkit-backdrop-filter: blur(24px);
+      backdrop-filter: blur(24px);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
   }
   /* Wiersz dropdownu (wzorzec): hover = tło --surface-hover #181840 + tytuł
      cyjan + kafel emoji „pływa" (translateY w media hover+no-RM niżej). */
@@ -2638,6 +2652,31 @@ html.lenis body {
     font-size: 0.75rem; /* 12px */
     line-height: 1.35;
     color: var(--fg-muted);
+  }
+  /* v5 (spec §2): BADGE mono po prawej wiersza dropdownu — pigułka w JASNYM
+     odcieniu kategorii (--badge-c z fluorescencyjnej palety odcieni v4).
+     Treść = ISTNIEJĄCE krótkie pole rejestru (uppercase robi CSS, string
+     w DOM zostaje 1:1). Kontrast: najciemniejszy odcień palety #a78bfa na
+     panelu rgba(10,10,16,.72) ≈ 6.6:1, reszta (#67e8f9/#4ade80/#fbbf24/
+     #f472b6/#60a5fa) ≥7:1 — spec wymaga ≥3:1, jest zapas AA. */
+  .inf-dd-badge {
+    --badge-c: var(--accent-hover);
+    flex: none;
+    align-self: center;
+    padding: 0.1875rem 0.5rem;
+    border-radius: 999px;
+    font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
+    font-size: 0.625rem; /* 10px — pigułka mono jak wzorzec */
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--badge-c);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-color: color-mix(in srgb, var(--badge-c) 40%, transparent);
+    background-color: rgba(255, 255, 255, 0.04);
+    background-color: color-mix(in srgb, var(--badge-c) 10%, transparent);
   }
   .inf-dd-row .inf-tile {
     transition: transform var(--dur-fast) var(--ease-out);
@@ -2979,16 +3018,16 @@ html.lenis body {
     color: var(--fg-muted);
   }
 
-  /* ── .inf-glow-cta — pigułka CTA „Hire Me" (v4, spec §PARTIA A pkt 3).
-     SPOCZYNEK = outline: tło transparent, obwódka color-mix(accent 60%),
-     NAPIS w akcencie (mono zostaje). Cyjan #22d3ee na #06060c ~11.2:1 (AA);
-     na tle pigułki nav #0a0a10 praktycznie tyle samo.
-     HOVER = „rozświetla się": wypełnienie akcentem + tekst #06060c
-     (~11.2:1 AA na #22d3ee) + glow 0 0 24px accent 70%.
+  /* ── .inf-glow-cta — pigułka CTA nav „Umów diagnozę" (v5, spec §2, dyktando
+     Pawła): SPOCZYNEK = obwódka + akcent ZIELONY (#10b981, glow #4ade80),
+     LITERY NIEBIESKIE/cyjan (var(--accent) #22d3ee ~10.9:1 na pigułce nav
+     #0a0a10 — AA). HOVER = litery BIAŁE ze świeceniem (text-shadow glow,
+     biel ~19:1) + obwódka JAŚNIEJE do #4ade80 + zielony glow zewnętrzny;
+     tło zostaje transparent (świecą litery, nie wypełnienie).
      WARIANT WYPEŁNIONY od spoczynku: .inf-glow-cta-solid niżej ORAZ kontrakt
      .sf-magnetic .inf-glow-cta (primary hero/ServiceHero/OnasHero na
-     MagneticButton — spec: „primary w hero może zostać wypełniony, ale NAV
-     CTA wg tej reguły"). Focus bez zmian (:focus-visible poza layerem). */
+     MagneticButton — tam hover zostaje białym wypełnieniem, text-shadow
+     wyłączony). Focus bez zmian (:focus-visible poza layerem). */
   .inf-glow-cta {
     display: inline-flex;
     align-items: center;
@@ -3003,19 +3042,22 @@ html.lenis body {
     letter-spacing: 0.04em;
     background-color: transparent;
     color: var(--accent);
-    border: 1px solid rgba(34, 211, 238, 0.6);
-    border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+    border: 1px solid rgba(16, 185, 129, 0.6); /* zielony #10b981 60% */
+    box-shadow: 0 0 16px -6px rgba(74, 222, 128, 0.45);
     transition:
       background-color var(--dur-base) var(--ease-out),
       border-color var(--dur-base) var(--ease-out),
       box-shadow var(--dur-base) var(--ease-out),
+      text-shadow var(--dur-base) var(--ease-out),
       color var(--dur-base) var(--ease-out);
   }
   .inf-glow-cta:hover {
-    background-color: var(--accent);
-    color: #06060c;
-    box-shadow: 0 0 24px rgba(34, 211, 238, 0.7);
-    box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 70%, transparent);
+    color: #fff;
+    text-shadow:
+      0 0 10px rgba(255, 255, 255, 0.7),
+      0 0 22px rgba(74, 222, 128, 0.6);
+    border-color: #4ade80;
+    box-shadow: 0 0 24px -4px rgba(74, 222, 128, 0.65);
   }
   /* Wariant WYPEŁNIONY (dawna baza v3) — spoczynek: tło akcent + neonowa
      obwódka; hover: białe podświetlenie (tekst #06060c, ~20:1). Używany przez
@@ -3032,6 +3074,10 @@ html.lenis body {
   .inf-glow-cta-solid:hover {
     background-color: #fff;
     color: #06060c;
+    /* v5: hover bazy świeci literami (text-shadow) i zieleni obwódkę — na
+       wypełnionym wariancie oba gasną (ciemny tekst na białym wypełnieniu). */
+    text-shadow: none;
+    border-color: transparent;
     box-shadow: 0 0 32px -2px rgba(20, 184, 196, 0.6);
     box-shadow:
       0 0 0 1px color-mix(in srgb, var(--accent) 70%, transparent),
@@ -3048,6 +3094,36 @@ html.lenis body {
   .inf-glow-cta-ghost:hover {
     background-color: var(--accent-soft);
     color: var(--accent-hover);
+    /* v5: cyjanowy ghost zostaje przy swojej palecie — zielony hover bazy
+       (text-shadow + obwódka #4ade80) tu nie wchodzi. */
+    text-shadow: none;
+    border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  }
+  /* ── .inf-cta-ghost-green — v5 (spec §2), klasa WIELOKROTNEGO UŻYTKU
+     (partia C/D wepnie ją na ghost CTA stron, np. „Sprawdź, którego Agenta
+     potrzebujesz"): NAPIS ZIELONY #4ade80 (~9.9:1 na --bg #06060c — AA),
+     hover = litery BIAŁE ze świeceniem (glow biel + zieleń). Działa solo na
+     linku tekstowym ORAZ w parze z .inf-glow-cta / .inf-glow-cta-ghost
+     (stoi PO nich w tej samej warstwie, więc wygrywa kolejnością). */
+  .inf-cta-ghost-green {
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.5);
+    /* Pełna lista przejść (nie tylko color) — w parze z .inf-glow-cta ta
+       deklaracja wygrywa kolejnością, więc niesie też glow/tło pigułki. */
+    transition:
+      background-color var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      text-shadow var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out);
+  }
+  .inf-cta-ghost-green:hover {
+    color: #fff;
+    text-shadow:
+      0 0 10px rgba(255, 255, 255, 0.7),
+      0 0 22px rgba(74, 222, 128, 0.6);
+    border-color: rgba(74, 222, 128, 0.8);
+    background-color: transparent;
   }
 
   /* ── .inf-stars — starfield strony: warstwa FIXED pod całą treścią (wzór
@@ -3270,6 +3346,7 @@ html.lenis body {
   .inf-tile,
   .inf-tile svg,
   .inf-glow-cta,
+  .inf-cta-ghost-green,
   .inf-nav-link,
   .inf-nav-chevron,
   .inf-dd,
@@ -3329,6 +3406,13 @@ html.lenis body {
   .inf-nav-link:hover,
   .inf-nav-link[aria-expanded='true'],
   .inf-nav-link[aria-current] {
+    box-shadow: none;
+  }
+  /* v5: świecenie liter CTA znika w trybie wysokiego kontrastu — zostają
+     systemowe kolory tekstu i ramka. */
+  .inf-glow-cta:hover,
+  .inf-cta-ghost-green:hover {
+    text-shadow: none;
     box-shadow: none;
   }
 }
@@ -3520,9 +3604,12 @@ html.lenis body {
 }
 .sf-magnetic .inf-glow-cta:hover {
   /* v3: białe podświetlenie także gdy utilities Buttona ustawiają tło/tekst
-     (specyficzność 2-klasowa bije utility hover:*). Spójne z bazą wyżej. */
+     (specyficzność 2-klasowa bije utility hover:*). Spójne z bazą wyżej.
+     v5: hover BAZY .inf-glow-cta świeci literami (text-shadow) — na
+     wypełnionym CTA hero gasimy (ciemny tekst na białym wypełnieniu). */
   background-color: #fff;
   color: #06060c;
+  text-shadow: none;
   box-shadow: 0 0 32px -2px rgba(20, 184, 196, 0.6);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--accent) 70%, transparent),
@@ -3596,5 +3683,42 @@ html.lenis body {
 @media (forced-colors: active) {
   [data-hero-loop] {
     display: none;
+  }
+}
+
+/* INFINITY v5 — kontrakty partii C (kafelki): pulsująca kropka statusu przy
+   .inf-card-sub + animacja ikony kafelka na hover karty (obrót -15°, powiększenie,
+   rozświetlenie — wzorzec). RM: bez transformacji i pulsu. */
+@layer components {
+  .inf-sub-dot {
+    width: 8px;
+    height: 8px;
+    flex: none;
+    display: inline-block;
+    margin-right: 8px;
+    border-radius: 999px;
+    background: var(--accent);
+    background: var(--card-c-l, var(--card-c, var(--accent)));
+    box-shadow: 0 0 8px var(--card-c-l, var(--card-c, var(--accent)));
+    vertical-align: middle;
+  }
+}
+.inf-tile {
+  transition:
+    transform 0.3s var(--ease-out),
+    filter 0.3s var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .inf-card:hover .inf-tile {
+    transform: rotate(-15deg) scale(1.15);
+    filter: brightness(1.35);
+  }
+  .inf-sub-dot {
+    animation: infAskPulse 2.4s var(--ease-in-out) infinite;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .inf-tile {
+    transition: none;
   }
 }

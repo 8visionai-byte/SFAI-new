@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { Card } from '@/components/ui';
 import { PostMeta } from './PostMeta';
 import type { Post, PostWkrotce } from '@/lib/blog/types';
-import { INF_TYP } from '@/lib/inf-kategorie';
+import { INF_TYP, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { InfIcon } from '@/components/ui/InfIcons';
 
 /**
  * PostCard — karta wpisu na liście /blog. Cała karta jest klikalna (link na H3
@@ -27,19 +28,19 @@ export function PostCard({ post }: { post: Post }) {
       as="article"
       variant="quiet"
       className="inf-card relative flex h-full flex-col p-6"
-      style={{ '--card-c': dekor.c } as CSSProperties}
+      style={{ '--card-c': dekor.c, '--card-c-l': dekor.odcien ?? dekor.c } as CSSProperties}
     >
-      <div aria-hidden="true" className="inf-shine" />
       <div aria-hidden="true" className="inf-spotlight" />
 
       <div className="flex items-center gap-3">
-        {/* Kafelek emoji typu treści — dekoracja aria-hidden (jak dropdown). */}
+        {/* Kafelek ikony typu treści — dekoracja aria-hidden (v5: ikona SVG na
+            kartach, emoji tylko w dropdownach nav). */}
         <span
           aria-hidden="true"
           className="inf-tile"
           style={{ '--tile-c': dekor.c } as CSSProperties}
         >
-          {dekor.emoji}
+          <InfIcon name={dekor.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
         </span>
         <span className="inf-tag">{post.kategoria}</span>
       </div>

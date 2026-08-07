@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import type { CSSProperties } from 'react';
 import { buildMetadata } from '@/lib/metadata';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { Section, Badge, MagneticButton } from '@/components/ui';
+import { Section, MagneticButton } from '@/components/ui';
+import { INF_TYP, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { InfIcon } from '@/components/ui/InfIcons';
 import { Reveal } from '@/components/motion/Reveal';
 import { Breadcrumbs } from '@/components/uslugi/Breadcrumbs';
 import { PostMeta } from '@/components/blog/PostMeta';
@@ -81,8 +84,12 @@ export default async function MaterialPage({
   return (
     <main id="main">
       {/* ───────────────────────────────────────────────────────────────
-          HERO — breadcrumb (przez /wiedza) + etykieta/typ + H1 + opis (kapsuła) + daty. */}
-      <Section tone="base">
+          HERO — breadcrumb (przez /wiedza) + etykieta/typ + H1 + opis (kapsuła) + daty.
+          INFINITY v5 (spec §4 — hero/meta w języku inf, treść 1:1):
+          tone="transparent" (globalne tło prześwituje), badge'e → kafelek
+          .inf-tile z ikoną SVG typu treści + mono .inf-tagi (istniejące pola
+          etykieta/typPliku, jak karty listy). */}
+      <Section tone="transparent">
         <div className="mx-auto max-w-narrow">
           <Breadcrumbs
             items={[
@@ -94,9 +101,22 @@ export default async function MaterialPage({
           />
 
           <Reveal>
-            <div className="mt-6 flex flex-wrap items-center gap-2">
-              <Badge variant="neutral">{material.etykieta}</Badge>
-              <Badge variant="accent">{material.typPliku}</Badge>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              {/* Kafelek ikony typu treści — dekoracja aria-hidden (jak karty). */}
+              <span
+                aria-hidden="true"
+                className="inf-tile"
+                style={{ '--tile-c': INF_TYP.material.c } as CSSProperties}
+              >
+                <InfIcon name={INF_TYP.material.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
+              </span>
+              <span className="inf-tag">{material.etykieta}</span>
+              <span
+                className="inf-tag"
+                style={{ color: INF_TYP.material.odcien ?? INF_TYP.material.c }}
+              >
+                {material.typPliku}
+              </span>
             </div>
           </Reveal>
 

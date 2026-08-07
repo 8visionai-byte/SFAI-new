@@ -65,6 +65,10 @@ function PromoKarta({ usluga, full = false }: { usluga: Usluga; full?: boolean }
         {/* Wiersz dekoracji: kafelek ikony + mono overline slugu w odcieniu
             + strzałka (widoczna na hover karty; mobile zawsze). */}
         <span className="flex items-center gap-3">
+          {/* v5 (spec §3 KAFELKI) — hover ikony robi CSS partii B w globals.
+              CSS DO DOPISANIA (partia B): .inf-card:hover .inf-tile
+              { transform: rotate(-15deg) scale(1.15); filter: brightness(1.35); }
+              (transition .3s niesie baza .inf-tile; RM: bez transform). */}
           <span
             aria-hidden="true"
             className="inf-tile"
@@ -75,7 +79,13 @@ function PromoKarta({ usluga, full = false }: { usluga: Usluga; full?: boolean }
           <span className="inf-overline" style={{ color: odcien }}>
             {usluga.slug}
           </span>
-          <span aria-hidden="true" className="inf-arrow ml-auto text-accent">
+          {/* v5 (spec §3 KAFELKI): strzałka hover w KOLORZE karty (--card-c-l)
+              — utility arbitralne bije warstwę components (kolor nie wraca do
+              accentu/fg-muted z reguł hover globals). */}
+          <span
+            aria-hidden="true"
+            className="inf-arrow ml-auto text-[color:var(--card-c-l,var(--accent))]"
+          >
             →
           </span>
         </span>
@@ -129,7 +139,11 @@ export function PromoUslugi() {
               <h2 className="text-ui font-semibold text-fg">{ARCHITEKCI.tytul}</h2>
               <p className="mt-1 text-body-sm text-fg-muted">{ARCHITEKCI.opis}</p>
             </span>
-            <span aria-hidden="true" className="inf-arrow text-accent max-sm:hidden">
+            {/* v5 (spec §3 KAFELKI): strzałka w kolorze karty (--card-c-l). */}
+            <span
+              aria-hidden="true"
+              className="inf-arrow text-[color:var(--card-c-l,var(--accent))] max-sm:hidden"
+            >
               →
             </span>
           </Link>

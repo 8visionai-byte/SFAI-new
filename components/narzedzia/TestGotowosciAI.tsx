@@ -68,8 +68,10 @@ export function TestGotowosciAI() {
     const postep = ((krok + 1) / PYTANIA.length) * 100;
     // krok jest zawsze < PYTANIA.length (gate `ukonczone` wyżej); guard dla TS (noUncheckedIndexedAccess)
     if (!p) return null;
+    // INFINITY v5 (spec §4): shell wyspy na .inf-card (ciemna karta wzorca
+    // z narożnikami i sweepem z globals) — kontrolki zostają na tokenach.
     return (
-      <div className="mx-auto max-w-narrow rounded-xl border border-border bg-surface p-6 shadow-xs sm:p-7">
+      <div className="inf-card mx-auto max-w-narrow p-6 shadow-xs sm:p-7">
         {/* pasek postępu */}
         <div className="mb-6">
           <div className="mb-2 flex items-center justify-between">

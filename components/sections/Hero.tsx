@@ -2,9 +2,11 @@ import type { CSSProperties } from 'react';
 import { Section, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { WritingHeadline } from '@/components/motion/WritingHeadline';
-import { InfinityLoopStatic } from '@/components/motion/InfinityLoopStatic';
-import { HeroLoopLite } from '@/components/motion/HeroLoopLite';
+import { VoiceAura } from '@/components/motion/VoiceAura';
 // import { AnimatedMetric } from '@/components/motion/AnimatedMetric'; // wróci z realnymi metrykami
+// INFINITY v5 §1: lemniskata zeszła z hero (InfinityLoopStatic / HeroLoopLite /
+// HeroRibbon zostają w repo NIEUŻYWANE na hero — bez slotu [data-hero-loop]
+// HeroRibbon sam nic nie montuje). NIE kasować plików (decyzja spec).
 import { POSITIONING, HOME_CTA } from '@/lib/site';
 import { HeroPersonaCycler } from './HeroPersonaCycler';
 import { HeroLiczniki } from './HeroLiczniki';
@@ -49,26 +51,17 @@ export function Hero() {
       mgławice (layout) — sekcja nie ma już własnych warstw dekoracyjnych.
     */
     <Section tone="base" space="lg" containerWidth="default" className="relative isolate text-center">
-      {/* SLOT ANIMACJI ∞ (spec v4 §PARTIA B pkt 2) — lemniskata 3D „pływające
-          DNA" pod paskiem nav, ŚCIŚNIĘTA: aspect 760/300, ~300px wysokości na
-          desktopie (skaluje się w dół z szerokością). W HTML zawsze STATYCZNY
-          SVG (reduced-motion + pierwszy paint). Desktop ≥1024px: HeroRibbon
-          (przez MotionGate, długo po load) portaluje TU canvas i płynnie
-          nakrywa SVG (opacity swap inline w JS — zero migniecia). Mobile
-          <1024px i !reduced-motion: gate HeroLoopLite montuje lekki canvas
-          (2×48 kropek, DPR 1, 30fps) po load+idle — bramki się wykluczają.
-          Czysta dekoracja: aria-hidden, pointer-events-none, BEZ
-          overflow-hidden (glow może wystawać). */}
-      <div
-        id="hero-loop"
-        data-hero-loop
-        aria-hidden="true"
-        className="pointer-events-none relative mx-auto flex aspect-[760/300] w-full max-w-[760px] items-center justify-center"
-      >
-        <InfinityLoopStatic />
-        {/* Gate mobilnego canvasa lite (spec v4 §B pkt 3) — sam decyduje o
-            bramkach; na desktopie/RM nie renderuje nic. */}
-        <HeroLoopLite />
+      {/* SLOT BLOBA VOICE AGENTA (spec v5 §1, decyzja Pawła: „zamiast tej
+          wizualizacji 3D wrzucasz tutaj naszego bota") — FlowCore 1:1 z 10K
+          (VoiceAura): canvas WebGL + statyczna aura fallback + PRZYCISK
+          „Zapytaj AI / Voice agent" (data-agent-open="voice" otwiera konsolę
+          agenta zamontowaną globalnie w layout). Rozmiar wg spec: ~420px
+          desktop / ~300px mobile — wymiary px ARBITRALNIE (pułapka tokenów
+          spacingu repo: h-9 = 96px!). BEZ aria-hidden i pointer-events-none
+          (w środku jest interaktywny przycisk); BEZ overflow-hidden (glow
+          bloba może wystawać — żelazna zasada v3). */}
+      <div className="relative mx-auto h-[300px] w-[300px] max-w-full lg:h-[420px] lg:w-[420px]">
+        <VoiceAura />
       </div>
 
       {/* INFINITY: badge → mono overline z liniami po bokach (.inf-overline
@@ -227,25 +220,13 @@ export function Hero() {
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/* CSS DO DOPISANIA (partia B — HERO): gotowe reguły do globals.css (właściciel:
-   partia A; konwencja pliku: media poza @layer, sekcja INFINITY).
+/* CSS DO DOPISANIA (dla partii B — właściciela globals.css w tej rundzie):
 
    1) KONTRAKT JUŻ SCALONY (v2, zostaje bez zmian): .sf-magnetic .inf-glow-cta
       (+ :hover/:focus-visible) — pigułka CTA wewnątrz magnetyzmu. Nie ruszać.
 
-   2) NOWE (v3, slot lemniskaty) — slot #hero-loop jest samowystarczalny na
-      utilities (aspect-[940/420], max-w-[940px], relative), a podmianę
-      SVG↔canvas HeroRibbon robi INLINE w JS (zero zależności od tych reguł).
-      CSS potrzebny wyłącznie dla Windows High Contrast (jak .inf-particles):
-
-@media (forced-colors: active) {
-  [data-hero-loop] {
-    display: none;
-  }
-}
-
-   3) SPRZĄTANIE (v3): reguły .inf-ribbon-slot i .inf-ribbon (+ ich wpis w
-      forced-colors) są MARTWE — HeroRibbon nie wstrzykuje już własnego slotu
-      (portaluje do [data-hero-loop] z tego pliku) i nie używa klasy .inf-ribbon.
-      Można je usunąć przy scalaniu.
+   2) SPRZĄTANIE (v5): slot [data-hero-loop] ZNIKNĄŁ z hero (blob voice agenta
+      go zastąpił — style bloba żyją w components/agent/flow-core.css, poza
+      globals). Jeśli w globals są reguły [data-hero-loop] / .inf-ribbon-slot /
+      .inf-ribbon (+ wpisy forced-colors), są MARTWE — można usunąć przy scalaniu.
 */

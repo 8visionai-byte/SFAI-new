@@ -67,6 +67,17 @@ export default function HomePage() {
         zasłania (3px na górnej krawędzi). Wzorzec dla pozostałych stron.
       */}
       <ScrollMetalProgress />
+      {/* INFINITY v5 (spec §3 PARTIA C) — kolejność opowieści:
+          Hero(voice) → PromoUslugi → PasekZaufania → Problem(walec) →
+          Rozwiazanie(karty AEO+demo+tabela) → JakToDziala → Oferta →
+          NarzedziaTeaser → Bezpieczenstwo → Dowod → Gwarancja →
+          DowodSpoleczny → FAQ → FinalneCTA. Zmiana vs v4: Bezpieczenstwo+Dowod
+          schodzą ZA Ofertę/NarzedziaTeaser (lęk i dowód przy cenie).
+          BranzeDemo i ZyweDemo nie są wymienione w liście spec v5 — ZOSTAJĄ
+          (usunięcie sekcji = usunięcie treści, poza zakresem C) w slotach
+          spójnych z opowieścią: BranzeDemo tuż za Problemem (język bólu per
+          branża), ZyweDemo przed FinalneCTA (kotwica #demo z ghost CTA hero
+          + konsola agenta partii A). */}
       <Hero />
       {/* v4: kafelki głównych usług (chatboty full + voiceboty/audyt połówki
           + Architekci cienka full) ZARAZ po hero — treść 1:1 z rejestru USLUGI. */}
@@ -75,12 +86,12 @@ export default function HomePage() {
       <Problem />
       <BranzeDemo />
       <Rozwiazanie />
-      <Bezpieczenstwo />
-      <Dowod />
       <JakToDziala />
       <Oferta />
       {/* v4: teaser 5 narzędzi (rejestr NARZEDZIA 1:1) między Ofertą a gwarancją. */}
       <NarzedziaTeaser />
+      <Bezpieczenstwo />
+      <Dowod />
       <GwarancjaEfektu />
       <DowodSpoleczny />
       <FAQ />

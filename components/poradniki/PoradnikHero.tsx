@@ -1,8 +1,11 @@
-import { Section, Badge } from '@/components/ui';
+import type { CSSProperties } from 'react';
+import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { PostMeta } from '@/components/blog';
 import { PoradnikBreadcrumbs } from './PoradnikBreadcrumbs';
 import type { Poradnik } from '@/lib/poradniki/types';
+import { INF_TYP, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { InfIcon } from '@/components/ui/InfIcons';
 
 /**
  * PoradnikHero — nagłówek poradnika (answer-first), wzorzec spójny z PostHero bloga.
@@ -14,8 +17,12 @@ import type { Poradnik } from '@/lib/poradniki/types';
  * kolumna = czytelność. Breadcrumbs 1:1 z BreadcrumbList JSON-LD (poradnikSchemas).
  */
 export function PoradnikHero({ poradnik }: { poradnik: Poradnik }) {
+  // INFINITY v5 (spec §4 — treść artykułu zostaje typograficzna, HERO/META
+  // w języku inf, treść 1:1): tone="transparent", badge kategorii → kafelek
+  // .inf-tile z ikoną SVG typu treści + mono .inf-tag (jak karty listy).
+  const dekor = INF_TYP.poradnik;
   return (
-    <Section tone="base" containerWidth="default">
+    <Section tone="transparent" containerWidth="default">
       <div className="mx-auto max-w-narrow">
         <PoradnikBreadcrumbs
           items={[
@@ -27,9 +34,19 @@ export function PoradnikHero({ poradnik }: { poradnik: Poradnik }) {
         />
 
         <Reveal>
-          <Badge variant="accent" className="mt-6">
-            {poradnik.kategoria}
-          </Badge>
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            {/* Kafelek ikony typu treści — dekoracja aria-hidden (jak karty). */}
+            <span
+              aria-hidden="true"
+              className="inf-tile"
+              style={{ '--tile-c': dekor.c } as CSSProperties}
+            >
+              <InfIcon name={dekor.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
+            </span>
+            <span className="inf-tag" style={{ color: dekor.odcien ?? dekor.c }}>
+              {poradnik.kategoria}
+            </span>
+          </div>
         </Reveal>
 
         <Reveal delay={0.05}>

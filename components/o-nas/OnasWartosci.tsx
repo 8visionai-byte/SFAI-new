@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { Section, Card } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { O_NAS } from '@/lib/o-nas/content';
@@ -16,10 +17,21 @@ export function OnasWartosci() {
         </Reveal>
       </div>
 
+      {/* INFINITY v5 (spec §4 — wartości NA KARTY, treść 1:1): .inf-card
+          w stopniach trasy marki (mechanizmy home). */}
       <div className="mx-auto mt-8 grid max-w-narrow gap-6 md:grid-cols-3">
         {O_NAS.wartosci.items.map((w, i) => (
           <Reveal key={w.cytat} delay={i * 0.06}>
-            <Card as="article" className="h-full">
+            <Card
+              as="article"
+              variant="quiet"
+              className="inf-card h-full p-6"
+              style={
+                {
+                  '--card-c': ['#2b7cff', '#8b5cf6', '#22e06b'][i] ?? 'var(--accent)',
+                } as CSSProperties
+              }
+            >
               <blockquote className="text-h3 text-fg">„{w.cytat}”</blockquote>
               <p className="mt-3 text-body-sm text-fg-muted">{w.opis}</p>
             </Card>

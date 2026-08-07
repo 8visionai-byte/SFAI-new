@@ -75,7 +75,9 @@ export function KalkulatorOszczednosci() {
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-10">
       {/* KOLUMNA WEJŚCIA */}
-      <div className="rounded-xl border border-border bg-surface p-6 shadow-xs sm:p-7">
+      {/* INFINITY v5 (spec §4): shell wyspy na .inf-card (ciemna karta wzorca
+          z narożnikami i sweepem z globals) — kontrolki zostają na tokenach. */}
+      <div className="inf-card p-6 shadow-xs sm:p-7">
         <h3 className="text-h3">Wpisz swoje liczby</h3>
         <p className="mt-1 text-caption text-fg-subtle">
           Domyślne wartości to typowe założenie. Zmień każde na swoje.

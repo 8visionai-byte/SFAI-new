@@ -20,7 +20,10 @@ export function ServiceFAQ({ faq }: { faq: Usluga['faq'] }) {
           <h2 className="text-h2">Najczęstsze pytania</h2>
         </Reveal>
 
-        <div className="mt-8 divide-y divide-border border-y border-border">
+        {/* INFINITY v5 (spec §4 — sekcja FAQ NA KARTĘ, treść 1:1): akordeon
+            w ciemnej karcie .inf-card (narożniki + sweep z globals); wewnątrz
+            wzorzec details/summary 1:1 z home FAQ. */}
+        <div className="inf-card mt-8 divide-y divide-border p-6">
           {faq.map((item, i) => (
             <Reveal key={item.pytanie} delay={Math.min(i * 0.03, 0.15)}>
               <details className="sf-faq group py-2">

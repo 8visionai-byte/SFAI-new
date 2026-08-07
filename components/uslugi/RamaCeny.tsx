@@ -22,23 +22,26 @@ export function RamaCeny({ ramaCeny }: { ramaCeny: Usluga['ramaCeny'] }) {
           <h2 className="text-h2">{ramaCeny.h2}</h2>
         </Reveal>
 
-        {maKwote && (
-          <Reveal delay={0.04}>
-            <p className="mt-5 font-display text-h2 font-semibold tabular-nums text-brand">
-              od {ramaCeny.minPrice!.toLocaleString('pl-PL')} zł
-            </p>
-          </Reveal>
-        )}
-
+        {/* INFINITY v5 (spec §4 — sekcja cennika NA KARTĘ, treść 1:1): rama ceny
+            w ciemnej karcie .inf-card (narożniki + sweep z globals), akcent
+            domyślny karty — jak karty cennika home. */}
         <Reveal delay={0.05}>
-          <p className="text-lead mt-5 text-fg-muted">{ramaCeny.tresc}</p>
-        </Reveal>
+          <div className="inf-card mt-8 p-6 md:p-8">
+            {maKwote && (
+              <p className="font-display text-h2 font-semibold tabular-nums text-brand">
+                od {ramaCeny.minPrice!.toLocaleString('pl-PL')} zł
+              </p>
+            )}
 
-        <Reveal delay={0.1}>
-          <p className="mt-6 text-caption text-fg-subtle">
-            To widełki startowe, nie ostateczna faktura. Dokładną cenę poznasz na
-            bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów.
-          </p>
+            <p className={`text-lead text-fg-muted ${maKwote ? 'mt-5' : ''}`}>
+              {ramaCeny.tresc}
+            </p>
+
+            <p className="mt-6 border-t border-border pt-5 text-caption text-fg-subtle">
+              To widełki startowe, nie ostateczna faktura. Dokładną cenę poznasz na
+              bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów.
+            </p>
+          </div>
         </Reveal>
       </div>
     </Section>

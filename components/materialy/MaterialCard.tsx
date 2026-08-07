@@ -2,7 +2,8 @@ import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { Card } from '@/components/ui';
 import type { Material, MaterialWkrotce } from '@/lib/materialy/types';
-import { INF_TYP } from '@/lib/inf-kategorie';
+import { INF_TYP, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { InfIcon } from '@/components/ui/InfIcons';
 
 /**
  * MaterialCard — karta lead magnetu na hubie /materialy. Cała karta klikalna
@@ -25,22 +26,25 @@ export function MaterialCard({ material }: { material: Material }) {
       as="article"
       variant="quiet"
       className="inf-card relative flex h-full flex-col p-6"
-      style={{ '--card-c': dekor.c } as CSSProperties}
+      style={{ '--card-c': dekor.c, '--card-c-l': dekor.odcien ?? dekor.c } as CSSProperties}
     >
-      <div aria-hidden="true" className="inf-shine" />
       <div aria-hidden="true" className="inf-spotlight" />
 
       <div className="flex items-center gap-3">
-        {/* Kafelek emoji typu treści — dekoracja aria-hidden (jak dropdown). */}
+        {/* Kafelek ikony typu treści — dekoracja aria-hidden (v5: ikona SVG na
+            kartach, emoji tylko w dropdownach nav). */}
         <span
           aria-hidden="true"
           className="inf-tile"
           style={{ '--tile-c': dekor.c } as CSSProperties}
         >
-          {dekor.emoji}
+          <InfIcon name={dekor.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
         </span>
         <span className="inf-tag">{material.etykieta}</span>
-        <span className="inf-tag text-accent">{material.typPliku}</span>
+        {/* Badge typu pliku w jasnym odcieniu typu (istniejące pole). */}
+        <span className="inf-tag" style={{ color: dekor.odcien ?? dekor.c }}>
+          {material.typPliku}
+        </span>
       </div>
 
       <h3 className="text-h3 mt-4">

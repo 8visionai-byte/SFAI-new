@@ -9,8 +9,10 @@ import { breadcrumbSchema } from '@/components/seo/schemas';
 import { SITE } from '@/lib/site';
 import { getUslugaBySlug } from '@/lib/uslugi';
 import type { Usluga } from '@/lib/uslugi/types';
+import { INF_USLUGA_BADGE } from '@/lib/inf-kategorie';
+import { InfIcon } from '@/components/ui/InfIcons';
 
-import { Section, Card, Badge, MagneticButton } from '@/components/ui';
+import { Section, Card, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { Breadcrumbs } from '@/components/uslugi/Breadcrumbs';
 import { HOME_CTA } from '@/lib/site';
@@ -82,34 +84,44 @@ const KLASTRY: Klaster[] = [
 ];
 
 /** Kafel usługi — link po H1 (= money query), kapsuła skrócona do dowodu wartości.
-    INFINITY v2 (sama prezentacja, treść 1:1): .inf-card na Card variant="quiet"
-    (lewa krawędź w kolorze kategorii przez --card-c), kafelek emoji kategorii
-    (aria-hidden, mapa lib/inf-kategorie jak dropdown), strzałka .inf-arrow,
-    błysk .inf-shine + spotlight .inf-spotlight jako wewnętrzne divy aria-hidden. */
+    INFINITY v5 (spec §4 — pełna spójność z home, treść 1:1): .inf-card na Card
+    variant="quiet" (narożniki + sweep robi sama karta), kafelek kategorii z
+    UNIKALNĄ ikoną SVG (jak PromoUslugi na home — v5: emoji tylko w dropdownach
+    nav), --card-c-l = odcień kategorii, badge mono po prawej = pochodna sluga
+    (INF_USLUGA_BADGE — istniejące pole rejestru, jak w dropdownie), strzałka
+    .inf-arrow, spotlight .inf-spotlight jako wewnętrzny div aria-hidden. */
 function UslugaKafel({ usluga }: { usluga: Usluga }) {
   const dekor = INF_KATEGORIA[usluga.slug] ?? INF_KATEGORIA_DEFAULT;
+  const odcien = dekor.odcien ?? dekor.c;
   return (
     <Card
       as="article"
       variant="quiet"
       className="inf-card h-full"
-      style={{ '--card-c': dekor.c } as CSSProperties}
+      style={{ '--card-c': dekor.c, '--card-c-l': odcien } as CSSProperties}
     >
-      <div aria-hidden="true" className="inf-shine" />
       <div aria-hidden="true" className="inf-spotlight" />
       <Link
         href={`/uslugi/${usluga.slug}`}
         className="flex h-full flex-col rounded-lg p-6"
       >
-        {/* Kafelek emoji kategorii — dekoracja aria-hidden (jak dropdown). */}
-        <span
-          aria-hidden="true"
-          className="inf-tile mb-4"
-          style={{ '--tile-c': dekor.c } as CSSProperties}
-        >
-          {dekor.emoji}
+        {/* Wiersz dekoracji jak w dropdownie wzorca: kafelek ikony + badge mono
+            kategorii po prawej (pochodna sluga, dekoracja w odcieniu karty). */}
+        <span className="flex items-center justify-between gap-3">
+          <span
+            aria-hidden="true"
+            className="inf-tile"
+            style={{ '--tile-c': dekor.c } as CSSProperties}
+          >
+            <InfIcon name={dekor.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
+          </span>
+          {INF_USLUGA_BADGE[usluga.slug] && (
+            <span className="inf-tag" style={{ color: odcien }}>
+              {INF_USLUGA_BADGE[usluga.slug]}
+            </span>
+          )}
         </span>
-        <h3 className="text-h3 text-fg">{usluga.h1}</h3>
+        <h3 className="text-h3 mt-4 text-fg">{usluga.h1}</h3>
         <p className="mt-3 text-body-sm text-fg-muted">{usluga.problem.h2}</p>
         <span className="mt-4 inline-flex items-center gap-1 text-body-sm font-semibold text-accent-hover">
           Zobacz usługę
@@ -167,8 +179,13 @@ export default function UslugiHubPage() {
       <Section tone="subtle">
         <div className="mx-auto max-w-narrow">
           <Reveal>
+            {/* INFINITY v5: wyróżnienie parasola zostaje na .sf-rim-gradient
+                (mechanizm home: wyróżniony plan cennika) — badge w języku inf
+                (mono .inf-tag na akcencie jak "Najczęściej wybierane" na home). */}
             <Card variant="highlight" className="overflow-hidden">
-              <Badge variant="accent">Zacznij tutaj</Badge>
+              <span className="inf-tag rounded-full border-transparent bg-accent px-3 py-1 text-accent-contrast">
+                Zacznij tutaj
+              </span>
               <h2 className="text-h2 mt-4">Nie wiesz, którą usługę wybrać?</h2>
               <p className="text-lead mt-4 text-fg-muted">
                 Architekci Wartości AI to my zamiast etatowego działu AI. Sami sprawdzamy,
@@ -201,8 +218,12 @@ export default function UslugiHubPage() {
         return (
           <Section key={klaster.id} tone={ki % 2 === 0 ? 'base' : 'subtle'}>
             <div className="mx-auto max-w-narrow">
+              {/* Overline mono klastra = ISTNIEJĄCY identyfikator (klaster.id),
+                  język techniczny wzorca jak slug w PromoUslugi — zero nowych
+                  stringów treści (dekoracja pochodna pola rejestru). */}
               <Reveal>
-                <h2 className="text-h2">{klaster.h2}</h2>
+                <p className="inf-overline">{klaster.id}</p>
+                <h2 className="text-h2 mt-2">{klaster.h2}</h2>
               </Reveal>
               <Reveal delay={0.05}>
                 <p className="text-lead mt-4 text-fg-muted">{klaster.intro}</p>

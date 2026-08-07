@@ -76,7 +76,9 @@ export function GeneratorPromptow() {
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-10">
       {/* KOLUMNA WYBORÓW */}
-      <div className="rounded-xl border border-border bg-surface p-6 shadow-xs sm:p-7">
+      {/* INFINITY v5 (spec §4): shell wyspy na .inf-card (ciemna karta wzorca
+          z narożnikami i sweepem z globals) — kontrolki zostają na tokenach. */}
+      <div className="inf-card p-6 shadow-xs sm:p-7">
         <h3 className="text-h3">Złóż swój prompt</h3>
         <p className="mt-1 text-caption text-fg-subtle">
           Wybierz cztery rzeczy. Prompt złoży się sam, na bieżąco.
@@ -160,7 +162,8 @@ export function GeneratorPromptow() {
         </div>
 
         {/* Bridge do magnetów (realna wartość) */}
-        <div className="mt-4 rounded-xl border border-border bg-surface p-5 shadow-xs">
+        {/* Panel wyniku — .inf-card (spec §4). */}
+        <div className="inf-card mt-4 p-5 shadow-xs">
           <p className="text-body-sm text-fg">
             Chcesz więcej gotowców? Mamy zestawy promptów do skopiowania.
           </p>

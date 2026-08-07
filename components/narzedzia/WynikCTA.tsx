@@ -26,8 +26,9 @@ type WynikCTAProps = {
 };
 
 export function WynikCTA({ mikrokopia }: WynikCTAProps) {
+  // INFINITY v5 (spec §4): blok wyniku/CTA na .inf-card (mechanizmy home).
   return (
-    <div className="mt-8 rounded-xl border border-border bg-surface p-6 shadow-xs">
+    <div className="inf-card mt-8 p-6 shadow-xs">
       <p className="text-body font-medium text-fg">{mikrokopia}</p>
       <div className="mt-4 flex flex-col items-start gap-3">
         <MagneticButton variant="primary" size="lg" href={HOME_CTA.href}>

@@ -7,7 +7,7 @@ import { breadcrumbSchema } from '@/components/seo/schemas';
 import { SITE, HOME_CTA } from '@/lib/site';
 import { PRODUKTY, KLOCKI, KLOCKI_DISCLAIMER } from '@/lib/produkty';
 
-import { Section, Card, Badge, MagneticButton } from '@/components/ui';
+import { Section, Card, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { ProduktCard, KlocekCard } from '@/components/produkty';
 
@@ -136,9 +136,14 @@ export default function ProduktyPage() {
         {/* DISCLAIMER — MUSI być widoczny pod katalogiem klocków (uczciwy sygnał). */}
         <div className="mx-auto mt-10 max-w-narrow">
           <Reveal>
+            {/* INFINITY v5: wyróżnienie disclaimera zostaje na .sf-rim-gradient
+                (mechanizm home) — badge w języku inf (mono .inf-tag na akcencie,
+                jak "Najczęściej wybierane" na home). Treść 1:1. */}
             <Card variant="highlight" className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <Badge variant="accent">Ważne</Badge>
+                <span className="inf-tag rounded-full border-transparent bg-accent px-3 py-1 text-accent-contrast">
+                  Ważne
+                </span>
                 <p className="text-body mt-3 text-fg">{KLOCKI_DISCLAIMER}</p>
                 <p className="mt-3 text-body-sm text-fg-muted">
                   Chcesz zobaczyć, jak budujemy rozwiązanie z tych klocków na zamówienie?

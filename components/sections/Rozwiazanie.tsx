@@ -1,6 +1,8 @@
+import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { Section, Button } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
+import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
 import { AgentDemo } from './AgentDemo';
 
 /** Styl frazowego linku w treści — sygnał SEO/AEO do podstron usług. */
@@ -49,52 +51,77 @@ export function Rozwiazanie() {
       (jeden system nagłówków redesignu). Kontrast treści bez zmian.
     */
     <Section tone="base" space="lg" seam>
-      {/* BLOK DEFINICYJNY (answer-first) — kanoniczny, cytowalny fragment dla LLM na
-          zapytanie „co to jest AI Agent dla firmy". Zwięzła definicja encyklopedyczna,
-          potem wyróżnik + kontekst ogólnopolski + linki wewnętrzne do usług (sygnał
-          SEO i AEO). Prowadzi czytelnika: CO to jest -> CZYM się różni -> demo -> tabela. */}
-      <div className="mx-auto max-w-narrow">
-        <Reveal>
-          <h2 className="text-h2">Co to jest AI Agent dla firmy?</h2>
-        </Reveal>
-        <Reveal delay={0.05}>
-          <p className="text-lead mt-5 text-fg-muted">
-            AI Agent dla firmy to system, który samodzielnie wykonuje powtarzalne zadania:
-            odbiera telefony, odpowiada klientom, umawia wizyty i przenosi dane między systemami.
-            Działa według Twoich zasad, ma dostęp do kalendarza, CRM i narzędzi, z których już
-            korzystasz. W odróżnieniu od chatbota nie tylko odpowiada na pytania, ale wykonuje
-            konkretne czynności od początku do końca.
-          </p>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <p className="mt-4 text-body text-fg-muted">
-            W SimpleFast.ai budujemy takich Agentów dla polskich małych i średnich firm.
-            Pracujemy zdalnie dla firm z całej Polski, od jednoosobowych działalności z mniejszych
-            miast po zespoły z Warszawy, Krakowa czy Wrocławia. Najczęściej są to{' '}
-            <Link href="/uslugi/chatboty" className={LINK}>chatboty AI dla firmy</Link>,{' '}
-            <Link href="/uslugi/voiceboty" className={LINK}>voiceboty odbierające telefony po polsku</Link>{' '}
-            oraz <Link href="/uslugi/automatyzacje" className={LINK}>automatyzacja procesów w firmie</Link>.
-            Dane zostają w UE, zgodnie z RODO, a płacisz za efekt.
-          </p>
-        </Reveal>
-      </div>
-
-      {/* RÓŻNICA Agent vs chatbot — drugi cytowalny blok (na zapytanie „czym się różni"). */}
-      <div className="mx-auto mt-14 max-w-narrow">
-        <Reveal>
-          {/* Jeden system H2 (redesign): granatowy text-h2 bez gradientu i bez
-              linii akcentowej — gradient marki ma twardy budżet 4 miejsc. */}
-          <h2 className="text-h2">Czym różni się AI Agent od zwykłego chatbota?</h2>
-        </Reveal>
-        <Reveal delay={0.05}>
-          <p className="text-lead mt-5 text-fg-muted">
-            Chatbot odpowiada na pytania. AI Agent wykonuje zadania. Chatbot powie klientowi, jakie masz
-            godziny otwarcia. Agent sprawdzi Twój kalendarz, zaproponuje wolny termin, zapisze wizytę i wyśle
-            potwierdzenie. Robi to pod Twoją kontrolą i według Twoich zasad, a Ty w każdej chwili widzisz, co
-            zrobił. To różnica między systemem, który gada, a pracownikiem, który działa.
-          </p>
-        </Reveal>
-      </div>
+      {/* INFINITY v5 (spec §3 PARTIA C): oba cytowalne bloki AEO — definicja
+          „Co to jest AI Agent dla firmy?" i różnica „Czym różni się AI Agent
+          od zwykłego chatbota?" — jako DWIE karty .inf-card OBOK SIEBIE
+          (md:grid-cols-2). Teksty i H2 co do znaku 1:1 z v4 (answer-first dla
+          LLM bez zmian; zmienia się tylko opakowanie wizualne). Overline mono
+          = dekoracyjna numeracja wzorca „// 01/02" (aria-hidden, zero słów —
+          zero nowych stringów treści). Kolory kart z rejestru INF_KATEGORIA:
+          definicja w cyjanie chatbotów, różnica w violecie voicebotów (dwie
+          karty w jednym gridzie = dwa odcienie, konwencja v4). Kaskadę wejścia
+          niesie .sf-stagger na Reveal (kontrakt: goły div = dzieci opacity:0). */}
+      <Reveal className="sf-stagger mx-auto grid max-w-wide gap-6 md:grid-cols-2">
+        {(
+          [
+            {
+              nr: '// 01',
+              kat: INF_KATEGORIA['chatboty'] ?? INF_KATEGORIA_DEFAULT,
+              h2: 'Co to jest AI Agent dla firmy?',
+            },
+            {
+              nr: '// 02',
+              kat: INF_KATEGORIA['voiceboty'] ?? INF_KATEGORIA_DEFAULT,
+              h2: 'Czym różni się AI Agent od zwykłego chatbota?',
+            },
+          ] as const
+        ).map((karta, i) => (
+          <article
+            key={karta.nr}
+            className="inf-card flex h-full flex-col p-6 md:p-8"
+            style={
+              {
+                '--card-c': karta.kat.c,
+                '--card-c-l': karta.kat.odcien ?? karta.kat.c,
+              } as CSSProperties
+            }
+          >
+            {/* Overline mono wzorca — numeracja dekoracyjna w odcieniu karty. */}
+            <span aria-hidden="true" className="inf-overline" style={{ color: 'var(--card-c-l)' }}>
+              {karta.nr}
+            </span>
+            {/* H2 zostaje H2 (kotwice AEO/SEO); w połówce grida rozmiar text-h3. */}
+            <h2 className="text-h3 mt-4">{karta.h2}</h2>
+            {i === 0 ? (
+              <>
+                <p className="mt-3 text-body text-fg-muted">
+                  AI Agent dla firmy to system, który samodzielnie wykonuje powtarzalne zadania:
+                  odbiera telefony, odpowiada klientom, umawia wizyty i przenosi dane między systemami.
+                  Działa według Twoich zasad, ma dostęp do kalendarza, CRM i narzędzi, z których już
+                  korzystasz. W odróżnieniu od chatbota nie tylko odpowiada na pytania, ale wykonuje
+                  konkretne czynności od początku do końca.
+                </p>
+                <p className="mt-3 text-body-sm text-fg-muted">
+                  W SimpleFast.ai budujemy takich Agentów dla polskich małych i średnich firm.
+                  Pracujemy zdalnie dla firm z całej Polski, od jednoosobowych działalności z mniejszych
+                  miast po zespoły z Warszawy, Krakowa czy Wrocławia. Najczęściej są to{' '}
+                  <Link href="/uslugi/chatboty" className={LINK}>chatboty AI dla firmy</Link>,{' '}
+                  <Link href="/uslugi/voiceboty" className={LINK}>voiceboty odbierające telefony po polsku</Link>{' '}
+                  oraz <Link href="/uslugi/automatyzacje" className={LINK}>automatyzacja procesów w firmie</Link>.
+                  Dane zostają w UE, zgodnie z RODO, a płacisz za efekt.
+                </p>
+              </>
+            ) : (
+              <p className="mt-3 text-body text-fg-muted">
+                Chatbot odpowiada na pytania. AI Agent wykonuje zadania. Chatbot powie klientowi, jakie masz
+                godziny otwarcia. Agent sprawdzi Twój kalendarz, zaproponuje wolny termin, zapisze wizytę i wyśle
+                potwierdzenie. Robi to pod Twoją kontrolą i według Twoich zasad, a Ty w każdej chwili widzisz, co
+                zrobił. To różnica między systemem, który gada, a pracownikiem, który działa.
+              </p>
+            )}
+          </article>
+        ))}
+      </Reveal>
 
       {/* Interaktywne demo „pokaż, nie mów": chatbot vs Agent — NAD cytowalną tabelą.
           Tabela ZOSTAJE (obowiązkowa dla cytowalności LLM); demo to wizualna ilustracja. */}

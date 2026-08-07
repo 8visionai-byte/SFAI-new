@@ -2,7 +2,12 @@ import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { KATEGORIA_LABEL } from '@/lib/realizacje/types';
 import type { Realizacja } from '@/lib/realizacje/types';
-import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import {
+  INF_KATEGORIA,
+  INF_KATEGORIA_DEFAULT,
+  INF_REALIZACJA_IKONA,
+} from '@/lib/inf-kategorie';
+import { InfIcon } from '@/components/ui/InfIcons';
 
 /**
  * RealizacjaCard — kafelek case'a na liście /realizacje (premium, hover preview).
@@ -27,32 +32,42 @@ import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
 export function RealizacjaCard({ realizacja }: { realizacja: Realizacja }) {
   const metryka = realizacja.efekt.metryki[0];
   const dekor = INF_KATEGORIA[realizacja.kategoria] ?? INF_KATEGORIA_DEFAULT;
+  const odcien = dekor.odcien ?? dekor.c;
 
   return (
     <Link
       href={`/realizacje/${realizacja.slug}`}
       className="inf-card group flex h-full flex-col p-6"
-      style={{ '--card-c': dekor.c } as CSSProperties}
+      style={{ '--card-c': dekor.c, '--card-c-l': odcien } as CSSProperties}
     >
-      {/* Błysk + spotlight — dekoracje malowane przez CSS fundamentu (i JS
-          orchestratora dla --mx/--my); pointer-events:none, zero treści. */}
-      <div aria-hidden="true" className="inf-shine" />
+      {/* Spotlight — dekoracja malowana przez CSS fundamentu (i JS orchestratora
+          dla --mx/--my); pointer-events:none, zero treści. Sweep robi ::after
+          samej .inf-card (v4) — bez dodatkowego .inf-shine. */}
       <div aria-hidden="true" className="inf-spotlight" />
 
       <div className="flex items-center justify-between gap-3">
         <span className="flex items-center gap-3">
-          {/* Kafelek emoji kategorii — dekoracja aria-hidden (jak dropdown). */}
+          {/* Kafelek kategorii — UNIKALNA ikona SVG per case (mapa
+              INF_REALIZACJA_IKONA; v5: emoji tylko w dropdownach nav);
+              dekoracja aria-hidden (jak dropdown). */}
           <span
             aria-hidden="true"
             className="inf-tile"
             style={{ '--tile-c': dekor.c } as CSSProperties}
           >
-            {dekor.emoji}
+            <InfIcon
+              name={INF_REALIZACJA_IKONA[realizacja.slug] ?? INF_KATEGORIA_DEFAULT.ikona}
+            />
           </span>
           <span className="inf-tag">{KATEGORIA_LABEL[realizacja.kategoria]}</span>
         </span>
+        {/* Metryka-dowód w JASNYM odcieniu kategorii karty (mechanizm
+            .inf-card-sub home — odcienie AA na --surface z zapasem). */}
         {metryka && (
-          <span className="font-display text-h3 font-semibold tabular-nums text-accent">
+          <span
+            className="font-display text-h3 font-semibold tabular-nums"
+            style={{ color: odcien }}
+          >
             {metryka.wartosc}
           </span>
         )}

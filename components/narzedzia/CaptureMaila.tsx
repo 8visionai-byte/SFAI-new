@@ -63,8 +63,9 @@ export function CaptureMaila({
   }
 
   if (status === 'success') {
+    // INFINITY v5: stan sukcesu w karcie .inf-card (spójnie z DiagnozaForm).
     return (
-      <div className="rounded-lg border border-border bg-success-bg p-5 text-center">
+      <div className="inf-card bg-success-bg p-5 text-center">
         <p className="text-body-sm font-medium text-fg">Raport jedzie na maila.</p>
         <p className="mt-1 text-caption text-fg-muted">
           Sprawdź skrzynkę za chwilę. Gdyby nie dotarł, zajrzyj do spamu.
