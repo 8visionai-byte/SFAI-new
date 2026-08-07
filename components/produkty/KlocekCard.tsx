@@ -50,7 +50,11 @@ export function KlocekCard({ klocek, indeks = 0 }: { klocek: Klocek; indeks?: nu
     >
       <div aria-hidden="true" className="inf-spotlight" />
 
-      <h3 className="text-body font-semibold text-fg">{klocek.nazwa}</h3>
+      {/* F2: `font-bold`, nie `font-semibold`. Reguła wagi tytułu karty
+          w globals zeszła z :is() (0,1,1) na :where() (0,1,0), żeby markup
+          realnie decydował — od tej chwili KAŻDE utility wagi wygrywa, więc
+          semibold renderowałby 600 zamiast dotychczasowych 700. */}
+      <h3 className="text-body font-bold text-fg">{klocek.nazwa}</h3>
       <p className="mt-2 text-body-sm text-fg-muted">{klocek.opis}</p>
     </Card>
   );

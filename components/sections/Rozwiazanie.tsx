@@ -1,9 +1,13 @@
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
-import { Section, Button } from '@/components/ui';
+/* Button zszedł z importu razem z CTA sekcji (v8 §3): przycisk mówi teraz
+   językiem pigułek .inf-glow-cta, a nie wariantem `secondary` z neutralną
+   obwódką --border-control. Żaden inny element tej sekcji go nie używa. */
+import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
-import { InfIcon } from '@/components/ui/InfIcons';
+/* v8: <InfIcon> już tu nie renderujemy (karty „co potrafi Agent" są tekstowe,
+   więc wzorzec nie daje im ikony) — zostaje sam TYP do rejestru POTRAFI. */
 import type { InfIconName } from '@/components/ui/InfIcons';
 import { AgentDemo } from './AgentDemo';
 
@@ -196,13 +200,10 @@ export function Rozwiazanie() {
         {POTRAFI.map((item) => (
           <li key={item.t} className="inf-card p-6" style={{ '--card-c': item.c } as CSSProperties}>
             <div aria-hidden="true" className="inf-spotlight" />
-            <span
-              aria-hidden="true"
-              className="inf-tile mb-4"
-              style={{ '--tile-c': item.c } as CSSProperties}
-            >
-              <InfIcon name={item.ikona} />
-            </span>
+            {/* v8 (spec §8, pomiary wzorca §3.5): „co potrafi Agent" to KARTY
+                TEKSTOWE (zdania o możliwościach), a takie we wzorcu ikony nie
+                mają. Kafelek stąd wypadł, ton karty (--card-c) zostaje. Pole
+                `ikona` zostaje w rejestrze POTRAFI, nie renderujemy go. */}
             <span className="block text-ui font-semibold text-fg">{item.t}</span>
             <span className="mt-2 block text-body-sm text-fg-muted">{item.d}</span>
           </li>
@@ -230,12 +231,37 @@ export function Rozwiazanie() {
         Wcześniej linkowała do /uslugi/agenci-ai — slug spoza rejestru lib/uslugi,
         a przy dynamicParams=false to twarde 404 (strona nie była prerenderowana).
         Intencja przycisku ("którego Agenta potrzebujesz") = dokładnie to, co robi diagnoza.
+
+        INFINITY v8 §3 — dwie skargi Pawła, dwie poprawki, ZERO zmian w treści:
+
+        1) „nie jest symetrycznie, nie jest na środku". Cytat wyżej jest
+           wyśrodkowany (mx-auto + text-center), ale przycisk leżał w gołym
+           <div>, czyli dosuwał się do LEWEJ krawędzi kontenera 1200px —
+           blok czytał się krzywo. Teraz cytat i CTA siedzą we WSPÓLNYM,
+           wyśrodkowanym bloku (flex + justify-center, max-w-wide mx-auto),
+           więc obie linie mają jedną oś.
+
+        2) „kolor ramki z dupy, kolor CTA z dupy". Przycisk był
+           <Button variant="secondary">, a ten wariant maluje obwódkę
+           --border-control (biel 55%) i tekst --brand (biel) — czyli
+           NEUTRALNĄ szarość spoza palety marki, obcą wobec reszty CTA.
+           Wchodzi dokładnie ten sam język, co drugorzędne CTA hero:
+           pigułka .inf-glow-cta + .inf-glow-cta-ghost (obwódka i litery
+           w akcencie --accent, glow akcentu, strzałka .sf-arrow jako
+           dekoracja aria-hidden). Zero nowego CSS, zero nowych tokenów —
+           obie klasy już żyją w globals i są używane w hero.
+
+        MIEJSCE NA REALNY WYBÓR AGENTA (decyzja D5 Pawła: quiz/selektor
+        prowadzący do właściwej usługi) — to osobne, większe zadanie. Ten
+        wrapper jest gotowym slotem: selektor wejdzie MIĘDZY cytat a CTA,
+        w tej samej osi i bez ruszania układu sekcji.
       */}
       <Reveal delay={0.15}>
-        <div className="mt-7">
-          <Button variant="secondary" href="#diagnoza">
-            Sprawdź, którego Agenta potrzebujesz
-          </Button>
+        <div className="mx-auto mt-7 flex max-w-wide flex-col items-center gap-3 text-center">
+          <a href="#diagnoza" className="inf-glow-cta inf-glow-cta-ghost">
+            Sprawdź, którego Agenta potrzebujesz{' '}
+            <span aria-hidden="true" className="sf-arrow">→</span>
+          </a>
         </div>
       </Reveal>
     </Section>

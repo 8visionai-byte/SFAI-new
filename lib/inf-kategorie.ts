@@ -14,10 +14,27 @@
  * (INF_USLUGA_BADGE / INF_WIEDZA_BADGE) — krótkie mono etykiety POCHODNE
  * ISTNIEJĄCYCH pól (slug/typ), zero nowych treści.
  *
- * Kolory kategorii 1:1 ze spec-infinity-v2 §Dropdown (zmierzone ze wzorca):
- * chatboty #22d3ee, voiceboty #8b5cf6, automatyzacje #10b981,
- * dokumenty #f59e0b, www #22d3ee, audyt #f59e0b, opieka #10b981,
- * rekrutacja #a78bfa, rozwiazania #8b5cf6, optymalizacja #22d3ee.
+ * F4 (naprawa z audytu, cytat Pawła: „Infinity ma głębsze, mocniejsze kolory,
+ * u nas blade, byle jakie"): NASYCENIE CAŁEJ PALETY PODBITE DO 100 PROCENT.
+ * Dotąd podbity był wyłącznie token --accent w globals, a ten rejestr — który
+ * realnie maluje karty, tagi, liczby i etykiety — stał nietknięty. Praca
+ * w HSL: BARWA (H) i JASNOŚĆ (L) zostają, rośnie samo S. Wzorem są neonowe
+ * tokeny wzorca z pomiarów §1.3, §2.1 i §5.1 (#00f0ff, #39ff14, #ff00e5) —
+ * wszystkie mają S = 100%, i to jest cała różnica między „głęboki" a „blady".
+ * Kontrasty policzone na korpusie karty (rgb(5,5,11)) i nad szczytem mgławicy
+ * violet 8% (rgb(15,12,28)); najsłabszy w palecie to fiolet bazowy 4,71:1,
+ * czyli AA ✓ — pełna tabela stary/nowy hex, HSL i kontrast w raporcie partii.
+ *   #22d3ee -> #11e0ff   hsl(188 86% 53%) -> hsl(188 100% 53%)
+ *   #8b5cf6 -> #8e5cff   hsl(258 90% 66%) -> hsl(258 100% 68%)  (jedyny wyjątek:
+ *       L +1,7 pp, bo przy samym S=100% kontrast spadał do 4,34:1 nad mgławicą)
+ *   #a78bfa -> #a586ff   #10b981 -> #00c986   #f59e0b -> #ffa101
+ *   #67e8f9 -> #61edff   #f472b6 -> #ff67b7   #4ade80 -> #29ff77
+ *   #fbbf24 -> #ffc120   #60a5fa -> #5ba4ff
+ *
+ * Kolory kategorii wywodzą się ze spec-infinity-v2 §Dropdown (zmierzone ze
+ * wzorca): chatboty cyjan, voiceboty fiolet, automatyzacje zieleń,
+ * dokumenty bursztyn, www cyjan, audyt bursztyn, opieka zieleń,
+ * rekrutacja fiolet jasny, rozwiazania fiolet, optymalizacja cyjan.
  *
  * ŻELAZNA ZASADA: ikona i kolor to WYŁĄCZNIE dekoracja (kafelek .inf-tile ma
  * aria-hidden, kolor wchodzi przez custom property --tile-c/--card-c).
@@ -35,8 +52,9 @@ export type InfDekor = {
   c: string;
   /**
    * v4 (spec §PARTIA A pkt 5): JAŚNIEJSZY odcień koloru — fluorescencyjna
-   * paleta kart: cyan #67e8f9, violet #a78bfa, magenta #f472b6, green
-   * #4ade80, amber #fbbf24, blue #60a5fa. Konsument (partia C) podaje go
+   * paleta kart, po podbiciu nasycenia F4: cyan #61edff, violet #a586ff,
+   * magenta #ff67b7, green #29ff77, amber #ffc120, blue #5ba4ff.
+   * Konsument (partia C) podaje go
    * w --card-c-l (mono podtytuł .inf-card-sub) i różnicuje nim karty
    * w JEDNYM gridzie. Opcjonalny w TYPIE (lokalne mapy partii C w app/
    * jeszcze go nie mają), ale WYPEŁNIONY w każdej mapie tego rejestru.
@@ -53,37 +71,40 @@ export type InfDekor = {
 export type InfIkonaDekor = { c: string; odcien?: string; ikona: InfIconName; emoji?: string };
 
 /** Kategorie usług (klucz = slug usługi; realizacje używają tych samych slugów).
- * Odcienie v4: mapowanie bazowy -> jasny (cyan->#67e8f9, violet->#a78bfa,
- * green->#4ade80, amber->#fbbf24) + rozróżnienie DUBLI w jednym gridzie
- * paletą spec: strony-www dostają blue #60a5fa (trzeci cyjan w mapie),
- * agent-rekrutacyjny (baza to już jasny violet) idzie w magentę #f472b6. */
+ * Odcienie v4 (hexy po podbiciu nasycenia F4): mapowanie bazowy -> jasny
+ * (cyan->#61edff, violet->#a586ff, green->#29ff77, amber->#ffc120)
+ * + rozróżnienie DUBLI w jednym gridzie paletą spec: strony-www dostają
+ * blue #5ba4ff (trzeci cyjan w mapie), agent-rekrutacyjny (baza to już jasny
+ * violet) idzie w magentę #ff67b7. */
 export const INF_KATEGORIA: Record<string, InfDekor> = {
-  chatboty: { c: '#22d3ee', odcien: '#67e8f9', emoji: '💬', ikona: 'chat-dymek' },
-  voiceboty: { c: '#8b5cf6', odcien: '#a78bfa', emoji: '🎙️', ikona: 'sluchawka-fala' },
-  'agent-rekrutacyjny': { c: '#a78bfa', odcien: '#f472b6', emoji: '🤝', ikona: 'osoba-check' },
-  automatyzacje: { c: '#10b981', odcien: '#4ade80', emoji: '⚡', ikona: 'blyskawica' },
-  'dokumenty-faktury': { c: '#f59e0b', odcien: '#fbbf24', emoji: '📄', ikona: 'dokument-skan' },
+  chatboty: { c: '#11e0ff', odcien: '#61edff', emoji: '💬', ikona: 'chat-dymek' },
+  voiceboty: { c: '#8e5cff', odcien: '#a586ff', emoji: '🎙️', ikona: 'sluchawka-fala' },
+  'agent-rekrutacyjny': { c: '#a586ff', odcien: '#ff67b7', emoji: '🤝', ikona: 'osoba-check' },
+  automatyzacje: { c: '#00c986', odcien: '#29ff77', emoji: '⚡', ikona: 'blyskawica' },
+  'dokumenty-faktury': { c: '#ffa101', odcien: '#ffc120', emoji: '📄', ikona: 'dokument-skan' },
   // v5 (spec §2): emoji opieki 🛡️ -> 🛠️ (lista emoji dropdownu Usługi 1:1 ze spec).
-  'opieka-ai': { c: '#10b981', odcien: '#4ade80', emoji: '🛠️', ikona: 'tarcza-serce' },
-  'audyt-ai': { c: '#f59e0b', odcien: '#fbbf24', emoji: '🔍', ikona: 'lupa-wykres' },
-  rozwiazania: { c: '#8b5cf6', odcien: '#a78bfa', emoji: '🧩', ikona: 'puzzle' },
-  'strony-www': { c: '#22d3ee', odcien: '#60a5fa', emoji: '🌐', ikona: 'glob-siatka' },
-  optymalizacja: { c: '#22d3ee', odcien: '#67e8f9', emoji: '📈', ikona: 'wykres-strzalka' },
+  'opieka-ai': { c: '#00c986', odcien: '#29ff77', emoji: '🛠️', ikona: 'tarcza-serce' },
+  'audyt-ai': { c: '#ffa101', odcien: '#ffc120', emoji: '🔍', ikona: 'lupa-wykres' },
+  rozwiazania: { c: '#8e5cff', odcien: '#a586ff', emoji: '🧩', ikona: 'puzzle' },
+  'strony-www': { c: '#11e0ff', odcien: '#5ba4ff', emoji: '🌐', ikona: 'glob-siatka' },
+  optymalizacja: { c: '#11e0ff', odcien: '#61edff', emoji: '📈', ikona: 'wykres-strzalka' },
 };
 
 /** Fallback dla slugów spoza map (nowe wpisy rejestrów). */
 export const INF_KATEGORIA_DEFAULT: Required<InfDekor> = {
   c: 'var(--accent)',
-  odcien: 'var(--accent-hover)', // #67e8f9 — jasny cyjan spójny z paletą odcieni
+  // Fallback jedzie na TOKENACH CSS, nie na hexach tego rejestru — podbicie
+  // nasycenia F4 go nie dotyczy; --accent-hover zostaje jasnym cyjanem globals.
+  odcien: 'var(--accent-hover)',
   emoji: '✨',
   ikona: 'iskry',
 };
 
 /** Typy treści Centrum Wiedzy (karty listingów blog/poradniki/materiały). */
 export const INF_TYP: Record<'poradnik' | 'wpis' | 'material', InfDekor> = {
-  poradnik: { c: '#22d3ee', odcien: '#67e8f9', emoji: '📚', ikona: 'ksiazka' },
-  wpis: { c: '#a78bfa', odcien: '#f472b6', emoji: '📝', ikona: 'notes-pioro' },
-  material: { c: '#f59e0b', odcien: '#fbbf24', emoji: '🧲', ikona: 'magnes' },
+  poradnik: { c: '#11e0ff', odcien: '#61edff', emoji: '📚', ikona: 'ksiazka' },
+  wpis: { c: '#a586ff', odcien: '#ff67b7', emoji: '📝', ikona: 'notes-pioro' },
+  material: { c: '#ffa101', odcien: '#ffc120', emoji: '🧲', ikona: 'magnes' },
 };
 
 /**
@@ -93,10 +114,10 @@ export const INF_TYP: Record<'poradnik' | 'wpis' | 'material', InfDekor> = {
 export const INF_PRODUKT: Record<string, InfIkonaDekor> = {
   // v5 (spec §2): emoji dropdownu Produkty 1:1 ze spec: 🧾 🗓️ ✅ 🎛️
   // (kolejność listy spec = kolejność rejestru PRODUKTY).
-  'skaner-faktur-ksef': { c: '#f59e0b', odcien: '#fbbf24', ikona: 'dokument-skan', emoji: '🧾' },
-  'app-coachingowa-z-agentami': { c: '#a78bfa', odcien: '#f472b6', ikona: 'gwiazda-kompas', emoji: '🗓️' },
-  'apka-obecnosci-skladek': { c: '#10b981', odcien: '#4ade80', ikona: 'kalendarz-check', emoji: '✅' },
-  'centrum-dowodzenia': { c: '#22d3ee', odcien: '#67e8f9', ikona: 'radar', emoji: '🎛️' },
+  'skaner-faktur-ksef': { c: '#ffa101', odcien: '#ffc120', ikona: 'dokument-skan', emoji: '🧾' },
+  'app-coachingowa-z-agentami': { c: '#a586ff', odcien: '#ff67b7', ikona: 'gwiazda-kompas', emoji: '🗓️' },
+  'apka-obecnosci-skladek': { c: '#00c986', odcien: '#29ff77', ikona: 'kalendarz-check', emoji: '✅' },
+  'centrum-dowodzenia': { c: '#11e0ff', odcien: '#61edff', ikona: 'radar', emoji: '🎛️' },
 };
 
 /**
@@ -107,11 +128,11 @@ export const INF_NARZEDZIE: Record<string, InfIkonaDekor> = {
   // partia C) — pełne pokrycie palety bez dubli.
   // v5 (spec §2): emoji dropdownu Narzędzia 1:1 ze spec: 🧮 ⏱️ 🧭 🔎 ✍️
   // (kolejność listy spec = kolejność rejestru NARZEDZIA).
-  'kalkulator-oszczednosci': { c: '#22d3ee', odcien: '#67e8f9', ikona: 'kalkulator', emoji: '🧮' },
-  'kalkulator-procesu': { c: '#10b981', odcien: '#4ade80', ikona: 'wykres-strzalka', emoji: '⏱️' },
-  'test-gotowosci-ai': { c: '#8b5cf6', odcien: '#a78bfa', ikona: 'gwiazda-kompas', emoji: '🧭' },
-  'audyt-strony-ai': { c: '#f59e0b', odcien: '#fbbf24', ikona: 'lupa-wykres', emoji: '🔎' },
-  'generator-promptow': { c: '#a78bfa', odcien: '#f472b6', ikona: 'iskry', emoji: '✍️' },
+  'kalkulator-oszczednosci': { c: '#11e0ff', odcien: '#61edff', ikona: 'kalkulator', emoji: '🧮' },
+  'kalkulator-procesu': { c: '#00c986', odcien: '#29ff77', ikona: 'wykres-strzalka', emoji: '⏱️' },
+  'test-gotowosci-ai': { c: '#8e5cff', odcien: '#a586ff', ikona: 'gwiazda-kompas', emoji: '🧭' },
+  'audyt-strony-ai': { c: '#ffa101', odcien: '#ffc120', ikona: 'lupa-wykres', emoji: '🔎' },
+  'generator-promptow': { c: '#a586ff', odcien: '#ff67b7', ikona: 'iskry', emoji: '✍️' },
 };
 
 /**
@@ -186,8 +207,8 @@ export const INF_WIEDZA_BADGE: Record<'blog' | 'poradniki' | 'materialy' | 'ai-r
  */
 export const INF_WIEDZA: Record<'blog' | 'poradniki' | 'materialy' | 'ai-radar', InfIkonaDekor> = {
   // v5 (spec §2): emoji dropdownu Wiedza 1:1 ze spec: 📰 📖 🧲 📡.
-  blog: { c: '#a78bfa', odcien: '#f472b6', ikona: 'notes-pioro', emoji: '📰' },
-  poradniki: { c: '#22d3ee', odcien: '#67e8f9', ikona: 'ksiazka', emoji: '📖' },
-  materialy: { c: '#f59e0b', odcien: '#fbbf24', ikona: 'magnes', emoji: '🧲' },
-  'ai-radar': { c: '#8b5cf6', odcien: '#a78bfa', ikona: 'radar', emoji: '📡' },
+  blog: { c: '#a586ff', odcien: '#ff67b7', ikona: 'notes-pioro', emoji: '📰' },
+  poradniki: { c: '#11e0ff', odcien: '#61edff', ikona: 'ksiazka', emoji: '📖' },
+  materialy: { c: '#ffa101', odcien: '#ffc120', ikona: 'magnes', emoji: '🧲' },
+  'ai-radar': { c: '#8e5cff', odcien: '#a586ff', ikona: 'radar', emoji: '📡' },
 };

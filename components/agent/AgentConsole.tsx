@@ -33,7 +33,9 @@ export function AgentConsole() {
 
   return (
     <>
-      {/* FAB „Zapytaj AI" (1:1 z 10K): klik = konsola w trybie docked + start głosu */}
+      {/* FAB „Zapytaj AI" (1:1 z 10K): klik = pełne okno konsoli z aktywną
+          zakładką „01 Czat" (spec v8b §5; głos przepina się zakładką „02 Głos").
+          Sam przełącznik trybów siedzi w agent-console-init.ts. */}
       <button className="agent-fab" type="button" data-agent-fab aria-label="Otwórz Agenta SimpleFast.ai">
         <span className="agent-fab__signal" aria-hidden="true"></span>
         <svg viewBox="0 0 24 24" aria-hidden="true">

@@ -4,6 +4,7 @@ import { DOJRZALOSC_LABEL } from '@/lib/produkty/types';
 import type { Produkt } from '@/lib/produkty/types';
 import { INF_PRODUKT, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
 import { InfIcon } from '@/components/ui/InfIcons';
+import { KartaEtykieta, KartaTagi } from '@/components/sections/KartaCzesci';
 
 /**
  * ProduktCard — karta JEDNEGO własnego produktu (opis przez funkcję).
@@ -23,7 +24,7 @@ import { InfIcon } from '@/components/ui/InfIcons';
  * source INF_PRODUKT z lib/inf-kategorie (kafelek .inf-tile z UNIKALNĄ ikoną SVG
  * — v5: emoji tylko w dropdownach nav), --card-c-l = jasny odcień, badge mono
  * po prawej = ISTNIEJĄCE pole `nazwaRobocza` (jak w dropdownie Produkty, spec §2),
- * badge dojrzałości → mono .inf-tag. BEZ strzałki (karta nieinteraktywna).
+ * badge dojrzałości → mono etykieta nad tytułem. BEZ strzałki (karta nieinteraktywna).
  * INFINITY v7 (audyt „naczynia połączone": 0 z 14 kart /produkty miało
  * reflektor): .inf-spotlight jako PIERWSZE dziecko karty — ta sama reakcja na
  * kursor co karty usług na hubie. Strzałki dalej nie ma (karta nieklikalna),
@@ -43,27 +44,26 @@ export function ProduktCard({ produkt }: { produkt: Produkt }) {
     >
       <div aria-hidden="true" className="inf-spotlight" />
 
-      <div className="flex items-center justify-between gap-3">
-        <span className="flex items-center gap-3">
-          {/* Kafelek ikony produktu — dekoracja aria-hidden (jak dropdown). */}
-          <span
-            aria-hidden="true"
-            className="inf-tile"
-            style={{ '--tile-c': dekor.c } as CSSProperties}
-          >
-            <InfIcon name={dekor.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
-          </span>
-          <span className="inf-tag">{DOJRZALOSC_LABEL[produkt.dojrzalosc]}</span>
+      {/* v8 (spec §8, pomiary wzorca §3.5/§3.6): karta produktu reprezentuje
+          RZECZ, więc IKONĘ ZACHOWUJE, a nad tytułem stoi mono ETYKIETA STATUSU
+          w kolorze karty — u wzorca to „• ACTIVE", u nas dojrzałość produktu
+          („MVP (działa rdzeń)" / „Działa u nas"), czyli istniejące pole
+          rejestru. Nazwa robocza zeszła na dół, do rzędu tagów. */}
+      <span className="flex items-center gap-3">
+        {/* Kafelek ikony produktu — dekoracja aria-hidden (jak dropdown). */}
+        <span
+          aria-hidden="true"
+          className="inf-tile"
+          style={{ '--tile-c': dekor.c } as CSSProperties}
+        >
+          <InfIcon name={dekor.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
         </span>
-        {/* Badge mono nazwy roboczej w odcieniu karty (istniejące pole rejestru). */}
-        {produkt.nazwaRobocza && (
-          <span className="inf-tag" style={{ color: odcien }}>
-            {produkt.nazwaRobocza}
-          </span>
-        )}
-      </div>
+        <KartaEtykieta>{DOJRZALOSC_LABEL[produkt.dojrzalosc]}</KartaEtykieta>
+      </span>
 
-      <h3 className="text-h3 mt-4 text-fg">{produkt.coRobi}</h3>
+      {/* TYTUŁ: waga 800 (pomiary §3.2 — świecenie tytułu wzorca to gruby glif,
+          nie text-shadow; h3 bazowo ma 600, Plus Jakarta wczytany do 800). */}
+      <h3 className="text-h3 mt-4 font-extrabold text-fg">{produkt.coRobi}</h3>
 
       <p className="mt-3 text-body-sm text-fg-muted">{produkt.opisFunkcji}</p>
 
@@ -98,6 +98,21 @@ export function ProduktCard({ produkt }: { produkt: Produkt }) {
           <p className="mt-1 text-caption text-fg-subtle">{produkt.demoHint}</p>
         </div>
       </div>
+
+      {/* v8: rząd TAGÓW na dole karty. Rejestr lib/produkty nie ma pola z
+          frazami (`queries` mają usługi i realizacje), więc jedyny uczciwy tag
+          to istniejąca NAZWA ROBOCZA produktu. Zero wymyślania nowych słów:
+          brak nazwy = brak rzędu tagów (KartaTagi zwraca null).
+          Odblokowanie pełnych 2-4 tagów: dopisać `queries` do typu `Produkt`. */}
+      <KartaTagi
+        tagi={produkt.nazwaRobocza ? [produkt.nazwaRobocza] : []}
+        doDolu={false}
+        /* WARIANT (a) PIGUŁKA (spec v8b §4): karta produktu reprezentuje RZECZ
+           (ma ikonę), więc tag idzie w ramce w kolorze karty — ten sam model co
+           karty narzędzi wzorca (OIDC / OAUTH2 / RBAC). */
+        wariant="pigulka"
+        etykietaListy={`Tagi produktu: ${produkt.coRobi}`}
+      />
     </Card>
   );
 }

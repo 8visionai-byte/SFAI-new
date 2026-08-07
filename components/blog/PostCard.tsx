@@ -5,6 +5,12 @@ import { PostMeta } from './PostMeta';
 import type { Post, PostWkrotce } from '@/lib/blog/types';
 import { INF_TYP, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
 import { InfIcon } from '@/components/ui/InfIcons';
+import {
+  KartaBadge,
+  KartaEtykieta,
+  KartaTagi,
+  tagiPosta,
+} from '@/components/sections/KartaCzesci';
 
 /**
  * PostCard — karta wpisu na liście /blog. Cała karta jest klikalna (link na H3
@@ -15,8 +21,14 @@ import { InfIcon } from '@/components/ui/InfIcons';
  *  - Card variant="quiet" + .inf-card (wzorzec z home/Oferta: quiet zdejmuje
  *    sf-glass, .inf-card daje ciemną kartę wzorca + lewą krawędź --card-c);
  *  - kafelek emoji typu treści (📝 wpis, aria-hidden, mapa lib/inf-kategorie);
- *  - badge kategorii → mono .inf-tag; strzałka „Czytaj" → .inf-arrow;
+ *  - strzałka „Czytaj" → .inf-arrow;
  *  - błysk .inf-shine + spotlight .inf-spotlight jako wewnętrzne divy aria-hidden.
+ *
+ * INFINITY v8b (spec §4 „różne modele tagów"): karta wpisu dostaje WARIANT (b),
+ * czyli tagi PŁASKIE. Kategoria nad tytułem zeszła z pigułki na mono etykietę
+ * w kolorze karty (wzorzec trzyma tam status bez ramki), a pod metą stoi rząd
+ * płaskich tagów z pola `tagi` rejestru. Pigułek z obwódką ta karta nie ma
+ * wcale — mają je karty usług, produktów i realizacji.
  *
  * Tytuł jest H3 (lista pod H1 strony /blog), lead = zajawka answer-first.
  */
@@ -42,10 +54,15 @@ export function PostCard({ post }: { post: Post }) {
         >
           <InfIcon name={dekor.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
         </span>
-        <span className="inf-tag">{post.kategoria}</span>
+        {/* v8b §4: kategoria schodzi z pigułki na PŁASKĄ mono etykietę w kolorze
+            karty — wzorzec trzyma status/kategorię nad tytułem bez ramki
+            (§3.6 „• ACTIVE"), a ramki zostawia rzędowi tagów na dole. */}
+        <KartaEtykieta>{post.kategoria}</KartaEtykieta>
       </div>
 
-      <h3 className="text-h3 mt-4">
+      {/* Waga 800 (pomiary §3.2 — tytuł wzorca nie ma poświaty, „świeci"
+          grubością glifu; h3 bazowo ma 600). */}
+      <h3 className="text-h3 mt-4 font-extrabold">
         <Link
           href={href}
           className="after:absolute after:inset-0 focus-visible:outline-none"
@@ -60,6 +77,18 @@ export function PostCard({ post }: { post: Post }) {
         data={post.data}
         dataAktualizacji={post.dataAktualizacji}
         className="mt-4 flex flex-wrap items-center gap-x-1 gap-y-1"
+      />
+
+      {/* WARIANT (b) PŁASKI (spec v8b §4): karta treści ma już kolorową etykietę
+          kategorii na górze i kolorowe „Czytaj" na dole — trzecia kolorowa
+          warstwa w ramkach byłaby hałasem. Tagi lecą sam tekstem mono, jak
+          „AWS BEDROCK ENTERPRISE AI" na wzorcu. Treść = pole `tagi` rejestru
+          lib/blog (istniejąca taksonomia wpisu), zero nowych stringów. */}
+      <KartaTagi
+        tagi={tagiPosta(post)}
+        doDolu={false}
+        wariant="plaski"
+        etykietaListy={`Tagi wpisu: ${post.tytul}`}
       />
 
       <span className="mt-4 inline-flex items-center gap-1 text-caption font-semibold text-accent">
@@ -90,7 +119,8 @@ export function PostCard({ post }: { post: Post }) {
  * martwego linku), badge „Wkrótce". Pokazuje plan redakcyjny i łapie long-tail,
  * zanim powstanie pełny wpis. `aria-disabled` dla czytników.
  * INFINITY v2: .inf-card bez błysku/strzałki (karta nieinteraktywna — bez
- * fałszywej afordancji), badge'e → mono .inf-tag (teksty 1:1).
+ * fałszywej afordancji). v8b: kategoria płaska mono, status „Wkrótce" w pigułce
+ * (teksty 1:1).
  * INFINITY v7 (audyt: karta bez --card-c spadała na fallbackowy akcent, więc
  * cały hover świecił jednym cyjanem): ta karta to TEN SAM typ treści co wpis
  * (INF_TYP.wpis), tylko zaplanowany — bierze więc tę samą parę kolor/odcień
@@ -112,11 +142,18 @@ export function PostCardWkrotce({ temat }: { temat: PostWkrotce }) {
     >
       <div aria-hidden="true" className="inf-spotlight" />
 
-      <div className="flex items-center gap-2">
-        <span className="inf-tag">{temat.kategoria}</span>
-        <span className="inf-tag text-accent">Wkrótce</span>
+      {/* v8b §4, DWA modele w jednym rzędzie (dokładnie ta różnica, którą
+          zauważył Paweł): kategoria PŁASKA mono, a status „Wkrótce" w PIGUŁCE
+          z obwódką w kolorze karty — bo to jedyna informacja, która ma tu
+          zatrzymać wzrok. */}
+      <div className="flex items-center gap-3">
+        <KartaEtykieta>{temat.kategoria}</KartaEtykieta>
+        <KartaBadge>Wkrótce</KartaBadge>
       </div>
 
+      {/* Tytuł zostaje wyciszony (karta bez trasy), więc BEZ podbicia wagi:
+          `.inf-card h3` z globals celowo nie rozjaśnia tytułów na
+          .text-fg-muted, a cięższy glif czytałby się jak aktywna karta. */}
       <h3 className="text-h3 mt-4 text-fg-muted">{temat.tytul}</h3>
 
       <span className="mt-auto pt-4 text-caption text-fg-subtle">

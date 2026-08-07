@@ -1,0 +1,16 @@
+{
+  "ramaCeny": {
+    "tekst": "od 1490 zł",
+    "kolor": "rgb(251, 191, 36)",
+    "cien": "rgb(251, 191, 36) 0px 0px 12px",
+    "rozmiar": "46px",
+    "kolorKarty": "#fbbf24"
+  },
+  "kursorSpoczynek": {
+    "klasy": "inf-kursor is-widoczny",
+    "w": "6px",
+    "h": "6px",
+    "radius": "2px",
+    "tlo": "rgb(0, 240, 255)"
+  }
+}

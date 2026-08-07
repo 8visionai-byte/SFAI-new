@@ -173,12 +173,12 @@
        --fg-subtle #4e4e6e      =  ~2.5:1 — WYŁĄCZNIE DEKORACJA (glify, kreski);
                                    mały CZYTELNY tekst jedzie na --fg-muted
                                    (AA-guard .text-fg-subtle na końcu pliku)
-       --accent #22d3ee         = ~11.2:1 na bg (AA tekst-akcja); tekst #06060c
-                                   na tle #22d3ee = ~11.2:1 (AA — CTA)
-       --success #10b981 ~8.0:1 · --warning #f59e0b ~9.4:1 · --error #ef4444 ~5.4:1
+       --accent #00f0ff         = 14,2:1 na bg (AA tekst-akcja); tekst #06060c
+                                   na tle #00f0ff = 14,2:1 (AA — CTA)
+       --success #00c986 9,33:1 · --warning #ffa101 9,96:1 · --error #ff3434 5,57:1
        --border-strong #2a2a50  =  ~1.5:1 — kreska DEKORACYJNA; obrys KONTROLEK
                                    dalej --border-control (biel 55%, >3:1, 1.4.11)
-       --ring #22d3ee           = ~11.2:1 (1.4.11 — wskaźnik fokusa ✓) */
+       --ring #00f0ff           = 14,2:1 (1.4.11 — wskaźnik fokusa ✓) */
   :root,
   [data-theme='dark'] {
     color-scheme: dark;
@@ -198,14 +198,30 @@
     --fg-subtle: #4e4e6e; /* INFINITY 1:1: --text-muted — TYLKO dekoracja (~2.5:1!) */
     --fg-on-accent: #06060c; /* ciemny tekst na cyjanie ~11.2:1 (AA) */
 
-    /* Brand / akcent — INFINITY: cyjan interakcji #22d3ee (hover nav, tekst-akcje,
-       CTA). Violet wzorca żyje w --accent-2 (kafle/dekoracja/druga barwa). */
+    /* Brand / akcent — INFINITY: cyjan interakcji (hover nav, tekst-akcje, CTA).
+       Violet wzorca żyje w --accent-2 (kafle/dekoracja/druga barwa).
+       v8b pkt 3 (cytat: „Infinity ma głębsze, mocniejsze kolory, u nas blade,
+       byle jakie. Więcej koloru w kolorze"): cyjan interakcji przechodzi
+       z #22d3ee na #00f0ff. To NIE jest kolor wymyślony — to zmierzony token
+       wzorca `--neon-cyan`, którym wzorzec maluje DOKŁADNIE te role, w których
+       my używamy --accent: hover pozycji nawigacji (pomiary §1.5:
+       `background rgba(0,240,255,.05)`, `border-color rgba(0,240,255,.3)`,
+       `text-shadow 0 0 8px rgba(0,240,255,.8)`) i wskaźnik kursora (§5.1).
+       Praca w HSL, tak jak każe spec: hue 187 -> 186 (bez zmiany rodziny),
+       NASYCENIE 86% -> 100%, jasność HSL 53% -> 50%. Podnosimy S, nie L.
+       KONTRAST (policzony, nie oszacowany): #00f0ff na --bg #06060c = 14,2:1
+       (było 11,2:1, czyli PO zmianie jest lepiej), na --surface #111127
+       = 13,0:1, a tekst --accent-contrast #06060c NA cyjanie = 14,2:1. */
     --brand: #ffffff;
-    --accent: #22d3ee;
-    --accent-hover: #67e8f9; /* stopień jaśniejszy (na ciemnym hover idzie W GÓRĘ) */
-    --accent-decor: #22d3ee;
-    --accent-soft: rgba(34, 211, 238, 0.14);
-    --accent-contrast: #06060c; /* tekst na CTA: ~11.2:1 na #22d3ee (AA ✓) */
+    --accent: #00f0ff;
+    --accent-hover: #61e9ff; /* stopień jaśniejszy (na ciemnym hover idzie W GÓRĘ), S 100% */
+    --accent-decor: #00f0ff;
+    --accent-soft: rgba(0, 240, 255, 0.14);
+    --accent-contrast: #06060c; /* tekst na CTA: 14,2:1 na #00f0ff (AAA ✓) */
+    /* Violet ZOSTAJE #8b5cf6 — to jest wartość ZMIERZONA u wzorca (obwódka
+       pigułki `rgba(139,92,246,.2)`, akcent kart, plama sekcji flagship), więc
+       nie ma tu czego „podbijać": jesteśmy 1:1. Wersja o pełnym nasyceniu
+       (#8853ff) spadłaby na 4,55:1 na --bg, czyli na styk progu AA. */
     --accent-2: #8b5cf6; /* NOWY (INFINITY 1:1: --accent wzorca) — violet pomocniczy */
 
     /* Linie: INFINITY 1:1 — granatowo-fioletowe kreski wzorca (DEKORACYJNE,
@@ -214,8 +230,8 @@
     --border-strong: #2a2a50;
     --hairline: rgba(255, 255, 255, 0.12);
     --border-control: rgba(255, 255, 255, 0.55); /* obrys kontrolki >3:1 (1.4.11) */
-    --border-accent: #22d3ee;
-    --ring: #22d3ee;
+    --border-accent: #00f0ff;
+    --ring: #00f0ff;
     /* NOWY token v7 (partia A, separator sekcji): DRUGA barwa iskry — magenta
        #ff00e5 zmierzona we wzorcu (`.lp-divider-line::after`, rgba(255,0,229,.3)).
        Rodzina --ring-gradient (róż/magenta pigułki nawigacji). WYŁĄCZNIE
@@ -229,13 +245,22 @@
     --glass-hairline: rgba(255, 255, 255, 0.1);
     --glass-inner-light: rgba(255, 255, 255, 0.08);
 
-    /* Semantyka statusu — INFINITY 1:1 (kontrasty w komentarzu bloku wyżej). */
-    --success: #10b981;
-    --success-bg: rgba(16, 185, 129, 0.12);
-    --warning: #f59e0b;
-    --warning-bg: rgba(245, 158, 11, 0.12);
-    --error: #ef4444;
-    --error-bg: rgba(239, 68, 68, 0.12);
+    /* Semantyka statusu — v8b pkt 3: te trzy tokeny to ZWYKŁE stopnie Tailwinda
+       (emerald-500 / amber-500 / red-500), czyli dokładnie ta „bladość", o której
+       mówi właściciel; wzorzec trzyma statusy w neonach (`#39ff14` na `ACTIVE`).
+       Każdy podniesiony do NASYCENIA 100% przy zachowanej jasności HSL, hue bez
+       zmian (zieleń 160°, bursztyn 38°, czerwień 0°). Kontrasty na --bg #06060c
+       policzone po zmianie i WSZYSTKIE poszły w górę, nie w dół:
+         --success #00c986  9,33:1 (było 7,97:1)
+         --warning #ffa101  9,96:1 (było 9,41:1)
+         --error   #ff3434  5,57:1 (było 5,40:1)
+       Na --surface #111127 odpowiednio 8,56:1 / 9,13:1 / 5,11:1 — AA wszędzie. */
+    --success: #00c986;
+    --success-bg: rgba(0, 201, 134, 0.12);
+    --warning: #ffa101;
+    --warning-bg: rgba(255, 161, 1, 0.12);
+    --error: #ff3434;
+    --error-bg: rgba(255, 52, 52, 0.12);
     --info: #5ea0dc;
     --info-bg: rgba(94, 160, 220, 0.12);
 
@@ -245,7 +270,7 @@
     --shadow-sm: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 2px 10px rgba(0, 0, 0, 0.45);
     --shadow-md: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 10px 30px rgba(0, 0, 0, 0.5);
     --shadow-lg: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 50px rgba(0, 0, 0, 0.6);
-    --shadow-accent: 0 8px 28px rgba(34, 211, 238, 0.35); /* INFINITY: glow w cyjanie akcentu */
+    --shadow-accent: 0 8px 28px rgba(0, 240, 255, 0.35); /* INFINITY: glow w cyjanie akcentu (v8b: #00f0ff) */
 
     /* METAL na ciemnym: JASNE stopnie tekstowe (AA na navy-950), dekoracja =
        oficjalne kolory marki (jaskrawy ai-green świeci dobrze na ciemnym). */
@@ -740,8 +765,10 @@
      Metaliczny akcent dekoracyjny: subtelny gradient w tle + górna linia połysku. */
   .surface-tech {
     /* Przełącz tokeny semantyczne na ciemne (lokalnie, bez atrybutu w DOM).
-       INFINITY: wartości = lustro pogłębionego :root (spójny kadr strony). */
-    --bg: #06070d;
+       INFINITY: wartości = lustro pogłębionego :root (spójny kadr strony).
+       v8 (spec pkt 1, „tło ma być jednolite"): --bg zrównany z globalnym
+       #06060c — sekcja NIE ma już własnego, o stopień innego czarnego. */
+    --bg: #06060c;
     --bg-subtle: #0a0c14;
     --surface: #0d1018;
     --surface-raised: var(--sf-navy-700);
@@ -774,36 +801,29 @@
     --metal-silver-hi: #e7edf5;
     --metal-fg: var(--metal-violet);
 
-    background-color: var(--bg);
+    /* v8 (spec pkt 1): TŁO ZDJĘTE. `background-color: var(--bg)` malowało
+       SOLIDNY prostokąt na całą szerokość, przez co (a) sekcja miała inny ton
+       niż reszta, (b) kryła globalne warstwy .inf-stars/.inf-nebula (z-index:-1)
+       i robiła w nich płaską dziurę. Kolor niesie teraz body, jak w sekcjach
+       .inf-sec-base. */
+    background-color: transparent;
     color: var(--fg);
-    /* Dekoracja: JEDEN niebieski glow od góry (redesign — trzy kolory w trzech
-       rogach to sygnatura AI-generic; został jeden, centralny). */
+    /* Dekoracja: JEDEN niebieski glow od góry.
+       v8 (POMIARY WZORCA §4.2): zejście do BUDŻETU wzorca — jedyne dozwolone
+       odstępstwo od jednolitego tła to plama radialna max 4% krycia, max 80%
+       szerokości kontenera, zaczepiona przy GÓRNEJ krawędzi, wygaszana do zera
+       przy 70%. Było 120% szerokości / 90% wysokości / 12% krycia, czyli plama
+       szersza niż sekcja (dochodziła do obu krawędzi = pozioma granica tonu). */
     background-image:
-      radial-gradient(120% 90% at 50% -20%, rgba(0, 123, 255, 0.12), transparent 55%);
+      radial-gradient(80% 50% at 50% 0%, rgba(0, 123, 255, 0.04), transparent 70%);
     position: relative;
     isolation: isolate;
   }
-  /* Górna linia połysku metalu — czysta dekoracja, nad tłem, pod treścią. */
-  .surface-tech::before {
-    content: '';
-    position: absolute;
-    inset: 0 0 auto 0;
-    height: 1px;
-    background: var(--metal-gradient-decor);
-    opacity: 0.65;
-    pointer-events: none;
-    z-index: -1;
-  }
-  /* Lustrzany hairline dolny — domyka ciemną kotwicę (szew z jasną sekcją). */
-  .surface-tech::after {
-    content: '';
-    position: absolute;
-    inset: auto 0 0 0;
-    height: 1px;
-    background: var(--metal-gradient-decor);
-    opacity: 0.35;
-    pointer-events: none;
-  }
+  /* v8 (spec pkt 1): USUNIĘTE .surface-tech::before i .surface-tech::after —
+     dwie kreski 1px na PEŁNĄ szerokość viewportu (gradient metalu, opacity .65
+     i .35) na górnej i dolnej krawędzi sekcji. To była dosłownie „widoczna
+     pozioma granica" z kryterium odbioru: dwa jasne szwy od brzegu do brzegu.
+     Rozdzielanie sekcji robi teraz WYŁĄCZNIE .inf-divider (jeden język). */
   /* Karty na ciemnym: cień spoczynkowy z wewnętrznym highlightem (czarny cień
      ginie na navy — górna kreska światła daje krawędź elewacji). */
   .surface-tech .shadow-xs {
@@ -822,25 +842,18 @@
   .surface-aurora {
     position: relative;
     isolation: isolate;
-    background-color: var(--bg);
+    /* v8 (spec pkt 1): SOLIDNE `background-color: var(--bg)` ZDJĘTE — kryło
+       globalne gwiazdy/mgławice i robiło z sekcji CTA płaski prostokąt o innej
+       fakturze niż sąsiedzi. Kolor niesie body. */
+    background-color: transparent;
+    /* v8 (POMIARY WZORCA §4.2): plama w budżecie wzorca — 80% szerokości,
+       4% krycia (było 10%), wygaszenie do zera przy 70% (było 60%). */
     background-image:
-      radial-gradient(80% 60% at 50% 0%, rgba(0, 123, 255, 0.1), transparent 60%);
+      radial-gradient(80% 50% at 50% 0%, rgba(0, 123, 255, 0.04), transparent 70%);
   }
-  /* Hairline w ryzach kontenera — linia kończy się z treścią, nie jak szew
-     renderowania na pełną szerokość viewportu. Na ciemnym lekko mocniej (0.3→0.45). */
-  .surface-aurora::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(100% - 2 * var(--gutter), var(--container-max));
-    height: 1px;
-    background: var(--metal-gradient-decor);
-    opacity: 0.45;
-    pointer-events: none;
-    z-index: -1;
-  }
+  /* v8 (spec pkt 1): USUNIĘTY .surface-aurora::before — kreska 1px gradientem
+     metalu (opacity .45) na górnej krawędzi sekcji. Znaczyła granicę sekcji
+     DRUGIM językiem niż separator .inf-divider i czytała się jako szew. */
 }
 
 /* ==========================================================================
@@ -2269,35 +2282,28 @@ html.lenis body {
   /* ── .sf-glass — szklana karta (makieta 4). backdrop-blur dokłada WYŁĄCZNIE
      media query desktopowa niżej — mobile zostaje matowa tafla (LCP święte).
      INFINITY v6 „NACZYNIA POŁĄCZONE" (spec §PARTIA D zad. 1): shell wszystkich
-     kart Card.tsx przechodzi z bieli 4% na TEN SAM język co .inf-card, żeby
-     podstrony przestały wyglądać „w starym stylu" jedną zmianą:
-      - tło rgba(6,6,12,.62) = ton --bg w kryciu (karta PRZYPOMINA TŁO, a nie
-        jaśniejszą taflę). Krycie WYŻSZE niż .5 w .inf-card, bo pod drobnymi
-        kartami leżą globalne gwiazdy/mgławice, a opisy jadą na --fg-muted
-        (AA jest twarde — spec: podnieś krycie, NIE rozjaśniaj tekstu),
-      - obwódka 1:1 wzorzec: rgba(255,255,255,.07),
-      - WASH w kolorze karty (--card-c, domyślnie akcent) jako background-image,
-        fallback rgba bez color-mix linijkę wyżej (konwencja pliku).
-     WASH 5%, NIE 14% jak .inf-card (wyliczenia w raporcie D, liczone na
-     rgba składanym z tłem): przy 14% sam róg washu zjada --fg-muted #7a7a9e
-     do 3,97:1, czyli poniżej AA, a rozjaśnianie tekstu jest tu zakazane
-     (spec). 5% daje 4,65:1 na czystym tle i 4,54:1 w najgorszym nałożeniu
-     (róg washu NAD szczytem mgławicy violet 8%) — AA wszędzie, przy starym
-     szkle biel-4% było w tym samym punkcie 4,28:1. Przy okazji realizuje
-     zasadę „drobne karty zostają spokojniejsze".
+     kart Card.tsx mówi TYM SAMYM językiem co .inf-card, żeby podstrony nie
+     wyglądały „w starym stylu".
+     v8b pkt 1 — „ŻADNEJ SZATY" (cytat: „To trzeba GLOBALNIE pousuwać"):
+      - USUNIĘTY kolorowy WASH `linear-gradient(135deg, color-mix(--card-c 5%),
+        transparent 55%)` — ta sama plama co w .inf-card, tylko słabsza,
+      - tło rgba(6,6,12,.62) -> rgba(0,0,0,.10), czyli „przeświecający kafelek
+        z delikatnym zaciemnieniem", jak każe najnowsza wypowiedź właściciela.
+        Krycie .62 było jaśniejszą taflą, przez którą tła praktycznie nie było
+        widać,
+      - obwódka 1:1 wzorzec: rgba(255,255,255,.07) — bez zmian.
+     KONTRAST po zdjęciu tafli (opisy w tych kartach jadą na --fg-muted #7a7a9e,
+     bo guard rozjaśniający do #8a8aad działa tylko wewnątrz .inf-card):
+       #7a7a9e na karcie nad czystym tłem #06060c            4,94:1 (AA ✓)
+       #7a7a9e na karcie nad szczytem mgławicy violet 8%     4,71:1 (AA ✓)
+     Tekst NIE był rozjaśniany (spec tego zabrania) — próg trzyma sam fakt,
+     że tło strony jest prawie czarne.
      ŚWIADOMIE BEZ narożników [ ] i BEZ sweepa — to sygnatura .inf-card
      (kart-bohaterów). Hover w odcieniu karty: reguła POZA @layer niżej. */
   .sf-glass {
     position: relative;
-    background-color: rgba(6, 6, 12, 0.62);
+    background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.07);
-    background-image: linear-gradient(135deg, rgba(34, 211, 238, 0.05), transparent 55%);
-    background-image: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--card-c, var(--accent)) 5%, transparent),
-      transparent 55%
-    );
-    background-repeat: no-repeat;
     box-shadow:
       inset 0 1px 0 var(--glass-inner-light),
       0 10px 30px -18px rgba(0, 0, 0, 0.6);
@@ -2324,20 +2330,60 @@ html.lenis body {
      ROSŁ zamiast maleć („naczynia połączone"), (2) dostępność — --fg-muted
      #7a7a9e na #101a30 dawało 4,21:1, czyli PONIŻEJ progu AA 4,5:1.
      Wyróżnikiem zostaje to, co było nim w makiecie: gradientowy obrys i aura,
-     nie jaśniejsze pudełko. Krycie .62 jak .sf-glass (tam policzone: najgorszy
-     przypadek nad mgławicą 4,51:1, czyli AA). */
+     nie jaśniejsze pudełko.
+
+     F1 (naprawa BLOKERA z audytu) — DLACZEGO WNĘTRZE MUSI BYĆ KRYJĄCE.
+     Runda v8b, wykonując „zdejmij szatę z kart", zamieniła warstwę padding-box
+     z rgba(6,6,12,.62) na rgba(0,0,0,.10). Dla .sf-glass i .inf-card to było
+     poprawne (mają JEDNO tło), ale ta karta stoi na sztuczce „gradientowa
+     obwódka": DWIE warstwy w jednym `background`, gdzie górna (padding-box)
+     ZASŁANIA dolną (border-box) wszędzie poza 1px obwódki. Warstwa o kryciu
+     .10 nie zasłania nic — 90 procent gradientu trasy (niebieski, fiolet,
+     zieleń) wypełniało CAŁE wnętrze karty. Policzone na złożonych warstwach:
+       przeciek 90%  -> tło ~rgb(31,202,96), --fg-muted #7a7a9e = 1,90:1
+       przeciek 10%  -> tło #081b14,          --fg-muted = 4,33:1  (dalej pod AA)
+       przeciek  4%  -> tło #070e0f,          --fg-muted = 4,73:1  (AA, ale
+                        wnętrze karty ma już widoczny zielony nalot)
+     Czyli KAŻDE realne krycie poniżej 100 procent maluje kartę na kolor trasy.
+     Rozwiązanie godzi obie rzeczy: DWIE warstwy padding-box zamiast jednej.
+       1. `var(--bg)` KRYJĄCY — to on zatrzymuje gradient na obwódce. Ton jest
+          identyczny z tłem strony, a w wyspach [data-theme=light] token sam
+          przeskakuje na papier, więc karta nigdy nie jest ciemną plamą.
+       2. NA NIM to samo `rgba(0,0,0,.10)` co w .sf-glass i .inf-card, czyli
+          zamówione „delikatne zaciemnienie 10 procent".
+     Wynik: wnętrze składa się do rgb(5,5,11) przy stronie rgb(6,6,12) — jedna
+     jednostka na kanał, dokładnie tyle co korpus .inf-card, więc karta dalej
+     czyta się jak przeświecająca (kontrast korpus/strona 1,01:1), a kolor
+     zostaje WYŁĄCZNIE w obwódce i w aurze ::before.
+     KONTRAST na wnętrzu rgb(5,5,11) (policzony, nie oszacowany):
+       --fg #e4e4f0                          16,09:1
+       --fg-muted #7a7a9e                     4,93:1  (AA ✓)
+       --fg-muted w .inf-card #8a8aad         6,10:1  (AA ✓)
+     CENA: przez tę jedną kartę nie widać gwiazd i mgławic (przez sąsiednie
+     .sf-glass widać) — to świadomy koszt sztuczki z gradientową obwódką. */
   .sf-rim-gradient {
     position: relative;
     border: 1px solid transparent;
     background:
-      linear-gradient(rgba(6, 6, 12, 0.62), rgba(6, 6, 12, 0.62)) padding-box,
+      linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)) padding-box,
+      linear-gradient(var(--bg), var(--bg)) padding-box,
       var(--route-gradient) border-box;
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.1),
       0 12px 40px -18px rgba(0, 0, 0, 0.65);
   }
   /* Aura marki ZA kartą: fiolet/zieleń/niebieski jak poświata na makiecie 4.
-     z-index:-1 = pod tłem karty, wystaje poza jej krawędzie (inset ujemny). */
+     v8b pkt 1 — TO BYŁA NAJMOCNIEJSZA „SZATA" W CAŁYM PLIKU, mocniejsza niż
+     wash .inf-card. Powód jest w kolejności malowania CSS: element o UJEMNYM
+     z-indeksie leży nad tłem własnego rodzica, a pod jego treścią. Aura ma
+     `inset: -28px -34px`, więc jej trzy radialne plamy (fiolet 30%, zieleń 22%,
+     niebieski 20%) kładły się na CAŁYM wnętrzu karty wyróżnionej, nie tylko
+     wokół niej. Dokładnie ten sam mechanizm, który w v8 wykryto w halo pigułki
+     nawigacji (`.inf-pill-nav::after`) i naprawiono tak samo:
+     MASKA PIERŚCIENIA. `padding: 28px 34px` = content-box równy CO DO PIKSELA
+     pudełku karty, `mask ... content-box exclude` wycina to pudełko z malowania.
+     Kolor zostaje WYŁĄCZNIE w rąbku NA ZEWNĄTRZ karty (aura, o którą chodziło
+     w makiecie), a wnętrze karty jest znowu czystym, przeświecającym tłem. */
   .sf-rim-gradient::before {
     content: '';
     position: absolute;
@@ -2345,10 +2391,19 @@ html.lenis body {
     z-index: -1;
     border-radius: inherit;
     pointer-events: none;
+    padding: 28px 34px;
     background:
       radial-gradient(55% 70% at 18% 30%, rgba(122, 60, 240, 0.3), transparent 70%),
       radial-gradient(55% 70% at 84% 38%, rgba(34, 224, 107, 0.22), transparent 70%),
       radial-gradient(50% 65% at 50% 92%, rgba(43, 124, 255, 0.2), transparent 70%);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
   }
 
   /* ── .sf-header — pasek świata B (makieta 1): przezroczysty nad ciemnym hero;
@@ -2541,9 +2596,21 @@ html.lenis body {
   [data-theme='light'] .inf-sec-base {
     background-color: var(--bg);
   }
+  /* v8 (spec pkt 1, NAJWAŻNIEJSZA uwaga właściciela: „całkowite tło powinno być
+     jednolite, a mamy jakieś jaśniejsze sekcje z tłem"): `subtle` PRZESTAJE
+     malować pas. USUNIĘTE deklaracje:
+       background-color: rgba(12, 12, 24, 0.72);
+       background-color: color-mix(in srgb, var(--bg-subtle) 72%, transparent);
+     To był pas #0c0c18 w 72% krycia na PEŁNĄ szerokość viewportu, w 33 sekcjach
+     home i podstron (m.in. „Powtarzalna robota wygląda inaczej w każdej branży"
+     i „Jak wygląda wdrożenie AI Agenta krok po kroku" — dokładnie te, które
+     wskazał właściciel). POMIARY WZORCA §4.2 potwierdzają: żadna sekcja wzorca
+     nie ma własnego tła, największy skok tonu na granicy sekcji to 1 jednostka
+     na kanał. `subtle` zostaje jako WAŻNA semantyka rytmu w Section.tsx (nie
+     ruszamy 33 wywołań), ale wizualnie ≡ `base`. Guard jasnych wysp niżej
+     BEZ ZMIAN — tam ton sekcji dalej jest częścią systemu. */
   .inf-sec-subtle {
-    background-color: rgba(12, 12, 24, 0.72);
-    background-color: color-mix(in srgb, var(--bg-subtle) 72%, transparent);
+    background-color: transparent;
   }
   .inf-sec-subtle[data-theme='light'],
   [data-theme='light'] .inf-sec-subtle {
@@ -2556,14 +2623,37 @@ html.lenis body {
      saturate(1.5) i ANIMACJA płynięcia obwódki (background-position).
      ::before = PŁYNĄCA obwódka: gradient --ring-gradient 300% szerokości,
      maska ring (content-box exclude) zostawia 2px obrączkę.
-     ::after = miękkie halo pod pigułką (delikatna aura, statyczny blur —
-     rastrowany raz, NIE animować!). */
+     ::after (halo) — USUNIĘTY w v8b pkt 1, uzasadnienie przy jego dawnym
+     miejscu niżej. */
+  /* v8 (spec pkt 5, cytat: „w stronie referencyjnej jest dużo lepiej
+     wyeksponowany, ten pasek ma tło CIEMNIEJSZE niż nasze").
+     POMIARY WZORCA §1.4 mówią wprost, że kopiowanie ich hexa 1:1 NIE zadziała:
+     wzorzec ma pod paskiem stronę o luminancji 0,00450 (ich .lp ma wielkie
+     plamy radialne), a jego pasek 0,00332 — czyli pasek jest ciemniejszy od
+     tła POD SOBĄ o 26%. Nasze tło to płaskie #06060c (0,001952), więc dotąd
+     stosowany 1:1 hex wzorca rgba(10,10,16,.65) dawał po złożeniu rgb(9,9,15),
+     czyli pasek o 47% JAŚNIEJSZY od strony — dokładnie odwrotnie niż wzorzec.
+     Odtwarzamy więc PROPORCJĘ, nie hex: cel = 0,74 luminancji tła.
+       złożone rgb(4,4,15), luminancja 0,00147 = 24,7% ciemniej od --bg ✓
+     Mobile (bez blur) zostaje SOLIDNY, żeby treść pod paskiem nie prześwitywała.
+     v8b: prześwit paska („ma być realnie przeświecający") wdrożony na DESKTOPIE
+     — tam jest backdrop-filter, więc to, co przepływa pod pigułką, jest rozmyte
+     i czytelności nie psuje. Na mobile bramka wydajności repo zabrania
+     backdrop-filter (LCP), a półprzezroczysty pasek BEZ rozmycia to duch
+     przewijanego tekstu pod nawigacją. Do decyzji właściciela, gdyby jednak
+     miał prześwitywać także na telefonie.
+     Do tego trzy pozostałe warstwy odcięcia z pomiaru §1.4: czarny cień 40px
+     w dół (buduje „pływanie"), jasna fazka 1px u góry i blur 32px saturate 1.5
+     (desktop, media niżej). Tekst nawigacji na nowym tle: #a0a0c0 = 8,05:1 ✓ */
   .inf-pill-nav {
     position: relative;
     isolation: isolate;
     border-radius: 999px;
-    background-color: #0a0a10;
+    background-color: #04040f;
     border: 1px solid rgba(139, 92, 246, 0.2);
+    box-shadow:
+      0 10px 40px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
   .inf-pill-nav::before {
     content: '';
@@ -2582,17 +2672,16 @@ html.lenis body {
     mask-composite: exclude;
     pointer-events: none;
   }
-  .inf-pill-nav::after {
-    content: '';
-    position: absolute;
-    inset: -3px;
-    z-index: -1;
-    border-radius: inherit;
-    background: var(--ring-gradient);
-    filter: blur(14px);
-    opacity: 0.25;
-    pointer-events: none;
-  }
+  /* v8b pkt 1 — HALO PIGUŁKI USUNIĘTE W CAŁOŚCI (cytat: „Tak samo z paskiem,
+     też nie jest przeświecający do końca, dlatego mamy taki badziewny efekt").
+     Historia w skrócie: „halo" (`.inf-pill-nav::after`) to był kolorowy
+     prostokąt z blur(14px) na `z-index:-1`. W v8 zawężono go maską do
+     10-pikselowego rąbka, ale `filter: blur(14px)` i tak rozlewał magentę
+     z fioletem 14 pikseli DO ŚRODKA paska — czyli dokładnie ta „szata", którą
+     właściciel widzi w połowie elementu. Wzorzec halo nie ma w ogóle
+     (pomiary §1.4: ma czarny cień 40px w dół, jasną fazkę 1px u góry
+     i animowaną wstęgę 2px — wszystkie trzy mamy). Usunięcie tej warstwy jest
+     więc jednocześnie zejściem do wzorca 1:1 i wykonaniem polecenia. */
 
   /* ── .inf-nav-link — link/przycisk nawigacji (stany .gnav-cat-btn wzorca 1:1):
      spoczynek #a0a0c0 (~7.6:1 na pigułce — AA); hover / otwarty dropdown /
@@ -2884,44 +2973,75 @@ html.lenis body {
      (8 warstw: 2 kreski na róg), kolor color-mix(--card-c 55%); wsunięte 8px
      od krawędzi, żeby radius-lg (16px) ich nie ścinał. Fallback bez color-mix:
      cyjan akcentu w rgba (55%).
-     v6 „ROZŚWIETLENIE" (spec §A pkt 1, pomiary wzorca): karta PRZYPOMINA TŁO —
-     tło solidne --surface schodzi do rgba(6,6,12,.5) (ton --bg w połowie krycia:
-     na czystym tle nieodróżnialna od tła, a gwiazdy/mgławice pod kartą przygasza
-     o połowę = strażnik AA dla opisów --fg-muted). Obwódka bazowa 1:1 wzorzec:
-     rgba(255,255,255,.07); hover zostaje w odcieniu karty (media hover niżej).
-     WASH wzorca (::before wzorca: 135deg KOLOR-WARIANTU -> transparent 55%,
-     opacity .5): oba pseudo-elementy karty są ZAJĘTE (pasek akcentu + sweep),
-     więc wash idzie jako 9. warstwa background-image POD narożnikami, a krycie
-     .5 jest WPIECZONE w kolor (spec: color-mix 28% x opacity .5 = 14%). */
+     v8b pkt 1 — „ŻADNEJ SZATY" (cytat Pawła, NAJNOWSZY, cofa v6 i v8):
+     „na połowie ramki coś się świeci, taka szata niebieska. Miało być bez żadnej
+     szaty, przeświecający kafelek, ewentualnie delikatne zaciemnienie pięcio-
+     dziesięcioprocentowe. To trzeba GLOBALNIE pousuwać, bo ten kafelek jest
+     nieprzeświecający do końca."
+     USUNIĘTE TĄ RUNDĄ, wszystkie trzy warstwy, które robiły „szatę":
+       1. WASH — 9. warstwa background-image `linear-gradient(135deg,
+          color-mix(--card-c 10%), transparent 55%)`, czyli kolorowa plama
+          od górnego rogu (to jest ta „szata niebieska" z cytatu),
+       2. DOLNA ŁUNA — `radial-gradient(ellipse 80% 50% at 50% 120%,
+          color-mix(--card-c var(--inf-luna-a)))`. Geometria: przy promieniu
+          pionowym 50% wysokości i wygaszeniu na 70% promienia kolorowa plama
+          sięgała od 85% wysokości karty w górę, a na hover jej krycie rosło
+          dwukrotnie (4% -> 8%) — czyli DOKŁADNIE „świeci się w części ramki".
+          Razem z nią znika zmienna --inf-luna-a i jej @property (niżej),
+       3. KORPUS — `linear-gradient(160deg, rgba(13,14,30,.88), rgba(9,10,22,.72))`
+          dodany w v8, żeby karta była JAŚNIEJSZA od strony (pomiary §3.1).
+          To jest wprost sprzeczne z „przeświecający kafelek + zaciemnienie
+          5-10 procent", a przy kryciu .88 dawał wyraźny granatowy nalot.
+          Świecenie tytułu bierze się teraz z WAGI (800/700, reguła na końcu
+          pliku) i z poświaty liczb, nie z podłoża — pomiary §3.2 mówią zresztą
+          wprost, że tytuł wzorca nie ma ŻADNEGO text-shadow.
+     ZOSTAJE (nietknięte): ZACIEMNIENIE 10% (jedno `background-color`), obwódka
+     rgba(255,255,255,.07), 8 warstw narożników [ ], sweep na hover, świecenie
+     obwódki na hover, reflektor pod kursorem.
+     DLACZEGO `rgba(0,0,0,.10)`, a nie ton --bg: to ma być ZACIEMNIENIE tego, co
+     leży pod kartą (gwiazdy, mgławice), a nie własne pudełko. Na czystym tle
+     składa się do rgb(5,5,11) przy stronie rgb(6,6,12), czyli różnica 1 jednostki
+     na kanał — tyle samo, ile wynosi największy skok tonu na granicach sekcji
+     wzorca (pomiary §4.3). Innymi słowy: widać przez kartę tło strony.
+     KONTRAST po zdjęciu korpusu (liczony na złożonych warstwach):
+       opis .inf-card .text-fg-muted #8a8aad na karcie nad czystym tłem  6,08:1
+       ten sam opis na karcie nad szczytem mgławicy violet 8%           5,83:1
+       tag/etykieta w NAJCIEMNIEJSZYM akcencie palety #8b5cf6           4,56:1
+     czyli AA wszędzie. Gwiazdy (kropki 1px, alfa .15-.25) prześwitują przez
+     kartę tak samo, jak prześwitują pod tekstem POZA kartami — to warunek
+     globalny strony, nie nowy dług tej klasy. */
   .inf-card {
     --card-c: var(--accent);
-    /* v7 (spec §PARTIA A pkt 2, POMIARY WZORCA) — ALFY dekoracji jako zmienne.
-       Wzorzec trzyma narożniki i dolną łunę na OSOBNYCH elementach i zmienia
-       im samo `opacity` (.22 -> .6 oraz .04 -> .08). U nas oba pseudo-elementy
-       karty są zajęte (pasek akcentu + sweep), więc narożniki i łuna jadą jako
-       warstwy background-image, a hover zmienia WYŁĄCZNIE te dwie liczby —
-       nigdy `background-color` karty (skarga Pawła: „zmienia się jeszcze
-       odcień, przez co daje fałszywy widok"). Płynne przejście alfy daje
-       @property + transition custom property (blok POZA @layer niżej);
-       silniki bez @property przełączą je skokowo — wygląd docelowy ten sam. */
+    /* v7 (spec §PARTIA A pkt 2, POMIARY WZORCA) — ALFA NAROŻNIKÓW jako zmienna.
+       Wzorzec trzyma narożniki na OSOBNYCH elementach i zmienia im samo
+       `opacity` (.22 -> .6). U nas oba pseudo-elementy karty są zajęte (pasek
+       akcentu + sweep), więc narożniki jadą jako warstwy background-image,
+       a hover zmienia WYŁĄCZNIE tę jedną liczbę — nigdy `background-color`
+       karty (skarga Pawła: „zmienia się jeszcze odcień, przez co daje fałszywy
+       widok"). Płynne przejście alfy daje @property + transition custom
+       property (blok POZA @layer niżej); silniki bez @property przełączą ją
+       skokowo — wygląd docelowy ten sam.
+       v8b: siostrzana zmienna --inf-luna-a (dolna łuna) USUNIĘTA razem z łuną. */
     --inf-corner-a: 22%;
-    --inf-luna-a: 4%;
     position: relative;
     overflow: hidden;
     border-radius: var(--radius-lg);
-    background-color: rgba(6, 6, 12, 0.5);
+    /* v8b pkt 1: JEDNA warstwa tła = delikatne zaciemnienie 10% (uzasadnienie
+       i policzone kontrasty w bloku komentarza nad regułą). Kolorowego washu,
+       dolnej łuny ani granatowego korpusu tu NIE MA i mieć nie może. */
+    background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.07);
+    /* Osiem warstw = 4 narożniki [ ] po 2 kreski (fallback rgba dla silników
+       bez color-mix linijkę wyżej, konwencja pliku). */
     background-image:
-      linear-gradient(rgba(34, 211, 238, 0.22), rgba(34, 211, 238, 0.22)),
-      linear-gradient(rgba(34, 211, 238, 0.22), rgba(34, 211, 238, 0.22)),
-      linear-gradient(rgba(34, 211, 238, 0.22), rgba(34, 211, 238, 0.22)),
-      linear-gradient(rgba(34, 211, 238, 0.22), rgba(34, 211, 238, 0.22)),
-      linear-gradient(rgba(34, 211, 238, 0.22), rgba(34, 211, 238, 0.22)),
-      linear-gradient(rgba(34, 211, 238, 0.22), rgba(34, 211, 238, 0.22)),
-      linear-gradient(rgba(34, 211, 238, 0.22), rgba(34, 211, 238, 0.22)),
-      linear-gradient(rgba(34, 211, 238, 0.22), rgba(34, 211, 238, 0.22)),
-      linear-gradient(135deg, rgba(34, 211, 238, 0.14), transparent 55%),
-      radial-gradient(ellipse 80% 50% at 50% 120%, rgba(34, 211, 238, 0.04), transparent 70%);
+      linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
+      linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
+      linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
+      linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
+      linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
+      linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
+      linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
+      linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22));
     background-image:
       linear-gradient(
         color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
@@ -2954,12 +3074,6 @@ html.lenis body {
       linear-gradient(
         color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
         color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
-      ),
-      linear-gradient(135deg, color-mix(in srgb, var(--card-c) 14%, transparent), transparent 55%),
-      radial-gradient(
-        ellipse 80% 50% at 50% 120%,
-        color-mix(in srgb, var(--card-c) var(--inf-luna-a), transparent),
-        transparent 70%
       );
     background-repeat: no-repeat;
     background-position:
@@ -2970,9 +3084,7 @@ html.lenis body {
       left 8px bottom 8px,
       left 8px bottom 8px,
       right 8px bottom 8px,
-      right 8px bottom 8px,
-      left top,
-      left top;
+      right 8px bottom 8px;
     background-size:
       10px 1px,
       1px 10px,
@@ -2981,9 +3093,7 @@ html.lenis body {
       10px 1px,
       1px 10px,
       10px 1px,
-      1px 10px,
-      100% 100%,
-      100% 100%;
+      1px 10px;
     /* v7: przejście 1:1 z pomiarów wzorca — `.4s cubic-bezier(.16,1,.3,1)`
        (= --ease-out repo) na transformie, obwódce i cieniu. `background-color`
        ZNIKA z listy, bo tło karty jest teraz IDENTYCZNE w spoczynku i na hover. */
@@ -3036,24 +3146,118 @@ html.lenis body {
     font-size: 0.75rem; /* 12px */
     line-height: 1.4;
     letter-spacing: 0.06em;
-    color: var(--card-c-l, var(--card-c, var(--accent)));
+    /* v8b pkt 3: pełny --card-c przed pastelowym --card-c-l (uzasadnienie
+       i policzone kontrasty przy regule `.inf-card .inf-overline` niżej). */
+    color: var(--card-c, var(--card-c-l, var(--accent)));
     /* v6 „ROZŚWIETLENIE" (spec §A pkt 3): „podświetlony napis" — glow w tym
        samym odcieniu 45% (halo nie liczy się do kontrastu; kolor liter bez zmian). */
-    text-shadow: 0 0 12px rgba(34, 211, 238, 0.45);
-    text-shadow: 0 0 12px color-mix(in srgb, var(--card-c-l, var(--card-c, var(--accent))) 45%, transparent);
+    text-shadow: 0 0 12px rgba(0, 240, 255, 0.45);
+    text-shadow: 0 0 12px color-mix(in srgb, var(--card-c, var(--card-c-l, var(--accent))) 45%, transparent);
   }
   /* v6 „ROZŚWIETLENIE" (spec §A pkt 3, wzorzec .lp-promo-tag: PEŁNE nasycenie
      koloru wariantu, „żadnego wyszarzenia"): mono overline i tagi WEWNĄTRZ kart
      przechodzą z szarości na odcień karty + glow. Selektor 2-klasowy (0,2,0)
      bije bazę i utility koloru (0,1,0); inline style konsumentów (PromoUslugi)
      ustawia ten sam odcień, więc nic się nie gryzie. NIE dotyczy białych
-     tytułów i szarych opisów (wzorzec też ich nie świeci). Kontrast: najciemniejszy
-     odcień palety #a78bfa na rogu z washem ~6.6:1, reszta wyżej — AA z zapasem. */
+     tytułów i szarych opisów (wzorzec też ich nie świeci).
+     v8b pkt 3 — „u nas blade, u nich mocniejsze, z większym nasyceniem":
+     ODWRÓCONA KOLEJNOŚĆ FALLBACKU. Dotąd etykiety i tagi brały NAJPIERW
+     --card-c-l, czyli JAŚNIEJSZY stopień z rejestru (#67e8f9, #a78bfa, #fbbf24,
+     #4ade80, #60a5fa). To są odcienie pastelowe: ta sama barwa, ale z mniejszą
+     chromą i wyższą jasnością, czyli dokładnie „blade". Wzorzec maluje tagi
+     i liczby PEŁNYM `--card-accent` (pomiary §3.3 i §3.4: „PEŁNY kolor akcentu
+     karty, bez krycia"). Bierzemy więc najpierw --card-c (baza: #22d3ee,
+     #8b5cf6, #10b981, #f59e0b), a jaśniejszy stopień zostaje jako zapas dla
+     kart, które podają wyłącznie --card-c-l.
+     KONTRAST na karcie po zdjęciu korpusu (najgorszy przypadek palety):
+       #8b5cf6 4,77:1 na czystym tle, 4,56:1 nad mgławicą — AA ✓
+       #2b7cff 5,23:1 · #10b981 7,97:1 · #22d3ee 11,18:1 · #f59e0b 9,41:1 */
   .inf-card .inf-overline,
   .inf-card .inf-tag {
-    color: var(--card-c-l, var(--card-c, var(--accent)));
-    text-shadow: 0 0 12px rgba(34, 211, 238, 0.45);
-    text-shadow: 0 0 12px color-mix(in srgb, var(--card-c-l, var(--card-c, var(--accent))) 45%, transparent);
+    color: var(--card-c, var(--card-c-l, var(--accent)));
+    text-shadow: 0 0 12px rgba(0, 240, 255, 0.45);
+    text-shadow: 0 0 12px color-mix(in srgb, var(--card-c, var(--card-c-l, var(--accent))) 45%, transparent);
+  }
+
+  /* ══ v8b pkt 4 — TAGI W DWÓCH WARIANTACH ══════════════════════════════════
+     Cytat: „na niektórych kartach nie ma tagów, a na niektórych są po trzy,
+     ale są w ramkach i mają też kolory. Zobacz różnicę."
+     Wzorzec ma dwa modele i oba są tu odwzorowane. Baza jednego i drugiego to
+     dalej `.inf-tag` (geometria i typografia bez zmian) — wariant dokłada się
+     DRUGĄ klasą, więc tag POZA kartą (rzędy chipów, listy) zostaje neutralny.
+
+     F3 (naprawa z audytu) — TO JEST JEDYNY ZESTAW NAZW TAGU W PROJEKCIE.
+     Audyt policzył rozjazd: markup wołał `.inf-card-tag` (49 wystąpień w HTML,
+     zero reguł tutaj), a te dwie reguły miały zero użyć, więc PIGUŁKA nie
+     istniała na stronie i wszystkie tagi renderowały się szarą bazą `.inf-tag`.
+     Naprawione po stronie markupu: components/sections/KartaCzesci.tsx podaje
+     teraz `inf-tag inf-tag-kolor` i `inf-tag inf-tag-plaski`. Nazwa
+     `.inf-card-tag` NIE ISTNIEJE — ani tu, ani w markupie. Jeśli kiedyś wróci
+     w JSX, tag będzie szary i to będzie ten sam błąd.
+     KONTRAKT DLA PARTII MARKUPOWYCH:
+       (a) `class="inf-tag inf-tag-kolor"` — PIGUŁKA: pełny kolor karty, tło
+           i obwódka w tym samym kolorze. Dla kart, które reprezentują RZECZ
+           (usługa, produkt, narzędzie), czyli tam, gdzie tag jest etykietą
+           techniczną (wzorzec: OIDC / OAUTH2 / RBAC).
+       (b) `class="inf-tag inf-tag-plaski"` — PŁASKI: sam mono tekst w szarości,
+           zero obwódki, zero tła. Dla kart, gdzie tagi są tylko kontekstem
+           i nie mają konkurować z tytułem (wzorzec: AWS / BEDROCK /
+           ENTERPRISE AI, CLAUDE AI / LEARNING GAME).
+       (c) brak obu klas = tag neutralny POZA kartą (stan dotychczasowy).
+     SPECYFICZNOŚĆ: selektory 2-klasowe (0,2,0) stoją PO regule
+     `.inf-card .inf-tag` (też 0,2,0) w tej samej warstwie, więc wygrywają
+     kolejnością i wariant płaski nie daje się przemalować na kolor karty.
+     TREŚĆ TAGÓW bez zmian: wyłącznie istniejące pola rejestrów, zero nowych
+     stringów marketingowych. */
+  /* (a) PIGUŁKA W KOLORZE KARTY. Wzorzec §3.4 mierzy tło 8% i obwódkę 20%
+     akcentu — ale mierzy je na korpusie karty JAŚNIEJSZYM od strony. U nas
+     karta jest teraz przeświecająca (v8b pkt 1), więc te same procenty siadają
+     na prawie czarnym tle i gasną. Odtwarzamy WRAŻENIE, nie liczbę: tło 12%,
+     obwódka 32%. Kolor liter zostaje w 100% krycia, jak we wzorcu.
+     F3: waga 700 zmierzona na `.lp-tag` (§3.4) siedzi na WARIANCIE, nie na
+     bazie `.inf-tag` — tagi poza kartami nie mają tyć przy okazji. */
+  .inf-tag.inf-tag-kolor {
+    color: var(--card-c, var(--card-c-l, var(--accent)));
+    font-weight: 700;
+    background-color: rgba(0, 240, 255, 0.12);
+    background-color: color-mix(in srgb, var(--card-c, var(--card-c-l, var(--accent))) 12%, transparent);
+    border-color: rgba(0, 240, 255, 0.32);
+    border-color: color-mix(in srgb, var(--card-c, var(--card-c-l, var(--accent))) 32%, transparent);
+    transition:
+      background-color 0.25s var(--ease-out),
+      border-color 0.25s var(--ease-out);
+  }
+  /* (b) PŁASKI TAG. Obwódka i tło znikają (border-color: transparent, NIE
+     border: none — pudełko ma zostać tej samej wysokości co wariant a, żeby
+     rzędy mieszane nie „skakały"). Szarość: --fg-muted #7a7a9e = 4,94:1 na
+     karcie nad czystym tłem i 4,71:1 nad mgławicą (AA ✓). Wzorzec ma tu
+     #5e5e7e = 3,10:1, czyli poniżej progu — to jeden z trzech punktów, gdzie
+     pomiary §6 wprost odradzają kopiowanie wzorca 1:1. Bez poświaty: płaski
+     tag ma być cichy, inaczej nie różni się od wariantu kolorowego.
+     F3: padding POZIOMY schodzi do zera (pudełka nie ma, więc światło po bokach
+     robiłoby dziury w rzędzie), padding PIONOWY zostaje — dzięki temu rząd
+     mieszany trzyma tę samą wysokość co pigułka. Waga 700 jak w wariancie (a).
+     Kontrast --fg-muted #7a7a9e na korpusie karty: 4,93:1 nad czystym tłem,
+     4,69:1 nad szczytem mgławicy violet 8% (AA ✓, policzone na złożeniu). */
+  .inf-tag.inf-tag-plaski {
+    color: var(--fg-muted);
+    font-weight: 700;
+    padding-left: 0;
+    padding-right: 0;
+    background-color: transparent;
+    border-color: transparent;
+    text-shadow: none;
+  }
+  /* Hover pigułki 1:1 wzorzec §3.4 (tło .08 -> .14, obwódka .20 -> .35), tylko
+     przeskalowany o ten sam współczynnik co spoczynek. Wariant płaski hoveru
+     NIE ma — nie jest kontrolką, tylko etykietą. */
+  @media (hover: hover) and (pointer: fine) {
+    .inf-tag.inf-tag-kolor:hover {
+      background-color: rgba(0, 240, 255, 0.2);
+      background-color: color-mix(in srgb, var(--card-c, var(--card-c-l, var(--accent))) 20%, transparent);
+      border-color: rgba(0, 240, 255, 0.5);
+      border-color: color-mix(in srgb, var(--card-c, var(--card-c-l, var(--accent))) 50%, transparent);
+    }
   }
   /* Strzałka karty — v3: WEWNĄTRZ .inf-card na desktopie POJAWIA SIĘ dopiero
      na hover karty (opacity 0 → 1 + dojazd; reguły w media hover niżej,
@@ -3065,7 +3269,11 @@ html.lenis body {
      glow-em (media hover niżej). */
   .inf-arrow {
     display: inline-block;
-    color: var(--card-c-l, var(--card-c, var(--accent)));
+    /* v8b pkt 3: pełny kolor karty przed pastelowym stopniem (jak reszta
+       akcentów tej rundy). UWAGA dla partii markupowych: część kart nadpisuje
+       to utility `text-[color:var(--card-c-l,…)]` w JSX i wtedy strzałka dalej
+       jedzie pastelem — to zostaje do wyprostowania po ich stronie. */
+    color: var(--card-c, var(--card-c-l, var(--accent)));
     transition:
       transform var(--dur-base) var(--ease-out),
       opacity var(--dur-base) var(--ease-out),
@@ -3130,7 +3338,13 @@ html.lenis body {
     border-radius: inherit;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.3s var(--ease-out);
+    /* v8 (spec pkt 7, „reflektor powinien SZYBCIEJ podążać za myszką"): część
+       opóźnienia, które widzi właściciel, to nie pozycja, tylko ZAPALANIE się
+       poświaty — 0,3 s wygaszania sprawiało, że reflektor „doganiał" kursor
+       przy wjeżdżaniu na kartę. 0,3 s -> 0,14 s. Pozycja (--mx/--my) NIE ma
+       i nie miała żadnego przejścia CSS: wygładzanie siedzi wyłącznie w JS
+       (partia B2, MotionOrchestrator) — z CSS nic jej nie spowalnia. */
+    transition: opacity 0.14s var(--ease-out);
     /* v7 POMIARY WZORCA 1:1: promień 180px (było 320px) i krycie 8% (było 12%).
        Paweł: „u nich kolor wyrazisty, ale delikatniejszy; u nas sztuczne
        światło za mocne" -> mniejsze rozmycie, mniejsza alfa, ten sam kolor.
@@ -3156,7 +3370,12 @@ html.lenis body {
      w kolorze --counter-c, opis micro-caps pod spodem. Separator pionowy:
      każda KOLEJNA pozycja w rzędzie dostaje linię z lewej (rodzic = flex row). */
   .inf-counter {
-    --counter-c: var(--accent);
+    /* v8b pkt 3 (pomiary §3.3: „kolor liczby jest ZAWSZE równy --card-accent
+       danej karty, w 100 procentach krycia"): wewnątrz karty licznik bierze
+       PEŁNY kolor tej karty, poza kartą zostaje akcent interakcji. Konsument,
+       który ustawia --counter-c inline (HeroLiczniki, RealizacjaEfekt), dalej
+       wygrywa — styl inline bije regułę arkusza. */
+    --counter-c: var(--card-c, var(--accent));
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
@@ -3182,16 +3401,31 @@ html.lenis body {
     color: var(--fg-muted);
   }
 
-  /* ── .inf-glow-cta — pigułka CTA nav „Umów diagnozę" (v5, spec §2, dyktando
-     Pawła): SPOCZYNEK = obwódka + akcent ZIELONY (#10b981, glow #4ade80),
-     LITERY NIEBIESKIE/cyjan (var(--accent) #22d3ee ~10.9:1 na pigułce nav
-     #0a0a10 — AA). HOVER = litery BIAŁE ze świeceniem (text-shadow glow,
-     biel ~19:1) + obwódka JAŚNIEJE do #4ade80 + zielony glow zewnętrzny;
-     tło zostaje transparent (świecą litery, nie wypełnienie).
-     WARIANT WYPEŁNIONY od spoczynku: .inf-glow-cta-solid niżej ORAZ kontrakt
-     .sf-magnetic .inf-glow-cta (primary hero/ServiceHero/OnasHero na
-     MagneticButton — tam hover zostaje białym wypełnieniem, text-shadow
-     wyłączony). Focus bez zmian (:focus-visible poza layerem). */
+  /* ── .inf-glow-cta — pigułka CTA nav „Umów diagnozę".
+     v8 (spec pkt 4, cytat Pawła: „masz użyć takiego samego koloru, czyli CAŁY
+     NAPIS ma być różowy. Zobacz, jak jest w referencji: Hire Me").
+     WARTOŚCI 1:1 Z POMIARÓW WZORCA §2 (`a.gnav-quick--cta`, nie z oka):
+       kolor bazowy #ff00e5 (--neon-magenta wzorca), CYJANU NIE MA ANI GRAMA,
+       tekst #ff00e5, obwódka rgba(255,0,229,.5), tło rgba(255,0,229,.08),
+       cień 0 0 12px rgba(255,0,229,.2) + inset 0 0 8px rgba(255,0,229,.1),
+       w spoczynku BRAK text-shadow, puls `cta-pulse 2s ease infinite`.
+     USUNIĘTE (v5): obwódka rgba(16,185,129,.6) i glow rgba(74,222,128,.45)
+     (zielone) oraz `color: var(--accent)` (cyjanowe litery) — dokładnie ten
+     dwukolorowy zestaw, który właściciel odrzucił.
+     KONTRAST (policzony po złożeniu warstw, nie na surowym hexie):
+       #ff00e5 na wnętrzu pigułki rgba(255,0,229,.08) nad paskiem nawigacji
+       (złożone rgb(28,8,32)) = 5,78:1  → AA dla tekstu normalnego ✓
+       #ff00e5 na tle strony #06060c                        = 6,14:1  → AA ✓
+       biel na tle hover rgba(255,0,229,.2)                 = 16,6:1  → AAA ✓
+     Obwódka w spoczynku 2,26:1 (poniżej 3:1 z 1.4.11), ale puls podnosi ją
+     dwa razy na 2 s do pełnego #ff00e5 = 5,78:1, a kontrolkę identyfikuje
+     też sam RÓŻOWY napis i tło. Przy reduced-motion (puls stoi) bramka na
+     końcu pliku ustawia obwódkę NA STAŁE na pełne #ff00e5.
+     WARIANTY (nietknięte kolorystycznie): .inf-glow-cta-solid,
+     .inf-glow-cta-ghost, .inf-cta-ghost-green i kontrakt
+     .sf-magnetic .inf-glow-cta — każdy z nich MUSI wyłączyć puls i nadpisać
+     komplet własności różu (dopisane niżej), inaczej animacja z bazy biłaby
+     ich cień (animacja wygrywa z regułą zwykłą niezależnie od specyficzności). */
   .inf-glow-cta {
     display: inline-flex;
     align-items: center;
@@ -3204,10 +3438,14 @@ html.lenis body {
     font-size: var(--fs-ui);
     font-weight: 700;
     letter-spacing: 0.04em;
-    background-color: transparent;
-    color: var(--accent);
-    border: 1px solid rgba(16, 185, 129, 0.6); /* zielony #10b981 60% */
-    box-shadow: 0 0 16px -6px rgba(74, 222, 128, 0.45);
+    background-color: rgba(255, 0, 229, 0.08);
+    color: #ff00e5;
+    border: 1px solid rgba(255, 0, 229, 0.5);
+    box-shadow:
+      0 0 12px rgba(255, 0, 229, 0.2),
+      inset 0 0 8px rgba(255, 0, 229, 0.1);
+    text-shadow: none;
+    animation: infCtaPulse 2s ease infinite;
     transition:
       background-color var(--dur-base) var(--ease-out),
       border-color var(--dur-base) var(--ease-out),
@@ -3215,18 +3453,31 @@ html.lenis body {
       text-shadow var(--dur-base) var(--ease-out),
       color var(--dur-base) var(--ease-out);
   }
+  /* Hover 1:1 wzorzec §2.3: tekst BIAŁY, róż zostaje w obwódce, tle i poświacie
+     (12px/20% -> 35px/80% — to jest ten skok, którego szukał właściciel).
+     `animation: none` jest KONIECZNE: puls animuje box-shadow, a animacja bije
+     regułę hoveru, więc bez tego wielki glow nigdy by się nie pokazał. */
   .inf-glow-cta:hover {
-    color: #fff;
+    color: #ffffff;
     text-shadow:
-      0 0 10px rgba(255, 255, 255, 0.7),
-      0 0 22px rgba(74, 222, 128, 0.6);
-    border-color: #4ade80;
-    box-shadow: 0 0 24px -4px rgba(74, 222, 128, 0.65);
+      0 0 8px #ffffff,
+      0 0 15px #ff00e5;
+    border-color: #ff00e5;
+    background-color: rgba(255, 0, 229, 0.2);
+    box-shadow:
+      0 0 35px rgba(255, 0, 229, 0.8),
+      inset 0 0 15px rgba(255, 0, 229, 0.4);
+    animation: none;
   }
   /* Wariant WYPEŁNIONY (dawna baza v3) — spoczynek: tło akcent + neonowa
      obwódka; hover: białe podświetlenie (tekst #06060c, ~20:1). Używany przez
      kontrakt .sf-magnetic niżej; klasa dostępna też wprost dla partii C/D. */
   .inf-glow-cta-solid {
+    /* v8: baza jest teraz RÓŻOWA i pulsuje — wariant wypełniony gasi puls
+       (inaczej animacja box-shadow biłaby jego własny cień) i nadpisuje
+       komplet: tło, kolor, obwódkę, cień, poświatę liter. */
+    animation: none;
+    text-shadow: none;
     background-color: var(--accent);
     color: var(--accent-contrast);
     border-color: transparent;
@@ -3248,6 +3499,10 @@ html.lenis body {
       0 0 32px -2px color-mix(in srgb, var(--accent) 80%, transparent);
   }
   .inf-glow-cta-ghost {
+    /* v8: patrz nota przy .inf-glow-cta-solid — puls bazy gaszony, komplet
+       własności różu nadpisany (ghost zostaje cyjanowy). */
+    animation: none;
+    text-shadow: none;
     background-color: transparent;
     color: var(--accent);
     /* Fallback literałem (ten sam bug co w .inf-card:hover): wersja z
@@ -3261,10 +3516,14 @@ html.lenis body {
   .inf-glow-cta-ghost:hover {
     background-color: var(--accent-soft);
     color: var(--accent-hover);
-    /* v5: cyjanowy ghost zostaje przy swojej palecie — zielony hover bazy
-       (text-shadow + obwódka #4ade80) tu nie wchodzi. */
+    /* v5: cyjanowy ghost zostaje przy swojej palecie — RÓŻOWY hover bazy
+       (v8: text-shadow biel+magenta, obwódka #ff00e5) tu nie wchodzi. */
     text-shadow: none;
     border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    /* v8: bez tego 35-pikselowa różowa poświata hoveru bazy przeciekała na
+       ghosta (baza nie miała wcześniej cienia na hover). */
+    box-shadow: 0 0 24px -6px rgba(20, 184, 196, 0.5);
+    box-shadow: 0 0 24px -6px color-mix(in srgb, var(--accent) 55%, transparent);
   }
   /* ── .inf-cta-ghost-green — v5 (spec §2), klasa WIELOKROTNEGO UŻYTKU
      (partia C/D wepnie ją na ghost CTA stron, np. „Sprawdź, którego Agenta
@@ -3275,6 +3534,13 @@ html.lenis body {
   .inf-cta-ghost-green {
     color: #4ade80;
     border-color: rgba(74, 222, 128, 0.5);
+    /* v8: baza .inf-glow-cta zeszła z zieleni na RÓŻ i dostała puls, więc
+       zielone tło/cień, które ten wariant dotąd DZIEDZICZYŁ z bazy, muszą tu
+       stanąć wprost (wcześniej wystarczał sam kolor liter i obwódki). */
+    animation: none;
+    text-shadow: none;
+    background-color: transparent;
+    box-shadow: 0 0 16px -6px rgba(74, 222, 128, 0.45);
     /* Pełna lista przejść (nie tylko color) — w parze z .inf-glow-cta ta
        deklaracja wygrywa kolejnością, więc niesie też glow/tło pigułki. */
     transition:
@@ -3291,6 +3557,8 @@ html.lenis body {
       0 0 22px rgba(74, 222, 128, 0.6);
     border-color: rgba(74, 222, 128, 0.8);
     background-color: transparent;
+    /* v8: patrz nota w .inf-glow-cta-ghost:hover — gasi różową poświatę bazy. */
+    box-shadow: 0 0 24px -4px rgba(74, 222, 128, 0.65);
   }
 
   /* ── .inf-stars — starfield strony: warstwa FIXED pod całą treścią (wzór
@@ -3350,25 +3618,21 @@ html.lenis body {
   }
 }
 
-/* ── INFINITY v7 (partia A): PŁYNNA ALFA NAROŻNIKÓW I DOLNEJ ŁUNY karty.
-   Wzorzec animuje `opacity` osobnych elementów (.3s / .4s); u nas te dekoracje
-   są warstwami background-image, a background-image jest własnością DYSKRETNĄ
-   (skacze). Rejestracja @property zamienia --inf-corner-a/--inf-luna-a w realne
-   <percentage>, które przeglądarka potrafi interpolować — dzięki temu narożniki
-   rozjaśniają się płynnie 22% -> 60%, a łuna 4% -> 8%, tak jak we wzorcu.
+/* ── INFINITY v7 (partia A): PŁYNNA ALFA NAROŻNIKÓW karty.
+   Wzorzec animuje `opacity` osobnych elementów (.3s); u nas ta dekoracja jest
+   warstwą background-image, a background-image jest własnością DYSKRETNĄ
+   (skacze). Rejestracja @property zamienia --inf-corner-a w realny
+   <percentage>, który przeglądarka potrafi interpolować — dzięki temu narożniki
+   rozjaśniają się płynnie 22% -> 60%, tak jak we wzorcu.
    Houdini: Chrome/Edge 85+, Safari 16.4+, Firefox 128+; starsze silniki
    traktują je jak zwykłe custom properties (skok zamiast płynięcia — wygląd
    docelowy identyczny, zero regresji). @supports pilnuje, żeby lista transition
    z nazwami custom properties NIE wywaliła bazowego przejścia karty tam, gdzie
-   parser jej nie zna. POZA @layer (konwencja pliku: at-rule'y warunkowe). */
+   parser jej nie zna. POZA @layer (konwencja pliku: at-rule'y warunkowe).
+   v8b pkt 1: @property --inf-luna-a USUNIĘTE — dolnej łuny nie ma. */
 @property --inf-corner-a {
   syntax: '<percentage>';
   initial-value: 22%;
-  inherits: false;
-}
-@property --inf-luna-a {
-  syntax: '<percentage>';
-  initial-value: 4%;
   inherits: false;
 }
 @supports (transition-property: --inf-corner-a) {
@@ -3377,8 +3641,7 @@ html.lenis body {
       transform 0.4s var(--ease-out),
       border-color 0.4s var(--ease-out),
       box-shadow 0.4s var(--ease-out),
-      --inf-corner-a 0.3s var(--ease-out),
-      --inf-luna-a 0.4s var(--ease-out);
+      --inf-corner-a 0.3s var(--ease-out);
   }
 }
 
@@ -3386,7 +3649,17 @@ html.lenis body {
    (backdrop-blur NIGDY na mobile) + hover kart (tylko realny hover). */
 @media (min-width: 1024px) {
   .inf-pill-nav {
-    background-color: rgba(10, 10, 16, 0.65);
+    /* v8: szkło zostaje (blur 32px saturate 1.5 = 1:1 wzorzec), ale kolor bazowy
+       zjeżdża tak, żeby PO ZŁOŻENIU z tłem #06060c pasek był ciemniejszy od
+       strony pod sobą, jak we wzorcu (pomiary §1.4: -26%).
+       v8b pkt 1 (cytat: „pasek ma być realnie przeświecający"): krycie wraca
+       na 0,65, czyli DOKŁADNIE wartość zmierzoną u wzorca (`.gnav` ma
+       `rgba(10,10,16,.65)`). Nasz kolor bazowy jest ciemniejszy od ich hexa,
+       więc przy tej samej alfie trzymamy jednocześnie oba warunki:
+         0,65 x rgb(3,3,16) + 0,35 x rgb(6,6,12) = rgb(4,4,15)
+         luminancja paska 0,00144 kontra strona 0,00195 = 26% ciemniej ✓
+       a 35 procent tego, co płynie pod paskiem, realnie przez niego widać. */
+    background-color: rgba(3, 3, 16, 0.65);
     -webkit-backdrop-filter: blur(32px) saturate(1.5);
     backdrop-filter: blur(32px) saturate(1.5);
   }
@@ -3428,11 +3701,13 @@ html.lenis body {
       0 18px 40px -18px color-mix(in srgb, var(--card-c) 30%, transparent),
       0 0 20px color-mix(in srgb, var(--card-c) 12%, transparent),
       inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    /* Narożniki [ ] .22 -> .6 i dolna łuna .04 -> .08 (pomiary wzorca).
-       Zmiana dotyczy WYŁĄCZNIE tych dwóch dekoracji — wash i kolor tła karty
-       stoją w miejscu, więc odcień karty się nie „przekręca". */
+    /* Narożniki [ ] .22 -> .6 (pomiary wzorca §3.6). Zmiana dotyczy WYŁĄCZNIE
+       tej jednej dekoracji — tło karty stoi w miejscu, więc odcień karty się
+       nie „przekręca".
+       v8b pkt 1: dolna łuna (--inf-luna-a 4% -> 8%) USUNIĘTA. To ona dawała
+       „świecenie w części ramki" na hover, a właściciel prosi o świecenie
+       WYŁĄCZNIE obwódki i dookoła obwódki. */
     --inf-corner-a: 60%;
-    --inf-luna-a: 8%;
   }
   /* Wariant KART-BOHATERÓW (kontrakt dla partii C/D/E: dopisać `inf-card-lg`
      obok `inf-card` na dużych kartach — cennik, promo usług, karty sekcji).
@@ -3470,8 +3745,8 @@ html.lenis body {
     transform: translateX(0);
     /* v6 (spec §A pkt 4): strzałka „mieni się kolorem ramki" — zostaje w odcieniu
        karty (kolor z bazy .inf-arrow), a na hover JAŚNIEJE glow-em. */
-    text-shadow: 0 0 12px rgba(34, 211, 238, 0.45);
-    text-shadow: 0 0 12px color-mix(in srgb, var(--card-c-l, var(--card-c, var(--accent))) 45%, transparent);
+    text-shadow: 0 0 12px rgba(0, 240, 255, 0.45);
+    text-shadow: 0 0 12px color-mix(in srgb, var(--card-c, var(--card-c-l, var(--accent))) 45%, transparent);
   }
   /* Kafel ikony na hover — v7 1:1 z pomiarów (`.lp-primary-card:hover
      .lp-tool-icon`): gradient 160deg kolor 22% -> 8%, obwódka 48%, inset biel
@@ -3579,12 +3854,36 @@ html.lenis body {
 }
 
 /* ── INFINITY: focus na .inf-glow-cta — tło = kolor ringu, sam outline by
-   zginął; podwójny pierścień jak w .sf-cta (jedyny system focusa, wyjątek 2). */
+   zginął; podwójny pierścień jak w .sf-cta (jedyny system focusa, wyjątek 2).
+   v8: `animation: none` jest tu KRYTYCZNE dla dostępności — puls różu animuje
+   box-shadow, a animacja bije regułę zwykłą niezależnie od specyficzności,
+   więc bez tej linii wskaźnik fokusa byłby po prostu niewidoczny (2.4.7). */
 .inf-glow-cta:focus-visible {
   outline: none;
+  animation: none;
   box-shadow:
     0 0 0 2px var(--bg),
     0 0 0 5px var(--ring);
+}
+
+/* Puls różowego CTA 1:1 z POMIARÓW WZORCA §2.2 (@keyframes cta-pulse odczytane
+   z CSSOM wzorca, nie zgadnięte): obwódka pulsuje między rgba(255,0,229,.5)
+   a pełnym #ff00e5, poświata między 12px/20% a 25px/50%. Cykl 2 s, ease.
+   To jedyna nowa pętla tej partii; stoi na JEDNYM elemencie (CTA nagłówka),
+   więc budżet ruchu („max 1 pętla ambient na viewport") zostaje zachowany. */
+@keyframes infCtaPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 12px rgba(255, 0, 229, 0.2),
+      inset 0 0 8px rgba(255, 0, 229, 0.1);
+  }
+  50% {
+    border-color: #ff00e5;
+    box-shadow:
+      0 0 25px rgba(255, 0, 229, 0.5),
+      inset 0 0 12px rgba(255, 0, 229, 0.3);
+  }
 }
 
 /* ── INFINITY: bramka reduced-motion — JAWNA dla każdej animacji/przejścia. */
@@ -3596,6 +3895,19 @@ html.lenis body {
   }
   .inf-pill-nav::before {
     animation: none !important;
+  }
+  /* v8 (spec pkt 4): puls różowego CTA stoi. Ponieważ to PULS niósł obwódkę
+     w pełnym #ff00e5 (spoczynek ma tylko 50% krycia = 2,26:1, poniżej progu
+     1.4.11), przy zatrzymanym ruchu zamrażamy ją na szczycie cyklu — użytkownik
+     reduced-motion dostaje NAJMOCNIEJSZĄ, nie najsłabszą klatkę (5,78:1).
+     Obwódkę podnosimy WYŁĄCZNIE w pigułce nawigacji (jedyne miejsce różowej
+     bazy), żeby nie ruszyć wariantów solid/ghost/green ani kontraktu
+     .sf-magnetic — te mają własne kolory obwódki. */
+  .inf-glow-cta {
+    animation: none !important;
+  }
+  .inf-pill-nav .inf-glow-cta {
+    border-color: #ff00e5;
   }
   .inf-card,
   .inf-card::before,
@@ -3644,8 +3956,7 @@ html.lenis body {
 /* ── INFINITY: forced-colors (Windows High Contrast) — neonowe poświaty i
    gradientowa obwódka pigułki znikają, zostają systemowe ramki. */
 @media (forced-colors: active) {
-  .inf-pill-nav::before,
-  .inf-pill-nav::after {
+  .inf-pill-nav::before {
     background: none;
     animation: none;
   }
@@ -3656,8 +3967,8 @@ html.lenis body {
     background-image: none;
   }
   /* v4: narożniki [ ] (background-image karty) i pas sweep znikają w trybie
-     wysokiego kontrastu — zostaje systemowa ramka karty. v6: razem z nimi
-     wash (9. warstwa background-image karty — ten sam reset). */
+     wysokiego kontrastu — zostaje systemowa ramka karty. (v8b: washu ani
+     dolnej łuny już nie ma, więc ten reset dotyczy wyłącznie narożników.) */
   .inf-card,
   .inf-card::after {
     background-image: none;
@@ -4005,6 +4316,11 @@ html.lenis body {
   border-radius: 999px;
   font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
   letter-spacing: 0.04em;
+  /* v8: baza jest RÓŻOWA i pulsuje (spec pkt 4) — CTA hero zostaje wypełnione
+     akcentem, więc gasimy puls i poświatę liter (inaczej animacja box-shadow
+     bazy biłaby cień tego kontraktu). */
+  animation: none;
+  text-shadow: none;
   background-color: var(--accent);
   color: var(--accent-contrast);
   border-color: transparent;
@@ -4089,13 +4405,15 @@ html.lenis body {
   color: var(--fg-muted);
 }
 
-/* INFINITY v6 — AA-GUARD opisów na PRZEZROCZYSTEJ karcie (spec §A pkt 1,
-   partia A). --fg-muted #7a7a9e ma na czystym --bg #06060c 4,9:1 (AA na styk,
-   nota przy tokenach), a kolorowy wash karty (14% odcienia w rogu) podnosi
-   luminancję tła i w pasie pierwszych wierszy opisu zjada margines do
-   ~4,2-4,4:1. Wewnątrz .inf-card muted idzie o włos jaśniej (mix 88% + biel
-   ≈ #8a8aad): ~6,1:1 na czystym tle, ~4,9:1 w najjaśniejszym rogu washu —
-   AA wszędzie. Ton dalej wyraźnie „muted" (wzorzec: opis szary, bez cienia).
+/* INFINITY v6 — AA-GUARD opisów na karcie (spec §A pkt 1, partia A).
+   --fg-muted #7a7a9e ma na czystym --bg #06060c 4,9:1 (AA na styk, nota przy
+   tokenach), a kolorowy wash karty podnosi luminancję tła i w pasie pierwszych
+   wierszy opisu zjada margines. Wewnątrz .inf-card muted idzie o włos jaśniej
+   (mix 88% + biel ≈ #8a8aad): AA wszędzie. Ton dalej wyraźnie „muted"
+   (wzorzec: opis szary, bez cienia).
+   v8 PRZELICZONE NA NOWY KORPUS karty (rgb(12,13,28) od góry, rgb(8,9,19) na
+   dole) przy washu zbitym do 10%: 5,80:1 na czystym korpusie, 4,80:1
+   w najjaśniejszym rogu washu — AA wszędzie, z lepszym zapasem niż przed v8.
    POZA @layer na końcu pliku: selektor (0,2,0) bije utility (0,1,0). */
 .inf-card .text-fg-muted,
 .inf-card .text-fg-subtle {
@@ -4107,14 +4425,16 @@ html.lenis body {
    KARTY MOCNĄ BIELĄ. Wzorzec: rgb(242,244,251), BEZ text-shadow (świecą tylko
    podtytuły/tagi w kolorze wariantu). U nas tytuły jechały na --fg #e4e4f0,
    czyli o stopień przygaszone, przez co karta wyglądała „niekrystalicznie".
-   Kontrast #f2f4fb na tle karty rgba(6,6,12,.5) nad --bg ≈ 17,5:1 (AAA).
+   Kontrast #f2f4fb na przeświecającej karcie nad --bg = 17,7:1 (AAA).
    Wyjątki: tytuły JAWNIE wyciszone utility (karty „wkrótce" na .text-fg-muted
    /.text-fg-subtle) zostają przygaszone — dlatego :not(). POZA @layer na końcu
-   pliku: selektor (0,1,1) bije utility koloru (0,1,0). */
+   pliku: selektor (0,1,1) bije utility koloru (0,1,0).
+   v8b: z listy selektorów usunięta martwa .inf-card-title (0 wystąpień w repo,
+   ta sama rodzina co reszta martwych klas struktury karty — patrz blok
+   MAJOR-1 na końcu pliku). */
 .inf-card h2:not(.text-fg-muted):not(.text-fg-subtle),
 .inf-card h3:not(.text-fg-muted):not(.text-fg-subtle),
-.inf-card h4:not(.text-fg-muted):not(.text-fg-subtle),
-.inf-card .inf-card-title {
+.inf-card h4:not(.text-fg-muted):not(.text-fg-subtle) {
   color: #f2f4fb;
   text-shadow: none;
 }
@@ -4139,8 +4459,8 @@ html.lenis body {
     margin-right: 8px;
     border-radius: 999px;
     background: var(--accent);
-    background: var(--card-c-l, var(--card-c, var(--accent)));
-    box-shadow: 0 0 8px var(--card-c-l, var(--card-c, var(--accent)));
+    background: var(--card-c, var(--card-c-l, var(--accent)));
+    box-shadow: 0 0 8px var(--card-c, var(--card-c-l, var(--accent)));
     vertical-align: middle;
   }
 }
@@ -4167,5 +4487,106 @@ html.lenis body {
 @media (prefers-reduced-motion: reduce) {
   .inf-tile {
     transition: none;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   INFINITY v8b — STRUKTURA KARTY WZORCA NA KLASACH, KTÓRE NAPRAWDĘ ISTNIEJĄ.
+   PARTIA C1 (właściciel app/globals.css). Naprawa MAJOR-1 z audytu.
+
+   CO TU BYŁO NIE TAK. Runda v8 dopisała komplet klas struktury karty
+   (.inf-card-name, .inf-card-name-sm, .inf-card-stats, .inf-card-stat,
+   .inf-card-stat-value, .inf-card-stat-label, .inf-card-tags, .inf-card-tag)
+   oraz wskaźnik kursora .inf-cursor-dot. Przeliczone grepem po CAŁYM repo
+   (app, components, lib, tools, scripts, z wyłączeniem tego pliku): KAŻDA
+   Z TYCH DZIEWIĘCIU KLAS MA ZERO WYSTĄPIEŃ W MARKUPIE. Karty realnie budują
+   się na .inf-card-sub / .inf-overline / .inf-counter-value / .inf-counter-label
+   / .inf-tag (67, 6 i 39 wystąpień), a wskaźnik kursora na .inf-kursor
+   (components/motion/kursor.css, partia B2, wpięty w MotionOrchestrator).
+   Skutek był dokładnie taki, jak brzmiała skarga „karty dalej nie świecą":
+   zmierzone u wzorca świecenie liczby (text-shadow 0 0 12px currentColor)
+   i waga tytułu (900/800) wylądowały w regułach, których nic nie renderuje.
+
+   MAPOWANIE martwa klasa -> żywa klasa (to samo w raporcie partii):
+     .inf-card-name        ->  .inf-card :is(h2,h3,h4)        (waga 700)
+     .inf-card-name-sm     ->  .inf-card-lg :is(h2,h3,h4)     (waga 800)
+     .inf-card-stats       ->  rząd .inf-counter (odstępy niosą utility markupu)
+     .inf-card-stat        ->  .inf-counter
+     .inf-card-stat-value  ->  .inf-counter-value  (+ poświata, reguła niżej)
+     .inf-card-stat-label  ->  .inf-counter-label
+     .inf-card-tags        ->  rząd .inf-tag (odstępy niosą utility markupu)
+     .inf-card-tag         ->  .inf-tag + .inf-tag-kolor / .inf-tag-plaski
+     .inf-cursor-dot       ->  .inf-kursor (components/motion/kursor.css)
+   Własności wizualne przeniesione do klas żywych, martwe reguły usunięte
+   w całości — razem z regułą html.has-cursor-dot, która nie miała już czego
+   włączać (jej jedyny konsument, .inf-cursor-dot, właśnie zniknął).
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── TYTUŁ KARTY: WAGA (przeniesione z martwych .inf-card-name/-name-sm).
+   POMIARY WZORCA §3.2: tytuł wzorca NIE MA text-shadow ani w spoczynku, ani
+   na hover — wrażenie świecenia robi gruby glif (900 na karcie-bohaterze,
+   800 na karcie kategorii) plus sąsiedztwo kolorowych mono akcentów. Nasz
+   Plus Jakarta Sans jest wczytany do 800 włącznie (app/layout.tsx), więc
+   bierzemy maksimum, jakie mamy, i różnicujemy o stopień niżej: 800 / 700.
+   Dociążenie wagi 900 = kolejny plik fontu i koszt LCP — decyzja do Pawła.
+   Baza pliku daje h1/h2 wagę 700, a h3/h4 tylko 600, więc tytuły kart na h3
+   były o dwa stopnie lżejsze od wzorca — to jest ta „nieświecąca" biel.
+
+   F2 (naprawa z audytu) — :is() ZAMIENIONE NA :where(). Poprzedni komentarz
+   twierdził, że utility wagi i tak wygra, „bo warstwa utilities jedzie PO
+   components". To NIEPRAWDA i kosztowało 23 tytuły kart: Tailwind 3 spłaszcza
+   @layer do zwykłego CSS (w zbudowanym arkuszu nie ma ani jednego @layer),
+   więc kolejność rozstrzyga DOPIERO przy równej specyficzności. `.inf-card
+   :is(h2,h3,h4)` to (0,1,1) — :is() bierze specyficzność najmocniejszego
+   argumentu, tu elementu — a `.font-extrabold` to (0,1,0). Reguła wygrywała
+   specyficznością, więc markup prosił o 800, a przeglądarka renderowała 700.
+   `:where()` ma specyficzność ZERO, więc oba selektory schodzą do (0,1,0):
+     - tytuł BEZ utility wagi -> dalej 700 (i 800 na .inf-card-lg, bo ta reguła
+       stoi niżej w tej samej warstwie i wygrywa kolejnością),
+     - tytuł Z `font-extrabold` -> realnie 800, bo utilities są w arkuszu
+       za components.
+   Baza h3 { font-weight: 600 } to (0,0,1) w warstwie base, więc dalej przegrywa
+   z (0,1,0) — karty bez utility nic nie tracą.
+   Reguła koloru tytułu została tam, gdzie była (koniec pliku).
+   Tailwind nie wytnie tych reguł z warstwy: .inf-card i .inf-card-lg są
+   w treści (odpowiednio 100+ i 11 wystąpień). */
+@layer components {
+  .inf-card :where(h2, h3, h4) {
+    font-weight: 700;
+  }
+  .inf-card-lg :where(h2, h3, h4) {
+    font-weight: 800;
+  }
+}
+
+/* ── LICZBA: POŚWIATA (przeniesione z martwej .inf-card-stat-value na żywą
+   .inf-counter-value — 6 wystąpień: liczniki hero i metryka-bohater karty
+   realizacji). POMIARY §3.3 1:1: text-shadow 0 0 12px currentColor, czyli
+   halo samo dobiera się do koloru liczby i nigdy nie rozjedzie się z paletą.
+   Poświata nie zmienia koloru liter, więc kontrast liczby zostaje ten sam
+   (kolor niesie --counter-c; na karcie to teraz --card-c, patrz reguła
+   .inf-counter wyżej). POZA @layer, żeby wygrać z ewentualnym utility.
+   Wzorzec ma w hero 14px zamiast 12px — różnica niewidoczna gołym okiem,
+   trzymamy jedną wartość dla jednej klasy. */
+.inf-counter-value {
+  text-shadow: 0 0 12px currentColor;
+}
+
+/* Windows High Contrast: poświata liczby gaśnie, tag kolorowy traci tło
+   (jak reszta glow-ów v6/v7 wyżej) — zostają systemowe kolory i ramki. */
+@media (forced-colors: active) {
+  .inf-counter-value {
+    text-shadow: none;
+  }
+  .inf-tag.inf-tag-kolor {
+    background-color: transparent;
+  }
+}
+
+/* Bramka reduced-motion — JAWNA dla każdej klasy tej partii (konwencja pliku).
+   Jedyne przejście, jakie dokłada ta runda, siedzi na tagu kolorowym. */
+@media (prefers-reduced-motion: reduce) {
+  .inf-tag.inf-tag-kolor {
+    transition: none !important;
   }
 }

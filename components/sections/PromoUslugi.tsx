@@ -4,8 +4,9 @@ import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { getUslugaBySlug } from '@/lib/uslugi';
 import type { Usluga } from '@/lib/uslugi';
-import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT, INF_USLUGA_BADGE } from '@/lib/inf-kategorie';
 import { InfIcon } from '@/components/ui/InfIcons';
+import { KartaEtykieta, KartaTagi, tagiUslugi } from '@/components/sections/KartaCzesci';
 
 /**
  * SEKCJA — PROMO GŁÓWNYCH USŁUG (INFINITY v4, spec §PARTIA C pkt 1).
@@ -24,9 +25,17 @@ import { InfIcon } from '@/components/ui/InfIcons';
  * page.tsx (stałe niżej, kopiowane co do znaku — przy zmianie tamtej strony
  * zaktualizować TU).
  *
- * DEKORACJA (nie treść): mono overline = SLUG usługi (istniejący identyfikator,
- * język techniczny wzorca „// CHATBOTY") w ODCIENIU kategorii (pole `odcien`
- * z lib/inf-kategorie, partia A); kafelek InfIcon w kolorze bazowym; strzałka
+ * INFINITY v8 (spec §8, cytat Pawła o strukturze kart wzorca): karta usługi
+ * jedzie w pełnym układzie wzorca — [mono etykieta kategorii w kolorze karty]
+ * -> [biały tytuł] -> [szary opis] -> [TAGI na dole]. Etykieta = INF_USLUGA_BADGE
+ * (istniejąca mapa krótkich etykiet pochodnych slugów, „CHATBOT"/„VOICE"),
+ * a NIE surowy slug: krótka i czytelna, ten sam język co badge w dropdownie nav.
+ * TAGI = money queries z rejestru (`usluga.queries`, te same frazy, które lecą
+ * do `keywords` w JSON-LD) — realny tekst w HTML dla botów, ZERO nowych słów.
+ * Karta usługi to karta KATEGORII (reprezentuje rzecz), więc IKONĘ ZACHOWUJE
+ * (pomiary wzorca §3.5: ikonę dostaje karta rzeczy, nie karta tekstowa).
+ *
+ * DEKORACJA (nie treść): kafelek InfIcon w kolorze bazowym; strzałka
  * .inf-arrow dojeżdża na hover karty (reguła .inf-card .inf-arrow z globals).
  * Rozbłysk sweep robi ::after samej .inf-card (v4) — bez dodatkowych divów.
  * Odcienie kart w JEDNYM gridzie RÓŻNIĄ się (spec §C pkt 5): każda usługa ma
@@ -84,9 +93,12 @@ function PromoKarta({ usluga, full = false }: { usluga: Usluga; full?: boolean }
           >
             <InfIcon name={kat.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
           </span>
-          <span className="inf-overline" style={{ color: odcien }}>
-            {usluga.slug}
-          </span>
+          {/* v8: mono ETYKIETA KATEGORII (wzorzec: status/kategoria na górze
+              karty, w jej kolorze) — krótka etykieta z INF_USLUGA_BADGE zamiast
+              surowego sluga. Koloru NIE wpisujemy inline: niesie go reguła
+              `.inf-card .inf-overline` z globals (partia B1), a odcien karta
+              podaje w --card-c-l (patrz style karty wyżej). */}
+          <KartaEtykieta>{INF_USLUGA_BADGE[usluga.slug] ?? usluga.slug}</KartaEtykieta>
           {/* v5 (spec §3 KAFELKI): strzałka hover w KOLORZE karty (--card-c-l)
               — utility arbitralne bije warstwę components (kolor nie wraca do
               accentu/fg-muted z reguł hover globals). */}
@@ -99,8 +111,22 @@ function PromoKarta({ usluga, full = false }: { usluga: Usluga; full?: boolean }
         </span>
         {/* Tytuł karty = h1 usługi (money query 1:1); h2 — sekcja nie ma
             własnego nagłówka (kafelki wchodzą od razu po hero, spec v4). */}
-        <h2 className={`${full ? 'text-h2' : 'text-h3'} mt-4 text-fg`}>{usluga.h1}</h2>
+        {/* Waga 800: pomiary §3.2 — tytuł wzorca nie ma poświaty, „świeci"
+            grubością glifu (900 przy karcie bohatera). H2 bazowo ma 700. */}
+        <h2 className={`${full ? 'text-h2' : 'text-h3'} mt-4 font-extrabold text-fg`}>
+          {usluga.h1}
+        </h2>
         <p className="mt-2 text-body-sm text-fg-muted">{usluga.metaDescription}</p>
+        {/* v8: TAGI na dole karty (wzorzec §3.4, margin-top:auto). Treść =
+            money queries usługi z rejestru — realny tekst w HTML, który bot
+            czyta razem z H2 i opisem. Zero nowych stringów.
+            WARIANT (a) PIGUŁKA (spec v8b §4): karta usługi reprezentuje RZECZ
+            DO KUPIENIA i ma ikonę — model wzorca dla kart narzędzi. */}
+        <KartaTagi
+          tagi={tagiUslugi(usluga)}
+          wariant="pigulka"
+          etykietaListy={`Frazy usługi: ${usluga.h1}`}
+        />
       </Link>
     </li>
   );
@@ -147,7 +173,10 @@ export function PromoUslugi() {
               <InfIcon name={INF_KATEGORIA_DEFAULT.ikona} />
             </span>
             <span className="min-w-0 flex-1">
-              <h2 className="text-ui font-semibold text-fg">{ARCHITEKCI.tytul}</h2>
+              {/* Ta sama waga co tytuły trzech kafelków wyżej: karty stoją
+                  w JEDNYM gridzie, więc lżejszy tytuł czytałby się jak
+                  niedoróbka („naczynia połączone"). */}
+              <h2 className="text-ui font-extrabold text-fg">{ARCHITEKCI.tytul}</h2>
               <p className="mt-1 text-body-sm text-fg-muted">{ARCHITEKCI.opis}</p>
             </span>
             {/* v5 (spec §3 KAFELKI): strzałka w kolorze karty (--card-c-l). */}

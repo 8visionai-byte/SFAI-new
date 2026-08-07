@@ -54,7 +54,15 @@ export function RamaCeny({
             <div aria-hidden="true" className="inf-spotlight" />
 
             {maKwote && (
-              <p className="font-display text-h2 font-semibold tabular-nums text-brand">
+              /* v8b: liczba na karcie ma świecić W KOLORZE KARTY, nie globalnym
+                 brandem (pomiary §3.3: `color: var(--card-accent)` w pełnym
+                 kryciu + `text-shadow: 0 0 12px currentColor`). Ton bierze się
+                 z kategorii usługi ustawionej wyżej w --card-c-l, więc cennik
+                 świeci tym samym kolorem co reszta kart tej usługi.
+                 KONTRAST: to tekst DUŻY (text-h2), próg 3:1; najciemniejszy
+                 odcień palety na korpusie karty daje 4,55:1 — AA z zapasem.
+                 Poświata gaśnie w Windows High Contrast, jak reszta glow-ów. */
+              <p className="font-display text-h2 font-semibold tabular-nums text-[color:var(--card-c-l,var(--card-c,var(--accent)))] [text-shadow:0_0_12px_currentColor] forced-colors:[text-shadow:none]">
                 od {ramaCeny.minPrice!.toLocaleString('pl-PL')} zł
               </p>
             )}

@@ -3,6 +3,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import dynamic from 'next/dynamic';
+/* Style wskaźnika kursora (spec v8 §7). Osobny arkusz, NIE globals.css —
+   globals należy do innej partii, a te reguły i tak mają jechać wyłącznie
+   w chunku orkiestratora (mobile nie pobiera ich w ogóle). */
+import './kursor.css';
 
 /**
  * MotionOrchestrator — warstwa „świeżości" (Lenis + GSAP ScrollTrigger),
@@ -24,10 +28,13 @@ import dynamic from 'next/dynamic';
  * Choreografie (funkcje po komponencie): pin „Jak to działa", scrub-tekst
  * soundbite'u, głębia hero. Paralaksa płyt CSS — NIE dublowana (pkt d spec).
  *
- * Orkiestrator jest też JEDYNYM właścicielem dwóch delegacji dla całej strony
- * (tanio, bo obie działają za tymi samymi bramkami): reflektor kart
- * (--mx/--my na .inf-card z jednego pointermove) oraz PAUZA iskier separatorów
- * poza kadrem (jeden IntersectionObserver przełącza .is-paused na .inf-divider).
+ * Orkiestrator jest też JEDYNYM właścicielem delegacji dla całej strony
+ * (tanio, bo wszystkie działają za tymi samymi bramkami):
+ *  • WSKAŹNIK KURSORA (v8 §7) + reflektor kart — JEDEN pointermove ustawia
+ *    pozycję kropki `.inf-kursor` i --mx/--my na hoverowanej .inf-card;
+ *    ZERO listenerów per karta (kart jest ~159),
+ *  • PAUZA iskier separatorów poza kadrem (jeden IntersectionObserver
+ *    przełącza .is-paused na .inf-divider).
  */
 
 /* Typy WYŁĄCZNIE type-level (erasowane w kompilacji — zero kodu w bundlu). */
@@ -76,41 +83,102 @@ export function MotionOrchestrator() {
     const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
     if (nav.connection?.saveData) return;
 
-    /* SPOTLIGHT KART (spec INFINITY v2): JEDEN delegowany pointermove ustawia
-       --mx/--my (w %) na najbliższej hoverowanej .inf-card — radial maluje CSS
-       fundamentu (.inf-spotlight, var(--mx,50%)/var(--my,50%)). Siedzimy już ZA
-       twardymi bramkami (desktop, bez RM/Save-Data), więc mobile nie płaci nic.
-       Throttle rAF: zapisujemy ostatnie współrzędne, getBoundingClientRect i
-       zapis stylu liczone maks. raz na klatkę. */
-    let spotRaf = 0;
+    /* ══ WSKAŹNIK KURSORA + REFLEKTOR KART — JEDNA delegacja na cały dokument ══
+       Spec v8 §7. Pomiary wzorca: raporty/pomiary-wzorca-v8.md §5 (wzorzec ma
+       DWA elementy o różnej szybkości: kropkę 1:1 bez wygładzania i poświatę
+       z lerpem 0,08 na klatkę). U nas rolę poświaty pełni reflektor karty
+       (.inf-spotlight), więc dokładamy brakującą KROPKĘ i przyspieszamy
+       reflektor. Siedzimy już ZA twardymi bramkami (desktop ≥1024px, bez
+       reduced-motion, bez Save-Data), więc mobile nie płaci za to nic.
+
+       CO SIĘ ZMIENIŁO WOBEC v7 (skarga Pawła „powinien szybciej podążać"):
+       reflektor liczył się w requestAnimationFrame, czyli zawsze o klatkę za
+       myszą, i do tego robił getBoundingClientRect PO zapisaniu --mx/--my,
+       czyli wymuszał przeliczenie układu co klatkę. Teraz pozycja idzie na
+       kartę W TYM SAMYM zdarzeniu (zero klatek opóźnienia — dokładnie tak jak
+       kropka wzorca), a prostokąt karty jest CACHE'OWANY i odświeżany tylko
+       przy zmianie karty, scrollu i resize. Jest więc szybciej ORAZ taniej. */
+    const kursor = document.createElement('div');
+    kursor.className = 'inf-kursor';
+    kursor.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(kursor);
+
+    /* Reguła „tu punkt rozwija się w ramkę" = reguła wzorca zmierzona na
+       9 typach elementów (§5.3): wskaźnik rośnie nad tym, co KLIKALNE
+       (link, przycisk i ich potomkowie), nigdy nad zwykłym tekstem.
+       KSZTAŁT jest u nas KWADRATOWY, nie okrągły (spec v8b §2, cytat Pawła:
+       „nie mamy nigdzie takich owalnych kształtów, bardziej kwadratowe") —
+       liczby i przełączanie klasy zostają, zmienia się sam wygląd w kursor.css.
+       `.inf-card` stoi w liście osobno, bo część naszych kart nie jest
+       linkiem (karty AEO, karty „co potrafi Agent"), a to właśnie kafelek
+       jest w cytacie Pawła („gdy myszka najeżdża na kafelek").
+       POLA FORMULARZA ŚWIADOMIE POMINIĘTE: wzorzec ich nie ma na liście,
+       a 40-pikselowa ramka nad inputem zasłaniałaby miejsce kursora tekstowego. */
+    const KLIKALNE = 'a[href], button, summary, [role="button"], .inf-card';
+
+    let kursorWidoczny = false;
     let spotCard: HTMLElement | null = null;
-    let spotX = 0;
-    let spotY = 0;
-    const spotFrame = () => {
-      spotRaf = 0;
-      const card = spotCard;
+    let spotRect: DOMRect | null = null;
+    let rectNieaktualny = true;
+
+    // Scroll/resize unieważniają zapamiętany prostokąt karty (jedyne dwa
+    // zdarzenia, które ruszają geometrię bez ruchu myszy).
+    const onGeometria = () => {
+      rectNieaktualny = true;
+    };
+    window.addEventListener('scroll', onGeometria, { passive: true });
+    window.addEventListener('resize', onGeometria, { passive: true });
+
+    const onPointerMove = (e: PointerEvent) => {
+      // Dotyk nie ma wskaźnika (bramka wzorca @media (pointer: coarse)).
+      if (e.pointerType === 'touch') return;
+
+      // (a) KROPKA — pozycja pisana wprost z clientX/clientY, bez lerpa i bez
+      //     rAF. translate3d = warstwa kompozytora, więc ruch nie kosztuje
+      //     ani layoutu, ani repaintu treści pod spodem.
+      kursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
+      if (!kursorWidoczny) {
+        kursorWidoczny = true;
+        kursor.classList.add('is-widoczny');
+      }
+
+      const target = e.target instanceof Element ? e.target : null;
+      kursor.classList.toggle('is-nad', Boolean(target?.closest(KLIKALNE)));
+
+      // (b) REFLEKTOR KARTY — --mx/--my w %, radial maluje CSS fundamentu
+      //     (.inf-spotlight w globals; bez JS zostaje środek karty 50%/50%).
+      const card = target?.closest<HTMLElement>('.inf-card') ?? null;
+      if (card !== spotCard) {
+        spotCard = card;
+        rectNieaktualny = true;
+        /* Barwa ramki przejmuje kolor karty (--card-c). getComputedStyle
+           liczymy WYŁĄCZNIE przy zmianie karty, nigdy co zdarzenie. */
+        const barwa = card ? getComputedStyle(card).getPropertyValue('--card-c').trim() : '';
+        if (barwa) kursor.style.setProperty('--kursor-c', barwa);
+        else kursor.style.removeProperty('--kursor-c');
+      }
       if (!card) return;
-      const rect = card.getBoundingClientRect();
-      if (rect.width === 0 || rect.height === 0) return;
-      const mx = ((spotX - rect.left) / rect.width) * 100;
-      const my = ((spotY - rect.top) / rect.height) * 100;
+      if (rectNieaktualny || !spotRect) {
+        spotRect = card.getBoundingClientRect();
+        rectNieaktualny = false;
+      }
+      if (spotRect.width === 0 || spotRect.height === 0) return;
+      const mx = ((e.clientX - spotRect.left) / spotRect.width) * 100;
+      const my = ((e.clientY - spotRect.top) / spotRect.height) * 100;
       card.style.setProperty('--mx', `${mx.toFixed(2)}%`);
       card.style.setProperty('--my', `${my.toFixed(2)}%`);
     };
-    const onSpotMove = (e: PointerEvent) => {
-      const target = e.target instanceof Element ? e.target : null;
-      const card = target?.closest<HTMLElement>('.inf-card') ?? null;
-      if (!card) {
-        // Poza kartą nic nie liczymy (opacity spotlightu i tak gasi :hover CSS).
-        spotCard = null;
-        return;
-      }
-      spotCard = card;
-      spotX = e.clientX;
-      spotY = e.clientY;
-      if (spotRaf === 0) spotRaf = requestAnimationFrame(spotFrame);
+    document.addEventListener('pointermove', onPointerMove, { passive: true });
+
+    /* Wyjazd kursora poza okno: relatedTarget === null oznacza opuszczenie
+       dokumentu (przy przejściu między elementami jest tam sąsiad). Kropka
+       gaśnie, żeby nie wisiała przyklejona do krawędzi. */
+    const onPointerOut = (e: PointerEvent) => {
+      if (e.relatedTarget !== null) return;
+      kursorWidoczny = false;
+      kursor.classList.remove('is-widoczny');
     };
-    document.addEventListener('pointermove', onSpotMove, { passive: true });
+    document.addEventListener('pointerout', onPointerOut, { passive: true });
 
     let cancelled = false;
     let idleId: number | null = null;
@@ -208,8 +276,11 @@ export function MotionOrchestrator() {
 
     return () => {
       cancelled = true;
-      document.removeEventListener('pointermove', onSpotMove);
-      if (spotRaf !== 0) cancelAnimationFrame(spotRaf);
+      document.removeEventListener('pointermove', onPointerMove);
+      document.removeEventListener('pointerout', onPointerOut);
+      window.removeEventListener('scroll', onGeometria);
+      window.removeEventListener('resize', onGeometria);
+      kursor.remove();
       window.removeEventListener('load', whenIdle);
       if (idleId !== null) window.cancelIdleCallback(idleId);
       if (timeoutId !== null) clearTimeout(timeoutId);

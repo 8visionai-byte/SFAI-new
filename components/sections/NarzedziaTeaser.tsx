@@ -4,6 +4,7 @@ import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { NARZEDZIA } from '@/lib/narzedzia';
 import { INF_NARZEDZIE, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { InfIcon } from '@/components/ui/InfIcons';
 
 /**
  * SEKCJA — TEASER NARZĘDZI na home (INFINITY v4, spec §PARTIA C pkt 2).
@@ -21,6 +22,13 @@ import { INF_NARZEDZIE, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
  * = 5 RÓŻNYCH odcieni (rejestr, spec §C pkt 5). Rozbłysk sweep robi ::after
  * samej .inf-card (v4) — bez dodatkowych divów. Link celuje w kotwicę
  * /narzedzia#<slug> (sekcje hubu mają id={slug}).
+ *
+ * TAGI (spec v8 §8): karta narzędzia ich NIE dostaje. Rejestr lib/narzedzia
+ * nie ma pola z frazami (`queries` mają usługi i realizacje, narzędzia nie),
+ * a jedyne krótkie pole `kategoria` powtarza co do słowa etykietę stojącą już
+ * na górze karty („Kalkulator"). Zasada Pawła jest twarda: tagi budujemy
+ * WYŁĄCZNIE z istniejących pól, więc zamiast wymyślać słowa zostawiamy kartę
+ * bez tagów. Odblokowanie: dopisać `queries` do typu `Narzedzie` (rejestr).
  *
  * KOORDYNACJA z partią D (ScrambleText): tytuł karty w <h3> niżej to
  * umówione miejsce owinięcia w <ScrambleText> (komponent partii D jest
@@ -56,6 +64,18 @@ export function NarzedziaTeaser() {
                   Dekoracja aria-hidden. */}
               <div aria-hidden="true" className="inf-spotlight" />
               <Link href={`/narzedzia#${n.slug}`} className="group flex h-full flex-col p-6">
+                {/* v8 (spec §8 pkt „nie wszystkie kafelki mają mieć emoji",
+                    pomiary wzorca §3.5): karta NARZĘDZIA reprezentuje RZECZ,
+                    a takie karty we wzorcu mają ikonę (20 z 35 kart). Dotąd
+                    ikony tu nie było, a miały ją karty czysto tekstowe —
+                    v8 odwraca to na regułę wzorca. Dekoracja aria-hidden. */}
+                <span
+                  aria-hidden="true"
+                  className="inf-tile mb-4"
+                  style={{ '--tile-c': dekor.c } as CSSProperties}
+                >
+                  <InfIcon name={dekor.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
+                </span>
                 {/* Mono kolorowy podtytuł wzorca („85K+ monthly searches") =
                     etykieta narzędzia z rejestru; kolor niesie --card-c-l. */}
                 <span className="flex items-center gap-2.5">
@@ -77,7 +97,11 @@ export function NarzedziaTeaser() {
                   </span>
                 </span>
                 {/* Miejsce wpięcia ScrambleText (partia D): owinąć treść h3. */}
-                <h3 className="mt-3 text-ui font-semibold text-fg">{n.tytul}</h3>
+                {/* F2: `font-bold` zamiast `font-semibold` — reguła wagi
+                    tytułu karty w globals zeszła na :where() (0,1,0), więc
+                    utility wagi zawsze wygrywa i semibold zdjąłby te tytuły
+                    z 700 na 600. */}
+                <h3 className="mt-3 text-ui font-bold text-fg">{n.tytul}</h3>
                 <p className="mt-2 text-body-sm text-fg-muted">{n.opis}</p>
               </Link>
             </li>

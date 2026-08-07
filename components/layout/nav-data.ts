@@ -128,7 +128,11 @@ export function getNavDropdowns(): NavDropdownData[] {
       items: NARZEDZIA.map((n) => {
         const dekor = INF_NARZEDZIE[n.slug] ?? INF_KATEGORIA_DEFAULT;
         return {
-          href: `/narzedzia/${n.slug}`,
+          // v8b (BLOKER 404): tras /narzedzia/<slug> NIE MA — hub /narzedzia to
+          // jeden listing z kotwicami (app/narzedzia/page.tsx renderuje
+          // <Section id={n.slug}> dla każdego narzędzia). Dropdown celuje więc
+          // w kotwicę, tak jak karta na home (components/sections/NarzedziaTeaser).
+          href: `/narzedzia#${n.slug}`,
           tytul: n.tytul,
           c: dekor.c,
           odcien: dekor.odcien,

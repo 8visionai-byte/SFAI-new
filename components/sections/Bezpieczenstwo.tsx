@@ -102,15 +102,17 @@ export function Bezpieczenstwo() {
                 delegowany pointermove z MotionOrchestrator (desktop).
                 Dekoracja aria-hidden. */}
             <div aria-hidden="true" className="inf-spotlight" />
-            {/* Kafelek ikony kategorii (czysta dekoracja). */}
-            <span
-              aria-hidden="true"
-              className="inf-tile mb-4"
-              style={{ '--tile-c': p.c } as CSSProperties}
-            >
-              <InfIcon name={p.ikona} />
-            </span>
-            <h3 className="text-ui font-semibold text-fg">{p.t}</h3>
+            {/* v8 (spec §8: „nie wszystkie kafelki powinny mieć emoji",
+                pomiary wzorca §3.5): to są KARTY TEKSTOWE (zdanie o zgodności,
+                nie rzecz), a takie karty we wzorcu ikony NIE mają. Kafelek
+                .inf-tile stąd wypadł; kolor karty (--card-c) i reflektor
+                zostają, więc każda z czterech dalej świeci innym tonem.
+                Pole `ikona` ZOSTAJE w rejestrze PUNKTY (dane się nie kasuje,
+                gdyby Paweł chciał je przywrócić), tylko go nie renderujemy. */}
+            {/* F2: `font-bold` zamiast `font-semibold` — reguła wagi tytułu
+                karty w globals zeszła na :where() (0,1,0), więc utility wagi
+                zawsze wygrywa i semibold zdjąłby te tytuły z 700 na 600. */}
+            <h3 className="text-ui font-bold text-fg">{p.t}</h3>
             <p className="mt-2 text-body-sm text-fg-muted">{p.d}</p>
           </li>
         ))}

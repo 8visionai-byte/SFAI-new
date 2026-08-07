@@ -4,8 +4,9 @@ import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { getUslugaBySlug } from '@/lib/uslugi';
 import type { RealizacjaKategoria } from '@/lib/realizacje/types';
-import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT, INF_USLUGA_BADGE } from '@/lib/inf-kategorie';
 import { InfIcon } from '@/components/ui/InfIcons';
+import { KartaEtykieta, KartaTagi, tagiUslugi } from '@/components/sections/KartaCzesci';
 
 /**
  * PowiazanaUsluga — SEKCJA 5 case'a: link wewnętrzny do powiązanej usługi
@@ -42,7 +43,10 @@ export function PowiazanaUsluga({ kategoria }: { kategoria: RealizacjaKategoria 
         <Reveal delay={0.1}>
           <Link
             href={`/uslugi/${usluga.slug}`}
-            className="inf-card group mt-6 flex items-center gap-4 p-6 md:gap-5"
+            /* v8: items-center -> items-start. Kolumna treści urosła o etykietę
+               kategorii i rząd tagów, więc wyśrodkowany pionowo kafelek ikony
+               odjeżdżał na środek karty zamiast stać przy etykiecie. */
+            className="inf-card group mt-6 flex items-start gap-4 p-6 md:gap-5"
             style={
               {
                 '--card-c': (INF_KATEGORIA[usluga.slug] ?? INF_KATEGORIA_DEFAULT).c,
@@ -65,8 +69,19 @@ export function PowiazanaUsluga({ kategoria }: { kategoria: RealizacjaKategoria 
                 name={(INF_KATEGORIA[usluga.slug] ?? INF_KATEGORIA_DEFAULT).ikona ?? INF_KATEGORIA_DEFAULT.ikona}
               />
             </span>
-            <span className="min-w-0 flex-1">
-              <span className="block text-body font-medium text-fg group-hover:text-brand">
+            {/* v8: kolumna treści była <span>, a rząd tagów to <ul> (lista jest
+                treścią, nie ozdobą) — <ul> w <span> to nieprawidłowe
+                zagnieżdżenie, więc kolumna schodzi na <div>. Wewnątrz <a> to
+                poprawne: <a> przyjmuje treść blokową, byle bez zagnieżdżonych
+                elementów interaktywnych. */}
+            <div className="min-w-0 flex-1">
+              {/* v8 (spec §8 — struktura wzorca): mono ETYKIETA KATEGORII
+                  w kolorze karty NAD tytułem (INF_USLUGA_BADGE, istniejąca mapa
+                  krótkich etykiet pochodnych slugów). */}
+              <KartaEtykieta>{INF_USLUGA_BADGE[usluga.slug] ?? usluga.slug}</KartaEtykieta>
+              {/* Waga 800 jak na kafelkach usług na home (pomiary §3.2: tytuł
+                  wzorca „świeci" grubością glifu, nie poświatą). */}
+              <span className="mt-2 block text-body font-extrabold text-fg group-hover:text-brand">
                 {usluga.h1}
               </span>
               <span className="mt-2 block text-body-sm text-fg-muted">
@@ -75,7 +90,20 @@ export function PowiazanaUsluga({ kategoria }: { kategoria: RealizacjaKategoria 
               <span className="mt-3 block text-caption text-fg-subtle">
                 Zobacz, jak to działa
               </span>
-            </span>
+              {/* v8: TAGI = money queries usługi z rejestru (realny tekst
+                  w HTML dla botów na każdej stronie case'a). */}
+              {/* WARIANT (a) PIGUŁKA (spec v8b §4) — ta sama usługa co kafelki
+                  na home, więc ten sam model tagu. Karta jest podłużna, czyli
+                  dokładnie ten przypadek z cytatu Pawła („na przykład
+                  w podłużnych są po trzy"). */}
+              <KartaTagi
+                tagi={tagiUslugi(usluga)}
+                doDolu={false}
+                wariant="pigulka"
+                etykietaListy={`Frazy usługi: ${usluga.h1}`}
+                className="pt-[12px]"
+              />
+            </div>
             <span aria-hidden="true" className="inf-arrow text-accent max-sm:hidden">
               →
             </span>

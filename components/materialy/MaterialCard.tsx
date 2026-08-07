@@ -4,6 +4,7 @@ import { Card } from '@/components/ui';
 import type { Material, MaterialWkrotce } from '@/lib/materialy/types';
 import { INF_TYP, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
 import { InfIcon } from '@/components/ui/InfIcons';
+import { KartaBadge, KartaEtykieta } from '@/components/sections/KartaCzesci';
 
 /**
  * MaterialCard — karta lead magnetu na hubie /materialy. Cała karta klikalna
@@ -13,8 +14,14 @@ import { InfIcon } from '@/components/ui/InfIcons';
  *
  * INFINITY v2 (spec §PODSTRONY — sama prezentacja, treść 1:1): .inf-card na
  * Card variant="quiet", kafelek emoji typu treści (🧲 lead magnet, aria-hidden),
- * badge'e (etykieta + typ pliku) → mono .inf-tag, strzałka → .inf-arrow, błysk
- * .inf-shine + spotlight .inf-spotlight jako wewnętrzne divy aria-hidden.
+ * strzałka → .inf-arrow, błysk .inf-shine + spotlight .inf-spotlight jako
+ * wewnętrzne divy aria-hidden.
+ *
+ * INFINITY v8b (spec §4 „różne modele tagów"): rząd nad tytułem miesza OBA
+ * modele świadomie — mikro-etykieta PŁASKA mono (wariant b) i typ pliku
+ * w PIGUŁCE z obwódką w kolorze karty (wariant a). Rzędu tagów na dole ta karta
+ * nie ma: rejestr magnetów nie ma pola z frazami (tylko opcjonalne `queries`
+ * pod meta), a wymyślać tagów nie wolno.
  *
  * Tytuł jest H3 (lista pod H1 huba), `zacheta` = krótkie zdanie problem -> efekt.
  */
@@ -40,14 +47,17 @@ export function MaterialCard({ material }: { material: Material }) {
         >
           <InfIcon name={dekor.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
         </span>
-        <span className="inf-tag">{material.etykieta}</span>
-        {/* Badge typu pliku w jasnym odcieniu typu (istniejące pole). */}
-        <span className="inf-tag" style={{ color: dekor.odcien ?? dekor.c }}>
-          {material.typPliku}
-        </span>
+        {/* v8b §4, DWA modele obok siebie: mikro-etykieta PŁASKA mono (wzorzec
+            trzyma status nad tytułem bez ramki, §3.6), a typ pliku w PIGUŁCE
+            z obwódką w kolorze karty — to twarda informacja „co dostajesz",
+            więc jako jedyna ma ramkę. Kolor niesie --card-c-l karty, więc
+            znika inline style. */}
+        <KartaEtykieta>{material.etykieta}</KartaEtykieta>
+        <KartaBadge>{material.typPliku}</KartaBadge>
       </div>
 
-      <h3 className="text-h3 mt-4">
+      {/* Waga 800 (pomiary §3.2: świecenie tytułu = gruby glif, nie poświata). */}
+      <h3 className="text-h3 mt-4 font-extrabold">
         <Link
           href={href}
           className="after:absolute after:inset-0 focus-visible:outline-none"
@@ -86,7 +96,8 @@ export function MaterialCard({ material }: { material: Material }) {
  * martwego linku), badge „Wkrótce". Pokazuje plan i łapie long-tail, zanim
  * powstanie pełna treść. `aria-disabled` dla czytników.
  * INFINITY v2: .inf-card bez błysku/strzałki (karta nieinteraktywna — bez
- * fałszywej afordancji), badge'e → mono .inf-tag (teksty 1:1).
+ * fałszywej afordancji). v8b: etykieta płaska mono, status „Wkrótce" w pigułce
+ * (teksty 1:1).
  * INFINITY v7 (audyt „naczynia połączone"): karta szła bez --card-c (fallback
  * na akcent = jeden cyjan dla całej siatki) i bez reflektora. To TEN SAM typ
  * treści co opublikowany magnet (INF_TYP.material), tylko zaplanowany, więc
@@ -105,9 +116,11 @@ export function MaterialCardWkrotce({ temat }: { temat: MaterialWkrotce }) {
     >
       <div aria-hidden="true" className="inf-spotlight" />
 
-      <div className="flex items-center gap-2">
-        <span className="inf-tag">{temat.etykieta}</span>
-        <span className="inf-tag text-accent">Wkrótce</span>
+      {/* v8b §4: etykieta PŁASKA mono + status „Wkrótce" w PIGUŁCE — ten sam
+          podział co na karcie magnetu wyżej i na karcie bloga. */}
+      <div className="flex items-center gap-3">
+        <KartaEtykieta>{temat.etykieta}</KartaEtykieta>
+        <KartaBadge>Wkrótce</KartaBadge>
       </div>
 
       <h3 className="text-h3 mt-4 text-fg-muted">{temat.tytul}</h3>

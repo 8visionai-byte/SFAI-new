@@ -70,13 +70,11 @@ export function Problem() {
                 delegowany pointermove z MotionOrchestrator (desktop).
                 Dekoracja aria-hidden. */}
             <div aria-hidden="true" className="inf-spotlight" />
-            <span
-              aria-hidden="true"
-              className="inf-tile mb-4"
-              style={{ '--tile-c': z.c } as CSSProperties}
-            >
-              <InfIcon name={z.ikona} />
-            </span>
+            {/* v8 (spec §8, pomiary wzorca §3.5): trzy „zjadacze tygodnia" to
+                KARTY TEKSTOWE (fragmenty jednego zdania), więc bez ikony.
+                Ikony w tej sekcji zostają na dwóch kartach pełnej szerokości
+                (domknięcie leadu i mostek do diagnozy) — to karty-bohaterowie.
+                Pole `ikona` zostaje w rejestrze ZJADACZE, nie renderujemy go. */}
             <p className="text-body text-fg">{z.t}</p>
           </li>
         ))}

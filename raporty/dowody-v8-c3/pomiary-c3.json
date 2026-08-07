@@ -1,0 +1,98 @@
+{
+  "realizacje": {
+    "liczba": {
+      "tekst": "75%",
+      "kolor": "rgb(74, 222, 128)",
+      "cien": "rgb(74, 222, 128) 0px 0px 12px",
+      "rozmiar": "20.8px",
+      "font": "\"JetBrains Mono\""
+    },
+    "etykieta": {
+      "tekst": "maili wymaga już tylko drobnej korekty p",
+      "font": "\"JetBrains Mono\"",
+      "rozmiar": "11px",
+      "caps": "none",
+      "kolor": "rgb(122, 122, 158)"
+    },
+    "tag": {
+      "tekst": "Edukacja i szkolenia",
+      "kolor": "rgb(74, 222, 128)",
+      "tlo": "color(srgb 0.290196 0.870588 0.501961 / 0.08)",
+      "obwodka": "color(srgb 0.290196 0.870588 0.501961 / 0.2)",
+      "radius": "6px",
+      "cien": "color(srgb 0.290196 0.870588 0.501961 / 0.45) 0px 0px 12px"
+    },
+    "tytul": {
+      "tekst": "Auto-email dla biura obsługi k",
+      "waga": "800",
+      "rozmiar": "20px",
+      "kolor": "rgb(242, 244, 251)"
+    },
+    "ileTagow": 23
+  },
+  "kursor": {
+    "klasy": "inf-kursor is-widoczny is-nad",
+    "ksztalt": {
+      "w": 40,
+      "h": 40,
+      "radius": "8px"
+    },
+    "obwodka": "rgb(16, 185, 129) / 1px",
+    "tlo": "rgba(0, 0, 0, 0)",
+    "kolorZmienna": "#10b981",
+    "okrag": false
+  },
+  "nadazanie": {
+    "przed": {
+      "x": 328.5,
+      "y": 855.938
+    },
+    "po": {
+      "x": 1200,
+      "y": 600
+    },
+    "roznicaX": 0
+  },
+  "blog": {
+    "ileList": 5,
+    "tagPlaski": {
+      "tekst": "koszt wdrożenia AI",
+      "kolor": "color(srgb 0.54102 0.54102 0.665255)",
+      "tlo": "rgba(0, 0, 0, 0)",
+      "obwodka": "0px",
+      "font": "\"JetBrains Mono\"",
+      "rozmiar": "11px",
+      "caps": "uppercase",
+      "waga": "700"
+    },
+    "etykieta": {
+      "tekst": "Koszty i wycena",
+      "kolor": "rgb(244, 114, 182)",
+      "waga": "700",
+      "obwodka": "0px"
+    },
+    "pigulekNaKarcieBloga": 5
+  },
+  "materialy": {
+    "badge": {
+      "tekst": "PDF",
+      "kolor": "rgb(251, 191, 36)",
+      "tlo": "color(srgb 0.984314 0.74902 0.141176 / 0.08)",
+      "radius": "6px"
+    }
+  },
+  "ramaCeny": null,
+  "home": {
+    "tytul": {
+      "tekst": "Chatbot AI dla firmy",
+      "waga": "800",
+      "rozmiar": "46px"
+    },
+    "tag": {
+      "tekst": "chatbot dla firmy",
+      "kolor": "rgb(103, 232, 249)",
+      "tlo": "color(srgb 0.403922 0.909804 0.976471 / 0.08)"
+    },
+    "ilePigulek": 9
+  }
+}

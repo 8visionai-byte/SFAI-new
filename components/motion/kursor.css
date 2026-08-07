@@ -1,0 +1,120 @@
+/*
+ * WSKAŹNIK KURSORA — spec v8b §2 (cytat Pawła, NAJNOWSZY, nadpisuje v8 §7:
+ * „nie podoba mi się, że jest w kółeczku, najeżdżamy i taka elipsa się robi.
+ * Nie mamy nigdzie takich owalnych kształtów, bardziej kwadratowe").
+ * Starsze cytaty, które dalej obowiązują: „u nas nie ma naprowadzającego
+ * punkciku", „powinien szybciej podążać za myszką".
+ *
+ * KSZTAŁT (v8b): KWADRAT, nie koło i nie elipsa. Zaokrąglenie bierzemy
+ * z naszych kart, żeby wskaźnik był z tej samej rodziny form:
+ *   spoczynek 6x6px  -> radius 2px  (proporcjonalny odpowiednik narożnika karty),
+ *   nad klikalnym 40x40px -> radius var(--radius-sm) = 8px (kafelek .inf-tile
+ *   ma 12px przy 40px boku, karta 16px przy dużym boku — 8px na 40px czyta się
+ *   jako TEN SAM narożnik, tylko nie zjada całego boku).
+ * `border-radius` wchodzi do `transition` razem z bokiem: bez tego kwadrat
+ * rósłby płynnie, a róg przeskakiwał skokowo w połowie animacji.
+ *
+ * POZOSTAŁE LICZBY TO POMIAR WZORCA infinitytechstack.uk, nie szacunek —
+ * raporty/pomiary-wzorca-v8.md §5.1 (`.lp-cursor-dot`):
+ *   spoczynek: 6px, poświata 12px + 24px,
+ *   nad elementem klikalnym: 40px, tło przezroczyste, obwódka 1,5px,
+ *   przejście: `width .2s, height .2s, background .2s`,
+ *   pozycja: 1:1 z pointermove, ZERO wygładzania (zmierzone 0 klatek opóźnienia,
+ *   §5.1: kropka wzorca dochodzi do celu w tej samej klatce — to jest odpowiedź
+ *   na „ma nadążać szybko"; lerp 0,08 ma WYŁĄCZNIE duży reflektor, nie wskaźnik).
+ * `border-width` świadomie ZOSTAJE POZA `transition` (tak jest we wzorcu):
+ * obrys pojawia się natychmiast, a płynnie rośnie sam bok — to daje wrażenie
+ * „punkt rozwija się w ramkę", czyli ten sam ruch, który opisał Paweł,
+ * tylko na kanciastym kształcie.
+ *
+ * RÓŻNICE WOBEC WZORCA, wszystkie świadome:
+ *  1. KSZTAŁT. Wzorzec ma koło (`border-radius: 50%`). U nas kwadrat —
+ *     wprost na życzenie właściciela (v8b §2), bo strona nie ma owali.
+ *  2. BARWA. Wzorzec ma sztywny cyjan #00f0ff. U nas `--kursor-c` domyślnie
+ *     bierze akcent strony, a nad kartą orkiestrator podstawia `--card-c`
+ *     TEJ karty (brief: „cienka linia w kolorze karty").
+ *  3. KURSOR SYSTEMOWY ZOSTAJE. Wzorzec chowa go (`.lp { cursor: none }`)
+ *     i zastępuje kropką. U nas kropka TOWARZYSZY strzałce, bo `cursor: none`
+ *     to realna regresja dostępności (znika sygnał zaznaczania tekstu i stanu
+ *     kontrolek), a reguła musiałaby usiąść w globals.css, czyli w cudzej
+ *     partii. DECYZJA PAWŁA: jeśli ma być 1:1 z wzorcem, dokłada się jedna
+ *     linia `cursor: none` na `body` (partia od globals).
+ *
+ * PRZEZROCZYSTOŚĆ ALFY: zamiast `rgba()`/`color-mix()` (color-mix wchodzi
+ * dopiero w Chrome 111, a browserslist repo dopuszcza 100) miękkość poświaty
+ * robi UJEMNY SPREAD — ta sama konwencja co `.inf-glow-cta-ghost` w globals.
+ *
+ * Ten plik NIE jest częścią globals.css (kontrakt partii B1). Wchodzi w chunk
+ * MotionOrchestratora, więc mobile / reduced-motion / Save-Data nie pobiera
+ * ani bajta tych reguł (chunk ładuje się wyłącznie za bramkami MotionGate).
+ */
+.inf-kursor {
+  --kursor-c: var(--accent);
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* Tokeny z-index repo kończą się na toast 600. Wskaźnik ma być nad
+     wszystkim (wzorzec trzyma 10000), ale jest czystą dekoracją bez zdarzeń. */
+  z-index: 700;
+  width: 6px;
+  height: 6px;
+  border: 0 solid var(--kursor-c);
+  /* v8b §2: KWADRAT z narożnikiem karty, nie koło. 2px na boku 6px to ta sama
+     proporcja co 8px na boku 40px niżej — kształt zostaje kanciasty w obu stanach. */
+  border-radius: 2px;
+  background-color: var(--kursor-c);
+  box-shadow:
+    0 0 12px -2px var(--kursor-c),
+    0 0 24px -8px var(--kursor-c);
+  opacity: 0;
+  pointer-events: none;
+  /* Pozycję pisze JS w `transform` (translate3d = warstwa kompozytora,
+     zero layoutu na ruch myszy); centrowanie dokleja drugi translate. */
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+  transition:
+    width 0.2s,
+    height 0.2s,
+    border-radius 0.2s,
+    background-color 0.2s,
+    opacity 0.25s;
+  will-change: transform;
+}
+
+/* Kropka pokazuje się dopiero przy pierwszym ruchu myszy (przed nim nie ma
+   sensownej pozycji, więc nie ma czego malować). */
+.inf-kursor.is-widoczny {
+  opacity: 1;
+}
+
+/* Nad elementem klikalnym: punkt rozwija się w RAMKĘ 40x40 (bok z pomiaru §5.3,
+   kształt z v8b §2). Zaokrąglenie = --radius-sm, czyli narożnik naszych kart. */
+.inf-kursor.is-nad {
+  width: 40px;
+  height: 40px;
+  border-width: 1.5px;
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  box-shadow: 0 0 20px -6px var(--kursor-c);
+}
+
+/* Bramki 1:1 z wzorcem (§5.4) — dotyk i pióro bez wskaźnika. Bramki JS
+   (desktop ≥1024px, brak reduced-motion, brak Save-Data) są ostrzejsze;
+   te reguły to obrona w głąb, gdyby element powstał inną drogą. */
+@media (hover: none), (pointer: coarse) {
+  .inf-kursor {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inf-kursor {
+    display: none;
+  }
+}
+
+/* Tryb wymuszonych kolorów: dekoracja znika (konwencja repo). */
+@media (forced-colors: active) {
+  .inf-kursor {
+    display: none;
+  }
+}

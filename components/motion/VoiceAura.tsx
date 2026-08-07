@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import type { CSSProperties } from 'react';
 import '@/components/agent/flow-core.css';
 
 /**
@@ -29,9 +30,34 @@ import '@/components/agent/flow-core.css';
  *     kolory TEJ strony — spectrum idzie różem #ff007f -> fioletem #8b5cf6,
  *     rdzeń i blask w bieli różowej. Zmieniona jest WYŁĄCZNIE barwa: wszystkie
  *     mnożniki, alfy i progi zostają 1:1 (moc świecenia bez zmian).
+ *  6. MASKA ZDJĘTA (v8 §6, obserwacja zostawiona przez partię v7 w Hero.tsx
+ *     pkt 4): flow-core.css trzyma na `canvas` i `.flow-metal-fallback`
+ *     `mask-image: linear-gradient(90deg, transparent 0, #000 28%, ...)`.
+ *     W 10K blob był doklejony do prawej krawędzi szerokiego hero i lewe 28%
+ *     musiało się wytapiać. U nas blob jest CENTROWANY w kwadratowym slocie,
+ *     więc ta sama maska zjadała lewy bok bloba (jego światło zaczyna się już
+ *     przy 5% szerokości slotu) — po powiększeniu slotu widać to jeszcze
+ *     mocniej. Maskę gasimy STYLEM INLINE tutaj, a nie w flow-core.css:
+ *     ten arkusz jest wspólny z konsolą agenta i nie należy do tej partii.
  */
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+
+/* Różnica #6 — zdjęcie poziomej maski 10K z canvasu i z fallbacku. Obie
+   właściwości (standard + prefiks WebKit), bo flow-core.css deklaruje obie. */
+const BEZ_MASKI: CSSProperties = { WebkitMaskImage: 'none', maskImage: 'none' };
+
+/* Różnica #7 (v8 §6) — HUD i indeks trzymają się BLOBA, nie rogów slotu.
+   W 10K oba paski leżały w rogach szerokiego hero (top 9% / bottom 5%) i to
+   działało, bo tamten kontener był płaski. Po powiększeniu naszego slotu do
+   620px kwadratu róg wypadał ~200px od bloba: HUD wisiał w pustce nad
+   licznikami, a indeks lądował dokładnie na overline i na H1 (zmierzone
+   w realnym Chrome: indeks y 693 przy H1 y 674). Blob zajmuje pionowo
+   0,28-0,72 wysokości slotu, więc HUD idzie na 20% od góry, a indeks na 24%
+   od dołu: oba dosiadają bloba w KAŻDYM rozmiarze slotu (hero i karta demo),
+   bo wartości są procentami. Poziom (right 4%) i wszystkie style zostają 1:1. */
+const HUD_POZYCJA: CSSProperties = { top: '20%' };
+const INDEX_POZYCJA: CSSProperties = { bottom: '24%' };
 
 /* Shader 1:1 z FlowCore.astro. */
 const vertexSource = `
@@ -468,16 +494,23 @@ export function VoiceAura() {
       {/* Ambientowa poświata pod blobem (czysty CSS, działa od pierwszego paintu) */}
       <div className="voice-aura__ambient" aria-hidden="true"></div>
 
-      {/* Statyczna aura fallback (reduced-motion / Save-Data / brak WebGL) */}
-      <div className="flow-metal-fallback voice-aura__fallback" data-flow-fallback aria-hidden="true">
+      {/* Statyczna aura fallback (reduced-motion / Save-Data / brak WebGL).
+          BEZ MASKI (różnica #6) — inline bije arkusz, którego nie ruszamy. */}
+      <div
+        className="flow-metal-fallback voice-aura__fallback"
+        data-flow-fallback
+        aria-hidden="true"
+        style={BEZ_MASKI}
+      >
         <span></span><i></i><b></b>
       </div>
 
-      {/* Canvas shadera WebGL (blob „żywej modulacji" 1:1 z 10K) */}
-      <canvas data-voice-aura-canvas aria-hidden="true"></canvas>
+      {/* Canvas shadera WebGL (blob „żywej modulacji" 1:1 z 10K), bez maski */}
+      <canvas data-voice-aura-canvas aria-hidden="true" style={BEZ_MASKI}></canvas>
 
-      {/* HUD stanu agenta (mono, znika na mobile przez CSS) */}
-      <div className="flow-metal-hud" aria-hidden="true">
+      {/* HUD stanu agenta (mono, znika na mobile przez CSS).
+          Różnica #7: pion podciągnięty do bloba. */}
+      <div className="flow-metal-hud" aria-hidden="true" style={HUD_POZYCJA}>
         <span>[ Agent głosowy / realtime ]</span>
         <span data-aura-state>Słucha / 01</span>
       </div>
@@ -495,8 +528,9 @@ export function VoiceAura() {
         <span className="voice-core-caption" aria-hidden="true">Voice agent</span>
       </button>
 
-      {/* Indeks postępu (mono; pasek skaluje --metal-progress) */}
-      <div className="flow-metal-index" aria-hidden="true"><i></i><span>Żywa modulacja</span><b>SF / AI</b></div>
+      {/* Indeks postępu (mono; pasek skaluje --metal-progress).
+          Różnica #7: pion podciągnięty do bloba. */}
+      <div className="flow-metal-index" aria-hidden="true" style={INDEX_POZYCJA}><i></i><span>Żywa modulacja</span><b>SF / AI</b></div>
     </div>
   );
 }

@@ -86,13 +86,10 @@ export function GwarancjaEfektu() {
         {FILARY.map((f) => (
           <li key={f.t} className="inf-card p-6" style={{ '--card-c': f.c } as CSSProperties}>
             <div aria-hidden="true" className="inf-spotlight" />
-            <span
-              aria-hidden="true"
-              className="inf-tile mb-4"
-              style={{ '--tile-c': f.c } as CSSProperties}
-            >
-              <InfIcon name={f.ikona} />
-            </span>
+            {/* v8 (spec §8, pomiary wzorca §3.5): filar to KARTA TEKSTOWA
+                (obietnica, nie rzecz), więc idzie BEZ ikony. Ikonę w tej sekcji
+                trzyma wyłącznie karta-bohater z H2 wyżej. Pole `ikona` zostaje
+                w rejestrze FILARY, po prostu go nie renderujemy. */}
             <h3 className="text-h3">{f.t}</h3>
             <p className="mt-2 text-body-sm text-fg-muted">{f.d}</p>
           </li>

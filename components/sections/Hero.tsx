@@ -56,7 +56,20 @@ export function Hero() {
       lemniskaty i CTA mogą wystawać). Tło robią globalne starfield/particles/
       mgławice (layout) — sekcja nie ma już własnych warstw dekoracyjnych.
     */
-    <Section tone="base" space="lg" containerWidth="default" className="relative isolate text-center">
+    /*
+      INFINITY v8 §6 (cytat Pawła: „ile miejsca niezagospodarowanego jest na
+      górze, całość trzeba przesunąć do góry"): ODDECH NAD HERO ŚCIĘTY.
+      Zmierzone przed zmianą (realny Chrome 1440x900): padding-top sekcji
+      151,2px, a nad nim jeszcze pasek nav 64px — czyli 215px pustki, zanim
+      cokolwiek się zaczyna. Wzorzec trzyma nad treścią 56px (`.lp
+      { padding-top: 56px }` przy pasku fixed 54px), więc schodzimy do tego
+      rzędu: 32px mobile / 40px desktop nad blobem.
+      py-section-loose zostaje na DOLE sekcji (rytm otwarcia aktu bez zmian) —
+      nadpisujemy wyłącznie górę, bo `pt-*` stoi w utilities PO `py-*`.
+      Wymiary px ARBITRALNIE (pułapka repo: h-9 = 96px, skala spacingu to
+      własne tokeny).
+    */
+    <Section tone="base" space="lg" containerWidth="default" className="relative isolate pt-[32px] text-center lg:pt-[40px]">
       {/*
         INFINITY v7 §PARTIA C pkt 1 — PAS TRÓJDZIELNY HERO (desktop ≥1024px).
         Skarga Pawła (czerwone ramki na zrzucie): po LEWEJ i po PRAWEJ stronie
@@ -84,8 +97,35 @@ export function Hero() {
             spacingu repo: h-9 = 96px!). BEZ aria-hidden i pointer-events-none
             (w środku jest interaktywny przycisk); BEZ overflow-hidden (glow
             bloba może wystawać — żelazna zasada v3).
-            v7: środkowa kolumna pasa (auto = dokładnie szerokość bloba). */}
-        <div className="relative mx-auto h-[300px] w-[300px] max-w-full lg:col-start-2 lg:row-start-1 lg:h-[420px] lg:w-[420px]">
+            v7: środkowa kolumna pasa (auto = dokładnie szerokość bloba).
+            v8 §6 (cytat Pawła: „nasze Zapytaj AI można zrobić zdecydowanie
+            trochę większe, zaznaczyłem na screenshocie" — czerwona elipsa
+            ~2x obecnego bloba): SLOT URÓSŁ 420 -> clamp(440,44vw,620)px na
+            desktopie i 300 -> 420px na mobile.
+            DLACZEGO CLAMP, A NIE SZTYWNE 620: środkowa kolumna pasa jest
+            `auto`, więc szerokość bloba zabiera miejsce skrzydłom. Przy
+            1024px kontener ma 929px, więc sztywne 620 zostawiłoby chipom po
+            122px (chip „Twoje dane zostają w UE" ma ~190px) i pas by się
+            rozjechał. clamp(440px, 44vw, 620px) daje 440px przy 1024
+            (skrzydła po ~212px), pełne 620px od ~1409px w górę.
+            ILE REALNIE UROSŁA ANIMACJA: shader rysuje blob o średnicy
+            0,464 x WYSOKOŚĆ slotu (boundary 0.232 w VoiceAura, uv liczone
+            po wysokości), czyli 195px -> 288px. Powierzchnia x2,2, dokładnie
+            rząd „dwa razy większe" z zaznaczenia Pawła.
+            UJEMNE MARGINESY (-16/-64 mobile, -40/-96 desktop): zewnętrzny
+            pierścień slotu jest fizycznie PRZEZROCZYSTY (alpha shadera gaśnie
+            do zera przy 0,45 promienia), więc gdyby slot płacił pełną
+            wysokość w układzie, powiększenie bloba zepchnęłoby H1 pod fold.
+            Ujemne marginesy oddają ten pusty pierścień układowi: blob wjeżdża
+            wyżej (górny), a overline i H1 podchodzą pod niego (dolny). Efekt
+            zmierzony w realnym Chrome 1440x900: H1 startuje na 634px zamiast
+            681px sprzed zmiany, czyli maszyna pisania (LCP) jest WYŻEJ, mimo
+            że animacja urosła 1,5x. Górnego marginesu nie da się zwiększyć
+            bez wjechania świecenia pod pigułkę nav: przy -40px pierwszy
+            malowany piksel bloba wypada 19px pod paskiem.
+            SZEROKOŚĆ MOBILE: w-full + max-w-[420px], więc przy 375px slot ma
+            szerokość kontenera i NIE MA szans na poziomy scroll. */}
+        <div className="relative mx-auto -mb-[64px] -mt-[16px] h-[420px] w-full max-w-[420px] lg:col-start-2 lg:row-start-1 lg:-mb-[96px] lg:-mt-[40px] lg:h-[clamp(440px,44vw,620px)] lg:w-[clamp(440px,44vw,620px)] lg:max-w-none">
           <VoiceAura />
         </div>
 

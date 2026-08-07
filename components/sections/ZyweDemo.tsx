@@ -68,8 +68,16 @@ export function ZyweDemo() {
             <p className="mt-2 text-body-sm text-fg-muted">
               Voicebot odbierze, porozmawia po polsku i pokaże, jak brzmi obsługa telefonu bez Twojego udziału.
             </p>
-            {/* Slot VoiceAura (komponent wypełnia rodzica absolute inset-0). */}
-            <div className="relative mt-4 h-[230px] md:h-[260px]">
+            {/* Slot VoiceAura (komponent wypełnia rodzica absolute inset-0).
+                v8 §6: ten sam blob co w hero, więc idzie za nim ta sama
+                poprawka skali, tylko w skali karty (230 -> 260 / 260 -> 300px).
+                Powód liczbowy: shader rysuje blob o średnicy 0,464 x WYSOKOŚĆ
+                slotu, czyli przy 260px wychodziło 121px, a sam przycisk
+                „Zapytaj AI" ma 112px — blob był mniejszy od własnego guzika.
+                Przy 300px blob ma 139px i znów jest tłem dla przycisku, a nie
+                jego obwódką. Karta ma overflow:hidden, więc nic nie wystaje;
+                wymiary px ARBITRALNIE (pułapka tokenów spacingu repo). */}
+            <div className="relative mt-4 h-[260px] md:h-[300px]">
               <VoiceAura />
             </div>
           </div>

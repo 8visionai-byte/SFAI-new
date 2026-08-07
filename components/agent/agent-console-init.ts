@@ -339,9 +339,14 @@ export function initAgentConsole(): (() => void) | undefined {
     }, closeDelay);
   };
 
-  // FAB: od razu agent głosowy w trybie docked (panel z prawej, strona widoczna),
-  // sesja startuje automatycznie (przeglądarka zapyta o mikrofon). Czat pozostaje
-  // dostępny jako druga zakładka. Ewentualny klik przy otwartym docku = pełne okno.
+  // FAB: pełne okno konsoli z aktywną zakładką „01 Czat" (spec v8b §5, decyzja
+  // Pawła: „niech domyślnie otwiera się 01 czat, a nie głos. Głos można po
+  // prostu przepiąć"). Do v6 FAB startował od razu rozmowę głosową w docku
+  // (mikrofon pytał o zgodę bez pytania użytkownika) — teraz głos jest o jeden
+  // świadomy klik dalej: zakładka „02 Głos" + przycisk „Rozpocznij rozmowę".
+  // Wznowienie rozmowy po przejściu na podstronę (RESUME_KEY, koniec pliku)
+  // NIE ZMIENIA SIĘ: tam konsola dalej wstaje w trybie voice + docked.
+  // Ewentualny klik przy otwartym docku = powrót do pełnego okna.
   if (fab) {
     on(fab, 'click', () => {
       // W trakcie animacji zamykania hidden jest jeszcze false — klik FAB ma
@@ -350,8 +355,7 @@ export function initAgentConsole(): (() => void) | undefined {
         setDocked(false);
         return;
       }
-      openConsole('voice', true);
-      startVoice();
+      openConsole('chat');
     });
   }
   // SPA (różnica #3): delegacja zamiast listenerów per przycisk — przyciski
