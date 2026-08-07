@@ -1,4 +1,18 @@
-# STATUS — INFINITY v6 — w toku (rozświetlenie + maszyna pisania + wiedza agenta)
+# STATUS — INFINITY v6 — NA PRODUKCJI (commit a5f35c1, 18 plików, +1238/-269)
+
+DOWODY Z PRODUKCJI (www.simplefast.ai, po deployu):
+- maszyna pisania ZŁAPANA W TRAKCIE na zrzucie: „Buduj|em" z kursorem,
+  wcześniej zmierzona na localhost co 160 ms: 3 litery @169 ms → 30 @1927 ms;
+- karty w języku wzorca: rgba(6,6,12,.5) + biel 7%, gwiazdy prześwitują,
+  kafle z poświatą w kolorze kategorii (cyjan/fiolet/bursztyn), mono etykiety
+  i strzałki w pełnym nasyceniu, narożniki [ ] zostały;
+- podstrona /uslugi/chatboty: te same karty (zrzut kroku „Diagnoza") —
+  „naczynia połączone" domknięte;
+- /wiedza-agenta.txt: HTTP 200, 15 938 znaków, text/plain UTF-8;
+- /api/elevenlabs-session: 503 elevenlabs_not_configured = funkcja żyje,
+  czeka na klucz (zgodnie z oczekiwaniem, ENV po stronie Pawła).
+
+# STATUS — INFINITY v6 — etapy rundy
 
 Runda v6 = feedback Pawła po v5. Etapy:
 - [DONE] A rozświetlenie kart wg POMIARÓW wzorca infinitytechstack.uk
