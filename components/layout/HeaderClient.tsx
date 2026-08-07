@@ -8,6 +8,7 @@ import { NAV_LINKS, HOME_CTA } from '@/lib/site';
 import { Logo } from './Logo';
 import { NavDropdown } from './ServicesMenu';
 import type { NavDropdownData } from './nav-data';
+import { ScrambleText } from '@/components/motion/ScrambleText';
 
 /**
  * HeaderClient — interaktywna powłoka nagłówka (INFINITY v3, partia A).
@@ -19,6 +20,12 @@ import type { NavDropdownData } from './nav-data';
  * NavDropdown (Usługi/Produkty/Realizacje/Narzędzia/Wiedza — spec v3
  * §NAWIGACJA); pozycje bez dropdownu (O nas) to zwykły .inf-nav-link.
  * Kolejność 1:1 z NAV_LINKS (treść nietknięta).
+ *
+ * v4 (spec §PARTIA A pkt 2): WSPÓLNY stan dropdownów — `openDropdown` trzyma
+ * href JEDYNEGO otwartego naraz; NavDropdown jest kontrolowany (open +
+ * onOpenChange), więc otwarcie kolejnego (hover-intent/klik) ZAMYKA poprzedni
+ * w jednym setState — koniec nachodzących paneli. Escape/focus/hover-intent
+ * bez zmian (mechanizmy zostały w NavDropdown).
  *
  * Mobile: bez zmian treści względem v2 — hamburger -> pełny panel (SOLIDNE
  * tło, zero backdrop-blur <1024px), Usługi rozwinięte listą (tytuły 1:1
@@ -33,6 +40,8 @@ import type { NavDropdownData } from './nav-data';
  */
 export function HeaderClient({ dropdowns }: { dropdowns: NavDropdownData[] }) {
   const [open, setOpen] = useState(false);
+  // v4: JEDEN otwarty dropdown naraz — stan wspólny (href aktywnego albo null).
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   // Aktywna strona w nav desktop: aria-current="page" (semantyka) zapala też
   // stan aktywny .inf-nav-link[aria-current] (biel + cyjanowy glow).
   const pathname = usePathname();
@@ -75,7 +84,23 @@ export function HeaderClient({ dropdowns }: { dropdowns: NavDropdownData[] }) {
         <ul className="ml-auto hidden items-center gap-1 lg:flex">
           {NAV_LINKS.map((link) => {
             const dd = dropdownByHref.get(link.href);
-            if (dd) return <NavDropdown key={link.href} data={dd} />;
+            if (dd)
+              return (
+                // v4: dropdown kontrolowany — otwarcie ustawia SWÓJ href
+                // (poprzedni gaśnie automatycznie), zamknięcie czyści stan
+                // tylko jeśli to on jest aktywny (spóźniony hover-intent
+                // timer nie może zgasić świeżo otwartego sąsiada).
+                <NavDropdown
+                  key={link.href}
+                  data={dd}
+                  open={openDropdown === dd.href}
+                  onOpenChange={(v) =>
+                    setOpenDropdown((prev) =>
+                      v ? dd.href : prev === dd.href ? null : prev
+                    )
+                  }
+                />
+              );
             return (
               <li key={link.href}>
                 <Link
@@ -83,7 +108,10 @@ export function HeaderClient({ dropdowns }: { dropdowns: NavDropdownData[] }) {
                   aria-current={isActive(link.href) ? 'page' : undefined}
                   className="inf-nav-link"
                 >
-                  {link.label}
+                  {/* v4 partia D: etykieta dekoduje się na hover/focus CAŁEGO
+                      linku (ScrambleText — bramki pointer:fine + !RM w środku;
+                      SSR renderuje pełny tekst, treść 1:1 z NAV_LINKS). */}
+                  <ScrambleText>{link.label}</ScrambleText>
                 </Link>
               </li>
             );

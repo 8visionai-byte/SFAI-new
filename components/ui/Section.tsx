@@ -27,13 +27,21 @@ type Theme = 'light' | 'dark';
 type Space = 'sm' | 'md' | 'lg';
 
 const toneClass: Record<Tone, string> = {
-  base: 'bg-bg',
-  subtle: 'bg-bg-subtle',
+  // INFINITY v4 (spec §PARTIA A pkt 1): base = PRZEZROCZYSTA (kolor niesie
+  // body #06060c) — fixed warstwy .inf-stars/.inf-nebula/.inf-particles
+  // wreszcie prześwitują na CAŁEJ stronie (diagnoza „tło znikło": sekcje
+  // kryły je solidnym bg-bg). subtle = PÓŁPRZEZROCZYSTY pas (color-mix
+  // --bg-subtle 72%). Obie klasy w globals.css (partia A) z guardem
+  // [data-theme=light]: jasne wyspy dostają solidne tło jak dotąd — wyspy
+  // BEZ ZMIAN. Kontrast bez regresji: tekst na gwiazdach (1px, alpha ≤.25)
+  // = tekst na #06060c (te same tokeny, AA policzone w globals).
+  base: 'inf-sec-base',
+  subtle: 'inf-sec-subtle',
   surface: 'bg-surface',
-  // INFINITY v2 (podstrony): hero podstrony BEZ solidnego tła — globalne
-  // .inf-stars/particles prześwitują (diagnoza „całe na czarno": sekcje kryły
-  // fixed tło własnym bg-bg). Tone emituje dokładnie jedną klasę, więc
-  // bg-transparent nie konkuruje z niczym (cn to goły join, bez merge).
+  // Tone emituje dokładnie jedną klasę, więc bg-transparent nie konkuruje
+  // z niczym (cn to goły join, bez merge). Po v4 transparent ≡ base na
+  // ciemnym; zostaje dla podstron (semantyka „celowo bez tła" + brak
+  // light-guarda).
   transparent: 'bg-transparent',
 };
 

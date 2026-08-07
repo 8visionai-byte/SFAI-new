@@ -6,6 +6,7 @@ import { FAQ_ITEMS } from '@/components/sections/faqData';
 
 import { ScrollMetalProgress } from '@/components/motion/ScrollMetalProgress';
 import { Hero } from '@/components/sections/Hero';
+import { PromoUslugi } from '@/components/sections/PromoUslugi';
 import { PasekZaufania } from '@/components/sections/PasekZaufania';
 import { Problem } from '@/components/sections/Problem';
 import { BranzeDemo } from '@/components/sections/BranzeDemo';
@@ -14,6 +15,7 @@ import { Bezpieczenstwo } from '@/components/sections/Bezpieczenstwo';
 import { Dowod } from '@/components/sections/Dowod';
 import { JakToDziala } from '@/components/sections/JakToDziala';
 import { Oferta } from '@/components/sections/Oferta';
+import { NarzedziaTeaser } from '@/components/sections/NarzedziaTeaser';
 import { GwarancjaEfektu } from '@/components/sections/GwarancjaEfektu';
 import { DowodSpoleczny } from '@/components/sections/DowodSpoleczny';
 import { FAQ } from '@/components/sections/FAQ';
@@ -27,8 +29,11 @@ import { FinalneCTA } from '@/components/sections/FinalneCTA';
  * przy pierwszym żądaniu. Sekcje to Server Components; framer-motion działa wewnątrz
  * wysp klienta (Reveal, AnimatedMetric, demo, formularz) i TYLKO wzbogaca.
  *
- * Kolejność (mapa emocji) jest częścią architektury — nie zmieniać bez decyzji:
- * lęk (2,4) zdejmujemy PRZED ceną (7); dowód towarzyszy zakrętom; CTA powtarza się.
+ * Kolejność (mapa emocji) jest częścią architektury — nie zmieniać bez decyzji.
+ * INFINITY v4 (spec §PARTIA C pkt 4, Paweł explicite pozwolił na restrukturyzację):
+ * po hero OD RAZU kafelki głównych usług wg SEO (PromoUslugi), po Ofercie teaser
+ * narzędzi (NarzedziaTeaser). Reszta mapy emocji bez zmian: lęk zdejmujemy PRZED
+ * ceną; dowód towarzyszy zakrętom; CTA powtarza się. Schema/teksty sekcji 1:1.
  */
 export const dynamic = 'force-static';
 
@@ -63,6 +68,9 @@ export default function HomePage() {
       */}
       <ScrollMetalProgress />
       <Hero />
+      {/* v4: kafelki głównych usług (chatboty full + voiceboty/audyt połówki
+          + Architekci cienka full) ZARAZ po hero — treść 1:1 z rejestru USLUGI. */}
+      <PromoUslugi />
       <PasekZaufania />
       <Problem />
       <BranzeDemo />
@@ -71,6 +79,8 @@ export default function HomePage() {
       <Dowod />
       <JakToDziala />
       <Oferta />
+      {/* v4: teaser 5 narzędzi (rejestr NARZEDZIA 1:1) między Ofertą a gwarancją. */}
+      <NarzedziaTeaser />
       <GwarancjaEfektu />
       <DowodSpoleczny />
       <FAQ />

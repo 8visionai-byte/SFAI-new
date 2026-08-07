@@ -2461,6 +2461,34 @@ html.lenis body {
    i szkło TYLKO w media query desktopowej niżej.
    ══════════════════════════════════════════════════════════════════════════ */
 @layer components {
+  /* ── .inf-sec-base / .inf-sec-subtle — TŁA SEKCJI v4 (spec §PARTIA A pkt 1;
+     konsument: components/ui/Section.tsx tone base/subtle).
+     base = TRANSPARENT: kolor niesie body (--bg #06060c), a fixed warstwy
+     .inf-stars/.inf-nebula/.inf-particles (z-index -1) prześwitują na całej
+     stronie — koniec „tło znikło" (sekcje kryły je solidnym bg-bg).
+     subtle = PÓŁPRZEZROCZYSTY pas: color-mix(--bg-subtle 72%, transparent)
+     — krok tonu zostaje, gwiazdy lekko prześwitują. Fallback bez color-mix:
+     rgba(12,12,24,.72) = #0c0c18 w 72% (1:1).
+     GUARD JASNYCH WYSP: sekcja/przodek z data-theme=light wraca na SOLIDNE
+     tokeny (wyspy BEZ ZMIAN — partia C i tak zdejmuje białą kartę z home).
+     KONTRAST: tekst na gwiazdach = tekst na #06060c (kropki 1px alpha ≤.25
+     nie zmieniają tła pod literami — AA jak w komentarzu tokenów). */
+  .inf-sec-base {
+    background-color: transparent;
+  }
+  .inf-sec-base[data-theme='light'],
+  [data-theme='light'] .inf-sec-base {
+    background-color: var(--bg);
+  }
+  .inf-sec-subtle {
+    background-color: rgba(12, 12, 24, 0.72);
+    background-color: color-mix(in srgb, var(--bg-subtle) 72%, transparent);
+  }
+  .inf-sec-subtle[data-theme='light'],
+  [data-theme='light'] .inf-sec-subtle {
+    background-color: var(--bg-subtle);
+  }
+
   /* ── .inf-pill-nav — pływająca pigułka nawigacji (konstrukcja .gnav wzorca
      1:1). Mobile: SOLIDNE tło (kryje treść, zero blur) + STATYCZNY gradient
      obwódki. Desktop (media poza layer): szkło rgba(10,10,16,.65) + blur(32)
@@ -2724,16 +2752,90 @@ html.lenis body {
       filter var(--dur-fast) var(--ease-out);
   }
 
-  /* ── .inf-card — karta wzorca: ciemna, cienka obwódka, LEWA krawędź akcentowa
-     2px w kolorze kategorii (--card-c) przez ::before (border-image gubi
-     radius). Hover (desktop, media query niżej): lift + poświata + strzałka.
-     UWAGA: ::before siedzi NA krawędzi — nie łączyć z overflow:hidden. */
+  /* ── .inf-card — karta wzorca v4: ciemna, cienka obwódka, LEWA krawędź
+     akcentowa 2px w kolorze kategorii (--card-c) przez ::before (border-image
+     gubi radius). Hover (desktop, media query niżej): lift + FLUORESCENCJA
+     (border 70%, glow zewn. 26px) + strzałka.
+     v4 OVERFLOW:HIDDEN (spec §PARTIA A pkt 4): zweryfikowane grepem — żadna
+     .inf-card nie ma wystających dzieci (badge cennika „-top-3" żyje na
+     .sf-glass/.sf-rim-gradient, NIE na .inf-card; honeypoty formularzy to
+     ukryte h-0 w-0). Dzięki temu SWEEP jedzie przez ::after karty 1:1 ze
+     wzorcem — rozbłysk na KAŻDEJ karcie bez zmian markupu (.inf-shine zostaje
+     jako nieszkodliwy duplikat u obecnych konsumentów).
+     ::before przesunięty left -1px -> 0 (overflow tnie w krawędzi paddingu —
+     pas 2px musi stać w całości WEWNĄTRZ karty).
+     NAROŻNIKI [ ] (wzorzec): 4 rogi 10x10px z linii 1px przez background-image
+     (8 warstw: 2 kreski na róg), kolor color-mix(--card-c 55%); wsunięte 8px
+     od krawędzi, żeby radius-lg (16px) ich nie ścinał. Fallback bez color-mix:
+     cyjan akcentu w rgba (55%). */
   .inf-card {
     --card-c: var(--accent);
     position: relative;
+    overflow: hidden;
     border-radius: var(--radius-lg);
     background-color: var(--surface);
     border: 1px solid var(--border);
+    background-image:
+      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
+      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
+      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
+      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
+      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
+      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
+      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
+      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55));
+    background-image:
+      linear-gradient(
+        color-mix(in srgb, var(--card-c) 55%, transparent),
+        color-mix(in srgb, var(--card-c) 55%, transparent)
+      ),
+      linear-gradient(
+        color-mix(in srgb, var(--card-c) 55%, transparent),
+        color-mix(in srgb, var(--card-c) 55%, transparent)
+      ),
+      linear-gradient(
+        color-mix(in srgb, var(--card-c) 55%, transparent),
+        color-mix(in srgb, var(--card-c) 55%, transparent)
+      ),
+      linear-gradient(
+        color-mix(in srgb, var(--card-c) 55%, transparent),
+        color-mix(in srgb, var(--card-c) 55%, transparent)
+      ),
+      linear-gradient(
+        color-mix(in srgb, var(--card-c) 55%, transparent),
+        color-mix(in srgb, var(--card-c) 55%, transparent)
+      ),
+      linear-gradient(
+        color-mix(in srgb, var(--card-c) 55%, transparent),
+        color-mix(in srgb, var(--card-c) 55%, transparent)
+      ),
+      linear-gradient(
+        color-mix(in srgb, var(--card-c) 55%, transparent),
+        color-mix(in srgb, var(--card-c) 55%, transparent)
+      ),
+      linear-gradient(
+        color-mix(in srgb, var(--card-c) 55%, transparent),
+        color-mix(in srgb, var(--card-c) 55%, transparent)
+      );
+    background-repeat: no-repeat;
+    background-position:
+      left 8px top 8px,
+      left 8px top 8px,
+      right 8px top 8px,
+      right 8px top 8px,
+      left 8px bottom 8px,
+      left 8px bottom 8px,
+      right 8px bottom 8px,
+      right 8px bottom 8px;
+    background-size:
+      10px 1px,
+      1px 10px,
+      10px 1px,
+      1px 10px,
+      10px 1px,
+      1px 10px,
+      10px 1px,
+      1px 10px;
     transition:
       transform var(--dur-base) var(--ease-out),
       border-color var(--dur-base) var(--ease-out),
@@ -2743,7 +2845,7 @@ html.lenis body {
   .inf-card::before {
     content: '';
     position: absolute;
-    left: -1px;
+    left: 0;
     top: 14px;
     bottom: 14px;
     width: 2px;
@@ -2752,6 +2854,39 @@ html.lenis body {
     opacity: 0.5;
     transition: opacity var(--dur-base) var(--ease-out);
     pointer-events: none;
+  }
+  /* v4 SWEEP przez ::after — 1:1 wzorzec: pas 38% szer. / 100% wys., start
+     left -40%, skewX(-18deg), gradient biel 6%, transition left .6s; hover
+     karty -> left 120% (media hover niżej; RM: pas stoi). Absolutny
+     pseudo-element maluje się NAD tekstem w flow (jak dotychczasowy
+     .inf-shine::after) — biel 6% nie psuje kontrastu treści. */
+  .inf-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -40%;
+    width: 38%;
+    height: 100%;
+    transform: skewX(-18deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+    transition: left 0.6s var(--ease-out);
+    pointer-events: none;
+  }
+
+  /* ── .inf-card-sub — mono KOLOROWY podtytuł karty (wzorzec „85K+ monthly
+     searches"; spec v4 §PARTIA A pkt 5). Kolor = ODCIEŃ kategorii przez
+     --card-c-l (pole `odcien` z lib/inf-kategorie.ts — konsument partii C
+     ustawia style={{'--card-c-l': odcien}}); fallback: --card-c karty, dalej
+     akcent. Odcienie (jasne stopnie 300/400) na --surface #111127: #67e8f9
+     ~10.9:1, #a78bfa ~6.6:1, #f472b6 ~6.7:1, #4ade80 ~9.9:1, #fbbf24 ~10.4:1,
+     #60a5fa ~6.5:1 — AA dla 12px z zapasem. */
+  .inf-card-sub {
+    display: block;
+    font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
+    font-size: 0.75rem; /* 12px */
+    line-height: 1.4;
+    letter-spacing: 0.06em;
+    color: var(--card-c-l, var(--card-c, var(--accent)));
   }
   /* Strzałka karty — v3: WEWNĄTRZ .inf-card na desktopie POJAWIA SIĘ dopiero
      na hover karty (opacity 0 → 1 + dojazd; reguły w media hover niżej,
@@ -2844,9 +2979,16 @@ html.lenis body {
     color: var(--fg-muted);
   }
 
-  /* ── .inf-glow-cta — pigułka CTA z neonową obwódką i glow.
-     Primary (bazowa): tło akcent + poświata. Ghost: outline + tekst akcent.
-     Kontrast: --accent-contrast na cyan-400 = AA (istniejąca para tokenów). */
+  /* ── .inf-glow-cta — pigułka CTA „Hire Me" (v4, spec §PARTIA A pkt 3).
+     SPOCZYNEK = outline: tło transparent, obwódka color-mix(accent 60%),
+     NAPIS w akcencie (mono zostaje). Cyjan #22d3ee na #06060c ~11.2:1 (AA);
+     na tle pigułki nav #0a0a10 praktycznie tyle samo.
+     HOVER = „rozświetla się": wypełnienie akcentem + tekst #06060c
+     (~11.2:1 AA na #22d3ee) + glow 0 0 24px accent 70%.
+     WARIANT WYPEŁNIONY od spoczynku: .inf-glow-cta-solid niżej ORAZ kontrakt
+     .sf-magnetic .inf-glow-cta (primary hero/ServiceHero/OnasHero na
+     MagneticButton — spec: „primary w hero może zostać wypełniony, ale NAV
+     CTA wg tej reguły"). Focus bez zmian (:focus-visible poza layerem). */
   .inf-glow-cta {
     display: inline-flex;
     align-items: center;
@@ -2859,22 +3001,35 @@ html.lenis body {
     font-size: var(--fs-ui);
     font-weight: 700;
     letter-spacing: 0.04em;
+    background-color: transparent;
+    color: var(--accent);
+    border: 1px solid rgba(34, 211, 238, 0.6);
+    border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+    transition:
+      background-color var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out);
+  }
+  .inf-glow-cta:hover {
+    background-color: var(--accent);
+    color: #06060c;
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.7);
+    box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 70%, transparent);
+  }
+  /* Wariant WYPEŁNIONY (dawna baza v3) — spoczynek: tło akcent + neonowa
+     obwódka; hover: białe podświetlenie (tekst #06060c, ~20:1). Używany przez
+     kontrakt .sf-magnetic niżej; klasa dostępna też wprost dla partii C/D. */
+  .inf-glow-cta-solid {
     background-color: var(--accent);
     color: var(--accent-contrast);
-    border: 1px solid transparent;
+    border-color: transparent;
     box-shadow: 0 0 24px -4px rgba(20, 184, 196, 0.45);
     box-shadow:
       0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent),
       0 0 24px -4px color-mix(in srgb, var(--accent) 65%, transparent);
-    transition:
-      background-color var(--dur-base) var(--ease-out),
-      box-shadow var(--dur-base) var(--ease-out),
-      color var(--dur-base) var(--ease-out);
   }
-  /* v3 (wzorzec "Hire Me"): hover = BIAŁE podświetlenie — tło #fff, tekst
-     ciemny #06060c (kontrast ~20:1), glow zostaje. Płynność niesie transition
-     bazowe (--dur-base 220ms). */
-  .inf-glow-cta:hover {
+  .inf-glow-cta-solid:hover {
     background-color: #fff;
     color: #06060c;
     box-shadow: 0 0 32px -2px rgba(20, 184, 196, 0.6);
@@ -2977,17 +3132,25 @@ html.lenis body {
   .inf-card:hover {
     transform: translateY(-3px);
     background-color: var(--surface-hover);
+    /* v4 FLUORESCENCJA (spec §PARTIA A pkt 4): border 50% -> 70% + DODATKOWY
+       glow zewnętrzny 0 0 26px w kolorze karty (30%) obok liftowego cienia. */
     border-color: var(--border-strong);
-    border-color: color-mix(in srgb, var(--card-c) 50%, transparent);
+    border-color: color-mix(in srgb, var(--card-c) 70%, transparent);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 0 26px rgba(34, 211, 238, 0.3),
       0 12px 40px -12px rgba(34, 211, 238, 0.4);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 0 26px color-mix(in srgb, var(--card-c) 30%, transparent),
       0 12px 40px -12px color-mix(in srgb, var(--card-c) 40%, transparent);
   }
   .inf-card:hover::before {
     opacity: 1;
+  }
+  /* v4: sweep na KAŻDEJ karcie — pas ::after przelatuje przez kartę. */
+  .inf-card:hover::after {
+    left: 120%;
   }
   /* Strzałka karty ukryta do hoveru — scope .inf-card, żeby strzałki poza
      kartami (wiersze listy usług w Ofercie) zostały widoczne jak dotąd. */
@@ -3000,10 +3163,11 @@ html.lenis body {
     transform: translateX(0);
     color: var(--fg-muted);
   }
-  /* Kafelek ikony karty: jaśnieje i rośnie (spec v3: brightness 1.3 + scale
-     1.12; transition niesie baza .inf-tile, RM: transform zdejmowany niżej). */
+  /* Kafelek ikony karty: jaśnieje i rośnie (v4 fluorescencja: brightness
+     1.3 -> 1.35 + scale 1.12; transition niesie baza .inf-tile, RM: transform
+     zdejmowany niżej). */
   .inf-card:hover .inf-tile {
-    filter: brightness(1.3);
+    filter: brightness(1.35);
     transform: scale(1.12);
   }
   .inf-card:hover .inf-shine::after {
@@ -3101,6 +3265,7 @@ html.lenis body {
   }
   .inf-card,
   .inf-card::before,
+  .inf-card::after,
   .inf-arrow,
   .inf-tile,
   .inf-tile svg,
@@ -3127,8 +3292,10 @@ html.lenis body {
   .inf-card:hover .inf-tile {
     transform: none !important;
   }
-  /* Błysk stoi (spec: RM bez zmiany left); kafel ikony nie „pływa". */
-  .inf-card:hover .inf-shine::after {
+  /* Błysk stoi (spec: RM bez zmiany left) — v4 także sweep ::after karty;
+     kafel ikony nie „pływa". */
+  .inf-card:hover .inf-shine::after,
+  .inf-card:hover::after {
     left: -40% !important;
   }
   .inf-dd-row:hover .inf-tile {
@@ -3151,6 +3318,12 @@ html.lenis body {
   .inf-nebula,
   .inf-shine::after,
   .inf-spotlight {
+    background-image: none;
+  }
+  /* v4: narożniki [ ] (background-image karty) i pas sweep znikają w trybie
+     wysokiego kontrastu — zostaje systemowa ramka karty. */
+  .inf-card,
+  .inf-card::after {
     background-image: none;
   }
   .inf-nav-link:hover,
@@ -3328,11 +3501,18 @@ html.lenis body {
 
 /* CTA hero w .sf-magnetic: utilities Buttona (font-sans, rounded-sm, shadow)
    biją @layer components — selektor 2-klasowy (0,2,0) odzyskuje mono, pigułkę
-   i glow niezależnie od kolejności. Focus = podwójny pierścień jak .sf-cta. */
+   i glow niezależnie od kolejności. Focus = podwójny pierścień jak .sf-cta.
+   v4: baza .inf-glow-cta zeszła na OUTLINE (Hire Me), a primary hero MA
+   zostać wypełniony (spec §PARTIA A pkt 3) — kontrakt wymusza tu solid
+   (tło akcent + ciemny tekst), czyli zachowanie v3 bez dotykania markupu
+   Hero/ServiceHero/OnasHero. */
 .sf-magnetic .inf-glow-cta {
   border-radius: 999px;
   font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
   letter-spacing: 0.04em;
+  background-color: var(--accent);
+  color: var(--accent-contrast);
+  border-color: transparent;
   box-shadow: 0 0 24px -4px rgba(20, 184, 196, 0.45);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent),

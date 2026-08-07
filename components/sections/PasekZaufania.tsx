@@ -11,14 +11,18 @@ import { Reveal } from '@/components/motion/Reveal';
  * liczników wzorca: tytuły w mono caps w kolorach trasy + pionowe separatory
  * między pozycjami (reguła .inf-counter + .inf-counter fundamentu; na mobile
  * kasowana utilities max-sm — kolumny stoją jedna pod drugą bez kreski).
- * `kolor` = token TEKSTOWY metalu (AA na ciemnym: blue-300 ~10.4:1,
- * violet-300 ~10.1:1, emerald-400 ~9.7:1). Teksty 1:1 — zero zmian treści.
+ * INFINITY v4 (spec §PARTIA C pkt 5): trzy obawy = trzy RÓŻNE fluorescencyjne
+ * ODCIENIE palety v4 (jasne stopnie 300/400 z lib/inf-kategorie: blue #60a5fa,
+ * violet #a78bfa, green #4ade80) zamiast tokenów metalu — żywsze, każda
+ * pozycja inny ton. AA na tle strony #06060c z zapasem (jaśniejsze niż
+ * dotychczasowe metal-300/400, kontrast tylko rośnie; policzone dla --surface
+ * w globals przy .inf-card-sub: 6.5:1 / 6.6:1 / 9.9:1). Teksty 1:1.
  */
 const FILARY = [
   {
     title: 'Twoje dane zostają w UE',
     desc: 'RODO i AI Act. Klient zawsze wie, że rozmawia z AI.',
-    kolor: 'var(--metal-blue)',
+    kolor: '#60a5fa',
     icon: (
       <path
         d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z"
@@ -31,7 +35,7 @@ const FILARY = [
   {
     title: 'Zaczynasz od małego kroku',
     desc: 'Najpierw darmowa diagnoza, potem mały projekt. Bez wielkiej decyzji na start.',
-    kolor: 'var(--metal-violet)',
+    kolor: '#a78bfa',
     icon: (
       <path
         d="M4 18h4v-4H4v4Zm6 0h4V9h-4v9Zm6 0h4V5h-4v13Z"
@@ -45,7 +49,7 @@ const FILARY = [
     title: 'Płacisz za efekt',
     // Pełny model gwarancji = osobna sekcja GwarancjaEfektu (+ decyzja Pawła o success-fee).
     desc: 'Umawiamy się na wynik. Rozliczamy się za efekt, nie za obietnice.',
-    kolor: 'var(--metal-green)',
+    kolor: '#4ade80',
     icon: (
       <path
         d="M5 12l4.5 4.5L19 7"
@@ -64,9 +68,9 @@ export function PasekZaufania() {
        koniec z pasami ABAB. Rejestr pionowy sm = pasek, nie pełna sekcja. */
     <Section tone="base" space="sm">
       <Reveal>
-        {/* Etykieta techniczna (11px, tracking .16), wyrównana do lewej —
-            jedna oś wyrównania na całej stronie. Tekst 1:1. */}
-        <p className="mb-10 text-overline uppercase tracking-[0.16em] text-fg-subtle">
+        {/* Etykieta techniczna (11px, tracking .16) — v4: WYŚRODKOWANA nad
+            gridem (wzorzec: nagłówek + opis centralnie nad siatką). Tekst 1:1. */}
+        <p className="mb-10 text-center text-overline uppercase tracking-[0.16em] text-fg-subtle">
           Zanim cokolwiek wdrożymy, zdejmujemy z Ciebie trzy największe obawy
         </p>
       </Reveal>

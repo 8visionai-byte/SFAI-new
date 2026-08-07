@@ -15,13 +15,18 @@ const BOLE = [
   'Wiem, że AI mogłoby pomóc. Tylko nie wiem od czego zacząć i boję się, że znowu przepalę budżet na coś, co nie zadziała.',
 ] as const;
 
+/* INFINITY v4 (spec §PARTIA C pkt 3+5): dekoracyjne „ cytatów w RÓŻNYCH
+   fluorescencyjnych odcieniach (paleta `odcien` z lib/inf-kategorie, partia A)
+   — 5 cytatów = 5 odcieni, zero dubli. Czysta dekoracja (aria-hidden). */
+const CYTAT_ODCIEN = ['#67e8f9', '#a78bfa', '#f472b6', '#4ade80', '#fbbf24'] as const;
+
 export function Problem() {
   return (
     <Section tone="base" id="problem" space="md">
       {/* INFINITY v3 (decyzja Pawła: zdjęcia WYLATUJĄ z całej strony): panorama
           „przed i po" usunięta z renderu (plik webp zostaje w /public). Sekcja
-          to teraz nagłówek + jasna karta cytatów solo. Teksty i hierarchia
-          nagłówków bez zmian. */}
+          to nagłówek + karta cytatów solo — od v4 CIEMNA .inf-card (biała
+          wyspa OUT). Teksty i hierarchia nagłówków bez zmian. */}
       <div className="mx-auto max-w-narrow">
         <Reveal variant="header">
           <h2 className="text-h2">Ile czasu w tygodniu zjada Ci robota, którą mógłby robić ktoś inny?</h2>
@@ -36,24 +41,24 @@ export function Problem() {
         </Reveal>
       </div>
 
-      {/* ŚWIAT B (makieta 2-problem): karta bólów to CELOWO BIAŁA wyspa światła
-          na ciemnej stronie — po v3 stoi SOLO, wyśrodkowana (max-w-narrow =
-          760px, token repo najbliższy „~720px" ze spec), bez nachodzenia na
-          usuniętą panoramę (ujemne marginesy kolażu wypadły razem ze zdjęciem).
-          data-theme="light" przełącza tokeny semantyczne strefowo, więc
-          wnętrze karty (tekst, kreski, tealowe „ , przycisk outline) liczy
-          kontrast na bieli — zero ręcznych HEX-ów. Kaskadę wierszy dalej niesie
-          .sf-stagger (selektor [data-reveal-shown] .sf-stagger > * z globals).
-          Teksty 1:1; mostek do diagnozy wchodzi DO karty (makieta: cytaty +
-          przycisk w jednej bryle). */}
+      {/* INFINITY v4 (decyzja Pawła: BIAŁA karta cytatów = porażka): karta
+          bólów przechodzi na CIEMNĄ .inf-card wzorca (obwódka, lewa krawędź
+          akcentowa, narożniki [ ], sweep na hover — wszystko z globals partii A).
+          data-theme="light" ZNIKA z home — wnętrze liczy kontrast na ciemnych
+          tokenach semantycznych (te same klasy text-fg/divide-border). Kolorowe
+          „ w akcentach z palety odcieni (CYTAT_ODCIEN wyżej, każda linia inny
+          odcień). Kaskadę wierszy dalej niesie .sf-stagger (selektor
+          [data-reveal-shown] .sf-stagger > * z globals). Teksty 1:1; mostek
+          do diagnozy zostaje W karcie (cytaty + przycisk w jednej bryle). */}
       <Reveal delay={0.1} className="mx-auto mt-12 max-w-narrow md:mt-16">
-        <div data-theme="light" className="rounded-lg bg-surface px-6 shadow-lg md:px-8">
+        <div className="inf-card px-6 md:px-8">
           <ul className="sf-stagger divide-y divide-border">
             {BOLE.map((bol, i) => (
               <li key={i} className="flex gap-4 py-5">
                 <span
                   aria-hidden="true"
-                  className="select-none font-display text-[2.5rem] leading-[0.6] text-accent-decor"
+                  className="select-none font-display text-[2.5rem] leading-[0.6]"
+                  style={{ color: CYTAT_ODCIEN[i % CYTAT_ODCIEN.length] }}
                 >
                   „
                 </span>

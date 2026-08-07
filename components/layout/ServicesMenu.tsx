@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { InfIcon } from '@/components/ui/InfIcons';
@@ -12,6 +12,12 @@ import type { NavDropdownData, NavDropdownItem } from './nav-data';
  * teraz JEDEN komponent renderuje każdy z 5 dropdownów (Usługi / Produkty /
  * Realizacje / Narzędzia / Wiedza) z danych `NavDropdownData` liczonych
  * SERWEROWO w nav-data.ts (rejestry treści nie wchodzą do bundla klienta).
+ *
+ * v4 (spec §PARTIA A pkt 2): stan otwarcia WYNIESIONY do HeaderClient —
+ * komponent jest KONTROLOWANY (props `open` + `onOpenChange`). Rodzic trzyma
+ * JEDEN aktywny dropdown naraz, więc otwarcie kolejnego (hover/klik) zamyka
+ * poprzedni — koniec nachodzących na siebie paneli. Hover-intent, Escape
+ * i focus działają jak dotąd (mechanizmy niżej, tylko piszą przez callback).
  *
  * Interakcja (mechanizm 1:1 z v2 — spec: hover-intent 180ms + klik toggle):
  *  - desktop: otwiera się na MOUSEENTER wrappera, zamyka po mouseleave
@@ -50,8 +56,16 @@ function KafelekIkony({ item }: { item: NavDropdownItem }) {
 /** Opóźnienie zamknięcia po mouseleave (hover-intent, spec: ~180ms). */
 const CLOSE_DELAY_MS = 180;
 
-export function NavDropdown({ data }: { data: NavDropdownData }) {
-  const [open, setOpen] = useState(false);
+export function NavDropdown({
+  data,
+  open,
+  onOpenChange,
+}: {
+  data: NavDropdownData;
+  /** v4: stan otwarcia trzyma HeaderClient (jeden aktywny dropdown naraz). */
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
   const ref = useRef<HTMLLIElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const closeTimer = useRef<number | null>(null);
@@ -73,7 +87,7 @@ export function NavDropdown({ data }: { data: NavDropdownData }) {
     closeTimer.current = window.setTimeout(() => {
       closeTimer.current = null;
       // focus-within trzyma otwarte (klawiatura w środku dropdownu).
-      if (!ref.current?.contains(document.activeElement)) setOpen(false);
+      if (!ref.current?.contains(document.activeElement)) onOpenChange(false);
     }, CLOSE_DELAY_MS);
   };
 
@@ -83,11 +97,11 @@ export function NavDropdown({ data }: { data: NavDropdownData }) {
   useEffect(() => {
     if (!open) return;
     const onClick = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node)) onOpenChange(false);
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
-      setOpen(false);
+      onOpenChange(false);
       // Fokus wraca na przycisk — element z fokusem nie może zostać w ukrytej
       // (visibility:hidden) liście.
       buttonRef.current?.focus();
@@ -98,7 +112,7 @@ export function NavDropdown({ data }: { data: NavDropdownData }) {
       document.removeEventListener('mousedown', onClick);
       document.removeEventListener('keydown', onKey);
     };
-  }, [open]);
+  }, [open, onOpenChange]);
 
   return (
     <li
@@ -109,7 +123,9 @@ export function NavDropdown({ data }: { data: NavDropdownData }) {
       onPointerEnter={(e) => {
         if (e.pointerType === 'mouse') {
           cancelClose();
-          setOpen(true);
+          // v4: rodzic (HeaderClient) trzyma JEDEN aktywny dropdown — to
+          // otwarcie zamyka poprzedni w tym samym setState.
+          onOpenChange(true);
         }
       }}
       onPointerLeave={(e) => {
@@ -117,14 +133,14 @@ export function NavDropdown({ data }: { data: NavDropdownData }) {
       }}
       // Blur poza wrapper (Tab wychodzi z menu) zamyka od razu.
       onBlur={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget as Node)) setOpen(false);
+        if (!e.currentTarget.contains(e.relatedTarget as Node)) onOpenChange(false);
       }}
     >
       {/* JEDEN przycisk kategorii + chevron w środku. Etykieta 1:1 z NAV_LINKS. */}
       <button
         ref={buttonRef}
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => onOpenChange(!open)}
         aria-expanded={open}
         aria-haspopup="true"
         aria-current={active ? 'true' : undefined}
@@ -151,7 +167,7 @@ export function NavDropdown({ data }: { data: NavDropdownData }) {
           <Link
             role="menuitem"
             href={data.href}
-            onClick={() => setOpen(false)}
+            onClick={() => onOpenChange(false)}
             className="inf-dd-row"
           >
             <span className="inf-dd-title">{data.hubLabel}</span>
@@ -168,7 +184,7 @@ export function NavDropdown({ data }: { data: NavDropdownData }) {
             <Link
               role="menuitem"
               href={item.href}
-              onClick={() => setOpen(false)}
+              onClick={() => onOpenChange(false)}
               className="inf-dd-row"
             >
               <KafelekIkony item={item} />

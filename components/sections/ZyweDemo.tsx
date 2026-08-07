@@ -2,7 +2,7 @@ import { Section, Button } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { HOME_CTA } from '@/lib/site';
 import { ChatDemo } from '@/components/demo/ChatDemo';
-import { InfIcon } from '@/components/ui/InfIcons';
+import { VoiceAura } from '@/components/motion/VoiceAura';
 
 /**
  * SEKCJA 10 — DEMO POKAZOWE (spec 03 §10). Emocja: kompetencja (szewc w butach).
@@ -46,41 +46,27 @@ export function ZyweDemo() {
           </p>
         </Reveal>
 
-        {/* Voicebot — ŻYWE demo (spec v3 §VOICEBOT, decyzja Pawła): martwy
-            disabled przycisk-stub zamieniony na AKTYWNY link zewnętrzny do
-            drugiej strony Pawła z działającym voicebotem, w stylu pigułki
-            .inf-glow-cta. Tekst przycisku 1:1; mikrokopia „uruchamiamy
-            wkrótce" USUNIĘTA (już nieprawdziwa — jedyna dozwolona zmiana
-            treści tej partii, zamówiona wprost). Karta wzorca (.inf-card)
-            z lewą krawędzią i kafelkiem w kolorze kategorii voicebotów
-            (violet #8b5cf6); emoji w kafelku ustąpiło ikonie SVG z InfIcons
-            (glif voicebotów 1:1 z rejestrem inf-kategorie). */}
+        {/* Voicebot — voice-blob „Zapytaj AI" (spec v4 §PARTIA D pkt 1, decyzja
+            Pawła): dotychczasowy kafelek ikony + pigułka .inf-glow-cta ustąpiły
+            miejsca VoiceAura — oddychającemu zielonemu blobowi z drugiej strony
+            Pawła (port FlowCore.astro). CAŁY blob jest linkiem do żywego demo
+            (ten sam URL co zdjęty przycisk — dlatego przycisk usunięty jako
+            zdublowany, zgodnie ze spec). Teksty sekcji (H3 + opis) zostają 1:1.
+            Karta w kolorze kategorii voicebotów (violet #8b5cf6) bez zmian.
+            Slot bloba: wysokość w px ARBITRALNIE h-[Npx] (spacing repo to
+            własne tokeny — h-9 = 96px, pułapka!). */}
         <Reveal delay={0.06}>
           <div
             className="inf-card flex h-full flex-col justify-center p-6"
             style={{ '--card-c': '#8b5cf6' } as React.CSSProperties}
           >
-            {/* Kafelek ikony w kolorze kategorii (czysta dekoracja). */}
-            <span
-              aria-hidden="true"
-              className="inf-tile mb-4"
-              style={{ '--tile-c': '#8b5cf6' } as React.CSSProperties}
-            >
-              <InfIcon name="sluchawka-fala" />
-            </span>
             <h3 className="text-h3">Wolisz posłuchać?</h3>
             <p className="mt-2 text-body-sm text-fg-muted">
               Voicebot odbierze, porozmawia po polsku i pokaże, jak brzmi obsługa telefonu bez Twojego udziału.
             </p>
-            <div className="mt-5">
-              <a
-                href="https://sfai-webseite-10k-look.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inf-glow-cta"
-              >
-                Zadzwoń do Agenta i posłuchaj
-              </a>
+            {/* Slot VoiceAura (komponent wypełnia rodzica absolute inset-0). */}
+            <div className="relative mt-4 h-[230px] md:h-[260px]">
+              <VoiceAura />
             </div>
           </div>
         </Reveal>

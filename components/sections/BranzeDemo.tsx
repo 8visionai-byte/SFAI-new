@@ -40,11 +40,15 @@ type Branza = {
   c: string;
 };
 
+/* INFINITY v4 (spec §PARTIA C pkt 5): kolory kafelków kart (tryb reduced-motion)
+   przechodzą na FLUORESCENCYJNE ODCIENIE palety v4 (baza -> jasny:
+   #2b7cff->#60a5fa, #8b5cf6->#a78bfa, #f59e0b->#fbbf24, #22d3ee->#67e8f9) —
+   każda karta w gridzie innym tonem. Wyłącznie dekoracja, teksty 1:1. */
 const BRANZE: readonly Branza[] = [
-  { label: 'dla biura', action: 'umawiam spotkania i pilnuję kalendarza', ikona: 'kalendarz-check', c: '#2b7cff' },
-  { label: 'dla salonu', action: 'odbieram telefon, gdy strzyżesz klienta', ikona: 'sluchawka-fala', c: '#8b5cf6' },
-  { label: 'dla budowlanki', action: 'składam wyceny z maila', ikona: 'dokument-skan', c: '#f59e0b' },
-  { label: 'dla e-commerce', action: 'odpowiadam na pytania o zamówienia 24/7', ikona: 'chat-dymek', c: '#22d3ee' },
+  { label: 'dla biura', action: 'umawiam spotkania i pilnuję kalendarza', ikona: 'kalendarz-check', c: '#60a5fa' },
+  { label: 'dla salonu', action: 'odbieram telefon, gdy strzyżesz klienta', ikona: 'sluchawka-fala', c: '#a78bfa' },
+  { label: 'dla budowlanki', action: 'składam wyceny z maila', ikona: 'dokument-skan', c: '#fbbf24' },
+  { label: 'dla e-commerce', action: 'odpowiadam na pytania o zamówienia 24/7', ikona: 'chat-dymek', c: '#67e8f9' },
 ] as const;
 
 /** Pełne zdanie jednej branży (spójne źródło dla typewritera i listy GEO). */
@@ -232,6 +236,10 @@ export function BranzeDemo() {
                 ? 'inf-card px-5 py-4'
                 : undefined
             }
+            // v4: odcień karty (lewa krawędź, narożniki [ ]) = odcień kafelka —
+            // każda karta w gridzie RM innym tonem (poza RM li jest sr-only,
+            // zmienna niczego nie maluje).
+            style={{ '--card-c': b.c } as CSSProperties}
           >
             {reduce ? (
               // INFINITY v3 (spec §KARTY): karta branży z kafelkiem UNIKALNEJ

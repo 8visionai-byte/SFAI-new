@@ -3,6 +3,7 @@ import { Section, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { WritingHeadline } from '@/components/motion/WritingHeadline';
 import { InfinityLoopStatic } from '@/components/motion/InfinityLoopStatic';
+import { HeroLoopLite } from '@/components/motion/HeroLoopLite';
 // import { AnimatedMetric } from '@/components/motion/AnimatedMetric'; // wróci z realnymi metrykami
 import { POSITIONING, HOME_CTA } from '@/lib/site';
 import { HeroPersonaCycler } from './HeroPersonaCycler';
@@ -48,20 +49,26 @@ export function Hero() {
       mgławice (layout) — sekcja nie ma już własnych warstw dekoracyjnych.
     */
     <Section tone="base" space="lg" containerWidth="default" className="relative isolate text-center">
-      {/* SLOT ANIMACJI ∞ (spec v3 §HERO pkt 2) — WIELKA lemniskata pod paskiem
-          nav, ~420px wysokości na desktopie (aspect 940/420, skaluje się w dół).
-          W HTML zawsze STATYCZNY SVG (mobile + reduced-motion + pierwszy paint
-          desktopu). Na desktopie HeroRibbon (przez MotionGate, długo po load)
-          portaluje TU canvas [data-hero-loop] i płynnie nakrywa SVG (opacity
-          swap inline w JS — zero migniecia). Czysta dekoracja: aria-hidden,
-          pointer-events-none, BEZ overflow-hidden (glow może wystawać). */}
+      {/* SLOT ANIMACJI ∞ (spec v4 §PARTIA B pkt 2) — lemniskata 3D „pływające
+          DNA" pod paskiem nav, ŚCIŚNIĘTA: aspect 760/300, ~300px wysokości na
+          desktopie (skaluje się w dół z szerokością). W HTML zawsze STATYCZNY
+          SVG (reduced-motion + pierwszy paint). Desktop ≥1024px: HeroRibbon
+          (przez MotionGate, długo po load) portaluje TU canvas i płynnie
+          nakrywa SVG (opacity swap inline w JS — zero migniecia). Mobile
+          <1024px i !reduced-motion: gate HeroLoopLite montuje lekki canvas
+          (2×48 kropek, DPR 1, 30fps) po load+idle — bramki się wykluczają.
+          Czysta dekoracja: aria-hidden, pointer-events-none, BEZ
+          overflow-hidden (glow może wystawać). */}
       <div
         id="hero-loop"
         data-hero-loop
         aria-hidden="true"
-        className="pointer-events-none relative mx-auto flex aspect-[940/420] w-full max-w-[940px] items-center justify-center"
+        className="pointer-events-none relative mx-auto flex aspect-[760/300] w-full max-w-[760px] items-center justify-center"
       >
         <InfinityLoopStatic />
+        {/* Gate mobilnego canvasa lite (spec v4 §B pkt 3) — sam decyduje o
+            bramkach; na desktopie/RM nie renderuje nic. */}
+        <HeroLoopLite />
       </div>
 
       {/* INFINITY: badge → mono overline z liniami po bokach (.inf-overline

@@ -26,41 +26,55 @@ import type { InfIconName } from '@/components/ui/InfIcons';
 export type InfDekor = {
   /** Kolor kategorii (wchodzi w --tile-c/--card-c). */
   c: string;
+  /**
+   * v4 (spec §PARTIA A pkt 5): JAŚNIEJSZY odcień koloru — fluorescencyjna
+   * paleta kart: cyan #67e8f9, violet #a78bfa, magenta #f472b6, green
+   * #4ade80, amber #fbbf24, blue #60a5fa. Konsument (partia C) podaje go
+   * w --card-c-l (mono podtytuł .inf-card-sub) i różnicuje nim karty
+   * w JEDNYM gridzie. Opcjonalny w TYPIE (lokalne mapy partii C w app/
+   * jeszcze go nie mają), ale WYPEŁNIONY w każdej mapie tego rejestru.
+   */
+  odcien?: string;
   /** @deprecated v3: emoji tylko dla starych konsumentów (partia C) — nowa dekoracja to `ikona` + <InfIcon>. */
   emoji: string;
   /** Nazwa glifu z components/ui/InfIcons.tsx (unikalna per pozycja w obrębie dropdownu/siatki). */
   ikona?: InfIconName;
 };
 
-/** Dekoracja z ikoną wymaganą — nowe mapy v3 (bez pola emoji). */
-export type InfIkonaDekor = { c: string; ikona: InfIconName };
+/** Dekoracja z ikoną wymaganą — nowe mapy v3 (bez pola emoji); odcień jak w InfDekor. */
+export type InfIkonaDekor = { c: string; odcien?: string; ikona: InfIconName };
 
-/** Kategorie usług (klucz = slug usługi; realizacje używają tych samych slugów). */
+/** Kategorie usług (klucz = slug usługi; realizacje używają tych samych slugów).
+ * Odcienie v4: mapowanie bazowy -> jasny (cyan->#67e8f9, violet->#a78bfa,
+ * green->#4ade80, amber->#fbbf24) + rozróżnienie DUBLI w jednym gridzie
+ * paletą spec: strony-www dostają blue #60a5fa (trzeci cyjan w mapie),
+ * agent-rekrutacyjny (baza to już jasny violet) idzie w magentę #f472b6. */
 export const INF_KATEGORIA: Record<string, InfDekor> = {
-  chatboty: { c: '#22d3ee', emoji: '💬', ikona: 'chat-dymek' },
-  voiceboty: { c: '#8b5cf6', emoji: '🎙️', ikona: 'sluchawka-fala' },
-  'agent-rekrutacyjny': { c: '#a78bfa', emoji: '🤝', ikona: 'osoba-check' },
-  automatyzacje: { c: '#10b981', emoji: '⚡', ikona: 'blyskawica' },
-  'dokumenty-faktury': { c: '#f59e0b', emoji: '📄', ikona: 'dokument-skan' },
-  'opieka-ai': { c: '#10b981', emoji: '🛡️', ikona: 'tarcza-serce' },
-  'audyt-ai': { c: '#f59e0b', emoji: '🔍', ikona: 'lupa-wykres' },
-  rozwiazania: { c: '#8b5cf6', emoji: '🧩', ikona: 'puzzle' },
-  'strony-www': { c: '#22d3ee', emoji: '🌐', ikona: 'glob-siatka' },
-  optymalizacja: { c: '#22d3ee', emoji: '📈', ikona: 'wykres-strzalka' },
+  chatboty: { c: '#22d3ee', odcien: '#67e8f9', emoji: '💬', ikona: 'chat-dymek' },
+  voiceboty: { c: '#8b5cf6', odcien: '#a78bfa', emoji: '🎙️', ikona: 'sluchawka-fala' },
+  'agent-rekrutacyjny': { c: '#a78bfa', odcien: '#f472b6', emoji: '🤝', ikona: 'osoba-check' },
+  automatyzacje: { c: '#10b981', odcien: '#4ade80', emoji: '⚡', ikona: 'blyskawica' },
+  'dokumenty-faktury': { c: '#f59e0b', odcien: '#fbbf24', emoji: '📄', ikona: 'dokument-skan' },
+  'opieka-ai': { c: '#10b981', odcien: '#4ade80', emoji: '🛡️', ikona: 'tarcza-serce' },
+  'audyt-ai': { c: '#f59e0b', odcien: '#fbbf24', emoji: '🔍', ikona: 'lupa-wykres' },
+  rozwiazania: { c: '#8b5cf6', odcien: '#a78bfa', emoji: '🧩', ikona: 'puzzle' },
+  'strony-www': { c: '#22d3ee', odcien: '#60a5fa', emoji: '🌐', ikona: 'glob-siatka' },
+  optymalizacja: { c: '#22d3ee', odcien: '#67e8f9', emoji: '📈', ikona: 'wykres-strzalka' },
 };
 
 /** Fallback dla slugów spoza map (nowe wpisy rejestrów). */
 export const INF_KATEGORIA_DEFAULT: Required<InfDekor> = {
   c: 'var(--accent)',
+  odcien: 'var(--accent-hover)', // #67e8f9 — jasny cyjan spójny z paletą odcieni
   emoji: '✨',
   ikona: 'iskry',
 };
 
 /** Typy treści Centrum Wiedzy (karty listingów blog/poradniki/materiały). */
 export const INF_TYP: Record<'poradnik' | 'wpis' | 'material', InfDekor> = {
-  poradnik: { c: '#22d3ee', emoji: '📚', ikona: 'ksiazka' },
-  wpis: { c: '#a78bfa', emoji: '📝', ikona: 'notes-pioro' },
-  material: { c: '#f59e0b', emoji: '🧲', ikona: 'magnes' },
+  poradnik: { c: '#22d3ee', odcien: '#67e8f9', emoji: '📚', ikona: 'ksiazka' },
+  wpis: { c: '#a78bfa', odcien: '#f472b6', emoji: '📝', ikona: 'notes-pioro' },
+  material: { c: '#f59e0b', odcien: '#fbbf24', emoji: '🧲', ikona: 'magnes' },
 };
 
 /**
@@ -68,21 +82,23 @@ export const INF_TYP: Record<'poradnik' | 'wpis' | 'material', InfDekor> = {
  * Glify unikalne w obrębie mapy; kolory z palety kategorii.
  */
 export const INF_PRODUKT: Record<string, InfIkonaDekor> = {
-  'skaner-faktur-ksef': { c: '#f59e0b', ikona: 'dokument-skan' },
-  'app-coachingowa-z-agentami': { c: '#a78bfa', ikona: 'gwiazda-kompas' },
-  'apka-obecnosci-skladek': { c: '#10b981', ikona: 'kalendarz-check' },
-  'centrum-dowodzenia': { c: '#22d3ee', ikona: 'radar' },
+  'skaner-faktur-ksef': { c: '#f59e0b', odcien: '#fbbf24', ikona: 'dokument-skan' },
+  'app-coachingowa-z-agentami': { c: '#a78bfa', odcien: '#f472b6', ikona: 'gwiazda-kompas' },
+  'apka-obecnosci-skladek': { c: '#10b981', odcien: '#4ade80', ikona: 'kalendarz-check' },
+  'centrum-dowodzenia': { c: '#22d3ee', odcien: '#67e8f9', ikona: 'radar' },
 };
 
 /**
  * Narzędzia (klucz = slug z lib/narzedzia) — dropdown "Narzędzia" + hub.
  */
 export const INF_NARZEDZIE: Record<string, InfIkonaDekor> = {
-  'kalkulator-oszczednosci': { c: '#22d3ee', ikona: 'kalkulator' },
-  'kalkulator-procesu': { c: '#10b981', ikona: 'wykres-strzalka' },
-  'test-gotowosci-ai': { c: '#8b5cf6', ikona: 'gwiazda-kompas' },
-  'audyt-strony-ai': { c: '#f59e0b', ikona: 'lupa-wykres' },
-  'generator-promptow': { c: '#a78bfa', ikona: 'iskry' },
+  // Odcienie v4: 5 narzędzi = 5 RÓŻNYCH tonów (grid teasera na home,
+  // partia C) — pełne pokrycie palety bez dubli.
+  'kalkulator-oszczednosci': { c: '#22d3ee', odcien: '#67e8f9', ikona: 'kalkulator' },
+  'kalkulator-procesu': { c: '#10b981', odcien: '#4ade80', ikona: 'wykres-strzalka' },
+  'test-gotowosci-ai': { c: '#8b5cf6', odcien: '#a78bfa', ikona: 'gwiazda-kompas' },
+  'audyt-strony-ai': { c: '#f59e0b', odcien: '#fbbf24', ikona: 'lupa-wykres' },
+  'generator-promptow': { c: '#a78bfa', odcien: '#f472b6', ikona: 'iskry' },
 };
 
 /**
@@ -107,8 +123,8 @@ export const INF_REALIZACJA_IKONA: Record<string, InfIconName> = {
  * ai-radar violet, blog/przemyślenia #a78bfa, materiały amber jak INF_TYP).
  */
 export const INF_WIEDZA: Record<'blog' | 'poradniki' | 'materialy' | 'ai-radar', InfIkonaDekor> = {
-  blog: { c: '#a78bfa', ikona: 'notes-pioro' },
-  poradniki: { c: '#22d3ee', ikona: 'ksiazka' },
-  materialy: { c: '#f59e0b', ikona: 'magnes' },
-  'ai-radar': { c: '#8b5cf6', ikona: 'radar' },
+  blog: { c: '#a78bfa', odcien: '#f472b6', ikona: 'notes-pioro' },
+  poradniki: { c: '#22d3ee', odcien: '#67e8f9', ikona: 'ksiazka' },
+  materialy: { c: '#f59e0b', odcien: '#fbbf24', ikona: 'magnes' },
+  'ai-radar': { c: '#8b5cf6', odcien: '#a78bfa', ikona: 'radar' },
 };

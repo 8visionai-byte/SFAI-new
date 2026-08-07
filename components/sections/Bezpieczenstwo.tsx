@@ -14,31 +14,35 @@ import type { InfIconName } from '@/components/ui/InfIcons';
  */
 /* INFINITY v3 (spec §KARTY): każda karta dostaje UNIKALNĄ ikonę InfIcons +
    kolor kafelka (dekoracja aria-hidden przez --tile-c/--card-c, paleta trasy
-   marki). Ikona/kolor NIE są treścią — teksty t/d 1:1 co do znaku. */
+   marki). Ikona/kolor NIE są treścią — teksty t/d 1:1 co do znaku.
+   v4 (spec §PARTIA C pkt 5): kolory kart przechodzą na FLUORESCENCYJNE
+   ODCIENIE palety v4 (mapowanie baza -> jasny z lib/inf-kategorie:
+   #2b7cff->#60a5fa, #f59e0b->#fbbf24, #22d3ee->#67e8f9, #8b5cf6->#a78bfa)
+   — żywsze karty, każda w JEDNYM gridzie innym tonem. */
 const PUNKTY: ReadonlyArray<{ t: string; d: string; ikona: InfIconName; c: string }> = [
   {
     t: 'Dane zostają w Unii Europejskiej',
     d: 'Przetwarzamy je zgodnie z RODO i AI Act. Bez wysyłania ich w nieznane, bez transferu poza UE bez Twojej wiedzy.',
     ikona: 'glob-siatka',
-    c: '#2b7cff',
+    c: '#60a5fa',
   },
   {
     t: 'Umowa powierzenia danych (DPA)',
     d: 'Podpisujemy umowę powierzenia przetwarzania. Na papierze jest, kto, po co i jak długo przetwarza dane Twoich klientów.',
     ikona: 'dokument-skan',
-    c: '#f59e0b',
+    c: '#fbbf24',
   },
   {
     t: 'Widzisz każdą akcję Agenta',
     d: 'Logujemy, co Agent zrobił. Masz nadzór i ustawiasz granice, a w każdej chwili możesz go zatrzymać. Żadnej czarnej skrzynki.',
     ikona: 'lupa-wykres',
-    c: '#22d3ee',
+    c: '#67e8f9',
   },
   {
     t: 'Klient zawsze wie, że to AI',
     d: 'Agent nie udaje człowieka. Rozmówca od początku wie, że rozmawia z AI, zgodnie z wymogami AI Act.',
     ikona: 'robot',
-    c: '#8b5cf6',
+    c: '#a78bfa',
   },
 ] as const;
 
@@ -66,7 +70,8 @@ export function Bezpieczenstwo() {
         <InfIcon name="tarcza-serce" size={560} />
       </div>
 
-      <div className="max-w-narrow">
+      {/* v4 (wzorzec sekcji z gridem): H2 + opis WYŚRODKOWANE nad siatką kart. */}
+      <div className="mx-auto max-w-narrow text-center">
         <Reveal variant="header">
           <h2 className="text-h2">Czy AI Agent dla firmy jest bezpieczny i zgodny z RODO?</h2>
         </Reveal>

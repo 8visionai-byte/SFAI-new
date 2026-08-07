@@ -1,4 +1,27 @@
-# STATUS — INFINITY v3 „kopia" — NA PRODUKCJI (commit 924803c, 58 plików)
+# STATUS — INFINITY v4 (2026-08-07) — W TOKU (wf_07983546)
+
+Feedback Pawła po v3 (decyzje WPROST): lemniskata do przebudowy na 3D
+„pływające DNA" (płaska = „odrażająca"), ŚCIŚNIĘTA (~300px, nie pół ekranu),
+fluorescencyjna, ANIMOWANA TEŻ NA MOBILE (ZMIANA BUDŻETU: mobile dostaje
+2 lekkie canvasy — lemniskata-lite + voice-aura-lite; DPR 1, bez shadowBlur,
+30fps, pauza IO/hidden; po deployu pomiar PSI, degradacja jeśli <75);
+BUG dropdownów (nachodzą — jeden otwarty naraz); TŁO znikło (diagnoza:
+sekcje home mają solidne bg-bg kryjące fixed-warstwy → tone base=transparent);
+karty: rozbłysk ::after na KAŻDEJ (overflow:hidden), fluorescencja, RÓŻNE
+odcienie per karta, mono podtytuł, narożniki [ ]; STRUKTURA: po hero
+promo-kafelki usług wg SEO (chatboty full + voiceboty/audyt + architekci),
+narzędzia-teaser na home, biała karta cytatów → ciemna, sekcje
+„H2+opis+grid"; voice-blob „Zapytaj AI" (port FlowCore.astro z folderu
+SF AI WWW 10K) zamiast znaku w „Wolisz posłuchać" → link na drugą stronę;
+scramble-text z site.js 10K (nav + tytuły); CTA nav = Hire-Me-style
+(outline→hover wypełnienie). Spec: scratchpad/spec-infinity-v4.md.
+4 partie: A fundament / B lemniskata 3D / C struktura home / D blob+scramble.
+Po nich: scalenie, build, weryfikacja (NOWA karta Chrome przy injection-
+timeout!), deploy, PSI mobile.
+
+---
+
+# STATUS — INFINITY v3 „kopia" — zastąpiony przez v4 (commit 924803c)
 
 Zweryfikowane live: lemniskata ∞ przeplata się (fix mojego autorstwa: nitka
 przesunięta o π pokrywała TEN SAM zbiór punktów środkowosymetrycznego toru —
