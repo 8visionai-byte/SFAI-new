@@ -158,6 +158,11 @@ const elevenFetch = async (apiKey, path, { method = 'GET', body } = {}) => {
     console.error('ElevenLabs API error', method, path.split('?')[0], upstream.status, JSON.stringify(data)?.slice(0, 500));
     const error = new Error(`ElevenLabs ${method} ${path.split('?')[0]} -> HTTP ${upstream.status}`);
     error.status = upstream.status;
+    // DIAGNOSTYKA (tymczasowa, patrz endpoint 502 niżej): treść odpowiedzi
+    // ElevenLabs bez klucza i bez payloadu żądania. Potrzebna, bo logi Vercela
+    // nie są dostępne z tej strony, a bez powodu odmowy naprawa to zgadywanie.
+    error.detail = (JSON.stringify(data) || '').slice(0, 300);
+    error.upstreamPath = path.split('?')[0];
     throw error;
   }
   return data;
@@ -712,6 +717,15 @@ export default async function handler(request, response) {
       return writeJson(response, 502, {
         error: 'Agent głosowy jest chwilowo niedostępny.',
         code: 'elevenlabs_provisioning_failed',
+        /* DIAGNOSTYKA URUCHOMIENIA (do USUNIĘCIA po naprawie głosu):
+           który endpoint ElevenLabs odmówił, z jakim kodem i co odpowiedział.
+           Zero sekretów: klucz nie jest tu nigdzie używany ani logowany. */
+        diag: {
+          sciezka: error?.upstreamPath || null,
+          status: error?.status || null,
+          komunikat: String(error?.message || '').slice(0, 200),
+          odpowiedz: error?.detail || null,
+        },
       });
     }
   }
