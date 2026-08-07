@@ -100,7 +100,15 @@ const UPSTREAM_TIMEOUT_MS = 12_000;
 const GLOBAL_DEADLINE_MS = 40_000;
 
 const RATE_WINDOW_MS = 10 * 60 * 1_000;
-const MAX_SESSIONS_PER_WINDOW = 6;
+/*
+ * Limit startów rozmowy na adres w oknie 10 minut. Podniesiony z 6 do 30
+ * (2026-08-07): przy 6 zwykłe testowanie strony (kilka kliknięć „Rozpocznij
+ * rozmowę", odświeżenia po redeployu) wyczerpywało pulę i front pokazywał
+ * „LIMIT ROZMÓW" zamiast realnego błędu, co maskowało diagnozę uruchomienia.
+ * 30 dalej chroni przed nadużyciem (koszt minut ElevenLabs), a nie przeszkadza
+ * ani nam, ani odwiedzającemu, który po prostu ogląda stronę.
+ */
+const MAX_SESSIONS_PER_WINDOW = 30;
 const sessionBuckets = new Map();
 
 // Klucz wg ustaleń: na Vercelu zmienna nazywa się dokładnie `Elevenlabs`.

@@ -7,7 +7,9 @@ import { getVoiceInstructions, NAV_SECTIONS, NAV_TOOL_NAME } from './_knowledge.
 // rozjazd nazw oznaczałby, że model woła funkcję, której sesja nie zna.
 
 const RATE_WINDOW_MS = 10 * 60 * 1_000;
-const MAX_SESSIONS_PER_WINDOW = 6;
+// Ten sam limit co w elevenlabs-session.mjs (patrz komentarz tam): 6 było za
+// mało na zwykłe testowanie i maskowało prawdziwe błędy komunikatem o limicie.
+const MAX_SESSIONS_PER_WINDOW = 30;
 const sessionBuckets = new Map();
 
 const writeJson = (response, status, body) => {
