@@ -1,4 +1,20 @@
-# STATUS — INFINITY v5 (2026-08-07) — W TOKU (wf_30a5e36f)
+# STATUS — INFINITY v5 — NA PRODUKCJI (commit b6d8e0c, 64 pliki, +5552)
+
+Zweryfikowane: voice agent 1:1 z 10K w hero (blob „Zapytaj AI" → konsola
+„Agent wiedzy firmy" czat/głos, FAB globalny; /api/elevenlabs-session na
+produkcji odpowiada 503 = funkcja działa, CZEKA NA ENV), dropdowny
+przezroczyste (widać stronę pod spodem) z emoji + badge mono po prawej,
+liczniki, walec cytatów, karty AEO, spójne podstrony. Mobile 375: overflow
+0, blur 0. PSI live mobile: **83** / A11y 100 / BP 100 / SEO 100
+(FCP 1,4 s, LCP 4,1 s, TBT 20 ms — najniższy w historii, CLS 0).
+CZEKA NA PAWŁA: w Vercelu projektu sfai-new dodać env z projektu
+website-10k: ELEVENLABS_API_KEY (konieczna; głos nie ruszy bez niej)
++ opcjonalne: ELEVENLABS_VOICE_ID, ELEVENLABS_AGENT_NAME, ELEVENLABS_LLM,
+KNOWLEDGE_DOC_URL → Redeploy. Prompty agenta dopracujemy po uruchomieniu.
+
+---
+
+# STATUS — INFINITY v5 plan (wykonany, wf_30a5e36f)
 
 Feedback Pawła po v4 (dyktando: JAKOŚĆ > TEMPO, sprawdzać przed wdrożeniem):
 1) VOICE AGENT z 10K przenieść 1:1 DO HERO zamiast lemniskaty (pełna
