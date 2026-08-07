@@ -1,4 +1,21 @@
-# STATUS — INFINITY v4 (2026-08-07) — W TOKU (wf_07983546)
+# STATUS — INFINITY v4 — NA PRODUKCJI (commit 800a209, 21 plików)
+
+Zweryfikowane live + lokalnie: lemniskata 3D „pływające DNA" (wspólny moduł
+lib/lemniskata.ts: z-oplot, tilt 18°, projekcja; desktop glow, MOBILE
+HeroLoopLite 2×48 kropek 30fps — nowy budżet Pawła), tło wróciło (Section
+base=transparent — solidne bg kryło fixed-warstwy), dropdown JEDEN naraz,
+karty: sweep ::after wszędzie + narożniki [ ] + fluorescencyjny hover +
+odcienie per karta, PromoUslugi po hero (chatboty FULL + voiceboty/audyt +
+architekci; treść 1:1 z USLUGI), NarzedziaTeaser, ciemna karta cytatów
+(jasna wyspa OUT z home), voice-blob FlowCore (zielona aura „Zapytaj AI" →
+link na żywego voicebota), scramble na nav/tytułach (zasady site.js 1:1),
+CTA nav outline→hover wypełnienie. Mobile 375: overflow 0, 2 canvasy-lite,
+blur 0. PSI live mobile: **84** / A11y 100 / BP 100 / SEO 100 (FCP 1,2 s,
+LCP 4,1 s, TBT 50 ms, CLS 0) — LEPIEJ niż v3 (82) mimo animacji na mobile.
+
+---
+
+# STATUS — INFINITY v4 plan (wykonany, wf_07983546)
 
 Feedback Pawła po v3 (decyzje WPROST): lemniskata do przebudowy na 3D
 „pływające DNA" (płaska = „odrażająca"), ŚCIŚNIĘTA (~300px, nie pół ekranu),
