@@ -1,3 +1,61 @@
+# STATUS — INFINITY v6 — w toku (rozświetlenie + maszyna pisania + wiedza agenta)
+
+Runda v6 = feedback Pawła po v5. Etapy:
+- [DONE] A rozświetlenie kart wg POMIARÓW wzorca infinitytechstack.uk
+  (zmierzone getComputedStyle, nie na oko): .inf-card tło rgba(6,6,12,.5)
+  zamiast solidnego, obwódka bieli 7%, wash 135° w kolorze karty; .inf-tile
+  tło 14% / obwódka 28% / glow 0 0 18px -4px 55%, glif w pełnym kolorze;
+  mono napisy i badge z text-shadow glow; strzałki w kolorze karty.
+- [DONE] B maszyna pisania H1 — NAPRAWIONY START (mechanizm liter nietknięty).
+  Przyczyna zniknięcia efektu: po v5 blob agenta zepchnął H1 tak, że był
+  częściowo widoczny przy załadowaniu, więc stary IntersectionObserver
+  (threshold .25, rootMargin -10%) odpalał pisanie natychmiast po hydration
+  i animacja kończyła się, zanim użytkownik spojrzał. Teraz: widoczny przy
+  starcie → pisanie po 700 ms (z ponownym sprawdzeniem widoczności), poza
+  widokiem → obserwator + zapasowy nasłuch scrolla. Scramble dołożony na 5
+  przyciskach dropdownów. DOWÓD (localhost, próbkowanie co 160 ms):
+  3 litery @169 ms → 6 @326 → 9 @483 → … → 30 @1927 ms, kursor przy ostatniej.
+- [DONE] C wiedza agenta przepisana pod TĘ stronę + ZABEZPIECZENIA.
+  Stara była kopią 1:1 z 10K: opisywała tamte usługi i trasy (404 u nas).
+  Teraz 11 naszych usług, ceny publiczne (1490 / 1990 / 350 zł-h / ryczałty
+  3000-5500-10000), founderzy, miasta — każdy fakt zgrepowany w rejestrach.
+  NAV_MAP i NAV_CLIENT: 24 pozycje, te same id w tej samej kolejności.
+  public/wiedza-agenta.txt = dokument do KNOWLEDGE_DOC_URL.
+- [DONE] D podstrony: przyczyną „starego stylu" był komponent Card
+  renderujący .sf-glass (biel 4% + blur), pominięty przez rozświetlenie.
+  .sf-glass przeszedł na rgba(6,6,12,.62) + biel 7% + wash; .sf-rim-gradient
+  (karta wyróżniona) też — solidny granat #101a30 dawał 4,21:1, czyli
+  PONIŻEJ AA. Tabele cennika, obiekcji i 23 tabele treści na styl katalogowy.
+- [DONE] Audyt adwersaryjny (qa-auditor) — werdykt NO-SHIP, naprawione:
+  * KOLIZJA DWÓCH STRON (najgroźniejsze, znalezione przy weryfikacji audytu):
+    plik przyszedł z 10K razem z nazwą agenta „SFAI Voice Agent", nazwą
+    narzędzia „navigate_to" i prefiksem dokumentów „SFAI Wiedza ". Przy
+    wspólnym ELEVENLABS_API_KEY (jeden workspace) nasz kod (a) adoptowałby
+    agenta 10K bez zmiany promptu, więc nasza wiedza i ZABEZPIECZENIA nigdy
+    by nie zadziałały, (b) PATCH-owałby wspólne narzędzie na nasze sekcje,
+    psując nawigację tamtej stronie, (c) sprzątanie KB SKASOWAŁOBY dokumenty
+    wiedzy tamtej strony. Teraz wszystko zawężone: agent „SimpleFast.ai WWW
+    Agent", narzędzie navigate_to_www (nazwa jedzie do klienta w payloadzie
+    sesji, alias navigate_to zostaje), prefiks „SFAI WWW Wiedza ".
+  * .sf-rim-gradient poniżej AA → migracja tonalna (wyżej).
+  * brak fallbacku rgba przy glow badge; martwa gałąź startu maszyny bez
+    zapasowego wyzwalacza; nieaktualne komentarze o PATCH promptu i #diagnoza.
+- [TODO] deploy + weryfikacja produkcji + PSI + zrzuty dla Pawła.
+
+KOLEJNOŚĆ URUCHOMIENIA GŁOSU (ważna, agent tworzy się RAZ):
+1) deploy (żeby /wiedza-agenta.txt było pod adresem),
+2) w Vercelu projektu sfai-new dodać ELEVENLABS_API_KEY (konieczna)
+   + KNOWLEDGE_DOC_URL=https://www.simplefast.ai/wiedza-agenta.txt
+   (+ opcjonalnie ELEVENLABS_VOICE_ID, ELEVENLABS_LLM),
+3) Redeploy, dopiero potem pierwsza rozmowa głosowa — przy niej kod tworzy
+   agenta z pełną konfiguracją z repo. Późniejsza zmiana wiedzy w repo
+   wymaga skasowania agenta w dashboardzie (kod odtworzy) albo ręcznej
+   edycji promptu, bo dashboard jest źródłem prawdy dla istniejącego agenta.
+
+Raport SEO z danych GSC/Bing: raporty/raport-seo-2026-08-07.md.
+
+---
+
 # STATUS — INFINITY v5 — NA PRODUKCJI (commit b6d8e0c, 64 pliki, +5552)
 
 Zweryfikowane: voice agent 1:1 z 10K w hero (blob „Zapytaj AI" → konsola

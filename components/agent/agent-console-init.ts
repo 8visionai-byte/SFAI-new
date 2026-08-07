@@ -26,6 +26,9 @@ type NavResult =
 type VoiceSessionPayload = {
   provider?: string;
   connection?: Record<string, unknown>;
+  /* Nazwa client toola nawigacji ustalona przez serwer (v6) — pod nią
+     rejestrujemy handler, patrz NAV_TOOL_NAME w api/_knowledge.mjs. */
+  toolName?: string;
   capabilities?: { firstMessageOverride?: boolean; resumeVarInPrompt?: boolean };
   dynamicVariables?: Record<string, string>;
   resumeContextualUpdate?: string;
@@ -422,7 +425,9 @@ export function initAgentConsole(): (() => void) | undefined {
   const fallbackAnswer = (question: string) => {
     const normalized = question.toLocaleLowerCase('pl-PL');
     if (/cen|koszt|budżet|wycen/.test(normalized)) {
-      return 'Cena zależy przede wszystkim od procesu, liczby integracji, ryzyka i zakresu późniejszej opieki. Najpierw warto zrobić krótką diagnozę — po niej można uczciwie określić zakres i budżet: /kontakt/';
+      // Kwoty WYŁĄCZNIE publiczne ze strony (lib/uslugi/audyt-ai, opieka-ai):
+      // Sprint 1490 zł odliczany od wdrożenia; reszta wyceny po diagnozie.
+      return 'Cenę liczymy od wartości, nie od godzin. Najczęściej zaczynamy od Sprintu Diagnostycznego za 1490 zł, który odliczamy od wdrożenia, gdy ruszamy ze współpracą. Dokładne widełki podajemy na bezpłatnej diagnozie: /kontakt';
     }
     if (/voice|telefon|połącze|rozmow/.test(normalized)) {
       return 'Voicebot AI może odbierać połączenia po polsku, umawiać lub zmieniać terminy, potwierdzać wizyty i przekazywać człowiekowi tylko sprawy wymagające decyzji. Projekt zaczyna się od konkretnego call flow i wyjątków.';
@@ -431,7 +436,9 @@ export function initAgentConsole(): (() => void) | undefined {
       return 'Chatbot SimpleFast.ai odpowiada na podstawie zatwierdzonej wiedzy firmy, może kwalifikować leady i przekazywać trudne sprawy człowiekowi. Agent AI idzie krok dalej: wykonuje działania w innych systemach, zamiast kończyć na odpowiedzi.';
     }
     if (/seo|geo|stron|google|chatgpt|perplexity|widocz/.test(normalized)) {
-      return 'Strona pod SEO i AI łączy mocny design z architekturą treści, SEO technicznym, danymi strukturalnymi i GEO. Celem jest widoczność zarówno w wyszukiwarce, jak i w odpowiedziach systemów AI. Więcej: /uslugi/strony-www-seo-ai/';
+      // Trasa i treść z NASZEGO rejestru (lib/uslugi/strony-www): trasa 10K
+      // /uslugi/strony-www-seo-ai/ na tej stronie dawała 404.
+      return 'Budujemy strony widoczne nie tylko w Google, ale i w ChatGPT, Claude, Gemini oraz Perplexity: cała treść w kodzie od razu, ułożona pod cytowanie, szybka. Więcej: /uslugi/strony-www';
     }
     if (/opie|monitor|utrzym|rozw/.test(normalized)) {
       return 'Opieka AI to stały monitoring jakości agentów i automatyzacji, aktualizowanie wiedzy, poprawa wyjątków oraz rozwój integracji. Dzięki temu system po wdrożeniu nie zostaje bez właściciela.';
@@ -535,31 +542,37 @@ export function initAgentConsole(): (() => void) | undefined {
   // WSPÓLNA STAŁA nawigacji po stronie klienta (jedno źródło w tym bundlu).
   // Klucze (id) 1:1 i W TEJ SAMEJ KOLEJNOŚCI co NAV_MAP/NAV_SECTIONS w
   // api/_knowledge.mjs (enum narzędzia navigate_to u obu dostawców głosu).
-  // `anchor` = realne id elementu w DOM, gdy różni się od klucza (miasta).
+  // Spec INFINITY v6 PARTIA C: trasy TEJ strony (rejestr lib/uslugi + app/),
+  // ścieżki bez końcowego slasha (konwencja repo). `anchor` = realne id
+  // elementu w DOM, gdy różni się od klucza (dziś: wszystkie id = kotwice).
   const NAV_CLIENT: Array<{ id: string; path: string; label: string; anchor?: string }> = [
     { id: 'start', path: '/', label: 'strona główna' },
-    { id: 'uslugi', path: '/uslugi/', label: 'lista usług' },
-    { id: 'architekci-wartosci-ai', path: '/uslugi/architekci-wartosci-ai/', label: 'usługa Architekci Wartości AI' },
-    { id: 'chatboty-ai', path: '/uslugi/chatboty-ai/', label: 'usługa Chatboty AI' },
-    { id: 'strony-www-seo-ai', path: '/uslugi/strony-www-seo-ai/', label: 'usługa Strony WWW pod SEO i AI' },
-    { id: 'voiceboty-ai', path: '/uslugi/voiceboty-ai/', label: 'usługa Voiceboty AI' },
-    { id: 'agenci-ai', path: '/uslugi/agenci-ai/', label: 'usługa Agenci AI' },
-    { id: 'automatyzacja-procesow', path: '/uslugi/automatyzacja-procesow/', label: 'usługa Automatyzacja procesów' },
-    { id: 'opieka-ai', path: '/uslugi/opieka-ai/', label: 'usługa Opieka AI' },
-    { id: 'jak-pracujemy', path: '/jak-pracujemy/', label: 'sposób pracy SimpleFast.ai' },
-    { id: 'realizacje', path: '/realizacje/', label: 'realizacje' },
-    { id: 'wiedza', path: '/wiedza/', label: 'baza wiedzy' },
-    { id: 'o-nas', path: '/o-nas/', label: 'zespół SimpleFast.ai' },
-    { id: 'kontakt', path: '/kontakt/', label: 'kontakt i diagnoza' },
-    // Sekcje strony głównej (mode 'show'; id sekcji istnieją w index.astro).
-    { id: 'manifest', path: '/#manifest', label: 'sekcja Nasze podejście (manifest)' },
-    { id: 'przeplyw', path: '/#przeplyw', label: 'sekcja Jeden przepływ (jak działa agent)' },
-    { id: 'filary', path: '/#filary', label: 'sekcja kart Trzy filary wdrożenia (najedź i zobacz)' },
-    { id: 'proces', path: '/#proces', label: 'sekcja Jak pracujemy (proces w 4 krokach)' },
-    { id: 'opieka', path: '/#opieka', label: 'sekcja Twój dział AI (opieka po wdrożeniu)' },
-    { id: 'artykuly', path: '/#artykuly', label: 'sekcja artykułów Co działa w AI dla firm' },
-    { id: 'miasta', path: '/#cities-physics', label: 'sekcja mapy Polski (miasta w bąbelkach)', anchor: 'cities-physics' },
-    { id: 'diagnoza', path: '/#diagnoza', label: 'stopka z wezwaniem do kontaktu' },
+    { id: 'uslugi', path: '/uslugi', label: 'lista usług' },
+    { id: 'chatboty', path: '/uslugi/chatboty', label: 'usługa Chatboty AI' },
+    { id: 'voiceboty', path: '/uslugi/voiceboty', label: 'usługa Voiceboty AI' },
+    { id: 'audyt-ai', path: '/uslugi/audyt-ai', label: 'usługa Audyt AI (Sprint Diagnostyczny)' },
+    { id: 'automatyzacje', path: '/uslugi/automatyzacje', label: 'usługa Automatyzacja procesów' },
+    { id: 'agent-rekrutacyjny', path: '/uslugi/agent-rekrutacyjny', label: 'usługa Agent rekrutacyjny AI' },
+    { id: 'dokumenty-faktury', path: '/uslugi/dokumenty-faktury', label: 'usługa Automatyzacja dokumentów i faktur (OCR, KSeF)' },
+    { id: 'rozwiazania', path: '/uslugi/rozwiazania', label: 'usługa Indywidualne rozwiązania AI (aplikacje i wtyczki)' },
+    { id: 'opieka-ai', path: '/uslugi/opieka-ai', label: 'usługa Opieka AI' },
+    { id: 'optymalizacja', path: '/uslugi/optymalizacja', label: 'usługa Pozycjonowanie pod AI (GEO)' },
+    { id: 'strony-www', path: '/uslugi/strony-www', label: 'usługa Strony WWW pod Google i AI' },
+    { id: 'architekci-wartosci-ai', path: '/uslugi/architekci-wartosci-ai', label: 'model Architekci Wartości AI' },
+    { id: 'produkty', path: '/produkty', label: 'gotowe produkty' },
+    { id: 'realizacje', path: '/realizacje', label: 'realizacje' },
+    { id: 'narzedzia', path: '/narzedzia', label: 'bezpłatne narzędzia' },
+    { id: 'wiedza', path: '/wiedza', label: 'Centrum Wiedzy' },
+    { id: 'o-nas', path: '/o-nas', label: 'zespół SimpleFast.ai' },
+    { id: 'kontakt', path: '/kontakt', label: 'kontakt i diagnoza' },
+    // Sekcje strony głównej (mode 'show'; realne id w components/sections:
+    // Problem #problem, ZyweDemo #demo, BranzeDemo #branze,
+    // NarzedziaTeaser #narzedzia-teaser, FinalneCTA #diagnoza).
+    { id: 'problem', path: '/#problem', label: 'sekcja Problem (gdzie ucieka czas)' },
+    { id: 'demo', path: '/#demo', label: 'sekcja Żywe demo agenta' },
+    { id: 'branze', path: '/#branze', label: 'sekcja Branże (powtarzalna robota per branża)' },
+    { id: 'narzedzia-teaser', path: '/#narzedzia-teaser', label: 'sekcja Narzędzia (zajawka na stronie głównej)' },
+    { id: 'diagnoza', path: '/#diagnoza', label: 'sekcja finalnego CTA z formularzem diagnozy' },
   ];
   // Mapy pochodne (kontrakt jak dotąd: klucz -> ścieżka / etykieta / kotwica DOM).
   const NAV_TARGETS: Record<string, string> = Object.fromEntries(NAV_CLIENT.map((entry) => [entry.id, entry.path]));
@@ -596,8 +609,12 @@ export function initAgentConsole(): (() => void) | undefined {
   };
 
   // Znajdź cel scrolla na BIEŻĄCEJ stronie: element po kotwicy DOM z NAV_ANCHORS
-  // (dla sekcji strony głównej to realne id sekcji; #diagnoza to stopka obecna
-  // na KAŻDEJ stronie) albo karta usługi po linku wewnątrz #main.
+  // (realne id sekcji strony głównej) albo karta usługi po linku wewnątrz #main.
+  // UWAGA (sprostowanie v6): wszystkie nasze kotwice, w tym #diagnoza (sekcja
+  // FinalneCTA), żyją WYŁĄCZNIE na stronie głównej — poprzedni opis mówił, że
+  // #diagnoza jest w stopce każdej strony, co u nas nieprawda. Na podstronie
+  // lookup nie znajdzie celu i nawigacja zejdzie na przejście cross-page, czyli
+  // zachowanie poprawne (tam sekcji po prostu nie ma).
   // Lookup po linku działa TYLKO na stronie głównej (karty usług z opisami);
   // na podstronach link do celu to zwykle przycisk CTA, a nie treść — wtedy
   // lepsze jest przejście na podstronę.
@@ -685,7 +702,10 @@ export function initAgentConsole(): (() => void) | undefined {
     if (!Array.isArray(output) || !voiceChannel) return;
     for (const rawItem of output) {
       const item = rawItem as FunctionCallItem;
-      if (item?.type !== 'function_call' || item.name !== 'navigate_to' || !item.call_id) continue;
+      /* Nazwa funkcji nawigacji jest zawężona dla tej strony i konfigurowalna
+         po stronie serwera (NAV_TOOL_NAME), a fallback OpenAI definiuje ją per
+         sesja — dlatego dopasowanie po prefiksie, nie po pełnej nazwie. */
+      if (item?.type !== 'function_call' || !String(item.name || '').startsWith('navigate_to') || !item.call_id) continue;
       let args: { section?: unknown; mode?: unknown } = {};
       try { args = JSON.parse(item.arguments || '{}') as { section?: unknown; mode?: unknown }; } catch {}
       const result = performNavigation(args.section, args.mode);
@@ -787,6 +807,9 @@ export function initAgentConsole(): (() => void) | undefined {
       // rozmowy, nie w głównym bundlu każdej strony.
       const { Conversation } = await import('@elevenlabs/client');
       if (!isVoiceSessionActive(generation)) return true;
+      // Jeden handler nawigacji pod obiema nazwami narzędzia (patrz clientTools).
+      const navigateClientTool = async (parameters: { section?: unknown; mode?: unknown }) =>
+        handleElevenNavigate(parameters, generation);
       // Opcje sesji budowane 1:1 ze źródłem; JEDEN cast na typ SDK, bo
       // session.connection przychodzi z JSON-a (runtime-owo: conversationToken
       // dla WebRTC albo signedUrl dla WebSocket — dokładnie jak w 10K).
@@ -799,8 +822,16 @@ export function initAgentConsole(): (() => void) | undefined {
         // {{resume_note}} w promptcie agenta (endpoint nie wysyła już pełnego
         // promptu per sesja — dieta promptu pod niskie TTFT).
         ...(session.dynamicVariables ? { dynamicVariables: session.dynamicVariables } : {}),
+        /* Client tool nawigacji rejestrowany POD NAZWĄ Z SERWERA (v6): nazwa
+           narzędzia jest zawężona dla tej strony, bo narzędzia ElevenLabs są
+           globalne dla workspace'u i kolidowały z drugim serwisem (patrz
+           NAV_TOOL_NAME w api/_knowledge.mjs). Klucz „navigate_to" zostaje jako
+           alias — agent utworzony przed tą zmianą dalej trafia w handler. */
         clientTools: {
-          navigate_to: async (parameters: { section?: unknown; mode?: unknown }) => handleElevenNavigate(parameters, generation),
+          navigate_to: navigateClientTool,
+          ...(session.toolName && session.toolName !== 'navigate_to'
+            ? { [session.toolName]: navigateClientTool }
+            : {}),
         },
         onModeChange: ({ mode }: { mode: string }) => {
           if (isVoiceSessionActive(generation)) handleElevenModeChange(mode);

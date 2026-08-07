@@ -4,6 +4,7 @@ import {
   getRemoteKnowledgeText,
   NAV_MAP,
   NAV_SECTIONS,
+  NAV_TOOL_NAME,
 } from './_knowledge.mjs';
 
 /*
@@ -49,7 +50,18 @@ import {
  */
 
 const API_BASE = 'https://api.elevenlabs.io';
-const AGENT_NAME = process.env.ELEVENLABS_AGENT_NAME?.trim() || 'SFAI Voice Agent';
+/*
+ * NAZWA AGENTA — własna dla TEJ strony (v6, naprawa kolizji dwóch serwisów).
+ * Plik przyszedł jako kopia 1:1 z projektu 10K, razem z nazwą „SFAI Voice
+ * Agent". Przy wspólnym kluczu ELEVENLABS_API_KEY (jeden workspace) kod
+ * znajdowałby po tej nazwie agenta TAMTEJ strony i — zgodnie z regułą
+ * WŁASNOŚĆ KONFIGURACJI niżej — adoptował go bez zmiany promptu. Skutek:
+ * nasza wiedza o firmie i sekcja ZABEZPIECZENIA nigdy nie trafiłyby do
+ * agenta głosowego, a rozmówca słyszałby ofertę i trasy drugiej strony.
+ * Własna nazwa = własny agent, tworzony przy pierwszej sesji z pełną
+ * konfiguracją z tego repo. ELEVENLABS_AGENT_NAME dalej nadpisuje.
+ */
+const AGENT_NAME = process.env.ELEVENLABS_AGENT_NAME?.trim() || 'SimpleFast.ai WWW Agent';
 // Voice ID to identyfikator publiczny (nie sekret). Env ELEVENLABS_VOICE_ID nadpisuje.
 const DEFAULT_VOICE_ID = 'Bz1e1clEKwgN71Vx7cxj';
 /*
@@ -68,9 +80,21 @@ const FIRST_MESSAGE = 'Cześć, jestem głosową asystentką SimpleFast AI. W cz
 // Wartość domyślna dynamic variable {{resume_note}} (sekcja "Kontekst
 // wznowienia" w promptcie agenta), gdy sesja NIE jest wznowieniem.
 const RESUME_NOTE_DEFAULT = 'Brak. To początek zupełnie nowej rozmowy.';
-const TOOL_NAME = 'navigate_to';
-// Prefiks nazw dokumentów natywnej knowledge base; po nim hash treści.
-const KB_DOC_PREFIX = 'SFAI Wiedza ';
+/*
+ * Nazwa narzędzia nawigacji — wspólna stała z _knowledge.mjs, żeby definicja
+ * narzędzia, prompt agenta i client tool w przeglądarce nie mogły się rozjechać
+ * (narzędzia ElevenLabs są globalne dla workspace'u — patrz komentarz przy
+ * NAV_TOOL_NAME).
+ */
+const TOOL_NAME = NAV_TOOL_NAME;
+/*
+ * Prefiks nazw dokumentów natywnej knowledge base; po nim hash treści.
+ * ZAWĘŻONY dla tej strony (v6): sprzątanie starych wersji KASUJE wszystkie
+ * dokumenty o tym prefiksie poza aktualnym (staleKbIds niżej). Przy wspólnym
+ * kluczu API i prefiksie z 10K („SFAI Wiedza ") nasza sesja usunęłaby bazę
+ * wiedzy TAMTEJ strony. Własny prefiks = własna przestrzeń dokumentów.
+ */
+const KB_DOC_PREFIX = 'SFAI WWW Wiedza ';
 const UPSTREAM_TIMEOUT_MS = 12_000;
 // Twardy limit łączny na provisioning+token w jednym requeście (patrz raceDeadline).
 const GLOBAL_DEADLINE_MS = 40_000;
@@ -766,6 +790,10 @@ export default async function handler(request, response) {
   return writeJson(response, 200, {
     provider: 'elevenlabs',
     connection,
+    // Nazwa client toola nawigacji (zero sekretów, zwykły identyfikator
+    // funkcji). Klient rejestruje handler POD TĄ nazwą, więc zmiana
+    // ELEVENLABS_TOOL_NAME nie wymaga przebudowy frontu — patrz NAV_TOOL_NAME.
+    toolName: TOOL_NAME,
     // Diagnostyka dla klienta (zero sekretów): co realnie wolno tej sesji.
     capabilities: {
       firstMessageOverride: caps.firstMessageOverride,

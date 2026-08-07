@@ -65,10 +65,9 @@ function PromoKarta({ usluga, full = false }: { usluga: Usluga; full?: boolean }
         {/* Wiersz dekoracji: kafelek ikony + mono overline slugu w odcieniu
             + strzałka (widoczna na hover karty; mobile zawsze). */}
         <span className="flex items-center gap-3">
-          {/* v5 (spec §3 KAFELKI) — hover ikony robi CSS partii B w globals.
-              CSS DO DOPISANIA (partia B): .inf-card:hover .inf-tile
-              { transform: rotate(-15deg) scale(1.15); filter: brightness(1.35); }
-              (transition .3s niesie baza .inf-tile; RM: bez transform). */}
+          {/* v5 (spec §3 KAFELKI) — hover ikony robi CSS w globals; kontrakt
+              SCALONY (koniec app/globals.css): .inf-card:hover .inf-tile =
+              rotate(-15deg) scale(1.15) + brightness(1.35); RM: bez transform. */}
           <span
             aria-hidden="true"
             className="inf-tile"

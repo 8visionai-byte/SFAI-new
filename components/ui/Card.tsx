@@ -11,8 +11,11 @@ import { cn } from '@/lib/cn';
  *  - highlight   : wyróżniona (plan "Najczęściej wybierane") — gradientowy rim + aura
  *
  * ŚWIAT B (ciemna pracownia, makieta zrodla/makiety-b/4-oferta.png): shell kart
- * to SZKŁO (.sf-glass w globals.css — biel 4% na granacie, hairline, światło od
- * góry; blur wyłącznie desktop). Wariant highlight = .sf-rim-gradient (obrys
+ * to SZKŁO (.sf-glass w globals.css; blur wyłącznie desktop). INFINITY v6
+ * („naczynia połączone", spec §PARTIA D): .sf-glass mówi już tym samym językiem
+ * co .inf-card — tafla w tonie tła rgba(6,6,12,.62), obwódka bieli 7%, wash
+ * w kolorze karty (--card-c) i hover w odcieniu; BEZ narożników [ ] i sweepa
+ * (sygnatura kart-bohaterów). Wariant highlight = .sf-rim-gradient (obrys
  * gradientem trasy + miękka aura za kartą — środkowa karta cennika z makiety).
  * NIE dokładać utility tła (bg-…) ani ramki (border-…) na elemencie z tymi
  * klasami — definiują własne tło i krawędź.

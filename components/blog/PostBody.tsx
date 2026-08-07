@@ -53,15 +53,24 @@ function BlokRender({ blok }: { blok: Blok }) {
     case 'tabela': {
       const [naglowekWiersz, ...wierszeDanych] = [blok.naglowki, ...blok.wiersze];
       return (
-        <div className="overflow-x-auto rounded-lg border border-border">
+        /* INFINITY v6 (spec §PARTIA D zad. 2): tabela wpisu w tym samym języku
+           co tabele home i usług — bez pudełka z ramką, nagłówki mono
+           .inf-overline (AA: --fg-muted zamiast dekoracyjnego --fg-subtle),
+           kreska rozdziału border-strong, wiersze z hoverem. Struktura
+           semantyczna i treść komórek 1:1. */
+        <div className="overflow-x-auto">
           <table className="w-full min-w-[36rem] border-collapse text-left text-body-sm">
             <thead>
-              <tr className="border-b border-border bg-surface">
+              <tr className="border-b border-border-strong">
                 {(naglowekWiersz ?? []).map((komorka, i) => (
                   <th
                     key={i}
                     scope="col"
-                    className="px-4 py-3 font-semibold text-fg-subtle"
+                    className={
+                      i === 0
+                        ? 'inf-overline py-3 pr-4 align-bottom'
+                        : 'inf-overline px-4 py-3 align-bottom'
+                    }
                   >
                     {komorka}
                   </th>
@@ -70,18 +79,21 @@ function BlokRender({ blok }: { blok: Blok }) {
             </thead>
             <tbody>
               {wierszeDanych.map((wiersz, ri) => (
-                <tr key={ri} className="border-b border-border last:border-b-0">
+                <tr
+                  key={ri}
+                  className="border-b border-border align-top transition-colors duration-fast last:border-b-0 hover:bg-bg-subtle"
+                >
                   {wiersz.map((komorka, ci) =>
                     ci === 0 ? (
                       <th
                         key={ci}
                         scope="row"
-                        className="px-4 py-3 align-top font-medium text-fg"
+                        className="py-4 pr-4 font-semibold text-fg"
                       >
                         {komorka}
                       </th>
                     ) : (
-                      <td key={ci} className="px-4 py-3 align-top text-fg-muted">
+                      <td key={ci} className="px-4 py-4 text-fg-muted">
                         {komorka}
                       </td>
                     )

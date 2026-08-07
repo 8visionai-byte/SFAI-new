@@ -1,8 +1,10 @@
 import { createHash } from 'node:crypto';
-import { getVoiceInstructions, NAV_SECTIONS } from './_knowledge.mjs';
+import { getVoiceInstructions, NAV_SECTIONS, NAV_TOOL_NAME } from './_knowledge.mjs';
 
-// Sekcje narzędzia navigate_to: wspólna mapa NAV_MAP/NAV_SECTIONS w _knowledge.mjs
-// (jedno źródło prawdy dla ElevenLabs i tego fallbacku OpenAI).
+// Sekcje narzędzia nawigacji: wspólna mapa NAV_MAP/NAV_SECTIONS w _knowledge.mjs
+// (jedno źródło prawdy dla ElevenLabs i tego fallbacku OpenAI). NAZWA narzędzia
+// też jest wspólna (NAV_TOOL_NAME) — prompt głosowy opisuje ją po nazwie, więc
+// rozjazd nazw oznaczałby, że model woła funkcję, której sesja nie zna.
 
 const RATE_WINDOW_MS = 10 * 60 * 1_000;
 const MAX_SESSIONS_PER_WINDOW = 6;
@@ -76,7 +78,7 @@ export default async function handler(request, response) {
       tools: [
         {
           type: 'function',
-          name: 'navigate_to',
+          name: NAV_TOOL_NAME,
           description: 'Pokaż użytkownikowi sekcję serwisu SimpleFast.ai na bieżącej stronie (mode "show", rozmowa trwa dalej) albo otwórz podstronę (mode "open"). Używaj zawsze, gdy rozmówca prosi, aby coś pokazać, gdzieś go przenieść albo pyta, gdzie coś znaleźć.',
           parameters: {
             type: 'object',

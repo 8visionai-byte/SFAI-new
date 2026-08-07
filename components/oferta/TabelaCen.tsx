@@ -89,21 +89,30 @@ export function TabelaCen() {
           </p>
         </Reveal>
 
+        {/* INFINITY v6 (spec §PARTIA D zad. 2): cennik w tym samym języku co
+            tabela porównawcza home (Rozwiazanie) i PorownanieTabela usług —
+            karta katalogowa bez pudełka z ramką: nagłówki kolumn mono
+            .inf-overline, kolumnę kluczową (Cena) trzyma 1px kreska akcentowa
+            i mono nagłówek w akcencie, wiersze z hoverem bg-bg-subtle.
+            Mobile bez zmian: overflow-x-auto na min-w-[36rem]. Treść 1:1. */}
         <Reveal delay={0.1}>
-          <div className="mt-8 overflow-x-auto rounded-lg border border-border">
+          <div className="mt-8 overflow-x-auto">
             <table className="w-full min-w-[36rem] border-collapse text-left text-body-sm">
               <caption className="sr-only">
                 Pełny cennik usług, od najtańszej do najdroższej
               </caption>
               <thead>
-                <tr className="border-b border-border bg-surface">
-                  <th scope="col" className="px-4 py-3 font-semibold text-fg-muted">
+                <tr className="border-b border-border-strong">
+                  <th scope="col" className="inf-overline py-3 pr-4 align-bottom">
                     Krok
                   </th>
-                  <th scope="col" className="px-4 py-3 font-semibold text-brand">
+                  <th
+                    scope="col"
+                    className="inf-overline border-l border-border-accent px-4 py-3 align-bottom text-accent"
+                  >
                     Cena
                   </th>
-                  <th scope="col" className="px-4 py-3 font-semibold text-fg-muted">
+                  <th scope="col" className="inf-overline px-4 py-3 align-bottom">
                     Co zawiera
                   </th>
                 </tr>
@@ -112,12 +121,9 @@ export function TabelaCen() {
                 {POZYCJE.map((p) => (
                   <tr
                     key={p.nazwa}
-                    className="border-b border-border last:border-b-0"
+                    className="border-b border-border align-top transition-colors duration-fast last:border-b-0 hover:bg-bg-subtle"
                   >
-                    <th
-                      scope="row"
-                      className="px-4 py-3 align-top font-medium text-fg"
-                    >
+                    <th scope="row" className="py-4 pr-4 font-semibold text-fg">
                       <span className="block">{p.nazwa}</span>
                       {p.tag ? (
                         <Badge variant="neutral" className="mt-2">
@@ -125,12 +131,10 @@ export function TabelaCen() {
                         </Badge>
                       ) : null}
                     </th>
-                    <td className="whitespace-nowrap px-4 py-3 align-top font-semibold tabular-nums text-fg">
+                    <td className="whitespace-nowrap border-l border-border-accent px-4 py-4 font-semibold tabular-nums text-fg">
                       {p.cena}
                     </td>
-                    <td className="px-4 py-3 align-top text-fg-muted">
-                      {p.cofazwiera}
-                    </td>
+                    <td className="px-4 py-4 text-fg-muted">{p.cofazwiera}</td>
                   </tr>
                 ))}
               </tbody>

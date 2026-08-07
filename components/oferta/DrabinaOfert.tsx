@@ -112,8 +112,14 @@ export function DrabinaOfert() {
               className="h-full"
             >
               <div className="flex flex-wrap items-center gap-3">
+                {/* INFINITY v6 (spec §PARTIA D zad. 2 — „kafle ikon z glow"):
+                    znacznik szczebla przechodzi z płaskiej pigułki bg-accent-soft
+                    na kafelek .inf-tile z globals (ten sam mechanizm co numery
+                    kroków na home i w KrokiJakToDziala usług): tło i obwódka
+                    w kolorze akcentu + poświata. Etykieta L0..L5 zostaje
+                    dekoracją (aria-hidden) — znaczenie niesie nazwa szczebla. */}
                 <span
-                  className="flex h-[36px] min-w-[36px] items-center justify-center rounded-full bg-accent-soft px-2 font-display text-body-sm font-semibold text-accent-hover"
+                  className="inf-tile font-display text-body-sm font-semibold"
                   aria-hidden="true"
                 >
                   {s.poziom}

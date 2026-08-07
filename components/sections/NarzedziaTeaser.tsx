@@ -57,12 +57,9 @@ export function NarzedziaTeaser() {
                 <span className="flex items-center gap-2.5">
                   {/* v5 (spec §3 KAFELKI): pulsująca kropka statusu PRZED
                       .inf-card-sub, kolor odcienia karty (--card-c-l).
-                      CSS DO DOPISANIA (partia B, globals): .inf-sub-dot =
-                      kropka 8px (border-radius 999px, flex:none), background
-                      var(--card-c-l, var(--card-c, var(--accent))), glow +
-                      animacja pulsu jak .inf-ask-dot (infAskPulse w kolorze
-                      karty); RM: bez animacji. Bez CSS span jest pusty i
-                      niewidoczny — bezpieczna degradacja. */}
+                      Kontrakt SCALONY (koniec app/globals.css): .inf-sub-dot =
+                      kropka 8px w kolorze karty + glow + puls infAskPulse;
+                      RM: bez animacji. */}
                   <span aria-hidden="true" className="inf-sub-dot" />
                   <span className="inf-card-sub">{n.etykieta}</span>
                   {/* v5 (spec §3 KAFELKI): strzałka hover w KOLORZE karty —

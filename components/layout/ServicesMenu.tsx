@@ -3,6 +3,7 @@
 import { useEffect, useRef, type CSSProperties } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { ScrambleText } from '@/components/motion/ScrambleText';
 import type { NavDropdownData, NavDropdownItem } from './nav-data';
 
 /**
@@ -146,7 +147,10 @@ export function NavDropdown({
         aria-current={active ? 'true' : undefined}
         className="inf-nav-link"
       >
-        {data.label}
+        {/* v6 (spec §PARTIA B pkt 2): etykieta dekoduje się jak zwykłe linki
+            nav (HeaderClient) — trigger to CAŁY przycisk (closest('a, button')
+            w ScrambleText), chevron zostaje POZA spanem. */}
+        <ScrambleText>{data.label}</ScrambleText>
         <svg
           width="14"
           height="14"

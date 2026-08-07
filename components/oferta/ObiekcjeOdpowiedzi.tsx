@@ -61,18 +61,26 @@ export function ObiekcjeOdpowiedzi() {
           </p>
         </Reveal>
 
+        {/* INFINITY v6 (spec §PARTIA D zad. 2): ten sam język tabeli co home
+            (Rozwiazanie) i PorownanieTabela usług — bez pudełka z ramką,
+            nagłówki mono .inf-overline, kolumnę „jak jest naprawdę" trzyma
+            1px kreska akcentowa + nagłówek w akcencie, wiersze z hoverem.
+            Mobile: overflow-x-auto na min-w-[36rem]. Treść 1:1. */}
         <Reveal delay={0.1}>
-          <div className="mt-8 overflow-x-auto rounded-lg border border-border">
+          <div className="mt-8 overflow-x-auto">
             <table className="w-full min-w-[36rem] border-collapse text-left text-body-sm">
               <caption className="sr-only">
                 Najczęstsze obiekcje i odpowiedzi
               </caption>
               <thead>
-                <tr className="border-b border-border bg-surface">
-                  <th scope="col" className="px-4 py-3 font-semibold text-fg-muted">
+                <tr className="border-b border-border-strong">
+                  <th scope="col" className="inf-overline py-3 pr-4 align-bottom">
                     Co myślisz
                   </th>
-                  <th scope="col" className="px-4 py-3 font-semibold text-brand">
+                  <th
+                    scope="col"
+                    className="inf-overline border-l border-border-accent px-4 py-3 align-bottom text-accent"
+                  >
                     Jak jest naprawdę
                   </th>
                 </tr>
@@ -81,15 +89,17 @@ export function ObiekcjeOdpowiedzi() {
                 {WIERSZE.map((w) => (
                   <tr
                     key={w.obiekcja}
-                    className="border-b border-border last:border-b-0"
+                    className="border-b border-border align-top transition-colors duration-fast last:border-b-0 hover:bg-bg-subtle"
                   >
                     <th
                       scope="row"
-                      className="w-[14rem] px-4 py-3 align-top font-medium text-fg"
+                      className="w-[14rem] py-4 pr-4 font-semibold text-fg"
                     >
                       „{w.obiekcja}”
                     </th>
-                    <td className="px-4 py-3 align-top text-fg-muted">
+                    {/* Kolumna „wygrana" 1:1 jak na home: font-medium + --fg
+                       (nie muted) — to ona niesie odpowiedź, nie obiekcję. */}
+                    <td className="border-l border-border-accent px-4 py-4 font-medium text-fg">
                       {w.odpowiedz}
                     </td>
                   </tr>

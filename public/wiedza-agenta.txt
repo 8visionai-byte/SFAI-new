@@ -1,0 +1,103 @@
+BAZA WIEDZY SIMPLEFAST.AI (dokument faktów dla agenta; wszystkie informacje pochodzą z treści opublikowanych na www.simplefast.ai)
+
+O FIRMIE
+SimpleFast.ai to Architekt AI dla polskich małych i średnich firm. Budujemy AI Agentów, nie chatboty: Agent AI działa, nie tylko gada. Zakres: automatyzacje, chatboty, voiceboty, agenci AI, aplikacje i wtyczki na zamówienie oraz strony www widoczne w Google i w odpowiedziach AI.
+Firmę prowadzi dwóch founderów. Paweł Pieloch jest Architektem AI full-stack i twarzą firmy: projektuje i stawia rozwiązania end to end, to z nim rozmawia się na diagnozie. Marcin Karpeta jest współzałożycielem: prowadzi firmę razem z Pawłem, pilnuje relacji z klientem, dowiezienia projektu i opieki po wdrożeniu. Poznali się na szkoleniu, na którym razem się uczyli; firmę założył Paweł, teraz prowadzą ją razem.
+Siedziba: Pisz (warmińsko-mazurskie), biura w Gubinie i Strzegomiu. Pracujemy w całej Polsce, zdalnie i na miejscu. Dane klientów zostają w Unii Europejskiej, przetwarzane zgodnie z RODO i AI Act; podpisujemy umowę powierzenia danych.
+Znak firmy to cyrkiel (divider): narzędzie, którym architekt kreśli plan, a kapitan odmierza kroki na mapie; z jego nóg i krzywej składają się litery SF.
+Wartości: 1) AI nie zastępuje ludzi, AI zastępuje to, co ich zatrzymuje. 2) Sprzedajemy efekt, nie narzędzia. 3) Mówimy wprost, też kiedy nie warto.
+
+USŁUGI
+
+1. Audyt AI firmy (Sprint Diagnostyczny), adres: /uslugi/audyt-ai
+Płatny audyt za 1490 zł: rozkładamy procesy firmy na czynniki i pokazujemy, gdzie AI da realny zysk, a gdzie to przepalanie kasy. Efekt: Action Plan, czyli mapa oszczędności czasu z konkretnymi miejscami do automatyzacji, ułożona od największego zwrotu. Kwota 1490 zł jest odliczana od kosztu wdrożenia, gdy klient decyduje się na współpracę; jeśli nie wdraża, Action Plan zostaje u niego. Bez abonamentu i ukrytych kosztów.
+
+2. Chatbot AI dla firmy, adres: /uslugi/chatboty
+Asystent tekstowy, który odpowiada klientom na stronie i w komunikatorach przez całą dobę: tłumaczy ofertę, podaje ceny i godziny, zbiera leady, także wieczorem i w weekend. Uczony na wiedzy firmy (oferta, cennik, najczęstsze pytania), odpowiada po polsku i w tonie klienta. Nie wymyśla: gdy nie zna odpowiedzi, mówi to wprost i przekazuje sprawę człowiekowi. Klient zawsze wie, że rozmawia z AI. Chatbot to pierwszy krok do Agenta, który dodatkowo umawia wizyty i zapisuje je w kalendarzu. Wdrożenie liczone w dniach, nie miesiącach.
+
+3. Voicebot dla firmy, adres: /uslugi/voiceboty
+Bot telefoniczny (głosowy), który odbiera telefon 24/7, rozmawia naturalnie po polsku i załatwia sprawę: umawia wizytę i zapisuje ją w kalendarzu, przyjmuje zgłoszenie, odpowiada na częste pytania, oddzwania do klientów, którzy się nie dodzwonili. Po rozmowie wysyła krótkie podsumowanie. Trudne sprawy przekazuje dalej: bierze kontakt i mówi, że firma oddzwoni. To nie nagranie ani menu z wciskaniem klawiszy. Voicebot na początku rozmowy informuje, że jest asystentem AI (wymóg AI Act). Koszt ma zwykle dwie części: jednorazowe wdrożenie oraz koszt działania zależny od liczby rozmów.
+
+4. Agent AI do rekrutacji i pierwszego kontaktu, adres: /uslugi/agent-rekrutacyjny
+Cyfrowy pracownik pierwszej linii rekrutacji: zbiera CV z formularza i skrzynki, czyta je pod kryteria klienta i robi wstępny scoring, odpowiada kandydatom na pytania o ofertę, etapy i widełki, umawia rozmowy w kalendarzu i przygotowuje notatkę dla rekrutera. Agent nie odrzuca nikogo sam; selekcję i decyzję o zatrudnieniu zawsze podejmuje człowiek. Dane kandydatów przetwarzane zgodnie z RODO, w Unii Europejskiej. Najczęściej start od Sprintu Diagnostycznego za 1490 zł odliczanego od wdrożenia.
+
+5. Automatyzacja procesów w firmie z AI, adres: /uslugi/automatyzacje
+System przejmuje powtarzalną robotę, którą dziś robi człowiek: przepisywanie danych między mailem, arkuszem i fakturą, wysyłanie potwierdzeń, pilnowanie terminów, raporty. Łączymy narzędzia, których klient już używa (poczta, arkusze, CRM, fakturowanie, kalendarz, komunikatory) w jeden proces działający sam. Klient ustawia zasady i granice, widzi każdy krok i może zatrzymać proces w każdej chwili. Zaczynamy od jednego procesu, który boli najbardziej; wdrożenie w dni, nie miesiące. Automatyzacja zdejmuje z zespołu powtarzalną robotę, a nie ludzi.
+
+6. Automatyzacja dokumentów i faktur (OCR, KSeF), adres: /uslugi/dokumenty-faktury
+Automat odbiera fakturę z maila, folderu albo zdjęcia, odczytuje ją OCR-em (skan, PDF, zdjęcie z telefonu) i wyciąga dane: sprzedawcę, NIP, numer, daty, kwoty netto, VAT i brutto. Przypisuje koszt do kategorii według planu kont, wpisuje fakturę do arkusza i programu księgowego, a potem przygotowuje eksport do KSeF. Faktury z błędem albo nietypowe odkłada do akceptacji człowieka, zamiast wpisywać w ciemno. Najjaśniejszy zysk widzą biura rachunkowe: faktury klientów lecą do Excela, do księgowości i do KSeF automatem, miesiąc po miesiącu. Start od Sprintu Diagnostycznego za 1490 zł odliczanego od wdrożenia.
+
+7. Opieka AI (utrzymanie i rozwój automatyzacji), adres: /uslugi/opieka-ai
+Stała opieka nad agentami i automatyzacjami: monitoring (o awarii wiemy my, a nie klient końcowy), poprawki promptów, łatanie integracji po zmianach u dostawców, rozwój o nowe automatyzacje, audyty i optymalizacje. Pod koniec miesiąca klient dostaje raport: co działało, co poprawiliśmy, co rozwinęliśmy i co proponujemy dalej. Praca na ryczałcie godzin miesięcznie: 10 h za 3000 zł (300 zł/h), 20 h za 5500 zł (275 zł/h), 40 h za 10000 zł (250 zł/h). Stawka bazowa poza ryczałtem: 350 zł/h. Abonament miesięczny, pakiet można zmieniać. Można też wziąć pod opiekę automatyzację zrobioną przez kogoś innego, po jej obejrzeniu na bezpłatnej diagnozie.
+
+8. Architekci Wartości AI (najszerszy model współpracy), adres: /uslugi/architekci-wartosci-ai
+My zamiast etatowego działu AI: sami sprawdzamy, gdzie firma traci czas i pieniądze, budujemy automatyzacje, utrzymujemy je i proponujemy kolejne kroki. Rozliczenie za przyniesioną wartość (odzyskane godziny i złotówki), nie za godziny pracy. Ścieżka wejścia: start od 0 zł (darmowa diagnoza, czyli Mapa Oszczędności Czasu), pierwszy płatny krok to Sprint Diagnostyczny za 1490 zł odliczany od wdrożenia, pierwsza automatyzacja na próbę to AI Start za 1990 zł. Pełny model startuje od 10000 zł miesięcznie, a jego podstawą jest Opieka AI. Pierwsze nisze: biura rachunkowe, kancelarie, e-commerce, firmy usługowe.
+
+9. Indywidualne rozwiązania AI (aplikacje i wtyczki na zamówienie), adres: /uslugi/rozwiazania
+Gdy gotowe narzędzia nie pasują do procesu: aplikacja webowa pod konkretny proces, wtyczka dokładająca AI do narzędzia, w którym klient już pracuje, albo Agent spinający kilka systemów. Najpierw projekt, potem najmniejsza działająca wersja, potem rozwój w kolejności od najważniejszych funkcji. Rozwiązanie i dane zostają własnością klienta, w Unii Europejskiej; własność kodu i danych ustalana na piśmie na starcie. Na diagnozie mówimy wprost, czy warto budować od zera, czy taniej złożyć z gotowych klocków.
+
+10. Tworzenie stron WWW widocznych w Google i w AI, adres: /uslugi/strony-www
+Strony z całą treścią w kodzie przy pierwszym wejściu (czytelne dla botów AI), szybkie i ułożone pod cytowanie: bezpośrednia odpowiedź na początku podstrony, tabele, konkretne liczby. Widoczność w Google i w odpowiedziach ChatGPT, Claude, Gemini i Perplexity naraz. Typowa strona z kreatora bywa dla botów AI pusta, bo treść doczytuje się skryptem w przeglądarce. Po starcie sprawdzamy, czy strona realnie pada w odpowiedziach silników. Klient może potem sam edytować bieżące treści.
+
+11. Pozycjonowanie pod AI (GEO), adres: /uslugi/optymalizacja
+Ustawiamy istniejącą stronę tak, żeby ChatGPT, Claude, Gemini i Perplexity polecały ją w odpowiedziach: sprawdzamy, czy boty AI widzą stronę, przepisujemy kluczowe strony pod cytowanie (answer-first, liczby, tabele), budujemy autorytet poza stroną (rankingi, zestawienia). Cytowalność mierzymy ręcznie co tydzień w czterech silnikach: co pada, na której pozycji, kto jest wymieniany zamiast klienta. Zmiany techniczne działają w kilka tygodni, cytowalność rośnie miesiącami; to praca na kwartały. Nikt uczciwy nie da gwarancji konkretnej pozycji w AI, my gwarantujemy robotę i twardy pomiar.
+
+CENNIK (kwoty publiczne ze strony; ostateczna wycena zawsze po diagnozie)
+- Bezpłatna diagnoza: 0 zł, około 30 minut; kończy się konkretną listą tego, co da się zautomatyzować, bez zobowiązań.
+- Sprint Diagnostyczny (audyt AI): 1490 zł, odliczany w całości od wdrożenia przy współpracy; efekt to Action Plan.
+- AI Start (pierwsza automatyzacja na próbę): 1990 zł.
+- Stawka bazowa poza ryczałtem: 350 zł za godzinę.
+- Opieka AI (ryczałt miesięczny): 10 h = 3000 zł, 20 h = 5500 zł, 40 h = 10000 zł.
+- Architekci Wartości AI: od 10000 zł miesięcznie.
+- Pozostałe wdrożenia (chatbot, voicebot, automatyzacja, dokumenty i faktury, strona www, aplikacja na zamówienie, GEO): cena liczona od wartości i zakresu; dokładne widełki podawane na bezpłatnej diagnozie. Innych kwot firma publicznie nie podaje.
+
+SPOSÓB PRACY
+Krok 1: pokazujesz problem. Bezpłatna diagnoza: klient mówi, gdzie ucieka czas i co boli, my słuchamy i pytamy, zamiast od razu sprzedawać.
+Krok 2: mapujemy wąskie gardła. Rozkładamy procesy na części i mówimy wprost, co da się zautomatyzować, ile to oszczędza i czego nie warto ruszać. Klient wychodzi z konkretną listą, nawet jeśli nic nie zamówi.
+Krok 3: wdrażamy i pilnujemy. Pierwszy Agent staje na jednym konkretnym procesie, test na żywo, granice ustawia klient. Potem pilnujemy, żeby działał, i dokładamy kolejne zadania. Płaci się za efekt, nie za obietnice.
+Pierwszy krok jest mały i odwracalny (AI Start za 1990 zł to jeden proces na próbę). Diagnoza trwa 30 minut i nic nie kosztuje.
+
+GOTOWE PRODUKTY (adres: /produkty; opisywane przez funkcję, każdy to punkt wyjścia do customu, nie pudełko)
+1. Skaner i automat faktur do KSeF (działa u nas): zdjęcie albo skan faktury, system wyciąga dane do arkusza i programu księgowego, raz w miesiącu automat przygotowuje eksport do KSeF. Oszczędność: kilka godzin pracy księgowej miesięcznie (szacunek).
+2. Aplikacja coachingowa z agentami, nazwa robocza PapiCoach (MVP): logujesz posiłki i cele, agent układa plan dnia i rozmawia o tym, co trudne. Ten sam silnik można złożyć pod zdrowie, finanse, naukę albo onboarding pracownika.
+3. Apka obecności i składek zespołu (działa u nas): jeden ekran pokazuje, kto obecny i kto wpłacił, a kto zalega. Dla trenerów, kół, klubów i małych zespołów.
+4. Centrum dowodzenia (MVP): dyktujesz głosem zadanie, pomysł albo notatkę, agent tworzy rekord i sam go sortuje, przypisuje i nadaje priorytet.
+
+REALIZACJE (adres: /realizacje; wyłącznie realne wdrożenia)
+1. Auto-email dla biura obsługi klienta (Instytut Kryptografii, edukacja i szkolenia): system czyta przychodzącego maila, sięga do historii korespondencji i przygotowuje gotowy draft odpowiedzi do jednego kliknięcia. Efekt: 75% maili wymaga już tylko drobnej korekty przed wysłaniem. Wysyłkę zawsze zatwierdza człowiek.
+2. Błyskawiczny generator leadów (klient anonimowy, sprzedaż B2B): automat zebrał 1000 rekordów potencjalnych klientów w 40 minut; ręcznie ta praca zajmowała około dwóch tygodni.
+3. Auto-podsumowania spotkań na Meet, Zoom i Teams (klient anonimowy, usługi B2B): agent dołącza do spotkania, spisuje rozmowę i wysyła raport z listą zadań przypisanych do osób. Kilka godzin tygodniowo mniej na notatki (szacunek).
+4. Automat treści na social media (klient anonimowy, marketing): zbiera newsy z branży, dobiera grafikę i przygotowuje gotowy post; człowiek sprawdza i publikuje jednym kliknięciem. Kilka godzin tygodniowo mniej na przygotowanie treści (szacunek).
+5. Automatyczne raporty zamiast ręcznych arkuszy (klient anonimowy, handel i usługi): automat zbiera dane z kilku źródeł i co rano dostarcza gotowy raport, bez kopiowania liczb między arkuszami. Kilka godzin tygodniowo mniej na raportowanie (szacunek).
+6. Chatbot edukacyjny do kursów online (Instytut Kryptografii): kursant pyta normalnym językiem, a bot wskazuje konkretną lekcję VOD; zna strukturę kursu, więc odpowiada precyzyjnie.
+7. Firmowi Agenci AI 24/7 (klient anonimowy, firma usługowa): Agenci na stronie firmowej znają ofertę i procesy, odpowiadają nowym leadom całą dobę; żaden lead nie zostaje bez odpowiedzi.
+8. Przechwytywanie i analiza rozmów (klient anonimowy, usługi B2B): aplikacja spisuje rozmowy, porządkuje je tematycznie i wyłapuje kluczowe ustalenia biznesowe.
+
+BEZPŁATNE NARZĘDZIA ONLINE (adres: /narzedzia; bez logowania i bez podawania maila)
+1. Kalkulator oszczędności z automatyzacji: wpisujesz, ile osób ile godzin tygodniowo traci na powtarzalnej robocie, a kalkulator pokazuje, ile złotych rocznie odzyskasz po automatyzacji.
+2. Kalkulator procesu (czy warto zautomatyzować ten proces): liczy roczny koszt jednego procesu i po ilu miesiącach zwróci się wdrożenie; koszt wdrożenia podaje użytkownik, więc sprawdzi nim każdą ofertę.
+3. Test gotowości firmy na AI: osiem pytań o procesy, dane, ludzi i pierwszy proces do zdjęcia; na koniec poziom gotowości i trzy rekomendacje.
+4. Audyt strony pod AI (GEO): dziesięć pytań o stronę pokazuje, czy ChatGPT i Perplexity mogą ją cytować, plus trzy rzeczy do naprawy najpierw.
+5. Generator promptów AI dla firm: wybierasz branżę, zadanie, cel i styl, a generator składa gotowy prompt do skopiowania do ChatGPT czy Claude.
+Wyniki narzędzi to liczby użytkownika, nie obietnica firmy; realny procent ustalany jest na bezpłatnej diagnozie.
+
+CENTRUM WIEDZY (adres: /wiedza)
+Cztery działy: Poradniki AI dla firm (m.in. ile kosztuje chatbot dla firmy, AI w biurze rachunkowym, ile kosztuje wdrożenie AI agenta), AI Radar (newsy AI dla firm), Przemyślenia o AI w biznesie (blog, m.in. chatbot czy AI agent, jak voicebot odbiera telefony, AI Act a Twoja firma), Case studies (realizacje z liczbami). Do pobrania są też bezpłatne materiały (adres: /materialy), m.in. 50 promptów dla właściciela firmy, checklista 20 procesów do automatyzacji, 10 błędów przy wdrażaniu AI, arkusz do policzenia kosztu ręcznych zadań.
+
+NAJCZĘSTSZE PYTANIA (FAQ)
+Ile kosztuje wdrożenie? Zależy od zakresu. Publiczne kwoty: audyt (Sprint Diagnostyczny) 1490 zł odliczany od wdrożenia, AI Start 1990 zł, Opieka AI od 3000 zł miesięcznie, Architekci Wartości AI od 10000 zł miesięcznie, stawka bazowa 350 zł/h. Dokładne widełki na bezpłatnej diagnozie.
+Czym chatbot różni się od AI Agenta? Chatbot odpowiada na pytania. Agent wykonuje całe zadania: sprawdzi kalendarz, zaproponuje termin, zapisze wizytę i wyśle potwierdzenie. Chatbot to pierwszy krok, który można rozwinąć w Agenta.
+Czym chatbot różni się od voicebota? Chatbot pisze (strona, komunikatory), voicebot rozmawia głosem przez telefon. To dwie różne usługi.
+Czy bot będzie zmyślał? Nie. Uczymy go na wiedzy firmy i ustawiamy, żeby trzymał się faktów; gdy nie zna odpowiedzi, mówi to wprost i przekazuje sprawę człowiekowi.
+Czy AI zwolni ludzi? Nie. AI nie zastępuje ludzi, AI zastępuje to, co ich zatrzymuje: zespół przestaje przepisywać maile, faktury i raporty, a zajmuje się tym, co wymaga człowieka.
+Czy dane są bezpieczne? Tak. Dane zostają w Unii Europejskiej, przetwarzane zgodnie z RODO i AI Act; podpisujemy umowę powierzenia danych, a użytkownik zawsze wie, że rozmawia z AI.
+Ile trwa wdrożenie? Pierwszy proces albo prosty chatbot stawiamy w dni, nie miesiące. Wersje z integracjami trwają trochę dłużej. Dokładny termin na diagnozie.
+Czy po audycie trzeba wdrażać u nas? Nie. Action Plan zostaje u klienta i może go zrealizować sam albo z kimkolwiek zechce.
+Czy działacie w moim mieście? Tak, pracujemy w całej Polsce, zdalnie i na miejscu; siedziba w Piszu, biura w Gubinie i Strzegomiu.
+
+KONTAKT
+E-mail: kontakt@simplefast.ai
+Telefon: +48 696 674 874
+Godziny: poniedziałek-piątek 9-18
+Formularz i umówienie bezpłatnej diagnozy: /kontakt (na stronie głównej sekcja z formularzem diagnozy)
+Strona: https://www.simplefast.ai

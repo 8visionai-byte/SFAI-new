@@ -2290,27 +2290,71 @@ html.lenis body {
     animation: sfRouteDraw 900ms var(--ease-out) 420ms both;
   }
 
-  /* ── .sf-glass — szklana karta (makieta 4): biel 4% na granacie + włos +
-     światło od góry (krawędź elewacji). backdrop-blur dokłada WYŁĄCZNIE media
-     query desktopowa niżej — mobile zostaje matowa tafla (LCP święte). */
+  /* ── .sf-glass — szklana karta (makieta 4). backdrop-blur dokłada WYŁĄCZNIE
+     media query desktopowa niżej — mobile zostaje matowa tafla (LCP święte).
+     INFINITY v6 „NACZYNIA POŁĄCZONE" (spec §PARTIA D zad. 1): shell wszystkich
+     kart Card.tsx przechodzi z bieli 4% na TEN SAM język co .inf-card, żeby
+     podstrony przestały wyglądać „w starym stylu" jedną zmianą:
+      - tło rgba(6,6,12,.62) = ton --bg w kryciu (karta PRZYPOMINA TŁO, a nie
+        jaśniejszą taflę). Krycie WYŻSZE niż .5 w .inf-card, bo pod drobnymi
+        kartami leżą globalne gwiazdy/mgławice, a opisy jadą na --fg-muted
+        (AA jest twarde — spec: podnieś krycie, NIE rozjaśniaj tekstu),
+      - obwódka 1:1 wzorzec: rgba(255,255,255,.07),
+      - WASH w kolorze karty (--card-c, domyślnie akcent) jako background-image,
+        fallback rgba bez color-mix linijkę wyżej (konwencja pliku).
+     WASH 5%, NIE 14% jak .inf-card (wyliczenia w raporcie D, liczone na
+     rgba składanym z tłem): przy 14% sam róg washu zjada --fg-muted #7a7a9e
+     do 3,97:1, czyli poniżej AA, a rozjaśnianie tekstu jest tu zakazane
+     (spec). 5% daje 4,65:1 na czystym tle i 4,54:1 w najgorszym nałożeniu
+     (róg washu NAD szczytem mgławicy violet 8%) — AA wszędzie, przy starym
+     szkle biel-4% było w tym samym punkcie 4,28:1. Przy okazji realizuje
+     zasadę „drobne karty zostają spokojniejsze".
+     ŚWIADOMIE BEZ narożników [ ] i BEZ sweepa — to sygnatura .inf-card
+     (kart-bohaterów). Hover w odcieniu karty: reguła POZA @layer niżej. */
   .sf-glass {
     position: relative;
-    background-color: var(--glass-bg);
-    border: 1px solid var(--glass-hairline);
+    background-color: rgba(6, 6, 12, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    background-image: linear-gradient(135deg, rgba(34, 211, 238, 0.05), transparent 55%);
+    background-image: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--card-c, var(--accent)) 5%, transparent),
+      transparent 55%
+    );
+    background-repeat: no-repeat;
     box-shadow:
       inset 0 1px 0 var(--glass-inner-light),
       0 10px 30px -18px rgba(0, 0, 0, 0.6);
   }
+  /* GUARD JASNYCH WYSP (parytet z .inf-sec-base/.inf-sec-subtle): w strefie
+     [data-theme=light] szkło wraca na własne tokeny jasne (granat o niskim
+     kryciu, linie ~450) i traci wash — ciemna karta na papierze byłaby plamą.
+     Selektor (0,2,0) bije bazę w tym samym @layer. */
+  [data-theme='light'] .sf-glass,
+  .sf-glass[data-theme='light'] {
+    background-color: var(--glass-bg);
+    border-color: var(--glass-hairline);
+    background-image: none;
+  }
 
   /* ── .sf-rim-gradient — karta WYRÓŻNIONA (makieta 4, środkowa): obrys
      gradientem trasy (maska padding-box/border-box zachowuje promień rogów)
-     na SOLIDNYM granacie + miękka AURA za kartą (::before). Aura celowo BEZ
-     filter:blur — miękkość dają same radial-gradienty (zero kosztu rastra). */
+     + miękka AURA za kartą (::before). Aura celowo BEZ filter:blur — miękkość
+     dają same radial-gradienty (zero kosztu rastra).
+     v6 „ROZŚWIETLENIE": wypełnienie zeszło z SOLIDNEGO granatu --sf-navy-900
+     (#101a30) na ten sam ton co .sf-glass i .inf-card. Powód podwójny:
+     (1) spójność — po migracji sąsiednich kart na rgba(6,6,12,…) karta
+     wyróżniona zostawała jaśniejszą, niebieskawą wyspą i rozjazd tonalny
+     ROSŁ zamiast maleć („naczynia połączone"), (2) dostępność — --fg-muted
+     #7a7a9e na #101a30 dawało 4,21:1, czyli PONIŻEJ progu AA 4,5:1.
+     Wyróżnikiem zostaje to, co było nim w makiecie: gradientowy obrys i aura,
+     nie jaśniejsze pudełko. Krycie .62 jak .sf-glass (tam policzone: najgorszy
+     przypadek nad mgławicą 4,51:1, czyli AA). */
   .sf-rim-gradient {
     position: relative;
     border: 1px solid transparent;
     background:
-      linear-gradient(var(--sf-navy-900), var(--sf-navy-900)) padding-box,
+      linear-gradient(rgba(6, 6, 12, 0.62), rgba(6, 6, 12, 0.62)) padding-box,
       var(--route-gradient) border-box;
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.1),
@@ -2395,8 +2439,10 @@ html.lenis body {
 }
 
 /* Szkło TYLKO desktop (mobile perf: backdrop-filter to najdroższy filtr
-   kompozytora; na telefonach matowa tafla biel-4%-na-granacie wygląda niemal
-   identycznie). Blur paska także tylko desktop i tylko po scrollu. */
+   kompozytora; na telefonach matowa tafla na tonie tła wygląda niemal
+   identycznie). Blur paska także tylko desktop i tylko po scrollu.
+   v6: blur ZOSTAJE dokładnie tam, gdzie już był (spec §D zad. 1) — zmienia się
+   tylko tafla pod nim (rgba tonu --bg zamiast bieli 4%). */
 @media (min-width: 1024px) {
   .sf-glass {
     -webkit-backdrop-filter: blur(14px);
@@ -2408,6 +2454,35 @@ html.lenis body {
     background-color: color-mix(in srgb, var(--bg) 82%, transparent);
     -webkit-backdrop-filter: blur(14px);
     backdrop-filter: blur(14px);
+  }
+}
+
+/* INFINITY v6 (spec §PARTIA D zad. 1) — HOVER SZKŁA W ODCIENIU KARTY, wzorem
+   .inf-card:hover, ale BEZ liftu, sweepa i narożników (drobne karty zostają
+   spokojniejsze; .sf-glass nigdy nie miało własnego transformu).
+   ZAKRES: tylko karty, które JUŻ reagowały na hover, czyli shell z Card.tsx
+   (.card-live / .card-lift). Statyczne panele na gołym .sf-glass (okno czatu
+   demo, karta opisu JakToDziala) zostają bez reakcji — zero fałszywej
+   afordancji „kliknij mnie".
+   POZA @layer ŚWIADOMIE: .card-live:hover/.card-lift:hover też stoją poza
+   warstwą (blok B wyżej), a reguła spoza @layer bije KAŻDĄ regułę z @layer
+   niezależnie od specyficzności. Selektor (0,3,0) > (0,2,0), więc wygrywa
+   z tamtymi bez !important. Ruch niosą transitiony .card-live/.card-lift
+   (border-color + box-shadow) — ZERO nowych animacji, bramka reduced-motion
+   bloku B obowiązuje bez zmian. */
+@media (hover: hover) and (pointer: fine) {
+  .sf-glass.card-live:hover,
+  .sf-glass.card-lift:hover {
+    border-color: rgba(34, 211, 238, 0.55);
+    border-color: color-mix(in srgb, var(--card-c, var(--accent)) 55%, transparent);
+    box-shadow:
+      inset 0 1px 0 var(--glass-inner-light),
+      0 0 20px rgba(34, 211, 238, 0.22),
+      0 12px 32px -16px rgba(0, 0, 0, 0.6);
+    box-shadow:
+      inset 0 1px 0 var(--glass-inner-light),
+      0 0 20px color-mix(in srgb, var(--card-c, var(--accent)) 22%, transparent),
+      0 12px 32px -16px rgba(0, 0, 0, 0.6);
   }
 }
 
@@ -2429,6 +2504,11 @@ html.lenis body {
     background-image: none;
     -webkit-text-fill-color: CanvasText;
     color: CanvasText;
+  }
+  /* v6: wash karty szklanej (background-image) znika w trybie wysokiego
+     kontrastu — ten sam reset co dla .inf-card niżej; zostaje systemowa ramka. */
+  .sf-glass {
+    background-image: none;
   }
 }
 
@@ -2677,6 +2757,10 @@ html.lenis body {
     border-color: color-mix(in srgb, var(--badge-c) 40%, transparent);
     background-color: rgba(255, 255, 255, 0.04);
     background-color: color-mix(in srgb, var(--badge-c) 10%, transparent);
+    /* v6 „ROZŚWIETLENIE" (spec §A pkt 3): kolorowy mono badge świeci — glow
+       w tym samym odcieniu 45% (halo, kolor liter bez zmian — kontrast jw.). */
+    text-shadow: 0 0 12px rgba(34, 211, 238, 0.45);
+    text-shadow: 0 0 12px color-mix(in srgb, var(--badge-c) 45%, transparent);
   }
   .inf-dd-row .inf-tile {
     transition: transform var(--dur-fast) var(--ease-out);
@@ -2757,10 +2841,14 @@ html.lenis body {
   }
 
   /* ── .inf-tile — kafelek ikony 40x40 (dropdown/karty): tło i obwódka w
-     kolorze kategorii (--tile-c) + statyczna poświata. W środku glif SVG
+     kolorze kategorii (--tile-c) + poświata GLOW. W środku glif SVG
      <InfIcon> (currentColor = --tile-c przez color niżej) lub — przejściowo,
      u konsumentów partii C — emoji. v3: hover karty rozświetla i powiększa
-     kafelek (reguły w media hover; transition tu, RM: bez transformów). */
+     kafelek (reguły w media hover; transition tu, RM: bez transformów).
+     v6 „ROZŚWIETLENIE" (spec §A pkt 2, pomiary wzorca .lp-promo-icon 1:1):
+     tło wariant 14%, obwódka wariant 28%, glow 0 0 18px -4px wariant 55%
+     („ikona rozświetlona"); glif zostaje w PEŁNYM kolorze wariantu (color).
+     Fallbacki bez color-mix w cyjanie akcentu (te same procenty). */
   .inf-tile {
     --tile-c: var(--accent);
     display: inline-flex;
@@ -2773,12 +2861,12 @@ html.lenis body {
     font-size: 1.125rem;
     line-height: 1;
     color: var(--tile-c);
-    background-color: var(--surface);
-    background-color: color-mix(in srgb, var(--tile-c) 16%, transparent);
-    border: 1px solid var(--border-strong);
-    border-color: color-mix(in srgb, var(--tile-c) 35%, transparent);
-    box-shadow: 0 0 18px -2px rgba(20, 184, 196, 0.2);
-    box-shadow: 0 0 18px -2px color-mix(in srgb, var(--tile-c) 25%, transparent);
+    background-color: rgba(34, 211, 238, 0.14);
+    background-color: color-mix(in srgb, var(--tile-c) 14%, transparent);
+    border: 1px solid rgba(34, 211, 238, 0.28);
+    border-color: color-mix(in srgb, var(--tile-c) 28%, transparent);
+    box-shadow: 0 0 18px -4px rgba(34, 211, 238, 0.55);
+    box-shadow: 0 0 18px -4px color-mix(in srgb, var(--tile-c) 55%, transparent);
     transition:
       transform var(--dur-base) var(--ease-out),
       filter var(--dur-base) var(--ease-out);
@@ -2806,14 +2894,23 @@ html.lenis body {
      NAROŻNIKI [ ] (wzorzec): 4 rogi 10x10px z linii 1px przez background-image
      (8 warstw: 2 kreski na róg), kolor color-mix(--card-c 55%); wsunięte 8px
      od krawędzi, żeby radius-lg (16px) ich nie ścinał. Fallback bez color-mix:
-     cyjan akcentu w rgba (55%). */
+     cyjan akcentu w rgba (55%).
+     v6 „ROZŚWIETLENIE" (spec §A pkt 1, pomiary wzorca): karta PRZYPOMINA TŁO —
+     tło solidne --surface schodzi do rgba(6,6,12,.5) (ton --bg w połowie krycia:
+     na czystym tle nieodróżnialna od tła, a gwiazdy/mgławice pod kartą przygasza
+     o połowę = strażnik AA dla opisów --fg-muted). Obwódka bazowa 1:1 wzorzec:
+     rgba(255,255,255,.07); hover zostaje w odcieniu karty (media hover niżej).
+     WASH wzorca (::before wzorca: 135deg KOLOR-WARIANTU -> transparent 55%,
+     opacity .5): oba pseudo-elementy karty są ZAJĘTE (pasek akcentu + sweep),
+     więc wash idzie jako 9. warstwa background-image POD narożnikami, a krycie
+     .5 jest WPIECZONE w kolor (spec: color-mix 28% x opacity .5 = 14%). */
   .inf-card {
     --card-c: var(--accent);
     position: relative;
     overflow: hidden;
     border-radius: var(--radius-lg);
-    background-color: var(--surface);
-    border: 1px solid var(--border);
+    background-color: rgba(6, 6, 12, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.07);
     background-image:
       linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
       linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
@@ -2822,7 +2919,8 @@ html.lenis body {
       linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
       linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
       linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
-      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55));
+      linear-gradient(rgba(34, 211, 238, 0.55), rgba(34, 211, 238, 0.55)),
+      linear-gradient(135deg, rgba(34, 211, 238, 0.14), transparent 55%);
     background-image:
       linear-gradient(
         color-mix(in srgb, var(--card-c) 55%, transparent),
@@ -2855,7 +2953,8 @@ html.lenis body {
       linear-gradient(
         color-mix(in srgb, var(--card-c) 55%, transparent),
         color-mix(in srgb, var(--card-c) 55%, transparent)
-      );
+      ),
+      linear-gradient(135deg, color-mix(in srgb, var(--card-c) 14%, transparent), transparent 55%);
     background-repeat: no-repeat;
     background-position:
       left 8px top 8px,
@@ -2865,7 +2964,8 @@ html.lenis body {
       left 8px bottom 8px,
       left 8px bottom 8px,
       right 8px bottom 8px,
-      right 8px bottom 8px;
+      right 8px bottom 8px,
+      left top;
     background-size:
       10px 1px,
       1px 10px,
@@ -2874,7 +2974,8 @@ html.lenis body {
       10px 1px,
       1px 10px,
       10px 1px,
-      1px 10px;
+      1px 10px,
+      100% 100%;
     transition:
       transform var(--dur-base) var(--ease-out),
       border-color var(--dur-base) var(--ease-out),
@@ -2926,14 +3027,35 @@ html.lenis body {
     line-height: 1.4;
     letter-spacing: 0.06em;
     color: var(--card-c-l, var(--card-c, var(--accent)));
+    /* v6 „ROZŚWIETLENIE" (spec §A pkt 3): „podświetlony napis" — glow w tym
+       samym odcieniu 45% (halo nie liczy się do kontrastu; kolor liter bez zmian). */
+    text-shadow: 0 0 12px rgba(34, 211, 238, 0.45);
+    text-shadow: 0 0 12px color-mix(in srgb, var(--card-c-l, var(--card-c, var(--accent))) 45%, transparent);
+  }
+  /* v6 „ROZŚWIETLENIE" (spec §A pkt 3, wzorzec .lp-promo-tag: PEŁNE nasycenie
+     koloru wariantu, „żadnego wyszarzenia"): mono overline i tagi WEWNĄTRZ kart
+     przechodzą z szarości na odcień karty + glow. Selektor 2-klasowy (0,2,0)
+     bije bazę i utility koloru (0,1,0); inline style konsumentów (PromoUslugi)
+     ustawia ten sam odcień, więc nic się nie gryzie. NIE dotyczy białych
+     tytułów i szarych opisów (wzorzec też ich nie świeci). Kontrast: najciemniejszy
+     odcień palety #a78bfa na rogu z washem ~6.6:1, reszta wyżej — AA z zapasem. */
+  .inf-card .inf-overline,
+  .inf-card .inf-tag {
+    color: var(--card-c-l, var(--card-c, var(--accent)));
+    text-shadow: 0 0 12px rgba(34, 211, 238, 0.45);
+    text-shadow: 0 0 12px color-mix(in srgb, var(--card-c-l, var(--card-c, var(--accent))) 45%, transparent);
   }
   /* Strzałka karty — v3: WEWNĄTRZ .inf-card na desktopie POJAWIA SIĘ dopiero
      na hover karty (opacity 0 → 1 + dojazd; reguły w media hover niżej,
      scope .inf-card .inf-arrow — strzałki POZA kartami, np. wiersze listy
-     Oferty, zostają widoczne jak dotąd). Mobile/dotyk: zawsze widoczna. */
+     Oferty, zostają widoczne jak dotąd). Mobile/dotyk: zawsze widoczna.
+     v6 „ROZŚWIETLENIE" (spec §A pkt 4, wzorzec .lp-promo-arrow): PEŁNY kolor
+     odcienia karty (--card-c-l dziedziczone z .inf-card; poza kartami fallback
+     = akcent interakcji) zamiast wyszarzonego --fg-subtle. Hover jaśnieje
+     glow-em (media hover niżej). */
   .inf-arrow {
     display: inline-block;
-    color: var(--fg-subtle);
+    color: var(--card-c-l, var(--card-c, var(--accent)));
     transition:
       transform var(--dur-base) var(--ease-out),
       opacity var(--dur-base) var(--ease-out),
@@ -3207,7 +3329,11 @@ html.lenis body {
      POJAWIA SIĘ (opacity 0→1 + dojazd -4px→0). */
   .inf-card:hover {
     transform: translateY(-3px);
-    background-color: var(--surface-hover);
+    /* v6 „ROZŚWIETLENIE" (spec §A pkt 1): karta w spoczynku przypomina tło,
+       więc hover NIE wraca do solidnego --surface-hover (szary kafelek) —
+       ten sam ton #181840 w połowie krycia (efektywnie ~#0e0e23 na --bg:
+       rozjaśnienie widać, przezroczystość zostaje). */
+    background-color: rgba(24, 24, 64, 0.45);
     /* v4 FLUORESCENCJA (spec §PARTIA A pkt 4): border 50% -> 70% + DODATKOWY
        glow zewnętrzny 0 0 26px w kolorze karty (30%) obok liftowego cienia. */
     border-color: var(--border-strong);
@@ -3237,7 +3363,10 @@ html.lenis body {
   .inf-card:hover .inf-arrow {
     opacity: 1;
     transform: translateX(0);
-    color: var(--fg-muted);
+    /* v6 (spec §A pkt 4): strzałka „mieni się kolorem ramki" — zostaje w odcieniu
+       karty (kolor z bazy .inf-arrow), a na hover JAŚNIEJE glow-em. */
+    text-shadow: 0 0 12px rgba(34, 211, 238, 0.45);
+    text-shadow: 0 0 12px color-mix(in srgb, var(--card-c-l, var(--card-c, var(--accent))) 45%, transparent);
   }
   /* Kafelek ikony karty: jaśnieje i rośnie (v4 fluorescencja: brightness
      1.3 -> 1.35 + scale 1.12; transition niesie baza .inf-tile, RM: transform
@@ -3398,10 +3527,20 @@ html.lenis body {
     background-image: none;
   }
   /* v4: narożniki [ ] (background-image karty) i pas sweep znikają w trybie
-     wysokiego kontrastu — zostaje systemowa ramka karty. */
+     wysokiego kontrastu — zostaje systemowa ramka karty. v6: razem z nimi
+     wash (9. warstwa background-image karty — ten sam reset). */
   .inf-card,
   .inf-card::after {
     background-image: none;
+  }
+  /* v6: „podświetlone napisy" (glow tekstu) znikają w trybie wysokiego
+     kontrastu — zostają systemowe kolory tekstu. */
+  .inf-card-sub,
+  .inf-card .inf-overline,
+  .inf-card .inf-tag,
+  .inf-dd-badge,
+  .inf-card:hover .inf-arrow {
+    text-shadow: none;
   }
   .inf-nav-link:hover,
   .inf-nav-link[aria-expanded='true'],
@@ -3676,6 +3815,20 @@ html.lenis body {
    specyficzności — ciemna strefa wewnątrz jasnej wraca na guard. */
 [data-theme='dark'] .text-fg-subtle {
   color: var(--fg-muted);
+}
+
+/* INFINITY v6 — AA-GUARD opisów na PRZEZROCZYSTEJ karcie (spec §A pkt 1,
+   partia A). --fg-muted #7a7a9e ma na czystym --bg #06060c 4,9:1 (AA na styk,
+   nota przy tokenach), a kolorowy wash karty (14% odcienia w rogu) podnosi
+   luminancję tła i w pasie pierwszych wierszy opisu zjada margines do
+   ~4,2-4,4:1. Wewnątrz .inf-card muted idzie o włos jaśniej (mix 88% + biel
+   ≈ #8a8aad): ~6,1:1 na czystym tle, ~4,9:1 w najjaśniejszym rogu washu —
+   AA wszędzie. Ton dalej wyraźnie „muted" (wzorzec: opis szary, bez cienia).
+   POZA @layer na końcu pliku: selektor (0,2,0) bije utility (0,1,0). */
+.inf-card .text-fg-muted,
+.inf-card .text-fg-subtle {
+  color: #8a8aad;
+  color: color-mix(in srgb, var(--fg-muted) 88%, white);
 }
 
 /* INFINITY v3 (kontrakt partii B): slot lemniskaty hero znika w Windows High
