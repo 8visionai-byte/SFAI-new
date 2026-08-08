@@ -87,7 +87,18 @@
 }
 
 /* Nad elementem klikalnym: punkt rozwija się w RAMKĘ 40x40 (bok z pomiaru §5.3,
-   kształt z v8b §2). Zaokrąglenie = --radius-sm, czyli narożnik naszych kart. */
+   kształt z v8b §2). Zaokrąglenie = --radius-sm, czyli narożnik naszych kart.
+
+   v9 §8 — WERYFIKACJA, NIE ZMIANA. Skarga „nad ikonką czatu robi się zdupcony
+   owal" wróciła, więc wskaźnik został ZMIERZONY w realnym Chrome (headless CDP,
+   hover na .agent-fab wymuszony zdarzeniem myszy): width 40px, height 40px,
+   border-radius 8px, background transparent. Czyli wskaźnik jest kwadratem,
+   NIE dziedziczy border-radius celu i NIE skaluje się do jego proporcji —
+   ten plik nie wymagał ani jednej poprawki.
+   Owal robił sam przycisk czatu: `.agent-fab` miał `border-radius: 50%` i po
+   rozsunięciu na hover (154x68) procent zamieniał koło w elipsę. Naprawione
+   w components/agent/agent-console.css (promień 34px zamiast 50%) — pełne
+   uzasadnienie w komentarzu przy .agent-fab. */
 .inf-kursor.is-nad {
   width: 40px;
   height: 40px;

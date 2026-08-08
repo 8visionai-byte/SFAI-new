@@ -20,6 +20,13 @@
  *     (pierwszy stop --ring-gradient), fiolet #8b5cf6 (--accent-2) i magenta
  *     #ff00e5 na punkty świecące. Podmieniona jest WYŁĄCZNIE barwa: każdy
  *     poziom alfy, blur, rozmiar i animacja zostają 1:1 jak w źródle.
+ *  5. MOC POŚWIATY (spec v9 §6, cytat Pawła: „voicebota poświatę dać bardziej
+ *     różowawą, bardziej rażącą, żeby nie był taki blady"). Adaptacja #4
+ *     trzymała alfy 1:1 z 10K i to jest dokładnie powód, dla którego blob
+ *     wychodził blady na naszej czerni #06060c (10K miał jaśniejsze tło).
+ *     Podniesione są WYŁĄCZNIE alfy warstw poświaty (::before, ::after,
+ *     __ambient, __fallback) i fiolet ustępuje w nich magencie #ff00e5.
+ *     Rozmiary, blur, animacje i geometria BEZ ZMIAN — koszt malowania ten sam.
  */
 .flow-core {
   --ink: #0d0b12;
@@ -70,15 +77,21 @@
 
 /* ===== Warianty voice-aura — kopia 1:1 z <style> FlowCore.astro ===== */
 
-/* Barwy: róż w środku -> fiolet na zewnątrz (adaptacja #4). Alfy i bluru nie ruszamy. */
+/* Barwy: róż w środku -> fiolet na zewnątrz (adaptacja #4).
+   ADAPTACJA #5 (spec v9 §6, cytat Pawła: „voicebota poświatę dać bardziej
+   różowawą, bardziej rażącą, żeby nie był taki blady"): alfy tej warstwy idą
+   w górę ~1,7x, a fiolet #8b5cf6 na trzecim stopniu ustępuje MAGENCIE #ff00e5.
+   To jest poświata CZYSTO CSS-owa, więc widać ją od pierwszego malowania
+   (przed startem WebGL) i na mobile, gdzie shader startuje najpóźniej.
+   Rozmiary i blur BEZ ZMIAN — koszt malowania ten sam co dotąd. */
 .flow-core.voice-aura::before {
-  background: radial-gradient(ellipse at var(--flow-object-x) 49%, rgba(255, 138, 199, .14), rgba(255, 0, 127, .075) 24%, rgba(139, 92, 246, .028) 43%, transparent 66%);
+  background: radial-gradient(ellipse at var(--flow-object-x) 49%, rgba(255, 138, 199, .24), rgba(255, 0, 127, .14) 24%, rgba(255, 0, 229, .06) 43%, transparent 68%);
   filter: blur(30px);
 }
 
 .flow-core.voice-aura::after {
-  background: linear-gradient(transparent, rgba(255, 0, 127, .06) 22%, rgba(255, 138, 199, .21) 49%, rgba(139, 92, 246, .06) 72%, transparent);
-  opacity: .5;
+  background: linear-gradient(transparent, rgba(255, 0, 127, .1) 22%, rgba(255, 138, 199, .3) 49%, rgba(255, 0, 229, .1) 72%, transparent);
+  opacity: .6;
 }
 
 .voice-aura__ambient {
@@ -89,12 +102,16 @@
   width: min(58%, 470px);
   aspect-ratio: 1;
   border-radius: 50%;
+  /* ADAPTACJA #5 (v9 §6): ta sama geometria plam, mocniejsze alfy (x ~2) i
+     magenta zamiast fioletu na trzeciej plamie. Ambient jest jedyną poświatą,
+     którą widać, zanim shader wystartuje — dlatego to on odpowiada za wrażenie
+     „blady / nie blady" w pierwszej sekundzie. */
   background:
-    radial-gradient(circle at 50% 50%, rgba(255, 138, 199, .12), transparent 35%),
-    radial-gradient(circle at 40% 64%, rgba(255, 0, 127, .11), transparent 31%),
-    radial-gradient(circle at 68% 35%, rgba(139, 92, 246, .075), transparent 29%);
+    radial-gradient(circle at 50% 50%, rgba(255, 138, 199, .24), transparent 38%),
+    radial-gradient(circle at 40% 64%, rgba(255, 0, 127, .22), transparent 34%),
+    radial-gradient(circle at 68% 35%, rgba(255, 0, 229, .15), transparent 32%);
   filter: blur(27px);
-  opacity: .86;
+  opacity: .95;
   pointer-events: none;
   transform: translate(-50%, -50%);
   transition: opacity .6s ease, transform .8s cubic-bezier(.2,.75,.2,1);
@@ -123,31 +140,34 @@
   transform: translate(-50%, -50%);
 }
 
+/* ADAPTACJA #5 (v9 §6) dotyczy też fallbacku: to jego widzą użytkownicy
+   z reduced-motion, Save-Data i bez WebGL — nie może zostać blady, skoro
+   wersja z shaderem świeci mocniej. Geometria (rozmiary, orbity) 1:1. */
 .voice-aura__fallback span {
   width: min(45%, 370px);
   background:
-    radial-gradient(circle at 35% 32%, rgba(255,236,248,.48), transparent 17%),
-    radial-gradient(circle at 63% 65%, rgba(255,0,127,.2), transparent 30%),
-    radial-gradient(circle at 67% 30%, rgba(139,92,246,.18), transparent 28%),
-    radial-gradient(circle, rgba(255,138,199,.21), rgba(121,40,202,.075) 48%, transparent 70%);
-  box-shadow: 0 0 72px rgba(255,0,127,.12), inset 0 0 52px rgba(255,214,238,.12);
+    radial-gradient(circle at 35% 32%, rgba(255,236,248,.52), transparent 18%),
+    radial-gradient(circle at 63% 65%, rgba(255,0,127,.34), transparent 32%),
+    radial-gradient(circle at 67% 30%, rgba(255,0,229,.26), transparent 30%),
+    radial-gradient(circle, rgba(255,138,199,.32), rgba(255,0,127,.12) 48%, transparent 72%);
+  box-shadow: 0 0 90px rgba(255,0,127,.22), inset 0 0 52px rgba(255,214,238,.16);
   filter: blur(1px);
   animation: voice-aura-breathe 7s ease-in-out infinite alternate;
 }
 
 .voice-aura__fallback i {
   width: min(36%, 292px);
-  border: 1px solid rgba(255,138,199,.2);
-  box-shadow: 0 0 48px rgba(255,0,127,.08);
-  opacity: .72;
+  border: 1px solid rgba(255,138,199,.34);
+  box-shadow: 0 0 56px rgba(255,0,127,.16);
+  opacity: .8;
   animation: voice-aura-orbit 12s linear infinite;
 }
 
 .voice-aura__fallback b {
   width: min(25%, 202px);
-  border: 1px solid rgba(255,0,127,.26);
-  box-shadow: 0 0 34px rgba(255,0,127,.07);
-  opacity: .68;
+  border: 1px solid rgba(255,0,127,.42);
+  box-shadow: 0 0 40px rgba(255,0,127,.14);
+  opacity: .78;
   animation: voice-aura-orbit 9s linear infinite reverse;
 }
 

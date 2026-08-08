@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { Section, Button } from '@/components/ui';
+import { Section, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { CytatyWalec } from '@/components/sections/CytatyWalec';
 import { InfIcon } from '@/components/ui/InfIcons';
@@ -117,24 +117,47 @@ export function Problem() {
         powstał realny kalkulator (godziny x stawka), wpiąć go jako krok 1 flow
         i wtedy można wrócić do słowa "policz".
       */}
+      {/*
+        v9 §3, cytaty Pawła: „zamiast na środku, to jest gdzieś tutaj, trzeba
+        wszystko przyrównać" oraz „przycisk Pokaż mi, ile tracę to jest call to
+        action, powinien być w podobnym tonie co wszystkie przyciski".
+
+        POMIAR PRZED (realny Chrome 1440x900, CDP): karta 980px szerokości,
+        text-align: start, a środek przycisku wypadał 334px NA LEWO od środka
+        karty. Ikona, tekst i CTA stały w jednej kolumnie przy lewej krawędzi
+        980-pikselowej karty, czyli dokładnie to, co widać na zrzucie.
+        UKŁAD PO: text-center na karcie (jedna oś dla wszystkiego), kafelek
+        ikony centrowany mx-auto, akapit dostaje max-w-[60ch] mx-auto — bez tego
+        wyśrodkowany tekst rozjeżdżałby się na 850px linii i czytałby się gorzej
+        niż przed zmianą. CTA w kontenerze flex justify-center (odchylenie 0px).
+
+        PRZYCISK: dotąd <Button variant="secondary"> = przezroczyste tło, biała
+        obwódka 55 procent i biały tekst, czyli neutralna szarość SPOZA palety
+        CTA (zmierzone: borderColor rgba(255,255,255,.55)). Wchodzi dokładnie
+        ten sam zestaw, co główne CTA sekcji na całej stronie (Dowod,
+        GwarancjaEfektu, Oferta, DowodSpoleczny, FinalneCTA):
+        <MagneticButton variant="primary" size="lg"> — magnetyzm + .sf-cta
+        + tło --accent. ETYKIETA 1:1 („Pokaż mi, ile tracę"), adres 1:1
+        (HOME_CTA.href), zero nowych stringów i zero nowego CSS.
+      */}
       <Reveal delay={0.15} className="mx-auto mt-10 max-w-wide">
-        <div className="inf-card p-6 md:p-8" style={{ '--card-c': '#60a5fa' } as CSSProperties}>
+        <div className="inf-card p-6 text-center md:p-8" style={{ '--card-c': '#60a5fa' } as CSSProperties}>
           <div aria-hidden="true" className="inf-spotlight" />
           <span
             aria-hidden="true"
-            className="inf-tile mb-4"
+            className="inf-tile mx-auto mb-4"
             style={{ '--tile-c': '#60a5fa' } as CSSProperties}
           >
             <InfIcon name="lupa-wykres" />
           </span>
-          <p className="text-body text-fg">
+          <p className="mx-auto max-w-[60ch] text-body text-fg">
             Nie zgaduj. Na bezpłatnej diagnozie pokażę Ci, ile godzin i złotych miesięcznie zjada
             powtarzalna robota w Twojej firmie. Konkretne liczby z Twoich procesów, nie ogólniki.
           </p>
-          <div className="mt-5">
-            <Button variant="secondary" href={HOME_CTA.href}>
+          <div className="mt-5 flex justify-center">
+            <MagneticButton variant="primary" size="lg" href={HOME_CTA.href}>
               Pokaż mi, ile tracę
-            </Button>
+            </MagneticButton>
           </div>
         </div>
       </Reveal>

@@ -30,6 +30,14 @@ import '@/components/agent/flow-core.css';
  *     kolory TEJ strony — spectrum idzie różem #ff007f -> fioletem #8b5cf6,
  *     rdzeń i blask w bieli różowej. Zmieniona jest WYŁĄCZNIE barwa: wszystkie
  *     mnożniki, alfy i progi zostają 1:1 (moc świecenia bez zmian).
+ *     v9 §6 ZDEJMUJE to zastrzeżenie na wprost polecenie Pawła („poświatę dać
+ *     bardziej różowawą, bardziej rażącą, żeby nie był taki blady"): spectrum
+ *     idzie teraz RÓŻ -> MAGENTA #ff00e5 (fiolet tylko jako 22% domieszka),
+ *     krawędź jest mniej rozcieńczona ciemnym fioletem (.68 -> .86), aureola
+ *     sięga dalej (spadki 21 -> 15,5 i 9 -> 6,4), a sufit krycia idzie .82 ->
+ *     .94. Geometria bloba (boundary 0.232, wstęgi, sygnał) NIETKNIĘTA —
+ *     zmienia się wyłącznie barwa i moc świecenia. Ten sam shader jedzie
+ *     w karcie „Wolisz posłuchać?" (ZyweDemo), więc świeci tam tak samo.
  *  6. MASKA ZDJĘTA (v8 §6, obserwacja zostawiona przez partię v7 w Hero.tsx
  *     pkt 4): flow-core.css trzyma na `canvas` i `.flow-metal-fallback`
  *     `mask-image: linear-gradient(90deg, transparent 0, #000 28%, ...)`.
@@ -135,7 +143,9 @@ const fragmentSource = `
     float boundary = 0.232 + breath * .82 + voiceWave;
     float outerDistance = abs(radius - boundary);
     float innerDistance = abs(radius - (boundary - 0.043 - sin(angle * 2.0 + time) * 0.007));
-    float outerGlow = exp(-outerDistance * (21.0 - u_energy * 2.2));
+    /* v9 §6 („bardziej rażąca poświata"): łagodniejszy spadek = SZERSZA aureola
+       wokół pierścienia. 21.0 -> 15.5 (im mniejsza liczba, tym dalej sięga). */
+    float outerGlow = exp(-outerDistance * (15.5 - u_energy * 2.2));
     float innerGlow = exp(-innerDistance * 35.0);
     float body = 1.0 - smoothstep(boundary - 0.09, boundary + 0.048, radius);
     float veil = body * (0.15 + grain * 0.17);
@@ -154,24 +164,35 @@ const fragmentSource = `
     vec3 deepViolet = vec3(0.14, 0.05, 0.24);
     vec3 softWhite = vec3(1.0, 0.93, 0.98);
     vec3 rose = vec3(1.0, 0.0, 0.50);
+    vec3 magenta = vec3(1.0, 0.0, 0.898);
     vec3 violet = vec3(0.545, 0.361, 0.965);
     float chroma = sin(angle + time * .31) * .5 + .5;
-    vec3 spectrum = mix(rose, violet, chroma);
-    vec3 edgeColor = mix(deepViolet, spectrum, .68 + u_energy * .10);
+    /* v9 §6: spektrum idzie RÓŻ #ff007f -> MAGENTA #ff00e5 (a nie róż -> fiolet),
+       fiolet zostaje tylko jako 22-procentowa domieszka na zimnym końcu. To jest
+       cała odpowiedź na „poświata ma być bardziej różowawa". */
+    vec3 spectrum = mix(rose, mix(magenta, violet, .22), chroma);
+    /* Mniej ciemnego fioletu w mieszance krawędzi = pełniejsze nasycenie
+       („żeby nie był taki blady"): .68 -> .86. */
+    vec3 edgeColor = mix(deepViolet, spectrum, .86 + u_energy * .10);
     edgeColor = mix(edgeColor, softWhite, innerGlow * .38 + outerGlow * .13);
     vec3 coreColor = mix(rose, softWhite, .47);
 
-    float halo = exp(-max(0.0, radius - boundary) * 9.0) * (1.0 - smoothstep(boundary - .01, boundary + .22, radius));
-    float alpha = (outerGlow * .4 + innerGlow * .2 + veil * .25 + ribbon * .1 + signalRing * .075 + halo * .065 + core * .11) * pulse;
-    alpha *= 1.0 - smoothstep(.16, .45, radius);
+    /* Aureola: dalszy zasięg (9.0 -> 6.4) i szersza bramka wygaszania. */
+    float halo = exp(-max(0.0, radius - boundary) * 6.4) * (1.0 - smoothstep(boundary - .01, boundary + .30, radius));
+    float alpha = (outerGlow * .52 + innerGlow * .22 + veil * .25 + ribbon * .1 + signalRing * .075 + halo * .13 + core * .13) * pulse;
+    /* ZASIĘG: alpha gaśnie do zera przy 0,47 promienia zamiast 0,45 — przy
+       slocie 780px to 23px marginesu od krawędzi, czyli blob dalej nie dotyka
+       boków slotu (kontrakt ujemnych marginesów w Hero.tsx). */
+    alpha *= 1.0 - smoothstep(.17, .47, radius);
     alpha *= .88 + u_progress * .08;
 
-    vec3 rgb = edgeColor * (outerGlow * .48 + innerGlow * .29 + veil * .23 + ribbon * .10);
+    vec3 rgb = edgeColor * (outerGlow * .62 + innerGlow * .29 + veil * .23 + ribbon * .10);
     rgb += coreColor * core * (.24 + u_energy * .1);
-    rgb += rose * innerMist * .062;
-    rgb += spectrum * (ribbon * .05 + signalRing * .065 + outerGlow * .03);
+    rgb += rose * innerMist * .11;
+    rgb += spectrum * (ribbon * .05 + signalRing * .065 + outerGlow * .07);
     rgb += (hash(gl_FragCoord.xy + u_time) - .5) / 255.0;
-    alpha = clamp(alpha, 0.0, .82);
+    /* Sufit krycia .82 -> .94: blob przestaje być prześwitującą mgiełką. */
+    alpha = clamp(alpha, 0.0, .94);
     gl_FragColor = vec4(max(rgb, vec3(0.0)) * alpha, alpha);
   }
 `;

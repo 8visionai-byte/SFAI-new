@@ -72,11 +72,27 @@
     --space-10: 8rem; /* 128px */
     --space-11: 10rem; /* 160px */
 
-    --section-y: clamp(4rem, 8vw, 8rem);
-    --section-y-tight: clamp(3rem, 5vw, 5rem);
+    /* v9 pkt 1 (NAJWAŻNIEJSZA uwaga właściciela: „przerwy między sekcjami są
+       gigantyczne, to jest dramat, powtarza się na każdej sekcji").
+       POMIARY raporty/pomiary-odstepy-v9.md §1 i §3, desktop 1440px:
+         przerwa = padding-bottom sekcji A + blok separatora + padding-top sekcji B
+         było: 151,2 + 109,2 + 115,2 = 375,6 px (mediana, 8 z 15 par)
+         wzorzec infinitytechstack.uk: 48 + 13,2 + 48 = 109,2 px na KAŻDEJ granicy
+       Byliśmy 3,44x szerzej niż wzorzec. Schodzimy do ok. 1,4x, a nie do 1,0x —
+       właściciel prosił wprost: „nie zbić wszystkiego na płasko, ma być oddech,
+       ale proporcjonalny". Trzy rejestry ZOSTAJĄ i zachowują swoje proporcje
+       (były 0,63 : 1 : 1,31, są 0,67 : 1 : 1,33 — po zaokrągleniu na siatkę 8px).
+       Nowe wartości przy 1440px: tight 32, md 48, loose 64 (było 72 / 115,2 / 151,2).
+       Nowe wartości przy 390px:  tight 24, md 32, loose 44 (było 48 / 64 / 88).
+       Środkowy człon clampa dobrany tak, żeby maksimum wypadało dokładnie przy
+       1440px (3,35vw * 1440 = 48,2; 2,25vw * 1440 = 32,4; 4,5vw * 1440 = 64,8).
+       Drugą połowę przerwy (marginesy separatora, 96 px na parę) ścina reguła
+       „SEPARATOR SIEDZI BLISKO TREŚCI" przy bloku .inf-divider na końcu pliku. */
+    --section-y: clamp(2rem, 3.35vw, 3rem); /* 32 -> 48px */
+    --section-y-tight: clamp(1.5rem, 2.25vw, 2rem); /* 24 -> 32px */
     /* Trzeci rejestr pionowy (redesign „Płyta na kalce"): rozdziały aktów
-       oddychają szerzej niż zwykła sekcja — 88 -> 160px. */
-    --section-y-loose: clamp(5.5rem, 10.5vw, 10rem);
+       oddychają szerzej niż zwykła sekcja — 44 -> 64px. */
+    --section-y-loose: clamp(2.75rem, 4.5vw, 4rem); /* 44 -> 64px */
 
     /* ---- Layout ----
        Osie szerokości (kontrakt redesignu): tekst/kapsuła = narrow (760),
@@ -2762,10 +2778,17 @@ html.lenis body {
      pod spodem, „przyciemnioną"): rgba(10,10,16,.72) + backdrop-blur 24px
      + jasna obwódka (border-light wzorca = biel 10%). Blur WYŁĄCZNIE ≥1024px
      (żelazna zasada perf mobile; poniżej dropdown i tak nie istnieje w DOM
-     nav mobile — pełny panel hamburgera ma solidne tło). */
+     nav mobile — pełny panel hamburgera ma solidne tło).
+     v9 pkt 5 (cytat: „za mocno jest prześwitujący, widzimy za dużo, przebija
+     się tło. Trzeba jakieś 10 procent zwiększyć kontrastu na ciemniejszy"):
+     krycie 0,72 -> 0,82, czyli dokładnie 10 punktów procentowych, o które
+     prosił właściciel. Reszta panelu bez zmian (blur 24px, obwódka biel 10%).
+     KONTRAST idzie w GÓRĘ, nie w dół: panel ciemnieje, a tekst zostaje jasny,
+     więc policzone przy .72 wartości badge'ów (#a78bfa ≈ 6,6:1, reszta ≥7:1)
+     są teraz progiem dolnym, nie sufitem. */
   @media (min-width: 1024px) {
     .inf-dd {
-      background-color: rgba(10, 10, 16, 0.72);
+      background-color: rgba(10, 10, 16, 0.82);
       -webkit-backdrop-filter: blur(24px);
       backdrop-filter: blur(24px);
       border-color: rgba(255, 255, 255, 0.1);
@@ -2784,10 +2807,15 @@ html.lenis body {
   .inf-dd-row:hover {
     background-color: var(--surface-hover);
   }
+  /* v9 pkt 5 (cytat: „te napisy są za grubo pisane, dobierz cieńszą czcionkę,
+     bo to wygląda za grube"): waga nazwy usługi 600 -> 500, czyli JEDEN stopień
+     w dół. Inter jest wczytany w 400/500/600/700 (app/layout.tsx), więc 500 to
+     realny krój, nie syntetyczne pogrubienie. Rozmiar (16px) i kolor (--fg)
+     zostają — cieńszy ma być glif, nie kontrast. */
   .inf-dd-title {
     display: block;
     font-size: var(--fs-body-sm);
-    font-weight: 600;
+    font-weight: 500;
     color: var(--fg);
     transition: color var(--dur-fast) var(--ease-out);
   }
@@ -2890,6 +2918,110 @@ html.lenis body {
     border-color: color-mix(in srgb, var(--chip-c) 55%, transparent);
     background-color: rgba(255, 255, 255, 0.04);
     background-color: color-mix(in srgb, var(--chip-c) 12%, transparent);
+  }
+
+  /* v9 pkt 7, TYLKO KOLOR (cytat: „one są takie wyszarzone, te kolory obok
+     voicebota są za blade, nie mają takiego jarzenia" + „mają jarzyć się jak
+     liczniki po prawej stronie"). TREŚCI CHIPÓW NIE RUSZAMY — czeka na decyzję
+     właściciela (spec v9 §PYTANIA).
+     WZORZEC WEWNĘTRZNY = .inf-counter-value, czyli licznik, który właściciel
+     chwali: kolor w PEŁNYM nasyceniu + `text-shadow: 0 0 12px currentColor`.
+     Chip miał dotąd tekst --fg-muted (#7a7a9e, szarofiolet) i kolor tylko
+     w obwódce — stąd „wyszarzone".
+     ZAKRES: selektor łapie wyłącznie chipy, które SAME deklarują swój kolor
+     (`style="--chip-c: ..."`). Od v10 to JUŻ TYLKO ServiceHero: z hero strony
+     głównej trzy chipy zaufania wyleciały (zastąpiły je .inf-stat-chip
+     z liczbami), reguła zostaje żywa dla podstron usług. Chipy-podpowiedzi
+     w oknie czatu (components/demo/ChatAgent.tsx) nie mają --chip-c, więc
+     zostają dokładnie takie, jak były.
+     KONTRAST ZMIERZONY NA PIKSELACH zrzutu 1440x900 z produkcyjnego builda
+     (nie policzony z hexa: wewnątrz pigułki tło podbija i mgławica tła, i sama
+     poświata liter, więc rachunek z surowego koloru kłamie na korzyść):
+       „Twoje dane zostają w UE" #2B7CFF -> rgb(102,161,255) na rgb(14,27,55) = 6,59:1 ✓
+       „RODO i AI Act"           #7A3CF0 -> rgb(159,115,244) na rgb(26,15,50) = 5,38:1 ✓
+       „Płacisz za efekt"        #22E06B -> rgb(96,233,148)  na rgb(10,38,27) = 10,40:1 ✓
+     Próg dla 12px to AA 4,5:1 — jest zapas na każdym chipie.
+     DLATEGO 72% KOLORU + 28% BIELI, A NIE 100%: goły #7A3CF0 daje na tle chipa
+     3,4:1, czyli PONIŻEJ progu. Domieszka bieli podnosi jasność, zostawiając
+     odcień — tak samo działa fluorescencyjna paleta odcieni v4 (#a78bfa,
+     #f472b6, #67e8f9), która na tej stronie już świeci.
+     DLATEGO POŚWIATA 55%, A NIE PEŁNY currentColor JAK W LICZNIKU: licznik stoi
+     na gołym tle strony, a chip ma własne pudełko 12% koloru. Halo w pełnym
+     kryciu rozjaśniało TŁO POD LITERAMI wewnątrz pigułki i chip fioletowy
+     spadał do 4,39:1 (zmierzone). 55% zostawia jarzenie, a nie zjada kontrastu. */
+  .inf-chip[style*='--chip-c'] {
+    color: color-mix(in srgb, var(--chip-c) 72%, #fff);
+    text-shadow: 0 0 12px currentColor;
+    text-shadow: 0 0 12px color-mix(in srgb, var(--chip-c) 55%, transparent);
+    border-color: color-mix(in srgb, var(--chip-c) 70%, transparent);
+  }
+
+  /* ── .inf-stat-chip — ŚWIECĄCY CHIP Z LICZBĄ (v10, lewe skrzydło hero).
+     Cytat właściciela: „muszą MOCNIEJ ŚWIECIĆ, takie świecące (...) mają jarzyć
+     się jak liczniki po prawej stronie". Dlatego liczba NIE dostaje własnej
+     reguły koloru: jedzie na .inf-counter-value (mono 700, pełne nasycenie,
+     `text-shadow: 0 0 12px currentColor`), a chip podaje jej swój kolor przez
+     --counter-c. Pudełko dokłada obwódkę, tinted tło i halo box-shadow.
+
+     KONTRAST (policzony na SKOMPONOWANYM tle, nie z gołego hexa: tło chipa to
+     8% koloru na --bg #06060c, czyli najjaśniejszy przypadek = cyjan, L≈0,0082):
+       liczba #00f0ff        12,8:1 ✓   liczba #ff007f  4,77:1 ✓
+       liczba var(--metal-green) 9,4:1 ✓ liczba var(--warning) 8,9:1 ✓
+       opis --fg #e4e4f0     13,2:1 ✓
+       podpis (mix muted+fg)  6,6:1 ✓
+     DLATEGO TINT 8%, A NIE 12% JAK W .inf-chip: przy 12% samo --fg-muted
+     spadało na 4,18:1, czyli pod próg AA dla 11px. Zamiast osłabiać kolor,
+     osłabiamy tło i podbijamy podpis domieszką --fg.
+     DLATEGO PODPIS NIE JEST NA --fg-subtle: to token DEKORACYJNY (~2,5:1),
+     a nazwa instytucji i rok to treść (żelazna zasada „zero liczb bez źródła").
+     LICZBA MA ≥19px I WAGĘ 700 (czyli „duży tekst" WCAG, próg 3:1), ale i tak
+     każdy z czterech kolorów przechodzi próg 4,5:1 dla małego tekstu. */
+  .inf-stat-chip {
+    --stat-c: var(--accent);
+    /* Kontrakt .inf-counter-value: liczba bierze kolor chipa. */
+    --counter-c: var(--stat-c);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0.4375rem 0.625rem; /* 7 / 10px — słupek czterech chipów musi zmieścić
+                                    się w wysokości bloba, patrz Hero.tsx */
+    border-radius: var(--radius-sm);
+    border: 1px solid color-mix(in srgb, var(--stat-c) 55%, transparent);
+    background-color: color-mix(in srgb, var(--stat-c) 8%, transparent);
+    box-shadow:
+      0 0 16px color-mix(in srgb, var(--stat-c) 16%, transparent),
+      inset 0 0 10px color-mix(in srgb, var(--stat-c) 7%, transparent);
+    /* Hero jest text-center; chip czyta się jak wpis, więc wraca do lewej. */
+    text-align: left;
+  }
+  /* Liczba chipa jest o stopień mniejsza niż w pasku liczników (22-28px): cztery
+     chipy muszą zmieścić się w słupku obok bloba. 19px przy wadze 700 to dalej
+     „duży tekst" WCAG. */
+  .inf-stat-chip .inf-counter-value {
+    font-size: clamp(1.1875rem, 1.5vw, 1.375rem); /* 19 -> 22px */
+  }
+  .inf-stat-chip-opis {
+    font-size: 0.75rem; /* 12px */
+    line-height: 1.3;
+    color: var(--fg);
+  }
+  /* SELEKTOR DWUKLASOWY CELOWO (0,2,0), nie samo .inf-stat-chip-zrodlo: podpis
+     jedzie RAZEM z .inf-counter-label (mono micro-caps), a tamta klasa stoi
+     NIŻEJ w tym pliku. Przy równej specyficzności (0,1,0) wygrywała kolejność
+     i podpis zostawał 11px w --fg-muted — zmierzone w realnym Chrome, nie
+     zgadnięte. Tailwind spłaszcza @layer, więc kolejność rozstrzyga naprawdę. */
+  .inf-stat-chip .inf-stat-chip-zrodlo {
+    font-size: 0.625rem; /* 10px — „mikroskopijny podpis" z decyzji */
+    /* Podpis to TREŚĆ (instytucja + rok), nie dekoracja: gołe --fg-muted na
+       tinted tle chipa schodzi w okolice 4,5:1, czyli na styk progu AA dla
+       10px. Domieszka --fg podnosi to do ~7:1, zostawiając podpis wyraźnie
+       ciemniejszym od opisu (13-16:1) i od liczby. */
+    color: color-mix(in srgb, var(--fg-muted) 70%, var(--fg));
+  }
+  /* Kropkowane podkreślenie <abbr> w 10-pikselowym podpisie robi wyłącznie szum;
+     pełna nazwa instytucji zostaje w title (dla czytnika i dla modelu AI). */
+  .inf-stat-chip abbr {
+    text-decoration: none;
   }
 
   /* ── .inf-tag — mono tag w ramce (rząd tagów na kartach wzorca). */
@@ -3979,13 +4111,22 @@ html.lenis body {
   .inf-card .inf-overline,
   .inf-card .inf-tag,
   .inf-dd-badge,
-  .inf-card:hover .inf-arrow {
+  .inf-card:hover .inf-arrow,
+  /* v9 pkt 7: jarzenie chipów zaufania gaśnie razem z resztą poświat. */
+  .inf-chip[style*='--chip-c'] {
     text-shadow: none;
   }
   .inf-nav-link:hover,
   .inf-nav-link[aria-expanded='true'],
   .inf-nav-link[aria-current] {
     box-shadow: none;
+  }
+  /* v10: halo chipów z liczbami gaśnie jak reszta poświat; zostaje systemowa
+     ramka i systemowe kolory tekstu (glow samej liczby gasi reguła
+     .inf-counter-value na końcu pliku). */
+  .inf-stat-chip {
+    box-shadow: none;
+    background-color: transparent;
   }
   /* v5: świecenie liter CTA znika w trybie wysokiego kontrastu — zostają
      systemowe kolory tekstu i ramka. */
@@ -4026,6 +4167,33 @@ html.lenis body {
   max-width: var(--container-max); /* wzorzec: 1120px = jego kontener */
   margin: 0 auto;
   padding: 0 var(--gutter); /* wzorzec: 0 1.5rem */
+}
+
+/* ── SEPARATOR SIEDZI BLISKO TREŚCI (v9 pkt 1, cytat: „separator wisi samotnie
+   w środku wielkiej dziury").
+   POMIAR (raporty/pomiary-odstepy-v9.md §1): opakowanie separatora niesie
+   `my-6 md:my-7`, a to NIE jest domyślna skala Tailwinda — --space-6 = 32px,
+   --space-7 = 48px. Przy 1440px dawało to 48 + 13,2 + 48 = 109,2 px, czyli
+   sam blok separatora był tak duży, jak CAŁA przerwa międzysekcyjna wzorca.
+   Schodzimy na --space-3 / --space-4 (12 i 16px): blok separatora = 41,2 px
+   mobile i 45,2 px desktop. Pasek dostaje ok. 1/3 oddechu sekcji, więc widać,
+   CO rozdziela, zamiast wisieć w pustce.
+   DLACZEGO TUTAJ, A NIE W KOMPONENCIE: margines niesie opakowanie w
+   components/ui/SekcjaSeparator.tsx, a ten plik jest w innej partii tej rundy.
+   Selektor `div:has(> .inf-divider)` trafia dokładnie w to opakowanie i nic
+   więcej (jedyny konsument klasy). SWOISTOŚĆ: (0,1,1) — :has() bierze wagę
+   najmocniejszego argumentu (.inf-divider = klasa), plus element `div`. Bije
+   utility `.my-6` i `.md\:my-7` (obie (0,1,0)) niezależnie od kolejności
+   w arkuszu, więc nie zależymy od tego, gdzie Tailwind wstawi warstwę utilities.
+   DEGRADACJA: silnik bez :has() (Firefox < 121) zostaje przy 32/48px, czyli
+   przy starym, większym odstępie — układ się nie psuje, jest tylko luźniejszy. */
+div:has(> .inf-divider) {
+  margin-block: var(--space-3); /* 12px */
+}
+@media (min-width: 768px) {
+  div:has(> .inf-divider) {
+    margin-block: var(--space-4); /* 16px */
+  }
 }
 .inf-divider-line {
   flex: 1;

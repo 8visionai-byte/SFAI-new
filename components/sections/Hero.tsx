@@ -1,4 +1,3 @@
-import type { CSSProperties } from 'react';
 import { Section, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { WritingHeadline } from '@/components/motion/WritingHeadline';
@@ -10,6 +9,7 @@ import { VoiceAura } from '@/components/motion/VoiceAura';
 import { POSITIONING, HOME_CTA } from '@/lib/site';
 import { HeroPersonaCycler } from './HeroPersonaCycler';
 import { HeroLiczniki } from './HeroLiczniki';
+import { HeroDaneRynku } from './HeroDaneRynku';
 
 /**
  * SEKCJA 1 — HERO (spec 06 §"CZĘŚĆ 1", WARIANT A "Działa, nie gada" — REKOMENDOWANY).
@@ -17,7 +17,8 @@ import { HeroLiczniki } from './HeroLiczniki';
  * Kolejność pionowa (spec v3 §HERO) = KOLEJNOŚĆ W DOM, niezmieniona do dziś:
  * slot wielkiej animacji (dziś blob voice agenta) pod paskiem nav → overline
  * mono z liniami → H1 (maszyna pisania NIETYKALNA, tylko wyśrodkowana) → lead →
- * chipy zaufania → CTA-pigułki → pasek liczników z rejestrów → persona → trasa.
+ * chipy z danymi rynku (v10: były chipy zaufania) → CTA-pigułki → pasek
+ * liczników z rejestrów → persona → trasa.
  *
  * INFINITY v7 §PARTIA C pkt 1: od 1024px ta sama kolejność DOM jest złożona
  * w PAS TRÓJDZIELNY — chipy | blob | liczniki w jednym rzędzie gridu, reszta
@@ -102,30 +103,85 @@ export function Hero() {
             trochę większe, zaznaczyłem na screenshocie" — czerwona elipsa
             ~2x obecnego bloba): SLOT URÓSŁ 420 -> clamp(440,44vw,620)px na
             desktopie i 300 -> 420px na mobile.
-            DLACZEGO CLAMP, A NIE SZTYWNE 620: środkowa kolumna pasa jest
-            `auto`, więc szerokość bloba zabiera miejsce skrzydłom. Przy
-            1024px kontener ma 929px, więc sztywne 620 zostawiłoby chipom po
-            122px (chip „Twoje dane zostają w UE" ma ~190px) i pas by się
-            rozjechał. clamp(440px, 44vw, 620px) daje 440px przy 1024
-            (skrzydła po ~212px), pełne 620px od ~1409px w górę.
             ILE REALNIE UROSŁA ANIMACJA: shader rysuje blob o średnicy
             0,464 x WYSOKOŚĆ slotu (boundary 0.232 w VoiceAura, uv liczone
-            po wysokości), czyli 195px -> 288px. Powierzchnia x2,2, dokładnie
-            rząd „dwa razy większe" z zaznaczenia Pawła.
-            UJEMNE MARGINESY (-16/-64 mobile, -40/-96 desktop): zewnętrzny
-            pierścień slotu jest fizycznie PRZEZROCZYSTY (alpha shadera gaśnie
-            do zera przy 0,45 promienia), więc gdyby slot płacił pełną
-            wysokość w układzie, powiększenie bloba zepchnęłoby H1 pod fold.
-            Ujemne marginesy oddają ten pusty pierścień układowi: blob wjeżdża
-            wyżej (górny), a overline i H1 podchodzą pod niego (dolny). Efekt
-            zmierzony w realnym Chrome 1440x900: H1 startuje na 634px zamiast
-            681px sprzed zmiany, czyli maszyna pisania (LCP) jest WYŻEJ, mimo
-            że animacja urosła 1,5x. Górnego marginesu nie da się zwiększyć
-            bez wjechania świecenia pod pigułkę nav: przy -40px pierwszy
-            malowany piksel bloba wypada 19px pod paskiem.
-            SZEROKOŚĆ MOBILE: w-full + max-w-[420px], więc przy 375px slot ma
-            szerokość kontenera i NIE MA szans na poziomy scroll. */}
-        <div className="relative mx-auto -mb-[64px] -mt-[16px] h-[420px] w-full max-w-[420px] lg:col-start-2 lg:row-start-1 lg:-mb-[96px] lg:-mt-[40px] lg:h-[clamp(440px,44vw,620px)] lg:w-[clamp(440px,44vw,620px)] lg:max-w-none">
+            po wysokości), czyli 195px -> 288px.
+            UJEMNE MARGINESY: zewnętrzny pierścień slotu jest fizycznie
+            PRZEZROCZYSTY (alpha shadera gaśnie do zera przy ~0,47 promienia),
+            więc gdyby slot płacił pełną wysokość w układzie, powiększenie
+            bloba zepchnęłoby H1 pod fold. Ujemne marginesy oddają ten pusty
+            pierścień układowi: blob wjeżdża wyżej (górny), a overline i H1
+            podchodzą pod niego (dolny).
+
+            v9 §6 (cytaty Pawła: „za mały jest tutaj nasz voicebot, powinien
+            być troszkę większy", „poświatę dać bardziej różowawą, bardziej
+            rażącą, żeby nie był taki blady"): SLOT DESKTOP 620 -> 780px.
+            POMIAR PRZED (realny Chrome 1440x900, headless CDP): slot 620x620
+            w x 403, chip „Twoje dane zostają w UE" 192px, lewe skrzydło pasa
+            218px, H1 na y 634.
+            DLACZEGO clamp(560px, 54vw, 780px) I DLACZEGO -mx-[80px]:
+            środkowa kolumna pasa jest `auto`, więc szerokość bloba zabiera
+            miejsce skrzydłom, a chip ma ZMIERZONE 192px. Same 780px zostawiłyby
+            skrzydłom po 148px i pas by się rozjechał. Ujemny margines poziomy
+            oddaje kolumnie tylko 780-160 = 620px (czyli dokładnie tyle, ile
+            zajmowała przed zmianą), więc skrzydła mają dalej po 218px, a blob
+            wystaje w NIEWIDOCZNY sposób: 80px od krawędzi slotu to promień
+            ~0,45 wysokości, gdzie alpha shadera jest już przy zerze.
+            PION: -mt 56 / -mb 128 (zamiast 40/96) — to ten sam UDZIAŁ pustego
+            pierścienia co dotąd, przeliczony na większy slot. Z progu alfy
+            shadera (gaśnie przy 0,47 promienia) wychodzi, że pierwszy malowany
+            piksel bloba wypada 7px pod pigułką nav przy 1440px i równo pod nią
+            przy 1024px, więc świecenie nie wchodzi pod pasek. Odstęp między
+            indeksem „Żywa modulacja" a overline: zmierzone 69px po zmianie
+            wobec 65px przed nią, czyli rytm bez zmian.
+            CENA ZMIANY, ZMIERZONA: H1 startuje na y 736 zamiast 634 (+102px).
+            Tyle kosztuje blob większy o 150px wysokości — proporcja pustego
+            pierścienia jest stała, więc nie da się tego oddać bez wjechania
+            świeceniem pod nav. H1 dalej pada w pierwszym kadrze 1440x900
+            (736 < 900), czyli element LCP zostaje ten sam.
+            MOBILE BEZ ZMIAN GEOMETRII (h-420, w-full, max-w-420): LCP maszyny
+            pisania jest święte, a Paweł prosił o większy blob „tutaj", czyli na
+            desktopie. Mobile dostaje wyłącznie mocniejszą poświatę (shader +
+            flow-core.css), która nie kosztuje ani piksela układu.
+            SZEROKOŚĆ MOBILE: w-full + max-w-[420px], więc przy 375px i 320px
+            slot ma szerokość kontenera i NIE MA szans na poziomy scroll
+            (zmierzone: scrollWidth == clientWidth na obu).
+
+            v10 §1 — BLOB SKALUJE SIĘ TEŻ DO WYSOKOŚCI OKNA (bloker: H1
+            z maszyną pisania, czyli sygnatura marki i element LCP, wypadł poza
+            pierwszy ekran). PRZYCZYNA: `clamp(560px,54vw,780px)` pytało
+            WYŁĄCZNIE o szerokość okna, więc na niskim i szerokim laptopie blob
+            rósł, choć brakowało wysokości.
+            ZMIERZONE PRZED (realny Chrome, headless CDP, produkcyjny build):
+              1440x900  blob 770  H1 dół 922 = 22px POD krawędzią ekranu
+              1366x768  blob 730  H1 dół 882 = 114px POD krawędzią
+              1280x800  blob 683  H1 dół 836 = 36px POD krawędzią
+            czyli na najpopularniejszym laptopie widać było górne połówki liter.
+            FIX: `min(54vw, 75vh, 780px)`. Człon 75vh jest nowy i to on ratuje
+            fold; 54vw zostaje bez zmian (te same szerokości co dotąd), 780px
+            zostaje sufitem, więc na dużych monitorach blob ma być dalej duży
+            (1920x1080 → 780, 1440x1080 → 770, czyli zakres 700-780 z zadania).
+            SKĄD 75%: slot płaci układowi (h - 56 - 128), a dolna krawędź H1
+            przesuwa się 1:1 za wysokością slotu. Z pomiarów wyszły progi
+            728px (900), 596px (768) i 627px (800) dla zapasu 20px; 0,75 daje
+            675 / 576 / 600, czyli zapas z rezerwą na każdym z nich.
+            PODŁOGA 360px: bardzo niskie okno (np. 1280x400) nie ma zamieniać
+            bloba w kropkę. Stary dolny próg 560px MUSIAŁ zniknąć — sam
+            unieważniłby zjazd na 768px.
+            DLACZEGO vh, A NIE dvh: browserslist repo dopuszcza Chrome 100,
+            a dvh wchodzi dopiero w 108. Nieznana jednostka wywala CAŁE min(),
+            slot zostałby wtedy na wysokości mobilnej. Na desktopie vh i dvh
+            i tak są tożsame.
+            MARGINESY BEZ ZMIAN (-56 / -128 / -80): to są ODLEGŁOŚCI, nie
+            proporcje — górny trzyma dystans bloba od pigułki nav, dolny odstęp
+            do overline, poziomy oddaje kolumnie pasa przezroczysty pierścień.
+            Skutek uboczny na plus: mniejszy blob = szersze skrzydła pasa
+            (zmierzone 218px → 260px przy 1440x900), a właśnie tam wjeżdżają
+            czterolinijkowe chipy z danymi.
+            MOBILE NIETKNIĘTE (h-420 + w-full + max-w-420): geometria mobile
+            została zatwierdzona przez właściciela w v9, a LCP maszyny pisania
+            jest święte. */}
+        <div className="relative mx-auto -mb-[64px] -mt-[16px] h-[420px] w-full max-w-[420px] lg:col-start-2 lg:row-start-1 lg:-mx-[80px] lg:-mb-[128px] lg:-mt-[56px] lg:[--blob:clamp(360px,min(54vw,75vh),780px)] lg:h-[var(--blob)] lg:w-[var(--blob)] lg:max-w-none">
           <VoiceAura />
         </div>
 
@@ -159,25 +215,20 @@ export function Hero() {
           </p>
         </Reveal>
 
-        {/* LEWE SKRZYDŁO PASA (v7): mono-chipy zaufania (.inf-chip, fundament).
-            Frazy 1:1 z sekcji PasekZaufania (tytuł filaru 1, fragment opisu filaru 1,
-            tytuł filaru 3) — ZERO nowych treści. Kolory obwódek = trasa marki
-            (dekoracja przez --chip-c; tekst chipa = --fg-muted, AA bez zmian).
-            ≥1024px: kolumna 1 pasa, wyśrodkowana pionowo względem bloba (self-center)
-            i ustawiona w słupek (flex-col). Poniżej 1024px: rząd pod leadem jak dotąd. */}
-        <Reveal eager delay={0.1} className="lg:col-start-1 lg:row-start-1 lg:self-center">
-          <ul className="mt-6 flex flex-wrap justify-center gap-2 lg:mt-0 lg:flex-col lg:items-center lg:gap-3">
-            <li className="inf-chip" style={{ '--chip-c': '#2B7CFF' } as CSSProperties}>
-              Twoje dane zostają w UE
-            </li>
-            <li className="inf-chip" style={{ '--chip-c': '#7A3CF0' } as CSSProperties}>
-              RODO i AI Act
-            </li>
-            <li className="inf-chip" style={{ '--chip-c': '#22E06B' } as CSSProperties}>
-              Płacisz za efekt
-            </li>
-          </ul>
-        </Reveal>
+        {/* LEWE SKRZYDŁO PASA — v10 §2: CZTERY ŚWIECĄCE CHIPY Z LICZBAMI
+            (HeroDaneRynku). Trzy mono-chipy zaufania („Twoje dane zostają w UE",
+            „RODO i AI Act", „Płacisz za efekt") ZNIKAJĄ stąd na wprost polecenie
+            właściciela („z tej głównej strony chcę to wyciągnąć (...) są za
+            słabe"). Te frazy NIE giną ze strony: dalej niosą je PasekZaufania
+            i ServiceHero — tam nic nie ruszamy.
+            Każda nowa liczba ma źródło i rok PRZY sobie (GUS / Eurostat / PIE),
+            dane z raporty/plan-dane-problem.md.
+            ≥1024px: kolumna 1 pasa, wyśrodkowana pionowo względem bloba
+            (self-center). Poniżej 1024px: blok pod leadem, czyli POD blobem,
+            jak dotąd — kolejność DOM bez zmian. */}
+        <div className="lg:col-start-1 lg:row-start-1 lg:self-center">
+          <HeroDaneRynku />
+        </div>
 
         {/* CTA-PIGUŁKI OBOK SIEBIE (spec v3 §HERO pkt 7) + mikrokopia pod spodem.
             Primary = istniejący CTA (HOME_CTA.label 1:1) jako .inf-glow-cta na

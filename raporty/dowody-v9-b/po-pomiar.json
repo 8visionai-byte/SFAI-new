@@ -1,0 +1,547 @@
+{
+  "etykieta": "po",
+  "kiedy": "2026-08-07T22:42:47.400Z",
+  "widoki": {
+    "desktop-1440": {
+      "viewport": {
+        "w": 1440,
+        "h": 900
+      },
+      "poziomyScroll": {
+        "scrollW": 1425,
+        "clientW": 1425,
+        "bodyScrollW": 1425,
+        "jestScroll": false
+      },
+      "blob": {
+        "slot": {
+          "x": 328,
+          "y": 48,
+          "w": 770,
+          "h": 770
+        },
+        "slotKlasy": "relative mx-auto -mb-[64px] -mt-[16px] h-[420px] w-full max-w-[420px] lg:col-start-2 lg:row-start-1 lg:-mx-[80px] lg:-mb-[128px] lg:-mt-[56px] lg:h-[clamp(560px,54vw,780px)] lg:w-[clamp(560px,54vw,780px)] lg:max-w-none",
+        "slotMargines": {
+          "marginTop": "-56px",
+          "marginBottom": "-128px",
+          "marginLeft": "-80px",
+          "marginRight": "-80px"
+        },
+        "canvas": {
+          "x": 328,
+          "y": 48,
+          "w": 770,
+          "h": 770
+        },
+        "ambient": {
+          "width": "446.297px",
+          "height": "446.297px",
+          "opacity": "0.95",
+          "filter": "blur(27px)"
+        },
+        "trigger": {
+          "x": 657,
+          "y": 377,
+          "w": 112,
+          "h": 112
+        },
+        "label": {
+          "fontSize": "9.28px",
+          "color": "rgb(247, 246, 251)"
+        }
+      },
+      "hero": {
+        "h1": {
+          "x": 153,
+          "y": 736,
+          "w": 1120,
+          "h": 187
+        },
+        "overline": {
+          "x": 393,
+          "y": 702,
+          "w": 640,
+          "h": 18
+        },
+        "chip1": {
+          "x": 168,
+          "y": 342,
+          "w": 192,
+          "h": 28
+        },
+        "chipTekstW": 192,
+        "licznik": {
+          "x": 1136,
+          "y": 232,
+          "w": 49,
+          "h": 53
+        },
+        "sekcjaWys": {
+          "x": 0,
+          "y": 64,
+          "w": 1425,
+          "h": 1532
+        }
+      },
+      "terminal": {
+        "prost": {
+          "x": 333,
+          "y": 5175,
+          "w": 760,
+          "h": 252
+        },
+        "klasy": "mx-auto mt-8 max-w-narrow overflow-hidden rounded-lg border border-border-accent bg-surface-raised shadow-lg",
+        "styl": {
+          "backgroundColor": "rgb(24, 24, 64)",
+          "borderColor": "rgb(0, 240, 255)",
+          "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.08) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.6) 0px 20px 50px 0px",
+          "opacity": "1",
+          "backdropFilter": "none"
+        },
+        "pasek": {
+          "backgroundColor": "rgb(14, 14, 34)"
+        },
+        "cialoTekst": {
+          "tekst": ">dla salonu: odbieram telefon▌",
+          "styl": {
+            "color": "rgb(228, 228, 240)"
+          }
+        }
+      },
+      "nieZgaduj": {
+        "karta": {
+          "x": 223,
+          "y": 4387,
+          "w": 980,
+          "h": 355
+        },
+        "kartaStyl": {
+          "textAlign": "center"
+        },
+        "akapit": {
+          "x": 372,
+          "y": 4508,
+          "w": 681,
+          "h": 89
+        },
+        "kafelek": {
+          "x": 693,
+          "y": 4452,
+          "w": 40,
+          "h": 40
+        },
+        "cta": {
+          "x": 615,
+          "y": 4621,
+          "w": 196,
+          "h": 56
+        },
+        "ctaKlasy": "inline-flex items-center justify-center gap-2 font-sans font-semibold text-ui rounded-sm select-none transition-[transform,background-color,box-shadow,border-color] duration-fast ease-out cursor-pointer sf-press disabled:cursor-not-allowed disabled:pointer-events-none sf-cta bg-accent text-accent-contrast shadow-accent hover:bg-accent-hover hover:-translate-y-px active:translate-y-0 active:scale-[0.97] disabled:bg-[var(--sf-gray-300)] disabled:text-[var(--sf-gray-500)] disabled:shadow-none min-h-[56px] px-6 text-body-sm",
+        "ctaTekst": "Pokaż mi, ile tracę",
+        "ctaStyl": {
+          "backgroundColor": "rgb(0, 240, 255)",
+          "color": "rgb(6, 6, 12)",
+          "borderRadius": "8px",
+          "borderColor": "rgb(229, 231, 235)",
+          "minHeight": "56px"
+        },
+        "odchylenieCTA": 0
+      },
+      "fab": {
+        "prost": {
+          "x": 1326,
+          "y": 801,
+          "w": 68,
+          "h": 68
+        },
+        "styl": {
+          "borderRadius": "34px",
+          "width": "68px",
+          "height": "68px",
+          "backgroundColor": "rgba(13, 11, 18, 0.86)"
+        }
+      },
+      "kursor": {
+        "klasy": "inf-kursor",
+        "styl": {
+          "width": "6px",
+          "height": "6px",
+          "borderRadius": "2px",
+          "backgroundColor": "rgb(0, 240, 255)",
+          "borderWidth": "0px"
+        }
+      }
+    },
+    "mobile-375": {
+      "viewport": {
+        "w": 375,
+        "h": 812
+      },
+      "poziomyScroll": {
+        "scrollW": 375,
+        "clientW": 375,
+        "bodyScrollW": 375,
+        "jestScroll": false
+      },
+      "blob": {
+        "slot": {
+          "x": 20,
+          "y": 80,
+          "w": 335,
+          "h": 420
+        },
+        "slotKlasy": "relative mx-auto -mb-[64px] -mt-[16px] h-[420px] w-full max-w-[420px] lg:col-start-2 lg:row-start-1 lg:-mx-[80px] lg:-mb-[128px] lg:-mt-[56px] lg:h-[clamp(560px,54vw,780px)] lg:w-[clamp(560px,54vw,780px)] lg:max-w-none",
+        "slotMargines": {
+          "marginTop": "-16px",
+          "marginBottom": "-64px",
+          "marginLeft": "0px",
+          "marginRight": "0px"
+        },
+        "canvas": {
+          "x": 20,
+          "y": 80,
+          "w": 335,
+          "h": 420
+        },
+        "ambient": {
+          "width": "227.797px",
+          "height": "227.797px",
+          "opacity": "0.95",
+          "filter": "blur(22px)"
+        },
+        "trigger": {
+          "x": 149,
+          "y": 251,
+          "w": 78,
+          "h": 78
+        },
+        "label": {
+          "fontSize": "7.36px",
+          "color": "rgb(247, 246, 251)"
+        }
+      },
+      "hero": {
+        "h1": {
+          "x": 20,
+          "y": 500,
+          "w": 335,
+          "h": 153
+        },
+        "overline": {
+          "x": 20,
+          "y": 448,
+          "w": 335,
+          "h": 36
+        },
+        "chip1": {
+          "x": 28,
+          "y": 1036,
+          "w": 192,
+          "h": 28
+        },
+        "chipTekstW": 192,
+        "licznik": {
+          "x": 45,
+          "y": 1516,
+          "w": 49,
+          "h": 46
+        },
+        "sekcjaWys": {
+          "x": 0,
+          "y": 64,
+          "w": 375,
+          "h": 1821
+        }
+      },
+      "terminal": {
+        "prost": {
+          "x": 20,
+          "y": 6909,
+          "w": 335,
+          "h": 208
+        },
+        "klasy": "mx-auto mt-8 max-w-narrow overflow-hidden rounded-lg border border-border-accent bg-surface-raised shadow-lg",
+        "styl": {
+          "backgroundColor": "rgb(24, 24, 64)",
+          "borderColor": "rgb(0, 240, 255)",
+          "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.08) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.6) 0px 20px 50px 0px",
+          "opacity": "1",
+          "backdropFilter": "none"
+        },
+        "pasek": {
+          "backgroundColor": "rgb(14, 14, 34)"
+        },
+        "cialoTekst": {
+          "tekst": ">dla salonu: odbieram telefon, gdy strz▌",
+          "styl": {
+            "color": "rgb(228, 228, 240)"
+          }
+        }
+      },
+      "nieZgaduj": {
+        "karta": {
+          "x": 20,
+          "y": 6090,
+          "w": 335,
+          "h": 380
+        },
+        "kartaStyl": {
+          "textAlign": "center"
+        },
+        "akapit": {
+          "x": 53,
+          "y": 6179,
+          "w": 269,
+          "h": 178
+        },
+        "kafelek": {
+          "x": 168,
+          "y": 6123,
+          "w": 40,
+          "h": 40
+        },
+        "cta": {
+          "x": 90,
+          "y": 6381,
+          "w": 196,
+          "h": 56
+        },
+        "ctaKlasy": "inline-flex items-center justify-center gap-2 font-sans font-semibold text-ui rounded-sm select-none transition-[transform,background-color,box-shadow,border-color] duration-fast ease-out cursor-pointer sf-press disabled:cursor-not-allowed disabled:pointer-events-none sf-cta bg-accent text-accent-contrast shadow-accent hover:bg-accent-hover hover:-translate-y-px active:translate-y-0 active:scale-[0.97] disabled:bg-[var(--sf-gray-300)] disabled:text-[var(--sf-gray-500)] disabled:shadow-none min-h-[56px] px-6 text-body-sm",
+        "ctaTekst": "Pokaż mi, ile tracę",
+        "ctaStyl": {
+          "backgroundColor": "rgb(0, 240, 255)",
+          "color": "rgb(6, 6, 12)",
+          "borderRadius": "8px",
+          "borderColor": "rgb(229, 231, 235)",
+          "minHeight": "56px"
+        },
+        "odchylenieCTA": 0
+      },
+      "fab": {
+        "prost": {
+          "x": 291,
+          "y": 728,
+          "w": 68,
+          "h": 68
+        },
+        "styl": {
+          "borderRadius": "34px",
+          "width": "68px",
+          "height": "68px",
+          "backgroundColor": "rgba(13, 11, 18, 0.94)"
+        }
+      },
+      "kursor": null
+    },
+    "mobile-320": {
+      "viewport": {
+        "w": 320,
+        "h": 640
+      },
+      "poziomyScroll": {
+        "scrollW": 320,
+        "clientW": 320,
+        "bodyScrollW": 320,
+        "jestScroll": false
+      },
+      "blob": {
+        "slot": {
+          "x": 20,
+          "y": 80,
+          "w": 280,
+          "h": 420
+        },
+        "slotKlasy": "relative mx-auto -mb-[64px] -mt-[16px] h-[420px] w-full max-w-[420px] lg:col-start-2 lg:row-start-1 lg:-mx-[80px] lg:-mb-[128px] lg:-mt-[56px] lg:h-[clamp(560px,54vw,780px)] lg:w-[clamp(560px,54vw,780px)] lg:max-w-none",
+        "slotMargines": {
+          "marginTop": "-16px",
+          "marginBottom": "-64px",
+          "marginLeft": "0px",
+          "marginRight": "0px"
+        },
+        "canvas": {
+          "x": 20,
+          "y": 80,
+          "w": 280,
+          "h": 420
+        },
+        "ambient": {
+          "width": "190.391px",
+          "height": "190.391px",
+          "opacity": "0.95",
+          "filter": "blur(22px)"
+        },
+        "trigger": {
+          "x": 121,
+          "y": 251,
+          "w": 78,
+          "h": 78
+        },
+        "label": {
+          "fontSize": "7.36px",
+          "color": "rgb(247, 246, 251)"
+        }
+      },
+      "hero": {
+        "h1": {
+          "x": 20,
+          "y": 500,
+          "w": 280,
+          "h": 204
+        },
+        "overline": {
+          "x": 20,
+          "y": 448,
+          "w": 280,
+          "h": 36
+        },
+        "chip1": {
+          "x": 64,
+          "y": 1145,
+          "w": 192,
+          "h": 28
+        },
+        "chipTekstW": 192,
+        "licznik": {
+          "x": 81,
+          "y": 1663,
+          "w": 49,
+          "h": 46
+        },
+        "sekcjaWys": {
+          "x": 0,
+          "y": 64,
+          "w": 320,
+          "h": 2044
+        }
+      },
+      "terminal": {
+        "prost": {
+          "x": 20,
+          "y": 7737,
+          "w": 280,
+          "h": 229
+        },
+        "klasy": "mx-auto mt-8 max-w-narrow overflow-hidden rounded-lg border border-border-accent bg-surface-raised shadow-lg",
+        "styl": {
+          "backgroundColor": "rgb(24, 24, 64)",
+          "borderColor": "rgb(0, 240, 255)",
+          "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.08) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.6) 0px 20px 50px 0px",
+          "opacity": "1",
+          "backdropFilter": "none"
+        },
+        "pasek": {
+          "backgroundColor": "rgb(14, 14, 34)"
+        },
+        "cialoTekst": {
+          "tekst": ">dla salonu: odbieram telefon, gdy strzyż▌",
+          "styl": {
+            "color": "rgb(228, 228, 240)"
+          }
+        }
+      },
+      "nieZgaduj": {
+        "karta": {
+          "x": 20,
+          "y": 6766,
+          "w": 280,
+          "h": 469
+        },
+        "kartaStyl": {
+          "textAlign": "center"
+        },
+        "akapit": {
+          "x": 53,
+          "y": 6855,
+          "w": 214,
+          "h": 267
+        },
+        "kafelek": {
+          "x": 140,
+          "y": 6799,
+          "w": 40,
+          "h": 40
+        },
+        "cta": {
+          "x": 62,
+          "y": 7146,
+          "w": 196,
+          "h": 56
+        },
+        "ctaKlasy": "inline-flex items-center justify-center gap-2 font-sans font-semibold text-ui rounded-sm select-none transition-[transform,background-color,box-shadow,border-color] duration-fast ease-out cursor-pointer sf-press disabled:cursor-not-allowed disabled:pointer-events-none sf-cta bg-accent text-accent-contrast shadow-accent hover:bg-accent-hover hover:-translate-y-px active:translate-y-0 active:scale-[0.97] disabled:bg-[var(--sf-gray-300)] disabled:text-[var(--sf-gray-500)] disabled:shadow-none min-h-[56px] px-6 text-body-sm",
+        "ctaTekst": "Pokaż mi, ile tracę",
+        "ctaStyl": {
+          "backgroundColor": "rgb(0, 240, 255)",
+          "color": "rgb(6, 6, 12)",
+          "borderRadius": "8px",
+          "borderColor": "rgb(229, 231, 235)",
+          "minHeight": "56px"
+        },
+        "odchylenieCTA": 0
+      },
+      "fab": {
+        "prost": {
+          "x": 236,
+          "y": 556,
+          "w": 68,
+          "h": 68
+        },
+        "styl": {
+          "borderRadius": "34px",
+          "width": "68px",
+          "height": "68px",
+          "backgroundColor": "rgba(13, 11, 18, 0.94)"
+        }
+      },
+      "kursor": null
+    }
+  },
+  "hoverFab": {
+    "fab": {
+      "w": 154,
+      "h": 68
+    },
+    "fabStyl": {
+      "borderRadius": "34px",
+      "width": "154px",
+      "height": "68px"
+    },
+    "kursorKlasy": "inf-kursor is-widoczny is-nad",
+    "kursorStyl": {
+      "width": "40px",
+      "height": "40px",
+      "borderRadius": "8px",
+      "borderWidth": "1px",
+      "backgroundColor": "rgba(0, 0, 0, 0)"
+    },
+    "kursorProst": {
+      "w": 40,
+      "h": 40
+    }
+  },
+  "zrzuty": {
+    "hero": {
+      "x": 0,
+      "y": 64,
+      "w": 1425,
+      "h": 1532,
+      "sx": 0,
+      "sy": 0
+    },
+    "terminal": {
+      "x": 333,
+      "y": 325,
+      "w": 760,
+      "h": 252,
+      "sx": 0,
+      "sy": 4860
+    },
+    "nie-zgaduj": {
+      "x": 223,
+      "y": 282,
+      "w": 980,
+      "h": 355,
+      "sx": 0,
+      "sy": 4115
+    }
+  }
+}

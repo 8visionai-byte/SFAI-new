@@ -47,6 +47,23 @@
   border: 0;
 }
 
+/* v9 §8 — cytat Pawła: „jak najedzie się na ikonkę rozmowy z chatem, to robi
+   się taki zdupcony owal. Niech to bardziej robi się taki podłużny prostokąt
+   z zaokrąglonymi bokami".
+   CO NAPRAWDĘ ROBIŁO OWAL (pomiar w realnym Chrome, CDP, hover wymuszony
+   zdarzeniem myszy): to NIE jest wskaźnik kursora. Wskaźnik `.inf-kursor`
+   zmierzył się jako 40x40 z border-radius 8px, czyli poprawny kwadracik z v8b.
+   Owal robi SAM FAB: w spoczynku 68x68 z `border-radius: 50%` (koło), a na
+   hover rośnie do 154x68 — i wtedy `50%` znaczy „promień połowy KAŻDEGO boku",
+   czyli elipsa 77x34. Dokładnie ten kształt jest na zrzucie przed zmianą.
+   FIX: promień w PIKSELACH zamiast procentów. 34px = połowa wysokości, więc:
+     - w spoczynku 68x68 z promieniem 34px to nadal DOKŁADNIE to samo koło
+       (zero zmiany wyglądu przycisku w stanie domyślnym),
+     - po rozsunięciu 154x68 wychodzi pigułka o PROSTYCH bokach góra/dół
+       i półkolistych końcach, czyli „podłużny prostokąt z zaokrąglonymi
+       bokami" z cytatu, a nie owal.
+   Wysokość FABa jest stała (68px także w blokach mobilnych niżej), więc 34px
+   trzyma koło na każdej szerokości ekranu. */
 .agent-fab {
   position: fixed;
   z-index: 315;
@@ -57,7 +74,7 @@
   height: 68px;
   place-items: center;
   border: 1px solid rgba(255, 0, 127, .46);
-  border-radius: 50%;
+  border-radius: 34px;
   background: rgba(13, 11, 18, .86);
   color: var(--white);
   box-shadow: 0 0 0 9px rgba(255, 0, 127, .035), 0 18px 60px rgba(0, 0, 0, .4);

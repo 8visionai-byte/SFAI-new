@@ -180,9 +180,29 @@ export function BranzeDemo() {
           tło --surface (#0d1018), obwódka accent, kropki okna w kolorach trasy
           marki (dekoracja aria-hidden, wzorzec infinitytechstack ma je jawnie),
           pasek i status w mono. Treść pisana i wszystkie stringi 1:1.
-          overflow-hidden zostaje (w środku nic nie wystaje poza kadr). */}
+          overflow-hidden zostaje (w środku nic nie wystaje poza kadr).
+
+          v9 §4 (cytat Pawła: „zobacz, jak jest zrobiony. Jest zrobiony tak, że
+          on ma tło nieprzezroczyste"). POMIAR PRZED (realny Chrome 1440x900,
+          CDP): tło okna liczyło się na rgb(17,17,39) przy KRYCIU 1 i bez
+          backdrop-filter, czyli technicznie nic przez nie nie prześwitywało.
+          Problem był WIZUALNY i widać go na zrzucie: korpus #111127 stał ledwie
+          nad tłem strony #06060c (kontrast korpus/strona 1,09:1), a pasek tytułu
+          #0e0e22 był od korpusu praktycznie nieodróżnialny — okno czytało się
+          jak przezroczysta szyba na gwiazdach, nie jak terminal.
+          ZMIANA: korpus wchodzi na --surface-raised #181840, czyli kontrast
+          korpus/strona 1,20:1 (luminancja względna 0,0122 zamiast 0,0067, ponad
+          dwa razy dalej od tła). Dla porównania POMIARY WZORCA §3.1: karty
+          infinitytechstack.uk trzymają 1,04-1,06:1, więc jesteśmy PO stronie
+          mocniejszej separacji, nie słabszej. Pasek tytułu ZOSTAJE na
+          --surface-sunken #0e0e22, więc para „ciemny pasek + jaśniejszy korpus"
+          wreszcie rysuje okno. Cień md -> lg odkleja je od gwiazd.
+          Oba tokeny są NIEPRZEZROCZYSTE (pełne hexy w globals), więc gwiazdy
+          i mgławice fizycznie nie mają którędy przejść.
+          KONTRAST TEKSTU: --fg #e4e4f0 na #181840 = 13,4:1 (było 16,0:1 na
+          #111127) — dalej AAA, zero regresji dostępności. */}
       <Reveal delay={0.1}>
-        <div className="mx-auto mt-8 max-w-narrow overflow-hidden rounded-lg border border-border-accent bg-surface shadow-md">
+        <div className="mx-auto mt-8 max-w-narrow overflow-hidden rounded-lg border border-border-accent bg-surface-raised shadow-lg">
           {/* Pasek okna: kropki + etykieta + status */}
           <div className="flex items-center gap-3 border-b border-hairline bg-surface-sunken px-5 py-3.5">
             {/* Kropki okna terminala — trasa marki zamiast semaforu macOS. */}
