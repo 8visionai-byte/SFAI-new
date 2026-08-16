@@ -43,12 +43,12 @@ export function ChatDemo() {
        karta wzorca). BEZ overflow-hidden — ::before karty siedzi NA krawędzi
        (kontrakt .inf-card w globals.css). Treść 1:1.
        v7 audyt: karta dostaje WŁASNY odcień (--card-c) — bez niego hover
-       świecił domyślnym cyjanem akcentu. #67e8f9 to jaśniejszy odcień
+       świecił domyślnym cyjanem akcentu. #61edff to jaśniejszy odcień
        kategorii „chatboty" z lib/inf-kategorie (okno czatu = chatbot), przez
        co para demo w tej sekcji gra dwoma tonami: czat cyjan, voice violet. */
     <div
       className="inf-card flex flex-col shadow-sm"
-      style={{ '--card-c': '#67e8f9' } as CSSProperties}
+      style={{ '--card-c': '#61edff' } as CSSProperties}
     >
       {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
           pointermove z MotionOrchestrator (desktop). Dekoracja aria-hidden. */}

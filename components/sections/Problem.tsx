@@ -35,12 +35,12 @@ import { HOME_CTA } from '@/lib/site';
    leadu. Kolor + glif to WYŁĄCZNIE dekoracja (kafelek aria-hidden), odcienie
    z fluorescencyjnej palety v4, każdy inny w obrębie siatki. */
 const ZJADACZE: ReadonlyArray<{ t: string; ikona: InfIconName; c: string }> = [
-  { t: 'odbieranie tych samych pytań', ikona: 'chat-dymek', c: '#67e8f9' },
-  { t: 'przepisywanie danych między systemami', ikona: 'dokument-skan', c: '#fbbf24' },
+  { t: 'odbieranie tych samych pytań', ikona: 'chat-dymek', c: '#61edff' },
+  { t: 'przepisywanie danych między systemami', ikona: 'dokument-skan', c: '#ffc120' },
   {
     t: 'oddzwanianie do klientów, którzy nie dodzwonili się za pierwszym razem',
     ikona: 'sluchawka-fala',
-    c: '#a78bfa',
+    c: '#a586ff',
   },
 ] as const;
 
@@ -52,7 +52,9 @@ export function Problem() {
           v5: nagłówek + lead wyśrodkowane (symetria z resztą home). */}
       <div className="mx-auto max-w-narrow text-center">
         <Reveal variant="header">
-          <h2 className="text-h2">Ile czasu w tygodniu zjada Ci robota, którą mógłby robić ktoś inny?</h2>
+          {/* v10 §3: końcówka H2 w gradiencie wzorca (span .inf-grad-text,
+              klasa partii A; data-text pod shimmer ::after). Treść 1:1. */}
+          <h2 className="text-h2">Ile czasu w tygodniu zjada Ci robota, którą mógłby robić <span className="inf-grad-text" data-text="ktoś inny?">ktoś inny?</span></h2>
         </Reveal>
         <Reveal delay={0.05}>
           <p className="text-lead mt-5 text-fg-muted">
@@ -63,7 +65,9 @@ export function Problem() {
 
       {/* Wyliczenie z leadu jako trzy kafelki (v7). Kaskadę niesie .sf-stagger
           na <Reveal> (kontrakt: goły div = dzieci opacity:0 na zawsze). */}
-      <Reveal as="ul" className="sf-stagger mx-auto mt-10 grid max-w-wide gap-6 md:grid-cols-3">
+      {/* v10 §6: gap kart 32 -> 20px klasą-kontraktem partii A .inf-grid-gap
+          (pomiar wzorca §3: .lp-primary-grid--three 20px). */}
+      <Reveal as="ul" className="sf-stagger inf-grid-gap mx-auto mt-10 grid max-w-wide md:grid-cols-3">
         {ZJADACZE.map((z) => (
           <li key={z.t} className="inf-card p-6" style={{ '--card-c': z.c } as CSSProperties}>
             {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
@@ -85,13 +89,13 @@ export function Problem() {
       <Reveal delay={0.05} className="mx-auto mt-6 max-w-wide">
         <div
           className="inf-card flex items-start gap-4 p-6 md:p-8"
-          style={{ '--card-c': '#4ade80' } as CSSProperties}
+          style={{ '--card-c': '#29ff77' } as CSSProperties}
         >
           <div aria-hidden="true" className="inf-spotlight" />
           <span
             aria-hidden="true"
             className="inf-tile"
-            style={{ '--tile-c': '#4ade80' } as CSSProperties}
+            style={{ '--tile-c': '#29ff77' } as CSSProperties}
           >
             <InfIcon name="robot" />
           </span>
@@ -141,12 +145,12 @@ export function Problem() {
         (HOME_CTA.href), zero nowych stringów i zero nowego CSS.
       */}
       <Reveal delay={0.15} className="mx-auto mt-10 max-w-wide">
-        <div className="inf-card p-6 text-center md:p-8" style={{ '--card-c': '#60a5fa' } as CSSProperties}>
+        <div className="inf-card p-6 text-center md:p-8" style={{ '--card-c': '#5ba4ff' } as CSSProperties}>
           <div aria-hidden="true" className="inf-spotlight" />
           <span
             aria-hidden="true"
             className="inf-tile mx-auto mb-4"
-            style={{ '--tile-c': '#60a5fa' } as CSSProperties}
+            style={{ '--tile-c': '#5ba4ff' } as CSSProperties}
           >
             <InfIcon name="lupa-wykres" />
           </span>

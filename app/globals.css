@@ -2686,6 +2686,9 @@ html.lenis body {
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
     mask-composite: exclude;
+    /* v10 pkt 8 (pomiary §5): wstęga wzorca ma `opacity: 0.95` — u nas brak
+       deklaracji dawał 1. Wyrównane 1:1 (dotyczy też statycznego mobile). */
+    opacity: 0.95;
     pointer-events: none;
   }
   /* v8b pkt 1 — HALO PIGUŁKI USUNIĘTE W CAŁOŚCI (cytat: „Tak samo z paskiem,
@@ -2785,10 +2788,18 @@ html.lenis body {
      prosił właściciel. Reszta panelu bez zmian (blur 24px, obwódka biel 10%).
      KONTRAST idzie w GÓRĘ, nie w dół: panel ciemnieje, a tekst zostaje jasny,
      więc policzone przy .72 wartości badge'ów (#a78bfa ≈ 6,6:1, reszta ≥7:1)
-     są teraz progiem dolnym, nie sufitem. */
+     są teraz progiem dolnym, nie sufitem.
+     v10 pkt 1 (cytat: „tło na tych panelach jest za mocno przezroczyste.
+     Troszkę trzeba je zwiększyć, jeszcze o 10%, bo na oryginalnej stronie
+     jest to ciemniejsze"): krycie 0,82 -> 0,92, znów dokładnie 10 punktów.
+     Panel po złożeniu z --bg #06060c = rgb(10,10,16). Kontrasty badge'ów
+     POLICZONE na nowym panelu (paleta po korekcie v10 rejestru): #a586ff
+     7,01:1 · #ff00e5 6,00:1 · #b638ff 4,70:1 · #61edff 14,16:1 · #29ff77
+     14,73:1 · #ffc120 12,13:1 · #5ba4ff 7,71:1 — AA wszędzie. Mobile bez
+     zmian: solidny --surface z reguły bazowej. */
   @media (min-width: 1024px) {
     .inf-dd {
-      background-color: rgba(10, 10, 16, 0.82);
+      background-color: rgba(10, 10, 16, 0.92);
       -webkit-backdrop-filter: blur(24px);
       backdrop-filter: blur(24px);
       border-color: rgba(255, 255, 255, 0.1);
@@ -3141,7 +3152,33 @@ html.lenis body {
        tag/etykieta w NAJCIEMNIEJSZYM akcencie palety #8b5cf6           4,56:1
      czyli AA wszędzie. Gwiazdy (kropki 1px, alfa .15-.25) prześwitują przez
      kartę tak samo, jak prześwitują pod tekstem POZA kartami — to warunek
-     globalny strony, nie nowy dług tej klasy. */
+     globalny strony, nie nowy dług tej klasy.
+     v10 pkt 4 (cytaty: „u nich od samego początku ten kolor jest mocniej
+     nasycony. U nas za blade" oraz „te moduły mają nie od boku podświetlenie,
+     a od góry. I to nie jest ciągłe, tylko jedzie z boków przygaszone, a na
+     środku się delikatnie zwiększa"; pomiary raporty/pomiary-wzorca-v10.md §1):
+       1. OBWÓDKA W SPOCZYNKU: biel 7% -> KOLOR KATEGORII 45%. Decyzja
+          właściciela idzie tu PONAD wzorzec: pomiar §1.1 pokazuje, że wzorzec
+          formalnie trzyma ramkę białą 6-7%, a „kolor od początku" składa
+          z warstw (neon-top, narożniki, ikona, tagi). U nas kolor wchodzi
+          wprost na ramkę; hover dalej podbija 45% -> 60% (zwykła) / 65%
+          (-lg), więc gradacja spoczynek->hover zostaje czytelna.
+       2. TOP-GLOW 1:1 z konstrukcji .lp-card-neon-top (pomiar §1.2): linia
+          1px na górnej krawędzi, gradient 90deg transparent -> kolor ->
+          kolor -> transparent (stopy równomierne: środkowa 1/3 szerokości
+          pełna, boczne 1/3 wygasają do zera). Wzorzec trzyma linię jako
+          OSOBNY div z `box-shadow: 0 0 8px accent`; u nas oba pseudoelementy
+          karty są zajęte (kreska boczna ::before + sweep ::after), a markup
+          należy do partii B/C — linia i jej łuna wchodzą więc jako DWIE
+          PIERWSZE warstwy background-image (karta ma overflow:hidden, więc
+          i tak widać wyłącznie połowę poświaty POD linią, jak u wzorca).
+          Łunę box-shadowa emuluje radial-gradient: elipsa 55% szerokości
+          zakotwiczona w górnej krawędzi, wygasa do 78% promienia — jaśniej
+          na środku, gaśnie ku bokom i w dół, czyli dosłownie opis Pawła.
+          Boczna kreska ::before ZOSTAJE sygnaturą (spec: „boczna kreska
+          zostaje tam, gdzie jest, ale główny akcent = góra").
+       Modyfikator .inf-card-lg dostaje oba efekty z tej bazy — kontrakt każe
+       pisać go ZAWSZE obok .inf-card, osobna reguła spoczynku nie istnieje. */
   .inf-card {
     --card-c: var(--accent);
     /* v7 (spec §PARTIA A pkt 2, POMIARY WZORCA) — ALFA NAROŻNIKÓW jako zmienna.
@@ -3162,10 +3199,17 @@ html.lenis body {
        i policzone kontrasty w bloku komentarza nad regułą). Kolorowego washu,
        dolnej łuny ani granatowego korpusu tu NIE MA i mieć nie może. */
     background-color: rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    /* Osiem warstw = 4 narożniki [ ] po 2 kreski (fallback rgba dla silników
-       bez color-mix linijkę wyżej, konwencja pliku). */
+    /* v10 pkt 4.1: obwódka spoczynku w KOLORZE KATEGORII 45% (fallback rgba
+       cyjanem akcentu — konwencja pliku; color-mix nadpisuje linijkę niżej). */
+    border: 1px solid rgba(0, 240, 255, 0.45);
+    border-color: color-mix(in srgb, var(--card-c) 45%, transparent);
+    /* Dziesięć warstw = TOP-GLOW v10 (linia 1px + łuna radialna, pomiar §1.2)
+       + 4 narożniki [ ] po 2 kreski (fallback rgba dla silników bez color-mix
+       w pierwszej deklaracji, konwencja pliku; linia jedzie na czystym
+       var(--card-c) w OBU deklaracjach — pełny kolor nie potrzebuje mixu). */
     background-image:
+      linear-gradient(90deg, transparent, var(--card-c), var(--card-c), transparent),
+      radial-gradient(ellipse 55% 100% at 50% 0%, rgba(0, 240, 255, 0.45), transparent 78%),
       linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
       linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
       linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
@@ -3175,6 +3219,12 @@ html.lenis body {
       linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
       linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22));
     background-image:
+      linear-gradient(90deg, transparent, var(--card-c), var(--card-c), transparent),
+      radial-gradient(
+        ellipse 55% 100% at 50% 0%,
+        color-mix(in srgb, var(--card-c) 45%, transparent),
+        transparent 78%
+      ),
       linear-gradient(
         color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
         color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
@@ -3208,7 +3258,13 @@ html.lenis body {
         color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
       );
     background-repeat: no-repeat;
+    /* Pozycje/rozmiary 1:1 z kolejnością warstw: [linia, łuna, 8 narożników].
+       Linia = 100% x 1px na górnej krawędzi (wzorzec: left:0; right:0; top:0;
+       height:1px); łuna = pas 100% x 10px pod nią (box-shadow 8px wzorca
+       plus 2px na wygaszenie gradientu). */
     background-position:
+      center top,
+      center top,
       left 8px top 8px,
       left 8px top 8px,
       right 8px top 8px,
@@ -3218,6 +3274,8 @@ html.lenis body {
       right 8px bottom 8px,
       right 8px bottom 8px;
     background-size:
+      100% 1px,
+      100% 10px,
       10px 1px,
       1px 10px,
       10px 1px,
@@ -3797,10 +3855,15 @@ html.lenis body {
   }
 }
 /* Płynięcie obwódki TYLKO desktop i TYLKO bez reduced-motion (mobile: statyczny
-   gradient z reguły bazowej — GPU-cheap i tak przez maskę). */
+   gradient z reguły bazowej — GPU-cheap i tak przez maskę).
+   v10 pkt 8 (pomiary §5): wzorzec płynie 200%/3s = 4 szerokości kontenera na
+   cykl, my płynęliśmy 300%/3s = 6 szerokości — czyli 1,5x ZA SZYBKO. Keyframes
+   wzorca NIE kopiujemy 1:1, bo jego pętla 0->200% przy gradencie 300% ma
+   zmierzony skok fazy co cykl; zostajemy przy bezszwowym 0->300% (infRingFlow)
+   i wyrównujemy PRĘDKOŚĆ LINIOWĄ czasem trwania: 300%/4,5s = 200%/3s. */
 @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
   .inf-pill-nav::before {
-    animation: infRingFlow 3s linear infinite;
+    animation: infRingFlow 4.5s linear infinite;
   }
 }
 @media (hover: hover) and (pointer: fine) {
@@ -4756,5 +4819,117 @@ div:has(> .inf-divider) {
 @media (prefers-reduced-motion: reduce) {
   .inf-tag.inf-tag-kolor {
     transition: none !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   INFINITY v10 — PARTIA A (właściciel app/globals.css). Dwa KONTRAKTY dla
+   partii B (klasy zdefiniowane tu, konsumowane w markupie). POZA @layer,
+   celowo:
+   1) Tailwind nie wytnie ich z arkusza, zanim partia B dopisze je w treści
+      (purge działa tylko na regułach wewnątrz dyrektyw @layer),
+   2) stoją w źródle ZA warstwą utilities, więc przy równej specyficzności
+      (0,1,0) wygrywają z gap-* kolejnością — partia B nie musi zdejmować
+      starych utility gapów, wystarczy dopisać klasę.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── KONTRAKT 1 (spec v10 pkt 6, cytat: „zobacz, jak tam są rozstawione
+   komórki, małe przestrzenie pomiędzy i wszystko symetrycznie"): GAP SIATEK
+   KART = POMIAR WZORCA §3. Zmierzone computed przy 1440px, zero dryfu wobec
+   boundingRect: .lp-primary-grid (karty security/tools, 2 i 3 kolumny) =
+   20px; .lp-learn-grid i .lp-promo-inner (drobne kafle) = 16px. U nas siatki
+   kart jadą przeważnie na gap-6 = --space-6 = 32px (PUŁAPKA repo: klasy
+   spacingu Tailwinda to WŁASNE tokeny — stąd wartości px wprost, nie token).
+   Gap siedzi w MARKUPIE partii B — kontrakt: dopisać `inf-grid-gap` na
+   siatkach kart (2-3 kolumny, .inf-card/.inf-card-lg) i `inf-grid-gap-sm`
+   na siatkach drobnych kafli. Reguły niosą SAM gap (bez display), żeby
+   klasa nie przestawiała rzędów flex użytych zamiast grida; wyrównanie
+   wysokości w rzędzie daje samo `align-items: stretch` grida (default). */
+.inf-grid-gap {
+  gap: 20px;
+}
+.inf-grid-gap-sm {
+  gap: 16px;
+}
+
+/* ── KONTRAKT 2 (spec v10 pkt 3, cytat: „część napisów też ma tutaj ładny
+   kolor, a u nas są tylko białe. Mówię o głównych sekcjach"): KOLOROWY
+   FRAGMENT NAGŁÓWKA SEKCJI. Pomiar §4: H2 wzorca bazowo białe rgb(228,228,240),
+   a końcówka/kluczowe słowa w spanie .lp-gradient-text — to GRADIENT-TEXT,
+   nie solidny kolor: linear-gradient(135deg, #00f0ff, #ff00e5, #b026ff)
+   (cyjan -> magenta -> violet, JEDEN wspólny gradient dla wszystkich sekcji)
+   + background-clip:text, a bazowy `color` zostaje biały jako fallback.
+   KONTRAKT dla partii B: <span class="inf-grad-text" data-text="ten sam
+   tekst">fragment H2</span> — data-text karmi shimmer (duplikat w ::after;
+   bez atrybutu attr() daje pusty content i shimmer po prostu nie startuje).
+   To design, nie treść: span owija ISTNIEJĄCE słowa.
+   FALLBACK: silnik bez background-clip:text renderuje zwykłą biel --fg —
+   przezroczystość liter wchodzi dopiero pod @supports (bez tego guard
+   silnik bez clipa pokazałby niewidzialny tekst).
+   KONTRAST (H2 = --fs-h2 32-46px, duży tekst, próg AA 3:1): najciemniejszy
+   stop #b026ff 4,40:1 na --bg i 4,42:1 na korpusie karty; #ff00e5 6,14:1;
+   #00f0ff 14,35:1 — wszystkie stopy ✓ (policzone, nie oszacowane). */
+.inf-grad-text {
+  position: relative;
+  display: inline-block;
+  color: var(--fg);
+  background-image: linear-gradient(135deg, #00f0ff, #ff00e5, #b026ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .inf-grad-text {
+    -webkit-text-fill-color: transparent;
+  }
+}
+/* Shimmer wzorca (pomiar §4: `.lp-gradient-text::after` z animacją
+   holo-shimmer 4s ease-in-out infinite): duplikat tekstu w ::after
+   z gradientem bieli 200% szerokości przesuwanym po literach przez
+   background-position, mix-blend-mode: overlay. Bramki jak reszta animacji
+   ambientowych repo: desktop ≥1024px + bez reduced-motion (wzorzec gasi
+   shimmer w swoim bloku reduce; u nas dodatkowo nie wchodzi na mobile —
+   bramka wydajności LCP). To animacja CSS na background-position, ZERO
+   nowych pętli rAF. Podwójny `content`: silniki ze składnią alternatywną
+   biorą wersję z pustym altem (czytniki ekranu NIE czytają duplikatu),
+   Firefox zostaje przy pierwszej — zachowanie tekstowe 1:1 ze wzorcem. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .inf-grad-text::after {
+    content: attr(data-text);
+    content: attr(data-text) / '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.15) 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.1) 75%,
+      transparent
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    animation: infHoloShimmer 4s ease-in-out infinite;
+  }
+}
+/* Pętla shimmera 1:1 z CSSOM wzorca (@keyframes holo-shimmer). */
+@keyframes infHoloShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+/* Windows High Contrast: gradient pod literami i tak znika (forced colors
+   nadpisują tła), ale przezroczystość liter trzeba cofnąć jawnie — inaczej
+   fragment nagłówka byłby niewidoczny. Shimmer nie istnieje poza media wyżej. */
+@media (forced-colors: active) {
+  .inf-grad-text {
+    background-image: none;
+    -webkit-text-fill-color: currentColor;
   }
 }

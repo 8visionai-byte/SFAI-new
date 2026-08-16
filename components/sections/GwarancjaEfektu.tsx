@@ -25,19 +25,19 @@ const FILARY = [
     t: 'Najpierw diagnoza, potem decyzja',
     d: 'Bezpłatna diagnoza i wstępna wycena, zanim wydasz złotówkę. Jak wyjdzie, że się nie opłaca, powiem to wprost.',
     ikona: 'lupa-wykres',
-    c: '#67e8f9',
+    c: '#61edff',
   },
   {
     t: 'Mały, odwracalny krok',
     d: 'Zaczynamy od jednego procesu, nie od wielkiej umowy. Testujesz na żywo, Ty ustawiasz granice, w każdej chwili możesz Agenta zatrzymać.',
     ikona: 'puzzle',
-    c: '#a78bfa',
+    c: '#a586ff',
   },
   {
     t: 'Rozliczenie za efekt',
     d: 'Umawiamy się na konkretny wynik. Dokładne warunki, co dzieje się, gdy Agent go nie dowozi, ustalamy na diagnozie i zapisujemy w umowie.',
     ikona: 'wykres-strzalka',
-    c: '#fbbf24',
+    c: '#ffc120',
   },
 ] as const satisfies ReadonlyArray<{ t: string; d: string; ikona: InfIconName; c: string }>;
 
@@ -57,7 +57,7 @@ export function GwarancjaEfektu() {
       <Reveal>
         <div
           className="inf-card inf-card-lg mx-auto max-w-wide p-6 md:p-10"
-          style={{ '--card-c': '#4ade80' } as CSSProperties}
+          style={{ '--card-c': '#29ff77' } as CSSProperties}
         >
           {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
               pointermove z MotionOrchestrator (desktop). Dekoracja aria-hidden. */}
@@ -65,11 +65,12 @@ export function GwarancjaEfektu() {
           <span
             aria-hidden="true"
             className="inf-tile mb-4"
-            style={{ '--tile-c': '#4ade80' } as CSSProperties}
+            style={{ '--tile-c': '#29ff77' } as CSSProperties}
           >
             <InfIcon name="tarcza-serce" />
           </span>
-          <h2 className="text-h2 text-fg">Co jeśli nie zadziała? Kto bierze na siebie ryzyko?</h2>
+          {/* v10 §3: jedno kluczowe słowo w gradiencie (jak „Answered" wzorca). Treść 1:1. */}
+          <h2 className="text-h2 text-fg">Co jeśli nie zadziała? Kto bierze na siebie <span className="inf-grad-text" data-text="ryzyko?">ryzyko?</span></h2>
           {/* Kapsuła answer-first — cytowalna dla LLM przy "co jak AI nie zadziała" */}
           <p className="text-lead mt-5 max-w-measure-lead text-fg-muted">
             Ryzyko bierzemy na siebie tam, gdzie to my decydujemy o efekcie. Zaczynasz od bezpłatnej diagnozy
@@ -82,7 +83,9 @@ export function GwarancjaEfektu() {
       {/* v7: filary wracają na KARTY wzorca (kafelek ikony + odcień), zamiast
           listy na kreskach — „szczegóły rozbić na kafelki". Kaskadę niesie
           .sf-stagger na <Reveal>. */}
-      <Reveal as="ul" className="sf-stagger mx-auto mt-12 grid max-w-wide gap-6 md:mt-16 md:grid-cols-3">
+      {/* v10 §6: gap kart 32 -> 20px klasą-kontraktem partii A .inf-grid-gap
+          (pomiar wzorca §3: .lp-primary-grid--three 20px). */}
+      <Reveal as="ul" className="sf-stagger inf-grid-gap mx-auto mt-12 grid max-w-wide md:mt-16 md:grid-cols-3">
         {FILARY.map((f) => (
           <li key={f.t} className="inf-card p-6" style={{ '--card-c': f.c } as CSSProperties}>
             <div aria-hidden="true" className="inf-spotlight" />

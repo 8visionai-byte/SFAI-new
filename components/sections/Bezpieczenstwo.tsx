@@ -17,32 +17,32 @@ import type { InfIconName } from '@/components/ui/InfIcons';
    marki). Ikona/kolor NIE są treścią — teksty t/d 1:1 co do znaku.
    v4 (spec §PARTIA C pkt 5): kolory kart przechodzą na FLUORESCENCYJNE
    ODCIENIE palety v4 (mapowanie baza -> jasny z lib/inf-kategorie:
-   #2b7cff->#60a5fa, #f59e0b->#fbbf24, #22d3ee->#67e8f9, #8b5cf6->#a78bfa)
+   #2b7cff->#5ba4ff, #ffa101->#ffc120, #22d3ee->#61edff, #8b5cf6->#a586ff)
    — żywsze karty, każda w JEDNYM gridzie innym tonem. */
 const PUNKTY: ReadonlyArray<{ t: string; d: string; ikona: InfIconName; c: string }> = [
   {
     t: 'Dane zostają w Unii Europejskiej',
     d: 'Przetwarzamy je zgodnie z RODO i AI Act. Bez wysyłania ich w nieznane, bez transferu poza UE bez Twojej wiedzy.',
     ikona: 'glob-siatka',
-    c: '#60a5fa',
+    c: '#5ba4ff',
   },
   {
     t: 'Umowa powierzenia danych (DPA)',
     d: 'Podpisujemy umowę powierzenia przetwarzania. Na papierze jest, kto, po co i jak długo przetwarza dane Twoich klientów.',
     ikona: 'dokument-skan',
-    c: '#fbbf24',
+    c: '#ffc120',
   },
   {
     t: 'Widzisz każdą akcję Agenta',
     d: 'Logujemy, co Agent zrobił. Masz nadzór i ustawiasz granice, a w każdej chwili możesz go zatrzymać. Żadnej czarnej skrzynki.',
     ikona: 'lupa-wykres',
-    c: '#67e8f9',
+    c: '#61edff',
   },
   {
     t: 'Klient zawsze wie, że to AI',
     d: 'Agent nie udaje człowieka. Rozmówca od początku wie, że rozmawia z AI, zgodnie z wymogami AI Act.',
     ikona: 'robot',
-    c: '#a78bfa',
+    c: '#a586ff',
   },
 ] as const;
 
@@ -73,7 +73,8 @@ export function Bezpieczenstwo() {
       {/* v4 (wzorzec sekcji z gridem): H2 + opis WYŚRODKOWANE nad siatką kart. */}
       <div className="mx-auto max-w-narrow text-center">
         <Reveal variant="header">
-          <h2 className="text-h2">Czy AI Agent dla firmy jest bezpieczny i zgodny z RODO?</h2>
+          {/* v10 §3: końcówka H2 w gradiencie wzorca (span .inf-grad-text, partia A). Treść 1:1. */}
+          <h2 className="text-h2">Czy AI Agent dla firmy jest bezpieczny i <span className="inf-grad-text" data-text="zgodny z RODO?">zgodny z RODO?</span></h2>
         </Reveal>
         {/* Kapsuła answer-first — cytat dla LLM */}
         <Reveal delay={0.05}>
@@ -91,7 +92,10 @@ export function Bezpieczenstwo() {
           --tile-c/--card-c z rejestru PUNKTY). Karty NIEklikalne — bez błysku
           i strzałki (konwencja ProduktCard). Teksty 1:1. .sf-stagger ZOSTAJE
           na <Reveal> (kontrakt: goły div = dzieci opacity:0 na zawsze). */}
-      <Reveal as="ul" className="sf-stagger mt-12 grid gap-6 sm:grid-cols-2 md:mt-16 lg:grid-cols-4">
+      {/* v10 §6: gap kafli 32 -> 16px klasą-kontraktem partii A .inf-grid-gap-sm
+          (pomiar wzorca §3: drobne kafle .lp-learn-grid 16px; 4-kol. =
+          najciaśniejsza siatka strony). */}
+      <Reveal as="ul" className="sf-stagger inf-grid-gap-sm mt-12 grid sm:grid-cols-2 md:mt-16 lg:grid-cols-4">
         {PUNKTY.map((p) => (
           <li
             key={p.t}

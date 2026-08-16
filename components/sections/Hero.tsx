@@ -281,9 +281,20 @@ export function Hero() {
         {/* Dynamiczny odbiorca (personalizacja językiem, RODO-safe) — zostaje
             PONIŻEJ liczników (spec v3 §HERO pkt 9), treść bez zmian; v3 tylko
             centruje blok (mx-auto, text-center dziedziczone z sekcji).
-            v7: mt-9 → mt-7, bo pas liczników nie stoi już nad tym blokiem. */}
+            v7: mt-9 → mt-7, bo pas liczników nie stoi już nad tym blokiem.
+            v10 §2 (cytat Pawła: „tu też powinna być tabelka, której nie ma"):
+            blok przestaje wisieć luzem na tle — wchodzi na KARTĘ .inf-card
+            (narożniki [ ], zaciemnienie 10%, obwódka w kolorze karty 45%
+            + top-glow — język kart z globals 1:1 po v10, zero nowego CSS). Kreska border-t wylatuje (ramka
+            karty ją zastępuje), pt-5 -> p-5 (24px, --space-5). Ton domyślny
+            --card-c = cyjan akcentu (blok bez kategorii, jak inne karty
+            neutralne). Reflektor .inf-spotlight jak na pozostałych kartach
+            nieklikalnych. Treść 1:1. */}
         <Reveal eager delay={0.24} className="lg:col-span-3">
-          <div className="mx-auto mt-7 max-w-[46ch] border-t border-border pt-5">
+          <div className="inf-card mx-auto mt-7 max-w-[46ch] p-5">
+            {/* Reflektor za kursorem — pozycję (--mx/--my) ustawia delegowany
+                pointermove z MotionOrchestrator (desktop). Dekoracja. */}
+            <div aria-hidden="true" className="inf-spotlight" />
             <p className="text-overline uppercase tracking-[0.14em] text-fg-subtle">
               Powtarzalna robota wygląda inaczej w każdej branży. Pokaż mi swoją.
             </p>

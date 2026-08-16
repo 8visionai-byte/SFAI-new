@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { dodajKlatke } from '@/components/motion/licznikTicker';
 
 /**
  * LicznikValue — liczba paska liczników hero z count-upem (spec INFINITY v3
@@ -13,8 +14,20 @@ import { useEffect, useRef } from 'react';
  * render = PEŁNA liczba w HTML (boty/no-JS/czytniki widzą finalną wartość).
  * Count-up to WYŁĄCZNIE progressive enhancement: desktop ≥1024px + brak
  * prefers-reduced-motion + brak Save-Data; trigger przez IntersectionObserver,
- * przebieg 1,2 s (ease-out, rAF). Mobile/RM: liczba stoi statycznie.
+ * przebieg 1,2 s (ease-out). Mobile/RM: liczba stoi statycznie.
  * min-width w ch = szerokość finalnej liczby — zero przesunięć layoutu (CLS 0).
+ *
+ * v10 §7 („liczby animowane cały czas", interpretacja ostrożna ze spec):
+ * 1. PĘTLA: koniec z pięcioma własnymi rAF — klatki jadą przez WSPÓLNY
+ *    licznikTicker (components/motion), czyli jedną pętlę na cały dokument,
+ *    tę samą, którą bije licznik chipa 8,7% (HeroDaneRynkuLicznik). Zero
+ *    nowych pętli rAF na stronie.
+ * 2. RESTART: IntersectionObserver bez `disconnect` po pierwszym przebiegu —
+ *    KAŻDE wejście paska w kadr puszcza odliczanie od zera (wzorzec 1:1
+ *    z licznikiem chipa; sam wzorzec infinitytechstack odlicza raz, restart to
+ *    świadome „ponad wzorzec" z decyzji właściciela w spec v10 §7).
+ * 3. PAUZA: wyjście z kadru odpina klatkę ze wspólnej pętli i przywraca
+ *    finalną liczbę — poza kadrem nic nie tyka (bateria, TBT).
  */
 export function LicznikValue({
   value,
@@ -34,19 +47,36 @@ export function LicznikValue({
     const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
     if (nav.connection?.saveData === true) return;
 
-    let raf = 0;
+    let odepnij: (() => void) | null = null;
+
+    // Przebieg 1,2 s na wspólnym tickerze; t0 z pierwszej klatki (spójne
+    // z DaneLicznik — performance.now() sprzed klatki zawyżałby pierwszy krok).
+    const start = () => {
+      odepnij?.();
+      let t0 = 0;
+      odepnij = dodajKlatke((teraz) => {
+        if (t0 === 0) t0 = teraz;
+        const p = Math.min(1, (teraz - t0) / 1200);
+        const eased = 1 - Math.pow(1 - p, 3); // ease-out cubic
+        el.textContent = String(Math.round(value * eased));
+        if (p < 1) return true;
+        el.textContent = String(value); // finał = dokładna liczba z SSR
+        odepnij = null;
+        return false;
+      });
+    };
+
     const io = new IntersectionObserver(
-      (entries) => {
-        if (!entries.some((e) => e.isIntersecting)) return;
-        io.disconnect();
-        const t0 = performance.now();
-        const tick = (now: number) => {
-          const p = Math.min(1, (now - t0) / 1200);
-          const eased = 1 - Math.pow(1 - p, 3); // ease-out cubic
-          el.textContent = String(Math.round(value * eased));
-          if (p < 1) raf = requestAnimationFrame(tick);
-        };
-        raf = requestAnimationFrame(tick);
+      (wpisy) => {
+        for (const wpis of wpisy) {
+          if (wpis.isIntersecting) start();
+          else {
+            // Poza kadrem: klatka wypada ze wspólnej pętli, liczba wraca na finał.
+            odepnij?.();
+            odepnij = null;
+            el.textContent = String(value);
+          }
+        }
       },
       { threshold: 0.5 }
     );
@@ -54,7 +84,7 @@ export function LicznikValue({
 
     return () => {
       io.disconnect();
-      cancelAnimationFrame(raf);
+      odepnij?.();
       // Sprzątanie przywraca pełną liczbę (np. re-montaż przy zmianie ścieżki).
       el.textContent = String(value);
     };

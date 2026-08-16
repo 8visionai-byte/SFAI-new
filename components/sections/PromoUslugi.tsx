@@ -141,7 +141,9 @@ export function PromoUslugi() {
   return (
     <Section tone="base" space="md">
       {/* Kaskadę wejścia robi .sf-stagger (jeden obserwator na siatce). */}
-      <Reveal as="ul" className="sf-stagger grid gap-6 md:grid-cols-2">
+      {/* v10 §6: gap kart 32 -> 20px klasą-kontraktem partii A .inf-grid-gap
+          (pomiar wzorca §3: .lp-primary-grid 2-kol. 20px). */}
+      <Reveal as="ul" className="sf-stagger inf-grid-gap grid md:grid-cols-2">
         {uslugi.map((u, i) => (
           <PromoKarta key={u.slug} usluga={u} full={i === 0} />
         ))}

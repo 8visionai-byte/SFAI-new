@@ -45,7 +45,9 @@ export function NarzedziaTeaser() {
       </div>
 
       {/* Kaskadę wejścia robi .sf-stagger (jeden obserwator na siatce). */}
-      <Reveal as="ul" className="sf-stagger mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 md:mt-12">
+      {/* v10 §6: gap kart 32 -> 20px klasą-kontraktem partii A .inf-grid-gap
+          (pomiar wzorca §3: .lp-primary-grid--three 20px). */}
+      <Reveal as="ul" className="sf-stagger inf-grid-gap mt-10 grid sm:grid-cols-2 lg:grid-cols-3 md:mt-12">
         {NARZEDZIA.map((n) => {
           const dekor = INF_NARZEDZIE[n.slug] ?? INF_KATEGORIA_DEFAULT;
           return (

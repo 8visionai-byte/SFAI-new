@@ -39,25 +39,25 @@ const POTRAFI = [
     t: 'Odbiera telefon, kiedy Ty nie możesz.',
     d: 'Voicebot rozmawia po polsku, umawia wizyty i przekazuje Ci tylko to, co ważne.',
     ikona: 'sluchawka-fala',
-    c: '#a78bfa',
+    c: '#a586ff',
   },
   {
     t: 'Odpisuje klientom w minuty, o każdej porze.',
     d: 'Chatbot na stronie i w komunikatorach odpowiada na pytania i zbiera leady, nawet o 22:00.',
     ikona: 'chat-dymek',
-    c: '#67e8f9',
+    c: '#61edff',
   },
   {
     t: 'Przepisuje dane za Ciebie.',
     d: 'Automatyzacja przenosi informacje między mailem, systemem i fakturą, bez ręcznej roboty.',
     ikona: 'blyskawica',
-    c: '#4ade80',
+    c: '#29ff77',
   },
   {
     t: 'Pilnuje, żeby nic nie wypadło.',
     d: 'Przypomnienia, follow-upy, oddzwonienia. Klient nie zostaje bez odpowiedzi.',
     ikona: 'kalendarz-check',
-    c: '#fbbf24',
+    c: '#ffc120',
   },
 ] as const satisfies ReadonlyArray<{ t: string; d: string; ikona: InfIconName; c: string }>;
 
@@ -80,18 +80,23 @@ export function Rozwiazanie() {
           definicja w cyjanie chatbotów, różnica w violecie voicebotów (dwie
           karty w jednym gridzie = dwa odcienie, konwencja v4). Kaskadę wejścia
           niesie .sf-stagger na Reveal (kontrakt: goły div = dzieci opacity:0). */}
-      <Reveal className="sf-stagger mx-auto grid max-w-wide gap-6 md:grid-cols-2">
+      {/* v10 §6: gap kart 32 -> 20px klasą-kontraktem partii A .inf-grid-gap
+          (pomiar wzorca §3: .lp-primary-grid 2-kol. 20px). */}
+      <Reveal className="sf-stagger inf-grid-gap mx-auto grid max-w-wide md:grid-cols-2">
         {(
           [
             {
               nr: '// 01',
               kat: INF_KATEGORIA['chatboty'] ?? INF_KATEGORIA_DEFAULT,
-              h2: 'Co to jest AI Agent dla firmy?',
+              /* v10 §3: h2 rozbite na start+akcent — konkatenacja daje IDENTYCZNY tekst. */
+              h2Start: 'Co to jest ',
+              h2Akcent: 'AI Agent dla firmy?',
             },
             {
               nr: '// 02',
               kat: INF_KATEGORIA['voiceboty'] ?? INF_KATEGORIA_DEFAULT,
-              h2: 'Czym różni się AI Agent od zwykłego chatbota?',
+              h2Start: 'Czym różni się AI Agent ',
+              h2Akcent: 'od zwykłego chatbota?',
             },
           ] as const
         ).map((karta, i) => (
@@ -114,7 +119,11 @@ export function Rozwiazanie() {
               {karta.nr}
             </span>
             {/* H2 zostaje H2 (kotwice AEO/SEO); w połówce grida rozmiar text-h3. */}
-            <h2 className="text-h3 mt-4">{karta.h2}</h2>
+            {/* v10 §3: kluczowe słowa H2 w gradiencie wzorca (span .inf-grad-text, partia A). */}
+            <h2 className="text-h3 mt-4">
+              {karta.h2Start}
+              <span className="inf-grad-text" data-text={karta.h2Akcent}>{karta.h2Akcent}</span>
+            </h2>
             {i === 0 ? (
               <>
                 <p className="mt-3 text-body text-fg-muted">
@@ -196,7 +205,9 @@ export function Rozwiazanie() {
           §PARTIA D pkt 2: „szczegóły rozbić na kafelki"). Kaskadę robi
           .sf-stagger; karty NIEklikalne, więc bez strzałki (konwencja
           ProduktCard). Treść 1:1. */}
-      <Reveal as="ul" className="sf-stagger mx-auto mt-12 grid max-w-wide gap-6 sm:grid-cols-2">
+      {/* v10 §6: gap kafli 32 -> 16px klasą-kontraktem partii A .inf-grid-gap-sm
+          (pomiar wzorca §3: .lp-learn-grid 16px — drobne kafle 2-kol.). */}
+      <Reveal as="ul" className="sf-stagger inf-grid-gap-sm mx-auto mt-12 grid max-w-wide sm:grid-cols-2">
         {POTRAFI.map((item) => (
           <li key={item.t} className="inf-card p-6" style={{ '--card-c': item.c } as CSSProperties}>
             <div aria-hidden="true" className="inf-spotlight" />

@@ -46,7 +46,9 @@ export function RealizacjaEfekt({
             zdaniem — micro-caps by ją zniekształcił). Treść 1:1.
             v7: ton karty = kolor kategorii case'a (był domyślny akcent)
             + reflektor jak na karcie huba. */}
-        <ul className={`mt-8 grid gap-6 ${cols}`}>
+        {/* v10 §6: gap kart 32 -> 20px klasą-kontraktem partii A .inf-grid-gap
+            (pomiar wzorca §3: .lp-primary-grid 20px). */}
+        <ul className={`inf-grid-gap mt-8 grid ${cols}`}>
           {efekt.metryki.map((m, i) => (
             <Reveal as="li" key={m.etykieta} delay={i * 0.06}>
               <Card

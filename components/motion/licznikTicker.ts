@@ -14,9 +14,9 @@
  * Modułu NIE importuje żaden komponent serwerowy — wchodzi do bundla wyłącznie
  * z komponentami 'use client', które go używają.
  *
- * ŚWIADOMIE NIE RUSZAM HeroLicznikiCountUp (5 własnych pętli): to plik z innej
- * partii i element chwalony przez właściciela. Migracja tamtych liczników na
- * ten ticker = zadanie osobne (raport §Follow-ups).
+ * HeroLicznikiCountUp ZMIGROWANE na ten ticker w v10 (wcześniejsza notatka
+ * o „nie ruszam" opisywała stan sprzed migracji): liczniki rejestrów odliczają
+ * przez wspólną pętlę i restartują przy każdym wejściu w kadr, jak chip 8,7%.
  */
 type Klatka = (teraz: number) => boolean;
 

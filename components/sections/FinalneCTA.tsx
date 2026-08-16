@@ -33,8 +33,9 @@ export function FinalneCTA() {
         <Reveal variant="header">
           {/* Skala h1 CELOWO: akt finalny to najgłośniejszy moment strony
               (makieta 5) — semantyka zostaje h2 (jedno h1 na stronę). */}
+          {/* v10 §3: końcówka H2 w gradiencie wzorca (span .inf-grad-text, partia A). Treść 1:1. */}
           <h2 className="text-h1 relative mx-auto max-w-[22ch] text-center">
-            Gotowy zobaczyć, gdzie Twoja firma traci czas?
+            Gotowy zobaczyć, gdzie Twoja firma <span className="inf-grad-text" data-text="traci czas?">traci czas?</span>
           </h2>
         </Reveal>
       </div>

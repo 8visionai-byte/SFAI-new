@@ -41,7 +41,7 @@ export function Dowod() {
       <Reveal variant="header">
         <div
           className="inf-card inf-card-lg mx-auto max-w-wide p-6 md:p-10"
-          style={{ '--card-c': '#67e8f9' } as CSSProperties}
+          style={{ '--card-c': '#61edff' } as CSSProperties}
         >
           {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
               pointermove z MotionOrchestrator (desktop). Dekoracja aria-hidden. */}
@@ -49,11 +49,12 @@ export function Dowod() {
           <span
             aria-hidden="true"
             className="inf-tile mb-4"
-            style={{ '--tile-c': '#67e8f9' } as CSSProperties}
+            style={{ '--tile-c': '#61edff' } as CSSProperties}
           >
             <InfIcon name="wykres-strzalka" />
           </span>
-          <h2 className="text-h2">Co konkretnie zmienia się w firmie po wdrożeniu Agenta?</h2>
+          {/* v10 §3: końcówka H2 w gradiencie wzorca (span .inf-grad-text, partia A). Treść 1:1. */}
+          <h2 className="text-h2">Co konkretnie zmienia się w firmie <span className="inf-grad-text" data-text="po wdrożeniu Agenta?">po wdrożeniu Agenta?</span></h2>
           {/* Kapsuła answer-first — uczciwa, bez zmyślonego case'a (INPUT PAWŁA na realny). */}
           <p className="text-lead mt-5 max-w-measure-lead text-fg-muted">
             Po wdrożeniu Agenta firma przestaje gubić telefony i powtarzać tę samą robotę. Voicebot odbiera, gdy
@@ -93,13 +94,13 @@ export function Dowod() {
         <Reveal delay={0.05}>
           <article
             className="inf-card h-full p-6 md:p-8"
-            style={{ '--card-c': '#fbbf24' } as CSSProperties}
+            style={{ '--card-c': '#ffc120' } as CSSProperties}
           >
             <div aria-hidden="true" className="inf-spotlight" />
             <span
               aria-hidden="true"
               className="inf-tile mb-4"
-              style={{ '--tile-c': '#fbbf24' } as CSSProperties}
+              style={{ '--tile-c': '#ffc120' } as CSSProperties}
             >
               <InfIcon name="lupa-wykres" />
             </span>

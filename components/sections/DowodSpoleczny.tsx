@@ -25,10 +25,10 @@ type Opinia = { cytat: string; branza: string; podpis: string };
    chatboty blue, automatyzacje green, www cyan, dokumenty amber). Kolejność
    1:1 z tablicą OPINIE. Wyłącznie dekoracja — tekst niosą tokeny. */
 const OPINIA_TON = [
-  '#f59e0b', // kancelaria: raporty/dokumenty
+  '#ffa101', // kancelaria: raporty/dokumenty
   '#2b7cff', // turystyka: chatbot
   '#22e06b', // budowlanka: automatyzacja maili
-  '#f59e0b', // hotel: faktury/dokumenty
+  '#ffa101', // hotel: faktury/dokumenty
   '#22d3ee', // agencja: narzędzia/www
   '#2b7cff', // edukacja: chatbot
 ] as const;
@@ -139,13 +139,13 @@ export function DowodSpoleczny() {
       <Reveal delay={0.1}>
         <div
           className="inf-card mx-auto mt-12 max-w-wide p-6 md:p-8"
-          style={{ '--card-c': '#a78bfa' } as React.CSSProperties}
+          style={{ '--card-c': '#a586ff' } as React.CSSProperties}
         >
           <div aria-hidden="true" className="inf-spotlight" />
           <span
             aria-hidden="true"
             className="inf-tile mb-4"
-            style={{ '--tile-c': '#a78bfa' } as React.CSSProperties}
+            style={{ '--tile-c': '#a586ff' } as React.CSSProperties}
           >
             <InfIcon name="osoba-check" />
           </span>

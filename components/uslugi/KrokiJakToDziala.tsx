@@ -33,7 +33,9 @@ export function KrokiJakToDziala({ kroki }: { kroki: Usluga['kroki'] }) {
         </Reveal>
       </div>
 
-      <ol className="mt-8 grid gap-6 md:grid-cols-3">
+      {/* v10 §6: gap kart 32 -> 20px klasą-kontraktem partii A .inf-grid-gap
+          (pomiar wzorca §3: .lp-primary-grid--three 20px). */}
+      <ol className="inf-grid-gap mt-8 grid md:grid-cols-3">
         {kroki.items.map((k, i) => (
           <Reveal as="li" key={k.tytul} delay={i * 0.06}>
             {/* Karta kroku: ciemna .inf-card, numer w kafelku .inf-tile w stopniu

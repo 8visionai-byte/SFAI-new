@@ -42,7 +42,7 @@ const NODE_TONE = ['text-metal-blue', 'text-metal-violet', 'text-metal-green'] a
    .inf-card w odcieniu SWOJEGO węzła (te same trzy stopnie co NODE_TONE, w
    fluorescencyjnej palecie v4: blue -> violet -> green). Bez tego hover karty
    był bezbarwny, a sekcja „nieuzupełniona kolorystyką". Treść kroków 1:1. */
-const KROK_C = ['#60a5fa', '#a78bfa', '#4ade80'] as const;
+const KROK_C = ['#5ba4ff', '#a586ff', '#29ff77'] as const;
 
 export function JakToDziala() {
   return (
@@ -54,7 +54,8 @@ export function JakToDziala() {
       {/* Nagłówek CENTRALNIE (makieta 3) — teksty i hierarchia bez zmian. */}
       <div className="mx-auto max-w-narrow text-center">
         <Reveal variant="header">
-          <h2 className="text-h2">Jak wygląda wdrożenie AI Agenta krok po kroku?</h2>
+          {/* v10 §3: końcówka H2 w gradiencie wzorca (span .inf-grad-text, partia A). Treść 1:1. */}
+          <h2 className="text-h2">Jak wygląda wdrożenie AI Agenta <span className="inf-grad-text" data-text="krok po kroku?">krok po kroku?</span></h2>
         </Reveal>
         <Reveal delay={0.05}>
           <p className="text-lead mx-auto mt-5 max-w-measure-lead text-fg-muted">
@@ -86,7 +87,12 @@ export function JakToDziala() {
 
         <Reveal
           as="ol"
-          className="sf-stagger relative grid gap-12 md:grid-cols-3 md:gap-8"
+          /* v10 §6: gap kolumn kroków 64 -> 20px na desktopie (pomiar wzorca §3:
+             .lp-primary-grid--three 20px). CELOWO utility md:gap-[20px], NIE
+             klasa-kontrakt .inf-grid-gap: kontrakt stoi POZA @layer i jego
+             gap:20px skasowalby gap-12 (48px), czyli pionowy rytm kroków
+             na mobile — to odstęp opowieści, nie siatki kart. */
+          className="sf-stagger relative grid gap-12 md:grid-cols-3 md:gap-[20px]"
         >
           {KROKI.map((k, i) => (
             /* v7: kolumna flex + karta flex-1 — trzy karty opisu kończą się na
@@ -111,7 +117,7 @@ export function JakToDziala() {
                   bezbarwna .sf-glass). Tekst kroku bez zmian. */}
               <div
                 className="inf-card mt-4 flex-1 p-6 text-left"
-                style={{ '--card-c': KROK_C[i] ?? '#60a5fa' } as CSSProperties}
+                style={{ '--card-c': KROK_C[i] ?? '#5ba4ff' } as CSSProperties}
               >
                 {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
                     delegowany pointermove z MotionOrchestrator (desktop).

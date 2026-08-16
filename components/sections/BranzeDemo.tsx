@@ -42,13 +42,13 @@ type Branza = {
 
 /* INFINITY v4 (spec §PARTIA C pkt 5): kolory kafelków kart (tryb reduced-motion)
    przechodzą na FLUORESCENCYJNE ODCIENIE palety v4 (baza -> jasny:
-   #2b7cff->#60a5fa, #8b5cf6->#a78bfa, #f59e0b->#fbbf24, #22d3ee->#67e8f9) —
+   #2b7cff->#5ba4ff, #8b5cf6->#a586ff, #ffa101->#ffc120, #22d3ee->#61edff) —
    każda karta w gridzie innym tonem. Wyłącznie dekoracja, teksty 1:1. */
 const BRANZE: readonly Branza[] = [
-  { label: 'dla biura', action: 'umawiam spotkania i pilnuję kalendarza', ikona: 'kalendarz-check', c: '#60a5fa' },
-  { label: 'dla salonu', action: 'odbieram telefon, gdy strzyżesz klienta', ikona: 'sluchawka-fala', c: '#a78bfa' },
-  { label: 'dla budowlanki', action: 'składam wyceny z maila', ikona: 'dokument-skan', c: '#fbbf24' },
-  { label: 'dla e-commerce', action: 'odpowiadam na pytania o zamówienia 24/7', ikona: 'chat-dymek', c: '#67e8f9' },
+  { label: 'dla biura', action: 'umawiam spotkania i pilnuję kalendarza', ikona: 'kalendarz-check', c: '#5ba4ff' },
+  { label: 'dla salonu', action: 'odbieram telefon, gdy strzyżesz klienta', ikona: 'sluchawka-fala', c: '#a586ff' },
+  { label: 'dla budowlanki', action: 'składam wyceny z maila', ikona: 'dokument-skan', c: '#ffc120' },
+  { label: 'dla e-commerce', action: 'odpowiadam na pytania o zamówienia 24/7', ikona: 'chat-dymek', c: '#61edff' },
 ] as const;
 
 /** Pełne zdanie jednej branży (spójne źródło dla typewritera i listy GEO). */
@@ -66,17 +66,17 @@ const DOMKNIECIE: ReadonlyArray<{ t: string; ikona: InfIconName; c: string }> = 
   {
     t: 'Agent SimpleFast przejmuje dokładnie tę część, w każdej branży po swojemu.',
     ikona: 'robot',
-    c: '#a78bfa',
+    c: '#a586ff',
   },
   {
     t: 'To nie rolka haseł. Każdy z tych przykładów to realne zadanie, które zdejmujemy z właściciela i jego zespołu.',
     ikona: 'iskry',
-    c: '#67e8f9',
+    c: '#61edff',
   },
   {
     t: 'Twój proces wygląda inaczej? Tym lepiej. Agenta układamy pod to, co naprawdę zżera Ci czas.',
     ikona: 'puzzle',
-    c: '#4ade80',
+    c: '#29ff77',
   },
 ] as const;
 
@@ -163,7 +163,8 @@ export function BranzeDemo() {
     <Section tone="subtle" space="md" id="branze">
       <div className="mx-auto max-w-narrow">
         <Reveal>
-          <h2 className="text-h2">Powtarzalna robota wygląda inaczej w każdej branży</h2>
+          {/* v10 §3: końcówka H2 w gradiencie wzorca (span .inf-grad-text, partia A). Treść 1:1. */}
+          <h2 className="text-h2">Powtarzalna robota wygląda inaczej <span className="inf-grad-text" data-text="w każdej branży">w każdej branży</span></h2>
         </Reveal>
         <Reveal delay={0.05}>
           {/* v7: lead skrócony do dwóch zdań — trzecie („Agent SimpleFast
@@ -316,7 +317,9 @@ export function BranzeDemo() {
       {/* Domknięcie wartości — "co to znaczy dla MŚP", bez obietnic liczbowych.
           v7: trzy kafelki zamiast akapitu pod oknem (treść 1:1, patrz
           DOMKNIECIE). Kaskadę niesie .sf-stagger na <Reveal>. */}
-      <Reveal as="ul" delay={0.15} className="sf-stagger mx-auto mt-8 grid max-w-wide gap-6 md:grid-cols-3">
+      {/* v10 §6: gap kart 32 -> 20px klasą-kontraktem partii A .inf-grid-gap
+          (pomiar wzorca §3: .lp-primary-grid--three 20px). */}
+      <Reveal as="ul" delay={0.15} className="sf-stagger inf-grid-gap mx-auto mt-8 grid max-w-wide md:grid-cols-3">
         {DOMKNIECIE.map((d) => (
           <li key={d.ikona} className="inf-card p-6" style={{ '--card-c': d.c } as CSSProperties}>
             <div aria-hidden="true" className="inf-spotlight" />

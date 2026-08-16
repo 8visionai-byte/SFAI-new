@@ -83,7 +83,9 @@ export function Oferta() {
       <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:items-center lg:gap-16">
         <div className="max-w-narrow">
           <Reveal>
-            <h2 className="text-h2">Ile kosztuje wdrożenie AI Agenta dla firmy?</h2>
+            {/* v10 §3: kluczowe słowa H2 w gradiencie wzorca (span w środku zdania,
+                jak brandy w H2 „Master Gemini, OpenAI..." wzorca). Treść 1:1. */}
+            <h2 className="text-h2">Ile kosztuje <span className="inf-grad-text" data-text="wdrożenie AI Agenta">wdrożenie AI Agenta</span> dla firmy?</h2>
           </Reveal>
           <Reveal delay={0.05}>
             <p className="text-lead mt-5 text-fg-muted">
@@ -117,7 +119,12 @@ export function Oferta() {
             własny transform na hover) i samo jest subgridem przelotowym.
             UWAGA: żaden kontener wokół kart nie może mieć overflow:hidden
             (utnie badge na -top-3) — kontrakt obowiązuje też .sf-glass. */}
-        <Reveal className="sf-stagger grid items-stretch gap-6 md:grid-cols-3 md:grid-rows-[auto_auto_auto_auto_auto_auto_auto] md:gap-y-0">
+        {/* v10 §6: gap kart 32 -> 20px (pomiar wzorca §3: .lp-primary-grid--three
+            20px). CELOWO utility gap-[20px], NIE klasa-kontrakt .inf-grid-gap:
+            kontrakt stoi POZA @layer (wygrywa z utilities kolejnością źródła),
+            więc jego shorthand gap skasowałby md:gap-y-0 — a zerowy row-gap
+            na desktopie to warunek subgridu cennika (wiersze niosą marginesy). */}
+        <Reveal className="sf-stagger grid items-stretch gap-[20px] md:grid-cols-3 md:grid-rows-[auto_auto_auto_auto_auto_auto_auto] md:gap-y-0">
           {POZIOMY.map((p, i) => (
             <div key={p.name} className="md:grid md:row-[span_7] md:grid-rows-subgrid">
               {/* Aura .card-aura zeszła z cennika (język świata B: rim zamiast
