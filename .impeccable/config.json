@@ -11,6 +11,15 @@
         ],
         "createdAt": "2026-08-16T18:41:08.633Z",
         "reason": "Decyzja Pawla 2026-08-16: gradient na .ai w logotypie i kolorowe fragmenty naglowkow (.inf-grad-text) sa celowe, zmierzone ze strony wzorcowej, z fallbackiem i policzonymi kontrastami. Regula dalej aktywna w pozostalych plikach."
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "app/globals.css"
+        ],
+        "createdAt": "2026-08-16T18:42:35.882Z",
+        "reason": "Falszywy alarm skanera: to plik CSS, nie markup - slowo <img> wystepuje wylacznie w polskich komentarzach o paralaksie zdjec i w selektorze potomka .sf-plate-media > img. Arkusz stylow nie moze wyslac na strone zadnego znacznika obrazka. Regula aktywna we wszystkich plikach markupu."
       }
     ]
   }
