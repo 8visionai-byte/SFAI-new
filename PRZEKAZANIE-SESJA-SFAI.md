@@ -63,5 +63,13 @@ Narzędzia z kluczami Pawła: `tools/gsc-raport.js`, `tools/bing-raport.js`, `to
 
 1. `MAKE_LEAD_WEBHOOK_URL` na Vercelu (Production) + Redeploy → test formularza na live.
 2. Wybór ceny voicebota: 2 500 czy 2 900 zł.
-3. Autoryzacja Ahrefs (claude.ai → konektory) → realne wolumeny fraz zamiast obecności w SERP.
-4. Klucz API Umami do `~/.sekrety/umami-api-key.txt` → odczyt danych o ruchu.
+3. Klucz API Umami do `~/.sekrety/umami-api-key.txt` → odczyt danych o ruchu.
+
+## STAN NARZĘDZI ANALITYCZNYCH (sprawdzone 2026-08-16)
+
+| Narzędzie | Stan | Uwaga |
+|---|---|---|
+| Google Search Console | **DZIAŁA** | własne narzędzie Pawła `tools/gsc-raport.js`, klucz konta usługi w `~/.sekrety/simplefastai-seo-*.json`. Wszystkie liczby w raportach pochodzą stąd |
+| Bing Webmaster | **DZIAŁA** | `tools/bing-raport.js` + `tools/bing-diagnoza.js`, klucz `~/.sekrety/bing-api-key.txt` |
+| Umami | **ZBIERA** dane na produkcji (zweryfikowane: skrypt `cloud.umami.is` w HTML) | do ODCZYTU liczb potrzebny osobny klucz API, patrz punkt 3 wyżej |
+| Ahrefs | wtyczka Marketing zainstalowana i włączona, konektor zarejestrowany ze statusem „Connects in sessions" | w sesji z 16.08 narzędzia Ahrefs były NIEDOSTĘPNE (ToolSearch nie zwrócił żadnego). Połączenie zestawia się per sesja — **na starcie sprawdź, czy tu działa**, zanim zaplanujesz research oparty na wolumenach |
