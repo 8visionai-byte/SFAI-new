@@ -117,8 +117,8 @@ export const SOCIALS = [
  * Używane w hero, meta, schema — utrzymuj spójne brzmienie.
  */
 export const POSITIONING = {
-  claim: 'Budujemy AI Agentów, nie chatboty.',
-  subClaim: 'Agent AI działa, nie tylko gada.',
+  claim: 'Chatboty, voiceboty i automatyzacje AI',
+  subClaim: 'Budujemy Agentów AI, którzy pracują za Ciebie 24/7.',
 } as const;
 
 /**

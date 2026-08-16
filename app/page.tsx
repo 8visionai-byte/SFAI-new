@@ -47,9 +47,9 @@ export const dynamic = 'force-static';
  * + fraza. Bez em-dash (głos Pawła): zamiast "—" używamy dwukropka. og:title dziedziczy z title.
  */
 export const metadata: Metadata = buildMetadata({
-  title: 'SimpleFast.ai: budujemy AI Agentów dla firm',
+  title: 'Chatboty, voiceboty i automatyzacje AI dla firm | SimpleFast',
   description:
-    'Budujemy AI Agentów dla polskich firm: voiceboty odbierają telefony, chatboty odpisują klientom, automatyzacje pilnują faktur. Dane w UE, płacisz za efekt.',
+    'Chatboty, voiceboty i automatyzacje AI dla polskich firm: odbierają telefony, odpisują klientom i pilnują faktur 24/7. Dane w UE, płacisz za efekt.',
   path: '/',
   ogImage: '/og/home.png',
 });

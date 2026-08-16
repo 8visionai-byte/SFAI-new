@@ -44,7 +44,7 @@ const WIERSZE: Wiersz[] = [
   {
     obiekcja: 'To pewnie zwykły chatbot.',
     odpowiedz:
-      'Budujemy AI Agentów, nie chatboty. Agent wykonuje pracę: czyta maila, wystawia ofertę, robi raport. Nie tylko odpowiada na pytania.',
+      'Chatbot to dopiero początek. Nasz Agent AI wykonuje pracę: czyta maila, wystawia ofertę, robi raport. Nie tylko odpowiada na pytania.',
   },
 ];
 

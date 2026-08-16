@@ -157,7 +157,8 @@ export default function UslugiHubPage() {
           {/* Kapsuła answer-first — surowy HTML, cytat dla LLM. */}
           <Reveal delay={0.05}>
             <p className="text-lead mt-6 text-fg-muted">
-              Budujemy AI Agentów, nie chatboty. Agent wykonuje pracę pod nadzorem
+              Budujemy chatboty, voiceboty i automatyzacje, które łączymy w Agentów AI.
+              Agent wykonuje pracę pod nadzorem
               człowieka: odbiera telefon, umawia, pilnuje faktur, odsiewa CV. Poniżej
               dziesięć usług w trzech grupach: obsługa 24/7, back-office i procesy,
               budowa i strategia. Nie musisz wybierać dziś. Zaczynasz od jednej rzeczy,
