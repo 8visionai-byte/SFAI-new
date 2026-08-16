@@ -1,3 +1,25 @@
+# STATUS — INFINITY v11 — NA PRODUKCJI (commit 5a632d9, 52 pliki, +1268/-149)
+
+Naprawa błędu uniformizacji z v10: zamiast jednego stylu ramki — SZEŚĆ
+wariantów zmierzonych na wzorcu (edge/top/full-hover/stat/quiet + baza),
+mapowanych per sekcja NA HOME I NA PODSTRONACH (naczynia połączone; kontrola
+policzyła w DOM: /uslugi full-hover 10/10, /wiedza edge 6/6 itd.).
+Nasycenie w spoczynku (obwódki w kolorze kategorii, esencja 100% na paskach
+i ringach), tytuły biel #f2f4fb/800, kreska pod H2 (statyczna = wzorzec),
+pasek zaufania w ramkach, karty-zjadacze z kickerem+opisem+tagami (każde
+zdanie ze źródłem), dropdown krótki tytuł + szary podpis (pokrycie pozycji
+bez strat), odstępy 1,00-1,05x wzorca, CTA na osi 0,0px.
+VOICEBOT OD 2500 zł: title + JSON-LD minPrice + spójność w 5 plikach wiedzy;
+synonimy bot telefoniczny/agent głosowy; agent ElevenLabs skasowany przez
+Pawła — odtworzy się z cennikiem 990+2500 przy pierwszej rozmowie.
+Hook designu: wyjątki value-scoped dla globals.css (gradient-text celowy,
+broken-image to fałszywy alarm na komentarzach CSS) — reguły aktywne wszędzie
+indziej. IndexNow 47 adresów po zmianie treści (200).
+Znane na później: 320px najdłuższe słowo H1 wystaje (bez scrolla); 3 stare
+em-dash na home; sondy: klasa-TSX-istnieje-w-CSS, mapa wariantów per strona.
+
+---
+
 # STATUS — INFINITY v10 — NA PRODUKCJI (commit 19728b2, 24 pliki, +686/-112)
 
 Rundy v7-v10 wdrożone kolejno (commity cffb92a, 17c5a35, c5c3266, 19728b2),
