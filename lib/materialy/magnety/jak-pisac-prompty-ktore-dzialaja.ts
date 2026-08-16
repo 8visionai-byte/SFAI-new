@@ -9,7 +9,7 @@ import type { Material } from '../types';
  */
 export const jakPisacPrompty: Material = {
   slug: 'jak-pisac-prompty-ktore-dzialaja',
-  tytul: 'Jak pisać prompty, które działają — mini poradnik dla firm',
+  tytul: 'Jak pisać prompty, które działają. Mini poradnik dla firm',
   etykieta: 'Poradnik',
   typPliku: 'PDF',
   ctaPobierz: 'Pobierz poradnik (PDF)',

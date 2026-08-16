@@ -27,7 +27,7 @@ const UPDATED_LABEL = '3 lipca 2026';
 export const metadata: Metadata = buildMetadata({
   title: 'Polityka prywatności',
   description:
-    'Polityka prywatności SimpleFast.ai: kto jest administratorem danych, w jakim celu i na jakiej podstawie przetwarzamy dane z formularza, komu je powierzamy oraz jakie masz prawa (RODO).',
+    'Polityka prywatności SimpleFast.ai: kto administruje danymi, po co je przetwarzamy, komu powierzamy i jakie masz prawa zgodnie z RODO.',
   path: PATH,
 });
 

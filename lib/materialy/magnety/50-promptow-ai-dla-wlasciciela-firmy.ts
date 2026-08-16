@@ -11,7 +11,7 @@ import type { Material } from '../types';
  */
 export const promptyDlaWlasciciela: Material = {
   slug: '50-promptow-ai-dla-wlasciciela-firmy',
-  tytul: '50 promptów AI dla właściciela firmy — gotowe do skopiowania',
+  tytul: '50 promptów AI dla właściciela firmy, gotowe do skopiowania',
   etykieta: 'Prompty',
   typPliku: 'PDF',
   ctaPobierz: 'Pobierz 50 promptów (PDF)',

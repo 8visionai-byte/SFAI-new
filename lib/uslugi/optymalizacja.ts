@@ -26,7 +26,7 @@ export const optymalizacja: Usluga = {
   kapsula:
     'Pozycjonowanie pod AI (GEO) to ustawienie Twojej strony tak, żeby ChatGPT, Claude, Gemini i Perplexity polecały ją w odpowiedziach, a nie tylko Google w wynikach. Nie musisz budować strony od nowa. Bierzemy to, co masz, i naprawiamy trzy rzeczy: czy boty AI w ogóle widzą Twoją treść, czy jest ułożona tak, by dało się ją zacytować, i czy masz autorytet poza własną stroną. Potem mierzymy, czy realnie zaczynasz padać w odpowiedziach.',
 
-  metaTitle: 'Pozycjonowanie pod AI: cytowanie w ChatGPT i Perplexity',
+  metaTitle: 'Pozycjonowanie pod AI: cytowanie w ChatGPT',
   metaDescription:
     'Pozycjonowanie pod AI (GEO): sprawiamy, że ChatGPT, Claude, Gemini i Perplexity polecają Twoją firmę. Cytowalność mierzymy co tydzień w czterech silnikach.',
 

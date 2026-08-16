@@ -16,7 +16,7 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
   lead:
     'AI agent kosztuje więcej niż chatbot, bo nie tylko odpowiada. Łączy się z kalendarzem, CRM i systemami i sam wykonuje zadania. Cenę liczymy od wartości, czyli ile godzin i leadów odzyskasz. Poniżej masz, od czego zależy koszt agenta, jak policzyć zwrot i po czym poznać, że wdrożenie się spina, zanim wydasz pierwszą złotówkę.',
 
-  metaTitle: 'Ile kosztuje wdrożenie AI agenta dla firmy? Cena i zwrot',
+  metaTitle: 'Ile kosztuje wdrożenie AI agenta dla firmy',
   metaDescription:
     'Ile kosztuje wdrożenie AI agenta dla firmy? Czym agent różni się od chatbota, od czego zależy koszt i jak policzyć zwrot, zanim zamówisz wdrożenie.',
 

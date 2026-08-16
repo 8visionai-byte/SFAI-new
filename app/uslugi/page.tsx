@@ -42,7 +42,7 @@ const CANONICAL = `${SITE.url}${PATH}`;
 export const metadata: Metadata = buildMetadata({
   title: 'Usługi AI dla firm: automatyzacje, agenci, strony',
   description:
-    'Usługi AI SimpleFast.ai dla MŚP: chatboty i voiceboty 24/7, automatyzacja faktur i procesów, agent rekrutacyjny, audyt AI, strony pod SEO/GEO. Zacznij od jednej automatyzacji.',
+    'Usługi AI dla MŚP: chatboty i voiceboty 24/7, automatyzacja faktur i procesów, audyt AI, strony pod SEO i AI. Zacznij od jednej automatyzacji.',
   path: PATH,
 });
 

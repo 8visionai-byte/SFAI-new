@@ -27,9 +27,9 @@ export const dynamic = 'force-static';
 
 export function generateMetadata(): Metadata {
   return buildMetadata({
-    title: 'AI Radar: newsy AI dla firm. Co się zmieniło i co z tym zrobić',
+    title: 'AI Radar: newsy AI dla firm z wnioskami',
     description:
-      'AI Radar to newsy ze świata AI przefiltrowane przez jedno pytanie: co to znaczy dla Twojej firmy. Co się stało, czemu ważne dla MŚP, nasz filtr i co możesz zrobić. Bez hype.',
+      'Newsy ze świata AI przefiltrowane przez jedno pytanie: co to znaczy dla Twojej firmy. Co się stało, czemu ważne dla MŚP i co z tym zrobić.',
     path: '/ai-radar',
   });
 }

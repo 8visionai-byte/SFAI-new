@@ -11,7 +11,7 @@ import type { Poradnik } from '../types';
  */
 export const aiWBiurzeRachunkowym: Poradnik = {
   slug: 'ai-w-biurze-rachunkowym-jakie-procesy-zautomatyzowac',
-  tytul: 'AI w biurze rachunkowym — które procesy zautomatyzować najpierw (lista 12)',
+  tytul: 'AI w biurze rachunkowym: które procesy zautomatyzować najpierw (lista 12)',
 
   lead:
     'W biurze rachunkowym najszybciej zwracają się trzy automatyzacje: odczyt i wpinanie faktur, segregacja maili od klientów i przypomnienia o brakujących dokumentach. To zadania nudne, powtarzalne i pełne ręcznego przepisywania, czyli dokładnie to, co AI robi dobrze. Poniżej masz listę 12 procesów uszeregowanych od najłatwiejszego zwrotu, z czasem wdrożenia i tym, co przygotować.',

@@ -17,7 +17,7 @@ export const dziesiecBledow: Material = {
     '10 najczęstszych błędów przy wdrażaniu AI w MŚP, od zaczynania od narzędzia zamiast od problemu po brak opieki po starcie. Przy każdym błędzie masz, jak go poznać i co zrobić zamiast tego. Sprawdź je, zanim wydasz pierwszą złotówkę.',
   zacheta:
     'Większość wdrożeń AI nie pada przez technologię. Pada przez te 10 błędów. Sprawdź je, zanim wydasz pierwszą złotówkę. Oszczędzisz czas i nerwy.',
-  metaTitle: '10 błędów przy wdrażaniu AI w firmie (i jak ich uniknąć)',
+  metaTitle: '10 błędów przy wdrażaniu AI w firmie',
   metaDescription:
     '10 błędów przy wdrażaniu AI w firmie i jak ich uniknąć: od startu od narzędzia zamiast od problemu po brak opieki po wdrożeniu. Przy każdym antidotum.',
   data: '2026-06-16',

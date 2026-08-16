@@ -20,9 +20,9 @@ export const automatyzacje: Usluga = {
   kapsula:
     'Automatyzacja procesów AI to przejęcie przez system powtarzalnej roboty, którą dziś robi człowiek: przepisywania danych między mailem, arkuszem i fakturą, wysyłania potwierdzeń, pilnowania terminów. Nie sprzedajemy narzędzi. Projektujemy działający proces end-to-end i wdrażamy go w dni, nie w miesiące. Zaczynamy od jednego procesu, który boli najbardziej, a Twoje dane zostają w Unii Europejskiej.',
 
-  metaTitle: 'Automatyzacja procesów AI dla firm',
+  metaTitle: 'Automatyzacja procesów AI: od czego zacząć',
   metaDescription:
-    'Automatyzacja procesów AI: przepisywanie danych, potwierdzenia i przypomnienia przejmuje system. Wdrażamy w dni, nie miesiące, a dane zostają w UE.',
+    'Automatyzacja procesów w firmie z AI: przepisywanie danych, potwierdzenia i przypomnienia przejmuje system. Zobacz, które procesy opłaca się oddać.',
 
   problem: {
     h2: 'Na czym naprawdę tracisz czas każdego dnia?',

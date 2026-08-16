@@ -20,7 +20,7 @@ export const arkuszKosztRecznychZadan: Material = {
     'Arkusz, w którym wpisujesz zadanie, czas tygodniowo i koszt godziny, a on liczy, ile Cię rocznie kosztuje ręczna robota i ile odzyskasz po automatyzacji. Gotowy wzór, wpisujesz tylko swoje liczby. Cały wzór i instrukcję masz na tej stronie, za darmo.',
   zacheta:
     'Czujesz, że tracisz czas, ale nie wiesz ile? Wpisujesz zadania i godziny, arkusz liczy koszt w pieniądzu. Zobaczysz czarno na białym, co najbardziej opłaca się zautomatyzować.',
-  metaTitle: 'Arkusz: policz, ile kosztują Cię ręczne zadania w firmie',
+  metaTitle: 'Arkusz: ile kosztują Cię ręczne zadania',
   metaDescription:
     'Arkusz do policzenia kosztu ręcznych zadań w firmie: wpisujesz czas i koszt godziny, liczysz roczny koszt i oszczędność po automatyzacji. Wzór i przykład.',
   data: '2026-06-16',

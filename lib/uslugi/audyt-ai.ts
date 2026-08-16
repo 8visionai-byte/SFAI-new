@@ -20,9 +20,9 @@ export const audytAi: Usluga = {
   kapsula:
     'Audyt AI firmy to płatny Sprint Diagnostyczny za 1490 zł, w którym rozkładamy Twoje procesy na czynniki i pokazujemy, gdzie AI da realny zysk, a gdzie to przepalanie kasy. Dostajesz Action Plan: mapę oszczędności czasu z konkretnymi miejscami do automatyzacji, ułożonymi od największego zwrotu. Cena 1490 zł odliczana jest od wdrożenia, gdy ruszamy z robotą. Najpierw mapa, potem decyzja, dopiero potem wydatek.',
 
-  metaTitle: 'Audyt AI firmy: mapa oszczędności czasu',
+  metaTitle: 'Audyt AI firmy: co zautomatyzować i za ile',
   metaDescription:
-    'Audyt AI firmy za 1490 zł: rozkładamy procesy i mówimy, gdzie wdrożyć AI z zyskiem, a gdzie odpuścić. Dostajesz Action Plan. Cena odliczana od wdrożenia.',
+    'Audyt AI za 1490 zł: rozkładamy procesy i mówimy, gdzie AI się opłaci, a gdzie nie. Dostajesz plan działania, a cena odlicza się od wdrożenia.',
 
   problem: {
     h2: 'Skąd wiesz, gdzie wdrożyć AI, żeby nie przepalić kasy?',

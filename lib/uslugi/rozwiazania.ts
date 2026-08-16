@@ -22,7 +22,7 @@ export const rozwiazania: Usluga = {
   kapsula:
     'Czasem gotowy chatbot czy automatyzacja nie wystarczą, bo Twój problem jest tylko Twój. Wtedy budujemy rozwiązanie na miarę: aplikację webową, wtyczkę do narzędzia, którego używasz, albo Agenta spiętego z kilkoma systemami naraz. Nie sprzedajemy pudełka z funkcjami. Projektujemy dokładnie to, czego potrzebuje Twój proces, i wdrażamy szybko. Zaczynamy od bezpłatnej diagnozy, na której mówimy wprost, czy warto budować od zera, czy taniej złożyć z gotowych klocków.',
 
-  metaTitle: 'Indywidualne rozwiązania AI: aplikacje i wtyczki dla firm',
+  metaTitle: 'Aplikacje i wtyczki AI na zamówienie',
   metaDescription:
     'Aplikacje AI dla firm, wtyczki i Agenci na zamówienie, gdy gotowe narzędzia nie pasują. Zaczynamy od najmniejszej działającej wersji. Dane i kod w UE.',
 

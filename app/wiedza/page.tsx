@@ -43,7 +43,7 @@ const PATH = '/wiedza';
 const CANONICAL = `${SITE.url}${PATH}`;
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Centrum Wiedzy AI dla firm: poradniki, newsy, case studies',
+  title: 'Wiedza o AI dla firm: poradniki i newsy',
   description:
     'Centrum Wiedzy AI dla firm: poradniki krok po kroku, newsy AI z filtrem dla MŚP, przemyślenia i realne case studies z liczbami. Jedno miejsce na odpowiedzi o AI.',
   path: PATH,

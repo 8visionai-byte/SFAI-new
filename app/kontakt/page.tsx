@@ -22,7 +22,7 @@ const PATH = '/kontakt';
 export const metadata: Metadata = buildMetadata({
   title: 'Kontakt: umów bezpłatną diagnozę AI',
   description:
-    'Skontaktuj się z SimpleFast.ai. Umów bezpłatną diagnozę: 30 minut, konkretna lista tego, co da się u Ciebie zautomatyzować. Napisz na e-mail, zadzwoń albo wypełnij formularz.',
+    'Umów bezpłatną diagnozę: 30 minut i konkretna lista tego, co da się u Ciebie zautomatyzować. Napisz, zadzwoń albo wypełnij formularz.',
   path: PATH,
 });
 

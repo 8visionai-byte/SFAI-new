@@ -52,9 +52,9 @@ const PATH = '/uslugi/architekci-wartosci-ai';
 const CANONICAL = `${SITE.url}${PATH}`;
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Architekci Wartości AI: wdrożenie AI rozliczane za efekt',
+  title: 'Architekci Wartości AI: płacisz za efekt',
   description:
-    'Rozliczamy się za przyniesioną wartość, nie za godziny. Sprawdzamy, gdzie tracisz pieniądze, robimy jeden proces na próbę, decydujesz. Darmowa diagnoza, pełny jawny cennik od 0 zł.',
+    'Rozliczamy się za przyniesioną wartość, nie za godziny. Jeden proces na próbę, potem decydujesz. Darmowa diagnoza i jawny cennik.',
   path: PATH,
 });
 

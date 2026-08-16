@@ -19,9 +19,9 @@ export const voiceboty: Usluga = {
   kapsula:
     'Voicebot, nazywany też botem telefonicznym, to bot głosowy, który odbiera telefon, rozmawia po polsku i załatwia sprawę: umawia wizytę, przyjmuje zgłoszenie, odpowiada na pytanie. Gdy sprawa wymaga człowieka, zapisuje ją i wysyła Ci powiadomienie, żebyś oddzwonił przygotowany. Działa 24/7, nawet gdy jesteś u klienta. To nie nagranie ani „wciśnij jeden”. To Agent, który rozmawia i wykonuje zadanie, a potem przekazuje Ci tylko to, co ważne.',
 
-  metaTitle: 'Voicebot dla firmy, który odbiera telefon 24/7',
+  metaTitle: 'Voicebot dla firm: bot telefoniczny 24/7',
   metaDescription:
-    'Voicebot, czyli bot telefoniczny dla firm: odbiera telefon 24/7, rozmawia po polsku i umawia wizyty. Żaden telefon nie zostaje bez odpowiedzi.',
+    'Voicebot dla firm: odbiera telefony po polsku, umawia wizyty i przekazuje pilne sprawy. Zobacz, ile kosztuje i jak brzmi w praktyce.',
 
   problem: {
     h2: 'Ile telefonów dziennie nie odbierasz?',

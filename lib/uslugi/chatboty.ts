@@ -20,9 +20,9 @@ export const chatboty: Usluga = {
   kapsula:
     'Chatbot AI dla firmy to asystent, który odpowiada klientom na stronie i w komunikatorach przez całą dobę: tłumaczy ofertę, podaje ceny i godziny, zbiera leady, nawet o 22:00. U nas chatbot to pierwszy krok do Agenta, który nie tylko odpowiada, ale i działa: umawia, zapisuje, przekazuje sprawę dalej. Wdrażamy go w dni, uczymy na Twojej wiedzy, a dane zostają w Unii Europejskiej.',
 
-  metaTitle: 'Chatbot AI dla firmy: wdrożenie 24/7',
+  metaTitle: 'Chatbot AI dla firm: cena i wdrożenie',
   metaDescription:
-    'Chatbot AI dla firmy: odpowiada klientom 24/7, zbiera leady i uczy się na Twojej wiedzy. Wdrożenie w dni, nie miesiące. Pierwszy krok do Agenta.',
+    'Chatbot AI dla firm, który odpowiada klientom 24/7 i zbiera leady. Ile kosztuje, ile trwa wdrożenie i czym różni się od Agenta. Sprawdź przykłady.',
 
   problem: {
     h2: 'Ile razy dziennie odpowiadasz na to samo pytanie?',

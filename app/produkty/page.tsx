@@ -36,7 +36,7 @@ const CANONICAL = `${SITE.url}${PATH}`;
 export const metadata: Metadata = buildMetadata({
   title: 'Produkty: co zbudowaliśmy i co możesz mieć u siebie',
   description:
-    'Cztery własne produkty AI SimpleFast.ai opisane przez funkcję: skaner faktur do KSeF, apka coachingowa z agentami, obecność i składki zespołu, centrum dowodzenia głosem. Plus katalog klocków.',
+    'Cztery własne produkty AI SimpleFast.ai: skaner faktur do KSeF, apka coachingowa z agentami, składki zespołu i centrum dowodzenia głosem.',
   path: PATH,
 });
 

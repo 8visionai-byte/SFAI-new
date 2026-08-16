@@ -31,7 +31,7 @@ const CANONICAL = `${SITE.url}${PATH}`;
 export const metadata: Metadata = buildMetadata({
   title: 'Darmowe materiały AI dla firm: prompty, checklisty',
   description:
-    'Darmowe materiały AI dla firm: gotowe zestawy promptów, checklisty procesów do automatyzacji i arkusze kosztów. Czytasz całość na stronie, pobierasz na maila albo w PDF.',
+    'Darmowe materiały AI: gotowe prompty, checklisty procesów do automatyzacji i arkusze kosztów. Całość na stronie, do pobrania w PDF.',
   path: PATH,
 });
 

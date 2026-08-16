@@ -35,7 +35,7 @@ export const dynamic = 'force-static';
 export const metadata: Metadata = buildMetadata({
   title: 'Darmowe narzędzia AI dla firm',
   description:
-    'Darmowe narzędzia AI dla firm: kalkulator oszczędności z automatyzacji, test gotowości firmy na AI i audyt strony pod cytowanie w ChatGPT. Policz i sprawdź sam, bez maila.',
+    'Darmowe narzędzia AI: kalkulator oszczędności, test gotowości firmy na AI i audyt strony pod cytowanie w ChatGPT. Sprawdź sam, bez maila.',
   path: '/narzedzia',
 });
 

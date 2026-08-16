@@ -84,27 +84,23 @@ export function DiagnozaForm() {
     if (!zgoda) return; // RODO: bez zgody nie wysyłamy
     setBladKontakt(null);
     setStatus('sending');
-    // Netlify Forms: POST application/x-www-form-urlencoded do "/" z form-name +
-    // polami. Ukryty formularz-detektor (statyczny HTML niżej) pozwala Netlify wykryć
-    // schemat „diagnoza" przy buildzie. Zgodę RODO wysyłamy jako pole (dowód zgody);
-    // honeypot/time-trap są też walidowane wyżej. Lead ląduje w panelu Netlify Forms.
-    const data: Record<string, string> = {
-      'form-name': 'diagnoza',
-      potrzeba: potrzeba ?? '',
-      branza,
-      zespol,
-      imie: imie.trim(),
-      kontakt: kontakt.trim(),
-      zgoda: 'tak',
-      firma_www: honeypot,
-    };
-    const body = Object.keys(data)
-      .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(data[k]!)}`)
-      .join('&');
-    fetch('/', {
+    // POST JSON do naszego /api/lead (Vercel) → stamtąd webhook Make → arkusz + mail.
+    // UWAGA: poprzednia wersja wysyłała w protokole Netlify Forms na "/", co na
+    // Vercelu zwracało 405 i KAŻDE zgłoszenie ginęło. Zgodę RODO wysyłamy jako pole
+    // (dowód zgody); honeypot/time-trap są walidowane tu ORAZ na serwerze.
+    fetch('/api/lead', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        zrodlo: 'formularz-kontakt',
+        potrzeba: potrzeba ?? '',
+        branza,
+        zespol,
+        imie: imie.trim(),
+        kontakt: kontakt.trim(),
+        zgoda: 'tak',
+        firma_www: honeypot,
+      }),
     })
       .then((res) => setStatus(res.ok ? 'success' : 'error'))
       .catch(() => setStatus('error'));
@@ -155,20 +151,6 @@ export function DiagnozaForm() {
 
   return (
     <>
-      {/* Netlify Forms — ukryty formularz-detektor (statyczny). Netlify wykrywa po nim
-          schemat „diagnoza" przy buildzie. Realny formularz niżej POST-uje fetch-em z
-          form-name=diagnoza; pola muszą pokrywać się z body w handleSubmit. */}
-      <form name="diagnoza" data-netlify="true" netlify-honeypot="firma_www" hidden>
-        <input type="hidden" name="form-name" defaultValue="diagnoza" />
-        <input type="text" name="potrzeba" />
-        <input type="text" name="branza" />
-        <input type="text" name="zespol" />
-        <input type="text" name="imie" />
-        <input type="text" name="kontakt" />
-        <input type="text" name="zgoda" />
-        <input type="text" name="firma_www" />
-      </form>
-
       {/* REGUŁA PROMIENIA: interakcja 8px, kontener 16px, element wewnątrz kontenera
           8px, pill = full. Cień: na home to JEDYNY formularz z shadow-md (fizyczny
           cel konwersji, nie kolejne pudełko).
