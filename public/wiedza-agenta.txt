@@ -13,7 +13,7 @@ USŁUGI
 Płatny audyt za 1490 zł: rozkładamy procesy firmy na czynniki i pokazujemy, gdzie AI da realny zysk, a gdzie to przepalanie kasy. Efekt: Action Plan, czyli mapa oszczędności czasu z konkretnymi miejscami do automatyzacji, ułożona od największego zwrotu. Kwota 1490 zł jest odliczana od kosztu wdrożenia, gdy klient decyduje się na współpracę; jeśli nie wdraża, Action Plan zostaje u niego. Bez abonamentu i ukrytych kosztów.
 
 2. Chatbot AI dla firmy, adres: /uslugi/chatboty
-Asystent tekstowy, który odpowiada klientom na stronie i w komunikatorach przez całą dobę: tłumaczy ofertę, podaje ceny i godziny, zbiera leady, także wieczorem i w weekend. Uczony na wiedzy firmy (oferta, cennik, najczęstsze pytania), odpowiada po polsku i w tonie klienta. Nie wymyśla: gdy nie zna odpowiedzi, mówi to wprost i przekazuje sprawę człowiekowi. Klient zawsze wie, że rozmawia z AI. Chatbot to pierwszy krok do Agenta, który dodatkowo umawia wizyty i zapisuje je w kalendarzu. Wdrożenie liczone w dniach, nie miesiącach.
+Asystent tekstowy, który odpowiada klientom na stronie i w komunikatorach przez całą dobę: tłumaczy ofertę, podaje ceny i godziny, zbiera leady, także wieczorem i w weekend. Uczony na wiedzy firmy (oferta, cennik, najczęstsze pytania), odpowiada po polsku i w tonie klienta. Nie wymyśla: gdy nie zna odpowiedzi, mówi to wprost i przekazuje sprawę człowiekowi. Klient zawsze wie, że rozmawia z AI. Chatbot to pierwszy krok do Agenta, który dodatkowo umawia wizyty i zapisuje je w kalendarzu. Wdrożenie liczone w dniach, nie miesiącach. Pakiet startowy od 990 zł: chatbot na stronę, uczony na wiedzy firmy, z wdrożeniem i pierwszą konfiguracją; dokładna wycena po bezpłatnej diagnozie. Każde wdrożenie ma abonament opieki od 99 do 599 zł miesięcznie, nie zostawiamy klientów.
 
 3. Voicebot dla firmy, adres: /uslugi/voiceboty
 Bot telefoniczny (głosowy), który odbiera telefon 24/7, rozmawia naturalnie po polsku i załatwia sprawę: umawia wizytę i zapisuje ją w kalendarzu, przyjmuje zgłoszenie, odpowiada na częste pytania. Po rozmowie wysyła krótkie podsumowanie. Trudne sprawy przekazuje dalej: bierze kontakt i mówi, że firma oddzwoni. Voicebot obsługuje połączenia przychodzące i nie dzwoni sam do klientów: przy sprawie do kontaktu zwrotnego zapisuje ją i wysyła powiadomienie (można ustawić SMS z numerem firmy), a rozmowę zaczyna człowiek albo klient, który oddzwania. To nie nagranie ani menu z wciskaniem klawiszy. Voicebot na początku rozmowy informuje, że jest asystentem AI (wymóg AI Act). Koszt ma zwykle dwie części: jednorazowe wdrożenie oraz koszt działania zależny od liczby rozmów.
@@ -45,11 +45,14 @@ Ustawiamy istniejącą stronę tak, żeby ChatGPT, Claude, Gemini i Perplexity p
 CENNIK (kwoty publiczne ze strony; ostateczna wycena zawsze po diagnozie)
 - Bezpłatna diagnoza: 0 zł, około 30 minut; kończy się konkretną listą tego, co da się zautomatyzować, bez zobowiązań.
 - Sprint Diagnostyczny (audyt AI): 1490 zł, odliczany w całości od wdrożenia przy współpracy; efekt to Action Plan.
-- AI Start (pierwsza automatyzacja na próbę): 1990 zł.
+- Chatbot: pakiet startowy od 990 zł (chatbot na stronę, uczony na wiedzy firmy, wdrożenie i pierwsza konfiguracja); dokładna wycena po bezpłatnej diagnozie.
+- AI Start (pierwsza automatyzacja na próbę): 1990 zł. To inny produkt niż pakiet startowy chatbota.
+- Abonament opieki do pakietów wdrożeniowych: od 99 do 599 zł miesięcznie; każde wdrożenie ma opiekę, nie zostawiamy klientów. To co innego niż ryczałt godzinowy Opieki AI (10/20/40 h).
 - Stawka bazowa poza ryczałtem: 350 zł za godzinę.
 - Opieka AI (ryczałt miesięczny): 10 h = 3000 zł, 20 h = 5500 zł, 40 h = 10000 zł.
 - Architekci Wartości AI: od 10000 zł miesięcznie.
-- Pozostałe wdrożenia (chatbot, voicebot, automatyzacja, dokumenty i faktury, strona www, aplikacja na zamówienie, GEO): cena liczona od wartości i zakresu; dokładne widełki podawane na bezpłatnej diagnozie. Innych kwot firma publicznie nie podaje.
+- Automatyzacja procesów: wdrożenie zwykle od 3000 do 10000 zł (jawne widełki, opublikowane też w poradniku-cenniku); dokładna kwota po bezpłatnej diagnozie.
+- Pozostałe wdrożenia (voicebot, dokumenty i faktury, strona www, aplikacja na zamówienie, GEO): cena liczona od wartości i zakresu; dokładne widełki podawane na bezpłatnej diagnozie. Innych kwot firma publicznie nie podaje.
 
 SPOSÓB PRACY
 Krok 1: pokazujesz problem. Bezpłatna diagnoza: klient mówi, gdzie ucieka czas i co boli, my słuchamy i pytamy, zamiast od razu sprzedawać.
@@ -85,7 +88,7 @@ CENTRUM WIEDZY (adres: /wiedza)
 Cztery działy: Poradniki AI dla firm (m.in. ile kosztuje chatbot dla firmy, AI w biurze rachunkowym, ile kosztuje wdrożenie AI agenta), AI Radar (newsy AI dla firm), Przemyślenia o AI w biznesie (blog, m.in. chatbot czy AI agent, jak voicebot odbiera telefony, AI Act a Twoja firma), Case studies (realizacje z liczbami). Do pobrania są też bezpłatne materiały (adres: /materialy), m.in. 50 promptów dla właściciela firmy, checklista 20 procesów do automatyzacji, 10 błędów przy wdrażaniu AI, arkusz do policzenia kosztu ręcznych zadań.
 
 NAJCZĘSTSZE PYTANIA (FAQ)
-Ile kosztuje wdrożenie? Zależy od zakresu. Publiczne kwoty: audyt (Sprint Diagnostyczny) 1490 zł odliczany od wdrożenia, AI Start 1990 zł, Opieka AI od 3000 zł miesięcznie, Architekci Wartości AI od 10000 zł miesięcznie, stawka bazowa 350 zł/h. Dokładne widełki na bezpłatnej diagnozie.
+Ile kosztuje wdrożenie? Zależy od zakresu. Publiczne kwoty: chatbot pakiet startowy od 990 zł, audyt (Sprint Diagnostyczny) 1490 zł odliczany od wdrożenia, AI Start 1990 zł, Opieka AI od 3000 zł miesięcznie, Architekci Wartości AI od 10000 zł miesięcznie, stawka bazowa 350 zł/h, abonament opieki do wdrożeń od 99 do 599 zł miesięcznie. Dokładne widełki na bezpłatnej diagnozie.
 Czym chatbot różni się od AI Agenta? Chatbot odpowiada na pytania. Agent wykonuje całe zadania: sprawdzi kalendarz, zaproponuje termin, zapisze wizytę i wyśle potwierdzenie. Chatbot to pierwszy krok, który można rozwinąć w Agenta.
 Czym chatbot różni się od voicebota? Chatbot pisze (strona, komunikatory), voicebot rozmawia głosem przez telefon. To dwie różne usługi.
 Czy voicebot dzwoni sam do klientów? Nie. Voicebot obsługuje połączenia przychodzące: odbiera telefon i prowadzi rozmowę. Firma nie robi botów, które same wydzwaniają do ludzi. Gdy sprawa wymaga kontaktu zwrotnego, bot zapisuje ją i wysyła powiadomienie (można ustawić SMS z numerem firmy), a rozmowę zaczyna człowiek albo klient, który oddzwania.

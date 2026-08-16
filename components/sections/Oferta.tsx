@@ -223,7 +223,7 @@ export function Oferta() {
       <Reveal delay={0.1}>
         <p className="mx-auto mt-6 max-w-narrow text-caption text-fg-subtle">
           To są widełki startowe, nie ostateczne faktury. Dokładną cenę poznasz na bezpłatnej diagnozie, zanim
-          cokolwiek zamówisz. Bez ukrytych kosztów, bez abonamentu na siłę.
+          cokolwiek zamówisz. Bez ukrytych kosztów, a po wdrożeniu opieka w abonamencie od 99 zł miesięcznie.
         </p>
       </Reveal>
 

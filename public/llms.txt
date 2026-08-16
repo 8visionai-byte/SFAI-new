@@ -16,7 +16,7 @@
 
 ## Uslugi
 - [Wszystkie uslugi (hub)](https://www.simplefast.ai/uslugi): rozdroze 10 uslug w 3 grupach: obsluga 24/7, back-office i procesy, budowa i strategia.
-- [Chatbot AI dla firmy](https://www.simplefast.ai/uslugi/chatboty): odpowiada klientom 24/7 na bazie wiedzy firmy, zbiera leady, rosnie do Agenta, ktory umawia i zapisuje.
+- [Chatbot AI dla firmy](https://www.simplefast.ai/uslugi/chatboty): odpowiada klientom 24/7 na bazie wiedzy firmy, zbiera leady, rosnie do Agenta, ktory umawia i zapisuje. Pakiet startowy od 990 zl.
 - [Voicebot dla firmy](https://www.simplefast.ai/uslugi/voiceboty): bot telefoniczny odbiera polaczenia przychodzace po polsku 24/7, umawia wizyty, przyjmuje zgloszenia. Nie dzwoni sam: sprawe do oddzwonienia zapisuje i wysyla powiadomienie, a kontakt zaczyna czlowiek.
 - [Agent AI do rekrutacji](https://www.simplefast.ai/uslugi/agent-rekrutacyjny): zbiera CV, robi pierwszy odsiew i scoring, odpowiada kandydatom, umawia rozmowy. Decyzje o zatrudnieniu podejmuje czlowiek.
 - [Automatyzacja procesow w firmie z AI](https://www.simplefast.ai/uslugi/automatyzacje): system przejmuje powtarzalna robote (przepisywanie danych, potwierdzenia, terminy), wdrozenie w dni.
@@ -36,7 +36,7 @@
 
 ## Centrum Wiedzy
 - [Centrum Wiedzy AI dla firm (hub)](https://www.simplefast.ai/wiedza): jedno miejsce z odpowiedziami o AI dla MSP. Cztery dzialy: Poradniki, AI Radar, Przemyslenia (blog) i Case studies (realizacje).
-- [Poradniki AI dla firm](https://www.simplefast.ai/poradniki): konkret krok po kroku pod pytania wlasciciela: ile kosztuje chatbot, ile kosztuje wdrozenie AI agenta, ktore procesy w biurze rachunkowym zautomatyzowac.
+- [Poradniki AI dla firm](https://www.simplefast.ai/poradniki): konkret krok po kroku pod pytania wlasciciela: ile kosztuje chatbot (od 990 zl), ile kosztuje automatyzacja AI (3000-10000 zl), ile kosztuje wdrozenie AI agenta, ktore procesy w biurze rachunkowym zautomatyzowac.
 - [AI Radar: newsy AI dla firm](https://www.simplefast.ai/ai-radar): newsy ze swiata AI przefiltrowane przez jedno pytanie: co to znaczy dla Twojej firmy. Co sie stalo, czemu wazne dla MSP, nasz filtr i co zrobic. Bez hype. Start z 2 wpisami-szablonami formatu (realne newsy dochodza na biezaco).
 - [Blog (Przemyslenia o AI)](https://www.simplefast.ai/blog): wdrozenia AI, koszty, AI Act dla firm, roznica chatbot vs agent.
 - [Materialy do pobrania](https://www.simplefast.ai/materialy): darmowe, gotowe materialy AI dla firm: zestawy promptow, checklisty procesow do automatyzacji i arkusze kosztow. Cala tresc czytasz na stronie, za darmo i bez zapisu.

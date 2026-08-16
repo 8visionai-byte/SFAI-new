@@ -86,7 +86,7 @@ export const dokumentyFaktury: Usluga = {
     {
       pytanie: 'Ile kosztuje automatyzacja faktur?',
       odpowiedz:
-        'Koszt zależy od skali i zakresu. Sam odczyt faktur do arkusza to inna półka niż pełny obieg z księgowością i KSeF dla wielu klientów biura. Pracę zaczynamy od Sprintu Diagnostycznego za 1490 zł, który odliczamy od wdrożenia, gdy wchodzimy we współpracę. Dokładne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów i bez abonamentu na siłę.',
+        'Koszt zależy od skali i zakresu. Sam odczyt faktur do arkusza to inna półka niż pełny obieg z księgowością i KSeF dla wielu klientów biura. Pracę zaczynamy od Sprintu Diagnostycznego za 1490 zł, który odliczamy od wdrożenia, gdy wchodzimy we współpracę. Dokładne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów. Po wdrożeniu dostajesz opiekę w abonamencie od 99 zł miesięcznie, nie zostawiamy klientów.',
     },
     {
       pytanie: 'Czy OCR poradzi sobie ze zdjęciem faktury z telefonu?',

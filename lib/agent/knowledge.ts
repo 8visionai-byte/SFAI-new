@@ -84,7 +84,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Uslugi',
     title: 'Chatbot AI dla firmy',
     summary:
-      'Chatbot AI dla firmy to asystent, ktory odpowiada klientom na stronie i w komunikatorach przez cala dobe: tlumaczy oferte, podaje ceny i godziny, zbiera leady, nawet o 22:00. U nas chatbot to pierwszy krok do Agenta, ktory nie tylko odpowiada, ale i dziala: umawia, zapisuje, przekazuje sprawe dalej. Wdrazamy go w dni, uczymy na Twojej wiedzy, a dane zostaja w Unii Europejskiej.',
+      'Chatbot AI dla firmy to asystent, ktory odpowiada klientom na stronie i w komunikatorach przez cala dobe: tlumaczy oferte, podaje ceny i godziny, zbiera leady, nawet o 22:00. U nas chatbot to pierwszy krok do Agenta, ktory nie tylko odpowiada, ale i dziala: umawia, zapisuje, przekazuje sprawe dalej. Wdrazamy go w dni, uczymy na Twojej wiedzy, a dane zostaja w Unii Europejskiej. Pakiet startowy od 990 zl (chatbot na strone, uczony na wiedzy firmy, wdrozenie i pierwsza konfiguracja), dokladna wycena po bezplatnej diagnozie; kazde wdrozenie ma abonament opieki od 99 do 599 zl miesiecznie, bo nie zostawiamy klientow.',
     url: '/uslugi/chatboty',
     intents: [
       'chatbot dla firmy',
@@ -135,7 +135,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Uslugi',
     title: 'Automatyzacja procesow w firmie z AI',
     summary:
-      'Automatyzacja procesow AI to przejecie przez system powtarzalnej roboty, ktora dzis robi czlowiek: przepisywania danych miedzy mailem, arkuszem i faktura, wysylania potwierdzen, pilnowania terminow. Nie sprzedajemy narzedzi, projektujemy dzialajacy proces end-to-end i wdrazamy go w dni, nie w miesiace. Zaczynamy od jednego procesu, ktory boli najbardziej, a Twoje dane zostaja w Unii Europejskiej.',
+      'Automatyzacja procesow AI to przejecie przez system powtarzalnej roboty, ktora dzis robi czlowiek: przepisywania danych miedzy mailem, arkuszem i faktura, wysylania potwierdzen, pilnowania terminow. Nie sprzedajemy narzedzi, projektujemy dzialajacy proces end-to-end i wdrazamy go w dni, nie w miesiace. Wdrozenie kosztuje zwykle od 3000 do 10000 zl, dokladna kwota po bezplatnej diagnozie; kazde wdrozenie ma opieke w abonamencie od 99 do 599 zl miesiecznie. Zaczynamy od jednego procesu, ktory boli najbardziej, a Twoje dane zostaja w Unii Europejskiej.',
     url: '/uslugi/automatyzacje',
     intents: [
       'automatyzacja procesow AI',
@@ -838,7 +838,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
  * KB_LAST_UPDATED zmieniaj recznie przy aktualizacji wpisow. Sluzy do cache-bustingu
  * promptu (gdy wstrzykujesz KB do system promptu z prompt cachingiem).
  */
-export const KB_LAST_UPDATED = '2026-06-20';
+export const KB_LAST_UPDATED = '2026-08-16';
 
 /**
  * Renderuje cala baze wiedzy do zwiezlego tekstu pod system prompt.

@@ -27,3 +27,4 @@ git log seo-2026-08-16..HEAD --oneline
 ## Uwaga
 Identyfikatora wdrożenia Vercela nie da się odczytać z zewnątrz — trzeba go spisać
 z panelu Vercela. Nagłówek `x-vercel-id` to ślad pojedynczego żądania, nie numer wdrożenia.
+| 2026-08-16 (po południu) | `seo-2026-08-16b` | `18dd388` | main | INFINITY v10 na produkcji; przed serią zmian treściowych (cenniki, pakiet 990) |

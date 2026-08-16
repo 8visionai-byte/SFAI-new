@@ -32,11 +32,14 @@ USŁUGI
 CENNIK (kwoty publiczne ze strony; przy każdej dodawaj, że ostateczna wycena jest po diagnozie)
 - Bezpłatna diagnoza: 0 zł, około 30 minut, kończy się konkretną listą rzeczy do automatyzacji.
 - Sprint Diagnostyczny (audyt AI): 1490 zł, odliczany w całości od wdrożenia przy współpracy.
-- AI Start (pierwsza automatyzacja na próbę): 1990 zł.
+- Chatbot: pakiet startowy od 990 zł (chatbot na stronę, uczony na wiedzy firmy, wdrożenie i pierwsza konfiguracja); dokładna wycena po bezpłatnej diagnozie.
+- AI Start (pierwsza automatyzacja na próbę): 1990 zł. To inny produkt niż pakiet startowy chatbota.
+- Abonament opieki do pakietów wdrożeniowych: od 99 do 599 zł miesięcznie; każde wdrożenie ma opiekę, nie zostawiamy klientów. To co innego niż ryczałt godzinowy Opieki AI.
 - Stawka bazowa poza ryczałtem: 350 zł za godzinę.
 - Opieka AI (ryczałt miesięczny): 10 h = 3000 zł (300 zł/h), 20 h = 5500 zł (275 zł/h), 40 h = 10000 zł (250 zł/h).
 - Architekci Wartości AI: od 10000 zł miesięcznie; kwota 10000 nigdy jako pierwsza propozycja, prowadź od najtańszego, odwracalnego kroku.
-- Pozostałe wdrożenia (chatbot, voicebot, automatyzacja, strona, aplikacja): cenę liczymy od wartości, dokładne widełki na bezpłatnej diagnozie. Nie podawaj innych kwot.
+- Automatyzacja procesów: wdrożenie zwykle od 3000 do 10000 zł (jawne widełki ze strony i poradnika-cennika); dokładna kwota po bezpłatnej diagnozie.
+- Pozostałe wdrożenia (voicebot, strona, aplikacja): cenę liczymy od wartości, dokładne widełki na bezpłatnej diagnozie. Nie podawaj innych kwot.
 
 SPOSÓB PRACY
 Krok 1: pokazujesz problem - bezpłatna diagnoza, klient mówi, gdzie ucieka czas, my słuchamy i pytamy.
@@ -329,7 +332,7 @@ ${renderNavMap()}
 - „Audyt", „od czego zacząć", „gdzie wdrożyć AI", „sprint diagnostyczny" → audyt-ai. „Zewnętrzny dział AI", „płacenie za efekt", „kompleksowa współpraca" → architekci-wartosci-ai.
 - „Faktury", „OCR", „KSeF", „biuro rachunkowe" → dokumenty-faktury. „Rekrutacja", „CV", „kandydaci" → agent-rekrutacyjny. „Apka", „wtyczka", „na zamówienie" → rozwiazania.
 - Pary sekcja strony głównej vs podstrona: szybki rzut oka w trakcie rozmowy → sekcja strony głównej (show); pełne szczegóły albo wyraźna prośba o przejście → podstrona. Konkretnie: narzedzia-teaser (sekcja) vs narzedzia (podstrona z pełnymi narzędziami), demo (sekcja z pokazową rozmową) zamiast opowiadania o agencie, diagnoza (sekcja z formularzem) vs kontakt (podstrona z danymi kontaktowymi i formularzem).
-- Pytania o cenę lub wycenę → podaj tylko kwoty publiczne z wiedzy (audyt 1490 zł, AI Start 1990 zł, Opieka AI od 3000 zł miesięcznie), dodaj, że ostateczna wycena jest po diagnozie, i zaproponuj sekcję diagnoza (formularz) albo kontakt.
+- Pytania o cenę lub wycenę → podaj tylko kwoty publiczne z wiedzy (chatbot pakiet startowy od 990 zł, audyt 1490 zł, AI Start 1990 zł, Opieka AI od 3000 zł miesięcznie, abonament opieki do wdrożeń od 99 do 599 zł miesięcznie), dodaj, że ostateczna wycena jest po diagnozie, i zaproponuj sekcję diagnoza (formularz) albo kontakt.
 - Jeśli prośba jest niejednoznaczna albo pasuje do kilku sekcji → NIE zgaduj. Zadaj jedno krótkie pytanie doprecyzowujące i nawiguj dopiero po odpowiedzi.
 - Używaj narzędzia zawsze, gdy rozmówca prosi „pokaż", „przenieś mnie", „otwórz", „gdzie znajdę" albo pyta o miejsce na stronie. Nie opisuj drogi słowami, po prostu wywołaj narzędzie.
 

@@ -78,7 +78,7 @@ export const automatyzacje: Usluga = {
   ramaCeny: {
     h2: 'Ile kosztuje wdrożenie automatyzacji?',
     tresc:
-      'Cenę liczymy od wartości, nie od godzin. Najpierw na bezpłatnej diagnozie liczymy, ile godzin i złotych miesięcznie zjada dany proces. Wdrożenie wyceniamy tak, żeby zwracało się tym, co odzyskujesz. Pojedynczy proces to inna półka niż kilka połączonych. Dokładne widełki podajemy na diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów i bez abonamentu na siłę.',
+      'Cenę liczymy od wartości, nie od godzin. Najpierw na bezpłatnej diagnozie liczymy, ile godzin i złotych miesięcznie zjada dany proces. Wdrożenie wyceniamy tak, żeby zwracało się tym, co odzyskujesz. Pojedynczy proces to inna półka niż kilka połączonych. Dokładne widełki podajemy na diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów. Po wdrożeniu dostajesz opiekę w abonamencie od 99 zł miesięcznie, nie zostawiamy klientów.',
     // INPUT PAWŁA: realne "od X zł" za pojedynczy proces → ustawić minPrice (number),
     // to włączy offers w Service JSON-LD spójnie z UI. Brak danej → undefined.
   },

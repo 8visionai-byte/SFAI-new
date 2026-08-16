@@ -7,8 +7,8 @@ import type { Usluga } from './types';
  * Answer-first, głos Pawła, zero em-dash, zero zmyślonych liczb i cen.
  *
  * INPUT PAWŁA (do uzupełnienia przed shipem, NIE renderowane):
- *  - ramaCeny.minPrice: realne "od X zł" za prosty chatbot (number, PLN).
- *    Dopiero wtedy włącza się kwota w UI i `offers` w Service JSON-LD. Dziś undefined.
+ *  - ramaCeny.minPrice: 990 USTAWIONE (pakiet startowy, decyzja Pawła i Marcina
+ *    z 2026-08-16, locked). Kwota w UI i `offers` w Service JSON-LD włączone.
  *  - osobne "od X zł" za chatbota z integracjami (kalendarz/CRM) — do treści ceny.
  *  - cta.dowod: realna liczba z wdrożenia (np. zapytań/mc obsłużonych przez chatbota
  *    klienta) ALBO case z liczbą + zgodą. Do tego czasu uczciwe zdanie o diagnozie.
@@ -74,15 +74,15 @@ export const chatboty: Usluga = {
   ramaCeny: {
     h2: 'Ile kosztuje wdrożenie chatbota?',
     tresc:
-      'Koszt zależy od zakresu. Inaczej wycenia się prosty chatbot odpowiadający na pytania z Twojej wiedzy, inaczej Agent, który dodatkowo umawia i zapisuje wizyty oraz łączy się z kalendarzem czy CRM. Cenę liczymy od wartości: ile pytań miesięcznie zdejmuje z Ciebie bot i ile leadów łapie po godzinach. Dokładne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów.',
-    // minPrice: undefined — brak realnej kwoty od Pawła. Bez offers w Service JSON-LD.
+      'Pakiet startowy zaczyna się od 990 zł. W tej cenie dostajesz chatbota na stronę, uczonego na wiedzy Twojej firmy, razem z wdrożeniem i pierwszą konfiguracją. Chatbot z integracjami, który dodatkowo umawia i zapisuje wizyty oraz łączy się z kalendarzem czy CRM, to wyższa półka, wyceniana od zakresu. Dokładną wycenę podajemy po bezpłatnej diagnozie, zanim cokolwiek zamówisz. Każde nasze wdrożenie ma abonament opieki od 99 do 599 zł miesięcznie, bo nie zostawiamy klientów samych z botem. Bez ukrytych kosztów.',
+    minPrice: 990, // pakiet startowy (locked 2026-08-16): kwota w UI + offers w Service JSON-LD.
   },
 
   faq: [
     {
       pytanie: 'Ile kosztuje chatbot AI dla firmy?',
       odpowiedz:
-        'Na pytanie, ile kosztuje chatbot dla firmy, odpowiadamy wprost: to zależy od zakresu. Gotowy chatbot odpowiadający na pytania z Twojej wiedzy to inna półka niż pełny Agent, który umawia wizyty i łączy się z kalendarzem czy CRM. Cenę liczymy od wartości, jaką bot daje, a dokładne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów i bez abonamentu na siłę.',
+        'Pakiet startowy kosztuje od 990 zł. W tej cenie jest chatbot na stronę, uczony na wiedzy Twojej firmy, z wdrożeniem i pierwszą konfiguracją. Pełny Agent, który umawia wizyty i łączy się z kalendarzem czy CRM, to wyższa półka, wyceniana od zakresu. Dokładną wycenę podajemy po bezpłatnej diagnozie, zanim cokolwiek zamówisz. Każde wdrożenie ma abonament opieki od 99 do 599 zł miesięcznie, bo nie zostawiamy klientów samych z botem. Bez ukrytych kosztów.',
     },
     {
       pytanie: 'Czym chatbot różni się od AI Agenta?',

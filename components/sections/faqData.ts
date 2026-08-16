@@ -18,7 +18,7 @@ export const FAQ_ITEMS: { q: string; a: string }[] = [
   },
   {
     q: 'Ile to kosztuje?',
-    a: 'Koszt zależy od zakresu: inaczej wycenia się pojedynczy chatbot, inaczej pełnego Agenta obsługującego telefon i kalendarz. Dokładną cenę i widełki podajemy na bezpłatnej diagnozie, kiedy znamy już Twój proces, zanim cokolwiek zamówisz. Bez ukrytych kosztów i bez abonamentu na siłę.',
+    a: 'Koszt zależy od zakresu: inaczej wycenia się pojedynczy chatbot, inaczej pełnego Agenta obsługującego telefon i kalendarz. Dokładną cenę i widełki podajemy na bezpłatnej diagnozie, kiedy znamy już Twój proces, zanim cokolwiek zamówisz. Bez ukrytych kosztów. Po wdrożeniu dostajesz opiekę w abonamencie od 99 zł miesięcznie, nie zostawiamy klientów.',
   },
   {
     q: 'Ile trwa wdrożenie?',

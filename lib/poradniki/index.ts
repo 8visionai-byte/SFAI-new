@@ -11,15 +11,17 @@
  * sitemap-hook (gdy podłączony) i SSG biorą się z tego rejestru automatycznie.
  * Konwencja slug: małe litery, myślniki, bez polskich znaków, bez końcowego slasha.
  *
- * STATUS: 3 poradniki evergreen z pełną treścią (faza 1). Tematy bez kanibalizacji
+ * STATUS: 4 poradniki evergreen z pełną treścią. Tematy bez kanibalizacji
  * z istniejącym blogiem (wpis „ile kosztuje wdrożenie AI w małej firmie" zostaje na
- * blogu; tu są chatbot, biuro rachunkowe i AI agent — węższe money queries).
+ * blogu; tu są chatbot, biuro rachunkowe, AI agent i cennik automatyzacji —
+ * węższe money queries).
  */
 import type { Poradnik } from './types';
 
 import { ileKosztujeChatbotDlaFirmy } from './poradniki/ile-kosztuje-chatbot-dla-firmy-2026';
 import { aiWBiurzeRachunkowym } from './poradniki/ai-w-biurze-rachunkowym-jakie-procesy-zautomatyzowac';
 import { ileKosztujeWdrozenieAiAgenta } from './poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy';
+import { ileKosztujeAutomatyzacjaAiWFirmie } from './poradniki/ile-kosztuje-automatyzacja-ai-w-firmie';
 
 export type {
   Poradnik,
@@ -37,6 +39,7 @@ const PORADNIKI_RAW: readonly Poradnik[] = [
   ileKosztujeChatbotDlaFirmy,
   aiWBiurzeRachunkowym,
   ileKosztujeWdrozenieAiAgenta,
+  ileKosztujeAutomatyzacjaAiWFirmie,
 ];
 
 /**
