@@ -11,6 +11,7 @@ import { NARZEDZIA } from '@/lib/narzedzia';
 
 import { Section, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
+import { KartaStatus } from '@/components/sections/KartaCzesci';
 
 import { KalkulatorOszczednosci } from '@/components/narzedzia/KalkulatorOszczednosci';
 import { KalkulatorProcesu } from '@/components/narzedzia/KalkulatorProcesu';
@@ -92,6 +93,14 @@ export default function NarzedziaPage() {
                       style={{ '--card-c': dekor.c, '--card-c-l': odcien } as CSSProperties}
                     >
                       <div aria-hidden="true" className="inf-spotlight" />
+                      {/* v12 (spec: „u góry karty FREE i migające"): status
+                          ● ZA DARMO na samej górze kafla — FAKT z tej strony
+                          (H1 „Darmowe narzędzia AI", lead „bez maila, bez
+                          zobowiązań"). Anatomia .lp-primary-status wzorca
+                          (pomiary-v12 §3): kropka pulsuje (klasa partii A),
+                          napis mono w kolorze karty. Margines arbitralny
+                          6px = .4rem wzorca (tokeny spacingu repo!). */}
+                      <KartaStatus className="mb-[6px]">ZA DARMO</KartaStatus>
                       <span className="flex items-center gap-3">
                         {/* Kafelek ikony narzędzia — dekoracja aria-hidden. */}
                         <span

@@ -5,6 +5,7 @@ import { Reveal } from '@/components/motion/Reveal';
 import { NARZEDZIA } from '@/lib/narzedzia';
 import { INF_NARZEDZIE, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
 import { InfIcon } from '@/components/ui/InfIcons';
+import { KartaStatus } from '@/components/sections/KartaCzesci';
 
 /**
  * SEKCJA — TEASER NARZĘDZI na home (INFINITY v4, spec §PARTIA C pkt 2).
@@ -78,6 +79,18 @@ export function NarzedziaTeaser() {
                   Dekoracja aria-hidden. */}
               <div aria-hidden="true" className="inf-spotlight" />
               <Link href={`/narzedzia#${n.slug}`} className="group flex h-full flex-col p-6">
+                {/* v12 (spec: „Migający FREE u góry karty — nasze narzędzia:
+                    dodać że są darmowe"): status ● ZA DARMO na SAMEJ GÓRZE
+                    karty, jak `.lp-primary-status` wzorca (pomiary-v12 §3).
+                    FAKT z istniejącej treści: hub /narzedzia to „Darmowe
+                    narzędzia AI" („bez maila, bez zobowiązań") — zero
+                    zmyślonego statusu. Kolor napisu = kolor karty (inline
+                    w KartaStatus), kropka pulsuje klasą partii A. Margines
+                    arbitralny mb-[6px] = zmierzone .4rem wzorca (PUŁAPKA
+                    tokenów spacingu repo: mb-3 to 12px); jeśli .inf-status
+                    partii A niesie własny margines, wygra kolejnością
+                    w arkuszu (reguły za warstwą utilities). */}
+                <KartaStatus className="mb-[6px]">ZA DARMO</KartaStatus>
                 {/* v8 (spec §8 pkt „nie wszystkie kafelki mają mieć emoji",
                     pomiary wzorca §3.5): karta NARZĘDZIA reprezentuje RZECZ,
                     a takie karty we wzorcu mają ikonę (20 z 35 kart). Dotąd

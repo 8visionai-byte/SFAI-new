@@ -101,9 +101,13 @@ export function CytatyWalec() {
       v7 audyt: karta dostaje WŁASNY odcień (--card-c) — bez niego hover świecił
       domyślnym cyjanem. Magenta #ff67b7 to jedyny ton z palety cytatów
       (ODCIENIE), którego nie zajęła żadna inna karta sekcji Problem.
+      v12 (spec: „karty cytatów: kolor w SPOCZYNKU, wariant W1 edge z mocnym
+      paskiem w kolorze karty"): dochodzi .inf-card-edge — magentowy pasek 3px
+      z lewej już w spoczynku; hover = pełne rozświetlenie CAŁEJ ramki ze
+      wspólnej gramatyki bazy .inf-card (kontrakt partii A, spec-v12).
     */
     <div
-      className="inf-card px-6 md:px-8"
+      className="inf-card inf-card-edge px-6 md:px-8"
       style={{ '--card-c': '#ff67b7' } as CSSProperties}
       onMouseEnter={lite ? undefined : () => setPaused(true)}
       onMouseLeave={lite ? undefined : () => setPaused(false)}

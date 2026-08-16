@@ -108,12 +108,15 @@ export function DowodSpoleczny() {
             <Reveal key={i} delay={Math.min(i, 4) * 0.06} className="mb-10 break-inside-avoid">
               {/* INFINITY: cytat na karcie wzorca (.inf-card) z lewą krawędzią
                   w kolorze kategorii (OPINIA_TON). Treść cytatu i podpisów 1:1. */}
-              {/* v11 spec A: opinie = WARIANT W5 wzorca (.lp-secondary-card:
-                  cicha, kanciasta, lewa kreska zapala się hoverem; mapa w
-                  raporty/taksonomia-ramek-v11.md §A). Klasa .inf-card-quiet =
-                  kontrakt partii A (globals: WARIANTY RAMEK v11). */}
+              {/* v12 (cytat Pawła: „Komu już postawiliśmy AI Agentów — ramki
+                  suche, bez koloru w spoczynku. Ma być: zawsze jakiś mocniejszy
+                  kolor, a hover DODATKOWO rozświetla"): opinie schodzą z W5
+                  (quiet — kolor dopiero hoverem) na W1 .inf-card-edge (mocny
+                  pasek 3px w kolorze karty JUŻ W SPOCZYNKU). Hover = pełne
+                  rozświetlenie CAŁEJ ramki — wspólna gramatyka hoveru z bazy
+                  .inf-card (kontrakt partii A, spec-v12). */}
               <figure
-                className="inf-card inf-card-quiet p-6"
+                className="inf-card inf-card-edge p-6"
                 style={{ '--card-c': OPINIA_TON[i] ?? 'var(--accent-decor)' } as React.CSSProperties}
               >
                 {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
@@ -144,8 +147,11 @@ export function DowodSpoleczny() {
           v7 (spec §PARTIA D pkt 2): blok schodzi z luźnego akapitu na kresce
           na KARTĘ .inf-card z kafelkiem ikony i odcieniem violet. Treść 1:1. */}
       <Reveal delay={0.1}>
+        {/* v12: ta sama sekcja = ta sama anatomia („naczynia połączone") —
+            karta founderów też z W5 na W1 edge: fioletowy pasek w spoczynku,
+            hover pełna ramka z bazy. */}
         <div
-          className="inf-card inf-card-quiet mx-auto mt-12 max-w-wide p-6 md:p-8"
+          className="inf-card inf-card-edge mx-auto mt-12 max-w-wide p-6 md:p-8"
           style={{ '--card-c': '#a586ff' } as React.CSSProperties}
         >
           <div aria-hidden="true" className="inf-spotlight" />

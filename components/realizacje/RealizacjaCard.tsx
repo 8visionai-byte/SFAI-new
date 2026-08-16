@@ -3,7 +3,13 @@ import Link from 'next/link';
 import { KATEGORIA_LABEL } from '@/lib/realizacje/types';
 import type { Realizacja } from '@/lib/realizacje/types';
 import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
-import { KartaEtykieta, KartaLiczba, KartaTagi, tagiRealizacji } from '@/components/sections/KartaCzesci';
+import {
+  KartaEtykieta,
+  KartaLiczba,
+  KartaStatus,
+  KartaTagi,
+  tagiRealizacji,
+} from '@/components/sections/KartaCzesci';
 
 /**
  * RealizacjaCard — kafelek case'a na liście /realizacje (premium, hover preview).
@@ -52,8 +58,16 @@ export function RealizacjaCard({ realizacja }: { realizacja: Realizacja }) {
 
       {/* 1. ETYKIETA KATEGORII — mono, w kolorze karty, na samej górze
           (wzorzec §3.6: status/kategoria stoi NAD tytułem). Dotąd siedziała
-          w rzędzie z kafelkiem ikony jako .inf-tag. */}
-      <KartaEtykieta>{KATEGORIA_LABEL[realizacja.kategoria]}</KartaEtykieta>
+          w rzędzie z kafelkiem ikony jako .inf-tag.
+          v12 (spec: statusy z ISTNIEJĄCYCH faktów): w tym samym rzędzie po
+          prawej status ● WDROŻONE — realizacja to opisane, działające
+          wdrożenie (FAKT z rejestru case'a), kropka pulsuje (klasa partii A),
+          napis w kolorze karty. Rząd flex zamiast dwóch mono linii jedna pod
+          drugą: kategoria i status nie sklejają się w jeden ciąg. */}
+      <span className="flex items-baseline justify-between gap-3">
+        <KartaEtykieta>{KATEGORIA_LABEL[realizacja.kategoria]}</KartaEtykieta>
+        <KartaStatus>WDROŻONE</KartaStatus>
+      </span>
 
       {/* 2. TYTUŁ biały. Kolor niesie kontrakt `.inf-card h3` z globals, a WAGĘ
           dokłada utility: pomiary §3.2 mówią wprost, że tytuł wzorca NIE MA

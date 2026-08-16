@@ -166,6 +166,45 @@ export function KartaBadge({
 }
 
 /**
+ * STATUS KARTY — pulsująca kropka + mono napis W KOLORZE KARTY (INFINITY v12,
+ * spec: „Migający FREE / Open source świeci, kropeczka PULSUJE"). Anatomia 1:1
+ * ze zmierzonego wzorca `.lp-primary-status` + `.lp-status-dot`
+ * (raporty/pomiary-v12.md §3): kropka to OSOBNY span PRZED tekstem (znak ● nie
+ * siedzi w treści), puls = czysty CSS (keyframes opacity, bramka RM po stronie
+ * arkusza), napis mono caps.
+ *
+ * KONTRAKT Z PARTIĄ A (app/globals.css — NIE nasz plik): klasy `.inf-status`
+ * (typografia mono + gap + margines) i `.inf-status-dot` (kropka, glow,
+ * animacja pulsu z bramką reduced-motion) — nazwy wg konwencji repo
+ * lp-* -> inf-* (jak .inf-card/.inf-tag). Kolor napisu podajemy tu INLINE
+ * łańcuchem zmiennych karty (--card-c-l -> --card-c -> accent), bo spec v12
+ * mówi wprost „napis w kolorze karty" — kropka jedzie na currentColor
+ * po stronie arkusza, więc dziedziczy ten sam ton.
+ *
+ * ZASADA TREŚCI (spec v12): status WYŁĄCZNIE z istniejącego faktu
+ * („ZA DARMO" — narzędzia są darmowe, „WDROŻONE" — realizacja wdrożona).
+ * Tam, gdzie faktu brak, karta statusu NIE dostaje. To realny tekst w HTML
+ * (bot go czyta), nie dekoracja — dlatego bez aria-hidden na napisie.
+ */
+export function KartaStatus({
+  children,
+  className = '',
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <span
+      className={`inf-status ${className}`}
+      style={{ color: 'var(--card-c-l, var(--card-c, var(--accent)))' } as CSSProperties}
+    >
+      <span aria-hidden="true" className="inf-status-dot" />
+      {children}
+    </span>
+  );
+}
+
+/**
  * BLOK LICZBY — duża liczba w kolorze karty + mono etykieta pod spodem
  * (wzorzec: `133` / `MODULES`, pomiary §3.3: liczba w PEŁNYM kolorze akcentu
  * karty z poświatą `0 0 12px currentColor`, etykieta mono caps w szarości).

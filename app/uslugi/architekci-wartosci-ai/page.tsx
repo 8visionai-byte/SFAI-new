@@ -178,15 +178,33 @@ export default function ArchitekciWartosciAiPage() {
             ]}
           />
 
-          {/* INFINITY v5 (spec §4): badge-eyebrow hero → mono overline .inf-overline
-              (język etykiet wzorca jak ServiceHero/OnasHero; treść 1:1). */}
+          {/* INFINITY v12 (spec-v12 §HERO PODSTRON USŁUG): overline przerobiony
+              na BADGE-pigułkę wzorca (.spatial-badge, pomiary-v12.md §4: mono
+              10px/800, letter-spacing 0.2em, padding 6px 16px, radius 100px,
+              tło biel 3%, obwódka i tekst PEŁNYM kolorem przewodnim). Kolor
+              przewodni tej strony-parasola = var(--accent), czyli 1:1 z tonem
+              jej karty na home (PromoUslugi jedzie na INF_KATEGORIA_DEFAULT).
+              Treść 1:1. */}
           <Reveal>
-            <p className="inf-overline mt-6">Architekci Wartości AI</p>
+            <p
+              className="mt-6 inline-flex max-w-full items-center rounded-full border px-[16px] py-[6px] font-mono text-[10px] font-extrabold uppercase tracking-[0.2em]"
+              style={{
+                color: 'var(--accent)',
+                borderColor: 'var(--accent)',
+                backgroundColor: 'rgba(255, 255, 255, 0.03)',
+              }}
+            >
+              Architekci Wartości AI
+            </p>
           </Reveal>
 
+          {/* v12: treść H1 NIETKNIĘTA (SEO żelazne); drugi człon zdania
+              w solidnym kolorze przewodnim (wzorzec: kolorowe drugie słowo
+              tytułu akademii, płaski kolor — nie gradient). */}
           <Reveal delay={0.05}>
             <h1 className="text-display mt-5">
-              Płacisz za przyniesioną wartość, nie za godziny.
+              Płacisz za przyniesioną wartość,{' '}
+              <span style={{ color: 'var(--accent)' }}>nie za godziny.</span>
             </h1>
           </Reveal>
 
@@ -211,9 +229,14 @@ export default function ArchitekciWartosciAiPage() {
             </p>
           </Reveal>
 
+          {/* v12: CTA hero pełnym kolorem przewodnim jak „ESTABLISH ROOT
+              CONNECTION" wzorca — kontrakt .sf-magnetic .inf-glow-cta (globals)
+              maluje solid z var(--accent); kolor przewodni tej strony TO
+              var(--accent), więc bez lokalnej podmiany tokenu. Tekst CTA
+              bez zmian. */}
           <Reveal delay={0.2}>
             <div className="mt-9 flex flex-col items-start gap-3">
-              <MagneticButton variant="primary" size="lg" href="#diagnoza">
+              <MagneticButton variant="primary" size="lg" href="#diagnoza" className="inf-glow-cta">
                 Pokaż mi, gdzie tracę czas
               </MagneticButton>
               <span className="text-caption max-w-[52ch] text-fg-subtle">
@@ -221,6 +244,56 @@ export default function ArchitekciWartosciAiPage() {
                 kilka minut.
               </span>
             </div>
+          </Reveal>
+
+          {/* v12: KAFLE STATYSTYK hero (wzorzec: 17 MODULES / 97 QUESTIONS /
+              9 LABS; pudełko 1:1 z pomiaru §4: obwódka rgba(kolor,0.15), tło
+              rgba(8,15,25,0.45), radius 16px, padding 24px; liczba na żywej
+              .inf-counter-value = mono + poświata, label .inf-counter-label
+              na --fg-muted, bo etykieta to treść, próg AA).
+              DANE WYŁĄCZNIE Z ISTNIEJĄCEJ TREŚCI TEJ STRONY (zero zmyślania):
+               - „0 zł"    — kapsuła hero „Zaczynasz za 0 zł" + FAQ „Start
+                             kosztuje 0 zł. Pierwszym krokiem jest darmowa
+                             diagnoza",
+               - „1490 zł" — sekcja (3) i FAQ: „Sprint Diagnostyczny za
+                             1490 zł" (odliczany od wdrożenia),
+               - „1990 zł" — FAQ: „jednego procesu na próbę w ramach AI Start
+                             za 1990 zł",
+               - „6"       — liczba pytań stałej FAQ (FAQ.length).
+              Obwódka kafla: rgba wyliczone z tokenu --accent (#00f0ff, dark),
+              bo inline style nie zniesie pary fallback rgba + color-mix. */}
+          <Reveal delay={0.25}>
+            {/* lg:-mr-[220px]: kolumna max-w-narrow (~660px) nie mieści
+                4 kafli w jednym rzędzie (zmierzone: czwarty spadał niżej,
+                a wzorzec trzyma kafle w jednej linii). Hero tej strony jest
+                wyrównane do lewej, więc rząd rośnie tylko w prawo, w pustkę
+                kolumny (strona 1440px ma tam ~390px zapasu). Poniżej lg gra
+                flex-wrap — mobile bez zmian i bez poziomego scrolla. */}
+            <ul className="mt-9 grid max-w-[560px] grid-cols-2 gap-[10px] sm:flex sm:max-w-none sm:flex-wrap lg:-mr-[220px]">
+              {[
+                { id: 'start', wartosc: '0 zł', opis: 'start: darmowa diagnoza' },
+                { id: 'sprint', wartosc: '1490 zł', opis: 'Sprint Diagnostyczny' },
+                { id: 'proba', wartosc: '1990 zł', opis: 'AI Start na próbę' },
+                { id: 'faq', wartosc: String(FAQ.length), opis: 'najczęstszych pytań' },
+              ].map((kafel) => (
+                <li
+                  key={kafel.id}
+                  className="rounded-[16px] border p-[24px] text-center sm:min-w-[150px]"
+                  style={{
+                    borderColor: 'rgba(0, 240, 255, 0.15)',
+                    backgroundColor: 'rgba(8, 15, 25, 0.45)',
+                  }}
+                >
+                  <span
+                    className="inf-counter-value block text-[28px] font-black leading-none"
+                    style={{ '--counter-c': 'var(--accent)' } as CSSProperties}
+                  >
+                    {kafel.wartosc}
+                  </span>
+                  <span className="inf-counter-label mt-[6px] block">{kafel.opis}</span>
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </div>
       </Section>
