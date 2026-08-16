@@ -1,3 +1,25 @@
+# STATUS — INFINITY v10 — NA PRODUKCJI (commit 19728b2, 24 pliki, +686/-112)
+
+Rundy v7-v10 wdrożone kolejno (commity cffb92a, 17c5a35, c5c3266, 19728b2),
+każda po audycie adwersaryjnym z pomiarami w realnym Chrome. Stan po v10:
+- karty NASYCONE OD RAZU: obwódka w kolorze kategorii 45% w spoczynku
+  (hover 60-65%) + TOP-GLOW 1:1 ze zmierzonego wzorca (gradientowa górna
+  krawędź, jaśniejsza na środku); koniec bladości — 12 sekcji zmigrowane
+  z lokalnych bladych hexów na podbitą paletę wg mapowania w inf-kategorie
+  (#67e8f9->#61edff itd.), grep starych hexów = 0 także na produkcji;
+- 19 kolorowych fragmentów H2 (.inf-grad-text, gradient wzorca
+  #00f0ff->#ff00e5->#b026ff), tekst 1:1, shimmer tylko desktop;
+- dropdown 0.92 (produkcja potwierdzona), gap siatek 32->20/16px,
+  persona hero w karcie, liczniki (chip 8,7% + 5 rejestrów) restartują
+  przy każdym wejściu w kadr przez JEDNĄ pętlę licznikTicker;
+- nietknięte inwarianty: hover karty bez zmiany tła, tło jednolite,
+  H1 nad foldem (1440x900 zapas 72px, 1366x768 zapas 39px), maszyna
+  pisania, zero 404 w menu, mobile bez poziomego scrolla.
+Agent głosowy: DZIAŁA (200 + token). Wnioski audytu domknięte przed
+wdrożeniem (paleta sekcji + 2 nieaktualne komentarze).
+
+---
+
 # STATUS — INFINITY v6 — NA PRODUKCJI (commit a5f35c1, 18 plików, +1238/-269)
 
 DOWODY Z PRODUKCJI (www.simplefast.ai, po deployu):
