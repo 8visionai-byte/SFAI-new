@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "app/globals.css"
+        ],
+        "createdAt": "2026-08-16T18:41:08.633Z",
+        "reason": "Decyzja Pawla 2026-08-16: gradient na .ai w logotypie i kolorowe fragmenty naglowkow (.inf-grad-text) sa celowe, zmierzone ze strony wzorcowej, z fallbackiem i policzonymi kontrastami. Regula dalej aktywna w pozostalych plikach."
+      }
+    ]
+  }
+}
