@@ -1,3 +1,36 @@
+# STATUS — INFINITY v12 — NA PRODUKCJI (commit ac62ef0, 10 plików, +1002/-124)
+
+Naprawa błędu v11 (pełny hover miał tylko wariant W3): REGUŁA WSPÓLNA —
+spoczynek RÓŻNY per wariant (pasek/linia górna/kolor obwódki/quiet), hover
+na KAŻDEJ karcie rozświetla WSZYSTKIE 4 strony ramki pełnym kolorem + sweep
+(zwolniony do 0.6s ease, 1:1 wzorzec) + lift; zmierzone 10 kart / 6 wariantów,
+background-color bez zmiany 10/10. Nasycenie spoczynku 100% koloru karty
+(decyzja „MAKSYMALNE nasycenie" — POWYŻEJ tabeli wzorca 6-7%; czeka na
+akcept wizualny Pawła na żywej stronie). Pulsujące statusy 1:1 anatomia
+wzorca (kropka osobnym spanem, czysty CSS, RM-bramka): „ZA DARMO" 5x
+/narzedzia + teaser home, „WDROŻONE" 8x /realizacje — zero zmyślonych.
+Hero podstron usług jak akademie wzorca: kolor przewodni z inf-kategorie
+(= karta na home), badge-pigułka z shimmerem, drugi człon H1 w kolorze
+(span; H1 byte-for-byte z rejestrem), tagi, kafle statystyk WYŁĄCZNIE
+z rejestru (990/2500/1490/24-7/kroki/FAQ ze źródłami), CTA pełnym kolorem.
+SEO NIETKNIĘTE: diff treści = 0 (audyt czytał linia po linii).
+Proces: workflow 5 agentów (zwiad pomiarowy -> partie A/B/C równoległe ->
+kontrola adwersaryjna; kontrola padła na limicie sesji, dokończona po
+resecie z cache — werdykt SHIP WITH MINORS). Minory naprawione przed
+commitem: hero przepięte z inline na klasy .inf-hero-* (zysk: shimmer,
+forced-colors, blur desktop-only), selektor tagu .inf-chip.inf-hero-tag
+(specyficzność), martwe .inf-hero-cta/-stat-value/-label/.inf-status-badge
+wycięte, alfa() bez fallbacku usunięta. Weryfikacja po minorach: build/tsc/
+lint 0, sonda realny Chrome (3 usługi: kolory pełne 1:1, shimmer żyje,
+RM gasi, mobile 375 bez scrolla) + produkcja (markery HTML/CSS, zrzuty).
+IndexNow pominięty ŚWIADOMIE: diff treści = 0, czysty design.
+Czeka na Pawła: ocena wizualna nasycenia 100% na żywej stronie.
+Znane na później: .sf-glass.card-live:hover bez żywej instancji (zmiana
+spójna, ryzyko niskie); sondy-testy z audytu (4 pomysły w raporcie
+kontroli); 320px najdłuższe słowo H1; 3 stare em-dash na home.
+
+---
+
 # STATUS — INFINITY v11 — NA PRODUKCJI (commit 5a632d9, 52 pliki, +1268/-149)
 
 Naprawa błędu uniformizacji z v10: zamiast jednego stylu ramki — SZEŚĆ
