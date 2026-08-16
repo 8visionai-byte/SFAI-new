@@ -280,7 +280,7 @@ export default function ArchitekciWartosciAiPage() {
               <Card
                 as="article"
                 variant="quiet"
-                className="inf-card h-full p-6"
+                className="inf-card inf-card-top h-full p-6"
                 style={{ '--card-c': '#2b7cff' } as CSSProperties}
               >
                 <div aria-hidden="true" className="inf-spotlight" />
@@ -297,7 +297,7 @@ export default function ArchitekciWartosciAiPage() {
               <Card
                 as="article"
                 variant="quiet"
-                className="inf-card h-full p-6"
+                className="inf-card inf-card-top h-full p-6"
                 style={{ '--card-c': '#8b5cf6' } as CSSProperties}
               >
                 <div aria-hidden="true" className="inf-spotlight" />
@@ -314,7 +314,7 @@ export default function ArchitekciWartosciAiPage() {
               <Card
                 as="article"
                 variant="quiet"
-                className="inf-card h-full p-6"
+                className="inf-card inf-card-top h-full p-6"
                 style={{ '--card-c': '#22e06b' } as CSSProperties}
               >
                 <div aria-hidden="true" className="inf-spotlight" />
@@ -380,7 +380,7 @@ export default function ArchitekciWartosciAiPage() {
               <Card
                 as="article"
                 variant="quiet"
-                className="inf-card h-full p-6"
+                className="inf-card inf-card-edge h-full p-6"
                 style={tonKarty(TON_PAWEL)}
               >
                 <div aria-hidden="true" className="inf-spotlight" />
@@ -405,7 +405,7 @@ export default function ArchitekciWartosciAiPage() {
               <Card
                 as="article"
                 variant="quiet"
-                className="inf-card h-full p-6"
+                className="inf-card inf-card-edge h-full p-6"
                 style={tonKarty(TON_MARCIN)}
               >
                 <div aria-hidden="true" className="inf-spotlight" />
@@ -459,7 +459,7 @@ export default function ArchitekciWartosciAiPage() {
                   <Card
                     as="article"
                     variant={n.pierwsza ? 'highlight' : 'quiet'}
-                    className={n.pierwsza ? 'h-full' : 'inf-card h-full p-6'}
+                    className={n.pierwsza ? 'h-full' : 'inf-card inf-card-edge h-full p-6'}
                     style={dekor ? tonKarty(dekor) : undefined}
                   >
                     {dekor ? <div aria-hidden="true" className="inf-spotlight" /> : null}
@@ -495,7 +495,7 @@ export default function ArchitekciWartosciAiPage() {
               home) podany JAWNIE + reflektor; `divide-y` zeszło na wewnętrzny
               wrapper, żeby reflektor nie dokładał kreski nad pierwszym
               pytaniem. */}
-          <div className="inf-card mt-8 p-6" style={tonKarty(INF_KATEGORIA_DEFAULT)}>
+          <div className="inf-card inf-card-top mt-8 p-6" style={tonKarty(INF_KATEGORIA_DEFAULT)}>
             <div aria-hidden="true" className="inf-spotlight" />
 
             <div className="divide-y divide-border">

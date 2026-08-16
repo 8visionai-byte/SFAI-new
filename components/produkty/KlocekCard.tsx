@@ -45,7 +45,7 @@ export function KlocekCard({ klocek, indeks = 0 }: { klocek: Klocek; indeks?: nu
     <Card
       as="article"
       variant="quiet"
-      className="inf-card relative h-full p-6"
+      className="inf-card inf-card-quiet relative h-full p-6"
       style={{ '--card-c': dekor.c, '--card-c-l': dekor.odcien ?? dekor.c } as CSSProperties}
     >
       <div aria-hidden="true" className="inf-spotlight" />

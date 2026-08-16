@@ -69,8 +69,15 @@ function PromoKarta({ usluga, full = false }: { usluga: Usluga; full?: boolean }
      `full`: siedzą w jednym gridzie, więc różne liczby hoveru czytałyby się
      jako niedoróbka („naczynia połączone"). */
   return (
+    /* v11 spec A (mapa sekcja->wariant, raporty/taksonomia-ramek-v11.md §A):
+       pas promo pod hero = WARIANT W3 wzorca (.lp-promo-card: gradientowy ring
+       od narożnika, błysk przez całą kartę na hover, ramka z każdej strony,
+       strzałka w pełnym kolorze). Klasa .inf-card-full-hover = kontrakt
+       partii A (globals: WARIANTY RAMEK v11). Modyfikator .inf-card-lg
+       SCHODZI z kafli tej sekcji: zasada łączenia partii A mówi wprost
+       „-full-hover z -lg NIE (inna gramatyka hoveru)". */
     <li
-      className={full ? 'inf-card inf-card-lg md:col-span-2' : 'inf-card inf-card-lg'}
+      className={full ? 'inf-card inf-card-full-hover md:col-span-2' : 'inf-card inf-card-full-hover'}
       style={{ '--card-c': kat.c, '--card-c-l': odcien } as CSSProperties}
     >
       {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
@@ -153,7 +160,7 @@ export function PromoUslugi() {
             v7 audyt H3 (MINOR-2): .inf-card-lg jak reszta kafelków tej sekcji —
             to nadal karta pełnej szerokości w tym samym gridzie. */}
         <li
-          className="inf-card inf-card-lg md:col-span-2"
+          className="inf-card inf-card-full-hover md:col-span-2"
           style={
             {
               '--card-c': INF_KATEGORIA_DEFAULT.c,

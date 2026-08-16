@@ -42,7 +42,7 @@ export function RealizacjaCard({ realizacja }: { realizacja: Realizacja }) {
   return (
     <Link
       href={`/realizacje/${realizacja.slug}`}
-      className="inf-card group flex h-full flex-col p-6"
+      className="inf-card inf-card-full-hover group flex h-full flex-col p-6"
       style={{ '--card-c': dekor.c, '--card-c-l': odcien } as CSSProperties}
     >
       {/* Spotlight — dekoracja malowana przez CSS fundamentu (i JS orchestratora

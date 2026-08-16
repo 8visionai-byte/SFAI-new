@@ -36,7 +36,7 @@ export function MaterialFAQ({ faq }: { faq: MaterialFaq[] }) {
             karcie .inf-card — spójnie z ServiceFAQ usług.
             v7: ton karty z rejestru typów + reflektor jako pierwsze dziecko. */}
         <div
-          className="inf-card mt-8 p-6"
+          className="inf-card inf-card-top mt-8 p-6"
           style={{ '--card-c': dekor.c, '--card-c-l': dekor.odcien ?? dekor.c } as CSSProperties}
         >
           <div aria-hidden="true" className="inf-spotlight" />

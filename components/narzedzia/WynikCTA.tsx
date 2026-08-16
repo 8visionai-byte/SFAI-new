@@ -44,7 +44,7 @@ export function WynikCTA({ mikrokopia, kolor, odcien }: WynikCTAProps) {
   // CTA łapie kursor tak samo jak wcześniej (poświata go nie przykrywa).
   return (
     <div
-      className="inf-card mt-8 p-6 shadow-xs"
+      className="inf-card inf-card-full-hover mt-8 p-6 shadow-xs"
       style={
         kolor ? ({ '--card-c': kolor, '--card-c-l': odcien ?? kolor } as CSSProperties) : undefined
       }

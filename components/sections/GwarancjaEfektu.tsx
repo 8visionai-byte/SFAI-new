@@ -55,8 +55,15 @@ export function GwarancjaEfektu() {
           v7 audyt: karta-bohater bierze modyfikator .inf-card-lg (mocniejszy
           hover wzorca: -5px + scale, obwódka 65%) — kontrakt z globals. */}
       <Reveal>
+        {/* v11 spec A: szeroka karta-obietnica = WARIANT W3 wzorca
+            (.lp-promo-card: błysk + ramka z każdej strony na hover; mapa w
+            raporty/taksonomia-ramek-v11.md §A; klasa .inf-card-full-hover =
+            kontrakt partii A). Modyfikator -lg schodzi: zasada łączenia A
+            mówi „-full-hover z -lg NIE (inna gramatyka hoveru)". Trzy filary
+            niżej zostają na bazowej .inf-card (detale obietnicy nie konkurują
+            z bohaterem). */}
         <div
-          className="inf-card inf-card-lg mx-auto max-w-wide p-6 md:p-10"
+          className="inf-card inf-card-full-hover mx-auto max-w-wide p-6 md:p-10"
           style={{ '--card-c': '#29ff77' } as CSSProperties}
         >
           {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
@@ -71,6 +78,9 @@ export function GwarancjaEfektu() {
           </span>
           {/* v10 §3: jedno kluczowe słowo w gradiencie (jak „Answered" wzorca). Treść 1:1. */}
           <h2 className="text-h2 text-fg">Co jeśli nie zadziała? Kto bierze na siebie <span className="inf-grad-text" data-text="ryzyko?">ryzyko?</span></h2>
+          {/* v11 spec D: kreska wzorca pod H2 (.inf-h2-line, kontrakt partii A);
+              nagłówek przy lewej, więc !mx-0 gasi centrowanie klasy. */}
+          <div aria-hidden="true" className="inf-h2-line !mx-0" />
           {/* Kapsuła answer-first — cytowalna dla LLM przy "co jak AI nie zadziała" */}
           <p className="text-lead mt-5 max-w-measure-lead text-fg-muted">
             Ryzyko bierzemy na siebie tam, gdzie to my decydujemy o efekcie. Zaczynasz od bezpłatnej diagnozy

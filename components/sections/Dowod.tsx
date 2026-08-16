@@ -39,8 +39,15 @@ export function Dowod() {
           v7 audyt: karta-bohater bierze modyfikator .inf-card-lg (mocniejszy
           hover wzorca: -5px + scale, obwódka 65%) — kontrakt z globals. */}
       <Reveal variant="header">
+        {/* v11 spec A: sekcja Dowód = WARIANT W4 wzorca (.inf-card-stat,
+            kontrakt partii A: gramatyka .stat-card, top-bar zapala się
+            hoverem). To wariant RAMKI, więc działa też bez liczb w treści
+            (CASE=null, zakaz zmyślonych metryk); gdy Paweł da realny case,
+            liczby wejdą w .inf-counter-value i karta zaświeci jak pasek metryk
+            wzorca. Modyfikator -lg schodzi: -stat ma własną gramatykę hoveru
+            (zasada łączenia partii A wymienia tylko parę -top + -lg). */}
         <div
-          className="inf-card inf-card-lg mx-auto max-w-wide p-6 md:p-10"
+          className="inf-card inf-card-stat mx-auto max-w-wide p-6 md:p-10"
           style={{ '--card-c': '#61edff' } as CSSProperties}
         >
           {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
@@ -55,6 +62,9 @@ export function Dowod() {
           </span>
           {/* v10 §3: końcówka H2 w gradiencie wzorca (span .inf-grad-text, partia A). Treść 1:1. */}
           <h2 className="text-h2">Co konkretnie zmienia się w firmie <span className="inf-grad-text" data-text="po wdrożeniu Agenta?">po wdrożeniu Agenta?</span></h2>
+          {/* v11 spec D: kreska wzorca pod H2 (.inf-h2-line, kontrakt partii A);
+              nagłówek przy lewej, więc !mx-0 gasi centrowanie klasy. */}
+          <div aria-hidden="true" className="inf-h2-line !mx-0" />
           {/* Kapsuła answer-first — uczciwa, bez zmyślonego case'a (INPUT PAWŁA na realny). */}
           <p className="text-lead mt-5 max-w-measure-lead text-fg-muted">
             Po wdrożeniu Agenta firma przestaje gubić telefony i powtarzać tę samą robotę. Voicebot odbiera, gdy
@@ -93,7 +103,7 @@ export function Dowod() {
             NIETKNIĘTA, teksty 1:1. */}
         <Reveal delay={0.05}>
           <article
-            className="inf-card h-full p-6 md:p-8"
+            className="inf-card inf-card-stat h-full p-6 md:p-8"
             style={{ '--card-c': '#ffc120' } as CSSProperties}
           >
             <div aria-hidden="true" className="inf-spotlight" />

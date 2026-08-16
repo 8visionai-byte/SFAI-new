@@ -6,8 +6,8 @@ import type { Usluga } from './types';
  * Answer-first, głos Pawła, zero em-dash, zero zmyślonych liczb i cen.
  *
  * INPUT PAWŁA (nie renderowane, do uzupełnienia przed shipem):
- *  - ramaCeny.minPrice: realne "od X zł" za wdrożenie voicebota. Dopóki brak,
- *    zostaje undefined → bez offers w Service JSON-LD, render bez kwoty.
+ *  - ramaCeny.minPrice: 2500 USTAWIONE (pakiet startowy, decyzja Pawła
+ *    z 2026-08-16, locked). Kwota w UI i `offers` w Service JSON-LD włączone.
  *  - Model kosztu działania: abonament czy stawka za minutę/rozmowę (do rozmowy na diagnozie).
  *  - cta.dowod: gdy będzie realna liczba operacyjna (np. połączeń odebranych przez
  *    voicebota klienta w miesiącu) albo case z imieniem i firmą za zgodą, podmienić
@@ -19,9 +19,9 @@ export const voiceboty: Usluga = {
   kapsula:
     'Voicebot, nazywany też botem telefonicznym, to bot głosowy, który odbiera telefon, rozmawia po polsku i załatwia sprawę: umawia wizytę, przyjmuje zgłoszenie, odpowiada na pytanie. Gdy sprawa wymaga człowieka, zapisuje ją i wysyła Ci powiadomienie, żebyś oddzwonił przygotowany. Działa 24/7, nawet gdy jesteś u klienta. To nie nagranie ani „wciśnij jeden”. To Agent, który rozmawia i wykonuje zadanie, a potem przekazuje Ci tylko to, co ważne.',
 
-  metaTitle: 'Voicebot dla firm: bot telefoniczny 24/7',
+  metaTitle: 'Voicebot od 2500 zł: bot telefoniczny 24/7',
   metaDescription:
-    'Voicebot dla firm: odbiera telefony po polsku, umawia wizyty i przekazuje pilne sprawy. Zobacz, ile kosztuje i jak brzmi w praktyce.',
+    'Voicebot dla firm od 2500 zł: bot telefoniczny odbiera połączenia po polsku 24/7, umawia wizyty i przekazuje pilne sprawy. Wycena po bezpłatnej diagnozie.',
 
   problem: {
     h2: 'Ile telefonów dziennie nie odbierasz?',
@@ -36,7 +36,9 @@ export const voiceboty: Usluga = {
   },
 
   tabelaPorownawcza: {
-    h2: 'Voicebot a odbieranie telefonu ręcznie',
+    // H2 z synonimem "agent głosowy" (decyzja Pawła 2026-08-16; "bot telefoniczny"
+    // siedzi w rozwiazanie.h2, "wirtualna recepcjonistka" celowo NIE występuje).
+    h2: 'Agent głosowy a odbieranie telefonu ręcznie',
     naglowekBez: 'Telefon odbierany ręcznie',
     naglowekZNami: 'Voicebot od SimpleFast.ai',
     wiersze: [
@@ -73,14 +75,15 @@ export const voiceboty: Usluga = {
   ramaCeny: {
     h2: 'Ile kosztuje voicebot dla firmy?',
     tresc:
-      'Voicebot ma zwykle dwie części kosztu: jednorazowe wdrożenie (scenariusze, podłączenie numeru i kalendarza) oraz koszt działania zależny od liczby rozmów. Cenę liczymy od wartości: ile umówionych wizyt i odebranych połączeń to da. Inaczej wycenia się bota tylko do umawiania, inaczej takiego, który obsługuje zgłoszenia i przekazuje je dalej z powiadomieniem. Dokładne widełki podajemy na bezpłatnej diagnozie. Bez ukrytych kosztów.',
+      'Pakiet startowy zaczyna się od 2500 zł. W tej cenie dostajesz bota, który odbiera telefon 24/7 i rozmawia po polsku, umawianie wizyt oraz wdrożenie i konfigurację. Do tego dochodzi koszt działania zależny od liczby rozmów. Bot rozbudowany o zgłoszenia i powiadomienia to wyższa półka, wyceniana od zakresu. Dokładną wycenę podajemy po bezpłatnej diagnozie, zanim cokolwiek zamówisz. Każde nasze wdrożenie ma abonament opieki od 99 do 599 zł miesięcznie, bo nie zostawiamy klientów samych z botem. Bez ukrytych kosztów.',
+    minPrice: 2500, // pakiet startowy (locked 2026-08-16): kwota w UI + offers w Service JSON-LD.
   },
 
   faq: [
     {
       pytanie: 'Czym jest voicebot?',
       odpowiedz:
-        'Voicebot to bot głosowy, który odbiera telefon i rozmawia po polsku jak asystent: umawia wizyty, przyjmuje zgłoszenia i odpowiada na pytania. Działa 24/7. To nie nagranie ani menu „wciśnij jeden”, tylko rozmowa, która kończy się załatwioną sprawą.',
+        'Voicebot, nazywany też botem telefonicznym albo agentem głosowym, to bot głosowy, który odbiera telefon i rozmawia po polsku jak asystent: umawia wizyty, przyjmuje zgłoszenia i odpowiada na pytania. Działa 24/7. To nie nagranie ani menu „wciśnij jeden”, tylko rozmowa, która kończy się załatwioną sprawą.',
     },
     {
       pytanie: 'Czy voicebot dzwoni sam do klientów?',
@@ -105,7 +108,7 @@ export const voiceboty: Usluga = {
     {
       pytanie: 'Ile kosztuje voicebot?',
       odpowiedz:
-        'Zwykle to jednorazowe wdrożenie plus koszt działania zależny od liczby rozmów. Inaczej wyceniamy bota tylko do umawiania, inaczej takiego, który obsługuje zgłoszenia i przekazuje je dalej z powiadomieniem. Dokładne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
+        'Pakiet startowy kosztuje od 2500 zł. W tej cenie jest bot, który odbiera telefon 24/7 i rozmawia po polsku, umawianie wizyt oraz wdrożenie i konfiguracja. Do tego dochodzi koszt działania zależny od liczby rozmów. Dokładną wycenę podajemy po bezpłatnej diagnozie, zanim cokolwiek zamówisz. Każde wdrożenie ma abonament opieki od 99 do 599 zł miesięcznie, bo nie zostawiamy klientów samych z botem. Bez ukrytych kosztów.',
     },
     {
       pytanie: 'Czy moje rozmowy i dane będą bezpieczne?',
@@ -127,7 +130,9 @@ export const voiceboty: Usluga = {
     'voicebot dla firmy',
     'bot telefoniczny',
     'bot głosowy',
+    'agent głosowy',
     'czym jest voicebot',
+    'ile kosztuje voicebot',
     'AI odbiera telefon',
     'czy voicebot dzwoni sam do klientów',
   ],

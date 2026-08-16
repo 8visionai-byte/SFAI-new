@@ -270,7 +270,7 @@ export function KalkulatorProcesu() {
           overflow-hidden (::before karty na krawędzi). Formuły i teksty 1:1. */}
       <div>
         <div
-          className="inf-card p-6 shadow-xs sm:p-7"
+          className="inf-card inf-card-edge p-6 shadow-xs sm:p-7"
           style={
             {
               '--card-c':

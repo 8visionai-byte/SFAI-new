@@ -5,6 +5,9 @@ import { CytatyWalec } from '@/components/sections/CytatyWalec';
 import { InfIcon } from '@/components/ui/InfIcons';
 import type { InfIconName } from '@/components/ui/InfIcons';
 import { HOME_CTA } from '@/lib/site';
+import { getUslugaBySlug } from '@/lib/uslugi';
+import { INF_USLUGA_BADGE } from '@/lib/inf-kategorie';
+import { KartaEtykieta, KartaTagi, tagiUslugi } from '@/components/sections/KartaCzesci';
 
 /**
  * SEKCJA 3 — PROBLEM językiem klienta (spec 03 §3). Emocja: loss aversion ->
@@ -31,14 +34,47 @@ import { HOME_CTA } from '@/lib/site';
  * - Każda karta ma własny odcień (--card-c) — sekcja przestaje być bezbarwna.
  */
 
-/* Trzy rzeczy, które zjadają tydzień — fragmenty JEDNEGO istniejącego zdania
-   leadu. Kolor + glif to WYŁĄCZNIE dekoracja (kafelek aria-hidden), odcienie
-   z fluorescencyjnej palety v4, każdy inny w obrębie siatki. */
-const ZJADACZE: ReadonlyArray<{ t: string; ikona: InfIconName; c: string }> = [
-  { t: 'odbieranie tych samych pytań', ikona: 'chat-dymek', c: '#61edff' },
-  { t: 'przepisywanie danych między systemami', ikona: 'dokument-skan', c: '#ffc120' },
+/* Trzy rzeczy, które zjadają tydzień. Tytuły kart = fragmenty JEDNEGO
+   istniejącego zdania leadu (1:1, jak w v7).
+   v11 spec E (cytat Pawła: „to powinna być ramka z WIĘCEJ treści. Zobacz
+   strukturę u nich: kolorowy kicker, biały tytuł, opis, tagi"): karta dostaje
+   pełną anatomię wariantu W2 wzorca. KAŻDE zdanie pola opis to PRZEREDAGOWANA
+   kapsuła usługi z lib/uslugi (chatboty / automatyzacje / voiceboty; źródło
+   zdanie po zdaniu w raporcie partii B v11), zero nowych faktów, zero cen,
+   zero em-dash. Pole slug wiąże kartę z rejestrem: z niego idą kicker
+   (INF_USLUGA_BADGE) i tagi (money queries przez tagiUslugi).
+   Kolor karty = odcień KATEGORII usługi z lib/inf-kategorie, więc
+   automatyzacje schodzą z bursztynu na zieleń kategorii (bursztyn przejmuje
+   karta domknięcia niżej, w sekcji zostaje 5 różnych tonów bez duplikatu).
+   Pole ikona zostaje w rejestrze (nie renderujemy go, konwencja v8). */
+const ZJADACZE: ReadonlyArray<{
+  t: string;
+  slug: string;
+  opis: string;
+  ikona: InfIconName;
+  c: string;
+}> = [
+  {
+    t: 'odbieranie tych samych pytań',
+    slug: 'chatboty',
+    opis:
+      'Chatbot AI odpowiada na nie za Ciebie na stronie i w komunikatorach przez całą dobę: tłumaczy ofertę, podaje ceny i godziny, zbiera leady, nawet o 22:00. Uczymy go na Twojej wiedzy, a dane zostają w Unii Europejskiej.',
+    ikona: 'chat-dymek',
+    c: '#61edff',
+  },
+  {
+    t: 'przepisywanie danych między systemami',
+    slug: 'automatyzacje',
+    opis:
+      'Automatyzacja przejmuje przepisywanie danych między mailem, arkuszem i fakturą, wysyłanie potwierdzeń i pilnowanie terminów. Zaczynamy od jednego procesu, który boli najbardziej.',
+    ikona: 'dokument-skan',
+    c: '#29ff77',
+  },
   {
     t: 'oddzwanianie do klientów, którzy nie dodzwonili się za pierwszym razem',
+    slug: 'voiceboty',
+    opis:
+      'Voicebot odbiera telefon, rozmawia po polsku i umawia wizytę albo przyjmuje zgłoszenie. Sprawy dla człowieka zapisuje i wysyła Ci powiadomienie, żebyś oddzwonił przygotowany.',
     ikona: 'sluchawka-fala',
     c: '#a586ff',
   },
@@ -55,6 +91,9 @@ export function Problem() {
           {/* v10 §3: końcówka H2 w gradiencie wzorca (span .inf-grad-text,
               klasa partii A; data-text pod shimmer ::after). Treść 1:1. */}
           <h2 className="text-h2">Ile czasu w tygodniu zjada Ci robota, którą mógłby robić <span className="inf-grad-text" data-text="ktoś inny?">ktoś inny?</span></h2>
+          {/* v11 spec D: kreska wzorca pod H2 (50x2px, gradient + poświata, statyczna
+              jak zmierzono na wzorcu). Klasa .inf-h2-line = kontrakt partii A. */}
+          <div aria-hidden="true" className="inf-h2-line" />
         </Reveal>
         <Reveal delay={0.05}>
           <p className="text-lead mt-5 text-fg-muted">
@@ -67,35 +106,57 @@ export function Problem() {
           na <Reveal> (kontrakt: goły div = dzieci opacity:0 na zawsze). */}
       {/* v10 §6: gap kart 32 -> 20px klasą-kontraktem partii A .inf-grid-gap
           (pomiar wzorca §3: .lp-primary-grid--three 20px). */}
+      {/* v11 spec A: sekcja Problem = WARIANT W2 wzorca (.lp-primary-card:
+          neon-top w spoczynku, hover podświetla CAŁĄ ramkę), mapa
+          sekcja->wariant w raporty/taksonomia-ramek-v11.md §A. Klasa
+          .inf-card-top = kontrakt partii A (globals: WARIANTY RAMEK v11).
+          Struktura treści karty = spec E (anatomia W2). */}
       <Reveal as="ul" className="sf-stagger inf-grid-gap mx-auto mt-10 grid max-w-wide md:grid-cols-3">
-        {ZJADACZE.map((z) => (
-          <li key={z.t} className="inf-card p-6" style={{ '--card-c': z.c } as CSSProperties}>
-            {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
-                delegowany pointermove z MotionOrchestrator (desktop).
-                Dekoracja aria-hidden. */}
-            <div aria-hidden="true" className="inf-spotlight" />
-            {/* v8 (spec §8, pomiary wzorca §3.5): trzy „zjadacze tygodnia" to
-                KARTY TEKSTOWE (fragmenty jednego zdania), więc bez ikony.
-                Ikony w tej sekcji zostają na dwóch kartach pełnej szerokości
-                (domknięcie leadu i mostek do diagnozy) — to karty-bohaterowie.
-                Pole `ikona` zostaje w rejestrze ZJADACZE, nie renderujemy go. */}
-            <p className="text-body text-fg">{z.t}</p>
-          </li>
-        ))}
+        {ZJADACZE.map((z) => {
+          const usluga = getUslugaBySlug(z.slug);
+          return (
+            <li
+              key={z.t}
+              className="inf-card inf-card-top flex flex-col p-6"
+              style={{ '--card-c': z.c } as CSSProperties}
+            >
+              {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
+                  delegowany pointermove z MotionOrchestrator (desktop).
+                  Dekoracja aria-hidden. */}
+              <div aria-hidden="true" className="inf-spotlight" />
+              {/* Mono kicker w kolorze karty (wzorzec: status nad tytułem).
+                  Etykieta = INF_USLUGA_BADGE, ta sama co na kaflach PromoUslugi
+                  i w dropdownie nav, jeden język etykiet na stronie. */}
+              <KartaEtykieta>{INF_USLUGA_BADGE[z.slug] ?? z.slug}</KartaEtykieta>
+              {/* Tytuł karty = dotychczasowe zdanie-zjadacz 1:1 (fragment leadu). */}
+              <h3 className="mt-3 text-ui font-bold text-fg">{z.t}</h3>
+              {/* Opis = przeredagowana kapsuła usługi (rejestr ZJADACZE wyżej). */}
+              <p className="mt-2 text-body-sm text-fg-muted">{z.opis}</p>
+              {/* Tagi = money queries usługi z rejestru (mechanizm KartaCzesci,
+                  zero nowych fraz); usługa spoza rejestru = brak tagów. */}
+              {usluga && (
+                <KartaTagi tagi={tagiUslugi(usluga)} etykietaListy={`Frazy usługi: ${usluga.h1}`} />
+              )}
+            </li>
+          );
+        })}
       </Reveal>
 
       {/* Domknięcie leadu — karta pełnej szerokości (ta sama myśl, co wcześniej
           trzy ostatnie zdania akapitu; treść 1:1). */}
       <Reveal delay={0.05} className="mx-auto mt-6 max-w-wide">
+        {/* v11: karta w wariancie sekcji (W2). Bursztyn przejęty po zjadaczu
+            automatyzacji (ten zszedł na zieleń kategorii), w sekcji dalej
+            5 różnych tonów bez duplikatu. */}
         <div
-          className="inf-card flex items-start gap-4 p-6 md:p-8"
-          style={{ '--card-c': '#29ff77' } as CSSProperties}
+          className="inf-card inf-card-top flex items-start gap-4 p-6 md:p-8"
+          style={{ '--card-c': '#ffc120' } as CSSProperties}
         >
           <div aria-hidden="true" className="inf-spotlight" />
           <span
             aria-hidden="true"
             className="inf-tile"
-            style={{ '--tile-c': '#29ff77' } as CSSProperties}
+            style={{ '--tile-c': '#ffc120' } as CSSProperties}
           >
             <InfIcon name="robot" />
           </span>
@@ -145,7 +206,7 @@ export function Problem() {
         (HOME_CTA.href), zero nowych stringów i zero nowego CSS.
       */}
       <Reveal delay={0.15} className="mx-auto mt-10 max-w-wide">
-        <div className="inf-card p-6 text-center md:p-8" style={{ '--card-c': '#5ba4ff' } as CSSProperties}>
+        <div className="inf-card inf-card-top p-6 text-center md:p-8" style={{ '--card-c': '#5ba4ff' } as CSSProperties}>
           <div aria-hidden="true" className="inf-spotlight" />
           <span
             aria-hidden="true"

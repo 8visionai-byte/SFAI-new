@@ -88,7 +88,7 @@ export default function NarzedziaPage() {
                   <li key={n.slug}>
                     <a
                       href={`#${n.slug}`}
-                      className="inf-card group flex h-full flex-col p-4"
+                      className="inf-card inf-card-top group flex h-full flex-col p-4"
                       style={{ '--card-c': dekor.c, '--card-c-l': odcien } as CSSProperties}
                     >
                       <div aria-hidden="true" className="inf-spotlight" />

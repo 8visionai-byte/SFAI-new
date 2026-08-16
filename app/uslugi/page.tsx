@@ -97,7 +97,7 @@ function UslugaKafel({ usluga }: { usluga: Usluga }) {
     <Card
       as="article"
       variant="quiet"
-      className="inf-card h-full"
+      className="inf-card inf-card-full-hover h-full"
       style={{ '--card-c': dekor.c, '--card-c-l': odcien } as CSSProperties}
     >
       <div aria-hidden="true" className="inf-spotlight" />

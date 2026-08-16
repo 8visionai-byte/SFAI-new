@@ -37,6 +37,9 @@ export function FinalneCTA() {
           <h2 className="text-h1 relative mx-auto max-w-[22ch] text-center">
             Gotowy zobaczyć, gdzie Twoja firma <span className="inf-grad-text" data-text="traci czas?">traci czas?</span>
           </h2>
+          {/* v11 spec D: kreska wzorca pod H2 (50x2px, gradient + poświata, statyczna
+              jak zmierzono na wzorcu). Klasa .inf-h2-line = kontrakt partii A. */}
+          <div aria-hidden="true" className="inf-h2-line" />
         </Reveal>
       </div>
 

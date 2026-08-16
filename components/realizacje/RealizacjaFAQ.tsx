@@ -40,7 +40,7 @@ export function RealizacjaFAQ({
             karcie .inf-card — spójnie z ServiceFAQ usług. v7: ton karty = kolor
             kategorii case'a + reflektor jak na karcie huba. */}
         <div
-          className="inf-card mt-8 p-6"
+          className="inf-card inf-card-top mt-8 p-6"
           style={
             {
               '--card-c': dekor.c,

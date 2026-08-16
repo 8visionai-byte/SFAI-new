@@ -165,6 +165,10 @@ export function BranzeDemo() {
         <Reveal>
           {/* v10 §3: końcówka H2 w gradiencie wzorca (span .inf-grad-text, partia A). Treść 1:1. */}
           <h2 className="text-h2">Powtarzalna robota wygląda inaczej <span className="inf-grad-text" data-text="w każdej branży">w każdej branży</span></h2>
+          {/* v11 spec D: kreska wzorca pod H2 (.inf-h2-line, kontrakt partii A).
+              Nagłówek dosunięty do lewej, więc !mx-0 gasi centrowanie klasy
+              (klasy A stoją poza @layer ZA utilities, zwykłe mx-0 przegrywa). */}
+          <div aria-hidden="true" className="inf-h2-line !mx-0" />
         </Reveal>
         <Reveal delay={0.05}>
           {/* v7: lead skrócony do dwóch zdań — trzecie („Agent SimpleFast
@@ -279,7 +283,7 @@ export function BranzeDemo() {
             key={b.label}
             className={
               reduce
-                ? 'inf-card px-5 py-4'
+                ? 'inf-card inf-card-edge px-5 py-4'
                 : undefined
             }
             // v4: odcień karty (lewa krawędź, narożniki [ ]) = odcień kafelka —
@@ -320,8 +324,12 @@ export function BranzeDemo() {
       {/* v10 §6: gap kart 32 -> 20px klasą-kontraktem partii A .inf-grid-gap
           (pomiar wzorca §3: .lp-primary-grid--three 20px). */}
       <Reveal as="ul" delay={0.15} className="sf-stagger inf-grid-gap mx-auto mt-8 grid max-w-wide md:grid-cols-3">
+        {/* v11 spec A: sekcja Branże = WARIANT W1 wzorca (.lp-learn-card,
+            lewa krawędź stała w kolorze; mapa w raporty/taksonomia-ramek-v11.md
+            §A). Klasa .inf-card-edge = kontrakt partii A (globals:
+            WARIANTY RAMEK v11). */}
         {DOMKNIECIE.map((d) => (
-          <li key={d.ikona} className="inf-card p-6" style={{ '--card-c': d.c } as CSSProperties}>
+          <li key={d.ikona} className="inf-card inf-card-edge p-6" style={{ '--card-c': d.c } as CSSProperties}>
             <div aria-hidden="true" className="inf-spotlight" />
             <span
               aria-hidden="true"

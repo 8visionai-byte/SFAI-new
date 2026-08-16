@@ -46,7 +46,7 @@ export function PowiazanaUsluga({ kategoria }: { kategoria: RealizacjaKategoria 
             /* v8: items-center -> items-start. Kolumna treści urosła o etykietę
                kategorii i rząd tagów, więc wyśrodkowany pionowo kafelek ikony
                odjeżdżał na środek karty zamiast stać przy etykiecie. */
-            className="inf-card group mt-6 flex items-start gap-4 p-6 md:gap-5"
+            className="inf-card inf-card-full-hover group mt-6 flex items-start gap-4 p-6 md:gap-5"
             style={
               {
                 '--card-c': (INF_KATEGORIA[usluga.slug] ?? INF_KATEGORIA_DEFAULT).c,

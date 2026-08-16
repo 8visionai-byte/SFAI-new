@@ -56,6 +56,9 @@ export function JakToDziala() {
         <Reveal variant="header">
           {/* v10 §3: końcówka H2 w gradiencie wzorca (span .inf-grad-text, partia A). Treść 1:1. */}
           <h2 className="text-h2">Jak wygląda wdrożenie AI Agenta <span className="inf-grad-text" data-text="krok po kroku?">krok po kroku?</span></h2>
+          {/* v11 spec D: kreska wzorca pod H2 (50x2px, gradient + poświata, statyczna
+              jak zmierzono na wzorcu). Klasa .inf-h2-line = kontrakt partii A. */}
+          <div aria-hidden="true" className="inf-h2-line" />
         </Reveal>
         <Reveal delay={0.05}>
           <p className="text-lead mx-auto mt-5 max-w-measure-lead text-fg-muted">
@@ -115,8 +118,13 @@ export function JakToDziala() {
 
               {/* Karta opisu kroku — v7: .inf-card w odcieniu węzła (dawniej
                   bezbarwna .sf-glass). Tekst kroku bez zmian. */}
+              {/* v11 spec A: kroki = WARIANT W5 wzorca (.lp-secondary-card:
+                  kanciasty radius 2px jak nasz kursor, biała ramka 4%, lewa
+                  kreska zapala się hoverem; mapa w taksonomia-ramek-v11 §A).
+                  Kroki nie konkurują z ofertą. Klasa .inf-card-quiet =
+                  kontrakt partii A (globals: WARIANTY RAMEK v11). */}
               <div
-                className="inf-card mt-4 flex-1 p-6 text-left"
+                className="inf-card inf-card-quiet mt-4 flex-1 p-6 text-left"
                 style={{ '--card-c': KROK_C[i] ?? '#5ba4ff' } as CSSProperties}
               >
                 {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
@@ -131,7 +139,10 @@ export function JakToDziala() {
       </div>
 
       <Reveal delay={0.1}>
-        <p className="mx-auto mt-10 max-w-narrow text-body-sm text-fg-muted">
+        {/* v11 spec G („Umów bezpłatną diagnozę nie jest na środku"): akapit
+            nad CTA i sam przycisk na JEDNEJ osi środka (text-center +
+            items-center; odchylenie 0px z konstrukcji, pomiar w raporcie). */}
+        <p className="mx-auto mt-10 max-w-narrow text-center text-body-sm text-fg-muted">
           Cały czas widzisz, co Agent robi, i w każdej chwili możesz go zatrzymać. To Ty jesteś szefem, on tylko
           zdejmuje robotę.
         </p>
@@ -144,7 +155,7 @@ export function JakToDziala() {
         wstawić ją tu zamiast samej mikrokopii.
       */}
       <Reveal delay={0.15}>
-        <div className="mt-12 flex flex-col items-start gap-2">
+        <div className="mt-12 flex flex-col items-center gap-2 text-center">
           <Button variant="primary" href={HOME_CTA.href}>
             Umów bezpłatną diagnozę
           </Button>

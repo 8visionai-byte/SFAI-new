@@ -101,12 +101,14 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Uslugi',
     title: 'Voicebot dla firmy, ktory odbiera telefon za Ciebie',
     summary:
-      'Voicebot to bot glosowy, ktory odbiera telefon, rozmawia po polsku i zalatwia sprawe: umawia wizyte, przyjmuje zgloszenie, odpowiada na pytanie. Gdy sprawa wymaga czlowieka, zapisuje ja i wysyla powiadomienie, zebys oddzwonil przygotowany. Voicebot obsluguje polaczenia przychodzace i nie dzwoni sam do klientow. Dziala 24/7, tez gdy jestes u klienta, i to nie nagranie ani menu wcisnij jeden. Klient zawsze slyszy, ze rozmawia z asystentem AI, a po rozmowie dostajesz krotkie podsumowanie.',
+      'Voicebot, nazywany tez botem telefonicznym albo agentem glosowym, to bot glosowy, ktory odbiera telefon, rozmawia po polsku i zalatwia sprawe: umawia wizyte, przyjmuje zgloszenie, odpowiada na pytanie. Gdy sprawa wymaga czlowieka, zapisuje ja i wysyla powiadomienie, zebys oddzwonil przygotowany. Voicebot obsluguje polaczenia przychodzace i nie dzwoni sam do klientow. Dziala 24/7, tez gdy jestes u klienta, i to nie nagranie ani menu wcisnij jeden. Klient zawsze slyszy, ze rozmawia z asystentem AI, a po rozmowie dostajesz krotkie podsumowanie. Pakiet startowy od 2500 zl (bot odbierajacy telefon 24/7 po polsku, umawianie wizyt, wdrozenie i konfiguracja), dokladna wycena po bezplatnej diagnozie; kazde wdrozenie ma abonament opieki od 99 do 599 zl miesiecznie.',
     url: '/uslugi/voiceboty',
     intents: [
       'voicebot dla firmy',
       'bot glosowy',
+      'agent glosowy',
       'czym jest voicebot',
+      'ile kosztuje voicebot',
       'AI odbiera telefon',
       'automatyczne odbieranie telefonu',
       'bot telefoniczny',

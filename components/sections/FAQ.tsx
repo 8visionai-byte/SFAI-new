@@ -17,7 +17,14 @@ export function FAQ() {
           bez zmian. */}
       <div className="mx-auto grid max-w-wide gap-10 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] lg:gap-20">
         <Reveal variant="header">
-          <h2 className="text-h2 lg:sticky lg:top-28">Najczęstsze pytania, zanim podejmiesz decyzję</h2>
+          {/* v11 spec D: sticky przechodzi z H2 na wspólny wrapper, żeby kreska
+              pod nagłówkiem jechała (przyklejona) razem z nim. */}
+          <div className="lg:sticky lg:top-28">
+            <h2 className="text-h2">Najczęstsze pytania, zanim podejmiesz decyzję</h2>
+            {/* v11 spec D: kreska wzorca pod H2 (.inf-h2-line, kontrakt partii A);
+              nagłówek przy lewej, więc !mx-0 gasi centrowanie klasy. */}
+            <div aria-hidden="true" className="inf-h2-line !mx-0" />
+          </div>
         </Reveal>
 
         <div>

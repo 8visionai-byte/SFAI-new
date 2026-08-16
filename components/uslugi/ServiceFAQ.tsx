@@ -37,7 +37,7 @@ export function ServiceFAQ({ faq, slug }: { faq: Usluga['faq']; slug: Usluga['sl
             wzorzec details/summary 1:1 z home FAQ. v7: ton karty = kolor
             kategorii usługi + reflektor jak na hubie. */}
         <div
-          className="inf-card mt-8 p-6"
+          className="inf-card inf-card-top mt-8 p-6"
           style={
             {
               '--card-c': dekor.c,

@@ -54,7 +54,7 @@ export function RealizacjaEfekt({
               <Card
                 as="article"
                 variant="quiet"
-                className="inf-card h-full p-6"
+                className="inf-card inf-card-stat h-full p-6"
                 style={
                   {
                     '--card-c': dekor.c,

@@ -34,6 +34,15 @@ import {
  *  - Wiedza: 4 działy (Blog / Poradniki / Materiały / AI Radar) — nazwy 1:1
  *    z istniejących tras + badge typu (INF_WIEDZA_BADGE).
  * Pierwszy wiersz każdego dropdownu = link hub ("Wszystkie …") w DOM (SEO).
+ *
+ * v11 (spec §H, wzorzec "Zero to Hero / Absolute Beginner Guide"): wiersze
+ * przechodzą na KRÓTKI tytuł + drobny szary podpis pod spodem (.inf-dd-desc,
+ * CSS istnieje od v3). Krótkie nazwy i podpisy są DERYWOWANE wyłącznie
+ * z istniejących pól rejestrów (h1 / kapsula / coRobi / opis / karty huba
+ * /wiedza) — mapy NAV_*_KROTKIE niżej cytują źródło przy każdym wpisie.
+ * Zero nowych obietnic, zero em-dash. Badge mono po prawej BEZ ZMIAN.
+ * Nowy slug spoza mapy = fallback na długie pole rejestru bez podpisu
+ * (zero zmyślania, jak dotąd przy badge'ach).
  */
 
 /** Jedna pozycja dropdownu — płaska i serializowalna (props server->client). */
@@ -65,6 +74,219 @@ export type NavDropdownData = {
   activePrefixes?: string[];
 };
 
+/** v11 §H: krótka nazwa wiersza + szary podpis pod spodem (oba derywowane). */
+type DdKrotki = { tytul: string; opis: string };
+
+/**
+ * v11 §H — USŁUGI: krótki tytuł + podpis per slug.
+ * Źródła per wpis w komentarzach: h1 / kapsula z lib/uslugi/<slug>.ts.
+ * Fakty 1:1 z rejestru, tylko skrócone; zero nowych obietnic.
+ */
+const NAV_USLUGI_KROTKIE: Record<string, DdKrotki> = {
+  // h1 1:1 (już krótkie); podpis: kapsula "odpowiada klientom na stronie
+  // i w komunikatorach przez całą dobę".
+  chatboty: {
+    tytul: 'Chatbot AI dla firmy',
+    opis: 'Odpowiada klientom na stronie przez całą dobę',
+  },
+  // Para wprost ze spec v11 §H; źródła: h1 "Voicebot dla firmy, który odbiera
+  // telefon za Ciebie" + kapsula "Działa 24/7".
+  voiceboty: {
+    tytul: 'Voicebot AI dla firmy',
+    opis: 'Odbiera telefon za Ciebie 24/7',
+  },
+  // Tytuł: początek h1; podpis: kapsula "zbiera CV, robi pierwszy odsiew
+  // i scoring, (...) umawia rozmowy".
+  'agent-rekrutacyjny': {
+    tytul: 'Agent AI do rekrutacji',
+    opis: 'Zbiera CV, robi pierwszy odsiew i umawia rozmowy',
+  },
+  // Tytuł: h1 bez "w firmie"; podpis: kapsula "przejęcie przez system
+  // powtarzalnej roboty: przepisywania danych, (...) maili, terminów".
+  automatyzacje: {
+    tytul: 'Automatyzacja procesów z AI',
+    opis: 'Przejmuje powtarzalną robotę: dane, maile, terminy',
+  },
+  // Tytuł: h1 bez nawiasu "(OCR, KSeF)"; podpis: kapsula "sam odczytuje
+  // fakturę (OCR) (...) eksportuje do KSeF".
+  'dokumenty-faktury': {
+    tytul: 'Automatyzacja dokumentów i faktur',
+    opis: 'System sam odczytuje faktury i eksportuje do KSeF',
+  },
+  // Tytuł: początek h1; podpis: reszta h1 "utrzymanie i rozwój automatyzacji"
+  // + kapsula "opieka nad Twoimi agentami i automatyzacjami".
+  'opieka-ai': {
+    tytul: 'Opieka AI',
+    opis: 'Utrzymanie i rozwój Twoich automatyzacji',
+  },
+  // Tytuł: początek h1; podpis: reszta h1 "mapa oszczędności czasu"
+  // + kapsula "rozkładamy Twoje procesy na czynniki".
+  'audyt-ai': {
+    tytul: 'Audyt AI firmy',
+    opis: 'Mapa oszczędności czasu w Twoich procesach',
+  },
+  // Tytuł i podpis = dwie połówki h1 "Indywidualne rozwiązania AI: aplikacje
+  // i wtyczki na zamówienie" (1:1).
+  rozwiazania: {
+    tytul: 'Indywidualne rozwiązania AI',
+    opis: 'Aplikacje i wtyczki na zamówienie',
+  },
+  // Tytuł i podpis = dwie połówki h1 "Tworzenie stron WWW widocznych
+  // w Google i w AI" (1:1).
+  'strony-www': {
+    tytul: 'Tworzenie stron WWW',
+    opis: 'Widoczne w Google i w AI',
+  },
+  // Tytuł: kapsula "Pozycjonowanie pod AI (GEO)"; podpis: reszta h1
+  // "bądź cytowany w ChatGPT i Perplexity" (1:1).
+  optymalizacja: {
+    tytul: 'Pozycjonowanie pod AI (GEO)',
+    opis: 'Bądź cytowany w ChatGPT i Perplexity',
+  },
+};
+
+/**
+ * v11 §H — PRODUKTY: pola coRobi to całe zdania; tniemy je na krótką nazwę
+ * + podpis. Źródło per wpis: coRobi z lib/produkty/<plik>.ts. Badge
+ * (nazwaRobocza) zostaje osobno, więc tytuł nie może go dublować.
+ */
+const NAV_PRODUKTY_KROTKIE: Record<string, DdKrotki> = {
+  // coRobi "Skaner faktur, który przepisuje je za Ciebie i przygotowuje
+  // eksport do KSeF" = głowa + ogon zdania.
+  'skaner-faktur-ksef': {
+    tytul: 'Skaner faktur',
+    opis: 'Przepisuje faktury za Ciebie, eksport do KSeF',
+  },
+  // coRobi "Aplikacja, w której agent układa Ci plan dnia i rozmawia o tym,
+  // co trudne" = głowa + ogon; badge "PapiCoach" bez zmian.
+  'app-coachingowa-z-agentami': {
+    tytul: 'Aplikacja coachingowa',
+    opis: 'Agent układa plan dnia i rozmawia o tym, co trudne',
+  },
+  // Tytuł ze sluga (apka-obecnosci-skladek); podpis: coRobi "pilnuje, kto
+  // jest obecny i kto wpłacił, a kto zalega" (1:1).
+  'apka-obecnosci-skladek': {
+    tytul: 'Apka obecności i składek',
+    opis: 'Pilnuje, kto jest obecny, kto wpłacił, a kto zalega',
+  },
+  // coRobi "Dyktujesz głosem, co masz w głowie, a agent sam to zapisuje,
+  // sortuje i przypisuje" = tytuł z głowy, podpis z ogona; badge "Centrum
+  // dowodzenia" zostaje, więc tytułem nie dublujemy nazwy roboczej.
+  'centrum-dowodzenia': {
+    tytul: 'Notatki dyktowane głosem',
+    opis: 'Agent sam je zapisuje, sortuje i przypisuje',
+  },
+};
+
+/**
+ * v11 §H — REALIZACJE: h1 przeważnie już krótkie (zostają 1:1); podpis
+ * = fakt z kapsuły case'a (lib/realizacje/<slug>.ts), bez nowych liczb.
+ */
+const NAV_REALIZACJE_KROTKIE: Record<string, DdKrotki> = {
+  // h1 1:1; podpis: kapsula "75% maili wymaga już tylko drobnej korekty".
+  'auto-email-bok': {
+    tytul: 'Auto-email dla biura obsługi klienta',
+    opis: '75% maili wymaga tylko drobnej korekty',
+  },
+  // h1 1:1; podpis: kapsula "1000 rekordów w 40 minut, robotę, która
+  // ręcznie zajmowała dwa tygodnie".
+  'lead-generator': {
+    tytul: 'Błyskawiczny generator leadów',
+    opis: '1000 rekordów w 40 minut zamiast dwóch tygodni',
+  },
+  // h1 1:1; podpis: kapsula "odpowiadają nowym leadom całą dobę, bez
+  // nadzoru" (1:1).
+  'agenci-ai-24-7': {
+    tytul: 'Firmowi Agenci AI 24/7',
+    opis: 'Odpowiadają nowym leadom całą dobę, bez nadzoru',
+  },
+  // h1 1:1; podpis: kapsula "prowadzi kursanta prosto do właściwej lekcji".
+  'chatbot-edukacyjny-kursy': {
+    tytul: 'Chatbot edukacyjny do kursów online',
+    opis: 'Prowadzi kursanta prosto do właściwej lekcji',
+  },
+  // Tytuł: początek h1; podpis: reszta h1 (Meet, Zoom, Teams) + kapsula
+  // "wysyła gotowy raport plus listę zadań".
+  'auto-podsumowania-spotkan': {
+    tytul: 'Auto-podsumowania spotkań',
+    opis: 'Raport i lista zadań po Meet, Zoom i Teams',
+  },
+  // h1 1:1; podpis: kapsula "sam zbiera najświeższe newsy (...)
+  // i przygotowuje gotowy post".
+  'automat-tresci-social': {
+    tytul: 'Automat treści na social media',
+    opis: 'Sam zbiera newsy i przygotowuje gotowy post',
+  },
+  // Tytuł: początek h1; podpis: reszta h1 "zamiast ręcznych arkuszy"
+  // + kapsula "co rano dostarcza gotowy raport".
+  'automatyczne-raporty': {
+    tytul: 'Automatyczne raporty',
+    opis: 'Gotowy raport co rano zamiast ręcznych arkuszy',
+  },
+  // h1 1:1; podpis: kapsula "sama spisuje rozmowy (...) wyłapuje kluczowe
+  // ustalenia".
+  'transkrypcja-rozmow': {
+    tytul: 'Przechwytywanie i analiza rozmów',
+    opis: 'Spisuje rozmowy i wyłapuje kluczowe ustalenia',
+  },
+};
+
+/**
+ * v11 §H — NARZĘDZIA: tytuły kart huba są krótkie (zostają 1:1 lub tracą
+ * dopisek); podpis = fragment pola `opis` z lib/narzedzia/index.ts.
+ */
+const NAV_NARZEDZIA_KROTKIE: Record<string, DdKrotki> = {
+  // Tytuł: początek tytułu karty; podpis: opis "ile złotych rocznie
+  // odzyskasz po automatyzacji" (1:1).
+  'kalkulator-oszczednosci': {
+    tytul: 'Kalkulator oszczędności',
+    opis: 'Ile złotych rocznie odzyskasz po automatyzacji',
+  },
+  // Tytuł 1:1; podpis: opis "liczy koszt jednego konkretnego procesu
+  // rocznie i to, po ilu miesiącach zwróci się (...) wdrożenie".
+  'kalkulator-procesu': {
+    tytul: 'Czy warto zautomatyzować ten proces?',
+    opis: 'Koszt procesu rocznie i czas zwrotu wdrożenia',
+  },
+  // Tytuł 1:1; podpis: opis "osiem pytań ocenia (...) procesy, dane, ludzi
+  // i pierwszy proces do zdjęcia".
+  'test-gotowosci-ai': {
+    tytul: 'Test gotowości firmy na AI',
+    opis: 'Osiem pytań: procesy, dane, ludzie i pierwszy krok',
+  },
+  // Tytuł 1:1; podpis: opis "czy ChatGPT i Perplexity mogą ją cytować".
+  'audyt-strony-ai': {
+    tytul: 'Audyt strony pod AI (GEO)',
+    opis: 'Czy ChatGPT i Perplexity mogą cytować Twoją stronę',
+  },
+  // Tytuł: karta huba bez "dla firm"; podpis: opis "gotowy prompt
+  // do skopiowania" + "w 30 sekund".
+  'generator-promptow': {
+    tytul: 'Generator promptów AI',
+    opis: 'Gotowy prompt do skopiowania w 30 sekund',
+  },
+};
+
+/**
+ * v11 §H — WIEDZA: tytuły działów już krótkie; podpisy derywowane z opisów
+ * kart działów na hubie /wiedza (app/wiedza/page.tsx, tablica KATEGORIE)
+ * i leadu sekcji "Narzędzia i materiały do pobrania" (materiały).
+ */
+const NAV_WIEDZA_PODPISY: Record<'blog' | 'poradniki' | 'materialy' | 'ai-radar', string> = {
+  // Karta "Przemyślenia o AI w biznesie": "opinie i eseje o AI w małych
+  // firmach, prostym językiem".
+  blog: 'Przemyślenia o AI w biznesie, prostym językiem',
+  // Karta "Poradniki AI dla firm": "konkret krok po kroku (...) ile kosztuje
+  // (...) które procesy zautomatyzować, jak policzyć zwrot".
+  poradniki: 'Konkret krok po kroku: ceny, procesy, zwrot',
+  // Lead huba /wiedza: "pobierzesz gotowe prompty, checklisty i arkusze AI
+  // dla firm, za darmo".
+  materialy: 'Prompty, checklisty i arkusze do pobrania',
+  // Karta "AI Radar": "newsy ze świata AI przefiltrowane przez jedno
+  // pytanie: co to znaczy dla Twojej firmy".
+  'ai-radar': 'Newsy AI z filtrem: co to znaczy dla Twojej firmy',
+};
+
 /** Buduje dane 5 dropdownów (Usługi/Produkty/Realizacje/Narzędzia/Wiedza). */
 export function getNavDropdowns(): NavDropdownData[] {
   return [
@@ -74,9 +296,13 @@ export function getNavDropdowns(): NavDropdownData[] {
       hubLabel: 'Wszystkie usługi',
       items: USLUGI.map((u) => {
         const dekor = INF_KATEGORIA[u.slug] ?? INF_KATEGORIA_DEFAULT;
+        // v11 §H: krótki tytuł + podpis z mapy; nowy slug spoza mapy
+        // = fallback na pełne h1 bez podpisu (zero zmyślania).
+        const krotkie = NAV_USLUGI_KROTKIE[u.slug];
         return {
           href: `/uslugi/${u.slug}`,
-          tytul: u.h1,
+          tytul: krotkie?.tytul ?? u.h1,
+          opis: krotkie?.opis,
           c: dekor.c,
           odcien: dekor.odcien,
           emoji: dekor.emoji,
@@ -92,10 +318,14 @@ export function getNavDropdowns(): NavDropdownData[] {
       hubLabel: 'Wszystkie produkty',
       items: PRODUKTY.map((p) => {
         const dekor = INF_PRODUKT[p.slug] ?? INF_KATEGORIA_DEFAULT;
+        // v11 §H: zdanie coRobi pocięte na krótką nazwę + podpis (mapa wyżej);
+        // nowy slug = fallback na pełne coRobi bez podpisu.
+        const krotkie = NAV_PRODUKTY_KROTKIE[p.slug];
         return {
           // Strona /produkty to jeden listing z kotwicami (ProduktCard id={slug}).
           href: `/produkty#${p.slug}`,
-          tytul: p.coRobi,
+          tytul: krotkie?.tytul ?? p.coRobi,
+          opis: krotkie?.opis,
           c: dekor.c,
           odcien: dekor.odcien,
           emoji: dekor.emoji ?? INF_KATEGORIA_DEFAULT.emoji,
@@ -110,9 +340,13 @@ export function getNavDropdowns(): NavDropdownData[] {
       hubLabel: 'Wszystkie realizacje',
       items: REALIZACJE.map((r) => {
         const kat = INF_KATEGORIA[r.kategoria] ?? INF_KATEGORIA_DEFAULT;
+        // v11 §H: tytuł krótki (h1 lub jego głowa) + podpis-fakt z kapsuły;
+        // nowy slug = fallback na pełne h1 bez podpisu.
+        const krotkie = NAV_REALIZACJE_KROTKIE[r.slug];
         return {
           href: `/realizacje/${r.slug}`,
-          tytul: r.h1,
+          tytul: krotkie?.tytul ?? r.h1,
+          opis: krotkie?.opis,
           c: kat.c,
           odcien: kat.odcien,
           emoji: INF_REALIZACJA_EMOJI[r.slug] ?? INF_KATEGORIA_DEFAULT.emoji,
@@ -133,7 +367,10 @@ export function getNavDropdowns(): NavDropdownData[] {
           // <Section id={n.slug}> dla każdego narzędzia). Dropdown celuje więc
           // w kotwicę, tak jak karta na home (components/sections/NarzedziaTeaser).
           href: `/narzedzia#${n.slug}`,
-          tytul: n.tytul,
+          // v11 §H: krótki tytuł + podpis z pola `opis` rejestru (mapa wyżej);
+          // nowy slug = fallback na pełny tytuł karty bez podpisu.
+          tytul: NAV_NARZEDZIA_KROTKIE[n.slug]?.tytul ?? n.tytul,
+          opis: NAV_NARZEDZIA_KROTKIE[n.slug]?.opis,
           c: dekor.c,
           odcien: dekor.odcien,
           emoji: dekor.emoji ?? INF_KATEGORIA_DEFAULT.emoji,
@@ -149,10 +386,12 @@ export function getNavDropdowns(): NavDropdownData[] {
       // Stan aktywny także na trasach działów spoza /wiedza/*.
       activePrefixes: ['/blog', '/poradniki', '/materialy', '/ai-radar'],
       // v5: emoji 1:1 ze spec (📰 📖 🧲 📡) + badge typu działu (INF_WIEDZA_BADGE).
+      // v11 §H: podpisy działów z NAV_WIEDZA_PODPISY (derywacja z kart huba /wiedza).
       items: [
         {
           href: '/blog',
           tytul: 'Blog',
+          opis: NAV_WIEDZA_PODPISY.blog,
           c: INF_WIEDZA.blog.c,
           odcien: INF_WIEDZA.blog.odcien,
           emoji: INF_WIEDZA.blog.emoji ?? INF_KATEGORIA_DEFAULT.emoji,
@@ -161,6 +400,7 @@ export function getNavDropdowns(): NavDropdownData[] {
         {
           href: '/poradniki',
           tytul: 'Poradniki',
+          opis: NAV_WIEDZA_PODPISY.poradniki,
           c: INF_WIEDZA.poradniki.c,
           odcien: INF_WIEDZA.poradniki.odcien,
           emoji: INF_WIEDZA.poradniki.emoji ?? INF_KATEGORIA_DEFAULT.emoji,
@@ -169,6 +409,7 @@ export function getNavDropdowns(): NavDropdownData[] {
         {
           href: '/materialy',
           tytul: 'Materiały',
+          opis: NAV_WIEDZA_PODPISY.materialy,
           c: INF_WIEDZA.materialy.c,
           odcien: INF_WIEDZA.materialy.odcien,
           emoji: INF_WIEDZA.materialy.emoji ?? INF_KATEGORIA_DEFAULT.emoji,
@@ -177,6 +418,7 @@ export function getNavDropdowns(): NavDropdownData[] {
         {
           href: '/ai-radar',
           tytul: 'AI Radar',
+          opis: NAV_WIEDZA_PODPISY['ai-radar'],
           c: INF_WIEDZA['ai-radar'].c,
           odcien: INF_WIEDZA['ai-radar'].odcien,
           emoji: INF_WIEDZA['ai-radar'].emoji ?? INF_KATEGORIA_DEFAULT.emoji,

@@ -556,9 +556,20 @@
     font-optical-sizing: auto;
   }
 
-  h1,
-  h2 {
+  h1 {
     font-weight: 700;
+  }
+
+  /* v11 §C („u nich białe napisy naprawdę białe, aż rażące, u nas szare").
+     POMIAR (raporty/taksonomia-ramek-v11.md §C): H2 wzorca = #e4e4f0 (TEN SAM
+     hex co nasz --fg, kontrast 16,03:1 na --bg), waga 800, text-shadow: NONE.
+     „Rażąca biel" wzorca to nie glow, tylko GRUBY glif — u nas H2 jechało na
+     700, stąd wrażenie szarości. Plus Jakarta Sans jest wczytany do 800
+     (app/layout.tsx), więc 800 to realny krój, nie syntetyczne pogrubienie.
+     H1 zostaje na 700 (wzorzec ma 900 — dociążenie do 900 = nowy plik fontu
+     i koszt LCP, decyzja do Pawła; maszyna pisania H1 nietykalna). */
+  h2 {
+    font-weight: 800;
   }
 
   h3,
@@ -2818,27 +2829,36 @@ html.lenis body {
   .inf-dd-row:hover {
     background-color: var(--surface-hover);
   }
-  /* v9 pkt 5 (cytat: „te napisy są za grubo pisane, dobierz cieńszą czcionkę,
-     bo to wygląda za grube"): waga nazwy usługi 600 -> 500, czyli JEDEN stopień
-     w dół. Inter jest wczytany w 400/500/600/700 (app/layout.tsx), więc 500 to
-     realny krój, nie syntetyczne pogrubienie. Rozmiar (16px) i kolor (--fg)
-     zostają — cieńszy ma być glif, nie kontrast. */
+  /* v11 §H (cytat: wzorzec „Zero to Hero / Absolute Beginner Guide" — krótka
+     nazwa + drobny szary opis; u nas całe zdania jednym tekstem). POMIAR
+     (raporty/taksonomia-ramek-v11.md §H, wiersz .gnav-mega-item wzorca):
+     tytuł 13,12px / 600 / #e4e4f0, podpis 10,88px / 400, odstęp 1px.
+     Nasz tytuł jechał na 16px/500 (decyzja v9 „cieńsza czcionka" dotyczyła
+     glifów 16px); przy 13px wzorca waga 600 daje obraz LŻEJSZY niż 16px/500,
+     więc obie uwagi są spełnione naraz. Inter ma wczytane 600 (app/layout.tsx).
+     BEZ white-space:nowrap wzorca — ŚWIADOME odstępstwo defensywne: dopóki
+     partia C nie skróci treści rejestru, długi tytuł ma się zawinąć, nie
+     wyjechać poza panel (przy krótkich nazwach różnicy nie widać).
+     KONTRAKT dla partii C: <span class="inf-dd-title">krótka nazwa</span>
+     + <span class="inf-dd-desc">podpis z istniejących pól</span>. */
   .inf-dd-title {
     display: block;
-    font-size: var(--fs-body-sm);
-    font-weight: 500;
+    font-size: 0.8125rem; /* 13px — wzorzec 13,12px */
+    font-weight: 600;
     color: var(--fg);
     transition: color var(--dur-fast) var(--ease-out);
   }
   .inf-dd-row:hover .inf-dd-title {
     color: var(--accent);
   }
-  /* v3: krótki opis muted pod tytułem wiersza (tylko gdy rejestr ma krótkie
-     pole: nazwa robocza produktu, etykieta narzędzia, kategoria case'a). */
+  /* v11 §H: podpis wiersza 11px (wzorzec 10,88px). KOLOR NIE ze wzorca:
+     jego #5a6a8a na naszym panelu rgba(10,10,16,.92) daje 3,63:1 — poniżej AA
+     dla tekstu 11px. Nasz --fg-muted #7a7a9e na tym samym panelu = 4,80:1
+     (policzone, nie oszacowane) — AA ✓, a ton dalej wyraźnie „drobny szary". */
   .inf-dd-desc {
     display: block;
-    margin-top: 1px;
-    font-size: 0.75rem; /* 12px */
+    margin-top: 1px; /* wzorzec: gap kolumny 1px */
+    font-size: 0.6875rem; /* 11px — wzorzec 10,88px */
     line-height: 1.35;
     color: var(--fg-muted);
   }
@@ -3178,7 +3198,21 @@ html.lenis body {
           Boczna kreska ::before ZOSTAJE sygnaturą (spec: „boczna kreska
           zostaje tam, gdzie jest, ale główny akcent = góra").
        Modyfikator .inf-card-lg dostaje oba efekty z tej bazy — kontrakt każe
-       pisać go ZAWSZE obok .inf-card, osobna reguła spoczynku nie istnieje. */
+       pisać go ZAWSZE obok .inf-card, osobna reguła spoczynku nie istnieje.
+     v11 §A — KOREKTA UNIFORMIZACJI z v10 (cytat Pawła: „wziąłeś domyślnie
+     wszystkie takie ramki zbudowałeś. Nie. Ramki są RÓŻNE, to zależy od
+     sekcji"). TOP-GLOW PRZESTAJE BYĆ DOMYŚLNY: warstwy linii i łuny zostają
+     w tej liście background-image (pozycje/rozmiary bez zmian), ale ich alfę
+     niosą zmienne --inf-top-a / --inf-top-halo z DOMYŚLNYM 0% — karta bez
+     modyfikatora ma górę zgaszoną. Zapala je wariant .inf-card-top (W2
+     taksonomii = .lp-primary-card wzorca; blok „WARIANTY RAMEK v11" na końcu
+     pliku). FALLBACK bez color-mix: pierwsze dwie warstwy w deklaracji
+     literałowej to przezroczyste gradienty — stare silniki (Chrome <111,
+     Safari <16.2) nie zobaczą top-glow nigdzie, także w wariancie -top
+     (degradacja świadoma: karta zostaje kompletna — obwódka, narożniki,
+     hover). Do spoczynku dochodzi POŚWIATA RAMKI wg pomiaru §B (wzorzec
+     .lp-learn-card: inset biel 4% + czerń 50%, bez koloru) — wcześniej karta
+     nie miała w spoczynku żadnego box-shadow. */
   .inf-card {
     --card-c: var(--accent);
     /* v7 (spec §PARTIA A pkt 2, POMIARY WZORCA) — ALFA NAROŻNIKÓW jako zmienna.
@@ -3192,9 +3226,20 @@ html.lenis body {
        skokowo — wygląd docelowy ten sam.
        v8b: siostrzana zmienna --inf-luna-a (dolna łuna) USUNIĘTA razem z łuną. */
     --inf-corner-a: 22%;
+    /* v11 §A: alfa linii top i jej łuny — DOMYŚLNIE ZGASZONE (0%). Wariant
+       .inf-card-top ustawia 100% / 45%; .inf-card-stat zapala samą linię
+       dopiero na hover (przejście przez @property, blok poza @layer). */
+    --inf-top-a: 0%;
+    --inf-top-halo: 0%;
     position: relative;
     overflow: hidden;
     border-radius: var(--radius-lg);
+    /* v11 §B: poświata ramki w spoczynku 1:1 z .lp-learn-card wzorca (inset
+       biel 4% + czerń 50% — głębia bez koloru; kolor w spoczynku niosą
+       obwódka 45% i pełnokolorowe elementy wariantów). */
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      0 8px 28px -16px rgba(0, 0, 0, 0.5);
     /* v8b pkt 1: JEDNA warstwa tła = delikatne zaciemnienie 10% (uzasadnienie
        i policzone kontrasty w bloku komentarza nad regułą). Kolorowego washu,
        dolnej łuny ani granatowego korpusu tu NIE MA i mieć nie może. */
@@ -3208,8 +3253,8 @@ html.lenis body {
        w pierwszej deklaracji, konwencja pliku; linia jedzie na czystym
        var(--card-c) w OBU deklaracjach — pełny kolor nie potrzebuje mixu). */
     background-image:
-      linear-gradient(90deg, transparent, var(--card-c), var(--card-c), transparent),
-      radial-gradient(ellipse 55% 100% at 50% 0%, rgba(0, 240, 255, 0.45), transparent 78%),
+      linear-gradient(transparent, transparent),
+      linear-gradient(transparent, transparent),
       linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
       linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
       linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
@@ -3219,10 +3264,16 @@ html.lenis body {
       linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
       linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22));
     background-image:
-      linear-gradient(90deg, transparent, var(--card-c), var(--card-c), transparent),
+      linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in srgb, var(--card-c) var(--inf-top-a), transparent),
+        color-mix(in srgb, var(--card-c) var(--inf-top-a), transparent),
+        transparent
+      ),
       radial-gradient(
         ellipse 55% 100% at 50% 0%,
-        color-mix(in srgb, var(--card-c) 45%, transparent),
+        color-mix(in srgb, var(--card-c) var(--inf-top-halo), transparent),
         transparent 78%
       ),
       linear-gradient(
@@ -3825,13 +3876,23 @@ html.lenis body {
   initial-value: 22%;
   inherits: false;
 }
+/* v11: alfa linii top jako typowana zmienna — wariant .inf-card-stat zapala
+   linię na hover (0% -> 100%) i dzięki rejestracji przejście jest płynne
+   (wzorzec .stat-card::before: opacity transition .3s). Silniki bez @property
+   przełączą skokowo — wygląd docelowy ten sam. */
+@property --inf-top-a {
+  syntax: '<percentage>';
+  initial-value: 0%;
+  inherits: false;
+}
 @supports (transition-property: --inf-corner-a) {
   .inf-card {
     transition:
       transform 0.4s var(--ease-out),
       border-color 0.4s var(--ease-out),
       box-shadow 0.4s var(--ease-out),
-      --inf-corner-a 0.3s var(--ease-out);
+      --inf-corner-a 0.3s var(--ease-out),
+      --inf-top-a 0.3s var(--ease-out);
   }
 }
 
@@ -4249,14 +4310,19 @@ html.lenis body {
    utility `.my-6` i `.md\:my-7` (obie (0,1,0)) niezależnie od kolejności
    w arkuszu, więc nie zależymy od tego, gdzie Tailwind wstawi warstwę utilities.
    DEGRADACJA: silnik bez :has() (Firefox < 121) zostaje przy 32/48px, czyli
-   przy starym, większym odstępie — układ się nie psuje, jest tylko luźniejszy. */
+   przy starym, większym odstępie — układ się nie psuje, jest tylko luźniejszy.
+   v11 §G („przestrzenie u nich gęstsze, u nas rozjechane" — cel ~1,0x wzorca).
+   POMIAR (raporty/taksonomia-ramek-v11.md §G): separator wzorca ma MARGIN 0,
+   pełna przerwa treść-do-treści = 48 + 13 + 48 = 109 px na każdej parze sekcji.
+   U nas po v9 blok separatora niósł jeszcze 12/16px z każdej strony:
+     desktop, para md+md: 48 + (16+13,2+16) + 48 = 141,2 px = 1,29x wzorca.
+   v11 zeruje marginesy bloku (1:1 ze wzorcem):
+     desktop, para md+md: 48 + 13,2 + 48 = 109,2 px = 1,002x wzorca ✓
+     para z rejestrem lg (świadomy oddech): 125,2 px = odpowiednik pary
+     z bannerem wzorca (tam zmierzone 125 px), więc i wyjątek gra 1:1.
+   Tokeny --section-y NIE ruszane: md = 48px to już dokładnie padding wzorca. */
 div:has(> .inf-divider) {
-  margin-block: var(--space-3); /* 12px */
-}
-@media (min-width: 768px) {
-  div:has(> .inf-divider) {
-    margin-block: var(--space-4); /* 16px */
-  }
+  margin-block: 0;
 }
 .inf-divider-line {
   flex: 1;
@@ -4792,15 +4858,15 @@ div:has(> .inf-divider) {
 
 /* ── LICZBA: POŚWIATA (przeniesione z martwej .inf-card-stat-value na żywą
    .inf-counter-value — 6 wystąpień: liczniki hero i metryka-bohater karty
-   realizacji). POMIARY §3.3 1:1: text-shadow 0 0 12px currentColor, czyli
-   halo samo dobiera się do koloru liczby i nigdy nie rozjedzie się z paletą.
-   Poświata nie zmienia koloru liter, więc kontrast liczby zostaje ten sam
-   (kolor niesie --counter-c; na karcie to teraz --card-c, patrz reguła
-   .inf-counter wyżej). POZA @layer, żeby wygrać z ewentualnym utility.
-   Wzorzec ma w hero 14px zamiast 12px — różnica niewidoczna gołym okiem,
-   trzymamy jedną wartość dla jednej klasy. */
+   realizacji). Halo w currentColor samo dobiera się do koloru liczby i nigdy
+   nie rozjedzie się z paletą. Poświata nie zmienia koloru liter, więc
+   kontrast liczby zostaje ten sam (kolor niesie --counter-c; na karcie to
+   teraz --card-c, patrz reguła .inf-counter wyżej). POZA @layer, żeby wygrać
+   z ewentualnym utility.
+   v11 §B („nasycenie w spoczynku do wartości wzorca"): promień 12px -> 14px,
+   1:1 z pomiarem W4 (.lp-stat-value: `text-shadow: currentcolor 0 0 14px`). */
 .inf-counter-value {
-  text-shadow: 0 0 12px currentColor;
+  text-shadow: 0 0 14px currentColor;
 }
 
 /* Windows High Contrast: poświata liczby gaśnie, tag kolorowy traci tło
@@ -4931,5 +4997,271 @@ div:has(> .inf-divider) {
   .inf-grad-text {
     background-image: none;
     -webkit-text-fill-color: currentColor;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   INFINITY v11 — PARTIA A: WARIANTY RAMEK (spec §A) + KRESKA POD H2 (spec §D).
+   ŹRÓDŁO: raporty/taksonomia-ramek-v11.md (pomiary wzorca infinitytechstack.uk,
+   Chromium 1440x900, spoczynek + hover na żywo). Korekta błędu v10: JEDEN styl
+   ramki (top-glow) poszedł na wszystkie karty, a Paweł: „Ramki są RÓŻNE, to
+   zależy od sekcji". Od v11 baza .inf-card jest NEUTRALNA (obwódka kolor 45%,
+   narożniki [ ], sweep, przeświecający korpus), a charakter sekcji nadaje
+   MODYFIKATOR — zawsze pisany OBOK .inf-card:
+
+     .inf-card-edge        W1  pasek 3px z lewej (.lp-learn-card wzorca)
+     .inf-card-top         W2  neon-top + łuna, hover CAŁA ramka (.lp-primary-card)
+     .inf-card-full-hover  W3  ring od narożnika + błysk + strzałka (.lp-promo-card)
+     .inf-card-stat        W4  karta liczb, top-bar zapala się hoverem (.stat-card)
+     .inf-card-quiet       W5  cicha, kanciasta 2px, kreska hoverem (.lp-secondary-card)
+
+   UWAGA NAZEWNICZA: .inf-card-stat to NOWA klasa v11 — zbieżność nazwy
+   z martwą klasą v8 (usuniętą w F3, patrz blok MAJOR-1 wyżej) jest
+   przypadkowa; tamta nigdy nie miała reguł, ta jest wariantem ramki.
+   MAPA sekcja -> wariant (pełna tabela w raporcie): PromoUslugi/Gwarancja/
+   FinalneCTA = -full-hover; PasekZaufania/BranzeDemo/Bezpieczenstwo = -edge;
+   Problem/Rozwiazanie/Oferta/NarzedziaTeaser = -top; Dowod = -stat;
+   JakToDziala/DowodSpoleczny = -quiet. FAQ i ZyweDemo bez wariantów.
+   ZASADY ŁĄCZENIA: wariantów NIE łączyć między sobą; -top wolno pisać z -lg
+   (hover ma te same liczby); -full-hover z -lg NIE (inna gramatyka hoveru).
+   POZA @layer ŚWIADOMIE (konwencja pliku): klasy konsumują partie B/C/D
+   równolegle — wewnątrz @layer Tailwind wyciąłby je do czasu wylądowania
+   markupu. Skutek uboczny: przy równej specyficzności wygrywają też
+   z utilities (stoją w źródle za warstwą utilities) — dla tych reguł OK,
+   bo niosą wartości pomiarowe, których markup nie ma nadpisywać.
+   ŻELAZNE dochowane: żaden hover nie zmienia background-color karty; każda
+   deklaracja color-mix ma fallback rgba/var; zero nowych pętli (kreska H2
+   jest STATYCZNA — tak zmierzono, patrz §D niżej). */
+
+/* ── W1 .inf-card-edge — LEWA KRAWĘDŹ STAŁA (pomiar W1: pasek 3x194px,
+   PEŁNY kolor kategorii na opacity .5, gradient gaśnie w dół do 30% koloru;
+   ramka karty bez narożników i bez top-glow — background-image:none zdejmuje
+   wszystkie 10 warstw bazy, zostaje zaciemnienie 10% z background-color).
+   ::before bazy (kreska 2px wsunięta 14px) przechodzi w pasek wzorca:
+   pełna wysokość, 3px, bez radiusa. Hover = baza (wartości .lp-learn-card:
+   obwódka 60%, cień potrójny, lift -4px, pasek .5 -> 1, strzałka). */
+.inf-card-edge {
+  background-image: none;
+}
+.inf-card-edge::before {
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 0;
+  background: linear-gradient(180deg, var(--card-c), transparent);
+  background: linear-gradient(
+    180deg,
+    var(--card-c),
+    color-mix(in srgb, var(--card-c) 30%, transparent)
+  );
+}
+
+/* ── W2 .inf-card-top — TOP-GLOW + HOVER CAŁEJ RAMKI (pomiar W2: linia 1px
+   pełny kolor + łuna 8px w spoczynku, narożniki .22; hover: obwódka 65%,
+   cień potrójny, -5px + scale 1.008, narożniki .6). To dokładnie „trzecia
+   sekcja" z cytatu Pawła. Zapala warstwy top z bazy .inf-card (zmienne
+   --inf-top-a/--inf-top-halo, geometria warstw bez zmian — pomiar §1.2 v10).
+   Poświata spoczynku: 1:1 .lp-primary-card (inset biel 5% + czerń 55%). */
+.inf-card-top {
+  --inf-top-a: 100%;
+  --inf-top-halo: 45%;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 10px 34px -18px rgba(0, 0, 0, 0.55);
+}
+/* Tytuł karty W2 = anatomia .lp-primary-card (H3 21.6px/900, pomiar §C).
+   Plus Jakarta Sans kończy się na 800 (app/layout.tsx) — bierzemy maksimum;
+   dociążenie 900 = nowy plik fontu, decyzja do Pawła. */
+.inf-card-top :where(h2, h3, h4) {
+  font-weight: 800;
+}
+
+/* ── W3 .inf-card-full-hover — RING OD NAROŻNIKA + BŁYSK + STRZAŁKA (pomiar
+   W3, .lp-promo-card: ring gradientowy 1px liczony maską, PEŁNY kolor od
+   lewego górnego narożnika gasnący do 55% długości, spoczynek opacity .5;
+   hover: ring -> 1, ramka Z KAŻDEJ STRONY 45%, cień 40%, błysk przelatuje,
+   strzałka widoczna też w spoczynku i dojeżdża +4px). Bez narożników [ ]
+   i bez top-glow (background-image:none); box-shadow spoczynku: wzorzec nie
+   ma żadnego (none). Błysk = sweep ::after bazy (geometria 1:1: pas 38%,
+   skewX -18deg, start -40%). */
+.inf-card-full-hover {
+  background-image: none;
+  box-shadow: none;
+}
+/* FALLBACK bez maski: ::before znika CAŁKIEM — bez mask-composite gradient
+   zalałby treść karty pełnym kolorem (ring rysuje się wyłącznie pod
+   @supports niżej; silnik bez maski zostaje przy samej obwódce 45%). */
+.inf-card-full-hover::before {
+  display: none;
+}
+@supports ((-webkit-mask-composite: xor) or (mask-composite: exclude)) {
+  .inf-card-full-hover::before {
+    display: block;
+    inset: 0;
+    width: auto;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--card-c), transparent 55%);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+    opacity: 0.5;
+  }
+}
+
+/* ── W4 .inf-card-stat — KARTA Z LICZBAMI (pomiar W4: ramka paska metryk
+   biała 7% — u nas zostaje kolor 45%, decyzja Pawła ponad wzorzec — kolor
+   niosą ŚWIECĄCE liczby .inf-counter-value w pełnym neonie, text-shadow
+   currentcolor 0 0 14px; cień spoczynku czerń 60% + inset biel 6%).
+   Bez narożników (wzorzec ich nie ma): --inf-corner-a 0% gasi 8 warstw
+   w silnikach z color-mix (stare silniki zobaczą narożniki z fallbacku —
+   degradacja świadoma, karta kompletna). Hover = gramatyka .stat-card
+   wzorca: top-bar zapala się, lift -2px, cień czerń 30% (media niżej). */
+.inf-card-stat {
+  --inf-corner-a: 0%;
+  box-shadow:
+    0 14px 44px -18px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* ── W5 .inf-card-quiet — CICHA, KANCIASTA (pomiar W5, .lp-secondary-card:
+   radius 2px — gra z kanciastym kursorem repo; ramka biała 4%, ŚWIADOMIE
+   pod progiem uwagi: to jedyny wariant, gdzie kolor wchodzi dopiero hoverem
+   — opinie i kroki nie konkurują z ofertą. Kreska 2px z lewej, gradient
+   w dół do zera, spoczynek opacity 0, hover .8; obwódka hover 40% + glow
+   18px/12%, lift -2px). Bez narożników, bez sweepa, bez cienia spoczynku. */
+.inf-card-quiet {
+  border-radius: 2px;
+  border-color: rgba(255, 255, 255, 0.04);
+  background-image: none;
+  box-shadow: none;
+}
+.inf-card-quiet::before {
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  border-radius: 0;
+  background: linear-gradient(180deg, var(--card-c), transparent);
+  opacity: 0;
+}
+.inf-card-quiet::after {
+  display: none;
+}
+
+/* ── HOVERY WARIANTÓW — tylko realny hover (ta sama bramka co baza). Reguły
+   stoją PO bloku hover bazy, więc przy równej specyficzności wygrywają
+   kolejnością. RM: istniejący blok reduced-motion gasi transformy i przejścia
+   przez selektory bazy (.inf-card:hover, .inf-card::before/::after z
+   !important) — obejmuje te same elementy, osobne reguły nie są potrzebne. */
+@media (hover: hover) and (pointer: fine) {
+  /* W2: hover CAŁEJ ramki = liczby .lp-primary-card:hover 1:1 (65% / 35% /
+     14% / inset 9%, -5px + scale 1.008). Te same wartości co .inf-card-lg —
+     celowo zdublowane: karta -top nie musi nosić -lg. */
+  .inf-card-top:hover {
+    transform: translateY(-5px) scale(1.008);
+    border-color: rgba(0, 240, 255, 0.65);
+    border-color: color-mix(in srgb, var(--card-c) 65%, transparent);
+    box-shadow:
+      0 22px 48px -20px rgba(0, 240, 255, 0.35),
+      0 0 28px rgba(0, 240, 255, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    box-shadow:
+      0 22px 48px -20px color-mix(in srgb, var(--card-c) 35%, transparent),
+      0 0 28px color-mix(in srgb, var(--card-c) 14%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  }
+  /* W3: „po najechaniu błysk + podświetlenie ramki Z KAŻDEJ STRONY +
+     zaświecenie strzałki" — 1:1 .lp-promo-card:hover (lift -3px, obwódka 45%
+     — czyli zostaje przy alfie spoczynku bazy, nadpisujemy 60% z hoveru bazy
+     — cień pojedynczy 40%; ring .5 -> 1 robi hover ::before bazy). */
+  .inf-card-full-hover:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0, 240, 255, 0.45);
+    border-color: color-mix(in srgb, var(--card-c) 45%, transparent);
+    box-shadow: 0 12px 40px -12px rgba(0, 240, 255, 0.4);
+    box-shadow: 0 12px 40px -12px color-mix(in srgb, var(--card-c) 40%, transparent);
+  }
+  /* W3: strzałka WIDOCZNA też w spoczynku (wzorzec: pełny kolor, opacity 1),
+     hover tylko dojeżdża +4px — nadpisuje chowanie strzałki z bazy. */
+  .inf-card-full-hover .inf-arrow {
+    opacity: 1;
+    transform: none;
+  }
+  .inf-card-full-hover:hover .inf-arrow {
+    transform: translateX(4px);
+  }
+  /* W4: gramatyka .stat-card wzorca — top-bar 0 -> 1 (u nas linia top przez
+     --inf-top-a, przejście .3s z @property), lift -2px, cień czerń 30%;
+     obwódka i narożniki BEZ zmian (nadpisujemy 60%/60% z hoveru bazy). */
+  .inf-card-stat:hover {
+    --inf-top-a: 100%;
+    --inf-corner-a: 0%;
+    transform: translateY(-2px);
+    border-color: rgba(0, 240, 255, 0.45);
+    border-color: color-mix(in srgb, var(--card-c) 45%, transparent);
+    box-shadow:
+      0 8px 24px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  /* W5: kolor zapala się DOPIERO teraz — obwódka 40%, glow 18px/12%,
+     lift -2px (1:1 .lp-secondary-card:hover), kreska 0 -> .8 (wzorzec ma .8,
+     nadpisujemy opacity 1 z hoveru bazy). */
+  .inf-card-quiet:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 240, 255, 0.4);
+    border-color: color-mix(in srgb, var(--card-c) 40%, transparent);
+    box-shadow: 0 0 18px rgba(0, 240, 255, 0.12);
+    box-shadow: 0 0 18px color-mix(in srgb, var(--card-c) 12%, transparent);
+  }
+  .inf-card-quiet:hover::before {
+    opacity: 0.8;
+  }
+}
+
+/* ── KRESKA POD H2 (spec §D) — 1:1 z pomiaru .lp-section-title-line:
+   50x2px, radius 2px, margin 12px auto 0 (centrowana pod H2), gradient
+   90deg cyjan -> magenta, poświata 0 0 12px cyjan 30%. ANIMACJI BRAK — tak
+   ZMIERZONO (computed animation: none, getAnimations() puste, zero
+   keyframes w CSSOM wzorca; „życie" nagłówka daje gradient + poświata).
+   Wzorzec = specyfikacja, więc kreska jest statyczna — bramki desktop/RM
+   nie są potrzebne, bo nie ma czego bramkować; ewentualna animacja to
+   decyzja Pawła PONAD wzorzec. Zero nowych pętli ✓.
+   KONTRAKT dla partii B/D: <div class="inf-h2-line" aria-hidden="true">
+   </div> bezpośrednio pod H2 sekcji (przed leadem). Warianty kolorów per
+   sekcja jak u wzorca (gold #e4a541->#a78bfa, green #39ff14->#00f0ff,
+   indigo #6366f1->#a855f7) ustawia konsument inline przez style
+   (--h2-line-a / --h2-line-b). Przy nagłówku wyrównanym do lewej konsument
+   nadpisuje margines utility (mx-0). Dekoracja (aria-hidden) — kontrast nie
+   podlega progom tekstu; stopy domyślne na --bg i tak mają 14,35:1 (cyjan)
+   i 6,14:1 (magenta). */
+.inf-h2-line {
+  width: 50px;
+  height: 2px;
+  border-radius: 2px;
+  margin: 12px auto 0;
+  background: linear-gradient(90deg, #00f0ff, #ff00e5);
+  background: linear-gradient(
+    90deg,
+    var(--h2-line-a, var(--accent)),
+    var(--h2-line-b, var(--ring-2))
+  );
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--h2-line-a, var(--accent)) 30%, transparent);
+}
+
+/* Windows High Contrast: gradientowe pseudo-paski wariantów i kreska H2
+   znikają jak reszta dekoracji (systemowe ramki zostają — obwódka karty
+   przechodzi na kolory systemowe w bloku forced-colors bazy). */
+@media (forced-colors: active) {
+  .inf-card-edge::before,
+  .inf-card-quiet::before,
+  .inf-card-full-hover::before,
+  .inf-h2-line {
+    background: none;
+    box-shadow: none;
   }
 }

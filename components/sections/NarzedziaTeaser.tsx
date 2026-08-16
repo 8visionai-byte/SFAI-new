@@ -41,6 +41,14 @@ export function NarzedziaTeaser() {
       <div className="mx-auto max-w-narrow text-center">
         <Reveal variant="header">
           <h2 className="text-h2">Narzędzia</h2>
+          {/* v11 spec D: kreska wzorca pod H2 (.inf-h2-line, kontrakt partii A)
+              w parze INDIGO wzorca: tak wzorzec koloruje kreskę sekcji tools
+              (#6366f1 -> #a855f7, pomiar taksonomia §D). */}
+          <div
+            aria-hidden="true"
+            className="inf-h2-line"
+            style={{ '--h2-line-a': '#6366f1', '--h2-line-b': '#a855f7' } as CSSProperties}
+          />
         </Reveal>
       </div>
 
@@ -53,7 +61,11 @@ export function NarzedziaTeaser() {
           return (
             <li
               key={n.slug}
-              className="inf-card"
+              /* v11 spec A: narzędzia = WARIANT W2 (wzorzec składa sekcję
+                 "Free Developer Tools" z .lp-primary-card, zmierzone; mapa w
+                 raporty/taksonomia-ramek-v11.md §A). Klasa .inf-card-top =
+                 kontrakt partii A (globals: WARIANTY RAMEK v11). */
+              className="inf-card inf-card-top"
               style={
                 {
                   '--card-c': dekor.c,

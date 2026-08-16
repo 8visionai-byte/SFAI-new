@@ -43,7 +43,7 @@ export function KrokiJakToDziala({ kroki }: { kroki: Usluga['kroki'] }) {
             <Card
               as="article"
               variant="quiet"
-              className="inf-card h-full p-6"
+              className="inf-card inf-card-quiet h-full p-6"
               style={{ '--card-c': KROK_TON[i] ?? 'var(--accent)' } as CSSProperties}
             >
               <div aria-hidden="true" className="inf-spotlight" />

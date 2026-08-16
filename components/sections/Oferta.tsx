@@ -86,6 +86,9 @@ export function Oferta() {
             {/* v10 §3: kluczowe słowa H2 w gradiencie wzorca (span w środku zdania,
                 jak brandy w H2 „Master Gemini, OpenAI..." wzorca). Treść 1:1. */}
             <h2 className="text-h2">Ile kosztuje <span className="inf-grad-text" data-text="wdrożenie AI Agenta">wdrożenie AI Agenta</span> dla firmy?</h2>
+            {/* v11 spec D: kreska wzorca pod H2 (.inf-h2-line, kontrakt partii A);
+              nagłówek przy lewej, więc !mx-0 gasi centrowanie klasy. */}
+            <div aria-hidden="true" className="inf-h2-line !mx-0" />
           </Reveal>
           <Reveal delay={0.05}>
             <p className="text-lead mt-5 text-fg-muted">
@@ -143,7 +146,11 @@ export function Oferta() {
                 className={
                   p.highlight
                     ? 'sf-glass sf-rim-gradient relative flex h-full flex-col rounded-lg p-6 shadow-md md:grid md:row-[span_7] md:grid-rows-subgrid'
-                    : 'inf-card inf-card-lg relative flex h-full flex-col p-6 md:grid md:row-[span_7] md:grid-rows-subgrid'
+                    : /* v11 spec A: cennik = WARIANT W2 (.inf-card-top, kontrakt
+                         partii A; zasada łączenia A dopuszcza -top z -lg, hover
+                         ma te same liczby). Wyróżniony plan zostaje na
+                         .sf-rim-gradient (jego język, nie .inf-card). */
+                      'inf-card inf-card-lg inf-card-top relative flex h-full flex-col p-6 md:grid md:row-[span_7] md:grid-rows-subgrid'
                 }
                 style={
                   p.highlight

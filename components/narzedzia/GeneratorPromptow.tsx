@@ -180,7 +180,7 @@ export function GeneratorPromptow() {
 
         {/* Bridge do magnetów (realna wartość) */}
         {/* Panel wyniku — .inf-card (spec §4). */}
-        <div className="inf-card mt-4 p-5 shadow-xs" style={TON}>
+        <div className="inf-card inf-card-quiet mt-4 p-5 shadow-xs" style={TON}>
           <div aria-hidden="true" className="inf-spotlight" />
 
           <p className="text-body-sm text-fg">

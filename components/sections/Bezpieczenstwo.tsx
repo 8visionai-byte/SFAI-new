@@ -75,6 +75,14 @@ export function Bezpieczenstwo() {
         <Reveal variant="header">
           {/* v10 §3: końcówka H2 w gradiencie wzorca (span .inf-grad-text, partia A). Treść 1:1. */}
           <h2 className="text-h2">Czy AI Agent dla firmy jest bezpieczny i <span className="inf-grad-text" data-text="zgodny z RODO?">zgodny z RODO?</span></h2>
+          {/* v11 spec D: kreska wzorca pod H2 (.inf-h2-line, kontrakt partii A)
+              w parze GREEN wzorca: tak wzorzec koloruje kreskę sekcji security
+              (#39ff14 -> #00f0ff, pomiar taksonomia §D). */}
+          <div
+            aria-hidden="true"
+            className="inf-h2-line"
+            style={{ '--h2-line-a': '#39ff14', '--h2-line-b': '#00f0ff' } as CSSProperties}
+          />
         </Reveal>
         {/* Kapsuła answer-first — cytat dla LLM */}
         <Reveal delay={0.05}>
@@ -99,7 +107,11 @@ export function Bezpieczenstwo() {
         {PUNKTY.map((p) => (
           <li
             key={p.t}
-            className="inf-card p-6"
+            /* v11 spec A: bezpieczeństwo = WARIANT W1 (lewa krawędź stała,
+               spokojny; sekcja ma uspokajać, nie krzyczeć, mapa w
+               raporty/taksonomia-ramek-v11.md §A). Klasa .inf-card-edge =
+               kontrakt partii A (globals: WARIANTY RAMEK v11). */
+            className="inf-card inf-card-edge p-6"
             style={{ '--card-c': p.c } as CSSProperties}
           >
             {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN

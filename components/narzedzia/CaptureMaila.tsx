@@ -72,7 +72,7 @@ export function CaptureMaila({
     // reflektor jest absolutny, więc nie jest tekstem do wyśrodkowania.
     return (
       <div
-        className="inf-card bg-success-bg p-5 text-center"
+        className="inf-card inf-card-quiet bg-success-bg p-5 text-center"
         style={{ '--card-c': 'var(--success)' } as CSSProperties}
       >
         <div aria-hidden="true" className="inf-spotlight" />

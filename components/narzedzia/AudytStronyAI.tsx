@@ -156,7 +156,7 @@ export function AudytStronyAI() {
       {pokazWynik && wszystkieOdp ? (
         <>
           {/* Panel wyniku — .inf-card (spec §4). */}
-          <div className="inf-card mt-4 p-6 shadow-xs sm:p-7" style={TON}>
+          <div className="inf-card inf-card-edge mt-4 p-6 shadow-xs sm:p-7" style={TON}>
             <div aria-hidden="true" className="inf-spotlight" />
 
             <div className="flex items-center justify-between gap-4">
@@ -204,7 +204,7 @@ export function AudytStronyAI() {
               niesie krawędź karty w kolorze narzędzia (v7: jawne --card-c
               zamiast fallbackowego akcentu). */}
           {wynik.doNaprawy.length > 0 ? (
-            <div className="inf-card mt-4 p-5 shadow-xs sm:p-6" style={TON}>
+            <div className="inf-card inf-card-edge mt-4 p-5 shadow-xs sm:p-6" style={TON}>
               <div aria-hidden="true" className="inf-spotlight" />
 
               <h3 className="text-h3">Napraw to najpierw</h3>
@@ -223,7 +223,7 @@ export function AudytStronyAI() {
               </ol>
             </div>
           ) : (
-            <div className="inf-card mt-4 bg-success-bg p-5 text-body-sm text-fg" style={TON_SUKCES}>
+            <div className="inf-card inf-card-edge mt-4 bg-success-bg p-5 text-body-sm text-fg" style={TON_SUKCES}>
               {/* Jedyny panel z gołym tekstem zamiast elementów — reflektor jest
                   absolutny, więc zdanie zostaje na swoim miejscu (tekst nie
                   dostaje żadnego marginesu ani nowej linii). */}
@@ -233,7 +233,7 @@ export function AudytStronyAI() {
           )}
 
           {/* Fragment "tak by to wyglądało poprawione" (pozycja #2) — .inf-card. */}
-          <div className="inf-card mt-4 p-5 shadow-xs sm:p-6" style={TON}>
+          <div className="inf-card inf-card-quiet mt-4 p-5 shadow-xs sm:p-6" style={TON}>
             <div aria-hidden="true" className="inf-spotlight" />
 
             <p className="text-caption font-semibold uppercase tracking-[0.08em] text-fg-subtle">

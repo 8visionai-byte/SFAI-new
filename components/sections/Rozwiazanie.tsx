@@ -102,7 +102,11 @@ export function Rozwiazanie() {
         ).map((karta, i) => (
           <article
             key={karta.nr}
-            className="inf-card flex h-full flex-col p-6 md:p-8"
+            /* v11 spec A: sekcja Rozwiązanie = WARIANT W2 wzorca
+               (.lp-primary-card, neon-top + hover całej ramki; mapa w
+               raporty/taksonomia-ramek-v11.md §A). Klasa .inf-card-top =
+               kontrakt partii A (globals: WARIANTY RAMEK v11). */
+            className="inf-card inf-card-top flex h-full flex-col p-6 md:p-8"
             style={
               {
                 '--card-c': karta.kat.c,
@@ -209,7 +213,7 @@ export function Rozwiazanie() {
           (pomiar wzorca §3: .lp-learn-grid 16px — drobne kafle 2-kol.). */}
       <Reveal as="ul" className="sf-stagger inf-grid-gap-sm mx-auto mt-12 grid max-w-wide sm:grid-cols-2">
         {POTRAFI.map((item) => (
-          <li key={item.t} className="inf-card p-6" style={{ '--card-c': item.c } as CSSProperties}>
+          <li key={item.t} className="inf-card inf-card-top p-6" style={{ '--card-c': item.c } as CSSProperties}>
             <div aria-hidden="true" className="inf-spotlight" />
             {/* v8 (spec §8, pomiary wzorca §3.5): „co potrafi Agent" to KARTY
                 TEKSTOWE (zdania o możliwościach), a takie we wzorcu ikony nie

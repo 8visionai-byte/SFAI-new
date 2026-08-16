@@ -27,9 +27,9 @@ import { ScrambleText } from '@/components/motion/ScrambleText';
  * w jednym setState — koniec nachodzących paneli. Escape/focus/hover-intent
  * bez zmian (mechanizmy zostały w NavDropdown).
  *
- * Mobile: bez zmian treści względem v2 — hamburger -> pełny panel (SOLIDNE
- * tło, zero backdrop-blur <1024px), Usługi rozwinięte listą (tytuły 1:1
- * z rejestru — biorą się z danych dropdownu "Usługi", więc jedno źródło),
+ * Mobile: hamburger -> pełny panel (SOLIDNE tło, zero backdrop-blur <1024px),
+ * Usługi rozwinięte listą (tytuły z danych dropdownu "Usługi" — od v11 §H to
+ * KRÓTKIE nazwy derywowane w nav-data.ts, jedno źródło z desktopem),
  * wyróżniony wpis "Architekci Wartości AI", reszta nav zwykłymi linkami,
  * zamykanie ESC. Nawigacja w HTML (linki widoczne dla botów).
  *

@@ -36,7 +36,7 @@ export function OnasPodejscie() {
             <Card
               as="article"
               variant="quiet"
-              className="inf-card relative h-full p-6"
+              className="inf-card inf-card-quiet relative h-full p-6"
               style={{ '--card-c': KROK_TON[i] ?? 'var(--accent)' } as CSSProperties}
             >
               <div aria-hidden="true" className="inf-spotlight" />

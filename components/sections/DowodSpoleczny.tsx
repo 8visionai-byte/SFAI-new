@@ -78,6 +78,9 @@ export function DowodSpoleczny() {
       <div className="mx-auto max-w-narrow">
         <Reveal>
           <h2 className="text-h2">Komu już postawiliśmy AI Agentów?</h2>
+          {/* v11 spec D: kreska wzorca pod H2 (.inf-h2-line, kontrakt partii A);
+              nagłówek przy lewej, więc !mx-0 gasi centrowanie klasy. */}
+          <div aria-hidden="true" className="inf-h2-line !mx-0" />
         </Reveal>
         <Reveal delay={0.05}>
           {/*
@@ -105,8 +108,12 @@ export function DowodSpoleczny() {
             <Reveal key={i} delay={Math.min(i, 4) * 0.06} className="mb-10 break-inside-avoid">
               {/* INFINITY: cytat na karcie wzorca (.inf-card) z lewą krawędzią
                   w kolorze kategorii (OPINIA_TON). Treść cytatu i podpisów 1:1. */}
+              {/* v11 spec A: opinie = WARIANT W5 wzorca (.lp-secondary-card:
+                  cicha, kanciasta, lewa kreska zapala się hoverem; mapa w
+                  raporty/taksonomia-ramek-v11.md §A). Klasa .inf-card-quiet =
+                  kontrakt partii A (globals: WARIANTY RAMEK v11). */}
               <figure
-                className="inf-card p-6"
+                className="inf-card inf-card-quiet p-6"
                 style={{ '--card-c': OPINIA_TON[i] ?? 'var(--accent-decor)' } as React.CSSProperties}
               >
                 {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
@@ -138,7 +145,7 @@ export function DowodSpoleczny() {
           na KARTĘ .inf-card z kafelkiem ikony i odcieniem violet. Treść 1:1. */}
       <Reveal delay={0.1}>
         <div
-          className="inf-card mx-auto mt-12 max-w-wide p-6 md:p-8"
+          className="inf-card inf-card-quiet mx-auto mt-12 max-w-wide p-6 md:p-8"
           style={{ '--card-c': '#a586ff' } as React.CSSProperties}
         >
           <div aria-hidden="true" className="inf-spotlight" />

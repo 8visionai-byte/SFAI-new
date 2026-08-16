@@ -32,7 +32,7 @@ export function MaterialCard({ material }: { material: Material }) {
     <Card
       as="article"
       variant="quiet"
-      className="inf-card relative flex h-full flex-col p-6"
+      className="inf-card inf-card-top relative flex h-full flex-col p-6"
       style={{ '--card-c': dekor.c, '--card-c-l': dekor.odcien ?? dekor.c } as CSSProperties}
     >
       <div aria-hidden="true" className="inf-spotlight" />
@@ -110,7 +110,7 @@ export function MaterialCardWkrotce({ temat }: { temat: MaterialWkrotce }) {
     <Card
       as="article"
       variant="quiet"
-      className="inf-card relative flex h-full flex-col p-6 opacity-80"
+      className="inf-card inf-card-quiet relative flex h-full flex-col p-6 opacity-80"
       style={{ '--card-c': dekor.c, '--card-c-l': dekor.odcien ?? dekor.c } as CSSProperties}
       aria-disabled="true"
     >

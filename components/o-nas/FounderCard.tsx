@@ -47,7 +47,7 @@ export function FounderCard({ profil }: { profil: FounderProfil }) {
     <Card
       as="article"
       variant="quiet"
-      className="inf-card relative h-full p-6"
+      className="inf-card inf-card-edge relative h-full p-6"
       style={{ '--card-c': dekor.c, '--card-c-l': dekor.odcien ?? dekor.c } as CSSProperties}
     >
       <div aria-hidden="true" className="inf-spotlight" />

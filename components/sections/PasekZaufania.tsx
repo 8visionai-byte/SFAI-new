@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 
@@ -74,15 +75,24 @@ export function PasekZaufania() {
           Zanim cokolwiek wdrożymy, zdejmujemy z Ciebie trzy największe obawy
         </p>
       </Reveal>
-      {/* Kaskadę robi .sf-stagger (JEDEN obserwator na kontenerze) — per-item
-          delaye zniknęły. INFINITY: kolumny jako pozycje pasa .inf-counter
-          (fundament) — pionowy separator z lewej dla pozycji 2 i 3 (reguła
-          sibling fundamentu; na mobile kasowana przez max-sm:border-l-0/pl-0,
-          utilities wygrywają z @layer components). Ikony w kolorze pozycji
-          (dekoracja); tytuł = mono caps w kolorze TEKSTOWYM metalu (AA). */}
-      <Reveal as="ul" className="sf-stagger mx-auto grid max-w-wide gap-8 sm:grid-cols-3 sm:gap-10">
+      {/* v11 spec F (zrzut Pawła: „nie ma tutaj ramek, a wszystko musi być
+          w ramkach"): trzy kolumny wchodzą NA KARTY wzorca w WARIANCIE W1
+          (lewa krawędź stała, .lp-learn-card, mapa sekcja->wariant w
+          raporty/taksonomia-ramek-v11.md §A). Język liczników (.inf-counter
+          z pionowym separatorem) wypada, bo ramkę rysuje teraz karta.
+          Gap 16px klasą-kontraktem .inf-grid-gap-sm (siatki W1 są u wzorca
+          najciaśniejsze: .lp-learn-grid 16px). Kaskadę dalej robi .sf-stagger;
+          teksty, ikony i kolory 1:1 co do znaku. Klasa .inf-card-edge =
+          kontrakt partii A (globals: WARIANTY RAMEK v11). */}
+      <Reveal as="ul" className="sf-stagger inf-grid-gap-sm mx-auto grid max-w-wide sm:grid-cols-3">
         {FILARY.map((f) => (
-          <li key={f.title} className="inf-counter max-sm:border-l-0 max-sm:pl-0">
+          <li
+            key={f.title}
+            className="inf-card inf-card-edge p-6"
+            style={{ '--card-c': f.kolor } as CSSProperties}
+          >
+            {/* Reflektor za kursorem (kontrakt kart home; dekoracja aria-hidden). */}
+            <div aria-hidden="true" className="inf-spotlight" />
             <svg
               width="28"
               height="28"

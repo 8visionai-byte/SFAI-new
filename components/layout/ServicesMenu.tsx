@@ -33,8 +33,8 @@ import type { NavDropdownData, NavDropdownItem } from './nav-data';
  * dla botów przy pierwszym żądaniu.
  *
  * Wiersze v5 (spec §2, wzorzec 1:1): [kafel 44px z NATYWNYM emoji 20px —
- * dekoracja aria-hidden, etykietę niesie tytuł] [tytuł 1:1 z rejestru
- * (+ opis muted .inf-dd-desc, gdy rejestr ma krótkie pole)] [BADGE mono
+ * dekoracja aria-hidden, etykietę niesie tytuł] [tytuł (od v11 §H: KRÓTKA
+ * nazwa derywowana w nav-data.ts) + szary podpis .inf-dd-desc] [BADGE mono
  * .inf-dd-badge po prawej w jasnym odcieniu kategorii — treść z istniejących
  * pól rejestrów, dekoracyjna pigułka]. Panel desktop PRZEZROCZYSTY
  * (rgba(10,10,16,.72) + blur 24px — CSS w globals, partia B). Hover wiersza:

@@ -43,7 +43,7 @@ export function RamaCeny({
             akcent) + reflektor jak na hubie. */}
         <Reveal delay={0.05}>
           <div
-            className="inf-card mt-8 p-6 md:p-8"
+            className="inf-card inf-card-top mt-8 p-6 md:p-8"
             style={
               {
                 '--card-c': dekor.c,

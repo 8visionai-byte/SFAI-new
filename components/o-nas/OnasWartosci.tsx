@@ -27,7 +27,7 @@ export function OnasWartosci() {
             <Card
               as="article"
               variant="quiet"
-              className="inf-card relative h-full p-6"
+              className="inf-card inf-card-quiet relative h-full p-6"
               style={
                 {
                   '--card-c': ['#2b7cff', '#8b5cf6', '#22e06b'][i] ?? 'var(--accent)',
