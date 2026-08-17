@@ -1,10 +1,15 @@
 /**
- * ahrefs-raport.js — czytnik Ahrefs API v3 (bez zależności npm).
- * Użycie: node tools/ahrefs-raport.js "C:\ścieżka\do\ahrefs-api-key.txt" [domena]
- * Klucz czytany z pliku (nigdy do czatu/repo). Drukuje TYLKO wyniki, nigdy klucza.
+ * ahrefs-raport.js — porownanie sily domen (Domain Rating) przez publiczne API Ahrefs.
+ * Uzycie: node tools/ahrefs-raport.js "C:\sciezka\do\ahrefs-api-key.txt" [domena1 domena2 ...]
+ * Klucz czytany z pliku, NIGDY nie drukowany.
  *
- * Zwraca: ocena domeny, backlinki, ruch organiczny, TOP frazy z WOLUMENAMI
- * (tego nie da GSC — GSC pokazuje tylko frazy, na które już się pokazujemy).
+ * CO TO DAJE: DR (0-100) to sila profilu linkow. Porownanie z konkurentami mowi,
+ * czy realnie mozemy ich wyprzedzic, czy potrzebujemy najpierw linkow.
+ *
+ * OGRANICZENIE (sprawdzone 2026-08-17): klucz Pawla ma zakres "API v3 for public
+ * endpoints" = 4 endpointy ze 129. Dziala domain-rating-free. NIE dziala
+ * site-explorer ani keywords-explorer (401) - te wymagaja planu Enterprise.
+ * Wolumeny fraz bierzemy z Search Console (prawdziwe dane), nie z Ahrefs (estymacje).
  */
 const fs = require('fs');
 
@@ -13,67 +18,55 @@ if (!KEY_PATH) {
   console.error('Podaj sciezke do pliku z kluczem API Ahrefs.');
   process.exit(1);
 }
-const key = fs.readFileSync(KEY_PATH, 'utf8').trim().split(/\s+/).pop();
-const TARGET = process.argv[3] || 'simplefast.ai';
-const BASE = 'https://api.ahrefs.com/v3';
+const key = fs.readFileSync(KEY_PATH, 'utf8').trim();
 
-async function call(sciezka, params = {}) {
-  const q = new URLSearchParams(params);
-  const res = await fetch(`${BASE}/${sciezka}?${q}`, {
-    headers: { Authorization: `Bearer ${key}`, Accept: 'application/json' },
-  });
-  const txt = await res.text();
-  if (!res.ok) {
-    // Nie drukujemy klucza nawet w komunikacie bledu.
-    return { blad: `HTTP ${res.status}`, tresc: txt.slice(0, 200).replace(key, 'KLUCZ_UKRYTY') };
+// Domeny: z argumentow albo domyslny zestaw (my + konkurenci z researchu SERP).
+const domeny = process.argv.length > 3
+  ? process.argv.slice(3)
+  : ['simplefast.ai', 'gagan.pl', 'mits.pl', 'malinski.ai', 'lessmanual.ai', 'syntalith.ai', 'wasko.pl'];
+
+async function dr(target) {
+  try {
+    const r = await fetch(`https://api.ahrefs.com/v3/public/domain-rating-free?target=${encodeURIComponent(target)}`, {
+      headers: { Authorization: `Bearer ${key}`, Accept: 'application/json' },
+    });
+    if (!r.ok) {
+      const t = (await r.text()).split(key).join('KLUCZ_UKRYTY');
+      return { target, blad: `HTTP ${r.status}`, tresc: t.slice(0, 90) };
+    }
+    const j = await r.json();
+    return { target, dr: j.domain_rating?.domain_rating ?? null };
+  } catch (e) {
+    return { target, blad: String(e.message).split(key).join('KLUCZ_UKRYTY').slice(0, 80) };
   }
-  try { return JSON.parse(txt); } catch { return { blad: 'zla odpowiedz', tresc: txt.slice(0, 200) }; }
 }
 
-const dzis = new Date().toISOString().slice(0, 10);
-
 (async () => {
-  console.log(`=== AHREFS: ${TARGET} (${dzis}) ===\n`);
+  console.log('=== AHREFS: sila domen (Domain Rating 0-100) ===\n');
+  const wyniki = [];
+  for (const d of domeny) wyniki.push(await dr(d));
 
-  // 1. Limity konta — od razu widac, czy klucz dziala i ile jednostek zostalo
-  const limity = await call('subscription-info/limits-and-usage');
-  if (limity.blad) {
-    console.log('KLUCZ NIE DZIALA: ' + limity.blad + ' | ' + (limity.tresc || ''));
-    console.log('\nNajczestsza przyczyna: plan Ahrefs BEZ dodatku API (API to osobna,');
-    console.log('platna usluga), albo klucz innego typu niz API v3.');
-    console.log('Sprawdz w Ahrefs: Account settings -> API keys (klucz v3 zaczyna sie od "ah_").');
-    return;
-  }
-  const l = limity.limits_and_usage || limity;
-  console.log('1. KONTO: jednostki zuzyte ' + (l.units_spent ?? '?') + ' / limit ' + (l.units_limit ?? '?') +
-    ' | reset: ' + (l.reset_at ?? '?'));
+  const nasz = wyniki.find((w) => /simplefast/.test(w.target));
+  wyniki.sort((a, b) => (b.dr ?? -1) - (a.dr ?? -1));
 
-  // 2. Ocena domeny i backlinki
-  const dr = await call('site-explorer/domain-rating', { target: TARGET, date: dzis });
-  console.log('\n2. OCENA DOMENY (DR): ' + (dr.domain_rating?.domain_rating ?? JSON.stringify(dr).slice(0, 120)));
-
-  const bl = await call('site-explorer/backlinks-stats', { target: TARGET, date: dzis, mode: 'domain' });
-  const b = bl.metrics || bl;
-  console.log('   backlinki: ' + (b.live ?? '?') + ' zywych | domeny odsylajace: ' + (b.live_refdomains ?? '?'));
-
-  // 3. Ruch organiczny i liczba fraz w TOP100
-  const om = await call('site-explorer/metrics', { target: TARGET, date: dzis, volume_mode: 'monthly', mode: 'domain' });
-  const m = om.metrics || om;
-  console.log('\n3. RUCH ORGANICZNY (szac. Ahrefs): ' + (m.org_traffic ?? '?') + '/mies | fraz w TOP100: ' + (m.org_keywords ?? '?'));
-
-  // 4. TOP frazy Z WOLUMENAMI — to jest to, czego GSC nie da
-  const kw = await call('site-explorer/organic-keywords', {
-    target: TARGET, date: dzis, country: 'pl', mode: 'domain',
-    select: 'keyword,best_position,volume,keyword_difficulty,best_position_url',
-    order_by: 'volume:desc', limit: '25',
+  wyniki.forEach((w) => {
+    const my = /simplefast/.test(w.target) ? '  <-- MY' : '';
+    if (w.blad) console.log(`  ${w.target.padEnd(20)} BLAD ${w.blad} ${w.tresc || ''}`);
+    else console.log(`  DR ${String(w.dr).padStart(5)}  ${w.target.padEnd(20)}${my}`);
   });
-  console.log('\n4. FRAZY W POLSCE (wg wolumenu):');
-  const lista = kw.keywords || kw.organic_keywords || [];
-  if (!Array.isArray(lista) || lista.length === 0) {
-    console.log('   ' + JSON.stringify(kw).slice(0, 200));
-  } else {
-    lista.forEach((k) => {
-      console.log(`   poz ${String(k.best_position ?? '?').padStart(3)} | wol ${String(k.volume ?? '?').padStart(6)} | KD ${String(k.keyword_difficulty ?? '?').padStart(3)} | ${k.keyword}`);
-    });
+
+  if (nasz && nasz.dr != null) {
+    const slabsi = wyniki.filter((w) => w.dr != null && w.dr < nasz.dr && !/simplefast/.test(w.target));
+    const mocniejsi = wyniki.filter((w) => w.dr != null && w.dr > nasz.dr);
+    console.log(`\nWNIOSEK: nasz DR = ${nasz.dr}.`);
+    if (slabsi.length) {
+      console.log(`  Slabsi od nas (mozemy ich wyprzedzic TRESCIA, bez budowania linkow): ${slabsi.map((w) => `${w.target} (${w.dr})`).join(', ')}`);
+    }
+    if (mocniejsi.length) {
+      console.log(`  Mocniejsi (tu potrzebne tez linki, nie tylko tresc): ${mocniejsi.map((w) => `${w.target} (${w.dr})`).join(', ')}`);
+    }
   }
+
+  console.log('\nUWAGA: wolumeny fraz i pozycje bierz z Search Console (tools/gsc-raport.js).');
+  console.log('Ahrefs w tym planie ich nie udostepnia (site-explorer i keywords-explorer = 401).');
 })();
