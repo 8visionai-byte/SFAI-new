@@ -1,3 +1,28 @@
+# STATUS — INFINITY v13 — NA PRODUKCJI (commit ce88871, 3 pliki, +447/-91)
+
+Naprawa przesycenia v12 (Pawel: cztery rodzaje ramek wzorca, „u nas tego
+nie ma w ogole"): baza obwodek WYCISZONA do wartosci wzorca (biel 4-7%,
+zero kolorowych obwodek dookola — 53/53 kart home zmierzone), swieci tylko
+WYROZNIK wariantu: TYP A gora gasnaca ku rogom + luna (18 kart), TYP B sam
+lewy bok, gora czysta (18), TYP C delikatny ring (5), TYP D pasek gorny
+w odcieniach jednego koloru (4 kafle POTRAFI, --card-c-alt, zielen->cyjan
+/ amber->pomarancz / fiolet->magenta). Wszystko 1:1 z zywego wzorca
+(raporty/pomiary-v13.md). Separator: DWA rozblyski naraz, przelot 4s
+ease-in-out (bylo 2,4s) = 2,4x wolniej, czysty CSS, RM gasi.
+HOVER WSPOLNY i HERO USLUG (v12) NIETKNIETE — zmierzone 8 przypadkow
+hovera + git diff uslug = 0. SEO: diff tresci = 0.
+Proces: workflow zwiad->implementacja->kontrola (SHIP WITH MINORS; oba
+minory SPRZED rundy: scroll 27px na 320px od slowa „automatyzacje" w H1
+maszyny — nietykalne bez decyzji Pawla; luna typu A/D emulowana radialem
+bo box-shadow architektonicznie niemozliwy na warstwie background).
+Produkcja zweryfikowana: CSS na produkcji = ten sam hash co audytowany
+lokalnie (0b028417aa79e44e), markery --card-c-alt i shimmer 4s obecne.
+Czeka na Pawla: ocena wizualna na zywo (luna A/D + odcienie D).
+W drzewie wisi niezacommitowany przebieg .seo-przeglad/ z 2026-08-17
+(werdykt STABILNIE) — artefakt osobnej sesji skillu, nie ruszany.
+
+---
+
 # STATUS — INFINITY v12 — NA PRODUKCJI (commit ac62ef0, 10 plików, +1002/-124)
 
 Naprawa błędu v11 (pełny hover miał tylko wariant W3): REGUŁA WSPÓLNA —
