@@ -2986,6 +2986,20 @@ html.lenis body {
     text-shadow: 0 0 12px currentColor;
     text-shadow: 0 0 12px color-mix(in srgb, var(--chip-c) 55%, transparent);
     border-color: color-mix(in srgb, var(--chip-c) 70%, transparent);
+    /* v16 §B (pomiary-v16.md §2.2): chipowi do kalibracji „Umów diagnozę"
+       brakowało TYLKO halo pudełka — dochodzi glow 12px/20% + inset 8px/10%
+       (1:1 spoczynek CTA). Tekst 72%+biel, poświata 55%, obwódka 70%, tło
+       12% BEZ zmian (zgodne z kalibracją; kontrasty z noty v9 wyżej stoją —
+       box-shadow nie zmienia tła pod literami tak jak pełnokryciowe halo
+       tekstu). Chip żyje dziś wyłącznie na podstronach usług — objęcie ich
+       regułą z globals to decyzja Pawła (pomiary-v16.md §2.2); pigułki hero
+       tych podstron chroni reguła .inf-chip.inf-hero-tag niżej. */
+    box-shadow:
+      0 0 12px rgba(0, 240, 255, 0.2),
+      inset 0 0 8px rgba(0, 240, 255, 0.1);
+    box-shadow:
+      0 0 12px color-mix(in srgb, var(--chip-c) 20%, transparent),
+      inset 0 0 8px color-mix(in srgb, var(--chip-c) 10%, transparent);
   }
 
   /* ── .inf-stat-chip — ŚWIECĄCY CHIP Z LICZBĄ (v10, lewe skrzydło hero).
@@ -3020,9 +3034,18 @@ html.lenis body {
     border-radius: var(--radius-sm);
     border: 1px solid color-mix(in srgb, var(--stat-c) 55%, transparent);
     background-color: color-mix(in srgb, var(--stat-c) 8%, transparent);
+    /* v16 §B (pomiary-v16.md §2.2): chip statystyk był już najbliżej
+       kalibracji „Umów diagnozę" — domknięcie do 1:1: glow 16% -> 20%,
+       inset 7% -> 10%. Promienie zostają (16/10px — pudełko większe od
+       pigułki CTA). Tint 8% i obwódka 55% bez zmian, więc kontrasty
+       policzone w nocie wyżej (liczba, opis, podpis) stoją. Fallback
+       literałem rgba w akcencie przed color-mix (konwencja pliku). */
     box-shadow:
-      0 0 16px color-mix(in srgb, var(--stat-c) 16%, transparent),
-      inset 0 0 10px color-mix(in srgb, var(--stat-c) 7%, transparent);
+      0 0 16px rgba(34, 211, 238, 0.2),
+      inset 0 0 10px rgba(34, 211, 238, 0.1);
+    box-shadow:
+      0 0 16px color-mix(in srgb, var(--stat-c) 20%, transparent),
+      inset 0 0 10px color-mix(in srgb, var(--stat-c) 10%, transparent);
     /* Hero jest text-center; chip czyta się jak wpis, więc wraca do lewej. */
     text-align: left;
   }
@@ -3116,14 +3139,28 @@ html.lenis body {
       color-mix(in srgb, var(--tile-c) 14%, transparent),
       color-mix(in srgb, var(--tile-c) 5%, transparent)
     );
-    border: 1px solid rgba(34, 211, 238, 0.28);
-    border-color: color-mix(in srgb, var(--tile-c) 28%, transparent);
+    /* v16 §B (pomiary-v16.md §2.2, gramatyka pudełka „Umów diagnozę"):
+       obwódka 28% -> 50% (CTA trzyma border 50% w spoczynku); glow BEZ
+       ujemnego spreadu — dotychczasowe `0 0 16px -6px` dusiło promień
+       niemal do zera — teraz `0 0 12px` 20% + `inset 0 0 8px` 10%, 1:1
+       spoczynek CTA. Szklany połysk `inset 0 1px 0` biel 10% i gradient
+       160deg 14->5% ZOSTAJĄ (głębia szklana v15 nietykalna; tint pudełka
+       niesie gradient — średnio ~8-9%, poziom tintu CTA). Glif dalej w
+       PEŁNYM kolorze — kontrast bez zmian. Hover kafla (blok v7/v15 wyżej:
+       border 48%, glow 22px/70%, inset biel 14%) NIETYKALNY — dalej
+       wyraźnie mocniejszy od spoczynku (glow 3,5x). */
+    /* v16-fix (kontrola: inwersja rest 50% > hover 48%): spoczynek 42% —
+       hover (48% + glow 3,5x) znów wzmacnia KAŻDY kanał. */
+    border: 1px solid rgba(34, 211, 238, 0.42);
+    border-color: color-mix(in srgb, var(--tile-c) 42%, transparent);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      0 0 16px -6px rgba(34, 211, 238, 0.6);
+      0 0 12px rgba(34, 211, 238, 0.2),
+      inset 0 0 8px rgba(34, 211, 238, 0.1);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      0 0 16px -6px color-mix(in srgb, var(--tile-c) 60%, transparent);
+      0 0 12px color-mix(in srgb, var(--tile-c) 20%, transparent),
+      inset 0 0 8px color-mix(in srgb, var(--tile-c) 10%, transparent);
     transition:
       transform var(--dur-base) var(--ease-out),
       filter var(--dur-base) var(--ease-out),
@@ -3391,7 +3428,7 @@ html.lenis body {
       center;
     background-size:
       100% 1px,
-      100% 10px,
+      100% 7px,
       10px 1px,
       1px 10px,
       10px 1px,
@@ -3468,10 +3505,15 @@ html.lenis body {
     /* v8b pkt 3: pełny --card-c przed pastelowym --card-c-l (uzasadnienie
        i policzone kontrasty przy regule `.inf-card .inf-overline` niżej). */
     color: var(--card-c, var(--card-c-l, var(--accent)));
-    /* v6 „ROZŚWIETLENIE" (spec §A pkt 3): „podświetlony napis" — glow w tym
-       samym odcieniu 45% (halo nie liczy się do kontrastu; kolor liter bez zmian). */
-    text-shadow: 0 0 12px rgba(0, 240, 255, 0.45);
-    text-shadow: 0 0 12px color-mix(in srgb, var(--card-c, var(--card-c-l, var(--accent))) 45%, transparent);
+    /* v16 §B (pomiary-v16.md §2.2): tagline dostaje tę samą jarzeniówkę
+       dwuwarstwową co kicker — rdzeń 6px/60% + ogon 14px/30% (zamiast
+       12px/45%). Kolor liter bez zmian, halo alfami — patrz nota AA §2.2. */
+    text-shadow:
+      0 0 6px rgba(0, 240, 255, 0.6),
+      0 0 14px rgba(0, 240, 255, 0.3);
+    text-shadow:
+      0 0 6px color-mix(in srgb, var(--card-c, var(--card-c-l, var(--accent))) 60%, transparent),
+      0 0 14px color-mix(in srgb, var(--card-c, var(--card-c-l, var(--accent))) 30%, transparent);
   }
   /* v6 „ROZŚWIETLENIE" (spec §A pkt 3, wzorzec .lp-promo-tag: PEŁNE nasycenie
      koloru wariantu, „żadnego wyszarzenia"): mono overline i tagi WEWNĄTRZ kart
@@ -3494,8 +3536,57 @@ html.lenis body {
   .inf-card .inf-overline,
   .inf-card .inf-tag {
     color: var(--card-c, var(--card-c-l, var(--accent)));
-    text-shadow: 0 0 12px rgba(0, 240, 255, 0.45);
-    text-shadow: 0 0 12px color-mix(in srgb, var(--card-c, var(--card-c-l, var(--accent))) 45%, transparent);
+    /* v16 §B (pomiary-v16.md §2.2, kalibracja „Umów diagnozę"): jarzeniówka
+       dwuwarstwowa zamiast pojedynczego 12px/45% — RDZEŃ 6px/60% (ostre
+       jarzenie przy glifie) + OGON 14px/30% (miękka poświata). Alfy zamiast
+       pełnego krycia, bo halo pod literami podbija tło i zjada kontrast
+       (nota AA §2.2: chip fioletowy spadał w v9 do 4,39:1). Kolor liter BEZ
+       zmian — kontrast AA liczony na kolorze tekstu zostaje. Fallback
+       literałem rgba w akcencie przed color-mix (konwencja pliku). */
+    text-shadow:
+      0 0 6px rgba(0, 240, 255, 0.6),
+      0 0 14px rgba(0, 240, 255, 0.3);
+    text-shadow:
+      0 0 6px color-mix(in srgb, var(--card-c, var(--card-c-l, var(--accent))) 60%, transparent),
+      0 0 14px color-mix(in srgb, var(--card-c, var(--card-c-l, var(--accent))) 30%, transparent);
+  }
+  /* v16 §B — WYJĄTEK AA DLA FIOLETU #b638ff (pomiary-v16.md §2.2 nota AA).
+     HISTORIA POMIARÓW PIKSELOWYCH (adwersaryjna kontrola v16, metody
+     pierścień 1-3px wokół glifów + mediana bbox): rdzeń 60% -> 4,28-4,44
+     FAIL; rdzeń 45% + ogon 25% -> 4,28-4,45 FAIL (metoda wykonawcy
+     „mediana pod literami" dawała 4,50 — za miękka). WNIOSEK: to RDZEŃ
+     6px podbija piksele tuż przy literze i zjada pierścień. Fiolet dostaje
+     więc SAM SZEROKI OGON 14px/35% — neonowa mgiełka rozlana daleko od
+     glifu, pierścień niemal nietknięty (bez cienia w ogóle: 4,65-4,66 =
+     sufit koloru). TYLKO karty z --card-c:#b638ff — pozostałe kolory
+     palety mają margines i trzymają pełną kalibrację 60/30. Selektor
+     atrybutu 1:1 z konwencją .inf-chip[style*='--chip-c']; rgba literałem,
+     bo kolor znany. Kolor liter BEZ zmian.
+     :not(.inf-tag-plaski) KONIECZNE: płaski tag gasi cień regułą (0,2,0)
+     wygrywającą kolejnością — ten selektor (0,3,0) bez :not() przywróciłby
+     mu fioletowe halo. */
+  .inf-card[style*='#b638ff'] .inf-overline,
+  .inf-card[style*='#b638ff'] .inf-card-sub {
+    text-shadow: 0 0 14px rgba(182, 56, 255, 0.35);
+  }
+  /* Tag fioletowy: glify gęste (pigułka pełna tekstu) — nawet sam ogon
+     14px trzymał pierścień na 4,36. Cień znika CAŁKIEM: neon pigułki
+     niosą pełnokolorowe litery + obwódka 32%. */
+  .inf-card[style*='#b638ff'] .inf-tag:not(.inf-tag-plaski) {
+    text-shadow: none;
+  }
+  /* Status na karcie fioletowej: glif 8px — jakikolwiek cień przy tak małym
+     tekście zjada pierścień (kontrola v16: rdzeń 60% -> 4,35 FAIL; bez
+     cienia -> 4,65 PASS). Fiolet wraca do neonu niesionego samą kropką. */
+  .inf-card[style*='#b638ff'] .inf-status {
+    text-shadow: none;
+  }
+  /* Tag na karcie fioletowej: STAN ZASTANY v15 (prod: pierścień 4,02) —
+     winny tint tła 12% jasnego fioletu pod glifem, nie jarzenie v16.
+     Tint schodzi na 6% (obwódka 32% i pełny kolor liter zostają — pigułka
+     dalej wyraźna); pomiar po fixie: patrz commit v16. */
+  .inf-card[style*='#b638ff'] .inf-tag.inf-tag-kolor {
+    background-color: rgba(182, 56, 255, 0.04);
   }
 
   /* ══ v8b pkt 4 — TAGI W DWÓCH WARIANTACH ══════════════════════════════════
@@ -4328,9 +4419,21 @@ html.lenis body {
   .inf-card .inf-tag,
   .inf-dd-badge,
   .inf-card:hover .inf-arrow,
-  /* v9 pkt 7: jarzenie chipów zaufania gaśnie razem z resztą poświat. */
-  .inf-chip[style*='--chip-c'] {
+  /* v9 pkt 7: jarzenie chipów zaufania gaśnie razem z resztą poświat.
+     v16 §B: dochodzi jarzeniówka statusów i wyjątek fioletu #b638ff —
+     jego selektory (0,3,0)/(0,4,0) biją listę (0,2,0), więc muszą stać
+     tu jawnie, inaczej fioletowe karty świeciłyby w High Contrast. */
+  .inf-chip[style*='--chip-c'],
+  .inf-status,
+  .inf-card[style*='#b638ff'] .inf-overline,
+  .inf-card[style*='#b638ff'] .inf-tag:not(.inf-tag-plaski),
+  .inf-card[style*='#b638ff'] .inf-card-sub {
     text-shadow: none;
+  }
+  /* v16 §B: halo pudełka chipów (nowe w v16) gaśnie jak halo stat-chipów
+     niżej — zostaje systemowa ramka i systemowe kolory. */
+  .inf-chip[style*='--chip-c'] {
+    box-shadow: none;
   }
   .inf-nav-link:hover,
   .inf-nav-link[aria-expanded='true'],
@@ -5192,11 +5295,23 @@ div:has(> .inf-divider) {
    Poświata spoczynku: 1:1 .lp-primary-card (inset biel 5% + czerń 55%). */
 .inf-card-top {
   --inf-top-a: 100%;
-  /* v15 §D (pomiary-v15.md §1a i §6 pkt 3): łuna emuluje `box-shadow:
-     0 0 8px var(--card-accent)` wzorca, a ten świeci PEŁNYM kolorem bez
-     alfy — radial 45% robił „blade". Idzie na 100%: miękkość daje geometria
-     (wygaszenie do 78% promienia), nie rozcieńczenie koloru. */
-  --inf-top-halo: 100%;
+  /* v16 §A (pomiary-v16.md §1.2 i §3.1; cytat Pawła: „u nas jest to
+     rozpierdolone i grube... na stronie referencyjnej wygląda to bardzo
+     profesjonalnie"): pomiar pikselowy wzorca pokazał, że jego halo
+     (box-shadow 0 0 8px pełnym kolorem z linii 1px) daje nad tłem deltę
+     ledwie +7 lumy i gaśnie w ~4px. Nasza łuna radialna przy 100% krycia
+     (v15) dawała +77..+125 lumy i 6,5-7px — 12-18x za mocno; to ONA robiła
+     „grube i rozlane", nie linia. Alfa łuny spoczynku schodzi 100% -> 10%:
+     raport §5 pkt 1 szacował ~12%, ale nakazana kontrola pikselowa PO
+     zmianie pokazała przy 12% deltę +14,5 na najjaśniejszym cyjanie
+     #11e0ff (cel §3.2/§5: +7..12); przy 10% zmierzone delty to
+     typA +12 / typD +10 / lg +6,5 — całość w oknie wzorca (+7..+19 po
+     rodzinach, §1.3). Geometria pasa 100%x10px zostaje (radial i tak
+     wygasza przy 78% promienia). LINIA 1px pełnym kolorem BEZ ZMIAN —
+     §3.1: geometrycznie 1:1 z .lp-card-neon-top wzorca. Hover wzorca
+     linii/halo NIE wzmacnia (§1.2) — u nas hover też ich nie dotyka
+     (świeci obwódka+cień wspólnego hoveru bazy). */
+  --inf-top-halo: 10%;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
     0 10px 34px -18px rgba(0, 0, 0, 0.55);
@@ -5443,6 +5558,12 @@ div:has(> .inf-divider) {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--status-c);
+  /* v16 §B (pomiary-v16.md §2.2): status miał text-shadow: none — dostaje
+     RDZEŃ jarzeniówki 6px/60% (bez ogona: glif ma 8px, szersze halo
+     robiłoby mgłę zamiast neonu). Kolor liter bez zmian — kontrast AA
+     z noty niżej (fiolet #b638ff 4,83:1 na korpusie karty) zostaje. */
+  text-shadow: 0 0 6px rgba(0, 240, 255, 0.6);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--status-c) 60%, transparent);
 }
 .inf-status-dot {
   flex: none;
@@ -5450,7 +5571,14 @@ div:has(> .inf-divider) {
   height: 5px;
   border-radius: 50%;
   background: var(--status-c);
+  /* v16 §B (pomiary-v16.md §2.2): kropka trzyma rdzeń 6px pełnym kolorem
+     (1:1 .lp-primary-status wzorca) i dostaje OGON 12px/40% — poziom
+     jarzenia pudełka „Umów diagnozę" przeskalowany na 5px kropkę.
+     Pierwsza deklaracja = fallback bez color-mix (konwencja pliku). */
   box-shadow: 0 0 6px var(--status-c);
+  box-shadow:
+    0 0 6px var(--status-c),
+    0 0 12px color-mix(in srgb, var(--status-c) 40%, transparent);
 }
 /* Pulsacja kropki — keyframes 1:1 pulse-glow wzorca (2s ease-in-out
    infinite, opacity 1 -> .4). Czysty CSS, zero JS. Bramka RM przez
@@ -5562,6 +5690,11 @@ div:has(> .inf-divider) {
   background-color: transparent;
   border: 1px solid rgba(0, 240, 255, 0.15);
   border-color: color-mix(in srgb, var(--hero-c, var(--accent)) 15%, transparent);
+  /* v16 §B: hero podstron usług NIETYKALNE (żelazne spec v16) — halo
+     pudełka dopisane chipom w .inf-chip[style*='--chip-c'] tu NIE wchodzi;
+     pigułka hero zostaje wizualnie 1:1 jak przed v16 (wzorzec §4 v12:
+     tekst pełny kolor, obwódka 15%, tło transparent, bez cienia). */
+  box-shadow: none;
 }
 
 /* Kafel statystyk hero — 1:1 kafle „17 MODULES" wzorca: obwódka 15% koloru,
