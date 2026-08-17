@@ -3249,9 +3249,16 @@ html.lenis body {
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.04),
       0 8px 28px -16px rgba(0, 0, 0, 0.5);
-    /* v8b pkt 1: JEDNA warstwa tła = delikatne zaciemnienie 10% (uzasadnienie
-       i policzone kontrasty w bloku komentarza nad regułą). Kolorowego washu,
-       dolnej łuny ani granatowego korpusu tu NIE MA i mieć nie może. */
+    /* v8b pkt 1: bazowe zaciemnienie 10% (kontrasty policzone w bloku nad
+       regułą). v14b (decyzja Pawła 2026-08-17, odwraca „zdjęcie szaty" z v8
+       PO obejrzeniu wzorca: „chcę mieć ten efekt premium, lecimy"): NAD tym
+       kolorem leży gradient powierzchni 160deg (11. warstwa background-image
+       niżej) — karta przestaje być płaską plamą, dostaje przejście tonalne
+       „szklanej płytki" 1:1 z .lp-learn-card wzorca (pomiary-v14.md §4).
+       Czerń 10% zostaje POD gradientem jako bezpiecznik AA: złożenie jest
+       minimalnie ciemniejsze niż goły wzorzec, więc żaden kontrast tekstu
+       nie spada względem stanu sprzed v14b. Rewert efektu = git revert
+       commita v14b (obiecane Pawłowi). */
     background-color: rgba(0, 0, 0, 0.1);
     /* v13 SPOCZYNEK WYCISZONY (pomiary-v13.md §1; spec v13: po pełnej
        kolorowej obwódce v12 „wszystkie karty wyglądają jednakowo" — zniknęła
@@ -3284,7 +3291,8 @@ html.lenis body {
       linear-gradient(rgba(228, 228, 240, 0.22), rgba(228, 228, 240, 0.22)),
       linear-gradient(rgba(228, 228, 240, 0.22), rgba(228, 228, 240, 0.22)),
       linear-gradient(rgba(228, 228, 240, 0.22), rgba(228, 228, 240, 0.22)),
-      linear-gradient(rgba(228, 228, 240, 0.22), rgba(228, 228, 240, 0.22));
+      linear-gradient(rgba(228, 228, 240, 0.22), rgba(228, 228, 240, 0.22)),
+      linear-gradient(160deg, rgba(12, 13, 28, 0.74), rgba(9, 10, 22, 0.55));
     background-image:
       linear-gradient(
         90deg,
@@ -3329,9 +3337,11 @@ html.lenis body {
       linear-gradient(
         color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
         color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
-      );
+      ),
+      linear-gradient(160deg, rgba(12, 13, 28, 0.74), rgba(9, 10, 22, 0.55));
     background-repeat: no-repeat;
-    /* Pozycje/rozmiary 1:1 z kolejnością warstw: [linia, łuna, 8 narożników].
+    /* Pozycje/rozmiary 1:1 z kolejnością warstw: [linia, łuna, 8 narożników,
+       powierzchnia v14b (całe pudełko)].
        Linia = 100% x 1px na górnej krawędzi (wzorzec: left:0; right:0; top:0;
        height:1px); łuna = pas 100% x 10px pod nią (box-shadow 8px wzorca
        plus 2px na wygaszenie gradientu). */
@@ -3345,7 +3355,8 @@ html.lenis body {
       left 8px bottom 8px,
       left 8px bottom 8px,
       right 8px bottom 8px,
-      right 8px bottom 8px;
+      right 8px bottom 8px,
+      center;
     background-size:
       100% 1px,
       100% 10px,
@@ -3356,7 +3367,8 @@ html.lenis body {
       10px 1px,
       1px 10px,
       10px 1px,
-      1px 10px;
+      1px 10px,
+      100% 100%;
     /* v7: przejście 1:1 z pomiarów wzorca — `.4s cubic-bezier(.16,1,.3,1)`
        (= --ease-out repo) na transformie, obwódce i cieniu. `background-color`
        ZNIKA z listy, bo tło karty jest teraz IDENTYCZNE w spoczynku i na hover. */
@@ -3941,6 +3953,14 @@ html.lenis body {
     background-color: rgba(3, 3, 16, 0.65);
     -webkit-backdrop-filter: blur(32px) saturate(1.5);
     backdrop-filter: blur(32px) saturate(1.5);
+  }
+  /* v14b: szkło POWIERZCHNI KART 1:1 .lp-learn-card wzorca (pomiary-v14.md
+     §4: blur 12px; primary ma 16, learn 12 — bierzemy wspólny mianownik
+     rodziny standardowej). TYLKO desktop — na mobile hero/karty to strefa
+     LCP (żelazna konwencja repo: backdrop-blur nigdy na mobile). */
+  .inf-card {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
   }
 }
 /* Płynięcie obwódki TYLKO desktop i TYLKO bez reduced-motion (mobile: statyczny
@@ -5075,15 +5095,20 @@ div:has(> .inf-divider) {
 /* ── W1 .inf-card-edge — LEWA KRAWĘDŹ STAŁA / TYP B (pomiary-v13.md §2:
    pasek 3px pełnej wysokości, gradient 180deg pełny kolor -> 30% koloru,
    opacity .5 w spoczynku (hover 1), BEZ box-shadow — łunę ma tylko TYP A/D;
-   góra czysta: karta bez narożników i bez top-glow — background-image:none
-   zdejmuje wszystkie 10 warstw bazy, zostaje zaciemnienie 10%
-   z background-color). ::before bazy (kreska 2px wsunięta 14px) przechodzi
+   góra czysta: karta bez narożników i bez top-glow — nadpisanie
+   background-image zdejmuje warstwy dekoracji bazy; od v14b zostaje
+   powierzchnia-gradient + zaciemnienie 10% z background-color). ::before bazy (kreska 2px wsunięta 14px) przechodzi
    w pasek wzorca: pełna wysokość, 3px, bez radiusa; opacity .5 niesie baza.
    Baza obwódki o oczko niżej niż primary: biel .06 (pomiary-v13.md §1,
    .lp-learn-card). Hover = WSPÓLNY hover bazy v12 (pełna ramka kolorem
    karty + łuna, lift -4px, pasek .5 -> 1, strzałka, sweep). */
 .inf-card-edge {
-  background-image: none;
+  /* v14b: wariant gasi narożniki/top-glow bazy, ale POWIERZCHNIA
+     (11. warstwa, pomiary-v14.md §4) zostaje — jedna warstwa wymaga
+     własnych size/position (listy bazy stosują się cyklicznie). */
+  background-image: linear-gradient(160deg, rgba(12, 13, 28, 0.74), rgba(9, 10, 22, 0.55));
+  background-position: center;
+  background-size: 100% 100%;
   border-color: rgba(255, 255, 255, 0.06);
 }
 .inf-card-edge::before {
@@ -5136,7 +5161,12 @@ div:has(> .inf-divider) {
    ma żadnego (none). Błysk = sweep ::after bazy (geometria 1:1: pas 38%,
    skewX -18deg, start -40%). */
 .inf-card-full-hover {
-  background-image: none;
+  /* v14b: wariant gasi narożniki/top-glow bazy, ale POWIERZCHNIA
+     (11. warstwa, pomiary-v14.md §4) zostaje — jedna warstwa wymaga
+     własnych size/position (listy bazy stosują się cyklicznie). */
+  background-image: linear-gradient(160deg, rgba(12, 13, 28, 0.74), rgba(9, 10, 22, 0.55));
+  background-position: center;
+  background-size: 100% 100%;
   box-shadow: none;
 }
 /* FALLBACK bez maski: ::before znika CAŁKIEM — bez mask-composite gradient
@@ -5191,7 +5221,12 @@ div:has(> .inf-divider) {
 .inf-card-quiet {
   border-radius: 2px;
   border-color: rgba(255, 255, 255, 0.04);
-  background-image: none;
+  /* v14b: wariant gasi narożniki/top-glow bazy, ale POWIERZCHNIA
+     (11. warstwa, pomiary-v14.md §4) zostaje — jedna warstwa wymaga
+     własnych size/position (listy bazy stosują się cyklicznie). */
+  background-image: linear-gradient(160deg, rgba(12, 13, 28, 0.74), rgba(9, 10, 22, 0.55));
+  background-position: center;
+  background-size: 100% 100%;
   box-shadow: none;
 }
 .inf-card-quiet::before {
