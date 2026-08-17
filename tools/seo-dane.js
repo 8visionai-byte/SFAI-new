@@ -20,9 +20,29 @@ const crypto = require('crypto');
 const os = require('os');
 
 const SEKRETY = path.join(os.homedir(), '.sekrety');
-const SITE = 'https://www.simplefast.ai';
-const SITE_GSC = 'sc-domain:simplefast.ai';
-const KONKURENCI = ['gagan.pl', 'mits.pl', 'wasko.pl', 'malinski.ai', 'lessmanual.ai', 'syntalith.ai'];
+
+// --- WIELE STRON ---
+// Domyślnie simplefast.ai. Inną stronę wskazujesz flagą:  --strona=papishop.pl
+// Wszystkie widoczne naraz:  --wszystkie
+// UWAGA: konto usługi musi być dodane jako użytkownik danej właściwości w GSC,
+// inaczej ta strona nie będzie widoczna (patrz --uslugi).
+const argWartosc = (n) => {
+  const a = process.argv.find((x) => x.startsWith(`--${n}=`));
+  return a ? a.split('=')[1] : null;
+};
+const DOMENA = argWartosc('strona') || 'simplefast.ai';
+const SITE = `https://www.${DOMENA}`;
+const SITE_GSC = `sc-domain:${DOMENA}`;
+
+// Konkurenci per klaster tematyczny — komplet 5 obszarów, nie tylko chatboty.
+const KONKURENCI_WG_KLASTRA = {
+  chatboty: ['mits.pl', 'malinski.ai', 'lessmanual.ai', 'falconworks.pl', 'biznesailab.pl', 'pawlicaweb.pl'],
+  voiceboty: ['malinski.ai', 'syntalith.ai', 'xomedia.pl', 'chatbotassistant.pl', 'apifonica.com'],
+  automatyzacje: ['gagan.pl', 'codescriptum.pl', 'sagiton.pl', 'lessmanual.ai'],
+  audyt: ['gagan.pl', 'ninjatech.pl', 'delante.co', 'widoczni.com'],
+  wdrozenia: ['wasko.pl', 'innowise.com', 'mits.pl', 'devstock.pl'],
+};
+const KONKURENCI = [...new Set(Object.values(KONKURENCI_WG_KLASTRA).flat())];
 
 const arg = (n) => process.argv.includes(n);
 const dzis = new Date().toISOString().slice(0, 10);
@@ -145,13 +165,40 @@ async function zbierzAhrefs() {
     return { domena: t, dr: j.domain_rating?.domain_rating ?? null };
   };
   const wyniki = [];
-  for (const d of ['simplefast.ai', ...KONKURENCI]) wyniki.push(await dr(d));
-  const nasz = wyniki.find((w) => /simplefast/.test(w.domena))?.dr ?? null;
+  for (const d of [DOMENA, ...KONKURENCI]) wyniki.push(await dr(d));
+  const nasz = wyniki.find((w) => w.domena === DOMENA)?.dr ?? null;
+
+  // Rozbicie per klaster: w KAŻDYM obszarze osobno widać, kogo wyprzedzimy treścią.
+  const wgKlastra = {};
+  for (const [klaster, lista] of Object.entries(KONKURENCI_WG_KLASTRA)) {
+    const w = wyniki.filter((x) => lista.includes(x.domena) && x.dr != null);
+    wgKlastra[klaster] = {
+      slabsi: w.filter((x) => nasz != null && x.dr < nasz).map((x) => `${x.domena} (DR ${x.dr})`),
+      mocniejsi: w.filter((x) => nasz != null && x.dr > nasz).map((x) => `${x.domena} (DR ${x.dr})`),
+    };
+  }
   return {
+    nasza_domena: DOMENA,
     domeny: wyniki.sort((a, b) => (b.dr ?? -1) - (a.dr ?? -1)),
     nasz_dr: nasz,
-    slabsi_od_nas: wyniki.filter((w) => w.dr != null && nasz != null && w.dr < nasz && !/simplefast/.test(w.domena)).map((w) => w.domena),
+    slabsi_od_nas: wyniki.filter((w) => w.dr != null && nasz != null && w.dr < nasz && w.domena !== DOMENA).map((w) => w.domena),
     mocniejsi: wyniki.filter((w) => w.dr != null && nasz != null && w.dr > nasz).map((w) => w.domena),
+    wg_klastra: wgKlastra,
+  };
+}
+
+// Lista właściwości widocznych dla konta usługi — do diagnozy "czemu nie widzę strony X".
+async function zbierzUslugi() {
+  const keyObj = JSON.parse(fs.readFileSync(path.join(SEKRETY, 'simplefastai-seo-e271ff1f5e28.json'), 'utf8'));
+  const token = await gscToken(keyObj);
+  const r = await fetch('https://www.googleapis.com/webmasters/v3/sites', {
+    headers: { authorization: `Bearer ${token}` },
+  });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  const j = await r.json();
+  return {
+    konto_uslugi: keyObj.client_email,
+    widoczne: (j.siteEntry || []).map((s) => ({ wlasciwosc: s.siteUrl, uprawnienie: s.permissionLevel })),
   };
 }
 
@@ -197,7 +244,21 @@ async function zbierzStrone() {
 
 // ---------- SKLEJKA ----------
 (async () => {
-  const dane = { data: dzis, zrodla: {} };
+  // Tryb diagnostyczny: które właściwości widzi konto usługi
+  if (arg('--uslugi')) {
+    try {
+      const u = await zbierzUslugi();
+      console.log('KONTO USLUGI: ' + u.konto_uslugi);
+      console.log('\nWIDOCZNE WLASCIWOSCI W SEARCH CONSOLE:');
+      u.widoczne.forEach((w) => console.log(`  ${w.wlasciwosc}  (${w.uprawnienie})`));
+      console.log('\nJesli brakuje strony: Search Console -> wybierz wlasciwosc -> Ustawienia ->');
+      console.log('Uzytkownicy i uprawnienia -> Dodaj uzytkownika -> wklej adres konta uslugi wyzej,');
+      console.log('uprawnienie "Pelny" -> potem: node tools/seo-dane.js --strona=<domena>');
+    } catch (e) { console.log('BLAD: ' + e.message); }
+    return;
+  }
+
+  const dane = { data: dzis, domena: DOMENA, zrodla: {} };
   const zrodla = [['gsc', zbierzGSC], ['bing', zbierzBing], ['ahrefs', zbierzAhrefs], ['strona', zbierzStrone]];
   for (const [nazwa, fn] of zrodla) {
     try { dane.zrodla[nazwa] = await fn(); }
@@ -234,9 +295,12 @@ async function zbierzStrone() {
   } else console.log('GSC: ' + (g?.blad || 'brak danych'));
 
   if (a?.nasz_dr != null) {
-    console.log(`\nSILA DOMEN: nasz DR ${a.nasz_dr}`);
-    console.log(`  slabsi (wyprzedzimy trescia): ${a.slabsi_od_nas.join(', ') || 'brak'}`);
-    console.log(`  mocniejsi (trzeba tez linkow): ${a.mocniejsi.join(', ') || 'brak'}`);
+    console.log(`\nSILA DOMEN: nasz DR ${a.nasz_dr} (${a.nasza_domena})`);
+    console.log('  WG OBSZARU (kogo wyprzedzimy sama trescia):');
+    for (const [klaster, v] of Object.entries(a.wg_klastra || {})) {
+      console.log(`    ${klaster.padEnd(14)} slabsi: ${v.slabsi.join(', ') || 'brak'}`);
+      if (v.mocniejsi.length) console.log(`    ${''.padEnd(14)} mocniejsi: ${v.mocniejsi.join(', ')}`);
+    }
   }
   if (b?.suma_14dni) console.log(`\nBING (14 dni): ${b.suma_14dni.wyswietlenia} wysw | ${b.suma_14dni.klikniecia} klik`);
   if (s?.podstron) {
