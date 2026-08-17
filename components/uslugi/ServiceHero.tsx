@@ -155,7 +155,20 @@ function kafleStatystyk(usluga: Usluga): Kafel[] {
   return kafle.slice(0, 4);
 }
 
-export function ServiceHero({ usluga }: { usluga: Usluga }) {
+export function ServiceHero({
+  usluga,
+  okruszki,
+}: {
+  usluga: Usluga;
+  /**
+   * Łańcuch okruszków podany z zewnątrz (podstrony usług: 4 poziomy
+   * z ogniwem rodzica). Gdy pominięty, hero składa domyślne 3 poziomy
+   * jak dotąd — strony usług wyglądają identycznie jak przed zmianą.
+   * Kontrakt: TA SAMA tablica zasila BreadcrumbList JSON-LD strony,
+   * więc widok i markup nie mogą się rozjechać (kontrola v19, MAJOR-1).
+   */
+  okruszki?: { name: string; href?: string }[];
+}) {
   // Kolor przewodni usługi = c z rejestru dekoracji (ten sam, co karta tej
   // usługi na home). To DEKORACJA: kolor nie niesie treści, kontrast tekstu
   // stoi na tokenach/wartościach policzonych w komentarzu nagłówkowym.
@@ -180,11 +193,13 @@ export function ServiceHero({ usluga }: { usluga: Usluga }) {
             centrowanie robi wrapper — komponent bez zmian. */}
         <div className="flex justify-center">
           <Breadcrumbs
-            items={[
-              { name: 'Strona główna', href: '/' },
-              { name: 'Usługi', href: '/uslugi' },
-              { name: usluga.h1 },
-            ]}
+            items={
+              okruszki ?? [
+                { name: 'Strona główna', href: '/' },
+                { name: 'Usługi', href: '/uslugi' },
+                { name: usluga.h1 },
+              ]
+            }
           />
         </div>
 

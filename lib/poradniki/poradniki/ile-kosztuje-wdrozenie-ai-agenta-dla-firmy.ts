@@ -23,14 +23,23 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
   lead:
     'AI agent kosztuje więcej niż chatbot, bo nie tylko odpowiada. Łączy się z kalendarzem, CRM i systemami i sam wykonuje zadania. Cenę liczymy od wartości, czyli ile godzin i leadów odzyskasz. Poniżej masz, od czego zależy koszt agenta, jak policzyć zwrot i po czym poznać, że wdrożenie się spina, zanim wydasz pierwszą złotówkę.',
 
-  /* SEO 2026-08-17d (Z7): tytuł wraca do konkretu, ale NIE do wersji sprzed
-     3b7fc61 („...dla firmy? Cena i zwrot" = 56 zn. + 16 zn. sufiksu marki =
-     72, czyli ucinane w SERP; skrócenie było świadome). Zamiast tego kwota
-     z NASZEGO cennika: „990 zł" stoi w renderowanej treści trzy razy (akapit
-     odpowiedzi, tabela widełek, blok „Zobacz też") i jest ceną startową
-     z lib/uslugi/chatboty.ts, więc tytuł nie kłamie. 43 zn. + 16 = 59,
-     mieści się w budżecie 60 (wariant „? Cena i zwrot" ma 62 i NIE mieści). */
-  metaTitle: 'Ile kosztuje wdrożenie AI agenta? Od 990 zł',
+  /* SEO 2026-08-17d (Z7), KOREKTA po decyzji Pawła: kwota w tytule to 2500 zł,
+     nie 990 zł. Poprzednia wersja tego pola miała „Od 990 zł" i była błędna
+     z dwóch powodów:
+       1. MERYTORYCZNIE: 990 zł to cena startowa z lib/uslugi/chatboty.ts,
+          czyli cennik CHATBOTA. W tabeli widełek tego poradnika 990 zł stoi
+          przy „agent do JEDNEGO zadania", a 2500 zł przy „agent z integracją
+          (kalendarz, CRM, poczta)". To drugie jest tym, co ludzie rozumieją
+          przez „AI agenta", więc tytuł ma pokazywać ten próg.
+       2. KOLIZJA W SERP: „Od 990 zł" stoi już w metaTitle poradnika
+          /poradniki/ile-kosztuje-chatbot-dla-firmy-2026. Dwa nasze poradniki
+          z identyczną kwotą w tytule konkurują ze sobą i mylą w wynikach.
+     Długość: 44 zn. + 16 zn. sufiksu marki = 60, mieści się w budżecie
+     (odrzucony wariant „? Cena i zwrot" ma 62 i faktycznie NIE mieści się —
+     ta część poprzedniej analizy była słuszna i zostaje w mocy).
+     Kwota jest prawdziwa: 2500 zł stoi w renderowanej tabeli widełek tego
+     poradnika oraz w lib/uslugi/voiceboty.ts (minPrice, locked 2026-08-16). */
+  metaTitle: 'Ile kosztuje wdrożenie AI agenta? Od 2500 zł',
   metaDescription:
     'Ile kosztuje wdrożenie AI agenta dla firmy? Czym agent różni się od chatbota, od czego zależy koszt i jak policzyć zwrot, zanim zamówisz wdrożenie.',
 

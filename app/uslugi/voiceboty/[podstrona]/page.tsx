@@ -5,6 +5,7 @@ import { buildMetadata } from '@/lib/metadata';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { serviceSchema, faqSchema, breadcrumbSchema } from '@/components/seo/schemas';
 import { getPodstrona, getPodstronyRodzica } from '@/lib/uslugi/podstrony';
+import { okruszkiPodstrony } from '@/lib/uslugi/podstrony/okruszki';
 
 import {
   ServiceHero,
@@ -109,21 +110,24 @@ export default async function PodstronaUslugiPage({
     path
   );
 
-  // ŚCIEŻKA OKRUSZKÓW 1:1 Z WIDOCZNĄ: ServiceHero renderuje
-  // „Strona główna / Usługi / [H1]" (ServiceHero.tsx), a repo trzyma zasadę,
-  // że BreadcrumbList nie może się rozjechać z tym, co widzi człowiek.
-  // Czwarty poziom (Voiceboty) wymaga propa w ServiceHero, czyli zmiany
-  // w cudzym zakresie — zgłoszone w raporcie do dopięcia.
-  const breadcrumb = breadcrumbSchema([
-    { name: 'Strona główna', path: '/' },
-    { name: 'Usługi', path: '/uslugi' },
-    { name: podstrona.h1, path },
-  ]);
+  // ŚCIEŻKA OKRUSZKÓW 1:1 Z WIDOCZNĄ: łańcuch liczy `okruszkiPodstrony()`
+  // (lib/uslugi/podstrony/okruszki.ts) — jedno źródło dla widoku i markupu,
+  // bo BreadcrumbList nie może się rozjechać z tym, co widzi człowiek.
+  // Poziom rodzica („Voiceboty" -> /uslugi/voiceboty) czeka tam za stałą
+  // WIDOK_RENDERUJE_POZIOM_RODZICA: włącza się dopiero razem z propem
+  // `okruszki` w ServiceHero (components/, cudzy zakres — patch w raporcie
+  // SEO 2026-08-17d). Do tego czasu markup = 3 poziomy, tak jak ekran.
+  // JEDNO źródło łańcucha dla widoku (ServiceHero) i markupu (JSON-LD).
+  const okruszki = okruszkiPodstrony(podstrona);
+  // Breadcrumbs (widok) mowi 'href', modul okruszkow 'path' — mapujemy raz,
+  // zeby oba wyszly z tej samej tablicy (kontrola v19: linki znikaly).
+  const okruszkiWidok = okruszki.map((o) => ({ name: o.name, href: o.path }));
+  const breadcrumb = breadcrumbSchema(okruszki);
 
   return (
     <main id="main">
       {/* (1) Hero answer-first: breadcrumbs + badge + H1 + kapsuła + CTA */}
-      <ServiceHero usluga={podstrona} />
+      <ServiceHero usluga={podstrona} okruszki={okruszkiWidok} />
 
       {/* (2) Problem (H2 jak pytanie) */}
       <ServiceNarrative h2={podstrona.problem.h2} tresc={podstrona.problem.tresc} tone="subtle" />

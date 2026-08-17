@@ -84,7 +84,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Uslugi',
     title: 'Chatbot AI dla firmy',
     summary:
-      'Chatbot AI dla firmy to asystent, ktory odpowiada klientom na stronie i w komunikatorach przez cala dobe: tlumaczy oferte, podaje ceny i godziny, zbiera leady, nawet o 22:00. U nas chatbot to pierwszy krok do Agenta, ktory nie tylko odpowiada, ale i dziala: umawia, zapisuje, przekazuje sprawe dalej. Wdrazamy go w dni, uczymy na Twojej wiedzy, a dane zostaja w Unii Europejskiej. Pakiet startowy od 990 zl (chatbot na strone, uczony na wiedzy firmy, wdrozenie i pierwsza konfiguracja), dokladna wycena po bezplatnej diagnozie; kazde wdrozenie ma abonament opieki od 99 do 599 zl miesiecznie, bo nie zostawiamy klientow.',
+      'Chatbot AI dla firmy to asystent, ktory odpowiada klientom na stronie i w komunikatorach przez cala dobe: tlumaczy oferte, podaje ceny i godziny, zbiera leady, nawet o 22:00. U nas chatbot to pierwszy krok do Agenta, ktory nie tylko odpowiada, ale i dziala: umawia, zapisuje, przekazuje sprawe dalej. Wdrazamy go w dni, uczymy na Twojej wiedzy, a dane zostaja w Unii Europejskiej. Pakiet startowy od 990 zl (chatbot na strone, uczony na wiedzy firmy, wdrozenie i pierwsza konfiguracja), dokladna wycena po bezplatnej diagnozie. Rozliczenie masz do wyboru: przekazujemy Ci cala infrastrukture i wtedy nie placisz abonamentu, albo projekt zostaje u nas pod opieka i wtedy jest oplata utrzymaniowa od 99 do 599 zl miesiecznie.',
     url: '/uslugi/chatboty',
     intents: [
       'chatbot dla firmy',
@@ -101,7 +101,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Uslugi',
     title: 'Voicebot dla firmy, ktory odbiera telefon za Ciebie',
     summary:
-      'Voicebot, nazywany tez botem telefonicznym albo agentem glosowym, to bot glosowy, ktory odbiera telefon, rozmawia po polsku i zalatwia sprawe: umawia wizyte, przyjmuje zgloszenie, odpowiada na pytanie. Gdy sprawa wymaga czlowieka, zapisuje ja i wysyla powiadomienie, zebys oddzwonil przygotowany. Voicebot obsluguje polaczenia przychodzace i nie dzwoni sam do klientow. Dziala 24/7, tez gdy jestes u klienta, i to nie nagranie ani menu wcisnij jeden. Klient zawsze slyszy, ze rozmawia z asystentem AI, a po rozmowie dostajesz krotkie podsumowanie. Pakiet startowy od 2500 zl (bot odbierajacy telefon 24/7 po polsku, umawianie wizyt, wdrozenie i konfiguracja), dokladna wycena po bezplatnej diagnozie; kazde wdrozenie ma abonament opieki od 99 do 599 zl miesiecznie.',
+      'Voicebot, nazywany tez botem telefonicznym albo agentem glosowym, to bot glosowy, ktory odbiera telefon, rozmawia po polsku i zalatwia sprawe: umawia wizyte, przyjmuje zgloszenie, odpowiada na pytanie. Gdy sprawa wymaga czlowieka, zapisuje ja i wysyla powiadomienie, zebys oddzwonil przygotowany. Voicebot obsluguje polaczenia przychodzace i nie dzwoni sam do klientow. Dziala 24/7, tez gdy jestes u klienta, i to nie nagranie ani menu wcisnij jeden. Klient zawsze slyszy, ze rozmawia z asystentem AI, a po rozmowie dostajesz krotkie podsumowanie. Pakiet startowy od 2500 zl (bot odbierajacy telefon 24/7 po polsku, umawianie wizyt, wdrozenie i konfiguracja), dokladna wycena po bezplatnej diagnozie. Rozliczenie do wyboru: przekazanie calej infrastruktury do Ciebie (bez abonamentu) albo opieka u nas z oplata utrzymaniowa od 99 do 599 zl miesiecznie.',
     url: '/uslugi/voiceboty',
     intents: [
       'voicebot dla firmy',

@@ -21,13 +21,15 @@
 import type { PodstronaUslugi } from './types';
 import { windykacja } from './windykacja';
 import { potwierdzanieWizyt } from './potwierdzanie-wizyt';
+import { odbieranieTelefonow } from './odbieranie-telefonow';
 
 export type { PodstronaUslugi } from './types';
 
-/** Wszystkie podstrony usług (dziś: dwie podstrony voicebotów). */
+/** Wszystkie podstrony usług (dziś: trzy podstrony voicebotów). */
 export const PODSTRONY: readonly PodstronaUslugi[] = [
   windykacja,
   potwierdzanieWizyt,
+  odbieranieTelefonow,
 ] as const;
 
 /** Indeks `rodzic/slug` -> podstrona (O(1) lookup, budowany raz na moduł). */
