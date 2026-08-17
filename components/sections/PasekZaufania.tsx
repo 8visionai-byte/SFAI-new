@@ -108,7 +108,7 @@ export function PasekZaufania() {
               </svg>
             </span>
             <span
-              className="mt-4 block font-mono text-caption font-semibold uppercase tracking-[0.14em]"
+              className="mt-4 block font-mono text-caption font-bold uppercase tracking-[0.14em]"
               style={{ color: f.kolor }}
             >
               {f.title}

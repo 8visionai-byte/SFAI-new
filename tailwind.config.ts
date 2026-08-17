@@ -78,18 +78,29 @@ const config: Config = {
       },
       fontSize: {
         // [rozmiar, { lineHeight, letterSpacing }]
-        // Metryki po skoku skali (88/56/46/20): im większy stopień, tym ciaśniej
-        // interlinia i tracking — inaczej display rozjeżdża się na dwa akapity.
-        display: ['var(--fs-display)', { lineHeight: '1.02', letterSpacing: '-0.035em' }],
-        h1: ['var(--fs-h1)', { lineHeight: '1.06', letterSpacing: '-0.03em' }],
-        h2: ['var(--fs-h2)', { lineHeight: '1.09', letterSpacing: '-0.025em' }],
-        h3: ['var(--fs-h3)', { lineHeight: '1.3', letterSpacing: '-0.005em' }],
-        lead: ['var(--fs-lead)', { lineHeight: '1.45' }],
+        // v19 §C — METRYKI WZORCA (pomiary-v19.md §3.2, mierzone na 1440px
+        // tą samą sondą na obu serwisach). Wzorzec trzyma nagłówki przy
+        // trackingu praktycznie zerowym (max -0.01em) i luźniejszej
+        // interlinii; nasze -0.035em / lh 1.02 dawały inny charakter pisma
+        // niż same rozmiary. Do v18 było: display 1.02/-0.035em,
+        // h1 1.06/-0.03em, h2 1.09/-0.025em, h3 1.3/-0.005em, lead 1.45,
+        // caption 1.4, overline 1.2/0.08em.
+        // H1 (56px) NIE MA własnego wiersza w pomiarze — leży między display
+        // a H2, więc jego metryki są INTERPOLACJĄ tych dwóch, nie pomiarem.
+        display: ['var(--fs-display)', { lineHeight: '1.1', letterSpacing: '-0.01em' }],
+        h1: ['var(--fs-h1)', { lineHeight: '1.14', letterSpacing: '-0.012em' }],
+        h2: ['var(--fs-h2)', { lineHeight: '1.22', letterSpacing: '-0.008em' }],
+        h3: ['var(--fs-h3)', { lineHeight: '1.4', letterSpacing: '-0.01em' }],
+        lead: ['var(--fs-lead)', { lineHeight: '1.6' }],
         body: ['var(--fs-body)', { lineHeight: '1.65' }],
-        'body-sm': ['var(--fs-body-sm)', { lineHeight: '1.6' }],
+        'body-sm': ['var(--fs-body-sm)', { lineHeight: '1.65' }],
         ui: ['var(--fs-ui)', { lineHeight: '1.4' }],
-        caption: ['var(--fs-caption)', { lineHeight: '1.4', letterSpacing: '0.01em' }],
-        overline: ['var(--fs-overline)', { lineHeight: '1.2', letterSpacing: '0.08em' }],
+        caption: ['var(--fs-caption)', { lineHeight: '1.6', letterSpacing: '0.01em' }],
+        /* v19: 0.28em ze wzorca dotyczy roli MONO — niesie ja .inf-overline
+           w globals.css (wlasna rodzina + tracking). Token Tailwinda jedzie
+           tez w sansie (stopka, 404, kalkulator), gdzie 0.28em rozjezdza
+           napis, wiec zostaje przy 0.08em (kontrola v19, MINOR-4). */
+        overline: ['var(--fs-overline)', { lineHeight: '1.5', letterSpacing: '0.08em' }],
         metric: ['var(--fs-metric)', { lineHeight: '1', letterSpacing: '-0.02em' }],
       },
       spacing: {

@@ -110,17 +110,41 @@
        Profil desktop 88/56/46/24/20/18 = 1,57x 1,22x 1,92x 1,20x 1,11x.
        H3 zjeżdża do stałych 20px CELOWO: przy H3 24px i leadzie 22px oba
        rozmiary były praktycznie identyczne, więc tytuł karty i lead nie
-       różniły się ROLĄ, tylko wagą. */
-    --fs-display: clamp(3rem, 7vw, 5.5rem); /* 48 -> 88 */
+       różniły się ROLĄ, tylko wagą.
+
+       v19 §C TYPOGRAFIA WZORCA (cytat Pawła: „zobacz, jakie czcionki są na
+       Infinity (...) Przeanalizuj te czcionki i zastosuj takie same").
+       Pomiary-v19.md §3.2 zmierzyły wzorzec rolą po roli na 1440px: jego
+       nagłówki są MNIEJSZE od naszych o 10-16px i mają tracking bliski zeru
+       (max -0.01em), a nie nasze -0.035em. Skala schodzi do wartości wzorca:
+       88 -> 76px (wzorzec 72), 46 -> 38px (wzorzec 35.2), H3 20 -> 21px
+       (wzorzec 21.6), lead 24 -> 21px (wzorzec 20), overline 11 -> 10px
+       (wzorzec 9.6). --fs-body zostaje 18px ŚWIADOMIE: wzorzec ma 16px, ale
+       treść po polsku czyta się dłużej i czytelność bije zgodność (§3.2). */
+    /* DÓŁ clampa 48 -> 40px: to NIE jest kosmetyka, tylko warunek konieczny
+       zmiany trackingu. Pomiar (sonda v19i-h1.mjs, 320/360/390/430 px):
+       po rozluźnieniu trackingu -0.035em -> -0.01em i wadze 800 najdłuższe
+       SŁOWO H1 rośnie z 327,5 do 346,5 px, a przy 390 px pudełko ma 335 px —
+       hero zaczynał wystawać, przy 320 px poziomy scroll strony rósł 347 ->
+       366 px. 40 px to jednocześnie DOKŁADNIE rozmiar H1 wzorca na 390 px
+       (pomiary-v19.md §3.4), więc zejście jest zgodne z pomiarem, nie
+       obejściem. Po zmianie: 390 i 360 px mieszczą się, a 320 px (gdzie
+       nagłówek wystawał JUŻ PRZED v19) wystaje mniej niż dotąd. */
+    --fs-display: clamp(2.5rem, 6vw, 4.75rem); /* 40 -> 76 (v18: 48 -> 88) */
     --fs-h1: clamp(2.5rem, 4.6vw, 3.5rem); /* 40 -> 56 */
-    --fs-h2: clamp(2rem, 3.6vw, 2.875rem); /* 32 -> 46 */
-    --fs-h3: 1.25rem; /* 20px na stałe */
-    --fs-lead: clamp(1.25rem, 1.8vw, 1.5rem); /* 20 -> 24 */
+    /* Dół clampa 32 -> 30px z tego samego powodu co przy display: przy
+       trackingu -0.008em (zamiast -0.025em) najdłuższy polski wyraz w H2
+       („zautomatyzować", /narzedzia) wystawał przy 320 px o 3 px poza swoją
+       kolumnę. Wzorzec ma H2 na 390 px = 22.4 px (pomiary-v19.md §3.4),
+       więc 30 px to dalej ponad jego wartość, a nie kompromis w dół. */
+    --fs-h2: clamp(1.875rem, 3vw, 2.375rem); /* 30 -> 38 (v18: 32 -> 46) */
+    --fs-h3: 1.3125rem; /* 21px na stałe (v18: 20px) */
+    --fs-lead: clamp(1.25rem, 1.6vw, 1.3125rem); /* 20 -> 21 (v18: 24) */
     --fs-body: 1.125rem; /* 18px — rytm czytania */
     --fs-body-sm: 1rem; /* 16px */
     --fs-ui: 0.9375rem; /* 15px */
     --fs-caption: 0.8125rem; /* 13px */
-    --fs-overline: 0.6875rem; /* 11px — etykieta techniczna, nie mini-nagłówek */
+    --fs-overline: 0.625rem; /* 10px — etykieta techniczna (v18: 11px; wzorzec 9.6px) */
     --fs-metric: clamp(2.5rem, 5vw, 3.5rem);
 
     /* ---- 4. RADIUS ---- */
@@ -584,8 +608,13 @@
     font-optical-sizing: auto;
   }
 
+  /* v19 §C: 700 -> 800. Wzorzec pisze WSZYSTKIE nagłówki wagami 800-900
+     (pomiary-v19.md §3.1/§3.2), a u nas H1 na 700 był LŻEJSZY od H2 na 800,
+     czyli hierarchia wagi szła odwrotnie niż u wzorca. 800 to maksimum
+     Plus Jakarta Sans wczytane w app/layout.tsx — waga 900 wymagałaby
+     nowego pliku fontu (propozycja fontu: raport v19). */
   h1 {
-    font-weight: 700;
+    font-weight: 800;
   }
 
   /* v11 §C („u nich białe napisy naprawdę białe, aż rażące, u nas szare").
@@ -594,8 +623,9 @@
      „Rażąca biel" wzorca to nie glow, tylko GRUBY glif — u nas H2 jechało na
      700, stąd wrażenie szarości. Plus Jakarta Sans jest wczytany do 800
      (app/layout.tsx), więc 800 to realny krój, nie syntetyczne pogrubienie.
-     H1 zostaje na 700 (wzorzec ma 900 — dociążenie do 900 = nowy plik fontu
-     i koszt LCP, decyzja do Pawła; maszyna pisania H1 nietykalna). */
+     H1 od v19 §C też idzie na 800 (wzorzec ma 900 — dociążenie do 900 = nowy
+     plik fontu i koszt LCP, decyzja do Pawła; mechanizm maszyny pisania H1
+     nietykalny, zmieniamy wyłącznie metryki). */
   h2 {
     font-weight: 800;
   }
@@ -1588,10 +1618,20 @@ button:hover .sf-arrow {
   /* METRYKI (redesign): przy 88px display line-height 1.15 rozjeżdżał wiersze,
      a tracking -0.02em rozsypywał wyraz. Mechanizm maszyny do pisania
      (.is-typing / .typed / .sf-caret / sfCaretBlink) NIETKNIĘTY — zmiana dotyczy
-     wyłącznie metryk. Wysokość dalej rezerwuje line-height (zero CLS). */
-  line-height: 1.06;
-  font-weight: 700; /* hero H1 w Plus Jakarta Sans 700 (mocniejszy akcent niż 600 sekcji) */
-  letter-spacing: -0.035em;
+     wyłącznie metryk. Wysokość dalej rezerwuje line-height (zero CLS).
+
+     v19 §C: te trzy liczby to jedyne miejsce, gdzie hero H1 NIE bierze metryk
+     ze stopnia `display` — reguła stoi poza @layer, więc bije utility.
+     Dociągamy je do pomiaru wzorca (pomiary-v19.md §3.2, wiersz „H1 hero":
+     lh 1.10, tracking praktycznie zerowy, waga 900): interlinia 1.06 -> 1.10,
+     tracking -0.035em -> -0.01em, waga 700 -> 800. Waga 900 wymagałaby
+     NOWEGO pliku fontu (Jakarta kończy się u nas na 800) — 800 to nasze
+     maksimum bez kosztu LCP i bez nowego pobrania.
+     ANTY-CLS bez zmian: wysokość dalej rezerwuje STAŁY line-height, tylko
+     wartość jest inna. Mechanizm maszyny do pisania NIETKNIĘTY. */
+  line-height: 1.1;
+  font-weight: 800; /* hero H1 w Plus Jakarta Sans 800 (v18: 700; wzorzec 900) */
+  letter-spacing: -0.01em;
 }
 
 /* Litery: inline-block (własny box na kolor per glif), nie łamią się wewnątrz
@@ -2752,8 +2792,18 @@ html.lenis body {
     gap: 0.375rem;
     padding: 0.4rem 0.75rem;
     border-radius: 100px;
-    font-size: 0.8125rem; /* 13px, jak wzorzec */
-    font-weight: 600;
+    /* v19 §C (pomiary-v19.md §3.2, wiersz „link nawigacji"): tu było
+       DOKŁADNIE ODWROTNIE niż u wzorca — wzorzec prowadzi nawigację MONO
+       (11.2px, tracking 0.04em), a my Interem 13px bez trackingu. Mono 12px
+       w700 (nasze JetBrains ma wagi 400/700, więc nie 600 jak wzorzec —
+       600 przeglądarka musiałaby syntezować).
+       PRZEPEŁNIENIE SPRAWDZONE na żywej produkcji (sonda v19i-nav.mjs,
+       1024/1280/1440): pasek nie dostaje poziomego scrolla na żadnej
+       szerokości; zapas w pigułce 46px przy 1024 i 166px od 1280. */
+    font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
+    font-size: 0.75rem; /* 12px (v18: 13px Inter; wzorzec 11.2px mono) */
+    font-weight: 700;
+    letter-spacing: 0.04em;
     line-height: 1.4;
     color: #a0a0c0;
     border: 1px solid transparent;
@@ -2937,8 +2987,14 @@ html.lenis body {
   .inf-overline {
     font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
     font-size: var(--fs-overline);
-    font-weight: 400;
-    letter-spacing: 0.18em;
+    /* v19 §C (pomiary-v19.md §3.2, wiersz „kicker / overline"): wzorzec
+       jedzie tę rolę mono 9.6px w WADZE 700 z trackingiem 0.30em; my mieliśmy
+       wagę 400 i 0.18em, przez co etykieta była miękka i za ciasna. Waga
+       700 i 0.28em, rozmiar z tokena (10px). Interlinia 1.5 = globalna
+       wartość wzorca (html { line-height: 1.5 }). */
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    line-height: 1.5;
     text-transform: uppercase;
     /* INFINITY v2: --fg-subtle spadł do dekoracyjnego #4e4e6e (~2.5:1) —
        mały CZYTELNY tekst (etykieta sekcji) jedzie na --fg-muted (AA). */
@@ -3112,10 +3168,17 @@ html.lenis body {
     display: inline-flex;
     align-items: center;
     padding: 0.25rem 0.5rem;
-    border-radius: var(--radius-xs);
+    /* v19 §C (pomiary-v19.md §3.2, wiersz „chip / tag"): wzorzec ma 8.8px
+       i radius 6px; tracking 0.08em oraz UPPERCASE były już 1:1. Rozmiar
+       schodzi 11 -> 10px (nie do 8.8px: polskie ogonki i czytelność),
+       radius 4 -> 6px. Waga zapisana JAWNIE — pomiar pokazał u nas w700
+       z dziedziczenia, a klasa ma być deterministyczna (utility markupu
+       dalej wygrywa, bo .inf-tag siedzi w @layer components). */
+    border-radius: 6px;
     border: 1px solid var(--border);
     font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
-    font-size: 0.6875rem; /* 11px */
+    font-size: 0.625rem; /* 10px (v18: 11px) */
+    font-weight: 700;
     line-height: 1.3;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -3322,8 +3385,29 @@ html.lenis body {
        widok"). Płynne przejście alfy daje @property + transition custom
        property (blok POZA @layer niżej); silniki bez @property przełączą ją
        skokowo — wygląd docelowy ten sam.
-       v8b: siostrzana zmienna --inf-luna-a (dolna łuna) USUNIĘTA razem z łuną. */
-    --inf-corner-a: 22%;
+       v8b: siostrzana zmienna --inf-luna-a (dolna łuna) USUNIĘTA razem z łuną.
+
+       ── v19 §A: DWA TRYBY NAROŻNIKÓW (cytat Pawła: „Normalnie powinny być
+       uśpione, a gdy się najeżdża na ramkę, powinny WYSKAKIWAĆ (...) w
+       niektórych ramkach te kątowniki są widoczne, ale WYSZARZONE, a jak się
+       na nie najedzie, to się rozświetlają na lepszy, mocniejszy kolor").
+       BAZA = TRYB UKRYTY: alfa 0% i odsadzenie 14px (kreski schowane w głąb
+       karty); hover -> 60% i 8px, czyli kątowniki WYSKAKUJĄ do narożnika
+       (6px drogi). Odsadzenie niesie --inf-corner-off zarejestrowane przez
+       @property jako <length>, więc background-position płynie zamiast
+       skakać (dowód interpolacji: pomiary-v19.md §1.6, sonda v19-n4).
+       TRYB WYSZARZONY siedzi na wariancie .inf-card-top (= .lp-primary-card
+       wzorca, JEDYNA rodzina wzorca z kątownikami): 22% -> 60% bez ruchu,
+       1:1 z pomiarem §1.2.
+       KOLOR: --inf-corner-c też jest zarejestrowany (<color>), żeby przejście
+       biel -> kolor karty na wariancie wyszarzonym interpolowało, a nie
+       przeskakiwało. Baza zostaje na bieli rgb(228,228,240) wzorca. */
+    --inf-corner-a: 0%;
+    --inf-corner-off: 14px;
+    /* Deklaracja JAWNA obok @property: silniki z color-mix, ale bez @property
+       (np. Firefox 113-127) inaczej dostałyby var() bez wartości i cała
+       druga deklaracja background-image poleciałaby jako nieprawidłowa. */
+    --inf-corner-c: rgb(228, 228, 240);
     /* v11 §A: alfa linii top i jej łuny — DOMYŚLNIE ZGASZONE (0%). Wariant
        .inf-card-top ustawia 100% / 45%; .inf-card-stat zapala samą linię
        dopiero na hover (przejście przez @property, blok poza @layer).
@@ -3404,36 +3488,36 @@ html.lenis body {
         transparent 78%
       ),
       linear-gradient(
-        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
-        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
+        color-mix(in srgb, var(--inf-corner-c) var(--inf-corner-a), transparent),
+        color-mix(in srgb, var(--inf-corner-c) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
-        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
+        color-mix(in srgb, var(--inf-corner-c) var(--inf-corner-a), transparent),
+        color-mix(in srgb, var(--inf-corner-c) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
-        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
+        color-mix(in srgb, var(--inf-corner-c) var(--inf-corner-a), transparent),
+        color-mix(in srgb, var(--inf-corner-c) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
-        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
+        color-mix(in srgb, var(--inf-corner-c) var(--inf-corner-a), transparent),
+        color-mix(in srgb, var(--inf-corner-c) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
-        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
+        color-mix(in srgb, var(--inf-corner-c) var(--inf-corner-a), transparent),
+        color-mix(in srgb, var(--inf-corner-c) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
-        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
+        color-mix(in srgb, var(--inf-corner-c) var(--inf-corner-a), transparent),
+        color-mix(in srgb, var(--inf-corner-c) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
-        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
+        color-mix(in srgb, var(--inf-corner-c) var(--inf-corner-a), transparent),
+        color-mix(in srgb, var(--inf-corner-c) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
-        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
+        color-mix(in srgb, var(--inf-corner-c) var(--inf-corner-a), transparent),
+        color-mix(in srgb, var(--inf-corner-c) var(--inf-corner-a), transparent)
       ),
       linear-gradient(160deg, rgba(12, 13, 28, 0.74), rgba(9, 10, 22, 0.55));
     background-repeat: no-repeat;
@@ -3445,14 +3529,14 @@ html.lenis body {
     background-position:
       center top,
       center top,
-      left 8px top 8px,
-      left 8px top 8px,
-      right 8px top 8px,
-      right 8px top 8px,
-      left 8px bottom 8px,
-      left 8px bottom 8px,
-      right 8px bottom 8px,
-      right 8px bottom 8px,
+      left var(--inf-corner-off) top var(--inf-corner-off),
+      left var(--inf-corner-off) top var(--inf-corner-off),
+      right var(--inf-corner-off) top var(--inf-corner-off),
+      right var(--inf-corner-off) top var(--inf-corner-off),
+      left var(--inf-corner-off) bottom var(--inf-corner-off),
+      left var(--inf-corner-off) bottom var(--inf-corner-off),
+      right var(--inf-corner-off) bottom var(--inf-corner-off),
+      right var(--inf-corner-off) bottom var(--inf-corner-off),
       center;
     background-size:
       100% 1px,
@@ -3513,7 +3597,20 @@ html.lenis body {
       rgba(255, 255, 255, 0.03) 55%,
       transparent 70%
     );
-    transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    /* v19 §D ROZBŁYSK WOLNIEJ W OBIE STRONY (cytat Pawła: „rozbłysk w momencie
+       najechania na ramki, niech on jest troszkę wolniejszy. Jak schodzi kursor
+       z ramek, no to też się to rozbłyska. Trochę wolniej trzeba to zrobić").
+       ŚWIADOME ODEJŚCIE OD WZORCA — pomiary-v19.md §4.1/§4.2: wzorzec trzyma
+       `left .6s cubic-bezier(.16,1,.3,1)` na regule BAZOWEJ, więc wejście i
+       wyjście są u niego identyczne, a my byliśmy z nim 1:1 (zmierzone: 78%
+       drogi w 150 ms w obie strony). Rozdzielamy oba kierunki:
+         • WYJŚCIE (ta reguła, stan spoczynku) = 1.05s ease-in-out
+           cubic-bezier(.33,0,.67,1) — krzywa symetryczna zamiast expo-out,
+           więc pas przy zjeżdżaniu kursora nie „ucieka" na starcie i nie
+           mignie po raz drugi przez kartę,
+         • WEJŚCIE = 0.85s expo-out (reguła :hover w bloku hover niżej) —
+           charakter „strzał i zawis" wzorca zostaje, tylko rozciągnięty. */
+    transition: left 1.05s cubic-bezier(0.33, 0, 0.67, 1);
     pointer-events: none;
   }
 
@@ -3527,9 +3624,13 @@ html.lenis body {
   .inf-card-sub {
     display: block;
     font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
-    font-size: 0.75rem; /* 12px */
-    line-height: 1.4;
-    letter-spacing: 0.06em;
+    /* v19 §C (pomiary-v19.md §3.2, wiersz „podtytuł karty (mono)"): wzorzec
+       ma 11.2px, wagę 400, tracking ZEROWY i interlinię 1.5. My mieliśmy
+       12px z dodanym trackingiem 0.06em — stąd tagline czytał się szerzej
+       niż u wzorca. Kontrasty z noty wyżej nie zmieniają się z rozmiarem. */
+    font-size: 0.6875rem; /* 11px (v18: 12px) */
+    line-height: 1.5;
+    letter-spacing: 0;
     /* v8b pkt 3: pełny --card-c przed pastelowym --card-c-l (uzasadnienie
        i policzone kontrasty przy regule `.inf-card .inf-overline` niżej). */
     color: var(--card-c, var(--card-c-l, var(--accent)));
@@ -3752,10 +3853,14 @@ html.lenis body {
        to utility `text-[color:var(--card-c-l,…)]` w JSX i wtedy strzałka dalej
        jedzie pastelem — to zostaje do wyprostowania po ich stronie. */
     color: var(--card-c, var(--card-c-l, var(--accent)));
+    /* v19 §B: czas 1:1 ze wzorcem — `.lp-primary-arrow` ma `transition: .35s`
+       (pomiary-v19.md §2.1), a nasze --dur-base (0,22 s) było 1,6x szybsze,
+       przez co dojazd był ledwie widoczny. Literał 0.35s, a nie nowy token:
+       --dur-base niesie dziesiątki innych przejść i nie wolno go ruszać. */
     transition:
-      transform var(--dur-base) var(--ease-out),
-      opacity var(--dur-base) var(--ease-out),
-      color var(--dur-base) var(--ease-out);
+      transform 0.35s var(--ease-out),
+      opacity 0.35s var(--ease-out),
+      color 0.35s var(--ease-out);
   }
 
   /* ── .inf-shine — BŁYSK karty: WEWNĘTRZNY div (inset 0, overflow:hidden TU,
@@ -3780,8 +3885,14 @@ html.lenis body {
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
     /* v12 SWEEP WOLNIEJ (pomiar §1f): wzorzec jedzie na DOMYŚLNYM `ease` —
        pas wisi nad kartą ~0,34 s; nasze expo wystrzeliwało go w ~0,18 s.
-       Krzywa 1:1 ze wzorca: `left 0.6s ease`. */
-    transition: left 0.6s ease;
+       Krzywa 1:1 ze wzorca: `left 0.6s ease`.
+       v19 §D: legacy .inf-shine dostaje TE SAME czasy co sweep bazy karty
+       (wyjście 1.05s symetryczne, wejście 0.85s expo-out w regule hoveru
+       niżej). Pomiary-v19.md §4.3: na mierzonych stronach .inf-shine nie
+       renderuje się ani razu, ale karty bloga/poradników go trzymają w JSX —
+       gdyby wrócił obok sweepa bazy, dwa błyski w innym tempie na jednej
+       karcie byłyby błędem, więc wyrównujemy je od razu. */
+    transition: left 1.05s cubic-bezier(0.33, 0, 0.67, 1);
   }
 
   /* ── .inf-spotlight — poświata podążająca za kursorem na karcie: radial w
@@ -3875,8 +3986,12 @@ html.lenis body {
   }
   .inf-counter-label {
     font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
-    font-size: 0.6875rem; /* 11px micro-caps */
-    letter-spacing: 0.14em;
+    /* v19 §C (pomiary-v19.md §3.2, wiersz „etykieta licznika"): wzorzec
+       8.8px w WADZE 700 z trackingiem 0.12em; u nas 11px w400 i 0.14em.
+       Waga 700 to główna różnica — micro-caps wzorca są twarde, nie miękkie. */
+    font-size: 0.625rem; /* 10px (v18: 11px; wzorzec 8.8px) */
+    font-weight: 700;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     /* INFINITY v2: micro-caps to czytelny opis licznika → --fg-muted (AA). */
     color: var(--fg-muted);
@@ -3915,10 +4030,21 @@ html.lenis body {
     min-height: 48px;
     padding: 0.75rem 1.5rem;
     border-radius: 999px;
-    font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
-    font-size: var(--fs-ui);
+    /* v19 §C — NAJWIĘKSZA POJEDYNCZA RÓŻNICA CHARAKTERU (pomiary-v19.md
+       §3.2, wiersz „CTA / przycisk"): wzorzec robi CTA SANSEM (Inter
+       16.32px, w700, tracking UJEMNY -0.01em), a my jechaliśmy mono
+       z trackingiem DODATNIM +0.04em. Inter jest już załadowany
+       (app/layout.tsx, next/font) — to nie jest nowy font, tylko inna
+       rodzina z tych, które mamy. Zmiana dotyczy też wariantów
+       (-solid, -ghost, .inf-cta-ghost-green), bo dziedziczą rodzinę z bazy;
+       to celowe, rola CTA ma jeden krój.
+       SZEROKOŚĆ SPRAWDZONA (sonda v19i-nav.mjs): pigułka CTA w nagłówku
+       ZWĘŻA się 174.8 -> 173.2px przy 1280 i 164.5 -> 158.1px przy 1024,
+       więc pasek nawigacji ma po zmianie więcej zapasu, nie mniej. */
+    font-family: var(--font-inter), system-ui, sans-serif;
+    font-size: 1rem; /* 16px (v18: --fs-ui 15px mono) */
     font-weight: 700;
-    letter-spacing: 0.04em;
+    letter-spacing: -0.01em;
     background-color: rgba(255, 0, 229, 0.08);
     color: #ff00e5;
     border: 1px solid rgba(255, 0, 229, 0.5);
@@ -4116,6 +4242,26 @@ html.lenis body {
   initial-value: 22%;
   inherits: false;
 }
+/* v19 §A: ODSADZENIE narożnika jako typowana długość — dzięki rejestracji
+   `background-position` (własność interpolowalna) płynie razem z alfą, więc
+   kątowniki w trybie ukrytym WYSKAKUJĄ z 14px do 8px zamiast przeskakiwać.
+   Dowód interpolacji na żywej produkcji: pomiary-v19.md §1.6 (60 ms 9.27px,
+   120 ms 8.21px, koniec 8px — płynnie w obie strony). */
+@property --inf-corner-off {
+  syntax: '<length>';
+  initial-value: 8px;
+  inherits: false;
+}
+/* v19 §A: KOLOR kreski jako typowany kolor. Bez rejestracji przejście
+   biel -> kolor karty przeskoczyłoby skokowo w środku płynącej alfy
+   (kolor w linear-gradient nie interpoluje przez zwykłą custom property).
+   Wartość domyślna = biel wzorca rgb(228,228,240) (pomiary-v19.md §1.2:
+   skrót `border-top:1px solid` u wzorca resetuje kolor do currentColor). */
+@property --inf-corner-c {
+  syntax: '<color>';
+  initial-value: rgb(228, 228, 240);
+  inherits: false;
+}
 /* v11: alfa linii top jako typowana zmienna — wariant .inf-card-stat zapala
    linię na hover (0% -> 100%) i dzięki rejestracji przejście jest płynne
    (wzorzec .stat-card::before: opacity transition .3s). Silniki bez @property
@@ -4132,6 +4278,11 @@ html.lenis body {
       border-color 0.4s var(--ease-out),
       box-shadow 0.4s var(--ease-out),
       --inf-corner-a 0.3s var(--ease-out),
+      /* v19 §A: te dwie dojeżdżają w tym samym czasie co alfa (0,3 s = czas
+         wzorca, pomiary-v19.md §1.2) — wyskok i rozświetlenie koloru są
+         jednym gestem, nie dwoma. */
+      --inf-corner-off 0.3s var(--ease-out),
+      --inf-corner-c 0.3s var(--ease-out),
       --inf-top-a 0.3s var(--ease-out);
   }
 }
@@ -4175,6 +4326,18 @@ html.lenis body {
     animation: infRingFlow 4.5s linear infinite;
   }
 }
+/* v19 (kontrola, MINOR-3): na urzadzeniach BEZ hoveru (telefon, tablet)
+   karty bazowe zostawaly z katownikami na 0% na zawsze — tryb „ukryty,
+   wyskakuje na hover" nie ma tam jak zadzialac. Dotyk dostaje wiec stan
+   spoczynku sprzed v19 (wyszarzone 22%, kreski w naroznikach), czyli to
+   samo, co widzi uzytkownik myszy przed najechaniem na karte typu -top. */
+@media (hover: none) {
+  .inf-card {
+    --inf-corner-a: 22%;
+    --inf-corner-off: 8px;
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   /* ══ HOVER KARTY v7 — 1:1 z POMIARAMI WZORCA (getComputedStyle + CSSOM) ══
      ŻELAZNA zasada rundy (skarga Pawła): „u nich kafelek się podświetla, ale
@@ -4212,8 +4375,13 @@ html.lenis body {
        nie „przekręca".
        v8b pkt 1: dolna łuna (--inf-luna-a 4% -> 8%) USUNIĘTA. To ona dawała
        „świecenie w części ramki" na hover, a właściciel prosi o świecenie
-       WYŁĄCZNIE obwódki i dookoła obwódki. */
+       WYŁĄCZNIE obwódki i dookoła obwódki.
+       v19 §A: alfa docelowa 60% zostaje 1:1 z wzorcem, dochodzi WYSKOK —
+       odsadzenie wraca z 14px (spoczynek bazy) do 8px wzorca. Wariant
+       wyszarzony (.inf-card-top) ma 8px już w spoczynku, więc u niego ta
+       sama deklaracja nie robi ruchu — dokładnie jak u wzorca. */
     --inf-corner-a: 60%;
+    --inf-corner-off: 8px;
   }
   /* Wariant KART-BOHATERÓW (kontrakt dla partii C/D/E: dopisać `inf-card-lg`
      obok `inf-card` na dużych kartach — cennik, promo usług, karty sekcji).
@@ -4232,12 +4400,20 @@ html.lenis body {
      primary wzorca (pomiary-v15.md §2: -100% -> 140% w 0,6 s expo-out). */
   .inf-card:hover::after {
     left: 140%;
+    /* v19 §D: WEJŚCIE dłuższe od wzorca (0,6 -> 0,85 s), krzywa expo-out
+       zostaje. Transition stoi TU, a nie w bazie, więc powrót jedzie własnym,
+       jeszcze dłuższym czasem 1,05 s z krzywej symetrycznej (patrz nota
+       przy `.inf-card::after`). Zero nowych pętli JS. */
+    transition: left 0.85s cubic-bezier(0.16, 1, 0.3, 1);
   }
   /* Strzałka karty ukryta do hoveru — scope .inf-card, żeby strzałki poza
      kartami (wiersze listy usług w Ofercie) zostały widoczne jak dotąd. */
   .inf-card .inf-arrow {
     opacity: 0;
-    transform: translateX(-4px);
+    /* v19 §B: dojazd 1:1 ze wzorcem — `.lp-primary-arrow` startuje z
+       translateX(-10px) (pomiary-v19.md §2.1). Nasze -4px przy 0,22 s dawało
+       ruch praktycznie niewidoczny; 10px + 0,35 s to ten sam gest co u wzorca. */
+    transform: translateX(-10px);
   }
   .inf-card:hover .inf-arrow {
     opacity: 1;
@@ -4281,6 +4457,8 @@ html.lenis body {
   }
   .inf-card:hover .inf-shine::after {
     left: 120%;
+    /* v19 §D: wejście 0.85s expo-out — ten sam czas co sweep bazy. */
+    transition: left 0.85s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .inf-card:hover .inf-spotlight {
     opacity: 1;
@@ -4430,6 +4608,14 @@ html.lenis body {
   .inf-card:hover {
     transform: none !important;
   }
+  /* v19 §A, RM = bez ruchu, sam stan docelowy: kątowniki stoją na docelowym
+     odsadzeniu 8px w OBU stanach, więc wyskoku (14px -> 8px) nie ma w ogóle.
+     Zmienia się wyłącznie alfa (i na wariancie wyszarzonym kolor) — a że
+     `transition: none !important` wyżej obejmuje .inf-card, dzieje się to
+     natychmiast. Gramatyka wzorca: on też ma własny blok reduced-motion. */
+  .inf-card {
+    --inf-corner-off: 8px !important;
+  }
   /* v3, RM = bez transformów: strzałka karty bez dojazdu (pokazuje/chowa ją
      samo opacity, skokowo), kafelki i ikony bez scale/translate. */
   .inf-card .inf-arrow,
@@ -4541,7 +4727,7 @@ html.lenis body {
    ODSTĘPSTWO ŚWIADOME (raport): etykieta wzorca ma rgba(139,92,246,.3) i
    .55rem, czyli ~1,5:1 i 8,8px — poniżej ŻELAZNEGO progu 4.5:1. U nas jasny
    fiolet (--accent-2 rozjaśniony bielą) przy opacity .8 = ~5,0:1 na --bg
-   i 11px (--fs-overline). Whisper zostaje, tekst jest czytelny. */
+   i 9px (v19 §C; do v18 11px). Whisper zostaje, tekst jest czytelny. */
 .inf-divider {
   display: flex;
   align-items: center;
@@ -4637,7 +4823,12 @@ div:has(> .inf-divider) {
 }
 .inf-divider-label {
   font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
-  font-size: var(--fs-overline); /* 11px; wzorzec .55rem — patrz nota AA wyżej */
+  /* v19 §C: wzorzec ma tę etykietę na .55rem = 8.8px (pomiary-v19.md §3.2);
+     schodzimy z 11px na 9px — bliżej wzorca, ale nie na 8.8px, bo polskie
+     ogonki przy tym trackingu robią się nieczytelne. Waga i tracking były
+     już 1:1 (§5.5). Kontrast bez zmian: 4,5:1 obowiązuje tak samo przy 11
+     i przy 9px (próg dużego tekstu dotyczy dopiero 18.66px w700). */
+  font-size: 0.5625rem; /* 9px (v18: 11px = --fs-overline) */
   font-weight: 700;
   letter-spacing: 0.35em;
   line-height: 1.2;
@@ -4881,8 +5072,19 @@ div:has(> .inf-divider) {
    Hero/ServiceHero/OnasHero. */
 .sf-magnetic .inf-glow-cta {
   border-radius: 999px;
-  font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
-  letter-spacing: 0.04em;
+  /* v19 §C: ten kontrakt POWTARZAŁ rodzinę i tracking bazy, więc po przejściu
+     CTA na sans nadpisywał ją z powrotem na mono — na home wychodziły dwa
+     kroje w jednym rzędzie przycisków (zauważone na zrzucie v19i-home-gora.png).
+     Trzymamy jedną rolę: sans Inter, tracking -0.01em, jak baza i jak wzorzec. */
+  font-family: var(--font-inter), system-ui, sans-serif;
+  letter-spacing: -0.01em;
+  /* v19 §C: rozmiar i waga też muszą stać TU. Pod spodem siedzi komponent
+     Button z utilities `text-ui font-semibold` (15px/600), które przy równej
+     roli dawały CTA hero inną metrykę niż sąsiednie pigułki w tym samym
+     rzędzie (zmierzone: 15px/600 obok 16px/700). Selektor (0,2,0) bije
+     utility (0,1,0), więc rola CTA ma jedną metrykę na całym serwisie. */
+  font-size: 1rem;
+  font-weight: 700;
   /* v8: baza jest RÓŻOWA i pulsuje (spec pkt 4) — CTA hero zostaje wypełnione
      akcentem, więc gasimy puls i poświatę liter (inaczej animacja box-shadow
      bazy biłaby cień tego kontraktu). */
@@ -5121,12 +5323,29 @@ div:has(> .inf-divider) {
    Tailwind nie wytnie tych reguł z warstwy: .inf-card i .inf-card-lg są
    w treści (odpowiednio 100+ i 11 wystąpień). */
 @layer components {
+  /* v19 §C (pomiary-v19.md §3.2, wiersz „H3 / tytuł karty"): wzorzec pisze
+     tytuły kart wagą 900. Plus Jakarta Sans kończy się u nas na 800
+     (app/layout.tsx), więc bierzemy nasze maksimum — dokładnie jak
+     rekomendacja pomiaru („900, lub 800 jeśli zostaje Jakarta"). Do v18 baza
+     miała 700, przez co tytuł karty był lżejszy od tytułu u wzorca o dwie
+     wagi. Warianty -lg i -top miały 800 już wcześniej. */
   .inf-card :where(h2, h3, h4) {
-    font-weight: 700;
+    font-weight: 800;
   }
   .inf-card-lg :where(h2, h3, h4) {
     font-weight: 800;
   }
+}
+
+/* v19 §C (pomiary-v19.md §3.2, wiersz „opis karty (p)"): wzorzec trzyma opis
+   karty na 13.12px z interlinią 1.70, my na 16px/1.60. Schodzimy do 15px
+   i 1.65 — TYLKO W KARCIE (utility text-body-sm poza kartą zostaje 16px:
+   13px po polsku jest za małe, a treść czytana ciągiem to inna rola).
+   POZA @layer ŚWIADOMIE: selektor (0,2,0) ma wygrać z utility rozmiaru
+   (0,1,0) niezależnie od kolejności warstw Tailwinda. */
+.inf-card .text-body-sm {
+  font-size: 0.9375rem; /* 15px (utility bazowe: 16px) */
+  line-height: 1.65;
 }
 
 /* ── LICZBA: POŚWIATA (przeniesione z martwej .inf-card-stat-value na żywą
@@ -5205,7 +5424,7 @@ div:has(> .inf-divider) {
    FALLBACK: silnik bez background-clip:text renderuje zwykłą biel --fg —
    przezroczystość liter wchodzi dopiero pod @supports (bez tego guard
    silnik bez clipa pokazałby niewidzialny tekst).
-   KONTRAST (H2 = --fs-h2 32-46px, duży tekst, próg AA 3:1): najciemniejszy
+   KONTRAST (H2 = --fs-h2 32-38px po v19 §C, duży tekst, próg AA 3:1): najciemniejszy
    stop #b026ff 4,40:1 na --bg i 4,42:1 na korpusie karty; #ff00e5 6,14:1;
    #00f0ff 14,35:1 — wszystkie stopy ✓ (policzone, nie oszacowane). */
 .inf-grad-text {
@@ -5357,6 +5576,15 @@ div:has(> .inf-divider) {
    tu lift bohatera -5px + scale 1.008, narożniki .6.
    Poświata spoczynku: 1:1 .lp-primary-card (inset biel 5% + czerń 55%). */
 .inf-card-top {
+  /* v19 §A TRYB WYSZARZONY — ten wariant jest naszym odpowiednikiem
+     `.lp-primary-card`, czyli JEDYNEJ rodziny wzorca, która w ogóle ma
+     kątowniki (pomiary-v19.md §1.1: 26 kart x 4 rogi = 104 sztuki, reszta
+     rodzin i 9 z 10 podstron nie ma ich wcale). Odtwarzamy jego zachowanie
+     1:1: kreski WIDOCZNE w spoczynku na 22% i na docelowym odsadzeniu 8px
+     (zero ruchu, `transform:none` w obu stanach u wzorca), hover podnosi
+     samą alfę do 60%. Wyskok zostaje wyłącznie w trybie ukrytym bazy. */
+  --inf-corner-a: 22%;
+  --inf-corner-off: 8px;
   --inf-top-a: 100%;
   /* v16 §A (pomiary-v16.md §1.2 i §3.1; cytat Pawła: „u nas jest to
      rozpierdolone i grube... na stronie referencyjnej wygląda to bardzo
@@ -5402,8 +5630,9 @@ div:has(> .inf-divider) {
    gradientowy 1px liczony maską, PEŁNY kolor od lewego górnego narożnika
    gasnący do 55% przekątnej, spoczynek opacity .5 — świeci kawałek góry
    i lewego boku; ramka wokół biel 7% z bazy, zgodność potwierdzona v13;
-   hover: ring -> 1, ramka Z KAŻDEJ STRONY 45%, cień 40%, błysk przelatuje,
-   strzałka widoczna też w spoczynku i dojeżdża +4px). Bez narożników [ ]
+   hover: ring -> 1, ramka Z KAŻDEJ STRONY 45%, cień 40%, błysk przelatuje;
+   strzałka od v19 §B chowa się w spoczynku jak w każdej innej karcie —
+   nadpisanie „widoczna w spoczynku" usunięte na prośbę Pawła). Bez narożników [ ]
    i bez top-glow (background-image:none); box-shadow spoczynku: wzorzec nie
    ma żadnego (none). Błysk = sweep ::after bazy (geometria 1:1: pas 38%,
    skewX -18deg, start -40%). */
@@ -5502,6 +5731,15 @@ div:has(> .inf-divider) {
      stojąca dalej w źródle nie osłabiała ramki z powrotem. */
   .inf-card-top:hover {
     transform: translateY(-5px) scale(1.008);
+    /* v19 §A: „a jak się na nie najedzie, to się rozświetlają na lepszy,
+       mocniejszy kolor" — kreski przechodzą z bieli w PEŁNY kolor karty
+       razem z alfą 22% -> 60% (oba płyną 0,3 s dzięki @property).
+       ODSTĘPSTWO OD WZORCA ŚWIADOME: pomiary-v19.md §1.2 i §6 pkt 3 —
+       u wzorca kolor kreski NIE zmienia się (rgb(228,228,240) w obu
+       stanach), rusza się sama alfa. To życzenie Pawła ponad wzorzec.
+       Fallback W SAMYM var (--card-c bywa nieustawione na kartach bez
+       kategorii): wtedy kreski zostają na bieli wzorca. */
+    --inf-corner-c: var(--card-c, rgb(228, 228, 240));
   }
   /* W3: „po najechaniu błysk + podświetlenie ramki Z KAŻDEJ STRONY +
      zaświecenie strzałki" — od v12 pełną ramkę i łunę daje WSPÓLNY hover
@@ -5510,15 +5748,15 @@ div:has(> .inf-divider) {
   .inf-card-full-hover:hover {
     transform: translateY(-3px);
   }
-  /* W3: strzałka WIDOCZNA też w spoczynku (wzorzec: pełny kolor, opacity 1),
-     hover tylko dojeżdża +4px — nadpisuje chowanie strzałki z bazy. */
-  .inf-card-full-hover .inf-arrow {
-    opacity: 1;
-    transform: none;
-  }
-  .inf-card-full-hover:hover .inf-arrow {
-    transform: translateX(4px);
-  }
+  /* W3: strzałka — v19 §B USUNIĘTO nadpisanie „widoczna też w spoczynku".
+     Do v18 ten wariant szedł za `.lp-promo-card` wzorca (opacity 1 w
+     spoczynku, hover tylko +4px) i to było 1:1 z pomiarem, ALE cytat Pawła
+     jest jednoznaczny: „jeżeli jest uśpienie, to strzałki nie widać.
+     Najeżdżam, strzałka się pokazuje". Pomiary-v19.md §2.2: ta jedna reguła
+     trzymała 12 z 24 strzałek w kartach widocznych w spoczynku (4 na home,
+     8 na /realizacje). Bez niej wariant wraca do wspólnej reguły bazy
+     (opacity 0 + translateX(-10px) -> 1 + 0), czyli do gramatyki
+     `.lp-primary-arrow`. ODSTĘPSTWO OD WZORCA ŚWIADOME — patrz raport. */
   /* W4: gramatyka .stat-card wzorca — top-bar 0 -> 1 (linia top przez
      --inf-top-a, przejście .3s z @property) + lift -2px. Obwódkę (pełny
      kolor) i łunę daje WSPÓLNY hover bazy v12 — korekta v11, gdzie karta

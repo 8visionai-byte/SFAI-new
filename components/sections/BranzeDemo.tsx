@@ -218,7 +218,7 @@ export function BranzeDemo() {
               <span className="h-2.5 w-2.5 rounded-full bg-[#8b5cf6]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#22e06b]" />
             </span>
-            <span className="font-mono text-ui font-semibold text-fg">Agent SimpleFast</span>
+            <span className="font-mono text-ui font-bold text-fg">Agent SimpleFast</span>
             <span className="ml-auto inline-flex items-center gap-2 font-mono text-caption text-fg-subtle">
               {/* Statyczny pierścień zamiast animate-pulse: ten sam sygnał „live" przy
                   zerowym koszcie na klatkę. Kontrakt: max 1 pętla ambient na viewport,
