@@ -1,3 +1,25 @@
+# STATUS — INFINITY v16 — NA PRODUKCJI (commit f1550a6, globals+pomiary, +343/-20)
+
+Feedback Pawla (zrzuty Security Stack wzorca): gorne rozswietlenia
+subtelne — luna 10px->7px, zasieg 6,5->4-4,5px (cel wzorca), 18/18 kart
+top + odcienie D + stat + lg; NEON skalibrowany do przycisku Umow
+diagnoze (zmierzone jarzenie przeniesione na kickery/tagi/statusy/kropki/
+plytki we wszystkich kolorach, teksty pelna paleta); sasiedztwo: zero
+powtorzen koloru obok siebie (53 karty, 1440+375). KONTROLA DALA NO-SHIP
+(pierscien pikselowy fioletu 4,28-4,45 < 4,5) — fixy sesji glownej:
+fiolet ogon 14px/35% bez rdzenia, status fiolet bez cienia, tag fiolet
+bez cienia + tint 12->4% (stan zastany v15 naprawiony przy okazji: prod
+mial 4,02), kafel rest 50->42% (inwersja), luna 7px. Po fixach pomiar
+sondami KONTROLI: overline 4,53 / tag 4,59 / sub 4,59 / status 4,65 —
+wszystkie >=4,5 i LEPSZE niz prod v15. Regresje v15 zero. Produkcja:
+markery CSS na zywo (285s), zrzuty.
+Czeka na Pawla: ocena na zywo (subtelnosc gor + poziom neonu).
+Znane: p90 fioletu ~4,4 (kryterium = mediana); blur na 3 elementach demo
+mobile (stan zastany, osobna decyzja); tools/*.js (4 szt.) w drzewie
+z osobnej sesji SEO.
+
+---
+
 # STATUS — INFINITY v15 — NA PRODUKCJI (commit 6fe5b07, 19 plików, +430/-178)
 
 Runda po wściekłym feedbacku Pawła (zrzuty sekcji Open Source wzorca).
