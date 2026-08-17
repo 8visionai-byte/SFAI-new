@@ -43,7 +43,7 @@ import type { Usluga } from '@/lib/uslugi/types';
  *  - CTA: pełne tło kolorem przewodnim jak „ESTABLISH ROOT CONNECTION" —
  *    kontrakt `.sf-magnetic .inf-glow-cta` (globals) maluje solid z
  *    var(--accent), więc podajemy --accent = c inline na przycisku; tekst CTA
- *    bez zmian, ciemny (--accent-contrast #06060c: na najsłabszym kolorze
+ *    bez zmian, ciemny (--accent-contrast #05050c: na najsłabszym kolorze
  *    palety v17 #e438ff to 6,07:1, AA także dla tekstu normalnego;
  *    stary #b638ff miał 4,84:1).
  *  - KAFLE STATYSTYK (wzorzec: 17 MODULES / 97 QUESTIONS / 9 LABS): pudełko
@@ -240,7 +240,7 @@ export function ServiceHero({ usluga }: { usluga: Usluga }) {
               size="lg"
               href={usluga.cta.href}
               className="inf-glow-cta"
-              style={{ '--accent': c, '--accent-contrast': '#06060c' } as CSSProperties}
+              style={{ '--accent': c, '--accent-contrast': '#05050c' } as CSSProperties}
             >
               {usluga.cta.label}
             </MagneticButton>

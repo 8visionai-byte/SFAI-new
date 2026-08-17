@@ -49,7 +49,29 @@ const POROWNANIE = [
    (cyjan #00f0ff, szmaragd #00e096, amber #ffa101 — nie pastele #61edff/
    #29ff77/#ffc120, te robiły „blade" linie); fiolet jasny zostaje pełnym hue,
    nie rozcieńczeniem. v17 (raporty/pomiary-v17.md §2): #a586ff->#dc7aff,
-   #11e0ff->#00f0ff, #00c986->#00e096 — neon bliżej kalibracji „ktoś inny". */
+   #11e0ff->#00f0ff, #00c986->#00e096 — neon bliżej kalibracji „ktoś inny".
+   v18 (spec-v18 pkt 4 „gradienty", pomiary-v18.md §5): DRUGIE STOPY jadą
+   na hexach z próbnika Pawła. Kluczowa własność paska: --card-c (stop 1)
+   maluje też obwódkę, reflektor, hover i łunę CAŁEJ karty, a --card-c-alt
+   (stop 2) żyje wyłącznie w tej jednej linii. Dlatego ciemne hexy próbnika
+   wchodzą jako stop DRUGI — na stopie pierwszym przygasiłyby całą kartę,
+   czyli zrobiłyby dokładnie to „blade", z którym walczymy od F4:
+     kafel 2 (chatbot)      #00f0ff -> #8600ff   para D2 pomiaru, dH 88 —
+       najmocniejszy skok barwy w zestawie. Stop drugi ZSZEDŁ z #39ff14, bo
+       ten hex jest od v18 BAZĄ zieleni kafla 3 (na mobile leży bezpośrednio
+       pod tym kaflem, więc byłaby to powtórka sąsiedztwa).
+     kafel 3 (automatyzacje) #39ff14 -> #02c5d3   para D4 pomiaru 1:1,
+       limonka do turkusu, oba hexy z próbnika. Baza podąża za rejestrem.
+     kafel 4 (dokumenty)     #ffa101 -> #f56601   para D1 pomiaru, przyjęta
+       na stopie drugim. #ff6b00 hsl(25 100 50) i #f56601 hsl(25 99 48) to
+       praktycznie ten sam kolor (2 pp jasności), więc wchodzi dokładny hex
+       próbnika zamiast bliźniaka spoza palety — zero ryzyka wizualnego,
+       jedna sierota mniej.
+     kafel 1 (voicebot)      #dc7aff -> #ff00e5   BEZ ZMIAN. Żaden hex
+       próbnika nie poprawia tej pary; #9e22e6 i #8600ff są tu ciemniejsze
+       od obu obecnych stopów.
+   Osiem stopów, osiem różnych hexów — zero powtórki w siatce i w kolumnie
+   mobilnej. #2500ff i #00d3ff z próbnika NIE weszły: patrz raport v18. */
 const POTRAFI = [
   {
     t: 'Odbiera telefon, kiedy Ty nie możesz.',
@@ -63,21 +85,21 @@ const POTRAFI = [
     d: 'Chatbot na stronie i w komunikatorach odpowiada na pytania i zbiera leady, nawet o 22:00.',
     ikona: 'chat-dymek',
     c: '#00f0ff',
-    alt: '#39ff14',
+    alt: '#8600ff',
   },
   {
     t: 'Przepisuje dane za Ciebie.',
     d: 'Automatyzacja przenosi informacje między mailem, systemem i fakturą, bez ręcznej roboty.',
     ikona: 'blyskawica',
-    c: '#00e096',
-    alt: '#00f0ff',
+    c: '#39ff14',
+    alt: '#02c5d3',
   },
   {
     t: 'Pilnuje, żeby nic nie wypadło.',
     d: 'Przypomnienia, follow-upy, oddzwonienia. Klient nie zostaje bez odpowiedzi.',
     ikona: 'kalendarz-check',
     c: '#ffa101',
-    alt: '#ff6b00',
+    alt: '#f56601',
   },
 ] as const satisfies ReadonlyArray<{
   t: string;

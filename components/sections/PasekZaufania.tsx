@@ -15,7 +15,7 @@ import { Reveal } from '@/components/motion/Reveal';
  * INFINITY v4 (spec §PARTIA C pkt 5): trzy obawy = trzy RÓŻNE fluorescencyjne
  * ODCIENIE palety v4 (jasne stopnie 300/400 z lib/inf-kategorie: blue #70b0ff,
  * violet #dc7aff, green #29ff77) zamiast tokenów metalu — żywsze, każda
- * pozycja inny ton. AA na tle strony #06060c z zapasem (jaśniejsze niż
+ * pozycja inny ton. AA na tle strony #05050c z zapasem (jaśniejsze niż
  * dotychczasowe metal-300/400, kontrast tylko rośnie; v17 na --surface
  * #111127: #70b0ff 8,24:1 / #dc7aff 7,30:1 / #29ff77 13,82:1). Teksty 1:1.
  */

@@ -157,7 +157,7 @@ export function ChatLauncher() {
     height: 8px;
     flex: none;
     border-radius: 999px;
-    background: #22e06b;
+    background: #29ff77;
     box-shadow: 0 0 8px rgba(34, 224, 107, 0.8);
   }
 }

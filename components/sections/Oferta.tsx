@@ -20,8 +20,21 @@ import { InfIcon } from '@/components/ui/InfIcons';
    fundament partii A). Kolor i ikona są WYŁĄCZNIE dekoracją (aria-hidden /
    custom property --tile-c, --card-c) — treść i kontrast tekstu niosą tokeny. */
 
-/* Tonacja dekoracyjna kart cennika = trzy stopnie trasy marki (krok po kroku). */
-const POZIOM_TON = ['#2b7cff', '#8b5cf6', '#22e06b'] as const;
+/* Tonacja dekoracyjna kart cennika = trzy stopnie trasy marki (krok po kroku).
+   v18: te trzy hexy były sprzed F4 i żadna z migracji palety (F4 -> v10 -> v17)
+   ich nie dotknęła, bo siedziały poza rejestrem lib/inf-kategorie — stąd
+   migracja na hexy rejestru (rodzina barwy bez zmian):
+     #2b7cff -> #70b0ff (blue), #8b5cf6 -> #e438ff (violet),
+     #22e06b -> #29ff77 (green).
+   SPROSTOWANIE (kontrola v18, znalezisko MAJ-6): wcześniejsza wersja tego
+   komentarza uzasadniała zmianę „naprawą AA etykiet" i podawała liczby, których
+   pomiar NIE potwierdził. Zmierzone w DOM: karta środkowa ma highlight:true
+   i NIE dostaje --card-c (jej overline jest szary rgb(122,122,158)), więc
+   POZIOM_TON[1] nigdy nie maluje tekstu; kart niewyróżnionych są DWIE, nie trzy.
+   Migracja jest więc czystą spójnością palety, nie poprawką kontrastu.
+   Tablica trzyelementowa zostaje: indeksy idą po wszystkich trzech kartach,
+   a wpis [1] jest ignorowany przez kartę wyróżnioną. */
+const POZIOM_TON = ['#70b0ff', '#e438ff', '#29ff77'] as const;
 
 /* FALLBACK DLA SILNIKÓW BEZ SUBGRID (starsze niż Chrome 117 / Safari 16;
    browserslist repo schodzi do chrome 100). Tam `grid-template-rows: subgrid`

@@ -194,7 +194,7 @@ export function BranzeDemo() {
           CDP): tło okna liczyło się na rgb(17,17,39) przy KRYCIU 1 i bez
           backdrop-filter, czyli technicznie nic przez nie nie prześwitywało.
           Problem był WIZUALNY i widać go na zrzucie: korpus #111127 stał ledwie
-          nad tłem strony #06060c (kontrast korpus/strona 1,09:1), a pasek tytułu
+          nad tłem strony #05050c (kontrast korpus/strona 1,09:1), a pasek tytułu
           #0e0e22 był od korpusu praktycznie nieodróżnialny — okno czytało się
           jak przezroczysta szyba na gwiazdach, nie jak terminal.
           ZMIANA: korpus wchodzi na --surface-raised #181840, czyli kontrast

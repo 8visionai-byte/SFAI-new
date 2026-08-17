@@ -23,7 +23,7 @@
  *  5. MOC POŚWIATY (spec v9 §6, cytat Pawła: „voicebota poświatę dać bardziej
  *     różowawą, bardziej rażącą, żeby nie był taki blady"). Adaptacja #4
  *     trzymała alfy 1:1 z 10K i to jest dokładnie powód, dla którego blob
- *     wychodził blady na naszej czerni #06060c (10K miał jaśniejsze tło).
+ *     wychodził blady na naszej czerni #05050c (10K miał jaśniejsze tło).
  *     Podniesione są WYŁĄCZNIE alfy warstw poświaty (::before, ::after,
  *     __ambient, __fallback) i fiolet ustępuje w nich magencie #ff00e5.
  *     Rozmiary, blur, animacje i geometria BEZ ZMIAN — koszt malowania ten sam.

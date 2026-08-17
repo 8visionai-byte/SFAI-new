@@ -44,7 +44,7 @@ const CYTATY = [
 
 /* Fluorescencyjne odcienie palety v4 (jak dotychczasowe CYTAT_ODCIEN w
    Problem.tsx) — 5 cytatów = 5 odcieni, zero dubli. Czysta dekoracja. */
-const ODCIENIE = ['#61edff', '#dc7aff', '#ff67b7', '#29ff77', '#ffc120'] as const;
+const ODCIENIE = ['#61edff', '#dc7aff', '#ff00e5', '#29ff77', '#ffc120'] as const;
 
 const N = CYTATY.length; // 5
 const KROK = 360 / N; // 72° na cytat
@@ -99,7 +99,7 @@ export function CytatyWalec() {
       (kropki). overflow:hidden karty jest tu CELOWY: przycina sąsiednie
       cytaty bębna na krawędzi kadru (nic dekoracyjnego nie ma wystawać).
       v7 audyt: karta dostaje WŁASNY odcień (--card-c) — bez niego hover świecił
-      domyślnym cyjanem. Magenta #ff67b7 to jedyny ton z palety cytatów
+      domyślnym cyjanem. Magenta #ff00e5 (v18: było #ff67b7) to jedyny ton z palety cytatów
       (ODCIENIE), którego nie zajęła żadna inna karta sekcji Problem.
       v12 (spec: „karty cytatów: kolor w SPOCZYNKU, wariant W1 edge z mocnym
       paskiem w kolorze karty"): dochodzi .inf-card-edge — magentowy pasek 3px
@@ -108,7 +108,7 @@ export function CytatyWalec() {
     */
     <div
       className="inf-card inf-card-edge px-6 md:px-8"
-      style={{ '--card-c': '#ff67b7' } as CSSProperties}
+      style={{ '--card-c': '#ff00e5' } as CSSProperties}
       onMouseEnter={lite ? undefined : () => setPaused(true)}
       onMouseLeave={lite ? undefined : () => setPaused(false)}
       onFocusCapture={() => setPaused(true)}

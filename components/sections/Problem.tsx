@@ -51,7 +51,12 @@ import { KartaEtykieta, KartaTagi, tagiUslugi } from '@/components/sections/Kart
    Pole ikona od v14 WRACA do renderu: plytka .inf-tile wzorca primary
    (pomiary-v14.md par.1b i par.5 pkt 1 - 19/24 kart primary wzorca ma plytke;
    dekoracja aria-hidden, bez strzalki - karta nieklikalna; hover pelny na
-   kazdej karcie od v15 par.A). */
+   kazdej karcie od v15 par.A).
+   v18 (probnik Pawla, pomiary-v18.md par.2): zielen automatyzacji #00e096 ->
+   #39ff14 (pierscien 8,33 -> 10,11). Piec tonow sekcji po zmianie: #00f0ff /
+   #39ff14 / #e438ff / #ffa101 / #70b0ff — dalej zero duplikatu. Walec cytatow
+   wewnatrz tej sekcji jedzie #ff00e5 (v18: bylo #ff67b7), czyli szosty ton,
+   tez nieuzywany przez zadna karte. */
 const ZJADACZE: ReadonlyArray<{
   t: string;
   slug: string;
@@ -73,7 +78,7 @@ const ZJADACZE: ReadonlyArray<{
     opis:
       'Automatyzacja przejmuje przepisywanie danych między mailem, arkuszem i fakturą, wysyłanie potwierdzeń i pilnowanie terminów. Zaczynamy od jednego procesu, który boli najbardziej.',
     ikona: 'dokument-skan',
-    c: '#00e096',
+    c: '#39ff14',
   },
   {
     t: 'oddzwanianie do klientów, którzy nie dodzwonili się za pierwszym razem',

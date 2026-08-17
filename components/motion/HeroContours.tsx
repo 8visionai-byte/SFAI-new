@@ -21,7 +21,7 @@
  *  INFINITY (partia HERO+NAV): komponent zostaje CSS-owym FALLBACKIEM tła hero
  *  pod przyszły canvas wstęgi (HeroRibbon, partia MOTION — desktop ≥1024px po
  *  load); mobile/reduced-motion widzi wyłącznie ten SVG. Krycia zweryfikowane
- *  na POGŁĘBIONYM tle #06070d: screen działa addytywnie, więc na ciemniejszej
+ *  na POGŁĘBIONYM tle (v18: #05050c): screen działa addytywnie, więc na ciemniejszej
  *  bazie linie świecą MOCNIEJ, nie słabiej — wartości celowo bez zmian
  *  (podbijanie dałoby neon konkurujący ze starfieldem .inf-stars i siatką
  *  .inf-grid fundamentu). */

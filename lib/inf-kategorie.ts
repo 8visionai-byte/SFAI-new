@@ -35,7 +35,7 @@
  * z tabeli pomiaru — reszta palety została tam potwierdzona jako identyczna
  * lub mocniejsza od wzorca („po F4 nasza paleta ma S=100% jak wzorzec"),
  * więc NIE ruszamy jej dalej. Kontrast liczony (nie szacowany) na czterech
- * tłach: --bg #06060c / korpus karty rgb(5,5,11) / szczyt mgławicy violet 8%
+ * tłach: --bg #05050c / korpus karty rgb(5,5,11) / szczyt mgławicy violet 8%
  * rgb(15,12,28) / panel dropdownu .92 rgb(10,10,16):
  *   #8e5cff -> #b638ff   hsl(258 100% 68%) -> hsl(278 100% 61%)   (violet)
  *       Wzorzec maluje violet kart #b026ff = hsl(278 100% 57%) — barwa
@@ -58,7 +58,7 @@
  * medianę hsl(278 88 58), o 10-26 deg za daleko od magenty (zmierzona
  * przyczyna „bladości"). Pomarańcz #ffa101/#ffc120 NIETYKALNY (referencja:
  * „już wygląda nieźle"). Kontrast liczony w Node na 4 tłach konwencji v10
- * (--bg #06060c / karta rgb(10,11,24) — tło wymogu >=4,8 / mgławica
+ * (--bg #05050c / karta rgb(10,11,24) — tło wymogu >=4,8 / mgławica
  * rgb(15,12,28) / dropdown rgb(10,10,16)):
  *   #b638ff -> #e438ff   hsl(278 100 61) -> hsl(292 100 61)   (violet)
  *       H 292 = środek dominant kalibracji, L bez zmian (relacja z odcieniami
@@ -78,6 +78,39 @@
  *   i statusu (pełna jarzeniówka 60/30 wraca — pierścień zmierzony
  *   5,03-5,40); pigułka taga trzyma pełny tint 12% i sam ogon 14px/30%
  *   (pierścień 5,10/5,05 — rdzeń 6px dalej zjadał p90 poniżej 4,5).
+ *
+ * v18 (spec-v18, PRÓBNIK PAWŁA; pomiary raporty/pomiary-v18.md). Paweł ręcznie
+ * wypróbkował siedem hexów, które mu się podobają, i nazwał je „namiastką, nie
+ * całą paletą". Sonda pierścieniowa (pierścień 1-3px wokół glifów na ŻYWEJ
+ * karcie, tło #05050c) przepuściła na TEKŚCIE cztery z siedmiu — i tylko jeden
+ * z nich bije to, co już mamy. Stąd v18 to JEDNA podmiana w rejestrze, nie sześć:
+ *   #00e096 -> #39ff14   hsl(160 100 44) -> hsl(111 100 54)   (green)
+ *       Hex Pawła 1:1 z próbnika. Pierścień 8,33 -> 10,11, karta 11,27 -> 14,42.
+ *       Zieleń przechodzi ze szmaragdu w limonkę — H rośnie o 49 stopni, więc
+ *       to JEDYNA zmiana barwy w tej rundzie i jedyna, którą widać w kadrze.
+ *       Ten sam hex maluje już od v13 drugi stop paska kafla chatbotowego
+ *       (Rozwiazanie) i kreskę H2 w Bezpieczenstwie — Paweł wypróbkował kolor,
+ *       który częściowo u nas siedział.
+ * ODCIEŃ ZIELENI #29ff77 hsl(142 100 58) ZOSTAJE. Po podmianie bazy para
+ * baza/odcień to H111/H142, czyli 31 stopni rozjazdu zamiast dotychczasowych 18
+ * (160/142). Kafle się nie zleją, ale para czyta się teraz jako limonka + mięta,
+ * a nie jako „ten sam kolor dwa razy". Gdyby Paweł chciał parę ciasną jak cyjan
+ * 184/187, odcień idzie na #7bff5c hsl(111 100 68) — to decyzja ESTETYCZNA,
+ * nie wymóg kontrastu (oba warianty mają zapas rzędu 5 jednostek nad AA).
+ * CZEGO v18 NIE ZMIENIŁO I DLACZEGO (wszystko zmierzone tą samą sondą,
+ * wartości = MIN p90 pierścienia na tle #05050c):
+ *   cyjan    #00f0ff 9,70  bije oba cyjany próbnika (#02c5d3 7,10, #00d3ff 8,15)
+ *   pomarańcz #ffa101 7,35 bije #f56601 5,23 — spec v18 sam każe wtedy zostawić
+ *   fiolet   #e438ff 4,92  bije OBA fiolety próbnika (#9e22e6 3,19, #8600ff 2,96)
+ *       i bije też ich rozjaśnione namiastki policzone w §3 pomiaru
+ *       (#c35cff 4,84, #b866ff 4,88). Dodatkowo #9e22e6 ma H278 i S=80, czyli
+ *       wraca dokładnie do hue, z którego v17 świadomie uciekło po „fioletowy
+ *       jest blady", i łamie regułę nasycenia 100% z tego samego spec.
+ *   blue     #70b0ff 6,66  bije #2500ff 2,23 (granat próbnika nie zdaje nawet
+ *       jako obwódka wskaźnika, próg 1.4.11 to 3,0)
+ * Trzy hexy próbnika z rodziny fiolet-niebieski nie wchodzą więc na tekst.
+ * Wchodzą tam, gdzie próg tekstowy nie obowiązuje: #8600ff i #f56601 jako DRUGI
+ * STOP paska typu D w Rozwiazanie.tsx, #02c5d3 jako drugi stop kafla zieleni.
  *
  * Kolory kategorii wywodzą się ze spec-infinity-v2 §Dropdown (zmierzone ze
  * wzorca): chatboty cyjan, voiceboty fiolet, automatyzacje zieleń,
@@ -128,11 +161,16 @@ export type InfIkonaDekor = { c: string; odcien?: string; ikona: InfIconName; em
 export const INF_KATEGORIA: Record<string, InfDekor> = {
   chatboty: { c: '#00f0ff', odcien: '#61edff', emoji: '💬', ikona: 'chat-dymek' },
   voiceboty: { c: '#e438ff', odcien: '#dc7aff', emoji: '🎙️', ikona: 'sluchawka-fala' },
+  // v18 (kontrola: podstrony /uslugi/voiceboty/* renderowaly sie DOMYSLNYM cyjanem,
+  // czyli kolorem rodziny chatbotow — mylacy sygnal wizualny). Podstrony dziedzicza
+  // kolor rodzica: ten sam fiolet co /uslugi/voiceboty.
+  windykacja: { c: '#e438ff', odcien: '#dc7aff', emoji: '🎙️', ikona: 'sluchawka-fala' },
+  'potwierdzanie-wizyt': { c: '#e438ff', odcien: '#dc7aff', emoji: '🎙️', ikona: 'sluchawka-fala' },
   'agent-rekrutacyjny': { c: '#dc7aff', odcien: '#ff00e5', emoji: '🤝', ikona: 'osoba-check' },
-  automatyzacje: { c: '#00e096', odcien: '#29ff77', emoji: '⚡', ikona: 'blyskawica' },
+  automatyzacje: { c: '#39ff14', odcien: '#29ff77', emoji: '⚡', ikona: 'blyskawica' },
   'dokumenty-faktury': { c: '#ffa101', odcien: '#ffc120', emoji: '📄', ikona: 'dokument-skan' },
   // v5 (spec §2): emoji opieki 🛡️ -> 🛠️ (lista emoji dropdownu Usługi 1:1 ze spec).
-  'opieka-ai': { c: '#00e096', odcien: '#29ff77', emoji: '🛠️', ikona: 'tarcza-serce' },
+  'opieka-ai': { c: '#39ff14', odcien: '#29ff77', emoji: '🛠️', ikona: 'tarcza-serce' },
   'audyt-ai': { c: '#ffa101', odcien: '#ffc120', emoji: '🔍', ikona: 'lupa-wykres' },
   rozwiazania: { c: '#e438ff', odcien: '#dc7aff', emoji: '🧩', ikona: 'puzzle' },
   'strony-www': { c: '#00f0ff', odcien: '#70b0ff', emoji: '🌐', ikona: 'glob-siatka' },
@@ -165,7 +203,7 @@ export const INF_PRODUKT: Record<string, InfIkonaDekor> = {
   // (kolejność listy spec = kolejność rejestru PRODUKTY).
   'skaner-faktur-ksef': { c: '#ffa101', odcien: '#ffc120', ikona: 'dokument-skan', emoji: '🧾' },
   'app-coachingowa-z-agentami': { c: '#dc7aff', odcien: '#ff00e5', ikona: 'gwiazda-kompas', emoji: '🗓️' },
-  'apka-obecnosci-skladek': { c: '#00e096', odcien: '#29ff77', ikona: 'kalendarz-check', emoji: '✅' },
+  'apka-obecnosci-skladek': { c: '#39ff14', odcien: '#29ff77', ikona: 'kalendarz-check', emoji: '✅' },
   'centrum-dowodzenia': { c: '#00f0ff', odcien: '#61edff', ikona: 'radar', emoji: '🎛️' },
 };
 
@@ -178,7 +216,7 @@ export const INF_NARZEDZIE: Record<string, InfIkonaDekor> = {
   // v5 (spec §2): emoji dropdownu Narzędzia 1:1 ze spec: 🧮 ⏱️ 🧭 🔎 ✍️
   // (kolejność listy spec = kolejność rejestru NARZEDZIA).
   'kalkulator-oszczednosci': { c: '#00f0ff', odcien: '#61edff', ikona: 'kalkulator', emoji: '🧮' },
-  'kalkulator-procesu': { c: '#00e096', odcien: '#29ff77', ikona: 'wykres-strzalka', emoji: '⏱️' },
+  'kalkulator-procesu': { c: '#39ff14', odcien: '#29ff77', ikona: 'wykres-strzalka', emoji: '⏱️' },
   'test-gotowosci-ai': { c: '#e438ff', odcien: '#dc7aff', ikona: 'gwiazda-kompas', emoji: '🧭' },
   'audyt-strony-ai': { c: '#ffa101', odcien: '#ffc120', ikona: 'lupa-wykres', emoji: '🔎' },
   'generator-promptow': { c: '#dc7aff', odcien: '#ff00e5', ikona: 'iskry', emoji: '✍️' },

@@ -23,14 +23,20 @@ type Opinia = { cytat: string; branza: string; podpis: string };
 /* INFINITY: tonacja dekoracyjna kart cytatów — lewa krawędź .inf-card w kolorze
    kategorii usługi, o której mówi dana opinia (rejestr kolorów ze spec:
    chatboty blue, automatyzacje green, www cyan, dokumenty amber). Kolejność
-   1:1 z tablicą OPINIE. Wyłącznie dekoracja — tekst niosą tokeny. */
+   1:1 z tablicą OPINIE. Wyłącznie dekoracja — tekst niosą tokeny.
+   v18 (pomiary-v18.md §4.3 „sieroty palety"): hexy sprzed F4 podmienione na
+   rejestrowe, rodzina barwy bez zmian, kontrast na górze karty tylko rośnie:
+     #2b7cff -> #70b0ff   blue   5,06 -> 8,70
+     #22e06b -> #29ff77   green 11,12 -> 14,59
+     #22d3ee -> #00f0ff   cyan  10,82 -> 13,88   (podmiana v8b, ominęła ten plik)
+   Kolejność tablicy bez zmian, żaden sąsiad nie dostał tego samego tonu. */
 const OPINIA_TON = [
   '#ffa101', // kancelaria: raporty/dokumenty
-  '#2b7cff', // turystyka: chatbot
-  '#22e06b', // budowlanka: automatyzacja maili
+  '#70b0ff', // turystyka: chatbot
+  '#29ff77', // budowlanka: automatyzacja maili
   '#ffa101', // hotel: faktury/dokumenty
-  '#22d3ee', // agencja: narzędzia/www
-  '#2b7cff', // edukacja: chatbot
+  '#00f0ff', // agencja: narzędzia/www
+  '#70b0ff', // edukacja: chatbot
 ] as const;
 
 const OPINIE: readonly Opinia[] = [

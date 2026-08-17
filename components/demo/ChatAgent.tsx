@@ -51,24 +51,24 @@ type KartaOdnosnik = {
 };
 
 const KOLORY_USLUG: Record<string, string> = {
-  chatboty: '#2b7cff',
-  voiceboty: '#8b5cf6',
-  'agent-rekrutacyjny': '#8b5cf6',
-  automatyzacje: '#22e06b',
+  chatboty: '#70b0ff',
+  voiceboty: '#e438ff',
+  'agent-rekrutacyjny': '#e438ff',
+  automatyzacje: '#29ff77',
   'dokumenty-faktury': '#f59e0b',
-  'opieka-ai': '#22e06b',
-  'audyt-ai': '#22d3ee',
-  rozwiazania: '#2b7cff',
-  'strony-www': '#22d3ee',
-  optymalizacja: '#22d3ee',
+  'opieka-ai': '#29ff77',
+  'audyt-ai': '#02c5d3',
+  rozwiazania: '#70b0ff',
+  'strony-www': '#02c5d3',
+  optymalizacja: '#02c5d3',
 };
 
 const KOLORY_NARZEDZI: Record<string, string> = {
-  'kalkulator-oszczednosci': '#22e06b',
-  'kalkulator-procesu': '#22e06b',
-  'test-gotowosci-ai': '#8b5cf6',
-  'audyt-strony-ai': '#22d3ee',
-  'generator-promptow': '#2b7cff',
+  'kalkulator-oszczednosci': '#29ff77',
+  'kalkulator-procesu': '#29ff77',
+  'test-gotowosci-ai': '#e438ff',
+  'audyt-strony-ai': '#02c5d3',
+  'generator-promptow': '#70b0ff',
 };
 
 const KARTY: ReadonlyMap<string, KartaOdnosnik> = new Map([
@@ -79,7 +79,7 @@ const KARTY: ReadonlyMap<string, KartaOdnosnik> = new Map([
       badge: 'Usługa',
       tytul: u.h1,
       opis: u.metaDescription,
-      kolor: KOLORY_USLUG[u.slug] ?? '#22d3ee',
+      kolor: KOLORY_USLUG[u.slug] ?? '#02c5d3',
     },
   ]),
   ...NARZEDZIA.map((n): [string, KartaOdnosnik] => [
@@ -89,7 +89,7 @@ const KARTY: ReadonlyMap<string, KartaOdnosnik> = new Map([
       badge: n.etykieta,
       tytul: n.tytul,
       opis: n.opis,
-      kolor: KOLORY_NARZEDZI[n.slug] ?? '#22d3ee',
+      kolor: KOLORY_NARZEDZI[n.slug] ?? '#02c5d3',
     },
   ]),
 ]);
@@ -474,7 +474,7 @@ function parseRich(text: string): ReactNode[] {
 /* CSS DO DOPISANIA (partia CHAT+TOOLS): pełne reguły — badge kategorii na
    karcie-odnośniku czatu. Dziedziczy --card-c z rodzica .inf-card; kolor tekstu
    ROZJAŚNIONY color-mix-em z bielą, żeby 11px mono zdawało AA na --surface
-   (czysty #8b5cf6 miał ~4.4:1 — za mało na drobny tekst). Pancerny fallback
+   (czysty #e438ff miał ~4.4:1 — za mało na drobny tekst). Pancerny fallback
    (var(--accent)) linijkę wyżej — stare silniki zostają na cyjanie AA.
    Do @layer components (konwencja pliku).
 

@@ -354,7 +354,7 @@ export default function ArchitekciWartosciAiPage() {
                 as="article"
                 variant="quiet"
                 className="inf-card inf-card-top h-full p-6"
-                style={{ '--card-c': '#2b7cff' } as CSSProperties}
+                style={{ '--card-c': '#70b0ff' } as CSSProperties}
               >
                 <div aria-hidden="true" className="inf-spotlight" />
 
@@ -371,7 +371,7 @@ export default function ArchitekciWartosciAiPage() {
                 as="article"
                 variant="quiet"
                 className="inf-card inf-card-top h-full p-6"
-                style={{ '--card-c': '#8b5cf6' } as CSSProperties}
+                style={{ '--card-c': '#e438ff' } as CSSProperties}
               >
                 <div aria-hidden="true" className="inf-spotlight" />
 
@@ -388,7 +388,7 @@ export default function ArchitekciWartosciAiPage() {
                 as="article"
                 variant="quiet"
                 className="inf-card inf-card-top h-full p-6"
-                style={{ '--card-c': '#22e06b' } as CSSProperties}
+                style={{ '--card-c': '#29ff77' } as CSSProperties}
               >
                 <div aria-hidden="true" className="inf-spotlight" />
 

@@ -28,13 +28,13 @@ type Space = 'sm' | 'md' | 'lg';
 
 const toneClass: Record<Tone, string> = {
   // INFINITY v4 (spec §PARTIA A pkt 1): base = PRZEZROCZYSTA (kolor niesie
-  // body #06060c) — fixed warstwy .inf-stars/.inf-nebula/.inf-particles
+  // body #05050c) — fixed warstwy .inf-stars/.inf-nebula/.inf-particles
   // wreszcie prześwitują na CAŁEJ stronie (diagnoza „tło znikło": sekcje
   // kryły je solidnym bg-bg). subtle = PÓŁPRZEZROCZYSTY pas (color-mix
   // --bg-subtle 72%). Obie klasy w globals.css (partia A) z guardem
   // [data-theme=light]: jasne wyspy dostają solidne tło jak dotąd — wyspy
   // BEZ ZMIAN. Kontrast bez regresji: tekst na gwiazdach (1px, alpha ≤.25)
-  // = tekst na #06060c (te same tokeny, AA policzone w globals).
+  // = tekst na #05050c (te same tokeny, AA policzone w globals).
   base: 'inf-sec-base',
   subtle: 'inf-sec-subtle',
   surface: 'bg-surface',

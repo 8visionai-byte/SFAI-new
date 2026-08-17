@@ -52,13 +52,15 @@ export function ZyweDemo() {
             data-agent-open="voice" otwierający globalną konsolę agenta
             (zamiast linku zewnętrznego z v4 — klik łapie delegacja w
             agent-console-init.ts). Teksty sekcji (H3 + opis) zostają 1:1.
-            Karta w kolorze kategorii voicebotów (violet #8b5cf6) bez zmian.
+            Karta w kolorze kategorii voicebotów — v18: #e438ff z rejestru
+            (do v17 stało tu #8b5cf6 sprzed F4, czyli kolor, którego kategoria
+            voiceboty nie ma od trzech rund).
             Slot bloba: wysokość w px ARBITRALNIE h-[Npx] (spacing repo to
             własne tokeny — h-9 = 96px, pułapka!). */}
         <Reveal delay={0.06}>
           <div
             className="inf-card flex h-full flex-col justify-center p-6"
-            style={{ '--card-c': '#8b5cf6' } as React.CSSProperties}
+            style={{ '--card-c': '#e438ff' } as React.CSSProperties}
           >
             {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
                 delegowany pointermove z MotionOrchestrator (desktop).

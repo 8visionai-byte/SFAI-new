@@ -180,26 +180,35 @@
      te same wartości, więc dark-w-light dalej działa.
      INFINITY v2 (2026-08-06, Paweł: „użyj dokładnie tych kolorów"): paleta 1:1
      ze ZMIERZONYCH root vars wzorca infinitytechstack.uk — czerń z fioletowym
-     nalotem #06060c, powierzchnie #111127/#181840, tekst #e4e4f0/#7a7a9e,
+     nalotem #05050c, powierzchnie #111127/#181840, tekst #e4e4f0/#7a7a9e,
      akcent interakcji cyjan #22d3ee, akcent pomocniczy violet #8b5cf6.
      KONTRASTY na nowej palecie (WCAG, policzone):
-       --fg #e4e4f0 na #06060c  = ~16.0:1 (AAA); na --surface #111127 ~14.7:1
+       --fg #e4e4f0 na #05050c  = ~16,1:1 (AAA); na --surface #111127 ~14.7:1
        --fg-muted #7a7a9e       =  ~4.9:1 na bg (AA); ~4.5:1 na surface (AA na
                                    styk — caption/body-sm OK, nie ściemniać)
        --fg-subtle #4e4e6e      =  ~2.5:1 — WYŁĄCZNIE DEKORACJA (glify, kreski);
                                    mały CZYTELNY tekst jedzie na --fg-muted
                                    (AA-guard .text-fg-subtle na końcu pliku)
-       --accent #00f0ff         = 14,2:1 na bg (AA tekst-akcja); tekst #06060c
-                                   na tle #00f0ff = 14,2:1 (AA — CTA)
-       --success #00e096 11,65:1 · --warning #ffa101 9,96:1 · --error #ff3434 5,57:1
+       --accent #00f0ff         = 14,4:1 na bg (AA tekst-akcja); tekst #05050c
+                                   na tle #00f0ff = 14,4:1 (AA — CTA)
+       --success #00e096 11,71:1 · --warning #ffa101 10,02:1 · --error #ff3434 5,61:1
        --border-strong #2a2a50  =  ~1.5:1 — kreska DEKORACYJNA; obrys KONTROLEK
                                    dalej --border-control (biel 55%, >3:1, 1.4.11)
-       --ring #00f0ff           = 14,2:1 (1.4.11 — wskaźnik fokusa ✓) */
+       --ring #00f0ff           = 14,4:1 (1.4.11 — wskaźnik fokusa ✓) */
   :root,
   [data-theme='dark'] {
     color-scheme: dark;
 
-    --bg: #06060c; /* INFINITY 1:1: --bg-primary wzorca */
+    /* v18 (spec-v18, decyzja Pawła: „nasze tło jest ciut jaśniejsze i to też
+       może powodować ten profesjonalizm... jakie powinno być te tło: #05050C"):
+       #06060c -> #05050c. POWÓD JEST ESTETYCZNY, NIE DOSTĘPNOŚCIOWY. Pomiar A/B
+       na produkcji (raporty/pomiary-v18.md §4.1) mówi wprost: wszystkie kontrasty
+       rosną albo stoją, ale o +0,02..+0,05, a na pigułce taga o okrągłe zero, bo
+       tam tekst siedzi na własnym tincie i tło strony nie dochodzi do pierścienia.
+       NIE WOLNO tej zmiany użyć jako uzasadnienia dla przyciemnienia palety —
+       zapasu nie kupuje. Ten sam hex jedzie w viewport.themeColor (app/layout.tsx)
+       i w .surface-tech niżej; te trzy wartości mają chodzić razem. */
+    --bg: #05050c; /* INFINITY: --bg-primary wzorca, pogłębione v18 */
     --bg-subtle: #0c0c18; /* INFINITY 1:1: --bg-secondary — krok tonu nad --bg */
     /* Powierzchnie SOLIDNE (dropdown, skip-link, panel menu — muszą kryć treść
        pod spodem; szkło rgba to OSOBNA klasa .sf-glass, nie token --surface). */
@@ -212,7 +221,16 @@
     --fg: #e4e4f0; /* INFINITY 1:1: --text-primary */
     --fg-muted: #7a7a9e; /* INFINITY 1:1: --text-secondary */
     --fg-subtle: #4e4e6e; /* INFINITY 1:1: --text-muted — TYLKO dekoracja (~2.5:1!) */
-    --fg-on-accent: #06060c; /* ciemny tekst na cyjanie ~11.2:1 (AA) */
+    /* v18, DECYZJA ŚWIADOMA: ATRAMENT SCHODZI RAZEM Z TŁEM. Ten hex nie jest
+       tłem strony — to ciemny tekst kładziony NA JASNYM (cyjan CTA, biel hoveru),
+       więc pomiary-v18.md §4.2.B słusznie zauważa, że podmiana nie była wymagana.
+       Robimy ją mimo to, bo projekt ma mieć JEDNĄ czerń: atrament czyta się jako
+       wycięcie w tle strony, a dwa czarne różniące się o jednostkę to zarodek
+       rozjazdu (dokładnie takiego, jaki v18 właśnie usuwa z themeColor). Kontrast
+       tylko rośnie: na #00f0ff 14,35 -> 14,43, na bieli 20,21 -> 20,32.
+       Ten sam ruch objął --accent-contrast niżej, .inf-glow-cta-solid:hover,
+       hover CTA hero i inline w components/uslugi/ServiceHero.tsx. */
+    --fg-on-accent: #05050c; /* ciemny tekst na cyjanie 14,4:1 (AAA) */
 
     /* Brand / akcent — INFINITY: cyjan interakcji (hover nav, tekst-akcje, CTA).
        Violet wzorca żyje w --accent-2 (kafle/dekoracja/druga barwa).
@@ -225,20 +243,20 @@
        `text-shadow 0 0 8px rgba(0,240,255,.8)`) i wskaźnik kursora (§5.1).
        Praca w HSL, tak jak każe spec: hue 187 -> 186 (bez zmiany rodziny),
        NASYCENIE 86% -> 100%, jasność HSL 53% -> 50%. Podnosimy S, nie L.
-       KONTRAST (policzony, nie oszacowany): #00f0ff na --bg #06060c = 14,2:1
+       KONTRAST (policzony, nie oszacowany): #00f0ff na --bg #05050c = 14,4:1
        (było 11,2:1, czyli PO zmianie jest lepiej), na --surface #111127
-       = 13,0:1, a tekst --accent-contrast #06060c NA cyjanie = 14,2:1. */
+       = 13,0:1, a tekst --accent-contrast #05050c NA cyjanie = 14,4:1. */
     --brand: #ffffff;
     --accent: #00f0ff;
     --accent-hover: #61e9ff; /* stopień jaśniejszy (na ciemnym hover idzie W GÓRĘ), S 100% */
     --accent-decor: #00f0ff;
     --accent-soft: rgba(0, 240, 255, 0.14);
-    --accent-contrast: #06060c; /* tekst na CTA: 14,2:1 na #00f0ff (AAA ✓) */
+    --accent-contrast: #05050c; /* tekst na CTA: 14,4:1 na #00f0ff (AAA ✓) */
     /* Violet ZOSTAJE #8b5cf6 — to jest wartość ZMIERZONA u wzorca (obwódka
        pigułki `rgba(139,92,246,.2)`, akcent kart, plama sekcji flagship), więc
        nie ma tu czego „podbijać": jesteśmy 1:1. Wersja o pełnym nasyceniu
        (#8853ff) spadłaby na 4,55:1 na --bg, czyli na styk progu AA. */
-    --accent-2: #8b5cf6; /* NOWY (INFINITY 1:1: --accent wzorca) — violet pomocniczy */
+    --accent-2: #e438ff; /* NOWY (INFINITY 1:1: --accent wzorca) — violet pomocniczy */
 
     /* Linie: INFINITY 1:1 — granatowo-fioletowe kreski wzorca (DEKORACYJNE,
        ~1.2-1.5:1); obrys kontrolek (1.4.11, >3:1) zostaje na --border-control. */
@@ -265,7 +283,7 @@
        (emerald-500 / amber-500 / red-500), czyli dokładnie ta „bladość", o której
        mówi właściciel; wzorzec trzyma statusy w neonach (`#39ff14` na `ACTIVE`).
        Każdy podniesiony do NASYCENIA 100% przy zachowanej jasności HSL, hue bez
-       zmian (zieleń 160°, bursztyn 38°, czerwień 0°). Kontrasty na --bg #06060c
+       zmian (zieleń 160°, bursztyn 38°, czerwień 0°). Kontrasty na --bg #05050c
        policzone po zmianie i WSZYSTKIE poszły w górę, nie w dół:
          --success #00c986  9,33:1 (było 7,97:1)
          --warning #ffa101  9,96:1 (było 9,41:1)
@@ -273,7 +291,14 @@
        Na --surface #111127 odpowiednio 8,56:1 / 9,13:1 / 5,11:1 — AA wszędzie.
        v17 (paleta neon, raporty/pomiary-v17.md §2): zieleń równana do poziomu
        pomarańczu — #00c986 -> #00e096 (hue 160 i S=100 bez zmian, L 39 -> 44):
-       11,65:1 na --bg, 10,68:1 na --surface; kontrast tylko rośnie. */
+       11,71:1 na --bg (v18), 10,68:1 na --surface; kontrast tylko rośnie.
+    /* v18 (raporty/pomiary-v18.md §2, pozycja 8 tabeli wystąpień): TOKEN STANU
+       ZOSTAJE NA #00e096, mimo że zieleń DEKORACYJNA rejestru zeszła w tej samej
+       rundzie na #39ff14. To nie jest przeoczenie, tylko rozdzielenie dwóch ról,
+       które od F4 dzieliły hex przez zbieg okoliczności, nie z projektu: --success
+       mówi „udało się" i ma czytać się jak zieleń potwierdzenia, a nie jak neonowa
+       limonka kategorii. Od v18 to NIE jest ten sam hex co zieleń dekoracyjna
+       i nie wolno ich zbijać z powrotem „zamień wszystkie". */
     --success: #00e096;
     --success-bg: rgba(0, 224, 150, 0.12);
     --warning: #ffa101;
@@ -330,7 +355,7 @@
     );
     /* TRASA ŚWIATA B (makiety 1/5): świetlista linia niebieski→fiolet→zieleń.
        Kolory 1:1 z zatwierdzonych makiet. WYŁĄCZNIE dekoracja — nie pod tekst. */
-    --route-gradient: linear-gradient(90deg, #2b7cff 0%, #7a3cf0 50%, #22e06b 100%);
+    --route-gradient: linear-gradient(90deg, #70b0ff 0%, #e438ff 50%, #29ff77 100%);
     /* RING NAV „INFINITY" (ZMIERZONY ze wzorca): magenta→violet→cyan→magenta
        (końce równe = pętla bez szwu). WYŁĄCZNIE płynąca obwódka pigułki
        nawigacji (.inf-pill-nav::before) + jej halo — nie pod tekst. */
@@ -389,7 +414,7 @@
     --accent-contrast: var(--sf-white);
     /* NOWY token (INFINITY): violet pomocniczy — na jasnym TYLKO dekoracja
        (~3.9:1 na bieli, poniżej AA dla tekstu). Dodatek, wyspa bez zmian. */
-    --accent-2: #8b5cf6;
+    --accent-2: #e438ff;
 
     /* Linie / obramowania
        Redesign „Płyta na kalce": kreska ma być WŁOSEM rysunku technicznego, a
@@ -797,8 +822,8 @@
     /* Przełącz tokeny semantyczne na ciemne (lokalnie, bez atrybutu w DOM).
        INFINITY: wartości = lustro pogłębionego :root (spójny kadr strony).
        v8 (spec pkt 1, „tło ma być jednolite"): --bg zrównany z globalnym
-       #06060c — sekcja NIE ma już własnego, o stopień innego czarnego. */
-    --bg: #06060c;
+       #05050c — sekcja NIE ma już własnego, o stopień innego czarnego. */
+    --bg: #05050c;
     --bg-subtle: #0a0c14;
     --surface: #0d1018;
     --surface-raised: var(--sf-navy-700);
@@ -2297,7 +2322,7 @@ html.lenis body {
     height: 10px;
     transform: translateY(-50%);
     border-radius: 999px;
-    background: #22e06b;
+    background: #29ff77;
     box-shadow:
       0 0 0 4px rgba(34, 224, 107, 0.18),
       0 0 18px 2px rgba(34, 224, 107, 0.55);
@@ -2324,7 +2349,7 @@ html.lenis body {
       - obwódka 1:1 wzorzec: rgba(255,255,255,.07) — bez zmian.
      KONTRAST po zdjęciu tafli (opisy w tych kartach jadą na --fg-muted #7a7a9e,
      bo guard rozjaśniający do #8a8aad działa tylko wewnątrz .inf-card):
-       #7a7a9e na karcie nad czystym tłem #06060c            4,94:1 (AA ✓)
+       #7a7a9e na karcie nad czystym tłem #05050c            4,94:1 (AA ✓)
        #7a7a9e na karcie nad szczytem mgławicy violet 8%     4,71:1 (AA ✓)
      Tekst NIE był rozjaśniany (spec tego zabrania) — próg trzyma sam fakt,
      że tło strony jest prawie czarne.
@@ -2381,7 +2406,7 @@ html.lenis body {
           przeskakuje na papier, więc karta nigdy nie jest ciemną plamą.
        2. NA NIM to samo `rgba(0,0,0,.10)` co w .sf-glass i .inf-card, czyli
           zamówione „delikatne zaciemnienie 10 procent".
-     Wynik: wnętrze składa się do rgb(5,5,11) przy stronie rgb(6,6,12) — jedna
+     Wynik: wnętrze składa się do rgb(5,5,11) przy stronie rgb(5,5,12) — jedna
      jednostka na kanał, dokładnie tyle co korpus .inf-card, więc karta dalej
      czyta się jak przeświecająca (kontrast korpus/strona 1,01:1), a kolor
      zostaje WYŁĄCZNIE w obwódce i w aurze ::before.
@@ -2450,7 +2475,7 @@ html.lenis body {
   }
   .sf-header.is-scrolled {
     /* INFINITY: token --bg zamiast sztywnego navy-950 — pasek zlewa się z
-       pogłębionym kadrem (#06070d), zero jaśniejszej belki nad treścią. */
+       pogłębionym kadrem (v18: #05050c), zero jaśniejszej belki nad treścią. */
     background-color: var(--bg);
     border-bottom-color: var(--glass-hairline);
   }
@@ -2595,7 +2620,7 @@ html.lenis body {
 /* ══════════════════════════════════════════════════════════════════════════
    REDESIGN „INFINITY" (wzorzec infinitytechstack.uk, partia FUNDAMENT).
    Język: mono-akcenty (JetBrains Mono przez --font-mono z next/font), pigułki,
-   neonowe obwódki, starfield na czerni #06060c. Paleta v2 = 1:1 ze wzorca
+   neonowe obwódki, starfield na czerni #05050c. Paleta v2 = 1:1 ze wzorca
    (cyjan #22d3ee interakcje, violet #8b5cf6 pomocniczo). Magenta WYŁĄCZNIE
    w płynącym ringu pigułki nawigacji (--ring-gradient, zmierzony ze wzorca).
    ARCHITEKTURA (konwencja pliku): bazowe klasy w @layer components;
@@ -2610,7 +2635,7 @@ html.lenis body {
 @layer components {
   /* ── .inf-sec-base / .inf-sec-subtle — TŁA SEKCJI v4 (spec §PARTIA A pkt 1;
      konsument: components/ui/Section.tsx tone base/subtle).
-     base = TRANSPARENT: kolor niesie body (--bg #06060c), a fixed warstwy
+     base = TRANSPARENT: kolor niesie body (--bg #05050c), a fixed warstwy
      .inf-stars/.inf-nebula/.inf-particles (z-index -1) prześwitują na całej
      stronie — koniec „tło znikło" (sekcje kryły je solidnym bg-bg).
      subtle = PÓŁPRZEZROCZYSTY pas: color-mix(--bg-subtle 72%, transparent)
@@ -2618,7 +2643,7 @@ html.lenis body {
      rgba(12,12,24,.72) = #0c0c18 w 72% (1:1).
      GUARD JASNYCH WYSP: sekcja/przodek z data-theme=light wraca na SOLIDNE
      tokeny (wyspy BEZ ZMIAN — partia C i tak zdejmuje białą kartę z home).
-     KONTRAST: tekst na gwiazdach = tekst na #06060c (kropki 1px alpha ≤.25
+     KONTRAST: tekst na gwiazdach = tekst na #05050c (kropki 1px alpha ≤.25
      nie zmieniają tła pod literami — AA jak w komentarzu tokenów). */
   .inf-sec-base {
     background-color: transparent;
@@ -2661,7 +2686,7 @@ html.lenis body {
      POMIARY WZORCA §1.4 mówią wprost, że kopiowanie ich hexa 1:1 NIE zadziała:
      wzorzec ma pod paskiem stronę o luminancji 0,00450 (ich .lp ma wielkie
      plamy radialne), a jego pasek 0,00332 — czyli pasek jest ciemniejszy od
-     tła POD SOBĄ o 26%. Nasze tło to płaskie #06060c (0,001952), więc dotąd
+     tła POD SOBĄ o 26%. Nasze tło to płaskie #05050c (0,001674), więc dotąd
      stosowany 1:1 hex wzorca rgba(10,10,16,.65) dawał po złożeniu rgb(9,9,15),
      czyli pasek o 47% JAŚNIEJSZY od strony — dokładnie odwrotnie niż wzorzec.
      Odtwarzamy więc PROPORCJĘ, nie hex: cel = 0,74 luminancji tła.
@@ -2807,7 +2832,7 @@ html.lenis body {
      v10 pkt 1 (cytat: „tło na tych panelach jest za mocno przezroczyste.
      Troszkę trzeba je zwiększyć, jeszcze o 10%, bo na oryginalnej stronie
      jest to ciemniejsze"): krycie 0,82 -> 0,92, znów dokładnie 10 punktów.
-     Panel po złożeniu z --bg #06060c = rgb(10,10,16). Kontrasty badge'ów
+     Panel po złożeniu z --bg #05050c = rgb(10,10,16). Kontrasty badge'ów
      POLICZONE na nowym panelu (paleta neon v17, raporty/pomiary-v17.md §2):
      #dc7aff 7,77:1 · #ff00e5 6,00:1 · #e438ff 5,93:1 · #61edff 14,16:1 ·
      #29ff77 14,73:1 · #ffc120 12,13:1 · #70b0ff 8,78:1 · #00f0ff 14,01:1
@@ -3013,7 +3038,7 @@ html.lenis body {
      --counter-c. Pudełko dokłada obwódkę, tinted tło i halo box-shadow.
 
      KONTRAST (policzony na SKOMPONOWANYM tle, nie z gołego hexa: tło chipa to
-     8% koloru na --bg #06060c, czyli najjaśniejszy przypadek = cyjan, L≈0,0082):
+     8% koloru na --bg #05050c, czyli najjaśniejszy przypadek = cyjan, L≈0,0082):
        liczba #00f0ff        12,8:1 ✓   liczba #ff007f  4,77:1 ✓
        liczba var(--metal-green) 9,4:1 ✓ liczba var(--warning) 8,9:1 ✓
        opis --fg #e4e4f0     13,2:1 ✓
@@ -3234,7 +3259,7 @@ html.lenis body {
      obwódki na hover, reflektor pod kursorem.
      DLACZEGO `rgba(0,0,0,.10)`, a nie ton --bg: to ma być ZACIEMNIENIE tego, co
      leży pod kartą (gwiazdy, mgławice), a nie własne pudełko. Na czystym tle
-     składa się do rgb(5,5,11) przy stronie rgb(6,6,12), czyli różnica 1 jednostki
+     składa się do rgb(5,5,11) przy stronie rgb(5,5,12), czyli różnica 1 jednostki
      na kanał — tyle samo, ile wynosi największy skok tonu na granicach sekcji
      wzorca (pomiary §4.3). Innymi słowy: widać przez kartę tło strony.
      KONTRAST po zdjęciu korpusu (liczony na złożonych warstwach):
@@ -3327,7 +3352,7 @@ html.lenis body {
        żeby była bardziej świecąca"): czerń 10% spod gradientu ZDJĘTA —
        wzorzec trzyma background-color TRANSPARENT na KAŻDEJ rodzinie kart,
        przezroczystość niesie wyłącznie alfa gradientu .74/.55. Kontrasty NIE
-       spadają pod próg: gradient nad tłem #06060c składa się do ~rgb(10,11,24)
+       spadają pod próg: gradient nad tłem #05050c składa się do ~rgb(10,11,24)
        na górze i ~rgb(8,8,17) na dole karty — opis --fg-muted ~5,9:1, fiolet
        v17 #e438ff 5,87:1 (AA; stary #b638ff miał ~4,65:1 policzone sondą v15
        na złożeniu; stara czerń 10% dawała różnicę <0,5 jednostki na kanał). */
@@ -3576,6 +3601,57 @@ html.lenis body {
   .inf-card[style*='#e438ff'] .inf-tag.inf-tag-kolor {
     text-shadow: 0 0 14px rgba(228, 56, 255, 0.3);
   }
+  /* ── v18, zadanie „JARZENIE MAKSYMALNE": DLACZEGO 60/30 ZOSTAJE ────────────
+     Spec v18 pkt 3 prosi o podbicie poświaty „do maksimum mieszczącego się
+     w progu AA". Policzone (scratchpad v18-jarzenie.mjs, model jednoparametrowy
+     skalibrowany na zmierzonym pierścieniu fioletu 4,92 z pomiary-v18.md §1;
+     model odtwarza CAŁĄ zmierzoną kolumnę pierścienia z dokładnością ±0,03:
+     #00f0ff 9,72/9,70 · #ffc120 8,69/8,68 · #00e096 8,31/8,33 · #ffa101
+     7,34/7,35 · #70b0ff 6,64/6,66 · #dc7aff 6,04/6,06 · #ff00e5 5,13/5,12 ·
+     #39ff14 10,10/10,11 · #02c5d3 7,07/7,10 · #f56601 5,24/5,23).
+
+     Jarzeniówka 60/30 daje pierścieniowi ALFĘ EFEKTYWNĄ 16,9%. Sufit alfy,
+     przy którym kolor jeszcze zdaje, jest RÓŻNY dla każdego koloru palety:
+
+       kolor      pierścień@60/30   sufit AA 4,50   sufit wymogu 4,80
+       #e438ff         4,92             22,6%             18,6%   <- limit
+       #ff00e5         5,13             25,4%             21,5%
+       #f56601         5,24             25,8%             22,2%
+       #dc7aff         6,04             30,7%             27,9%
+       #70b0ff         6,64             33,4%             30,8%
+       #02c5d3         7,07             35,3%             32,8%
+       #ffa101         7,34             36,2%             33,8%
+       #ffc120         8,69             39,4%             37,3%
+       #00f0ff         9,72             41,2%             39,2%
+       #39ff14        10,10             41,9%             39,9%
+
+     Sufit CAŁEJ palety niesie więc fiolet bazowy, a fiolet w v18 SIĘ NIE
+     ZMIENIŁ (próbnik Pawła nie miał nic jaśniejszego — patrz lib/inf-kategorie
+     §v18). Skoro najsłabszy kolor stoi w miejscu, SUFIT JARZENIA TEŻ STOI.
+     Co konkretnie kosztowałoby podbicie, przy fiolecie:
+       60/30 (dziś)  alfa 16,9%  ->  4,92   zapas 0,42 nad AA, spełnia wymóg 4,8
+       66/33 (+10%)  alfa 18,6%  ->  4,80   wymóg 4,8 zjedzony CO DO SETNEJ
+       70/35 (+17%)  alfa 19,7%  ->  4,72   poniżej wymogu wewnętrznego v17
+       80/40 (+33%)  alfa 22,5%  ->  4,51   0,01 nad AA — zero zapasu
+      100/50 (+67%)  alfa 28,2%  ->  4,09   AA ZŁAMANE
+     Czyli za +17% alfy cienia (na cieniu 6px/14px praktycznie niewidoczne)
+     płaci się CAŁYM zapasem bezpieczeństwa najsłabszego koloru strony. Zły
+     kurs — 60/30 zostaje.
+
+     ODRZUCONY WARIANT: podbić globalnie do 80/40 i dorobić wyjątek atrybutowy
+     dla fioletu (i drugi dla magenty, która przy 22,5% siada na ~4,74).
+     To dołożyłoby DWIE kolejne reguły z hexem w selektorze, czyli dokładnie
+     ten wzorzec, który pomiary-v18.md §O3 wskazał jako minę: przy każdej
+     przyszłej zmianie palety wyjątek CICHO przestaje łapać, a build i typecheck
+     przechodzą. Jeden taki selektor już tu stoi (wyżej) i to jest maksimum,
+     ile tego wzorca ten plik ma unieść.
+
+     JARZENIE W v18 ROŚNIE INACZEJ, BEZ RUSZANIA ALF: (1) zieleń bazowa poszła
+     z #00e096 na #39ff14, czyli jej pierścień z 8,31 na 10,10 — te same alfy
+     świecą mocniej, bo świeci jaśniejszy kolor; (2) tło zeszło na #05050c,
+     więc każda poświata siedzi na ciemniejszym gruncie; (3) paski typu D dostały
+     pełnonasycone hexy próbnika. WYMAGA POTWIERDZENIA SONDĄ PIERŚCIENIOWĄ
+     po zbudowaniu v18 — liczby wyżej są policzone, nie zmierzone na tej wersji. */
 
   /* ══ v8b pkt 4 — TAGI W DWÓCH WARIANTACH ══════════════════════════════════
      Cytat: „na niektórych kartach nie ma tagów, a na niektórych są po trzy,
@@ -3820,7 +3896,7 @@ html.lenis body {
      KONTRAST (policzony po złożeniu warstw, nie na surowym hexie):
        #ff00e5 na wnętrzu pigułki rgba(255,0,229,.08) nad paskiem nawigacji
        (złożone rgb(28,8,32)) = 5,78:1  → AA dla tekstu normalnego ✓
-       #ff00e5 na tle strony #06060c                        = 6,14:1  → AA ✓
+       #ff00e5 na tle strony #05050c                        = 6,14:1  → AA ✓
        biel na tle hover rgba(255,0,229,.2)                 = 16,6:1  → AAA ✓
      Obwódka w spoczynku 2,26:1 (poniżej 3:1 z 1.4.11), ale puls podnosi ją
      dwa razy na 2 s do pełnego #ff00e5 = 5,78:1, a kontrolkę identyfikuje
@@ -3875,7 +3951,7 @@ html.lenis body {
     animation: none;
   }
   /* Wariant WYPEŁNIONY (dawna baza v3) — spoczynek: tło akcent + neonowa
-     obwódka; hover: białe podświetlenie (tekst #06060c, ~20:1). Używany przez
+     obwódka; hover: białe podświetlenie (tekst #05050c, ~20:1). Używany przez
      kontrakt .sf-magnetic niżej; klasa dostępna też wprost dla partii C/D. */
   .inf-glow-cta-solid {
     /* v8: baza jest teraz RÓŻOWA i pulsuje — wariant wypełniony gasi puls
@@ -3893,7 +3969,7 @@ html.lenis body {
   }
   .inf-glow-cta-solid:hover {
     background-color: #fff;
-    color: #06060c;
+    color: #05050c;
     /* v5: hover bazy świeci literami (text-shadow) i zieleni obwódkę — na
        wypełnionym wariancie oba gasną (ciemny tekst na białym wypełnieniu). */
     text-shadow: none;
@@ -3932,7 +4008,7 @@ html.lenis body {
   }
   /* ── .inf-cta-ghost-green — v5 (spec §2), klasa WIELOKROTNEGO UŻYTKU
      (partia C/D wepnie ją na ghost CTA stron, np. „Sprawdź, którego Agenta
-     potrzebujesz"): NAPIS ZIELONY #4ade80 (~9.9:1 na --bg #06060c — AA),
+     potrzebujesz"): NAPIS ZIELONY #4ade80 (~9.9:1 na --bg #05050c — AA),
      hover = litery BIAŁE ze świeceniem (glow biel + zieleń). Działa solo na
      linku tekstowym ORAZ w parze z .inf-glow-cta / .inf-glow-cta-ghost
      (stoi PO nich w tej samej warstwie, więc wygrywa kolejnością). */
@@ -4065,13 +4141,13 @@ html.lenis body {
 @media (min-width: 1024px) {
   .inf-pill-nav {
     /* v8: szkło zostaje (blur 32px saturate 1.5 = 1:1 wzorzec), ale kolor bazowy
-       zjeżdża tak, żeby PO ZŁOŻENIU z tłem #06060c pasek był ciemniejszy od
+       zjeżdża tak, żeby PO ZŁOŻENIU z tłem #05050c pasek był ciemniejszy od
        strony pod sobą, jak we wzorcu (pomiary §1.4: -26%).
        v8b pkt 1 (cytat: „pasek ma być realnie przeświecający"): krycie wraca
        na 0,65, czyli DOKŁADNIE wartość zmierzoną u wzorca (`.gnav` ma
        `rgba(10,10,16,.65)`). Nasz kolor bazowy jest ciemniejszy od ich hexa,
        więc przy tej samej alfie trzymamy jednocześnie oba warunki:
-         0,65 x rgb(3,3,16) + 0,35 x rgb(6,6,12) = rgb(4,4,15)
+         0,65 x rgb(3,3,16) + 0,35 x rgb(5,5,12) = rgb(4,4,14)
          luminancja paska 0,00144 kontra strona 0,00195 = 26% ciemniej ✓
        a 35 procent tego, co płynie pod paskiem, realnie przez niego widać. */
     background-color: rgba(3, 3, 16, 0.65);
@@ -4735,7 +4811,7 @@ div:has(> .inf-divider) {
     height: 8px;
     flex: none;
     border-radius: 999px;
-    background: #22e06b;
+    background: #29ff77;
     box-shadow: 0 0 8px rgba(34, 224, 107, 0.8);
   }
 
@@ -4826,7 +4902,7 @@ div:has(> .inf-divider) {
      v5: hover BAZY .inf-glow-cta świeci literami (text-shadow) — na
      wypełnionym CTA hero gasimy (ciemny tekst na białym wypełnieniu). */
   background-color: #fff;
-  color: #06060c;
+  color: #05050c;
   text-shadow: none;
   box-shadow: 0 0 32px -2px rgba(20, 184, 196, 0.6);
   box-shadow:
@@ -4897,7 +4973,7 @@ div:has(> .inf-divider) {
 }
 
 /* INFINITY v6 — AA-GUARD opisów na karcie (spec §A pkt 1, partia A).
-   --fg-muted #7a7a9e ma na czystym --bg #06060c 4,9:1 (AA na styk, nota przy
+   --fg-muted #7a7a9e ma na czystym --bg #05050c 4,9:1 (AA na styk, nota przy
    tokenach), a kolorowy wash karty podnosi luminancję tła i w pasie pierwszych
    wierszy opisu zjada margines. Wewnątrz .inf-card muted idzie o włos jaśniej
    (mix 88% + biel ≈ #8a8aad): AA wszędzie. Ton dalej wyraźnie „muted"
