@@ -3229,7 +3229,15 @@ html.lenis body {
     --inf-corner-a: 22%;
     /* v11 §A: alfa linii top i jej łuny — DOMYŚLNIE ZGASZONE (0%). Wariant
        .inf-card-top ustawia 100% / 45%; .inf-card-stat zapala samą linię
-       dopiero na hover (przejście przez @property, blok poza @layer). */
+       dopiero na hover (przejście przez @property, blok poza @layer).
+       v13 TYP D „odcienie" (pomiary-v13.md §2): DRUGI środkowy stop linii
+       bierze --card-c-alt (fallback: --card-c — TYP A za darmo). Karta
+       z parą odcieni (u nas kafle „co potrafi Agent" w Rozwiązaniu, hexy
+       par 1:1 z tabeli pomiaru) dostaje pasek dwustopowy: transparent 0%
+       -> kolor 33.33% -> kolor-alt 66.67% -> transparent 100% (stopy bez
+       pozycji = równy rozkład wg spec CSS, jak u wzorca). Łuna ZAWSZE
+       bierze pierwszy odcień var(--card-c) — 1:1 (wzorzec: box-shadow
+       0 0 8px var(--card-accent)). */
     --inf-top-a: 0%;
     --inf-top-halo: 0%;
     position: relative;
@@ -3245,38 +3253,44 @@ html.lenis body {
        i policzone kontrasty w bloku komentarza nad regułą). Kolorowego washu,
        dolnej łuny ani granatowego korpusu tu NIE MA i mieć nie może. */
     background-color: rgba(0, 0, 0, 0.1);
-    /* v12 NASYCENIE (cytat: „Skoro mówię nasycenie kolorów, to je nasyć,
-       a nie podkręcasz o 10-15%. Ma być jarzeniowe. Zrób MAKSYMALNE
-       nasycenie") — obwódka spoczynku z 45% na PEŁNĄ ESENCJĘ koloru karty.
-       Pomiar v12 §2: jarzeniowość wzorca niesie CZYSTY, nierozcieńczony
-       kolor (ring/pasek/statusy bez color-mix) — tę esencję dostaje nasza
-       sygnatura, czyli kolorowa obwódka (decyzja Pawła ponad białą 7%
-       wzorca, podtrzymana: „zawsze jakiś mocniejszy kolor w spoczynku").
-       Czysty var() nie potrzebuje color-mix ani fallbacku rgba — działa
-       też na starych silnikach. Kontrast TEKSTU bez zmian (tekst jedzie
-       na tokenach; „obwódki mogą razić" — spec v12). */
-    border: 1px solid var(--card-c);
-    /* Dziesięć warstw = TOP-GLOW v10 (linia 1px + łuna radialna, pomiar §1.2)
+    /* v13 SPOCZYNEK WYCISZONY (pomiary-v13.md §1; spec v13: po pełnej
+       kolorowej obwódce v12 „wszystkie karty wyglądają jednakowo" — zniknęła
+       wariantowość wzorca). Wzorzec trzyma bazę KAŻDEJ karty na bieli 6-7%
+       (primary/promo/faq/hero-metrics rgba(255,255,255,.07), learn .06;
+       jedyny barwiony wyjątek: forge pomarańcz 12%) — kolor w spoczynku
+       niesie WYŁĄCZNIE wyróżnik wariantu (linia top / pasek boczny / ring),
+       nigdy cała obwódka. Wariant -edge schodzi na .06 we własnej regule.
+       HOVER BEZ ZMIAN: wspólny hover v12 dalej zapala 4 strony pełnym
+       var(--card-c) (pochwalony) — gradacja spoczynek->hover wraca do
+       gramatyki wzorca (biel 7% -> pełny kolor). */
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    /* Dziesięć warstw = TOP-GLOW (linia 1px + łuna radialna, geometria v10)
        + 4 narożniki [ ] po 2 kreski (fallback rgba dla silników bez color-mix
-       w pierwszej deklaracji, konwencja pliku; linia jedzie na czystym
-       var(--card-c) w OBU deklaracjach — pełny kolor nie potrzebuje mixu). */
+       w pierwszej deklaracji, konwencja pliku).
+       v13 KOREKTA NAROŻNIKÓW (pomiary-v13.md §2, koniec sekcji TYP C):
+       computed wzorca pokazał kreski [ ] BIAŁE rgb(228,228,240) na opacity
+       .22 — shorthand `border-top: 1px solid` w klasach kierunkowych wzorca
+       resetuje var koloru do currentColor (dziedziczona biel tekstu), więc
+       kolorowe narożniki v12 były błędnym odczytem CSSOM. Od v13 narożniki
+       jadą na bieli rgb(228,228,240); alfę dalej niesie --inf-corner-a
+       (22% spoczynek -> 60% hover, 1:1 z opacity .22 -> .6 wzorca). */
     background-image:
       linear-gradient(transparent, transparent),
       linear-gradient(transparent, transparent),
-      linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
-      linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
-      linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
-      linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
-      linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
-      linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
-      linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22)),
-      linear-gradient(rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.22));
+      linear-gradient(rgba(228, 228, 240, 0.22), rgba(228, 228, 240, 0.22)),
+      linear-gradient(rgba(228, 228, 240, 0.22), rgba(228, 228, 240, 0.22)),
+      linear-gradient(rgba(228, 228, 240, 0.22), rgba(228, 228, 240, 0.22)),
+      linear-gradient(rgba(228, 228, 240, 0.22), rgba(228, 228, 240, 0.22)),
+      linear-gradient(rgba(228, 228, 240, 0.22), rgba(228, 228, 240, 0.22)),
+      linear-gradient(rgba(228, 228, 240, 0.22), rgba(228, 228, 240, 0.22)),
+      linear-gradient(rgba(228, 228, 240, 0.22), rgba(228, 228, 240, 0.22)),
+      linear-gradient(rgba(228, 228, 240, 0.22), rgba(228, 228, 240, 0.22));
     background-image:
       linear-gradient(
         90deg,
         transparent,
         color-mix(in srgb, var(--card-c) var(--inf-top-a), transparent),
-        color-mix(in srgb, var(--card-c) var(--inf-top-a), transparent),
+        color-mix(in srgb, var(--card-c-alt, var(--card-c)) var(--inf-top-a), transparent),
         transparent
       ),
       radial-gradient(
@@ -3285,36 +3299,36 @@ html.lenis body {
         transparent 78%
       ),
       linear-gradient(
-        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
-        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
+        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
+        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
-        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
+        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
+        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
-        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
+        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
+        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
-        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
+        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
+        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
-        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
+        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
+        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
-        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
+        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
+        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
-        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
+        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
+        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
       ),
       linear-gradient(
-        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent),
-        color-mix(in srgb, var(--card-c) var(--inf-corner-a), transparent)
+        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent),
+        color-mix(in srgb, rgb(228, 228, 240) var(--inf-corner-a), transparent)
       );
     background-repeat: no-repeat;
     /* Pozycje/rozmiary 1:1 z kolejnością warstw: [linia, łuna, 8 narożników].
@@ -3972,7 +3986,8 @@ html.lenis body {
       0 22px 48px -20px color-mix(in srgb, var(--card-c) 35%, transparent),
       0 0 28px color-mix(in srgb, var(--card-c) 14%, transparent),
       inset 0 1px 0 rgba(255, 255, 255, 0.09);
-    /* Narożniki [ ] .22 -> .6 (pomiary wzorca §3.6). Zmiana dotyczy WYŁĄCZNIE
+    /* Narożniki [ ] .22 -> .6 (pomiary wzorca §3.6; od v13 kreski BIAŁE
+       rgb(228,228,240) — pomiary-v13.md §2). Zmiana dotyczy WYŁĄCZNIE
        tej jednej dekoracji — tło karty stoi w miejscu, więc odcień karty się
        nie „przekręca".
        v8b pkt 1: dolna łuna (--inf-luna-a 4% -> 8%) USUNIĘTA. To ona dawała
@@ -4343,7 +4358,12 @@ div:has(> .inf-divider) {
     transparent
   );
 }
-/* ISKRA — pas 40% szerokości przelatujący w kółko (jedyna pętla separatora).
+/* ISKRA — pas 40% szerokości linii przelatujący w kółko (jedyna pętla
+   separatora). Pomiary-v13.md §3: „punkt świetlny" wzorca to właśnie ten
+   pas — 40% linii (computed 166.8px przy linii 417px), 1px wysokości,
+   gradient cyjan .4 -> magenta .3, BEZ box-shadow i bez osobnych „kropek";
+   na separatorze jadą DWA rozbłyski naraz (lewa i prawa linia, obie
+   delay 0, wspólna faza — trace wzorca identyczny co do piksela).
    BUDŻET WYDAJNOŚCI (v7, znalezisko nadzorcy): separatorów jest ~15, każdy ma
    2 linie = do 30 pętli naraz. Dlatego:
      • ruch idzie przez `transform: translate3d`, NIE przez `left` — animacja
@@ -4351,9 +4371,10 @@ div:has(> .inf-divider) {
        na animację kompozytora (osobna warstwa GPU, zero rekalkulacji),
      • pętla startuje DOPIERO od 1024px (reguła niżej) — na telefonie, gdzie
        liczy się LCP/TBT, linia jest statyczna i iskra stoi poza kadrem.
-   Pozycja spoczynkowa = start przelotu: -250% WŁASNEJ szerokości = -100%
-   szerokości linii (bo pas ma 40% linii: 40% x 250% = 100%). overflow:hidden
-   rodzica ją przycina, więc na mobile jest niewidoczna. */
+   Pozycja spoczynkowa = start przelotu wzorca: -100% WŁASNEJ szerokości
+   pasa = -40% szerokości linii (keyframes wzorca: left -40%). Przy left:0
+   pas stoi wtedy w całości za lewą krawędzią linii, a overflow:hidden
+   rodzica go przycina — na mobile niewidoczny. */
 .inf-divider-line::after {
   content: '';
   position: absolute;
@@ -4361,7 +4382,7 @@ div:has(> .inf-divider) {
   left: 0;
   width: 40%;
   height: 100%;
-  transform: translate3d(-250%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
   background: linear-gradient(
     90deg,
     transparent,
@@ -4391,31 +4412,37 @@ div:has(> .inf-divider) {
   text-shadow: 0 0 10px rgba(139, 92, 246, 0.15);
   text-shadow: 0 0 10px color-mix(in srgb, var(--accent-2) 15%, transparent);
 }
-/* Przelot iskry: z lewej poza kadrem w prawo poza kadr, potem PAUZA do końca
-   cyklu. Pomiar wzorca dał tylko `4s ease-in-out infinite` (ciała keyframes
-   CSSOM nie oddaje), więc kształt jest wnioskiem: przelot 2,4 s + 1,6 s ciszy
-   czyta się jako „iskra przebiega co chwilę", a nie jako ciągły pasek światła.
-   Ten sam kształt założyła partia D w kontrakcie SekcjaSeparator.tsx.
+/* Przelot iskry v13 — 1:1 z pomiaru (pomiary-v13.md §3; spec v13: „mija za
+   szybko. U nich są to dwie albo trzy takie punkty (...) na raz się pokazują
+   i przelatują wolniej"). Tym razem CSSOM wzorca ODDAŁ pełne ciało keyframes:
+   @keyframes divider-shimmer { 0% { left:-40% } 100% { left:140% } } — trasa
+   -40% -> 140% szerokości LINII rozciągnięta na PEŁNE 4 s, BEZ żadnej pauzy
+   (stary kształt v7 był wnioskiem: przelot w 0-60% cyklu + 1,6 s ciszy +
+   dłuższa trasa + ostrzejszy bezier = pas widoczny ~0,54 s; wzorzec trzyma
+   go nad linią ~2,70 s z każdych 4 s — stąd cała skarga). Częstotliwość bez
+   zmian (co 4 s), synchronizacja bez zmian (obie linie delay 0 = dwa
+   rozbłyski naraz, jak 12 zsynchronizowanych animacji wzorca).
    Kadry w translate3d liczone na WŁASNEJ szerokości pasa (40% linii):
-   -100% linii = -250% pasa, 160% linii = 400% pasa — geometria 1:1 z wersją
-   na `left`, tylko bez dotykania układu strony. */
+   -40% linii = -100% pasa, 140% linii = 350% pasa — geometria 1:1 z wersją
+   na `left`, tylko bez dotykania układu strony (budżet perf: kompozytor). */
 @keyframes inf-divider-shimmer {
   0% {
-    transform: translate3d(-250%, 0, 0);
-  }
-  60% {
-    transform: translate3d(400%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
   }
   100% {
-    transform: translate3d(400%, 0, 0);
+    transform: translate3d(350%, 0, 0);
   }
 }
 /* Iskra rusza WYŁĄCZNIE na desktopie i bez reduced-motion (ta sama bramka co
-   .inf-pill-nav::before). Mobile: kreska stoi — to najtańsza forma tej
-   dekoracji, a przy ~15 separatorach na stronie to główny budżet TBT. */
+   .inf-pill-nav::before; wzorzec też gasi iskrę pod RM — pomiary-v13.md §3).
+   Mobile: kreska stoi — to najtańsza forma tej dekoracji, a przy ~15
+   separatorach na stronie to główny budżet TBT.
+   v13 EASING LITERALNY `ease-in-out` = cubic-bezier(.42,0,.58,1) wzorca —
+   nasz token --ease-in-out (.65,0,.35,1) jest bardziej stromy i skracał
+   czas, w którym pas realnie wisi nad linią (pomiary-v13.md §3). */
 @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
   .inf-divider-line::after {
-    animation: inf-divider-shimmer 4s var(--ease-in-out) infinite;
+    animation: inf-divider-shimmer 4s ease-in-out infinite;
   }
   /* PAUZA POZA KADREM (audyt H3 pkt 1 / MINOR-5): na home stoi ~15 separatorów
      x 2 linie = do 30 pętli naraz, a nieskończona animacja tyka także wtedy, gdy
@@ -5011,14 +5038,18 @@ div:has(> .inf-divider) {
    ŹRÓDŁO: raporty/taksonomia-ramek-v11.md (pomiary wzorca infinitytechstack.uk,
    Chromium 1440x900, spoczynek + hover na żywo). Korekta błędu v10: JEDEN styl
    ramki (top-glow) poszedł na wszystkie karty, a Paweł: „Ramki są RÓŻNE, to
-   zależy od sekcji". Od v11 baza .inf-card jest NEUTRALNA (obwódka w kolorze karty,
-   od v12 PEŁNA esencja,
-   narożniki [ ], sweep, przeświecający korpus), a charakter sekcji nadaje
-   MODYFIKATOR — zawsze pisany OBOK .inf-card:
+   zależy od sekcji". Od v13 (pomiary-v13.md §1-2; spec v13: po pełnej
+   kolorowej obwódce v12 „wszystkie karty wyglądają jednakowo") baza
+   .inf-card wraca do gramatyki wzorca: obwódka spoczynku BIAŁA 7%
+   (-edge 6%, -quiet 4%), narożniki [ ] białe 22%, sweep i przeświecający
+   korpus bez zmian — KOLOR w spoczynku niesie wyłącznie wyróżnik wariantu,
+   a charakter sekcji nadaje MODYFIKATOR — zawsze pisany OBOK .inf-card:
 
-     .inf-card-edge        W1  pasek 3px z lewej (.lp-learn-card wzorca)
-     .inf-card-top         W2  neon-top + łuna, hover CAŁA ramka (.lp-primary-card)
-     .inf-card-full-hover  W3  ring od narożnika + błysk + strzałka (.lp-promo-card)
+     .inf-card-edge        W1/TYP B  pasek 3px z lewej, góra czysta (.lp-learn-card)
+     .inf-card-top         W2/TYP A  neon-top + łuna, hover CAŁA ramka (.lp-primary-card)
+                           TYP D = ta sama klasa + --card-c-alt inline (pasek
+                           dwustopowy w odcieniach; pomiary-v13.md §2)
+     .inf-card-full-hover  W3/TYP C  ring od narożnika + błysk + strzałka (.lp-promo-card)
      .inf-card-stat        W4  karta liczb, top-bar zapala się hoverem (.stat-card)
      .inf-card-quiet       W5  cicha, kanciasta 2px, kreska hoverem (.lp-secondary-card)
 
@@ -5041,15 +5072,19 @@ div:has(> .inf-divider) {
    deklaracja color-mix ma fallback rgba/var; zero nowych pętli (kreska H2
    jest STATYCZNA — tak zmierzono, patrz §D niżej). */
 
-/* ── W1 .inf-card-edge — LEWA KRAWĘDŹ STAŁA (pomiar W1: pasek 3x194px,
-   PEŁNY kolor kategorii na opacity .5, gradient gaśnie w dół do 30% koloru;
-   ramka karty bez narożników i bez top-glow — background-image:none zdejmuje
-   wszystkie 10 warstw bazy, zostaje zaciemnienie 10% z background-color).
-   ::before bazy (kreska 2px wsunięta 14px) przechodzi w pasek wzorca:
-   pełna wysokość, 3px, bez radiusa. Hover = WSPÓLNY hover bazy v12 (pełna
-   ramka kolorem karty + łuna, lift -4px, pasek .5 -> 1, strzałka, sweep). */
+/* ── W1 .inf-card-edge — LEWA KRAWĘDŹ STAŁA / TYP B (pomiary-v13.md §2:
+   pasek 3px pełnej wysokości, gradient 180deg pełny kolor -> 30% koloru,
+   opacity .5 w spoczynku (hover 1), BEZ box-shadow — łunę ma tylko TYP A/D;
+   góra czysta: karta bez narożników i bez top-glow — background-image:none
+   zdejmuje wszystkie 10 warstw bazy, zostaje zaciemnienie 10%
+   z background-color). ::before bazy (kreska 2px wsunięta 14px) przechodzi
+   w pasek wzorca: pełna wysokość, 3px, bez radiusa; opacity .5 niesie baza.
+   Baza obwódki o oczko niżej niż primary: biel .06 (pomiary-v13.md §1,
+   .lp-learn-card). Hover = WSPÓLNY hover bazy v12 (pełna ramka kolorem
+   karty + łuna, lift -4px, pasek .5 -> 1, strzałka, sweep). */
 .inf-card-edge {
   background-image: none;
+  border-color: rgba(255, 255, 255, 0.06);
 }
 .inf-card-edge::before {
   top: 0;
@@ -5064,11 +5099,17 @@ div:has(> .inf-divider) {
   );
 }
 
-/* ── W2 .inf-card-top — TOP-GLOW + HOVER CAŁEJ RAMKI (pomiar W2: linia 1px
-   pełny kolor + łuna 8px w spoczynku, narożniki .22; hover: obwódka 65%,
-   cień potrójny, -5px + scale 1.008, narożniki .6). To dokładnie „trzecia
-   sekcja" z cytatu Pawła. Zapala warstwy top z bazy .inf-card (zmienne
-   --inf-top-a/--inf-top-halo, geometria warstw bez zmian — pomiar §1.2 v10).
+/* ── W2 .inf-card-top — TYP A: GÓRA GASNĄCA KU ROGOM (pomiary-v13.md §2,
+   .lp-card-neon-top na 24/24 kart primary wzorca: linia 1px pełnej
+   szerokości, gradient 90deg transparent 0% -> kolor 33.33% -> kolor-alt
+   66.67% -> transparent 100%, kolor CZYSTY 100% — „delikatność" robi sama
+   geometria 1px; plus box-shadow 0 0 8px pełnym kolorem, u nas emulowana
+   warstwą radial-gradient przez --inf-top-halo 45%, geometria v10 §1.2;
+   reszta ramki = biel 7% z bazy, narożniki białe .22).
+   TYP D „odcienie" = ta sama klasa, karta dostaje --card-c-alt inline
+   (drugi środkowy stop linii; mapa par w Rozwiazanie.tsx).
+   Hover: obwódka pełny kolor + cień potrójny (wspólny hover bazy v12),
+   tu lift bohatera -5px + scale 1.008, narożniki .6.
    Poświata spoczynku: 1:1 .lp-primary-card (inset biel 5% + czerń 55%). */
 .inf-card-top {
   --inf-top-a: 100%;
@@ -5084,9 +5125,11 @@ div:has(> .inf-divider) {
   font-weight: 800;
 }
 
-/* ── W3 .inf-card-full-hover — RING OD NAROŻNIKA + BŁYSK + STRZAŁKA (pomiar
-   W3, .lp-promo-card: ring gradientowy 1px liczony maską, PEŁNY kolor od
-   lewego górnego narożnika gasnący do 55% długości, spoczynek opacity .5;
+/* ── W3 .inf-card-full-hover — TYP C: BOK + KAWAŁKI KRAWĘDZI PRZY NAROŻU
+   (pomiary-v13.md §2, .lp-promo-card „górnej sekcji" wzorca: ring
+   gradientowy 1px liczony maską, PEŁNY kolor od lewego górnego narożnika
+   gasnący do 55% przekątnej, spoczynek opacity .5 — świeci kawałek góry
+   i lewego boku; ramka wokół biel 7% z bazy, zgodność potwierdzona v13;
    hover: ring -> 1, ramka Z KAŻDEJ STRONY 45%, cień 40%, błysk przelatuje,
    strzałka widoczna też w spoczynku i dojeżdża +4px). Bez narożników [ ]
    i bez top-glow (background-image:none); box-shadow spoczynku: wzorzec nie
@@ -5121,10 +5164,10 @@ div:has(> .inf-divider) {
   }
 }
 
-/* ── W4 .inf-card-stat — KARTA Z LICZBAMI (pomiar W4: ramka paska metryk
-   biała 7% — u nas PEŁNY kolor karty, v12 „jarzeniowo", decyzja Pawła ponad
-   wzorzec — kolor
-   niosą ŚWIECĄCE liczby .inf-counter-value w pełnym neonie, text-shadow
+/* ── W4 .inf-card-stat — KARTA Z LICZBAMI (pomiary-v13.md §1 i §6 pkt 7:
+   ramka .lp-hero-metrics biała 7% — od v13 wraca 1:1 przez bazę .inf-card,
+   osobna deklaracja obwódki niepotrzebna; neon w spoczynku niosą WYŁĄCZNIE
+   ŚWIECĄCE liczby .inf-counter-value w pełnym kolorze, text-shadow
    currentcolor 0 0 14px; cień spoczynku czerń 60% + inset biel 6%).
    Bez narożników (wzorzec ich nie ma): --inf-corner-a 0% gasi 8 warstw
    w silnikach z color-mix (stare silniki zobaczą narożniki z fallbacku —

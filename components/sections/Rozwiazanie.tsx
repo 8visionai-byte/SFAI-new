@@ -33,33 +33,51 @@ const POROWNANIE = [
    kreskach i wchodzi na KARTY .inf-card z kafelkiem ikony. Teksty t/d 1:1 co do
    znaku — dochodzi wyłącznie dekoracja: glif InfIcons + odcień kategorii usługi
    (voiceboty violet, chatboty cyan, automatyzacje green, dokumenty amber
-   z lib/inf-kategorie), każda karta w siatce innym tonem. */
+   z lib/inf-kategorie), każda karta w siatce innym tonem.
+   v13 TYP D „odcienie" (raporty/pomiary-v13.md §2 i §6 pkt 3): ta siatka
+   4 kafli to nasz odpowiednik sekcji Research wzorca — JEDYNEJ, gdzie
+   WSZYSTKIE karty mają pasek górny dwustopowy (--card-accent ≠ alt).
+   Pole `alt` = drugi stop linii top (zmienna --card-c-alt w globals);
+   pary odcieni per rodzina barwy 1:1 z tabeli pomiaru: fiolet jasny ->
+   magenta #ff00e5 (Neuromantix), cyjan -> zieleń #39ff14 (Vitalis),
+   szmaragd/zieleń -> cyjan #00f0ff (Freedom OS), amber -> pomarańcz
+   #ff6b00 (Void LLM). Łuna bierze pierwszy odcień (robi to globals). */
 const POTRAFI = [
   {
     t: 'Odbiera telefon, kiedy Ty nie możesz.',
     d: 'Voicebot rozmawia po polsku, umawia wizyty i przekazuje Ci tylko to, co ważne.',
     ikona: 'sluchawka-fala',
     c: '#a586ff',
+    alt: '#ff00e5',
   },
   {
     t: 'Odpisuje klientom w minuty, o każdej porze.',
     d: 'Chatbot na stronie i w komunikatorach odpowiada na pytania i zbiera leady, nawet o 22:00.',
     ikona: 'chat-dymek',
     c: '#61edff',
+    alt: '#39ff14',
   },
   {
     t: 'Przepisuje dane za Ciebie.',
     d: 'Automatyzacja przenosi informacje między mailem, systemem i fakturą, bez ręcznej roboty.',
     ikona: 'blyskawica',
     c: '#29ff77',
+    alt: '#00f0ff',
   },
   {
     t: 'Pilnuje, żeby nic nie wypadło.',
     d: 'Przypomnienia, follow-upy, oddzwonienia. Klient nie zostaje bez odpowiedzi.',
     ikona: 'kalendarz-check',
     c: '#ffc120',
+    alt: '#ff6b00',
   },
-] as const satisfies ReadonlyArray<{ t: string; d: string; ikona: InfIconName; c: string }>;
+] as const satisfies ReadonlyArray<{
+  t: string;
+  d: string;
+  ikona: InfIconName;
+  c: string;
+  alt: string;
+}>;
 
 export function Rozwiazanie() {
   return (
@@ -213,7 +231,13 @@ export function Rozwiazanie() {
           (pomiar wzorca §3: .lp-learn-grid 16px — drobne kafle 2-kol.). */}
       <Reveal as="ul" className="sf-stagger inf-grid-gap-sm mx-auto mt-12 grid max-w-wide sm:grid-cols-2">
         {POTRAFI.map((item) => (
-          <li key={item.t} className="inf-card inf-card-top p-6" style={{ '--card-c': item.c } as CSSProperties}>
+          <li
+            key={item.t}
+            className="inf-card inf-card-top p-6"
+            /* v13 TYP D: --card-c-alt = drugi stop paska górnego (odcienie
+               jednej rodziny barwy, pary z rejestru POTRAFI wyżej). */
+            style={{ '--card-c': item.c, '--card-c-alt': item.alt } as CSSProperties}
+          >
             <div aria-hidden="true" className="inf-spotlight" />
             {/* v8 (spec §8, pomiary wzorca §3.5): „co potrafi Agent" to KARTY
                 TEKSTOWE (zdania o możliwościach), a takie we wzorcu ikony nie
