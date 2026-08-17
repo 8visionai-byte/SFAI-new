@@ -1,0 +1,993 @@
+{
+ "data": "2026-08-17",
+ "domena": "https://www.simplefast.ai",
+ "podsumowanie": {
+  "podstron_w_sitemap": 47,
+  "odpowiedz_200": 47,
+  "z_kanonicznym": 47,
+  "z_jednym_h1": 47,
+  "z_og_image": 47,
+  "z_danymi_strukturalnymi": 47,
+  "noindex": 0,
+  "bledy_parsowania_jsonld": 0,
+  "title_ponad_60_znakow": 16,
+  "description_ponad_158_znakow": 2,
+  "problemy_http": []
+ },
+ "technika": {
+  "robots_txt": 200,
+  "robots_ma_sitemap": true,
+  "llms_txt": 200,
+  "llms_txt_kb": 6.3,
+  "wiedza_agenta_txt": 200,
+  "host_kanoniczny": "www.simplefast.ai",
+  "apex_przekierowuje_na_www": true,
+  "apex_status": 308,
+  "apex_loc": "https://www.simplefast.ai/",
+  "http_przekierowuje_na_https": true,
+  "status_404": 404,
+  "naglowki_bezpieczenstwa": {
+   "strict-transport-security": "max-age=63072000; includeSubDomains",
+   "content-security-policy": "JEST",
+   "x-content-type-options": "nosniff",
+   "x-frame-options": "SAMEORIGIN",
+   "referrer-policy": "strict-origin-when-cross-origin",
+   "permissions-policy": "JEST"
+  },
+  "cache_home": "public, max-age=0, must-revalidate",
+  "sitemap_lastmod": {
+   "2026-06-15": 35,
+   "2026-06-16": 8,
+   "2026-06-19": 2,
+   "2026-08-16": 2
+  }
+ },
+ "boty_ai": {
+  "GPTBot": "wpuszczony",
+  "OAI-SearchBot": "wpuszczony",
+  "ChatGPT-User": "wpuszczony",
+  "PerplexityBot": "wpuszczony",
+  "Perplexity-User": "wpuszczony",
+  "ClaudeBot": "wpuszczony",
+  "Google-Extended": "wpuszczony",
+  "Bingbot": "wpuszczony",
+  "anthropic-ai": "brak wpisu (domyslnie wpuszczony)",
+  "CCBot": "brak wpisu (domyslnie wpuszczony)",
+  "Applebot-Extended": "wpuszczony",
+  "meta-externalagent": "brak wpisu (domyslnie wpuszczony)"
+ },
+ "pomiar": {
+  "umami": true,
+  "umami_website_id": "448c496a-7c6a-49bb-b9cd-6f56b0c8b94b",
+  "ga4": false,
+  "gtm": false,
+  "plausible": false,
+  "vercel_analytics": false,
+  "clarity_hotjar": false
+ },
+ "konwersja": {
+  "endpointy": {
+   "/api/lead": 405,
+   "/api/chat": 405,
+   "/api/realtime-session": 405,
+   "/api/elevenlabs-session": 405
+  },
+  "lead_pusty_post": 400
+ },
+ "podstrony": [
+  {
+   "u": "/",
+   "t": "Chatboty, voiceboty i automatyzacje AI dla firm | SimpleFast",
+   "tl": 60,
+   "dl": 147,
+   "h1": "Chatboty, voiceboty i automatyzacje AI",
+   "h1n": 1,
+   "can": "/ (bez koncowego ukosnika w zrodle)",
+   "ld": [
+    "FAQPage",
+    "Service",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 29453,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/uslugi",
+   "t": "Usługi AI dla firm: automatyzacje, agenci, strony · SimpleFast.ai",
+   "tl": 65,
+   "dl": 142,
+   "h1": "Usługi AI dla firm",
+   "h1n": 1,
+   "can": "/uslugi",
+   "ld": [
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 7609,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/uslugi/architekci-wartosci-ai",
+   "t": "Architekci Wartości AI: płacisz za efekt · SimpleFast.ai",
+   "tl": 56,
+   "dl": 129,
+   "h1": "Płacisz za przyniesioną wartość, nie za godziny.",
+   "h1n": 1,
+   "can": "/uslugi/architekci-wartosci-ai",
+   "ld": [
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 16686,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/narzedzia",
+   "t": "Darmowe narzędzia AI dla firm · SimpleFast.ai",
+   "tl": 45,
+   "dl": 137,
+   "h1": "Darmowe narzędzia AI",
+   "h1n": 1,
+   "can": "/narzedzia",
+   "ld": [
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 18398,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/produkty",
+   "t": "Produkty: co zbudowaliśmy i co możesz mieć u siebie · SimpleFast.ai",
+   "tl": 67,
+   "dl": 137,
+   "h1": "Co zbudowaliśmy i co z tego możesz mieć u siebie",
+   "h1n": 1,
+   "can": "/produkty",
+   "ld": [
+    "BreadcrumbList",
+    "ItemList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 11202,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/wiedza",
+   "t": "Wiedza o AI dla firm: poradniki i newsy · SimpleFast.ai",
+   "tl": 55,
+   "dl": 161,
+   "h1": "Centrum Wiedzy AI dla firm",
+   "h1n": 1,
+   "can": "/wiedza",
+   "ld": [
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 7958,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/poradniki",
+   "t": "Poradniki AI dla firm: ile kosztuje, co automatyzować · SimpleFast.ai",
+   "tl": 69,
+   "dl": 166,
+   "h1": "Poradniki AI dla firm",
+   "h1n": 1,
+   "can": "/poradniki",
+   "ld": [
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 7290,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/ai-radar",
+   "t": "AI Radar: newsy AI dla firm z wnioskami · SimpleFast.ai",
+   "tl": 55,
+   "dl": 138,
+   "h1": "AI Radar: newsy AI dla firm z filtrem, co to znaczy dla Ciebie",
+   "h1n": 1,
+   "can": "/ai-radar",
+   "ld": [
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 5428,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/materialy",
+   "t": "Darmowe materiały AI dla firm: prompty, checklisty · SimpleFast.ai",
+   "tl": 66,
+   "dl": 131,
+   "h1": "Materiały do pobrania: prompty, checklisty i arkusze AI dla firm",
+   "h1n": 1,
+   "can": "/materialy",
+   "ld": [
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 6947,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/realizacje",
+   "t": "Realizacje: wdrożenia AI dla firm · SimpleFast.ai",
+   "tl": 49,
+   "dl": 155,
+   "h1": "Realizacje",
+   "h1n": 1,
+   "can": "/realizacje",
+   "ld": [
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 9517,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/blog",
+   "t": "Blog o AI dla firm: poradniki bez żargonu · SimpleFast.ai",
+   "tl": 57,
+   "dl": 157,
+   "h1": "Blog o AI dla firm",
+   "h1n": 1,
+   "can": "/blog",
+   "ld": [
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 8165,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/o-nas",
+   "t": "O nas: dwóch founderów, którzy budują AI Agentów · SimpleFast.ai",
+   "tl": 64,
+   "dl": 154,
+   "h1": "Kto stoi za SimpleFast.ai?",
+   "h1n": 1,
+   "can": "/o-nas",
+   "ld": [
+    "AboutPage",
+    "Person",
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 9488,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/kontakt",
+   "t": "Kontakt: umów bezpłatną diagnozę AI · SimpleFast.ai",
+   "tl": 51,
+   "dl": 133,
+   "h1": "Zacznijmy od bezpłatnej diagnozy",
+   "h1n": 1,
+   "can": "/kontakt",
+   "ld": [
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 5195,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/polityka-prywatnosci",
+   "t": "Polityka prywatności · SimpleFast.ai",
+   "tl": 36,
+   "dl": 134,
+   "h1": "Polityka prywatności",
+   "h1n": 1,
+   "can": "/polityka-prywatnosci",
+   "ld": [
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 8730,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/uslugi/chatboty",
+   "t": "Chatbot AI dla firm: cena i wdrożenie · SimpleFast.ai",
+   "tl": 53,
+   "dl": 146,
+   "h1": "Chatbot AI dla firmy",
+   "h1n": 1,
+   "can": "/uslugi/chatboty",
+   "ld": [
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 9964,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/uslugi/voiceboty",
+   "t": "Voicebot od 2500 zł: bot telefoniczny 24/7 · SimpleFast.ai",
+   "tl": 58,
+   "dl": 154,
+   "h1": "Voicebot dla firmy, który odbiera telefon za Ciebie",
+   "h1n": 1,
+   "can": "/uslugi/voiceboty",
+   "ld": [
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 10540,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/uslugi/agent-rekrutacyjny",
+   "t": "Agent rekrutacyjny AI: automatyzacja rekrutacji · SimpleFast.ai",
+   "tl": 63,
+   "dl": 155,
+   "h1": "Agent AI do rekrutacji i pierwszego kontaktu",
+   "h1n": 1,
+   "can": "/uslugi/agent-rekrutacyjny",
+   "ld": [
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 10648,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/uslugi/automatyzacje",
+   "t": "Automatyzacja procesów AI: od czego zacząć · SimpleFast.ai",
+   "tl": 58,
+   "dl": 147,
+   "h1": "Automatyzacja procesów w firmie z AI",
+   "h1n": 1,
+   "can": "/uslugi/automatyzacje",
+   "ld": [
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 10035,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/uslugi/dokumenty-faktury",
+   "t": "Automatyzacja faktur: OCR faktur AI i KSeF · SimpleFast.ai",
+   "tl": 58,
+   "dl": 149,
+   "h1": "Automatyzacja dokumentów i faktur (OCR, KSeF)",
+   "h1n": 1,
+   "can": "/uslugi/dokumenty-faktury",
+   "ld": [
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 11226,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/uslugi/opieka-ai",
+   "t": "Opieka AI: utrzymanie automatyzacji · SimpleFast.ai",
+   "tl": 51,
+   "dl": 146,
+   "h1": "Opieka AI: utrzymanie i rozwój automatyzacji",
+   "h1n": 1,
+   "can": "/uslugi/opieka-ai",
+   "ld": [
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 11362,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/uslugi/audyt-ai",
+   "t": "Audyt AI firmy: co zautomatyzować i za ile · SimpleFast.ai",
+   "tl": 58,
+   "dl": 142,
+   "h1": "Audyt AI firmy: mapa oszczędności czasu",
+   "h1n": 1,
+   "can": "/uslugi/audyt-ai",
+   "ld": [
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 10481,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/uslugi/rozwiazania",
+   "t": "Aplikacje i wtyczki AI na zamówienie · SimpleFast.ai",
+   "tl": 52,
+   "dl": 150,
+   "h1": "Indywidualne rozwiązania AI: aplikacje i wtyczki na zamówienie",
+   "h1n": 1,
+   "can": "/uslugi/rozwiazania",
+   "ld": [
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 10249,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/uslugi/strony-www",
+   "t": "Tworzenie stron WWW pod Google i AI · SimpleFast.ai",
+   "tl": 51,
+   "dl": 146,
+   "h1": "Tworzenie stron WWW widocznych w Google i w AI",
+   "h1n": 1,
+   "can": "/uslugi/strony-www",
+   "ld": [
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 9796,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/uslugi/optymalizacja",
+   "t": "Pozycjonowanie pod AI: cytowanie w ChatGPT · SimpleFast.ai",
+   "tl": 58,
+   "dl": 155,
+   "h1": "Pozycjonowanie pod AI: bądź cytowany w ChatGPT i Perplexity",
+   "h1n": 1,
+   "can": "/uslugi/optymalizacja",
+   "ld": [
+    "Service",
+    "FAQPage",
+    "BreadcrumbList",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 10473,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/realizacje/auto-email-bok",
+   "t": "Auto-email dla biura obsługi klienta · SimpleFast.ai",
+   "tl": 52,
+   "dl": 148,
+   "h1": "Auto-email dla biura obsługi klienta",
+   "h1n": 1,
+   "can": "/realizacje/auto-email-bok",
+   "ld": [
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 7710,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/realizacje/lead-generator",
+   "t": "Błyskawiczny generator leadów · SimpleFast.ai",
+   "tl": 45,
+   "dl": 152,
+   "h1": "Błyskawiczny generator leadów",
+   "h1n": 1,
+   "can": "/realizacje/lead-generator",
+   "ld": [
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 7489,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/realizacje/auto-podsumowania-spotkan",
+   "t": "Auto-podsumowania spotkań na Meet, Zoom i Teams · SimpleFast.ai",
+   "tl": 63,
+   "dl": 150,
+   "h1": "Auto-podsumowania spotkań na Meet, Zoom i Teams",
+   "h1n": 1,
+   "can": "/realizacje/auto-podsumowania-spotkan",
+   "ld": [
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 7650,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/realizacje/automat-tresci-social",
+   "t": "Automat treści na social media · SimpleFast.ai",
+   "tl": 46,
+   "dl": 145,
+   "h1": "Automat treści na social media",
+   "h1n": 1,
+   "can": "/realizacje/automat-tresci-social",
+   "ld": [
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 7655,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/realizacje/automatyczne-raporty",
+   "t": "Automatyczne raporty zamiast ręcznych arkuszy · SimpleFast.ai",
+   "tl": 61,
+   "dl": 147,
+   "h1": "Automatyczne raporty zamiast ręcznych arkuszy",
+   "h1n": 1,
+   "can": "/realizacje/automatyczne-raporty",
+   "ld": [
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 7671,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/realizacje/chatbot-edukacyjny-kursy",
+   "t": "Chatbot edukacyjny do kursów online · SimpleFast.ai",
+   "tl": 51,
+   "dl": 150,
+   "h1": "Chatbot edukacyjny do kursów online",
+   "h1n": 1,
+   "can": "/realizacje/chatbot-edukacyjny-kursy",
+   "ld": [
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 7504,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/realizacje/agenci-ai-24-7",
+   "t": "Firmowi Agenci AI 24/7 na stronie · SimpleFast.ai",
+   "tl": 49,
+   "dl": 154,
+   "h1": "Firmowi Agenci AI 24/7",
+   "h1n": 1,
+   "can": "/realizacje/agenci-ai-24-7",
+   "ld": [
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 7494,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/realizacje/transkrypcja-rozmow",
+   "t": "Aplikacja do transkrypcji i analizy rozmów · SimpleFast.ai",
+   "tl": 58,
+   "dl": 147,
+   "h1": "Przechwytywanie i analiza rozmów",
+   "h1n": 1,
+   "can": "/realizacje/transkrypcja-rozmow",
+   "ld": [
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 7520,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/blog/ile-kosztuje-wdrozenie-ai-w-malej-firmie-2026",
+   "t": "Ile kosztuje wdrożenie AI w małej firmie w 2026? · SimpleFast.ai",
+   "tl": 64,
+   "dl": 150,
+   "h1": "Ile kosztuje wdrożenie AI w małej firmie w 2026?",
+   "h1n": 1,
+   "can": "/blog/ile-kosztuje-wdrozenie-ai-w-malej-firmie-2026",
+   "ld": [
+    "Article",
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 11446,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/blog/chatbot-czy-ai-agent-roznice",
+   "t": "Chatbot czy AI Agent: różnice i co wybrać · SimpleFast.ai",
+   "tl": 57,
+   "dl": 152,
+   "h1": "Chatbot czy AI Agent: czym się różnią i co wybrać dla firmy",
+   "h1n": 1,
+   "can": "/blog/chatbot-czy-ai-agent-roznice",
+   "ld": [
+    "Article",
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 12018,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/blog/jak-voicebot-odbiera-telefony",
+   "t": "Jak voicebot odbiera telefony, gdy pracujesz · SimpleFast.ai",
+   "tl": 60,
+   "dl": 147,
+   "h1": "Jak voicebot odbiera telefony, gdy pracujesz, i czy klienci to akceptują",
+   "h1n": 1,
+   "can": "/blog/jak-voicebot-odbiera-telefony",
+   "ld": [
+    "Article",
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 12115,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/blog/ai-act-a-twoja-firma-2026",
+   "t": "AI Act a Twoja firma: co wiedzieć (2026) · SimpleFast.ai",
+   "tl": 56,
+   "dl": 145,
+   "h1": "AI Act a Twoja firma: co musisz wiedzieć przed wdrożeniem (2026)",
+   "h1n": 1,
+   "can": "/blog/ai-act-a-twoja-firma-2026",
+   "ld": [
+    "Article",
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 12712,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/blog/automatyzacja-procesow-ai-od-czego-zaczac",
+   "t": "Automatyzacja procesów AI: od czego zacząć w MŚP · SimpleFast.ai",
+   "tl": 64,
+   "dl": 146,
+   "h1": "Czym jest automatyzacja procesów AI i od czego zacząć w MŚP",
+   "h1n": 1,
+   "can": "/blog/automatyzacja-procesow-ai-od-czego-zaczac",
+   "ld": [
+    "Article",
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 11473,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie",
+   "t": "Ile kosztuje automatyzacja AI? Widełki 2026: 3000-10000 zł · SimpleFast.ai",
+   "tl": 74,
+   "dl": 154,
+   "h1": "Ile kosztuje automatyzacja AI w firmie? Widełki 2026: od 3000 do 10000 zł",
+   "h1n": 1,
+   "can": "/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie",
+   "ld": [
+    "Article",
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 13907,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/poradniki/ile-kosztuje-chatbot-dla-firmy-2026",
+   "t": "Ile kosztuje chatbot AI dla firmy? Od 990 zł · SimpleFast.ai",
+   "tl": 60,
+   "dl": 150,
+   "h1": "Ile kosztuje chatbot dla firmy w 2026? Od 990 zł i co wpływa na cenę",
+   "h1n": 1,
+   "can": "/poradniki/ile-kosztuje-chatbot-dla-firmy-2026",
+   "ld": [
+    "Article",
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 15116,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/poradniki/ai-w-biurze-rachunkowym-jakie-procesy-zautomatyzowac",
+   "t": "AI w biurze rachunkowym: 12 procesów do automatyzacji · SimpleFast.ai",
+   "tl": 69,
+   "dl": 147,
+   "h1": "AI w biurze rachunkowym: które procesy zautomatyzować najpierw (lista 12)",
+   "h1n": 1,
+   "can": "/poradniki/ai-w-biurze-rachunkowym-jakie-procesy-zautomatyzowac",
+   "ld": [
+    "Article",
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 11717,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy",
+   "t": "Ile kosztuje wdrożenie AI agenta dla firmy · SimpleFast.ai",
+   "tl": 58,
+   "dl": 147,
+   "h1": "Ile kosztuje wdrożenie AI agenta dla firmy i po czym poznać, że się zwróci",
+   "h1n": 1,
+   "can": "/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy",
+   "ld": [
+    "Article",
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 12461,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/materialy/50-promptow-ai-dla-wlasciciela-firmy",
+   "t": "50 promptów AI dla właściciela firmy (do skopiowania) · SimpleFast.ai",
+   "tl": 69,
+   "dl": 154,
+   "h1": "50 promptów AI dla właściciela firmy, gotowe do skopiowania",
+   "h1n": 1,
+   "can": "/materialy/50-promptow-ai-dla-wlasciciela-firmy",
+   "ld": [
+    "Article",
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 16730,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/materialy/jak-pisac-prompty-ktore-dzialaja",
+   "t": "Jak pisać prompty, które działają (mini poradnik) · SimpleFast.ai",
+   "tl": 65,
+   "dl": 152,
+   "h1": "Jak pisać prompty, które działają. Mini poradnik dla firm",
+   "h1n": 1,
+   "can": "/materialy/jak-pisac-prompty-ktore-dzialaja",
+   "ld": [
+    "Article",
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 11186,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/materialy/prompty-branzowe-kancelaria-ecommerce-budowlanka",
+   "t": "Prompty AI: kancelaria, e-commerce, budowlanka · SimpleFast.ai",
+   "tl": 62,
+   "dl": 155,
+   "h1": "Prompty branżowe AI: kancelaria, e-commerce, budowlanka",
+   "h1n": 1,
+   "can": "/materialy/prompty-branzowe-kancelaria-ecommerce-budowlanka",
+   "ld": [
+    "Article",
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 12342,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/materialy/checklista-20-procesow-do-automatyzacji-ai",
+   "t": "Checklista: 20 procesów w firmie do automatyzacji AI · SimpleFast.ai",
+   "tl": 68,
+   "dl": 155,
+   "h1": "Checklista: 20 procesów w firmie, które warto zautomatyzować z AI",
+   "h1n": 1,
+   "can": "/materialy/checklista-20-procesow-do-automatyzacji-ai",
+   "ld": [
+    "Article",
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 12648,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/materialy/10-bledow-przy-wdrazaniu-ai-w-firmie",
+   "t": "10 błędów przy wdrażaniu AI w firmie · SimpleFast.ai",
+   "tl": 52,
+   "dl": 150,
+   "h1": "10 błędów przy wdrażaniu AI w firmie, i jak ich uniknąć",
+   "h1n": 1,
+   "can": "/materialy/10-bledow-przy-wdrazaniu-ai-w-firmie",
+   "ld": [
+    "Article",
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 12412,
+   "idx": "index, follow",
+   "og": true
+  },
+  {
+   "u": "/materialy/arkusz-policz-koszt-recznych-zadan",
+   "t": "Arkusz: ile kosztują Cię ręczne zadania · SimpleFast.ai",
+   "tl": 55,
+   "dl": 154,
+   "h1": "Arkusz: policz, ile naprawdę kosztują Cię ręczne zadania",
+   "h1n": 1,
+   "can": "/materialy/arkusz-policz-koszt-recznych-zadan",
+   "ld": [
+    "Article",
+    "BreadcrumbList",
+    "FAQPage",
+    "Organization",
+    "WebSite"
+   ],
+   "ldb": 0,
+   "sl": 11476,
+   "idx": "index, follow",
+   "og": true
+  }
+ ],
+ "metoda": "automatyczna: fetch surowego HTML (47 podstron z sitemap) + pomiar w przegladarce (waga zasobow, kreator kontaktu) + GSC Search Analytics i URL Inspection API + Bing Webmaster API. Metoda liczenia sl identyczna jak 2026-08-17 (porownywalna).",
+ "tag_cofniecia": "seo-2026-08-17b",
+ "commit": "4277aef",
+ "przebieg": "drugi tego dnia"
+}
