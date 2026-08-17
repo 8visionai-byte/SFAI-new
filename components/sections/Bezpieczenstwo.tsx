@@ -111,7 +111,7 @@ export function Bezpieczenstwo() {
                spokojny; sekcja ma uspokajać, nie krzyczeć, mapa w
                raporty/taksonomia-ramek-v11.md §A). Klasa .inf-card-edge =
                kontrakt partii A (globals: WARIANTY RAMEK v11). */
-            className="inf-card inf-card-edge inf-card-static p-6"
+            className="inf-card inf-card-edge p-6"
             style={{ '--card-c': p.c } as CSSProperties}
           >
             {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
@@ -124,7 +124,7 @@ export function Bezpieczenstwo() {
                 a KAZDA karta learn wzorca ma plytke 38-42px z glifem w pelnym
                 kolorze. Glif = istniejace pole `ikona` rejestru PUNKTY
                 (dekoracja aria-hidden, zero nowych znaczen). Karta
-                NIEklikalna -> .inf-card-static (cisza par.2), bez strzalki. */}
+                NIEklikalna, bez strzalki; hover pelny od v15 par.A. */}
             <span
               aria-hidden="true"
               className="inf-tile mb-4"

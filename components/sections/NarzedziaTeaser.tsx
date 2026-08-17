@@ -103,9 +103,19 @@ export function NarzedziaTeaser() {
                 >
                   <InfIcon name={dekor.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
                 </span>
-                {/* Mono kolorowy podtytuł wzorca („85K+ monthly searches") =
-                    etykieta narzędzia z rejestru; kolor niesie --card-c-l. */}
-                <span className="flex items-center gap-2.5">
+                {/* Miejsce wpięcia ScrambleText (partia D): owinąć treść h3. */}
+                {/* F2: `font-bold` zamiast `font-semibold` — reguła wagi
+                    tytułu karty w globals zeszła na :where() (0,1,0), więc
+                    utility wagi zawsze wygrywa i semibold zdjąłby te tytuły
+                    z 700 na 600. Bez mt: odstęp od płytki niesie jej mb-4. */}
+                <h3 className="text-ui font-bold text-fg">{n.tytul}</h3>
+                {/* v15 §G — TAGLINE POD TYTUŁEM (pomiary-v15.md §1a i §6 pkt 9,
+                    szablon wzorca: status NAD tytułem, wielki tytuł, KOLOROWY
+                    tagline mono POD tytułem, opis): mono etykieta narzędzia
+                    (.inf-card-sub, istniejące pole rejestru — zero nowych
+                    treści) schodzi ZNAD tytułu pod niego. Kropka i strzałka
+                    hover jadą razem z wierszem (v5, bez zmian). */}
+                <span className="mt-2 flex items-center gap-2.5">
                   {/* v5 (spec §3 KAFELKI): pulsująca kropka statusu PRZED
                       .inf-card-sub, kolor odcienia karty (--card-c-l).
                       Kontrakt SCALONY (koniec app/globals.css): .inf-sub-dot =
@@ -123,12 +133,6 @@ export function NarzedziaTeaser() {
                     →
                   </span>
                 </span>
-                {/* Miejsce wpięcia ScrambleText (partia D): owinąć treść h3. */}
-                {/* F2: `font-bold` zamiast `font-semibold` — reguła wagi
-                    tytułu karty w globals zeszła na :where() (0,1,0), więc
-                    utility wagi zawsze wygrywa i semibold zdjąłby te tytuły
-                    z 700 na 600. */}
-                <h3 className="mt-3 text-ui font-bold text-fg">{n.tytul}</h3>
                 <p className="mt-2 text-body-sm text-fg-muted">{n.opis}</p>
               </Link>
             </li>

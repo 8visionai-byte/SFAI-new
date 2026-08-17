@@ -107,7 +107,7 @@ export function CytatyWalec() {
       wspólnej gramatyki bazy .inf-card (kontrakt partii A, spec-v12).
     */
     <div
-      className="inf-card inf-card-edge inf-card-static px-6 md:px-8"
+      className="inf-card inf-card-edge px-6 md:px-8"
       style={{ '--card-c': '#ff67b7' } as CSSProperties}
       onMouseEnter={lite ? undefined : () => setPaused(true)}
       onMouseLeave={lite ? undefined : () => setPaused(false)}

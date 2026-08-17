@@ -164,12 +164,11 @@ export function DiagnozaForm() {
           lib/inf-kategorie (ton „rozwiązań"), świadomie NIE kolor statusu:
           zielony i czerwony są zarezerwowane dla stanu sukcesu i błędu niżej,
           a amber czytałby się jak ostrzeżenie na polu do wypełnienia.
-          v14 (pomiary-v14.md par.2): formularz to PANEL, nie karta-link ->
-          .inf-card-static (cisza: bez sweepa i mocnego glow, delikatny obrys
-          na hover; sweep wzorzec trzyma tylko na kartach-linkach). */}
+          v15 par.A (decyzja Pawla wycofuje cisze v14): hover pelny (sweep +
+          glow + lift) takze na panelach — wszystkie karty reaguja tak samo. */}
       <form
         onSubmit={handleSubmit}
-        className="inf-card inf-card-static p-6 shadow-md sm:p-7"
+        className="inf-card p-6 shadow-md sm:p-7"
         style={{ '--card-c': '#8b5cf6' } as React.CSSProperties}
       >
       {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany

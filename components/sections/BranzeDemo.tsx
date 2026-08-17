@@ -283,7 +283,7 @@ export function BranzeDemo() {
             key={b.label}
             className={
               reduce
-                ? 'inf-card inf-card-edge inf-card-static px-5 py-4'
+                ? 'inf-card inf-card-edge px-5 py-4'
                 : undefined
             }
             // v4: odcień karty (lewa krawędź, narożniki [ ]) = odcień kafelka —
@@ -329,7 +329,7 @@ export function BranzeDemo() {
             §A). Klasa .inf-card-edge = kontrakt partii A (globals:
             WARIANTY RAMEK v11). */}
         {DOMKNIECIE.map((d) => (
-          <li key={d.ikona} className="inf-card inf-card-edge inf-card-static p-6" style={{ '--card-c': d.c } as CSSProperties}>
+          <li key={d.ikona} className="inf-card inf-card-edge p-6" style={{ '--card-c': d.c } as CSSProperties}>
             <div aria-hidden="true" className="inf-spotlight" />
             <span
               aria-hidden="true"

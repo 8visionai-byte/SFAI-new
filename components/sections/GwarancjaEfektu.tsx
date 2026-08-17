@@ -63,7 +63,7 @@ export function GwarancjaEfektu() {
             niżej zostają na bazowej .inf-card (detale obietnicy nie konkurują
             z bohaterem). */}
         <div
-          className="inf-card inf-card-full-hover inf-card-static mx-auto max-w-wide p-6 md:p-10"
+          className="inf-card inf-card-full-hover mx-auto max-w-wide p-6 md:p-10"
           style={{ '--card-c': '#29ff77' } as CSSProperties}
         >
           {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
@@ -97,14 +97,14 @@ export function GwarancjaEfektu() {
           (pomiar wzorca §3: .lp-primary-grid--three 20px). */}
       <Reveal as="ul" className="sf-stagger inf-grid-gap mx-auto mt-12 grid max-w-wide md:mt-16 md:grid-cols-3">
         {FILARY.map((f) => (
-          <li key={f.t} className="inf-card inf-card-static p-6" style={{ '--card-c': f.c } as CSSProperties}>
+          <li key={f.t} className="inf-card p-6" style={{ '--card-c': f.c } as CSSProperties}>
             <div aria-hidden="true" className="inf-spotlight" />
             {/* v8 zdjelo ikone filarow; v14 JA PRZYWRACA: spec v14 par.1
                 ("kafelek w kafelku" na kazdej karcie adekwatnie do typu)
                 i pomiary-v14.md par.1b - filar to rodzina primary/W2, a plytke
                 ma 19/24 kart primary wzorca. Glif = istniejace pole `ikona`
-                rejestru FILARY (dekoracja aria-hidden). Karta NIEklikalna ->
-                .inf-card-static (cisza par.2), bez strzalki. */}
+                rejestru FILARY (dekoracja aria-hidden). Karta NIEklikalna,
+                bez strzalki; hover pelny od v15 par.A. */}
             <span
               aria-hidden="true"
               className="inf-tile mb-4"

@@ -43,12 +43,15 @@ import { KartaEtykieta, KartaTagi, tagiUslugi } from '@/components/sections/Kart
    zdanie po zdaniu w raporcie partii B v11), zero nowych faktów, zero cen,
    zero em-dash. Pole slug wiąże kartę z rejestrem: z niego idą kicker
    (INF_USLUGA_BADGE) i tagi (money queries przez tagiUslugi).
-   Kolor karty = odcień KATEGORII usługi z lib/inf-kategorie, więc
-   automatyzacje schodzą z bursztynu na zieleń kategorii (bursztyn przejmuje
-   karta domknięcia niżej, w sekcji zostaje 5 różnych tonów bez duplikatu).
+   Kolor karty = od v15 PELNY kolor kategorii z lib/inf-kategorie (pole c,
+   nie odcien): pomiary-v15.md par.1b i par.6 pkt 3 zmierzyly, ze pastelowy
+   --card-c (#61edff itd.) robil "blade" linie top i kicker — wzorzec swieci
+   pelnym hue (#ff6b00/#39ff14/#00f0ff/#b026ff). W sekcji dalej 5 roznych
+   tonow bez duplikatu (bursztyn trzyma karta domkniecia nizej).
    Pole ikona od v14 WRACA do renderu: plytka .inf-tile wzorca primary
    (pomiary-v14.md par.1b i par.5 pkt 1 - 19/24 kart primary wzorca ma plytke;
-   dekoracja aria-hidden, bez strzalki - karta nieklikalna, cisza par.2). */
+   dekoracja aria-hidden, bez strzalki - karta nieklikalna; hover pelny na
+   kazdej karcie od v15 par.A). */
 const ZJADACZE: ReadonlyArray<{
   t: string;
   slug: string;
@@ -62,7 +65,7 @@ const ZJADACZE: ReadonlyArray<{
     opis:
       'Chatbot AI odpowiada na nie za Ciebie na stronie i w komunikatorach przez całą dobę: tłumaczy ofertę, podaje ceny i godziny, zbiera leady, nawet o 22:00. Uczymy go na Twojej wiedzy, a dane zostają w Unii Europejskiej.',
     ikona: 'chat-dymek',
-    c: '#61edff',
+    c: '#11e0ff',
   },
   {
     t: 'przepisywanie danych między systemami',
@@ -70,7 +73,7 @@ const ZJADACZE: ReadonlyArray<{
     opis:
       'Automatyzacja przejmuje przepisywanie danych między mailem, arkuszem i fakturą, wysyłanie potwierdzeń i pilnowanie terminów. Zaczynamy od jednego procesu, który boli najbardziej.',
     ikona: 'dokument-skan',
-    c: '#29ff77',
+    c: '#00c986',
   },
   {
     t: 'oddzwanianie do klientów, którzy nie dodzwonili się za pierwszym razem',
@@ -78,7 +81,7 @@ const ZJADACZE: ReadonlyArray<{
     opis:
       'Voicebot odbiera telefon, rozmawia po polsku i umawia wizytę albo przyjmuje zgłoszenie. Sprawy dla człowieka zapisuje i wysyła Ci powiadomienie, żebyś oddzwonił przygotowany.',
     ikona: 'sluchawka-fala',
-    c: '#a586ff',
+    c: '#b638ff',
   },
 ] as const;
 
@@ -119,7 +122,7 @@ export function Problem() {
           return (
             <li
               key={z.t}
-              className="inf-card inf-card-top inf-card-static flex flex-col p-6"
+              className="inf-card inf-card-top flex flex-col p-6"
               style={{ '--card-c': z.c } as CSSProperties}
             >
               {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
@@ -128,9 +131,8 @@ export function Problem() {
               <div aria-hidden="true" className="inf-spotlight" />
               {/* v14 (pomiary-v14.md par.1b, par.5 pkt 1): PLYTKA IKONY wzorca
                   primary - pole ikona rejestru ZJADACZE ubrane w .inf-tile
-                  (dekoracja aria-hidden). Karta NIEklikalna, wiec klasa
-                  .inf-card-static (cisza par.2: bez sweepa i mocnego glow)
-                  i zadnej strzalki. */}
+                  (dekoracja aria-hidden). Karta NIEklikalna - zadnej strzalki;
+                  hover (sweep + glow + lift) pelny jak wszedzie (v15 par.A). */}
               <span
                 aria-hidden="true"
                 className="inf-tile mb-4"
@@ -161,16 +163,17 @@ export function Problem() {
       <Reveal delay={0.05} className="mx-auto mt-6 max-w-wide">
         {/* v11: karta w wariancie sekcji (W2). Bursztyn przejęty po zjadaczu
             automatyzacji (ten zszedł na zieleń kategorii), w sekcji dalej
-            5 różnych tonów bez duplikatu. */}
+            5 różnych tonów bez duplikatu. v15: bursztyn PEŁNY #ffa101
+            (rejestr, pole c) zamiast pastelu #ffc120 — pomiary-v15.md §6.3. */}
         <div
-          className="inf-card inf-card-top inf-card-static flex items-start gap-4 p-6 md:p-8"
-          style={{ '--card-c': '#ffc120' } as CSSProperties}
+          className="inf-card inf-card-top flex items-start gap-4 p-6 md:p-8"
+          style={{ '--card-c': '#ffa101' } as CSSProperties}
         >
           <div aria-hidden="true" className="inf-spotlight" />
           <span
             aria-hidden="true"
             className="inf-tile"
-            style={{ '--tile-c': '#ffc120' } as CSSProperties}
+            style={{ '--tile-c': '#ffa101' } as CSSProperties}
           >
             <InfIcon name="robot" />
           </span>
@@ -220,7 +223,7 @@ export function Problem() {
         (HOME_CTA.href), zero nowych stringów i zero nowego CSS.
       */}
       <Reveal delay={0.15} className="mx-auto mt-10 max-w-wide">
-        <div className="inf-card inf-card-top inf-card-static p-6 text-center md:p-8" style={{ '--card-c': '#5ba4ff' } as CSSProperties}>
+        <div className="inf-card inf-card-top p-6 text-center md:p-8" style={{ '--card-c': '#5ba4ff' } as CSSProperties}>
           <div aria-hidden="true" className="inf-spotlight" />
           <span
             aria-hidden="true"

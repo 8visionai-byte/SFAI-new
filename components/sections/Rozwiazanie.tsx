@@ -44,7 +44,11 @@ const POROWNANIE = [
    pary odcieni per rodzina barwy 1:1 z tabeli pomiaru: fiolet jasny ->
    magenta #ff00e5 (Neuromantix), cyjan -> zieleń #39ff14 (Vitalis),
    szmaragd/zieleń -> cyjan #00f0ff (Freedom OS), amber -> pomarańcz
-   #ff6b00 (Void LLM). Łuna bierze pierwszy odcień (robi to globals). */
+   #ff6b00 (Void LLM). Łuna bierze pierwszy odcień (robi to globals).
+   v15 §D (pomiary-v15.md §6 pkt 3): pierwszy stop = PEŁNY kolor rejestru
+   (cyjan #11e0ff, szmaragd #00c986, amber #ffa101 — nie pastele #61edff/
+   #29ff77/#ffc120, te robiły „blade" linie); fiolet jasny #a586ff zostaje,
+   bo to pełne hue wzorca (Vitalis #a78bfa), nie rozcieńczenie. */
 const POTRAFI = [
   {
     t: 'Odbiera telefon, kiedy Ty nie możesz.',
@@ -57,21 +61,21 @@ const POTRAFI = [
     t: 'Odpisuje klientom w minuty, o każdej porze.',
     d: 'Chatbot na stronie i w komunikatorach odpowiada na pytania i zbiera leady, nawet o 22:00.',
     ikona: 'chat-dymek',
-    c: '#61edff',
+    c: '#11e0ff',
     alt: '#39ff14',
   },
   {
     t: 'Przepisuje dane za Ciebie.',
     d: 'Automatyzacja przenosi informacje między mailem, systemem i fakturą, bez ręcznej roboty.',
     ikona: 'blyskawica',
-    c: '#29ff77',
+    c: '#00c986',
     alt: '#00f0ff',
   },
   {
     t: 'Pilnuje, żeby nic nie wypadło.',
     d: 'Przypomnienia, follow-upy, oddzwonienia. Klient nie zostaje bez odpowiedzi.',
     ikona: 'kalendarz-check',
-    c: '#ffc120',
+    c: '#ffa101',
     alt: '#ff6b00',
   },
 ] as const satisfies ReadonlyArray<{
@@ -127,7 +131,7 @@ export function Rozwiazanie() {
                (.lp-primary-card, neon-top + hover całej ramki; mapa w
                raporty/taksonomia-ramek-v11.md §A). Klasa .inf-card-top =
                kontrakt partii A (globals: WARIANTY RAMEK v11). */
-            className="inf-card inf-card-top inf-card-static flex h-full flex-col p-6 md:p-8"
+            className="inf-card inf-card-top flex h-full flex-col p-6 md:p-8"
             style={
               {
                 '--card-c': karta.kat.c,
@@ -141,7 +145,7 @@ export function Rozwiazanie() {
             <div aria-hidden="true" className="inf-spotlight" />
             {/* v14 (pomiary-v14.md par.1b, par.5): PLYTKA IKONY wzorca primary -
                 glif kategorii z rejestru INF_KATEGORIA (dekoracja aria-hidden);
-                karta NIEklikalna -> .inf-card-static (cisza par.2), bez strzalki. */}
+                karta NIEklikalna, bez strzalki; hover pelny od v15 par.A. */}
             <span
               aria-hidden="true"
               className="inf-tile mb-4"
@@ -246,7 +250,7 @@ export function Rozwiazanie() {
         {POTRAFI.map((item) => (
           <li
             key={item.t}
-            className="inf-card inf-card-top inf-card-static p-6"
+            className="inf-card inf-card-top p-6"
             /* v13 TYP D: --card-c-alt = drugi stop paska górnego (odcienie
                jednej rodziny barwy, pary z rejestru POTRAFI wyżej). */
             style={{ '--card-c': item.c, '--card-c-alt': item.alt } as CSSProperties}
@@ -259,7 +263,7 @@ export function Rozwiazanie() {
                 v14 POTWIERDZA (pomiary-v14.md par.1b): to odpowiednik kart
                 research wzorca (TYP D, pasek dwustopowy), a research plytki
                 NIE ma (19/24, research bez) - karta zostaje swiadomie prosta;
-                nieklikalna -> .inf-card-static (cisza par.2). */}
+                nieklikalna, bez strzalki; hover pelny od v15 par.A. */}
             <span className="block text-ui font-semibold text-fg">{item.t}</span>
             <span className="mt-2 block text-body-sm text-fg-muted">{item.d}</span>
           </li>

@@ -57,7 +57,7 @@ export function ZyweDemo() {
             własne tokeny — h-9 = 96px, pułapka!). */}
         <Reveal delay={0.06}>
           <div
-            className="inf-card inf-card-static flex h-full flex-col justify-center p-6"
+            className="inf-card flex h-full flex-col justify-center p-6"
             style={{ '--card-c': '#8b5cf6' } as React.CSSProperties}
           >
             {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN

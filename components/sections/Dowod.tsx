@@ -47,8 +47,8 @@ export function Dowod() {
             wzorca. Modyfikator -lg schodzi: -stat ma własną gramatykę hoveru
             (zasada łączenia partii A wymienia tylko parę -top + -lg). */}
         <div
-          className="inf-card inf-card-stat inf-card-static mx-auto max-w-wide p-6 md:p-10"
-          style={{ '--card-c': '#61edff' } as CSSProperties}
+          className="inf-card inf-card-stat mx-auto max-w-wide p-6 md:p-10"
+          style={{ '--card-c': '#11e0ff' } as CSSProperties}
         >
           {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
               pointermove z MotionOrchestrator (desktop). Dekoracja aria-hidden. */}
@@ -56,7 +56,7 @@ export function Dowod() {
           <span
             aria-hidden="true"
             className="inf-tile mb-4"
-            style={{ '--tile-c': '#61edff' } as CSSProperties}
+            style={{ '--tile-c': '#11e0ff' } as CSSProperties}
           >
             <InfIcon name="wykres-strzalka" />
           </span>
@@ -103,14 +103,14 @@ export function Dowod() {
             NIETKNIĘTA, teksty 1:1. */}
         <Reveal delay={0.05}>
           <article
-            className="inf-card inf-card-stat inf-card-static h-full p-6 md:p-8"
-            style={{ '--card-c': '#ffc120' } as CSSProperties}
+            className="inf-card inf-card-stat h-full p-6 md:p-8"
+            style={{ '--card-c': '#ffa101' } as CSSProperties}
           >
             <div aria-hidden="true" className="inf-spotlight" />
             <span
               aria-hidden="true"
               className="inf-tile mb-4"
-              style={{ '--tile-c': '#ffc120' } as CSSProperties}
+              style={{ '--tile-c': '#ffa101' } as CSSProperties}
             >
               <InfIcon name="lupa-wykres" />
             </span>

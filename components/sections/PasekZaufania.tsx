@@ -88,7 +88,7 @@ export function PasekZaufania() {
         {FILARY.map((f) => (
           <li
             key={f.title}
-            className="inf-card inf-card-edge inf-card-static p-6"
+            className="inf-card inf-card-edge p-6"
             style={{ '--card-c': f.kolor } as CSSProperties}
           >
             {/* Reflektor za kursorem (kontrakt kart home; dekoracja aria-hidden). */}
@@ -97,7 +97,7 @@ export function PasekZaufania() {
                 glif wchodzi do plytki .inf-tile (anatomia W1/learn wzorca,
                 par.1c: SVG 17-20px w plytce, pelny kolor przez currentColor -
                 kolor niesie --tile-c). Rozmiar 20px = pomiar par.1a. Karta
-                NIEklikalna -> .inf-card-static (cisza par.2). */}
+                NIEklikalna, bez strzalki; hover pelny od v15 par.A. */}
             <span
               aria-hidden="true"
               className="inf-tile"

@@ -177,9 +177,12 @@ export function KartaBadge({
  * (typografia mono + gap + margines) i `.inf-status-dot` (kropka, glow,
  * animacja pulsu z bramką reduced-motion) — nazwy wg konwencji repo
  * lp-* -> inf-* (jak .inf-card/.inf-tag). Kolor napisu podajemy tu INLINE
- * łańcuchem zmiennych karty (--card-c-l -> --card-c -> accent), bo spec v12
- * mówi wprost „napis w kolorze karty" — kropka jedzie na currentColor
- * po stronie arkusza, więc dziedziczy ten sam ton.
+ * łańcuchem zmiennych karty — od v15 PEŁNY kolor NAJPIERW (--card-c ->
+ * --card-c-l -> accent): pomiary-v15.md §1b zmierzyły u nas tekst statusu
+ * w PASTELU #61edff przy kropce w pełnym #11e0ff, a wzorzec świeci status
+ * PEŁNYM neonem (tekst i kropka w jednym tonie) — pastel to dokładnie
+ * „u nas jest blade" z cytatu Pawła. Kropka .inf-status-dot bierze pełny
+ * ton z --status-c po stronie arkusza.
  *
  * ZASADA TREŚCI (spec v12): status WYŁĄCZNIE z istniejącego faktu
  * („ZA DARMO" — narzędzia są darmowe, „WDROŻONE" — realizacja wdrożona).
@@ -196,7 +199,7 @@ export function KartaStatus({
   return (
     <span
       className={`inf-status ${className}`}
-      style={{ color: 'var(--card-c-l, var(--card-c, var(--accent)))' } as CSSProperties}
+      style={{ color: 'var(--card-c, var(--card-c-l, var(--accent)))' } as CSSProperties}
     >
       <span aria-hidden="true" className="inf-status-dot" />
       {children}

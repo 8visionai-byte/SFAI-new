@@ -150,7 +150,7 @@ export function Oferta() {
                          partii A; zasada łączenia A dopuszcza -top z -lg, hover
                          ma te same liczby). Wyróżniony plan zostaje na
                          .sf-rim-gradient (jego język, nie .inf-card). */
-                      'inf-card inf-card-lg inf-card-top inf-card-static relative flex h-full flex-col p-6 md:grid md:row-[span_7] md:grid-rows-subgrid'
+                      'inf-card inf-card-lg inf-card-top relative flex h-full flex-col p-6 md:grid md:row-[span_7] md:grid-rows-subgrid'
                 }
                 style={
                   p.highlight

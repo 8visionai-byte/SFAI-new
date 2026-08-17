@@ -3100,12 +3100,30 @@ html.lenis body {
     font-size: 1.125rem;
     line-height: 1;
     color: var(--tile-c);
-    background-color: rgba(34, 211, 238, 0.14);
-    background-color: color-mix(in srgb, var(--tile-c) 14%, transparent);
+    /* v15 §D — PŁYTKA 1:1 .lp-tool-icon wzorca (pomiary-v15.md §1a; cytat:
+       „nie ma tego koloru jarzącego, tego neonu... u nas jest blade"): FLAT
+       14% przechodzi w GRADIENT 160deg 14% -> 5%, a łuna dostaje SZKLANY
+       POŁYSK inset biel 10% (u nas go nie było — stąd „płaska" płytka) i
+       zmierzone `0 0 16px -6px` akcent 60% zamiast 18px/-4px/55%. Obwódka
+       zostaje 28% (wzorzec 26% — nasza minimalnie mocniejsza, nie osłabiamy).
+       TRZECIA warstwa światła wzorca (drop-shadow 35%) w bloku desktop niżej
+       — filtry nigdy na mobile (żelazna konwencja LCP). Fallback literałem
+       rgba w cyjanie akcentu przed color-mix (konwencja pliku). */
+    background-color: transparent;
+    background-image: linear-gradient(160deg, rgba(34, 211, 238, 0.14), rgba(34, 211, 238, 0.05));
+    background-image: linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--tile-c) 14%, transparent),
+      color-mix(in srgb, var(--tile-c) 5%, transparent)
+    );
     border: 1px solid rgba(34, 211, 238, 0.28);
     border-color: color-mix(in srgb, var(--tile-c) 28%, transparent);
-    box-shadow: 0 0 18px -4px rgba(34, 211, 238, 0.55);
-    box-shadow: 0 0 18px -4px color-mix(in srgb, var(--tile-c) 55%, transparent);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 0 16px -6px rgba(34, 211, 238, 0.6);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 0 16px -6px color-mix(in srgb, var(--tile-c) 60%, transparent);
     transition:
       transform var(--dur-base) var(--ease-out),
       filter var(--dur-base) var(--ease-out),
@@ -3119,6 +3137,17 @@ html.lenis body {
     transition:
       transform var(--dur-fast) var(--ease-out),
       filter var(--dur-fast) var(--ease-out);
+  }
+  /* v15 §D: TRZECIA warstwa światła płytki wzorca — `filter: drop-shadow(
+     0 0 6px akcent 35%)` (pomiary-v15.md §1a: halo wychodzące POZA obrys
+     płytki, „trzy warstwy światła naraz"). TYLKO desktop ≥1024px: filtry
+     i blury nigdy na mobile (strefa LCP — żelazna konwencja repo).
+     Fallback literałem rgba przed color-mix. */
+  @media (min-width: 1024px) {
+    .inf-tile {
+      filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.35));
+      filter: drop-shadow(0 0 6px color-mix(in srgb, var(--tile-c) 35%, transparent));
+    }
   }
 
   /* ── .inf-card — karta wzorca v4: ciemna, cienka obwódka, LEWA krawędź
@@ -3159,7 +3188,8 @@ html.lenis body {
           Świecenie tytułu bierze się teraz z WAGI (800/700, reguła na końcu
           pliku) i z poświaty liczb, nie z podłoża — pomiary §3.2 mówią zresztą
           wprost, że tytuł wzorca nie ma ŻADNEGO text-shadow.
-     ZOSTAJE (nietknięte): ZACIEMNIENIE 10% (jedno `background-color`), obwódka
+     ZOSTAWAŁO wtedy: ZACIEMNIENIE 10% (jedno `background-color` — ZDJĘTE
+     w v15 §F, wzorzec trzyma transparent; komentarz przy deklaracji), obwódka
      rgba(255,255,255,.07), 8 warstw narożników [ ], sweep na hover, świecenie
      obwódki na hover, reflektor pod kursorem.
      DLACZEGO `rgba(0,0,0,.10)`, a nie ton --bg: to ma być ZACIEMNIENIE tego, co
@@ -3197,7 +3227,9 @@ html.lenis body {
           zakotwiczona w górnej krawędzi, wygasa do 78% promienia — jaśniej
           na środku, gaśnie ku bokom i w dół, czyli dosłownie opis Pawła.
           Boczna kreska ::before ZOSTAJE sygnaturą (spec: „boczna kreska
-          zostaje tam, gdzie jest, ale główny akcent = góra").
+          zostaje tam, gdzie jest, ale główny akcent = góra"). v15 §E: na
+          wariantach -top i -stat kreska GAŚNIE (warianty się NIE łączą —
+          pomiary-v15.md §5, cytat Pawła w bloku WARIANTY niżej).
        Modyfikator .inf-card-lg dostaje oba efekty z tej bazy — kontrakt każe
        pisać go ZAWSZE obok .inf-card, osobna reguła spoczynku nie istnieje.
      v11 §A — KOREKTA UNIFORMIZACJI z v10 (cytat Pawła: „wziąłeś domyślnie
@@ -3249,17 +3281,17 @@ html.lenis body {
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.04),
       0 8px 28px -16px rgba(0, 0, 0, 0.5);
-    /* v8b pkt 1: bazowe zaciemnienie 10% (kontrasty policzone w bloku nad
-       regułą). v14b (decyzja Pawła 2026-08-17, odwraca „zdjęcie szaty" z v8
-       PO obejrzeniu wzorca: „chcę mieć ten efekt premium, lecimy"): NAD tym
-       kolorem leży gradient powierzchni 160deg (11. warstwa background-image
-       niżej) — karta przestaje być płaską plamą, dostaje przejście tonalne
-       „szklanej płytki" 1:1 z .lp-learn-card wzorca (pomiary-v14.md §4).
-       Czerń 10% zostaje POD gradientem jako bezpiecznik AA: złożenie jest
-       minimalnie ciemniejsze niż goły wzorzec, więc żaden kontrast tekstu
-       nie spada względem stanu sprzed v14b. Rewert efektu = git revert
-       commita v14b (obiecane Pawłowi). */
-    background-color: rgba(0, 0, 0, 0.1);
+    /* v14b: gradient powierzchni 160deg (ostatnia warstwa background-image
+       niżej) — „szklana płytka" 1:1 .lp-learn-card wzorca (pomiary-v14.md §4).
+       v15 §F (pomiary-v15.md §4, cytat Pawła: „u nas jest za matowa. Zrób,
+       żeby była bardziej świecąca"): czerń 10% spod gradientu ZDJĘTA —
+       wzorzec trzyma background-color TRANSPARENT na KAŻDEJ rodzinie kart,
+       przezroczystość niesie wyłącznie alfa gradientu .74/.55. Kontrasty NIE
+       spadają pod próg: gradient nad tłem #06060c składa się do ~rgb(10,11,24)
+       na górze i ~rgb(8,8,17) na dole karty — opis --fg-muted ~5,9:1, fiolet
+       #b638ff ~4,65:1 (AA, policzone sondą v15 na złożeniu; stara czerń 10%
+       dawała różnicę <0,5 jednostki na kanał). */
+    background-color: transparent;
     /* v13 SPOCZYNEK WYCISZONY (pomiary-v13.md §1; spec v13: po pełnej
        kolorowej obwódce v12 „wszystkie karty wyglądają jednakowo" — zniknęła
        wariantowość wzorca). Wzorzec trzyma bazę KAŻDEJ karty na bieli 6-7%
@@ -3390,24 +3422,33 @@ html.lenis body {
     transition: opacity var(--dur-base) var(--ease-out);
     pointer-events: none;
   }
-  /* v4 SWEEP przez ::after — 1:1 wzorzec: pas 38% szer. / 100% wys., start
-     left -40%, skewX(-18deg), gradient biel 6%, transition left .6s; hover
-     karty -> left 120% (media hover niżej; RM: pas stoi). Absolutny
-     pseudo-element maluje się NAD tekstem w flow (jak dotychczasowy
-     .inf-shine::after) — biel 6% nie psuje kontrastu treści. */
+  /* v15 §B SWEEP = przepis PRIMARY wzorca (pomiary-v15.md §2; cytat Pawła:
+     „błysk powinien być troszkę wolniejszy. U Infinity jest bardzo płynne,
+     u nas nie"). Dotąd jechał u nas przepis PROMO (pas 38%, skewX -18°,
+     twarda biel 6%, -40% -> 120%, ease) — a zrzuty Pawła to karty Open
+     Source, czyli rodzina .lp-primary-card: pas 60% szerokości, gradient
+     105deg z MIĘKKIM rdzeniem (3%/6%/3% na stopach 45/50/55), BEZ skew,
+     przelot -100% -> 140% (240% szerokości karty) i easing expo-out
+     cubic-bezier(.16,1,.3,1). Ta sama duration 0,6 s + dłuższa droga =
+     błysk wisi nad kartą dłużej i gaśnie płynnie, bez skoku. Absolutny
+     pseudo-element maluje się NAD tekstem w flow — biel 6% nie psuje
+     kontrastu treści (konwencja jak dotąd). */
   .inf-card::after {
     content: '';
     position: absolute;
     top: 0;
-    left: -40%;
-    width: 38%;
+    left: -100%;
+    width: 60%;
     height: 100%;
-    transform: skewX(-18deg);
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
-    /* v12 SWEEP WOLNIEJ (pomiar §1f): wzorzec jedzie na DOMYŚLNYM `ease` —
-       pas wisi nad kartą ~0,34 s; nasze expo wystrzeliwało go w ~0,18 s.
-       Krzywa 1:1 ze wzorca: `left 0.6s ease`. */
-    transition: left 0.6s ease;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.03) 45%,
+      rgba(255, 255, 255, 0.06) 50%,
+      rgba(255, 255, 255, 0.03) 55%,
+      transparent 70%
+    );
+    transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
   }
 
@@ -3497,6 +3538,10 @@ html.lenis body {
   .inf-tag.inf-tag-kolor {
     color: var(--card-c, var(--card-c-l, var(--accent)));
     font-weight: 700;
+    /* v15 §D: radius 6px = 1:1 .lp-tag wzorca (pomiary-v15.md §1a). Procenty
+       tła/obwódki ZOSTAJĄ 12/32 — mocniejsze niż wzorcowe 8/20 na jaśniejszym
+       korpusie; pomiary-v15.md §6 pkt 10: „nie osłabiać". */
+    border-radius: 6px;
     background-color: rgba(0, 240, 255, 0.12);
     background-color: color-mix(in srgb, var(--card-c, var(--card-c-l, var(--accent))) 12%, transparent);
     border-color: rgba(0, 240, 255, 0.32);
@@ -4027,9 +4072,11 @@ html.lenis body {
   .inf-card:hover::before {
     opacity: 1;
   }
-  /* v4: sweep na KAŻDEJ karcie — pas ::after przelatuje przez kartę. */
+  /* v15 §A+B: sweep na KAŻDEJ karcie (decyzja Pawła wycofuje ciszę v14 —
+     blok .inf-card-static usunięty na końcu pliku); dojazd 140% = przelot
+     primary wzorca (pomiary-v15.md §2: -100% -> 140% w 0,6 s expo-out). */
   .inf-card:hover::after {
-    left: 120%;
+    left: 140%;
   }
   /* Strzałka karty ukryta do hoveru — scope .inf-card, żeby strzałki poza
      kartami (wiersze listy usług w Ofercie) zostały widoczne jak dotąd. */
@@ -4047,7 +4094,8 @@ html.lenis body {
   }
   /* Kafel ikony na hover — v7 1:1 z pomiarów (`.lp-primary-card:hover
      .lp-tool-icon`): gradient 160deg kolor 22% -> 8%, obwódka 48%, inset biel
-     14% + glow 0 0 22px -4px w kolorze karty. `filter: brightness(1.35)` USUNIĘTY
+     14% + glow 0 0 22px -4px w kolorze karty (v15 §D: alfa glow 70% —
+     pomiary-v15.md §1b: wzorzec hover 70%, nasze 55% było „blade"). `filter: brightness(1.35)` USUNIĘTY
      (Paweł: „u nas sztuczne światło słabej jakości, za mocne" — brightness
      rozjaśnia CAŁY kafel razem z glifem zamiast go nasycić).
      Emoji w kafelku dostaje własny blask przez text-shadow (u wzorca to SVG
@@ -4069,10 +4117,10 @@ html.lenis body {
     border-color: color-mix(in srgb, var(--tile-c) 48%, transparent);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.14),
-      0 0 22px -4px rgba(34, 211, 238, 0.55);
+      0 0 22px -4px rgba(34, 211, 238, 0.7);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.14),
-      0 0 22px -4px color-mix(in srgb, var(--tile-c) 55%, transparent);
+      0 0 22px -4px color-mix(in srgb, var(--tile-c) 70%, transparent);
     text-shadow: 0 0 10px rgba(34, 211, 238, 0.55);
     text-shadow: 0 0 10px color-mix(in srgb, var(--tile-c) 55%, transparent);
   }
@@ -4237,10 +4285,13 @@ html.lenis body {
     transform: none !important;
   }
   /* Błysk stoi (spec: RM bez zmiany left) — v4 także sweep ::after karty;
-     kafel ikony nie „pływa". */
-  .inf-card:hover .inf-shine::after,
-  .inf-card:hover::after {
+     kafel ikony nie „pływa". v15 §B: karta parkuje pas w -100% (geometria
+     primary), legacy .inf-shine zostaje przy swoim -40%. */
+  .inf-card:hover .inf-shine::after {
     left: -40% !important;
+  }
+  .inf-card:hover::after {
+    left: -100% !important;
   }
   .inf-dd-row:hover .inf-tile {
     transform: none !important;
@@ -4826,9 +4877,12 @@ div:has(> .inf-divider) {
 }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   /* v7: sam RUCH kafla (obrót + powiększenie, zamówione przez Pawła w v5).
-     Rozświetlenie robi reguła 1:1 z pomiarów wyżej — bez `brightness`. */
+     Rozświetlenie robi reguła 1:1 z pomiarów wyżej — bez `brightness`.
+     v15 §D (pomiary-v15.md §1b): wartości ściszone DO WZORCA 1:1 —
+     .lp-primary-card:hover .lp-tool-icon = scale(1.06) rotate(-3deg);
+     nasze 1.15/-15° było 5x mocniejsze od zmierzonego. */
   .inf-card:hover .inf-tile {
-    transform: rotate(-15deg) scale(1.15);
+    transform: rotate(-3deg) scale(1.06);
   }
   .inf-sub-dot {
     animation: infAskPulse 2.4s var(--ease-in-out) infinite;
@@ -5138,7 +5192,11 @@ div:has(> .inf-divider) {
    Poświata spoczynku: 1:1 .lp-primary-card (inset biel 5% + czerń 55%). */
 .inf-card-top {
   --inf-top-a: 100%;
-  --inf-top-halo: 45%;
+  /* v15 §D (pomiary-v15.md §1a i §6 pkt 3): łuna emuluje `box-shadow:
+     0 0 8px var(--card-accent)` wzorca, a ten świeci PEŁNYM kolorem bez
+     alfy — radial 45% robił „blade". Idzie na 100%: miękkość daje geometria
+     (wygaszenie do 78% promienia), nie rozcieńczenie koloru. */
+  --inf-top-halo: 100%;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
     0 10px 34px -18px rgba(0, 0, 0, 0.55);
@@ -5148,6 +5206,17 @@ div:has(> .inf-divider) {
    dociążenie 900 = nowy plik fontu, decyzja do Pawła. */
 .inf-card-top :where(h2, h3, h4) {
   font-weight: 800;
+}
+
+/* v15 §E (cytat Pawła: „skoro ramka ma z lewej strony podświetlenie, to nie
+   może mieć na górze. I odwrotnie. Masz bardzo dużo wariantów, przedstawiaj
+   różne, ale ich NIE ŁĄCZ"; pomiary-v15.md §5: primary wzorca ma na lewym
+   boku ZERO — jego ::before to sweep zaparkowany POZA kartą, u nas sweep
+   jedzie przez ::after, więc kreskę gasi content:none): kreska boczna 2px
+   bazy GAŚNIE na wariancie top — jedynym wyróżnikiem spoczynku zostaje
+   linia górna. Dotyczy też TYP D (odcienie — ta sama klasa). */
+.inf-card-top::before {
+  content: none;
 }
 
 /* ── W3 .inf-card-full-hover — TYP C: BOK + KAWAŁKI KRAWĘDZI PRZY NAROŻU
@@ -5208,6 +5277,12 @@ div:has(> .inf-divider) {
   box-shadow:
     0 14px 44px -18px rgba(0, 0, 0, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+/* v15 §E: stat = .lp-hero-metric wzorca (pomiary-v15.md §5: czysty spoczynek
+   — nic na górze, nic na boku; neon niosą świecące liczby v13). Kreska
+   boczna bazy gaśnie; linia top dalej zapala się dopiero hoverem. */
+.inf-card-stat::before {
+  content: none;
 }
 
 /* ── W5 .inf-card-quiet — CICHA, KANCIASTA (pomiar W5, .lp-secondary-card:
@@ -5522,79 +5597,25 @@ div:has(> .inf-divider) {
     box-shadow: none;
     animation: none;
   }
+  /* v15 (minor audytu): silnik forced-colors sam gasi background-image
+     i box-shadow, ale NIE filtry — drop-shadow płytki trzeba zgasić jawnie. */
+  .inf-tile {
+    filter: none;
+  }
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   INFINITY v14 — CISZA NA NIEKLIKALNYCH (spec v14 §2) + FOCUS-VISIBLE
-   KART-LINKÓW (spec v14 §3). ŹRÓDŁO: raporty/pomiary-v14.md (computed
-   z żywego wzorca infinitytechstack.uk, 2026-08-17).
-   POZA @layer Świadomie (konwencja pliku). Blok stoi NA KOŃCU pliku CELOWO:
-   reguly .inf-card-static:hover maja (0,2,0) jak hovery bazy v12 i wariantów
-   v11/v13, więc o wyniku na kartach nieklikalnych decyduje kolejność
-   w źródle. Hover KLIKALNYCH (v12) i spoczynek wariantów (v13) NIETKNIĘTE:
-   karta bez .inf-card-static nie wpada w żaden selektor tego bloku. */
-
-/* ── .inf-card-static — KARTA INFORMACYJNA (nieklikalna), pomiar §2:
-   sweep i mocny glow wzorzec trzyma WYŁĄCZNIE na kartach-linkach; elementy
-   czysto informacyjne są na hover martwe (.lp-hero-metric: ::before/::after
-   content:none, ZERO reguł :hover w 137,9 kB CSSOM) albo dostają szept
-   (.lp-bench-row: samo tło 4%). U nas karta informacyjna dostaje „spokojny
-   hover”: delikatna zmiana obrysu (kolor karty 45% — alfa spoczynku v10,
-   gradacja znana stronie) + pasek/ring ::before 0.5 -> 1 i reflektor
-   .inf-spotlight zostają (sygnatury repo, nie „mocny glow”), a znikają:
-   sweep (::after), lift, pełnokolorowa obwódka i potrójna łuna hoveru v12
-   oraz rozjaśnienie narożników. KONTRAKT dla markupu: klasę dostaje KAŻDA
-   .inf-card home, która nie jest linkiem (statystyki, panele, cytaty, kroki,
-   cennik); karty-linki (PromoUslugi, NarzedziaTeaser) NIGDY. */
-.inf-card-static::after {
-  /* Sweep zdjęty 1:1 z gramatyki wzorca dla nie-linków (pomiar §2:
-     .lp-hero-metric ma ::after content:none). Dotyczy też hoveru — reguła
-     .inf-card:hover::after { left:120% } nie ma już czego przesuwać. */
-  content: none;
-}
-@media (hover: hover) and (pointer: fine) {
-  .inf-card-static:hover {
-    /* Bez liftu (pomiar §2: kafle statystyk wzorca bez transform na hover).
-       Reguła stoi ZA hoverami wariantów (-top -5px, -lg -5px, -full-hover
-       -3px, -stat/-quiet -2px) — przy równej specyficzności wygrywa
-       kolejnością źródła. */
-    transform: none;
-    /* „Delikatna zmiana obrysu” zamiast pełnego var(--card-c) z hoveru v12.
-       Fallback literalny w cyjanie akcentu przed color-mix (konwencja pliku). */
-    border-color: rgba(34, 211, 238, 0.45);
-    border-color: color-mix(in srgb, var(--card-c) 45%, transparent);
-    /* Łuna hoveru v12 (48px 35% + 28px 14% + inset 9%) zdjęta: zostaje CIEŃ
-       SPOCZYNKU bazy .inf-card (v11 §B, 1:1 .lp-learn-card) — wartości
-       powtórzone literalnie, bo reguł spoczynku v13 nie wolno ruszać. */
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.04),
-      0 8px 28px -16px rgba(0, 0, 0, 0.5);
-    /* Narożniki [ ] zostają na alfie spoczynku (hover v12 podbijał 60%). */
-    --inf-corner-a: 22%;
-  }
-  /* Cienie spoczynku wariantów powtórzone 1:1 z ich reguł spoczynkowych
-     (blok WARIANTY RAMEK v11/v13 wyżej — NIETYKALNY, stąd duplikat wprost):
-     hover statyczny ma stać w miejscu, a reguła bazowa wyżej zna tylko cień
-     bazy. Linia top statu (--inf-top-a 0 -> 100%) CELOWO zostaje — to 1px
-     „delikatnej zmiany obrysu”, nie łuna. */
-  .inf-card-top.inf-card-static:hover {
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.05),
-      0 10px 34px -18px rgba(0, 0, 0, 0.55);
-  }
-  .inf-card-stat.inf-card-static:hover {
-    /* Stat nie ma narożników także w spoczynku (--inf-corner-a 0%) —
-       selektor 2-klasowy (0,3,0) bije regułę bazową statyczną wyżej. */
-    --inf-corner-a: 0%;
-    box-shadow:
-      0 14px 44px -18px rgba(0, 0, 0, 0.6),
-      inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  }
-  .inf-card-full-hover.inf-card-static:hover,
-  .inf-card-quiet.inf-card-static:hover {
-    box-shadow: none;
-  }
-}
+   INFINITY v15 §A — CISZA v14 WYCOFANA (decyzja Pawła, spec-v15 §1: „nie we
+   wszystkich ramkach jest takie rozświetlenie, gdy najedziemy, błysk
+   przechodzi z lewej do prawej... na wszystkich kratkach po najechaniu
+   rozświetlenie powinno być trochę mocniejsze" — hover PEŁNY, błysk +
+   rozświetlenie + lift, na KAŻDEJ karcie jak w v12; właściciel rozstrzyga
+   przeciw rekomendacji „ciszy" z v14). Reguły .inf-card-static (gaszenie
+   sweepa ::after, spokojny hover, cienie spoczynku na hover) USUNIĘTE w
+   całości, klasa zniknęła też z markupu (grep repo = 0 wystąpień — zasada
+   F3: nazwa klasy żyje w JSX tylko z regułą w globals). Strzałki na kartach
+   nieklikalnych NIE wracają — nigdy ich tam nie było. FOCUS-VISIBLE v14
+   niżej ZOSTAJE bez zmian. */
 
 /* ── FOCUS-VISIBLE KART-LINKÓW (spec v14 §3) — wzorzec własnego stylu NIE MA
    (pomiar §3: 0 wystąpień :focus-visible w CSS home/forge/academy wzorca;

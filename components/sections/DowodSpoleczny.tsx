@@ -116,7 +116,7 @@ export function DowodSpoleczny() {
                   rozświetlenie CAŁEJ ramki — wspólna gramatyka hoveru z bazy
                   .inf-card (kontrakt partii A, spec-v12). */}
               <figure
-                className="inf-card inf-card-edge inf-card-static p-6"
+                className="inf-card inf-card-edge p-6"
                 style={{ '--card-c': OPINIA_TON[i] ?? 'var(--accent-decor)' } as React.CSSProperties}
               >
                 {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
@@ -151,7 +151,7 @@ export function DowodSpoleczny() {
             karta founderów też z W5 na W1 edge: fioletowy pasek w spoczynku,
             hover pełna ramka z bazy. */}
         <div
-          className="inf-card inf-card-edge inf-card-static mx-auto mt-12 max-w-wide p-6 md:p-8"
+          className="inf-card inf-card-edge mx-auto mt-12 max-w-wide p-6 md:p-8"
           style={{ '--card-c': '#a586ff' } as React.CSSProperties}
         >
           <div aria-hidden="true" className="inf-spotlight" />
