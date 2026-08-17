@@ -65,7 +65,7 @@ const ZJADACZE: ReadonlyArray<{
     opis:
       'Chatbot AI odpowiada na nie za Ciebie na stronie i w komunikatorach przez całą dobę: tłumaczy ofertę, podaje ceny i godziny, zbiera leady, nawet o 22:00. Uczymy go na Twojej wiedzy, a dane zostają w Unii Europejskiej.',
     ikona: 'chat-dymek',
-    c: '#11e0ff',
+    c: '#00f0ff',
   },
   {
     t: 'przepisywanie danych między systemami',
@@ -73,7 +73,7 @@ const ZJADACZE: ReadonlyArray<{
     opis:
       'Automatyzacja przejmuje przepisywanie danych między mailem, arkuszem i fakturą, wysyłanie potwierdzeń i pilnowanie terminów. Zaczynamy od jednego procesu, który boli najbardziej.',
     ikona: 'dokument-skan',
-    c: '#00c986',
+    c: '#00e096',
   },
   {
     t: 'oddzwanianie do klientów, którzy nie dodzwonili się za pierwszym razem',
@@ -81,7 +81,7 @@ const ZJADACZE: ReadonlyArray<{
     opis:
       'Voicebot odbiera telefon, rozmawia po polsku i umawia wizytę albo przyjmuje zgłoszenie. Sprawy dla człowieka zapisuje i wysyła Ci powiadomienie, żebyś oddzwonił przygotowany.',
     ikona: 'sluchawka-fala',
-    c: '#b638ff',
+    c: '#e438ff',
   },
 ] as const;
 
@@ -223,12 +223,12 @@ export function Problem() {
         (HOME_CTA.href), zero nowych stringów i zero nowego CSS.
       */}
       <Reveal delay={0.15} className="mx-auto mt-10 max-w-wide">
-        <div className="inf-card inf-card-top p-6 text-center md:p-8" style={{ '--card-c': '#5ba4ff' } as CSSProperties}>
+        <div className="inf-card inf-card-top p-6 text-center md:p-8" style={{ '--card-c': '#70b0ff' } as CSSProperties}>
           <div aria-hidden="true" className="inf-spotlight" />
           <span
             aria-hidden="true"
             className="inf-tile mx-auto mb-4"
-            style={{ '--tile-c': '#5ba4ff' } as CSSProperties}
+            style={{ '--tile-c': '#70b0ff' } as CSSProperties}
           >
             <InfIcon name="lupa-wykres" />
           </span>

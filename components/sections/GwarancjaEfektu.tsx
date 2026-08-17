@@ -31,7 +31,7 @@ const FILARY = [
     t: 'Mały, odwracalny krok',
     d: 'Zaczynamy od jednego procesu, nie od wielkiej umowy. Testujesz na żywo, Ty ustawiasz granice, w każdej chwili możesz Agenta zatrzymać.',
     ikona: 'puzzle',
-    c: '#a586ff',
+    c: '#dc7aff',
   },
   {
     t: 'Rozliczenie za efekt',

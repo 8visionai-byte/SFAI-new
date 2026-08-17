@@ -46,29 +46,30 @@ const POROWNANIE = [
    szmaragd/zieleń -> cyjan #00f0ff (Freedom OS), amber -> pomarańcz
    #ff6b00 (Void LLM). Łuna bierze pierwszy odcień (robi to globals).
    v15 §D (pomiary-v15.md §6 pkt 3): pierwszy stop = PEŁNY kolor rejestru
-   (cyjan #11e0ff, szmaragd #00c986, amber #ffa101 — nie pastele #61edff/
-   #29ff77/#ffc120, te robiły „blade" linie); fiolet jasny #a586ff zostaje,
-   bo to pełne hue wzorca (Vitalis #a78bfa), nie rozcieńczenie. */
+   (cyjan #00f0ff, szmaragd #00e096, amber #ffa101 — nie pastele #61edff/
+   #29ff77/#ffc120, te robiły „blade" linie); fiolet jasny zostaje pełnym hue,
+   nie rozcieńczeniem. v17 (raporty/pomiary-v17.md §2): #a586ff->#dc7aff,
+   #11e0ff->#00f0ff, #00c986->#00e096 — neon bliżej kalibracji „ktoś inny". */
 const POTRAFI = [
   {
     t: 'Odbiera telefon, kiedy Ty nie możesz.',
     d: 'Voicebot rozmawia po polsku, umawia wizyty i przekazuje Ci tylko to, co ważne.',
     ikona: 'sluchawka-fala',
-    c: '#a586ff',
+    c: '#dc7aff',
     alt: '#ff00e5',
   },
   {
     t: 'Odpisuje klientom w minuty, o każdej porze.',
     d: 'Chatbot na stronie i w komunikatorach odpowiada na pytania i zbiera leady, nawet o 22:00.',
     ikona: 'chat-dymek',
-    c: '#11e0ff',
+    c: '#00f0ff',
     alt: '#39ff14',
   },
   {
     t: 'Przepisuje dane za Ciebie.',
     d: 'Automatyzacja przenosi informacje między mailem, systemem i fakturą, bez ręcznej roboty.',
     ikona: 'blyskawica',
-    c: '#00c986',
+    c: '#00e096',
     alt: '#00f0ff',
   },
   {

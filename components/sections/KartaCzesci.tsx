@@ -179,7 +179,7 @@ export function KartaBadge({
  * lp-* -> inf-* (jak .inf-card/.inf-tag). Kolor napisu podajemy tu INLINE
  * łańcuchem zmiennych karty — od v15 PEŁNY kolor NAJPIERW (--card-c ->
  * --card-c-l -> accent): pomiary-v15.md §1b zmierzyły u nas tekst statusu
- * w PASTELU #61edff przy kropce w pełnym #11e0ff, a wzorzec świeci status
+ * w PASTELU #61edff przy kropce w pełnym #00f0ff, a wzorzec świeci status
  * PEŁNYM neonem (tekst i kropka w jednym tonie) — pastel to dokładnie
  * „u nas jest blade" z cytatu Pawła. Kropka .inf-status-dot bierze pełny
  * ton z --status-c po stronie arkusza.

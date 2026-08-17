@@ -43,10 +43,12 @@ type Branza = {
 /* INFINITY v4 (spec §PARTIA C pkt 5): kolory kafelków kart (tryb reduced-motion)
    przechodzą na FLUORESCENCYJNE ODCIENIE palety v4 (baza -> jasny:
    #2b7cff->#5ba4ff, #8b5cf6->#a586ff, #ffa101->#ffc120, #22d3ee->#61edff) —
-   każda karta w gridzie innym tonem. Wyłącznie dekoracja, teksty 1:1. */
+   każda karta w gridzie innym tonem. Wyłącznie dekoracja, teksty 1:1.
+   v17 (paleta neon, raporty/pomiary-v17.md §2): #5ba4ff->#70b0ff,
+   #a586ff->#dc7aff — jaśniejsze, bliżej magenty; kontrast tylko rośnie. */
 const BRANZE: readonly Branza[] = [
-  { label: 'dla biura', action: 'umawiam spotkania i pilnuję kalendarza', ikona: 'kalendarz-check', c: '#5ba4ff' },
-  { label: 'dla salonu', action: 'odbieram telefon, gdy strzyżesz klienta', ikona: 'sluchawka-fala', c: '#a586ff' },
+  { label: 'dla biura', action: 'umawiam spotkania i pilnuję kalendarza', ikona: 'kalendarz-check', c: '#70b0ff' },
+  { label: 'dla salonu', action: 'odbieram telefon, gdy strzyżesz klienta', ikona: 'sluchawka-fala', c: '#dc7aff' },
   { label: 'dla budowlanki', action: 'składam wyceny z maila', ikona: 'dokument-skan', c: '#ffc120' },
   { label: 'dla e-commerce', action: 'odpowiadam na pytania o zamówienia 24/7', ikona: 'chat-dymek', c: '#61edff' },
 ] as const;
@@ -66,7 +68,7 @@ const DOMKNIECIE: ReadonlyArray<{ t: string; ikona: InfIconName; c: string }> = 
   {
     t: 'Agent SimpleFast przejmuje dokładnie tę część, w każdej branży po swojemu.',
     ikona: 'robot',
-    c: '#a586ff',
+    c: '#dc7aff',
   },
   {
     t: 'To nie rolka haseł. Każdy z tych przykładów to realne zadanie, które zdejmujemy z właściciela i jego zespołu.',

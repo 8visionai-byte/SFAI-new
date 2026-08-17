@@ -13,17 +13,17 @@ import { Reveal } from '@/components/motion/Reveal';
  * między pozycjami (reguła .inf-counter + .inf-counter fundamentu; na mobile
  * kasowana utilities max-sm — kolumny stoją jedna pod drugą bez kreski).
  * INFINITY v4 (spec §PARTIA C pkt 5): trzy obawy = trzy RÓŻNE fluorescencyjne
- * ODCIENIE palety v4 (jasne stopnie 300/400 z lib/inf-kategorie: blue #5ba4ff,
- * violet #a586ff, green #29ff77) zamiast tokenów metalu — żywsze, każda
+ * ODCIENIE palety v4 (jasne stopnie 300/400 z lib/inf-kategorie: blue #70b0ff,
+ * violet #dc7aff, green #29ff77) zamiast tokenów metalu — żywsze, każda
  * pozycja inny ton. AA na tle strony #06060c z zapasem (jaśniejsze niż
- * dotychczasowe metal-300/400, kontrast tylko rośnie; policzone dla --surface
- * w globals przy .inf-card-sub: 6.5:1 / 6.6:1 / 9.9:1). Teksty 1:1.
+ * dotychczasowe metal-300/400, kontrast tylko rośnie; v17 na --surface
+ * #111127: #70b0ff 8,24:1 / #dc7aff 7,30:1 / #29ff77 13,82:1). Teksty 1:1.
  */
 const FILARY = [
   {
     title: 'Twoje dane zostają w UE',
     desc: 'RODO i AI Act. Klient zawsze wie, że rozmawia z AI.',
-    kolor: '#5ba4ff',
+    kolor: '#70b0ff',
     icon: (
       <path
         d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z"
@@ -36,7 +36,7 @@ const FILARY = [
   {
     title: 'Zaczynasz od małego kroku',
     desc: 'Najpierw darmowa diagnoza, potem mały projekt. Bez wielkiej decyzji na start.',
-    kolor: '#a586ff',
+    kolor: '#dc7aff',
     icon: (
       <path
         d="M4 18h4v-4H4v4Zm6 0h4V9h-4v9Zm6 0h4V5h-4v13Z"

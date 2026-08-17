@@ -191,7 +191,7 @@
                                    (AA-guard .text-fg-subtle na końcu pliku)
        --accent #00f0ff         = 14,2:1 na bg (AA tekst-akcja); tekst #06060c
                                    na tle #00f0ff = 14,2:1 (AA — CTA)
-       --success #00c986 9,33:1 · --warning #ffa101 9,96:1 · --error #ff3434 5,57:1
+       --success #00e096 11,65:1 · --warning #ffa101 9,96:1 · --error #ff3434 5,57:1
        --border-strong #2a2a50  =  ~1.5:1 — kreska DEKORACYJNA; obrys KONTROLEK
                                    dalej --border-control (biel 55%, >3:1, 1.4.11)
        --ring #00f0ff           = 14,2:1 (1.4.11 — wskaźnik fokusa ✓) */
@@ -270,9 +270,12 @@
          --success #00c986  9,33:1 (było 7,97:1)
          --warning #ffa101  9,96:1 (było 9,41:1)
          --error   #ff3434  5,57:1 (było 5,40:1)
-       Na --surface #111127 odpowiednio 8,56:1 / 9,13:1 / 5,11:1 — AA wszędzie. */
-    --success: #00c986;
-    --success-bg: rgba(0, 201, 134, 0.12);
+       Na --surface #111127 odpowiednio 8,56:1 / 9,13:1 / 5,11:1 — AA wszędzie.
+       v17 (paleta neon, raporty/pomiary-v17.md §2): zieleń równana do poziomu
+       pomarańczu — #00c986 -> #00e096 (hue 160 i S=100 bez zmian, L 39 -> 44):
+       11,65:1 na --bg, 10,68:1 na --surface; kontrast tylko rośnie. */
+    --success: #00e096;
+    --success-bg: rgba(0, 224, 150, 0.12);
     --warning: #ffa101;
     --warning-bg: rgba(255, 161, 1, 0.12);
     --error: #ff3434;
@@ -2805,10 +2808,10 @@ html.lenis body {
      Troszkę trzeba je zwiększyć, jeszcze o 10%, bo na oryginalnej stronie
      jest to ciemniejsze"): krycie 0,82 -> 0,92, znów dokładnie 10 punktów.
      Panel po złożeniu z --bg #06060c = rgb(10,10,16). Kontrasty badge'ów
-     POLICZONE na nowym panelu (paleta po korekcie v10 rejestru): #a586ff
-     7,01:1 · #ff00e5 6,00:1 · #b638ff 4,70:1 · #61edff 14,16:1 · #29ff77
-     14,73:1 · #ffc120 12,13:1 · #5ba4ff 7,71:1 — AA wszędzie. Mobile bez
-     zmian: solidny --surface z reguły bazowej. */
+     POLICZONE na nowym panelu (paleta neon v17, raporty/pomiary-v17.md §2):
+     #dc7aff 7,77:1 · #ff00e5 6,00:1 · #e438ff 5,93:1 · #61edff 14,16:1 ·
+     #29ff77 14,73:1 · #ffc120 12,13:1 · #70b0ff 8,78:1 · #00f0ff 14,01:1
+     — AA wszędzie. Mobile bez zmian: solidny --surface z reguły bazowej. */
   @media (min-width: 1024px) {
     .inf-dd {
       background-color: rgba(10, 10, 16, 0.92);
@@ -3326,8 +3329,8 @@ html.lenis body {
        przezroczystość niesie wyłącznie alfa gradientu .74/.55. Kontrasty NIE
        spadają pod próg: gradient nad tłem #06060c składa się do ~rgb(10,11,24)
        na górze i ~rgb(8,8,17) na dole karty — opis --fg-muted ~5,9:1, fiolet
-       #b638ff ~4,65:1 (AA, policzone sondą v15 na złożeniu; stara czerń 10%
-       dawała różnicę <0,5 jednostki na kanał). */
+       v17 #e438ff 5,87:1 (AA; stary #b638ff miał ~4,65:1 policzone sondą v15
+       na złożeniu; stara czerń 10% dawała różnicę <0,5 jednostki na kanał). */
     background-color: transparent;
     /* v13 SPOCZYNEK WYCISZONY (pomiary-v13.md §1; spec v13: po pełnej
        kolorowej obwódce v12 „wszystkie karty wyglądają jednakowo" — zniknęła
@@ -3550,43 +3553,28 @@ html.lenis body {
       0 0 6px color-mix(in srgb, var(--card-c, var(--card-c-l, var(--accent))) 60%, transparent),
       0 0 14px color-mix(in srgb, var(--card-c, var(--card-c-l, var(--accent))) 30%, transparent);
   }
-  /* v16 §B — WYJĄTEK AA DLA FIOLETU #b638ff (pomiary-v16.md §2.2 nota AA).
-     HISTORIA POMIARÓW PIKSELOWYCH (adwersaryjna kontrola v16, metody
-     pierścień 1-3px wokół glifów + mediana bbox): rdzeń 60% -> 4,28-4,44
-     FAIL; rdzeń 45% + ogon 25% -> 4,28-4,45 FAIL (metoda wykonawcy
-     „mediana pod literami" dawała 4,50 — za miękka). WNIOSEK: to RDZEŃ
-     6px podbija piksele tuż przy literze i zjada pierścień. Fiolet dostaje
-     więc SAM SZEROKI OGON 14px/35% — neonowa mgiełka rozlana daleko od
-     glifu, pierścień niemal nietknięty (bez cienia w ogóle: 4,65-4,66 =
-     sufit koloru). TYLKO karty z --card-c:#b638ff — pozostałe kolory
-     palety mają margines i trzymają pełną kalibrację 60/30. Selektor
-     atrybutu 1:1 z konwencją .inf-chip[style*='--chip-c']; rgba literałem,
-     bo kolor znany. Kolor liter BEZ zmian.
-     :not(.inf-tag-plaski) KONIECZNE: płaski tag gasi cień regułą (0,2,0)
-     wygrywającą kolejnością — ten selektor (0,3,0) bez :not() przywróciłby
-     mu fioletowe halo. */
-  .inf-card[style*='#b638ff'] .inf-overline,
-  .inf-card[style*='#b638ff'] .inf-card-sub {
-    text-shadow: 0 0 14px rgba(182, 56, 255, 0.35);
-  }
-  /* Tag fioletowy: glify gęste (pigułka pełna tekstu) — nawet sam ogon
-     14px trzymał pierścień na 4,36. Cień znika CAŁKIEM: neon pigułki
-     niosą pełnokolorowe litery + obwódka 32%. */
-  .inf-card[style*='#b638ff'] .inf-tag:not(.inf-tag-plaski) {
-    text-shadow: none;
-  }
-  /* Status na karcie fioletowej: glif 8px — jakikolwiek cień przy tak małym
-     tekście zjada pierścień (kontrola v16: rdzeń 60% -> 4,35 FAIL; bez
-     cienia -> 4,65 PASS). Fiolet wraca do neonu niesionego samą kropką. */
-  .inf-card[style*='#b638ff'] .inf-status {
-    text-shadow: none;
-  }
-  /* Tag na karcie fioletowej: STAN ZASTANY v15 (prod: pierścień 4,02) —
-     winny tint tła 12% jasnego fioletu pod glifem, nie jarzenie v16.
-     Tint schodzi na 6% (obwódka 32% i pełny kolor liter zostają — pigułka
-     dalej wyraźna); pomiar po fixie: patrz commit v16. */
-  .inf-card[style*='#b638ff'] .inf-tag.inf-tag-kolor {
-    background-color: rgba(182, 56, 255, 0.04);
+  /* v17 — WYJĄTKI AA FIOLETU Z v16 ZDJĘTE (spec-v17 „żelazne"; pomiary
+     raporty/pomiary-v17.md §4). Historia: stary fiolet #b638ff miał sufit
+     koloru 4,65-4,66 na karcie i pomiar pierścieniowy v16 (pierścień 1-3px
+     wokół glifów) wykazał, że rdzeń jarzeniówki 6px/60% zjada z pierścienia
+     0,25-0,35 — stąd wyjątki: overline/sub tylko ogon 14px/35%
+     rgba(182,56,255,.35), tag i status bez cienia, tint tagu zbity do 4%.
+     Po zmianie palety v17 fiolet to #e438ff hsl(292 100 61): surowy kontrast
+     na karcie 4,65 -> 5,87 (+1,22). POMIAR PIERŚCIENIOWY PO WDROŻENIU
+     (sonda v17-pierscien/v17-tag-warianty, raport v17): overline 5,16/4,84,
+     sub 5,37/5,03, status 5,40/5,06 — pełna kalibracja 60/30 i bazowy tint
+     12% WRACAJĄ dla overline, sub i statusu (trzy z czterech wyjątków v16
+     zdjęte w całości). */
+  /* JEDYNY wyjątek v17 — PIGUŁKA taga na karcie fioletowej: glify gęste
+     i pomiar wariantowy pokazał, że to RDZEŃ 6px/60% zjada pierścień
+     (tint 12% + pełne 60/30 -> 4,44/3,99 FAIL; tint 8% i 6% z rdzeniem
+     dalej FAIL na p90: 4,24/4,34). SAM OGON 14px/30% przy pełnym tincie
+     12% daje 5,10/5,05 — PASS z zapasem 0,55 nad AA 4,5, i to WIĘCEJ neonu
+     niż wyjątek v16 (tam: zero cienia + tint zbity do 4%). Selektor
+     atrybutu 1:1 z konwencją pliku; rgba literałem, bo kolor znany;
+     celuje w .inf-tag-kolor, więc płaskiego taga nie dotyka. */
+  .inf-card[style*='#e438ff'] .inf-tag.inf-tag-kolor {
+    text-shadow: 0 0 14px rgba(228, 56, 255, 0.3);
   }
 
   /* ══ v8b pkt 4 — TAGI W DWÓCH WARIANTACH ══════════════════════════════════
@@ -4420,14 +4408,13 @@ html.lenis body {
   .inf-dd-badge,
   .inf-card:hover .inf-arrow,
   /* v9 pkt 7: jarzenie chipów zaufania gaśnie razem z resztą poświat.
-     v16 §B: dochodzi jarzeniówka statusów i wyjątek fioletu #b638ff —
-     jego selektory (0,3,0)/(0,4,0) biją listę (0,2,0), więc muszą stać
-     tu jawnie, inaczej fioletowe karty świeciłyby w High Contrast. */
+     v16 §B: dochodzi jarzeniówka statusów. v17: z wyjątków fioletu został
+     TYLKO ogon pigułki taga (#e438ff) — jego selektor (0,4,0) bije listę
+     (0,2,0), więc musi stać tu jawnie; reszta fioletu jedzie regułami
+     ogólnymi z listy wyżej. */
   .inf-chip[style*='--chip-c'],
   .inf-status,
-  .inf-card[style*='#b638ff'] .inf-overline,
-  .inf-card[style*='#b638ff'] .inf-tag:not(.inf-tag-plaski),
-  .inf-card[style*='#b638ff'] .inf-card-sub {
+  .inf-card[style*='#e438ff'] .inf-tag.inf-tag-kolor {
     text-shadow: none;
   }
   /* v16 §B: halo pudełka chipów (nowe w v16) gaśnie jak halo stat-chipów
@@ -5304,7 +5291,7 @@ div:has(> .inf-divider) {
      „grube i rozlane", nie linia. Alfa łuny spoczynku schodzi 100% -> 10%:
      raport §5 pkt 1 szacował ~12%, ale nakazana kontrola pikselowa PO
      zmianie pokazała przy 12% deltę +14,5 na najjaśniejszym cyjanie
-     #11e0ff (cel §3.2/§5: +7..12); przy 10% zmierzone delty to
+     #11e0ff (od v17 cyjan = #00f0ff; cel §3.2/§5: +7..12); przy 10% zmierzone delty to
      typA +12 / typD +10 / lg +6,5 — całość w oknie wzorca (+7..+19 po
      rodzinach, §1.3). Geometria pasa 100%x10px zostaje (radial i tak
      wygasza przy 78% promienia). LINIA 1px pełnym kolorem BEZ ZMIAN —
@@ -5543,10 +5530,10 @@ div:has(> .inf-divider) {
    1 -> .4 -> 1 w 2 s). Kolor = PEŁNA esencja koloru karty (zero color-mix);
    fallback --accent poza kartami. Na hover karty status NIC nie robi — tak
    zmierzono (wzorzec nie ma reguł :hover dla statusów; „przepiękną animację"
-   robi wspólny hover całej karty). KONTRAST: najciemniejszy kolor rejestru
-   #b638ff na korpusie karty (tło #06060c + zaciemnienie 10%) = 4,83:1
-   (AA ✓ dla 8px/700); NIE kłaść statusu na jaśniejszym --surface #111127
-   (tam fiolet spada do 4,43:1 — poniżej progu). */
+   robi wspólny hover całej karty). KONTRAST (paleta neon v17): najciemniejszy
+   kolor rejestru #e438ff na szczycie karty rgb(10,11,24) = 5,87:1, na
+   korpusie rgb(5,5,11) = 6,11:1 (AA ✓ dla 8px/700); na --surface #111127
+   5,57:1 — też AA (stary #b638ff miał tam 4,43:1, stąd dawny zakaz). */
 .inf-status {
   --status-c: var(--card-c, var(--accent));
   display: inline-flex;
@@ -5561,7 +5548,7 @@ div:has(> .inf-divider) {
   /* v16 §B (pomiary-v16.md §2.2): status miał text-shadow: none — dostaje
      RDZEŃ jarzeniówki 6px/60% (bez ogona: glif ma 8px, szersze halo
      robiłoby mgłę zamiast neonu). Kolor liter bez zmian — kontrast AA
-     z noty niżej (fiolet #b638ff 4,83:1 na korpusie karty) zostaje. */
+     z noty niżej (fiolet v17 #e438ff 6,11:1 na korpusie karty) zostaje. */
   text-shadow: 0 0 6px rgba(0, 240, 255, 0.6);
   text-shadow: 0 0 6px color-mix(in srgb, var(--status-c) 60%, transparent);
 }
@@ -5664,9 +5651,9 @@ div:has(> .inf-divider) {
 
 /* Kolorowy człon H1 — wzorzec robi to inline background-clip:text PŁASKIM
    kolorem, czyli wizualnie zwykły color; u nas span na ISTNIEJĄCYM tekście
-   H1 (treść i znaczniki SEO bez zmian, jak na home). Kontrast:
-   najciemniejszy #b638ff na --bg = 4,81:1, H1 to tekst duży (próg 3:1) —
-   AA ✓ z dużym zapasem. */
+   H1 (treść i znaczniki SEO bez zmian, jak na home). Kontrast (paleta neon
+   v17): najciemniejszy #e438ff na --bg = 6,07:1, H1 to tekst duży
+   (próg 3:1) — AA ✓ z dużym zapasem. */
 .inf-hero-word {
   color: var(--hero-c, var(--accent));
 }

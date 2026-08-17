@@ -48,7 +48,7 @@ export function Dowod() {
             (zasada łączenia partii A wymienia tylko parę -top + -lg). */}
         <div
           className="inf-card inf-card-stat mx-auto max-w-wide p-6 md:p-10"
-          style={{ '--card-c': '#11e0ff' } as CSSProperties}
+          style={{ '--card-c': '#00f0ff' } as CSSProperties}
         >
           {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
               pointermove z MotionOrchestrator (desktop). Dekoracja aria-hidden. */}
@@ -56,7 +56,7 @@ export function Dowod() {
           <span
             aria-hidden="true"
             className="inf-tile mb-4"
-            style={{ '--tile-c': '#11e0ff' } as CSSProperties}
+            style={{ '--tile-c': '#00f0ff' } as CSSProperties}
           >
             <InfIcon name="wykres-strzalka" />
           </span>

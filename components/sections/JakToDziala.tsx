@@ -42,7 +42,7 @@ const NODE_TONE = ['text-metal-blue', 'text-metal-violet', 'text-metal-green'] a
    .inf-card w odcieniu SWOJEGO węzła (te same trzy stopnie co NODE_TONE, w
    fluorescencyjnej palecie v4: blue -> violet -> green). Bez tego hover karty
    był bezbarwny, a sekcja „nieuzupełniona kolorystyką". Treść kroków 1:1. */
-const KROK_C = ['#5ba4ff', '#a586ff', '#29ff77'] as const;
+const KROK_C = ['#70b0ff', '#dc7aff', '#29ff77'] as const;
 
 export function JakToDziala() {
   return (
@@ -125,7 +125,7 @@ export function JakToDziala() {
                   kontrakt partii A (globals: WARIANTY RAMEK v11). */}
               <div
                 className="inf-card inf-card-quiet mt-4 flex-1 p-6 text-left"
-                style={{ '--card-c': KROK_C[i] ?? '#5ba4ff' } as CSSProperties}
+                style={{ '--card-c': KROK_C[i] ?? '#70b0ff' } as CSSProperties}
               >
                 {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
                     delegowany pointermove z MotionOrchestrator (desktop).

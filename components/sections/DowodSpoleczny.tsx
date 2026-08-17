@@ -152,13 +152,13 @@ export function DowodSpoleczny() {
             hover pełna ramka z bazy. */}
         <div
           className="inf-card inf-card-edge mx-auto mt-12 max-w-wide p-6 md:p-8"
-          style={{ '--card-c': '#a586ff' } as React.CSSProperties}
+          style={{ '--card-c': '#dc7aff' } as React.CSSProperties}
         >
           <div aria-hidden="true" className="inf-spotlight" />
           <span
             aria-hidden="true"
             className="inf-tile mb-4"
-            style={{ '--tile-c': '#a586ff' } as React.CSSProperties}
+            style={{ '--tile-c': '#dc7aff' } as React.CSSProperties}
           >
             <InfIcon name="osoba-check" />
           </span>

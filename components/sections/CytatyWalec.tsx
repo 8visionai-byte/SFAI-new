@@ -44,7 +44,7 @@ const CYTATY = [
 
 /* Fluorescencyjne odcienie palety v4 (jak dotychczasowe CYTAT_ODCIEN w
    Problem.tsx) — 5 cytatów = 5 odcieni, zero dubli. Czysta dekoracja. */
-const ODCIENIE = ['#61edff', '#a586ff', '#ff67b7', '#29ff77', '#ffc120'] as const;
+const ODCIENIE = ['#61edff', '#dc7aff', '#ff67b7', '#29ff77', '#ffc120'] as const;
 
 const N = CYTATY.length; // 5
 const KROK = 360 / N; // 72° na cytat

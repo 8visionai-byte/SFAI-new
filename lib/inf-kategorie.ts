@@ -50,6 +50,35 @@
  *       magentę L 50, nasz róż L 70 jest bledszy"). Kontrast: 6,14 / 6,18 /
  *       5,86 / 6,00 — AA ✓. Ten sam hex żyje już w globals jako --ring-2.
  *
+ * v17 (spec-v17, pomiary raporty/pomiary-v17.md; cytat Pawła: „jeszcze jest
+ * za mało neonu... fioletowy jest blady, «ktoś inny» ma ten mocny
+ * różowo-fioletowy odcień"): PALETA RÓWNANA DO KALIBRACJI. Zmierzone piksele
+ * liter „ktoś inny" (span .inf-grad-text na home, klon 1:1 wzorca) dają cel
+ * H 288-304, S 90-97, L 48-57 — a nasz fiolet #b638ff miał na literach
+ * medianę hsl(278 88 58), o 10-26 deg za daleko od magenty (zmierzona
+ * przyczyna „bladości"). Pomarańcz #ffa101/#ffc120 NIETYKALNY (referencja:
+ * „już wygląda nieźle"). Kontrast liczony w Node na 4 tłach konwencji v10
+ * (--bg #06060c / karta rgb(10,11,24) — tło wymogu >=4,8 / mgławica
+ * rgb(15,12,28) / dropdown rgb(10,10,16)):
+ *   #b638ff -> #e438ff   hsl(278 100 61) -> hsl(292 100 61)   (violet)
+ *       H 292 = środek dominant kalibracji, L bez zmian (relacja z odcieniami
+ *       zostaje). Karta 5,87 = wymóg >=4,8 z zapasem (stary sufit 4,65).
+ *   #a586ff -> #dc7aff   hsl(255 100 76) -> hsl(284 100 74)   (violet jasny)
+ *       Różowszy, para z bazą jak cyjan 188/187. Karta 7,70.
+ *   #00c986 -> #00e096   hsl(160 100 39) -> hsl(160 100 44)   (green)
+ *       H bez zmian, L +5 pp. Karta 11,27 — przeskakuje pomarańcz.
+ *   #5ba4ff -> #70b0ff   hsl(213 100 68) -> hsl(213 100 72)   (blue)
+ *       H bez zmian. Karta 8,70.
+ *   #11e0ff -> #00f0ff   hsl(188 100 53) -> hsl(184 100 50)   (cyan)
+ *       Scalenie 1:1 z tokenem neonu wzorca (--accent globals, 18 użyć);
+ *       L/S 50/100 jak pomarańcz. Karta 13,88.
+ *   Bez zmian: #61edff, #29ff77, #ff00e5 (środkowy stop kalibracji),
+ *   #ffa101, #ffc120. Minimum nowej palety: fiolet 5,79 (mgławica) — AA
+ *   wszędzie; wyjątki AA fioletu z v16 w globals ZDJĘTE dla overline, sub
+ *   i statusu (pełna jarzeniówka 60/30 wraca — pierścień zmierzony
+ *   5,03-5,40); pigułka taga trzyma pełny tint 12% i sam ogon 14px/30%
+ *   (pierścień 5,10/5,05 — rdzeń 6px dalej zjadał p90 poniżej 4,5).
+ *
  * Kolory kategorii wywodzą się ze spec-infinity-v2 §Dropdown (zmierzone ze
  * wzorca): chatboty cyjan, voiceboty fiolet, automatyzacje zieleń,
  * dokumenty bursztyn, www cyjan, audyt bursztyn, opieka zieleń,
@@ -71,9 +100,9 @@ export type InfDekor = {
   c: string;
   /**
    * v4 (spec §PARTIA A pkt 5): JAŚNIEJSZY odcień koloru — fluorescencyjna
-   * paleta kart, po podbiciu nasycenia F4 i korekcie v10: cyan #61edff,
-   * violet #a586ff, magenta #ff00e5, green #29ff77, amber #ffc120,
-   * blue #5ba4ff.
+   * paleta kart, po podbiciu nasycenia F4, korekcie v10 i palecie neon v17:
+   * cyan #61edff, violet #dc7aff, magenta #ff00e5, green #29ff77,
+   * amber #ffc120, blue #70b0ff.
    * Konsument (partia C) podaje go
    * w --card-c-l (mono podtytuł .inf-card-sub) i różnicuje nim karty
    * w JEDNYM gridzie. Opcjonalny w TYPIE (lokalne mapy partii C w app/
@@ -91,23 +120,23 @@ export type InfDekor = {
 export type InfIkonaDekor = { c: string; odcien?: string; ikona: InfIconName; emoji?: string };
 
 /** Kategorie usług (klucz = slug usługi; realizacje używają tych samych slugów).
- * Odcienie v4 (hexy po podbiciu nasycenia F4): mapowanie bazowy -> jasny
- * (cyan->#61edff, violet->#a586ff, green->#29ff77, amber->#ffc120)
- * + rozróżnienie DUBLI w jednym gridzie paletą spec: strony-www dostają
- * blue #5ba4ff (trzeci cyjan w mapie), agent-rekrutacyjny (baza to już jasny
- * violet) idzie w magentę #ff00e5 (v10: neon wzorca zamiast różu). */
+ * Odcienie v4 (hexy po podbiciu nasycenia F4 i palecie neon v17): mapowanie
+ * bazowy -> jasny (cyan->#61edff, violet->#dc7aff, green->#29ff77,
+ * amber->#ffc120) + rozróżnienie DUBLI w jednym gridzie paletą spec:
+ * strony-www dostają blue #70b0ff (trzeci cyjan w mapie), agent-rekrutacyjny
+ * (baza to już jasny violet) idzie w magentę #ff00e5 (v10: neon wzorca). */
 export const INF_KATEGORIA: Record<string, InfDekor> = {
-  chatboty: { c: '#11e0ff', odcien: '#61edff', emoji: '💬', ikona: 'chat-dymek' },
-  voiceboty: { c: '#b638ff', odcien: '#a586ff', emoji: '🎙️', ikona: 'sluchawka-fala' },
-  'agent-rekrutacyjny': { c: '#a586ff', odcien: '#ff00e5', emoji: '🤝', ikona: 'osoba-check' },
-  automatyzacje: { c: '#00c986', odcien: '#29ff77', emoji: '⚡', ikona: 'blyskawica' },
+  chatboty: { c: '#00f0ff', odcien: '#61edff', emoji: '💬', ikona: 'chat-dymek' },
+  voiceboty: { c: '#e438ff', odcien: '#dc7aff', emoji: '🎙️', ikona: 'sluchawka-fala' },
+  'agent-rekrutacyjny': { c: '#dc7aff', odcien: '#ff00e5', emoji: '🤝', ikona: 'osoba-check' },
+  automatyzacje: { c: '#00e096', odcien: '#29ff77', emoji: '⚡', ikona: 'blyskawica' },
   'dokumenty-faktury': { c: '#ffa101', odcien: '#ffc120', emoji: '📄', ikona: 'dokument-skan' },
   // v5 (spec §2): emoji opieki 🛡️ -> 🛠️ (lista emoji dropdownu Usługi 1:1 ze spec).
-  'opieka-ai': { c: '#00c986', odcien: '#29ff77', emoji: '🛠️', ikona: 'tarcza-serce' },
+  'opieka-ai': { c: '#00e096', odcien: '#29ff77', emoji: '🛠️', ikona: 'tarcza-serce' },
   'audyt-ai': { c: '#ffa101', odcien: '#ffc120', emoji: '🔍', ikona: 'lupa-wykres' },
-  rozwiazania: { c: '#b638ff', odcien: '#a586ff', emoji: '🧩', ikona: 'puzzle' },
-  'strony-www': { c: '#11e0ff', odcien: '#5ba4ff', emoji: '🌐', ikona: 'glob-siatka' },
-  optymalizacja: { c: '#11e0ff', odcien: '#61edff', emoji: '📈', ikona: 'wykres-strzalka' },
+  rozwiazania: { c: '#e438ff', odcien: '#dc7aff', emoji: '🧩', ikona: 'puzzle' },
+  'strony-www': { c: '#00f0ff', odcien: '#70b0ff', emoji: '🌐', ikona: 'glob-siatka' },
+  optymalizacja: { c: '#00f0ff', odcien: '#61edff', emoji: '📈', ikona: 'wykres-strzalka' },
 };
 
 /** Fallback dla slugów spoza map (nowe wpisy rejestrów). */
@@ -122,8 +151,8 @@ export const INF_KATEGORIA_DEFAULT: Required<InfDekor> = {
 
 /** Typy treści Centrum Wiedzy (karty listingów blog/poradniki/materiały). */
 export const INF_TYP: Record<'poradnik' | 'wpis' | 'material', InfDekor> = {
-  poradnik: { c: '#11e0ff', odcien: '#61edff', emoji: '📚', ikona: 'ksiazka' },
-  wpis: { c: '#a586ff', odcien: '#ff00e5', emoji: '📝', ikona: 'notes-pioro' },
+  poradnik: { c: '#00f0ff', odcien: '#61edff', emoji: '📚', ikona: 'ksiazka' },
+  wpis: { c: '#dc7aff', odcien: '#ff00e5', emoji: '📝', ikona: 'notes-pioro' },
   material: { c: '#ffa101', odcien: '#ffc120', emoji: '🧲', ikona: 'magnes' },
 };
 
@@ -135,9 +164,9 @@ export const INF_PRODUKT: Record<string, InfIkonaDekor> = {
   // v5 (spec §2): emoji dropdownu Produkty 1:1 ze spec: 🧾 🗓️ ✅ 🎛️
   // (kolejność listy spec = kolejność rejestru PRODUKTY).
   'skaner-faktur-ksef': { c: '#ffa101', odcien: '#ffc120', ikona: 'dokument-skan', emoji: '🧾' },
-  'app-coachingowa-z-agentami': { c: '#a586ff', odcien: '#ff00e5', ikona: 'gwiazda-kompas', emoji: '🗓️' },
-  'apka-obecnosci-skladek': { c: '#00c986', odcien: '#29ff77', ikona: 'kalendarz-check', emoji: '✅' },
-  'centrum-dowodzenia': { c: '#11e0ff', odcien: '#61edff', ikona: 'radar', emoji: '🎛️' },
+  'app-coachingowa-z-agentami': { c: '#dc7aff', odcien: '#ff00e5', ikona: 'gwiazda-kompas', emoji: '🗓️' },
+  'apka-obecnosci-skladek': { c: '#00e096', odcien: '#29ff77', ikona: 'kalendarz-check', emoji: '✅' },
+  'centrum-dowodzenia': { c: '#00f0ff', odcien: '#61edff', ikona: 'radar', emoji: '🎛️' },
 };
 
 /**
@@ -148,11 +177,11 @@ export const INF_NARZEDZIE: Record<string, InfIkonaDekor> = {
   // partia C) — pełne pokrycie palety bez dubli.
   // v5 (spec §2): emoji dropdownu Narzędzia 1:1 ze spec: 🧮 ⏱️ 🧭 🔎 ✍️
   // (kolejność listy spec = kolejność rejestru NARZEDZIA).
-  'kalkulator-oszczednosci': { c: '#11e0ff', odcien: '#61edff', ikona: 'kalkulator', emoji: '🧮' },
-  'kalkulator-procesu': { c: '#00c986', odcien: '#29ff77', ikona: 'wykres-strzalka', emoji: '⏱️' },
-  'test-gotowosci-ai': { c: '#b638ff', odcien: '#a586ff', ikona: 'gwiazda-kompas', emoji: '🧭' },
+  'kalkulator-oszczednosci': { c: '#00f0ff', odcien: '#61edff', ikona: 'kalkulator', emoji: '🧮' },
+  'kalkulator-procesu': { c: '#00e096', odcien: '#29ff77', ikona: 'wykres-strzalka', emoji: '⏱️' },
+  'test-gotowosci-ai': { c: '#e438ff', odcien: '#dc7aff', ikona: 'gwiazda-kompas', emoji: '🧭' },
   'audyt-strony-ai': { c: '#ffa101', odcien: '#ffc120', ikona: 'lupa-wykres', emoji: '🔎' },
-  'generator-promptow': { c: '#a586ff', odcien: '#ff00e5', ikona: 'iskry', emoji: '✍️' },
+  'generator-promptow': { c: '#dc7aff', odcien: '#ff00e5', ikona: 'iskry', emoji: '✍️' },
 };
 
 /**
@@ -227,8 +256,8 @@ export const INF_WIEDZA_BADGE: Record<'blog' | 'poradniki' | 'materialy' | 'ai-r
  */
 export const INF_WIEDZA: Record<'blog' | 'poradniki' | 'materialy' | 'ai-radar', InfIkonaDekor> = {
   // v5 (spec §2): emoji dropdownu Wiedza 1:1 ze spec: 📰 📖 🧲 📡.
-  blog: { c: '#a586ff', odcien: '#ff00e5', ikona: 'notes-pioro', emoji: '📰' },
-  poradniki: { c: '#11e0ff', odcien: '#61edff', ikona: 'ksiazka', emoji: '📖' },
+  blog: { c: '#dc7aff', odcien: '#ff00e5', ikona: 'notes-pioro', emoji: '📰' },
+  poradniki: { c: '#00f0ff', odcien: '#61edff', ikona: 'ksiazka', emoji: '📖' },
   materialy: { c: '#ffa101', odcien: '#ffc120', ikona: 'magnes', emoji: '🧲' },
-  'ai-radar': { c: '#b638ff', odcien: '#a586ff', ikona: 'radar', emoji: '📡' },
+  'ai-radar': { c: '#e438ff', odcien: '#dc7aff', ikona: 'radar', emoji: '📡' },
 };

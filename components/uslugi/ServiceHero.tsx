@@ -44,7 +44,8 @@ import type { Usluga } from '@/lib/uslugi/types';
  *    kontrakt `.sf-magnetic .inf-glow-cta` (globals) maluje solid z
  *    var(--accent), więc podajemy --accent = c inline na przycisku; tekst CTA
  *    bez zmian, ciemny (--accent-contrast #06060c: na najsłabszym kolorze
- *    palety #b638ff to 4,84:1, AA także dla tekstu normalnego).
+ *    palety v17 #e438ff to 6,07:1, AA także dla tekstu normalnego;
+ *    stary #b638ff miał 4,84:1).
  *  - KAFLE STATYSTYK (wzorzec: 17 MODULES / 97 QUESTIONS / 9 LABS): pudełko
  *    niesie .inf-hero-stat z globals (kontrakt partii A) — obwódka
  *    rgba(kolor, 0.15), tło rgba(8,15,25,0.45), radius 16px, padding 24px,

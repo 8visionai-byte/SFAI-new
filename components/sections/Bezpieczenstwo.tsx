@@ -18,13 +18,15 @@ import type { InfIconName } from '@/components/ui/InfIcons';
    v4 (spec §PARTIA C pkt 5): kolory kart przechodzą na FLUORESCENCYJNE
    ODCIENIE palety v4 (mapowanie baza -> jasny z lib/inf-kategorie:
    #2b7cff->#5ba4ff, #ffa101->#ffc120, #22d3ee->#61edff, #8b5cf6->#a586ff)
-   — żywsze karty, każda w JEDNYM gridzie innym tonem. */
+   — żywsze karty, każda w JEDNYM gridzie innym tonem.
+   v17 (paleta neon, raporty/pomiary-v17.md §2): #5ba4ff->#70b0ff,
+   #a586ff->#dc7aff — jaśniejsze, bliżej magenty; kontrast tylko rośnie. */
 const PUNKTY: ReadonlyArray<{ t: string; d: string; ikona: InfIconName; c: string }> = [
   {
     t: 'Dane zostają w Unii Europejskiej',
     d: 'Przetwarzamy je zgodnie z RODO i AI Act. Bez wysyłania ich w nieznane, bez transferu poza UE bez Twojej wiedzy.',
     ikona: 'glob-siatka',
-    c: '#5ba4ff',
+    c: '#70b0ff',
   },
   {
     t: 'Umowa powierzenia danych (DPA)',
@@ -42,7 +44,7 @@ const PUNKTY: ReadonlyArray<{ t: string; d: string; ikona: InfIconName; c: strin
     t: 'Klient zawsze wie, że to AI',
     d: 'Agent nie udaje człowieka. Rozmówca od początku wie, że rozmawia z AI, zgodnie z wymogami AI Act.',
     ikona: 'robot',
-    c: '#a586ff',
+    c: '#dc7aff',
   },
 ] as const;
 
