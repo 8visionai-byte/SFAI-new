@@ -1,3 +1,27 @@
+# STATUS — SEO (5337f45) + INFINITY v17 (4081591) — NA PRODUKCJI
+
+TOR SEO (brief Pawla 17.08; tag cofniecia przed-seo-2026-08-17): kwoty
+w poradniku agenta AI (990/2500/1490/99-599 z plikow uslug, tabela
+widelki 2026, H2 od-czego-zalezy, dataAktualizacji 2026-08-17) +
+linkowanie wewnetrzne: 4 zdania z linkami w RamaCeny uslug (osobne pole
+linkPoradnik, wyglad bez zmian) + Zobacz tez w 4 poradnikach
+(LinkiKrzyzowe). Przy okazji: 2 zastane em-dash z AgentConsole usuniete.
+Kontrola SEO: SHIP WITH MINORS (decyzje redakcyjne: od 990 obok zdania
+nie-kosztuje-tyle-co-chatbot — do ew. korekty Pawla). IndexNow 47
+adresow 200. GSC: Pawel recznie 4 adresy do zaindeksowania.
+
+TOR v17 (paleta neon): kalibracja z pikseli napisu ktos inny (hue 290):
+#b638ff->#e438ff, #a586ff->#dc7aff, #00c986->#00e096, #5ba4ff->#70b0ff;
+pomarancz nietkniety. Nowy fiolet jasniejszy -> pierscien 4,91-5,40
+(prog 4,5) -> wyjatki AA z v16 ZDJETE z overline/sub/statusu (pelne
+jarzenie 60/30 wrocilo); jedyny wyjatek: tag-kolor (ogon 14px/30%).
+Kontrola v17: SHIP WITH MINORS, zero blokerow, regresje zero.
+Produkcja zweryfikowana (paleta, kwoty, linki, em-dash out), zrzuty.
+Czeka na Pawla: ocena neonu na zywo; GSC 4 adresy; test ChatGPT/
+Perplexity ile kosztuje agent AI dla firmy w Polsce.
+
+---
+
 # STATUS — INFINITY v16 — NA PRODUKCJI (commit f1550a6, globals+pomiary, +343/-20)
 
 Feedback Pawla (zrzuty Security Stack wzorca): gorne rozswietlenia
