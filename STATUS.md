@@ -1,3 +1,33 @@
+# STATUS — INFINITY v15 — NA PRODUKCJI (commit 6fe5b07, 19 plików, +430/-178)
+
+Runda po wściekłym feedbacku Pawła (zrzuty sekcji Open Source wzorca).
+TRZY BŁĘDY WYCOFANE: (1) „cisza" v14 w kosz — hover PEŁNY (sweep +
+rozświetlenie + lift) na KAŻDEJ karcie, także statystyki/FAQ/cytaty
+(zmierzone CDP 17 kart / 6 wariantów, 53/53 z żywym sweepem); (2) czyste
+warianty spoczynku — lewa kreska bazy zgaszona na kartach z górną linią
+(::before none na top/stat), każda karta DOKŁADNIE 1 wyróżnik, zero łączeń;
+(3) głębia przezroczysta — czerń 10% spod gradientu zdjęta (bgColor
+transparent), karta szklana, kontrasty wzrosły (fiolet 4,57, mierzone
+na pikselach). NEON 1:1 z pomiaru Open Source (pomiary-v15.md): płytka
+3 warstwy (gradient+inset+glow 16px+drop-shadow), chipy tło 12% obwódka
+32% tekst pełny, statusy glow. SWEEP płynniejszy: pas 60% (było 38%),
+gradient 105deg miękki, bez skew, 0.6s spring cubic-bezier(.16,1,.3,1).
+HOVER GLOW POZA RAMKĘ: łuna 22/48px 35% + 28px 14% + inset. Tagline pod
+tytułem (NarzedziaTeaser), różnorodność kolorów sąsiadów OK. Minor audytu
+naprawiony przed commitem: forced-colors gasi drop-shadow płytki.
+Kontrola: SHIP WITH MINORS, zero blokerów; zero nowych tekstów w diffie.
+Produkcja: computed zmierzony na żywo (pas 59,8%, spring, transparent,
+20 kart bez ::before), zrzuty w scratchpadzie.
+Czeka na Pawła: ocena „czy świeci jak wzorzec" na żywo; pastelowe
+--card-c kilku sekcji (Bezpieczeństwo, Gwarancja, Oferta, ZyweDemo) poza
+zakresem pomiaru — jeśli dalej „blade", osobny pomiar tych rodzin (v16).
+Margines AA fioletu #b638ff ~0,1 — nie rozjaśniać tła kart.
+W drzewie (nie commitowane w rundach designu): .seo-przeglad/* +
+tools/diagnoza-produkcji.js, gsc-pelny.js, migawka.js, porownaj-migawki.js
+(artefakty osobnej sesji SEO).
+
+---
+
 # STATUS — INFINITY v14 + v14b — NA PRODUKCJI (commity 0539767 + 0f82b7a)
 
 v14 (17 plików, +425/-47) — po audycie Manusa i uwadze Pawła o wnętrzu kart:
