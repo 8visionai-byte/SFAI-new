@@ -15,6 +15,7 @@ import type { Usluga } from './types';
  */
 export const automatyzacje: Usluga = {
   slug: 'automatyzacje',
+  dataAktualizacji: '2026-08-17',
   h1: 'Automatyzacja procesów w firmie z AI',
 
   kapsula:

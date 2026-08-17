@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { SITE, NAV_LINKS, LEGAL_ROUTES, SOCIALS } from '@/lib/site';
 import { USLUGI } from '@/lib/uslugi';
+import { TrackedLink } from '@/components/analytics/TrackedLink';
 import { Logo } from './Logo';
 import { SocialIcon, BRAND_COLORS } from './SocialIcon';
 
@@ -106,16 +107,24 @@ export function Footer() {
               {/* E-mail TYLKO gdy zweryfikowany (nie sam niepusty string) — patrz SITE.contact */}
               {SITE.contact.emailVerified && SITE.contact.email && (
                 <li>
-                  <a href={`mailto:${SITE.contact.email}`} className="u-slide hover:text-fg">
+                  <TrackedLink
+                    href={`mailto:${SITE.contact.email}`}
+                    event="klik_email"
+                    className="u-slide hover:text-fg"
+                  >
                     {SITE.contact.email}
-                  </a>
+                  </TrackedLink>
                 </li>
               )}
               {SITE.contact.phone && (
                 <li>
-                  <a href={`tel:${SITE.contact.phone}`} className="u-slide hover:text-fg">
+                  <TrackedLink
+                    href={`tel:${SITE.contact.phone}`}
+                    event="klik_telefon"
+                    className="u-slide hover:text-fg"
+                  >
                     {SITE.contact.phone}
-                  </a>
+                  </TrackedLink>
                 </li>
               )}
               <li>Siedziba: Pisz (woj. warmińsko-mazurskie). Biura: Gubin i Strzegom.</li>

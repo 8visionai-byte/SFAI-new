@@ -18,6 +18,7 @@ import type { Usluga } from './types';
  */
 export const dokumentyFaktury: Usluga = {
   slug: 'dokumenty-faktury',
+  dataAktualizacji: '2026-08-16',
   h1: 'Automatyzacja dokumentów i faktur (OCR, KSeF)',
 
   kapsula:

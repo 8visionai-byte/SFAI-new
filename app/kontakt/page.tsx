@@ -7,6 +7,7 @@ import { SITE } from '@/lib/site';
 import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { DiagnozaForm } from '@/components/forms/DiagnozaForm';
+import { TrackedLink } from '@/components/analytics/TrackedLink';
 
 /**
  * STRONA /kontakt — SSG (force-static). Realny cel wszystkich CTA "diagnozy" i
@@ -62,12 +63,13 @@ export default function KontaktPage() {
                   <div>
                     <dt className="inf-overline">E-mail</dt>
                     <dd className="mt-1 text-body text-fg">
-                      <a
+                      <TrackedLink
                         href={`mailto:${SITE.contact.email}`}
+                        event="klik_email"
                         className="text-accent underline decoration-1 underline-offset-2 hover:text-accent-hover"
                       >
                         {SITE.contact.email}
-                      </a>
+                      </TrackedLink>
                     </dd>
                   </div>
                 )}
@@ -75,12 +77,13 @@ export default function KontaktPage() {
                   <div>
                     <dt className="inf-overline">Telefon</dt>
                     <dd className="mt-1 text-body text-fg">
-                      <a
+                      <TrackedLink
                         href={`tel:${SITE.contact.phone}`}
+                        event="klik_telefon"
                         className="text-accent underline decoration-1 underline-offset-2 hover:text-accent-hover"
                       >
                         {SITE.contact.phone}
-                      </a>
+                      </TrackedLink>
                     </dd>
                   </div>
                 )}

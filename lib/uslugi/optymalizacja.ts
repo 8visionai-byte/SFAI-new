@@ -21,6 +21,7 @@ import type { Usluga } from './types';
  */
 export const optymalizacja: Usluga = {
   slug: 'optymalizacja',
+  dataAktualizacji: '2026-08-16',
   h1: 'Pozycjonowanie pod AI: bądź cytowany w ChatGPT i Perplexity',
 
   kapsula:

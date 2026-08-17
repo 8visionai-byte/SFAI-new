@@ -202,6 +202,14 @@ export const HOME_LAST_MODIFIED = '2026-06-15';
 export const USLUGI_LAST_MODIFIED = '2026-06-15';
 
 /**
+ * Data ostatniej realnej zmiany huba /poradniki i strony
+ * /uslugi/architekci-wartosci-ai (kontrola v18: obie raportowaly czerwiec,
+ * mimo ze git log pokazuje 2026-08-17 — poradniki dostaly kwoty i bloki
+ * „Zobacz tez", architekci przeszli na palete v18). Stala, nie new Date().
+ */
+export const TRESC_SIERPIEN_2026 = '2026-08-17';
+
+/**
  * Data ostatniej realnej rewizji huba /ai-radar (Centrum Wiedzy -> AI Radar).
  * Hub startuje z 2 wpisami-szablonami formatu (data 2026-06-16). Trzymamy literal
  * (lib/site.ts bez zaleznosci od warstwy tresci); pojedyncze wpisy /ai-radar/[slug]
@@ -224,7 +232,7 @@ export const ROUTES: RouteEntry[] = [
   // Strona-parasol "Architekci Wartosci AI" (app/uslugi/architekci-wartosci-ai/page.tsx, SSG).
   // CELOWO poza rejestrem lib/uslugi (to centrum oferty, nie szablonowa usluga), wiec
   // jej URL wpisujemy tu recznie. live:true -> wchodzi do sitemapy.
-  { path: '/uslugi/architekci-wartosci-ai', priority: 0.9, changeFrequency: 'monthly', live: true, lastModified: USLUGI_LAST_MODIFIED },
+  { path: '/uslugi/architekci-wartosci-ai', priority: 0.9, changeFrequency: 'monthly', live: true, lastModified: TRESC_SIERPIEN_2026 },
 
   // 6 stron uslug (/uslugi/<slug>) NIE jest tu wpisanych pojedynczo — zrodlem prawdy
   // ich URL-i jest rejestr lib/uslugi (USLUGI_SLUGS), a sitemap (app/sitemap.ts) dolacza
@@ -247,7 +255,7 @@ export const ROUTES: RouteEntry[] = [
   // URL-i jest rejestr lib/poradniki (PORADNIKI_SLUGS), a sitemap dolacza je z rejestru
   // (jak lib/blog/lib/uslugi) -> slug w trasie SSG i w sitemapie nigdy sie nie rozjedzie.
   { path: '/wiedza', priority: 0.8, changeFrequency: 'monthly', live: true, lastModified: HOME_LAST_MODIFIED },
-  { path: '/poradniki', priority: 0.7, changeFrequency: 'monthly', live: true, lastModified: HOME_LAST_MODIFIED },
+  { path: '/poradniki', priority: 0.7, changeFrequency: 'monthly', live: true, lastModified: TRESC_SIERPIEN_2026 },
 
   // AI Radar (silnik newsow „AI o 19:00") — hub /ai-radar zbudowany (SSG, 200 OK):
   // app/ai-radar/page.tsx + app/ai-radar/[slug]. Startuje z 2 wpisami-SZABLONAMI

@@ -9,7 +9,9 @@ import { useEffect } from 'react';
  * sygnalizując, że coś się dzieje. To favicon ma pulsować, NIE strona.
  *
  * Mechanika: rysujemy JASNY zaokrąglony kafelek (favicon widoczny też na CIEMNYCH
- * paskach kart i w ciemnych aplikacjach), na nim oficjalny znak (/brand/mark-t.png)
+ * paskach kart i w ciemnych aplikacjach), na nim oficjalny znak (/brand/mark-64.png:
+ * kopia 64x64 znaku z /brand/mark-t.png, 4302 B zamiast 1 631 603 B, canvas i tak rysuje
+ * w 64 px, więc pełny render był czystą stratą transferu na KAŻDEJ podstronie)
  * na canvas 64x64, i co klatkę nakładamy przesuwający się pas światła w kolorach marki
  * (cyan -> fiolet -> zielony; tryb 'lighter' rozświetla ciemny znak neonem, a jasny
  * kafelek zostaje jasny). Podmieniamy <link rel="icon"> przez canvas.toDataURL.
@@ -52,7 +54,7 @@ export function FaviconPulse() {
     img.onerror = () => {
       ready = false;
     };
-    img.src = '/brand/mark-t.png';
+    img.src = '/brand/mark-64.png';
 
     const PERIOD = 2800; // ms na pełny przelot błysku
     const MIN_FRAME = 1000 / 12; // ~12 fps

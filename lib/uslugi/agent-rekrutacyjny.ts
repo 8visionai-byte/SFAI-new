@@ -18,6 +18,7 @@ import type { Usluga } from './types';
  */
 export const agentRekrutacyjny: Usluga = {
   slug: 'agent-rekrutacyjny',
+  dataAktualizacji: '2026-08-06',
   h1: 'Agent AI do rekrutacji i pierwszego kontaktu',
 
   kapsula:

@@ -102,7 +102,14 @@ export function DiagnozaForm() {
         firma_www: honeypot,
       }),
     })
-      .then((res) => setStatus(res.ok ? 'success' : 'error'))
+      .then((res) => {
+        // Konwersja do Umami: liczymy TYLKO realnie przyjęte zgłoszenie (res.ok).
+        // `?.` jest obowiązkowe: bloker reklam albo brak env = obiektu nie ma, a gołe
+        // wywołanie rzuciłoby wyjątkiem i użytkownik zobaczyłby stan błędu mimo
+        // poprawnie wysłanego leada. Analityka nigdy nie może zepsuć konwersji.
+        if (res.ok) window.umami?.track('wyslano_formularz');
+        setStatus(res.ok ? 'success' : 'error');
+      })
       .catch(() => setStatus('error'));
   }
 
@@ -112,7 +119,7 @@ export function DiagnozaForm() {
          przez --card-c; tło sukcesu zostaje tokenem semantycznym). */
       <div
         className="inf-card bg-success-bg p-7 text-center"
-        style={{ '--card-c': '#22e06b' } as React.CSSProperties}
+        style={{ '--card-c': '#29ff77' } as React.CSSProperties}
       >
         {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
             pointermove z MotionOrchestrator (desktop). Dekoracja aria-hidden. */}
@@ -160,7 +167,7 @@ export function DiagnozaForm() {
           (surface-sunken + text-fg = czytelność AA). Honeypot jest h-0 w-0, więc
           overflow:hidden karty niczego nie ucina (kontrakt v4).
           v7 audyt: karta formularza dostaje WŁASNY odcień (--card-c) — bez
-          niego hover świecił domyślnym cyjanem akcentu. Violet #8b5cf6 z
+          niego hover świecił domyślnym cyjanem akcentu. Violet #e438ff z
           lib/inf-kategorie (ton „rozwiązań"), świadomie NIE kolor statusu:
           zielony i czerwony są zarezerwowane dla stanu sukcesu i błędu niżej,
           a amber czytałby się jak ostrzeżenie na polu do wypełnienia.
@@ -169,7 +176,7 @@ export function DiagnozaForm() {
       <form
         onSubmit={handleSubmit}
         className="inf-card p-6 shadow-md sm:p-7"
-        style={{ '--card-c': '#8b5cf6' } as React.CSSProperties}
+        style={{ '--card-c': '#e438ff' } as React.CSSProperties}
       >
       {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
           pointermove z MotionOrchestrator (desktop). Dekoracja aria-hidden. */}

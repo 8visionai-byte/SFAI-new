@@ -64,8 +64,11 @@ export const metadata: Metadata = {
   ...(SITE.assetsReady
     ? {
         icons: {
-          icon: '/favicon.ico',
-          shortcut: '/favicon.ico',
+          /* v18 (kontrola, MIN-5): NIE deklarujemy tu icon/shortcut — App Router
+             sam publikuje app/favicon.ico i app/icon.png i wstawia <link>.
+             Ręczna deklaracja dokładała TRZECI konkurencyjny <link rel=icon>,
+             który mógł wygrać z pulsującym faviconem (.ico ma sizes, puls nie).
+             Zostaje apple-touch-icon: tego App Router nie generuje z icon.png. */
           apple: '/icon.png',
         },
       }
@@ -75,9 +78,11 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   // ŚWIAT B / INFINITY: cała strona jest ciemna — pasek przeglądarki zawsze
-  // w pogłębionej czerni kadru (--bg #06070d), niezależnie od systemowego
-  // schematu kolorów.
-  themeColor: '#06070d',
+  // w pogłębionej czerni kadru, niezależnie od systemowego schematu kolorów.
+  // v18: zrównane z --bg (#05050c). Do v17 stało tu #06070d, czyli o jednostkę
+  // inny hex niż tło strony — pasek adresu na mobile malował się innym czarnym
+  // niż kadr. Ten token i --bg mają od teraz JEDNĄ wartość i mają razem chodzić.
+  themeColor: '#05050c',
   width: 'device-width',
   initialScale: 1,
 };

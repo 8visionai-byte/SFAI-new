@@ -21,6 +21,7 @@ import type { Usluga } from './types';
  */
 export const opiekaAi: Usluga = {
   slug: 'opieka-ai',
+  dataAktualizacji: '2026-08-06',
   h1: 'Opieka AI: utrzymanie i rozwój automatyzacji',
 
   kapsula:

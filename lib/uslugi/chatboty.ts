@@ -15,6 +15,7 @@ import type { Usluga } from './types';
  */
 export const chatboty: Usluga = {
   slug: 'chatboty',
+  dataAktualizacji: '2026-08-17',
   h1: 'Chatbot AI dla firmy',
 
   kapsula:

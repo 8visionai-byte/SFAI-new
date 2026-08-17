@@ -17,6 +17,7 @@ import type { Usluga } from './types';
  */
 export const stronyWww: Usluga = {
   slug: 'strony-www',
+  dataAktualizacji: '2026-08-06',
   h1: 'Tworzenie stron WWW widocznych w Google i w AI',
   kapsula:
     'Budujemy strony widoczne nie tylko w Google, ale i w ChatGPT, Claude, Gemini oraz Perplexity. Większość stron jest dla AI niewidoczna, bo treść doczytuje się skryptem, a boty tego nie czytają. My oddajemy całą treść od razu w czystym kodzie, układamy ją pod cytowanie i robimy to szybko.',

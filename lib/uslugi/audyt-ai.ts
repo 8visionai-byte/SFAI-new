@@ -15,6 +15,7 @@ import type { Usluga } from './types';
  */
 export const audytAi: Usluga = {
   slug: 'audyt-ai',
+  dataAktualizacji: '2026-08-17',
   h1: 'Audyt AI firmy: mapa oszczędności czasu',
 
   kapsula:

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
-import { SITE, ROUTES, USLUGI_LAST_MODIFIED } from '@/lib/site';
-import { USLUGI_SLUGS } from '@/lib/uslugi';
+import { SITE, ROUTES } from '@/lib/site';
+import { USLUGI } from '@/lib/uslugi';
+import { PODSTRONY_SITEMAP } from '@/lib/uslugi/podstrony';
 import { REALIZACJE_SLUGS } from '@/lib/realizacje';
 import { POSTS } from '@/lib/blog';
 import { PORADNIKI } from '@/lib/poradniki';
@@ -15,7 +16,7 @@ const TRESC_LAST_MODIFIED = '2026-06-15';
  *
  * DWA ZRODLA, jedna zasada (emit tylko to, co realnie istnieje, 200 OK, index):
  *  1) ROUTES (lib/site.ts) — strony statyczne; emitowane tylko gdy `live: true`.
- *  2) USLUGI_SLUGS (rejestr lib/uslugi) — 6 stron uslug /uslugi/<slug>. Ich URL bierze
+ *  2) USLUGI (rejestr lib/uslugi) — strony uslug /uslugi/<slug>. URL i `lastmod` bierza
  *     sie wprost z rejestru, ktory napedza tez generateStaticParams (SSG) i nawigacje.
  *     Slug w trasie, w linkach i w sitemapie nie moze sie rozjechac (zamyka bloker #1).
  *
@@ -36,10 +37,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route.priority,
   }));
 
-  // 6 stron uslug — zrodlo prawdy = rejestr lib/uslugi (USLUGI_SLUGS).
-  const uslugiRoutes: MetadataRoute.Sitemap = USLUGI_SLUGS.map((slug) => ({
-    url: `${SITE.url}/uslugi/${slug}`,
-    lastModified: new Date(USLUGI_LAST_MODIFIED),
+  // Strony uslug — zrodlo prawdy = rejestr lib/uslugi (USLUGI).
+  // SEO 2026-08-17: lastmod bierzemy z `u.dataAktualizacji` (pole per usluga), nie ze
+  // wspolnej stalej USLUGI_LAST_MODIFIED. Wczesniej WSZYSTKIE uslugi raportowaly jedna
+  // czerwcowa date, wiec sierpniowe zmiany tresci byly dla botow niewidoczne. Stala
+  // zostaje w lib/site.ts, bo napedza jeszcze hub /uslugi i /uslugi/architekci-wartosci-ai.
+  const uslugiRoutes: MetadataRoute.Sitemap = USLUGI.map((u) => ({
+    url: `${SITE.url}/uslugi/${u.slug}`,
+    lastModified: new Date(u.dataAktualizacji),
     changeFrequency: 'monthly',
     priority: 0.9,
   }));
@@ -61,6 +66,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   // Poradniki (Centrum Wiedzy) — zrodlo prawdy = rejestr lib/poradniki; lastmod z dataAktualizacji.
+  // Podstrony uslug (/uslugi/<rodzic>/<slug>) — rejestr lib/uslugi/podstrony.
+  // Kazda niesie WLASNA dataAktualizacji (jak poradniki), zero wspolnych stalych.
+  // priority 0.7: nizej niz strona macierzysta uslugi (0.9), wyzej niz blog (0.6) —
+  // to strony pod konkretna intencje wyszukiwania, nie tresci pomocnicze.
+  const podstronyRoutes: MetadataRoute.Sitemap = PODSTRONY_SITEMAP.map((p) => ({
+    url: `${SITE.url}${p.path}`,
+    lastModified: new Date(p.dataAktualizacji),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
   const poradnikiRoutes: MetadataRoute.Sitemap = PORADNIKI.map((p) => ({
     url: `${SITE.url}/poradniki/${p.slug}`,
     lastModified: new Date(p.dataAktualizacji),
@@ -96,6 +112,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...staticRoutes,
     ...uslugiRoutes,
+    ...podstronyRoutes,
     ...realizacjeRoutes,
     ...blogRoutes,
     ...poradnikiRoutes,

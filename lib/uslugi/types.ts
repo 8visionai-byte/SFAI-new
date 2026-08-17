@@ -81,6 +81,15 @@ export type Usluga = {
    */
   slug: string;
 
+  /**
+   * ISO data ostatniej REALNEJ zmiany treści (YYYY-MM-DD) — źródło `lastmod`
+   * w sitemap.xml (app/sitemap.ts) dla /uslugi/<slug>.
+   * NIGDY `new Date()` przy buildzie: data builda to fałszywa świeżość, którą
+   * boty czytają jako sygnał śmieciowy. Zmieniasz treść pliku usługi -> bumpujesz
+   * to pole ręcznie na dzień zmiany. Pole wymagane, żeby nie dało się zapomnieć.
+   */
+  dataAktualizacji: string;
+
   /** Nagłówek H1 = primary money query (fraza, pod którą strona ma być cytowana). */
   h1: string;
 

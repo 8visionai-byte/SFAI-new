@@ -18,6 +18,7 @@ import type { Usluga } from './types';
  */
 export const rozwiazania: Usluga = {
   slug: 'rozwiazania',
+  dataAktualizacji: '2026-08-16',
   h1: 'Indywidualne rozwiązania AI: aplikacje i wtyczki na zamówienie',
   kapsula:
     'Czasem gotowy chatbot czy automatyzacja nie wystarczą, bo Twój problem jest tylko Twój. Wtedy budujemy rozwiązanie na miarę: aplikację webową, wtyczkę do narzędzia, którego używasz, albo Agenta spiętego z kilkoma systemami naraz. Nie sprzedajemy pudełka z funkcjami. Projektujemy dokładnie to, czego potrzebuje Twój proces, i wdrażamy szybko. Zaczynamy od bezpłatnej diagnozy, na której mówimy wprost, czy warto budować od zera, czy taniej złożyć z gotowych klocków.',
