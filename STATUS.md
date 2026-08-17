@@ -1,3 +1,52 @@
+# STATUS — SEO-tech (4ba2971) + SEO-tresc (b4b2d95) + v18 (2bc6816) — PRODUKCJA
+
+ROJ 6 AGENTOW (zwiad x2 -> 3 implementacje rownolegle z twarda wlasnoscia
+plikow -> kontrola adwersaryjna). Kontrola dala NO-SHIP z 6 MAJORami —
+wszystkie naprawione przez sesje glowna przed commitem.
+
+SEO-TECH (plan Z1/Z3/Z4/Z5): daty w mapie witryny z realnego pola
+dataAktualizacji (10 uslug) + nowa stala dla /poradniki i architektow
+(kontrola: siedzialy na czerwcu w lib/site.ts); 3 zdarzenia Umami przez
+window.umami?.track (bez umami zero wyjatkow, przy 500 event nie leci);
+mark-64.png 4,2 kB zamiast 1593 kB w FaviconPulse; app/favicon.ico
+(koniec 404) + usunieta reczna deklaracja icons (3 konkurencyjne linki
+grozily zgaszeniem pulsu). Produkcja: sitemap 49 URL, lastmod sierpniowy,
+favicon 200, logo przez next/image 2,4 kB.
+
+SEO-TRESC (Z6/Z7/Z8): dwie podstrony voicebotow (windykacja,
+potwierdzanie-wizyt) — rejestr lib/uslugi/podstrony, trasa SSG, JSON-LD,
+breadcrumbs; ODRZUCONE z planu: kwota 4900 zl (nie istnieje w cenniku —
+uzyto "Od 990 zl", 59 zn.) i zwrot "bez abonamentu" (sprzeczny z opieka
+99-599 — uzyto "od 2500 zl jednorazowo za wdrozenie, opieka od 99 zl/mies.").
+FIXY po kontroli: podstrony byly SIEROTAMI (brak w sitemapie, zero linkow)
+i mialy kolor chatbotow — dodana sekcja PodstronyPowiazane (te same klasy
+.inf-card, renderuje sie tylko gdy usluga ma podstrony), wpis w sitemapie,
+wpisy w rejestrze dekoracji (fiolet rodzica).
+
+v18 (paleta z probnika Pawla): tlo #05050C (theme-color potwierdzony na
+produkcji), zielen #39FF14, gradienty z probnika; hexy nieprzechodzace AA
+na tekscie (#2500FF, #9E22E6) tylko jako ramka/glow. MIGRACJA SIEROT
+PALETY: stare hexy sprzed F4 zyly w architektach, ChatAgent (17 szt.),
+ChatLauncher, DiagnozaForm i globals (--accent-2, --route-gradient).
+SPROSTOWANIE w Oferta.tsx: komentarz podawal niezweryfikowane liczby
+(kontrola MAJ-6) — poprawiony, zero zmyslonych liczb w repo.
+Kontrasty po wszystkim: 5,11-5,38 (prog 4,5).
+
+IndexNow: 49 adresow, 200.
+CZEKA NA PAWLA: (1) GSC — zglos recznie /poradniki/ile-kosztuje-chatbot-
+dla-firmy-2026, /uslugi/chatboty i obie nowe podstrony voicebotow;
+(2) Cloudflare — sprawdz w logach, czy boty AI (GPTBot, ClaudeBot,
+PerplexityBot, OAI-SearchBot) w ogole wchodza; (3) test formularza na
+produkcji i zdarzenie wyslano_formularz w Umami (potem skasuj testowy lead).
+OBIEKCJE DO PONOWNEJ ANALIZY: „bez abonamentu" zyje jeszcze w
+lib/uslugi/audyt-ai.ts:78 i public/wiedza-agenta.txt:13 (dlug sprzed rundy);
+tel: z spacjami w href (RFC 3966); breadcrumb podstron 3-poziomowy (bez
+poziomu "Voiceboty"); /uslugi/voiceboty/potwierdzanie-wizyt na 320 px
+rozpycha kadr do 334 px (bez scrolla, dlug jak na home); /produkty tytul
+67 zn. (ucinany w SERP).
+
+---
+
 # STATUS — SEO (5337f45) + INFINITY v17 (4081591) — NA PRODUKCJI
 
 TOR SEO (brief Pawla 17.08; tag cofniecia przed-seo-2026-08-17): kwoty
