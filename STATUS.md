@@ -1,3 +1,40 @@
+# STATUS — v19 (4980c59) + treści/okruszki (ade91c3) — PRODUKCJA
+
+DESIGN v19: kątowniki dwa tryby (ukryty: 0%/14px -> hover 60%/8px, kreski
+wjeżdżają w narożnik; wyszarzony -top/-lg: biel 22% -> kolor karty 60%),
+dotyk dostaje 22% na stałe (@media hover:none, bo na telefonie hover nie
+istnieje); strzałki 45 szt. niewidoczne w spoczynku, hover 1 + dojazd;
+typografia 9 ról wg pomiaru wzorca BEZ nowego fontu (document.fonts
+identyczne z produkcją); rozbłysk wolniej w obie strony: wejście 0,85 s,
+powrót 1,05 s ease-in-out (było 0,6 s expo w obie). Mobile 320: 309/320
+(było 347/320, czyli scroll). Kontrast pierścieniowy min. 4,72.
+
+TREŚCI: dwa modele rozliczenia (przekazanie infrastruktury = bez
+abonamentu / opieka u nas = opłata 99-599) w 4 źródłach: audyt-ai,
+wiedza-agenta.txt, lib/agent/knowledge.ts (agent mówił, że KAŻDE wdrożenie
+ma abonament — nieprawda), api/_knowledge.mjs. Fakt zapisany w pamięci
+projektu. OKRUSZKI podstron 4-poziomowe z linkiem do rodzica, widok
+i JSON-LD z jednej funkcji; przy dopinaniu wyszło, że linki nie działały
+(pole path vs href) — naprawione. Trzecia podstrona
+/uslugi/voiceboty/odbieranie-telefonow (frazy z najlepszymi pozycjami:
+bot telefoniczny 16,9; bot telefon 8,0). Tytuł poradnika o agencie:
+Od 2500 zł (990 to cennik chatbota i kolizja z drugim poradnikiem w SERP).
+
+SEO/AI — ustalenia z pomiarów: boty AI NIE są blokowane (GPTBot,
+OAI-SearchBot, ChatGPT-User, PerplexityBot, ClaudeBot, Bingbot: 200
+i widzą kwoty; brak Cloudflare, server: Vercel). Puste logi Vercela to
+okno 30 minut na planie Hobby, nie blokada. Bing: zaindeksowani (mapa
+Success), ale 3 wyświetlenia przez 7 dni, frazy długiego ogona. ChatGPT
+nie cytuje, bo kwoty weszły dopiero 17.08 — test powtórzyć za 1-2 tygodnie.
+Nowe narzędzie: tools/bing-zglos-url.js (SubmitUrlBatch, limit 10k/dzień).
+Sitemap 50 URL. Po wdrożeniu: IndexNow 50 adresów + Bing 12 adresów, 200.
+
+CZEKA NA PAWŁA: GSC — zgłosić 4 adresy (3 podstrony voicebotów + poradnik
+o agencie); decyzja: własny licznik botów AI (zdarzenia w Umami zamiast
+ślepych logów Vercela).
+
+---
+
 # STATUS — SEO-tech (4ba2971) + SEO-tresc (b4b2d95) + v18 (2bc6816) — PRODUKCJA
 
 ROJ 6 AGENTOW (zwiad x2 -> 3 implementacje rownolegle z twarda wlasnoscia
