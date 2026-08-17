@@ -1,3 +1,33 @@
+# STATUS — INFINITY v14 + v14b — NA PRODUKCJI (commity 0539767 + 0f82b7a)
+
+v14 (17 plików, +425/-47) — po audycie Manusa i uwadze Pawła o wnętrzu kart:
+KOMPLET ANATOMII wnętrza kart home (płytka ikony .inf-tile 40px z gradientem
+i glow — 33 szt.; kickery mono w kolorze karty — 15, WYŁĄCZNIE etykiety
+z istniejących danych, zero nowych węzłów tekstowych w diffie; chipy;
+strzałki tylko na linkach), CISZA NA NIEKLIKALNYCH (.inf-card-static:
+44 karty informacyjne bez sweepa/liftu, 9 kart-linków z pełnym językiem),
+FOCUS-VISIBLE kart-linków (ring 2px w kolorze karty + offset, 9/9 Tab-em).
+v14b (1 plik: globals.css, OSOBNY commit dla łatwego revertu — decyzja
+Pawła „chcę ten efekt premium; jak się nie spodoba, cofniesz"): GŁĘBIA
+powierzchni kart 1:1 .lp-learn-card wzorca — gradient 160deg
+rgba(12,13,28,.74)->rgba(9,10,22,.55) jako 11. warstwa background-image
+(53/53 kart; warianty edge/full-hover/quiet dostały osobną nadpiskę,
+bo gasiły całą listę) + backdrop-blur(12px) TYLKO desktop; czerń 10%
+zostaje pod spodem jako bezpiecznik AA. REVERT GŁĘBI = git revert 0f82b7a.
+Kontrole: v14 SHIP WITH MINORS (minor: kickery pominięte w sekcjach bez
+etykiet rejestrowych — zero-nowych-treści górą; INFO: statusy 5 kolorów
+vs 1 zielony wzorca; sweep nieklikalnych na PODSTRONACH poza zakresem),
+v14b SHIP WITH MINORS (margines AA fioletu 4,67 — nie rozjaśniać
+powierzchni bez przeliczenia; przygaszone cytaty opacity .25 sprzed rundy;
+GPU blura niezmierzone tracingiem). Produkcja: markery HTML/CSS + zrzuty.
+Czeka na Pawła: ocena głębi na żywo (rewert = 1 commit); decyzja
+o kickerach-numerach w JakToDziala (dubel numeru); ew. ujednolicenie
+statusów do 1 koloru; ew. cisza nieklikalnych na podstronach (v15?).
+W drzewie: artefakty .seo-przeglad/ (2 przebiegi 2026-08-17) — osobna
+sesja, nie commitowane w rundach designu.
+
+---
+
 # STATUS — INFINITY v13 — NA PRODUKCJI (commit ce88871, 3 pliki, +447/-91)
 
 Naprawa przesycenia v12 (Pawel: cztery rodzaje ramek wzorca, „u nas tego
