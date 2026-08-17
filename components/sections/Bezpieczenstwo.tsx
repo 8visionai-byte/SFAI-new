@@ -111,20 +111,27 @@ export function Bezpieczenstwo() {
                spokojny; sekcja ma uspokajać, nie krzyczeć, mapa w
                raporty/taksonomia-ramek-v11.md §A). Klasa .inf-card-edge =
                kontrakt partii A (globals: WARIANTY RAMEK v11). */
-            className="inf-card inf-card-edge p-6"
+            className="inf-card inf-card-edge inf-card-static p-6"
             style={{ '--card-c': p.c } as CSSProperties}
           >
             {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
                 delegowany pointermove z MotionOrchestrator (desktop).
                 Dekoracja aria-hidden. */}
             <div aria-hidden="true" className="inf-spotlight" />
-            {/* v8 (spec §8: „nie wszystkie kafelki powinny mieć emoji",
-                pomiary wzorca §3.5): to są KARTY TEKSTOWE (zdanie o zgodności,
-                nie rzecz), a takie karty we wzorcu ikony NIE mają. Kafelek
-                .inf-tile stąd wypadł; kolor karty (--card-c) i reflektor
-                zostają, więc każda z czterech dalej świeci innym tonem.
-                Pole `ikona` ZOSTAJE w rejestrze PUNKTY (dane się nie kasuje,
-                gdyby Paweł chciał je przywrócić), tylko go nie renderujemy. */}
+            {/* v8 zdjelo stad kafelek ("karty tekstowe bez ikon"); v14 GO
+                PRZYWRACA: spec v14 par.1 (audyt Manusa, "kafelek w kafelku")
+                i pomiary-v14.md par.1c - sekcja jedzie wariantem W1/learn,
+                a KAZDA karta learn wzorca ma plytke 38-42px z glifem w pelnym
+                kolorze. Glif = istniejace pole `ikona` rejestru PUNKTY
+                (dekoracja aria-hidden, zero nowych znaczen). Karta
+                NIEklikalna -> .inf-card-static (cisza par.2), bez strzalki. */}
+            <span
+              aria-hidden="true"
+              className="inf-tile mb-4"
+              style={{ '--tile-c': p.c } as CSSProperties}
+            >
+              <InfIcon name={p.ikona} />
+            </span>
             {/* F2: `font-bold` zamiast `font-semibold` — reguła wagi tytułu
                 karty w globals zeszła na :where() (0,1,0), więc utility wagi
                 zawsze wygrywa i semibold zdjąłby te tytuły z 700 na 600. */}

@@ -6,8 +6,11 @@ import Link from 'next/link';
 import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
-/* v8: <InfIcon> już tu nie renderujemy (karty „co potrafi Agent" są tekstowe,
-   więc wzorzec nie daje im ikony) — zostaje sam TYP do rejestru POTRAFI. */
+/* v8: karty „co potrafi Agent" zostaly bez ikon (odpowiednik kart research
+   wzorca - pomiary-v14.md par.1b: 4 karty research NIE maja plytki, rodzina
+   swiadomie prosta). v14: <InfIcon> WRACA dla dwoch kart AEO (rodzina
+   W2/primary, par.1b - plytke ma 19/24 kart primary wzorca). */
+import { InfIcon } from '@/components/ui/InfIcons';
 import type { InfIconName } from '@/components/ui/InfIcons';
 import { AgentDemo } from './AgentDemo';
 
@@ -124,7 +127,7 @@ export function Rozwiazanie() {
                (.lp-primary-card, neon-top + hover całej ramki; mapa w
                raporty/taksonomia-ramek-v11.md §A). Klasa .inf-card-top =
                kontrakt partii A (globals: WARIANTY RAMEK v11). */
-            className="inf-card inf-card-top flex h-full flex-col p-6 md:p-8"
+            className="inf-card inf-card-top inf-card-static flex h-full flex-col p-6 md:p-8"
             style={
               {
                 '--card-c': karta.kat.c,
@@ -136,6 +139,16 @@ export function Rozwiazanie() {
                 delegowany pointermove z MotionOrchestrator (desktop).
                 Dekoracja aria-hidden. */}
             <div aria-hidden="true" className="inf-spotlight" />
+            {/* v14 (pomiary-v14.md par.1b, par.5): PLYTKA IKONY wzorca primary -
+                glif kategorii z rejestru INF_KATEGORIA (dekoracja aria-hidden);
+                karta NIEklikalna -> .inf-card-static (cisza par.2), bez strzalki. */}
+            <span
+              aria-hidden="true"
+              className="inf-tile mb-4"
+              style={{ '--tile-c': karta.kat.c } as CSSProperties}
+            >
+              <InfIcon name={karta.kat.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
+            </span>
             {/* Overline mono wzorca — numeracja dekoracyjna w odcieniu karty. */}
             <span aria-hidden="true" className="inf-overline" style={{ color: 'var(--card-c-l)' }}>
               {karta.nr}
@@ -233,7 +246,7 @@ export function Rozwiazanie() {
         {POTRAFI.map((item) => (
           <li
             key={item.t}
-            className="inf-card inf-card-top p-6"
+            className="inf-card inf-card-top inf-card-static p-6"
             /* v13 TYP D: --card-c-alt = drugi stop paska górnego (odcienie
                jednej rodziny barwy, pary z rejestru POTRAFI wyżej). */
             style={{ '--card-c': item.c, '--card-c-alt': item.alt } as CSSProperties}
@@ -242,7 +255,11 @@ export function Rozwiazanie() {
             {/* v8 (spec §8, pomiary wzorca §3.5): „co potrafi Agent" to KARTY
                 TEKSTOWE (zdania o możliwościach), a takie we wzorcu ikony nie
                 mają. Kafelek stąd wypadł, ton karty (--card-c) zostaje. Pole
-                `ikona` zostaje w rejestrze POTRAFI, nie renderujemy go. */}
+                `ikona` zostaje w rejestrze POTRAFI, nie renderujemy go.
+                v14 POTWIERDZA (pomiary-v14.md par.1b): to odpowiednik kart
+                research wzorca (TYP D, pasek dwustopowy), a research plytki
+                NIE ma (19/24, research bez) - karta zostaje swiadomie prosta;
+                nieklikalna -> .inf-card-static (cisza par.2). */}
             <span className="block text-ui font-semibold text-fg">{item.t}</span>
             <span className="mt-2 block text-body-sm text-fg-muted">{item.d}</span>
           </li>

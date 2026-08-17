@@ -45,9 +45,11 @@ export function ChatDemo() {
        v7 audyt: karta dostaje WŁASNY odcień (--card-c) — bez niego hover
        świecił domyślnym cyjanem akcentu. #61edff to jaśniejszy odcień
        kategorii „chatboty" z lib/inf-kategorie (okno czatu = chatbot), przez
-       co para demo w tej sekcji gra dwoma tonami: czat cyjan, voice violet. */
+       co para demo w tej sekcji gra dwoma tonami: czat cyjan, voice violet.
+       v14 (pomiary-v14.md par.2): okno czatu to PANEL, nie karta-link ->
+       .inf-card-static (cisza: bez sweepa i mocnego glow, delikatny obrys). */
     <div
-      className="inf-card flex flex-col shadow-sm"
+      className="inf-card inf-card-static flex flex-col shadow-sm"
       style={{ '--card-c': '#61edff' } as CSSProperties}
     >
       {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany

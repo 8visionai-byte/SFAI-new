@@ -88,21 +88,25 @@ export function PasekZaufania() {
         {FILARY.map((f) => (
           <li
             key={f.title}
-            className="inf-card inf-card-edge p-6"
+            className="inf-card inf-card-edge inf-card-static p-6"
             style={{ '--card-c': f.kolor } as CSSProperties}
           >
             {/* Reflektor za kursorem (kontrakt kart home; dekoracja aria-hidden). */}
             <div aria-hidden="true" className="inf-spotlight" />
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
+            {/* v14 (pomiary-v14.md par.5, mapa: "symbol luzem -> plytka"):
+                glif wchodzi do plytki .inf-tile (anatomia W1/learn wzorca,
+                par.1c: SVG 17-20px w plytce, pelny kolor przez currentColor -
+                kolor niesie --tile-c). Rozmiar 20px = pomiar par.1a. Karta
+                NIEklikalna -> .inf-card-static (cisza par.2). */}
+            <span
               aria-hidden="true"
-              style={{ color: f.kolor }}
+              className="inf-tile"
+              style={{ '--tile-c': f.kolor } as CSSProperties}
             >
-              {f.icon}
-            </svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                {f.icon}
+              </svg>
+            </span>
             <span
               className="mt-4 block font-mono text-caption font-semibold uppercase tracking-[0.14em]"
               style={{ color: f.kolor }}

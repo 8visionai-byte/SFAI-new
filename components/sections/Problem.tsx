@@ -46,7 +46,9 @@ import { KartaEtykieta, KartaTagi, tagiUslugi } from '@/components/sections/Kart
    Kolor karty = odcień KATEGORII usługi z lib/inf-kategorie, więc
    automatyzacje schodzą z bursztynu na zieleń kategorii (bursztyn przejmuje
    karta domknięcia niżej, w sekcji zostaje 5 różnych tonów bez duplikatu).
-   Pole ikona zostaje w rejestrze (nie renderujemy go, konwencja v8). */
+   Pole ikona od v14 WRACA do renderu: plytka .inf-tile wzorca primary
+   (pomiary-v14.md par.1b i par.5 pkt 1 - 19/24 kart primary wzorca ma plytke;
+   dekoracja aria-hidden, bez strzalki - karta nieklikalna, cisza par.2). */
 const ZJADACZE: ReadonlyArray<{
   t: string;
   slug: string;
@@ -117,13 +119,25 @@ export function Problem() {
           return (
             <li
               key={z.t}
-              className="inf-card inf-card-top flex flex-col p-6"
+              className="inf-card inf-card-top inf-card-static flex flex-col p-6"
               style={{ '--card-c': z.c } as CSSProperties}
             >
               {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN
                   delegowany pointermove z MotionOrchestrator (desktop).
                   Dekoracja aria-hidden. */}
               <div aria-hidden="true" className="inf-spotlight" />
+              {/* v14 (pomiary-v14.md par.1b, par.5 pkt 1): PLYTKA IKONY wzorca
+                  primary - pole ikona rejestru ZJADACZE ubrane w .inf-tile
+                  (dekoracja aria-hidden). Karta NIEklikalna, wiec klasa
+                  .inf-card-static (cisza par.2: bez sweepa i mocnego glow)
+                  i zadnej strzalki. */}
+              <span
+                aria-hidden="true"
+                className="inf-tile mb-4"
+                style={{ '--tile-c': z.c } as CSSProperties}
+              >
+                <InfIcon name={z.ikona} />
+              </span>
               {/* Mono kicker w kolorze karty (wzorzec: status nad tytułem).
                   Etykieta = INF_USLUGA_BADGE, ta sama co na kaflach PromoUslugi
                   i w dropdownie nav, jeden język etykiet na stronie. */}
@@ -149,7 +163,7 @@ export function Problem() {
             automatyzacji (ten zszedł na zieleń kategorii), w sekcji dalej
             5 różnych tonów bez duplikatu. */}
         <div
-          className="inf-card inf-card-top flex items-start gap-4 p-6 md:p-8"
+          className="inf-card inf-card-top inf-card-static flex items-start gap-4 p-6 md:p-8"
           style={{ '--card-c': '#ffc120' } as CSSProperties}
         >
           <div aria-hidden="true" className="inf-spotlight" />
@@ -206,7 +220,7 @@ export function Problem() {
         (HOME_CTA.href), zero nowych stringów i zero nowego CSS.
       */}
       <Reveal delay={0.15} className="mx-auto mt-10 max-w-wide">
-        <div className="inf-card inf-card-top p-6 text-center md:p-8" style={{ '--card-c': '#5ba4ff' } as CSSProperties}>
+        <div className="inf-card inf-card-top inf-card-static p-6 text-center md:p-8" style={{ '--card-c': '#5ba4ff' } as CSSProperties}>
           <div aria-hidden="true" className="inf-spotlight" />
           <span
             aria-hidden="true"

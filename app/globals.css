@@ -5488,3 +5488,108 @@ div:has(> .inf-divider) {
     animation: none;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   INFINITY v14 — CISZA NA NIEKLIKALNYCH (spec v14 §2) + FOCUS-VISIBLE
+   KART-LINKÓW (spec v14 §3). ŹRÓDŁO: raporty/pomiary-v14.md (computed
+   z żywego wzorca infinitytechstack.uk, 2026-08-17).
+   POZA @layer Świadomie (konwencja pliku). Blok stoi NA KOŃCU pliku CELOWO:
+   reguly .inf-card-static:hover maja (0,2,0) jak hovery bazy v12 i wariantów
+   v11/v13, więc o wyniku na kartach nieklikalnych decyduje kolejność
+   w źródle. Hover KLIKALNYCH (v12) i spoczynek wariantów (v13) NIETKNIĘTE:
+   karta bez .inf-card-static nie wpada w żaden selektor tego bloku. */
+
+/* ── .inf-card-static — KARTA INFORMACYJNA (nieklikalna), pomiar §2:
+   sweep i mocny glow wzorzec trzyma WYŁĄCZNIE na kartach-linkach; elementy
+   czysto informacyjne są na hover martwe (.lp-hero-metric: ::before/::after
+   content:none, ZERO reguł :hover w 137,9 kB CSSOM) albo dostają szept
+   (.lp-bench-row: samo tło 4%). U nas karta informacyjna dostaje „spokojny
+   hover”: delikatna zmiana obrysu (kolor karty 45% — alfa spoczynku v10,
+   gradacja znana stronie) + pasek/ring ::before 0.5 -> 1 i reflektor
+   .inf-spotlight zostają (sygnatury repo, nie „mocny glow”), a znikają:
+   sweep (::after), lift, pełnokolorowa obwódka i potrójna łuna hoveru v12
+   oraz rozjaśnienie narożników. KONTRAKT dla markupu: klasę dostaje KAŻDA
+   .inf-card home, która nie jest linkiem (statystyki, panele, cytaty, kroki,
+   cennik); karty-linki (PromoUslugi, NarzedziaTeaser) NIGDY. */
+.inf-card-static::after {
+  /* Sweep zdjęty 1:1 z gramatyki wzorca dla nie-linków (pomiar §2:
+     .lp-hero-metric ma ::after content:none). Dotyczy też hoveru — reguła
+     .inf-card:hover::after { left:120% } nie ma już czego przesuwać. */
+  content: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .inf-card-static:hover {
+    /* Bez liftu (pomiar §2: kafle statystyk wzorca bez transform na hover).
+       Reguła stoi ZA hoverami wariantów (-top -5px, -lg -5px, -full-hover
+       -3px, -stat/-quiet -2px) — przy równej specyficzności wygrywa
+       kolejnością źródła. */
+    transform: none;
+    /* „Delikatna zmiana obrysu” zamiast pełnego var(--card-c) z hoveru v12.
+       Fallback literalny w cyjanie akcentu przed color-mix (konwencja pliku). */
+    border-color: rgba(34, 211, 238, 0.45);
+    border-color: color-mix(in srgb, var(--card-c) 45%, transparent);
+    /* Łuna hoveru v12 (48px 35% + 28px 14% + inset 9%) zdjęta: zostaje CIEŃ
+       SPOCZYNKU bazy .inf-card (v11 §B, 1:1 .lp-learn-card) — wartości
+       powtórzone literalnie, bo reguł spoczynku v13 nie wolno ruszać. */
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      0 8px 28px -16px rgba(0, 0, 0, 0.5);
+    /* Narożniki [ ] zostają na alfie spoczynku (hover v12 podbijał 60%). */
+    --inf-corner-a: 22%;
+  }
+  /* Cienie spoczynku wariantów powtórzone 1:1 z ich reguł spoczynkowych
+     (blok WARIANTY RAMEK v11/v13 wyżej — NIETYKALNY, stąd duplikat wprost):
+     hover statyczny ma stać w miejscu, a reguła bazowa wyżej zna tylko cień
+     bazy. Linia top statu (--inf-top-a 0 -> 100%) CELOWO zostaje — to 1px
+     „delikatnej zmiany obrysu”, nie łuna. */
+  .inf-card-top.inf-card-static:hover {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 10px 34px -18px rgba(0, 0, 0, 0.55);
+  }
+  .inf-card-stat.inf-card-static:hover {
+    /* Stat nie ma narożników także w spoczynku (--inf-corner-a 0%) —
+       selektor 2-klasowy (0,3,0) bije regułę bazową statyczną wyżej. */
+    --inf-corner-a: 0%;
+    box-shadow:
+      0 14px 44px -18px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .inf-card-full-hover.inf-card-static:hover,
+  .inf-card-quiet.inf-card-static:hover {
+    box-shadow: none;
+  }
+}
+
+/* ── FOCUS-VISIBLE KART-LINKÓW (spec v14 §3) — wzorzec własnego stylu NIE MA
+   (pomiar §3: 0 wystąpień :focus-visible w CSS home/forge/academy wzorca;
+   Tab na żywo = goły ring Chrome outline:auto). Projektujemy własny ZGODNY
+   z bazą repo (globals ~l.617: outline 2px + offset 2px): na karcie-linku
+   ring przechodzi na KOLOR KARTY (--card-c, fallback literalny w cyjanie
+   akcentu) i rysuje się NA CAŁEJ KARCIE, nie na wewnętrznym <a> — karta
+   jest jedną wizualną całością, klawiatura ma widzieć „tę kartę”.
+   Mechanika: karty-linki home to wzór <li.inf-card><a>...</a></li>, więc
+   :has(> a:focus-visible) łapie wyłącznie kartę, której całe wnętrze jest
+   linkiem (link = bezpośrednie dziecko); karty informacyjne z przyciskiem
+   głęboko w środku (mostek Problemu, karta founderów) nie wpadają.
+   Silniki bez :has (browserslist schodzi do Chrome 100; :has od 105)
+   ignorują obie reguły i zostaje globalny ring z ~l.617 — baza NIEZŁAMANA,
+   degradacja świadoma. Outline elementu nie podlega jego overflow:hidden
+   (rysuje się na samej karcie), offset 2px = wartość globalnego systemu. */
+.inf-card:has(> a:focus-visible) {
+  outline: 2px solid rgba(34, 211, 238, 1);
+  outline: 2px solid var(--card-c, var(--accent));
+  outline-offset: 2px;
+}
+/* Wewnętrzny ring linku gaśnie TYLKO pod tą samą bramką :has — nigdy nie
+   zostajemy bez wskaźnika fokusa (WCAG 2.4.7). */
+.inf-card:has(> a:focus-visible) > a:focus-visible {
+  outline: none;
+}
+/* Karta, która SAMA jest linkiem (listingi podstron: <a class="inf-card">) —
+   ten sam ring w kolorze karty; (0,1,1) bije globalne :focus-visible (0,1,0). */
+a.inf-card:focus-visible {
+  outline: 2px solid rgba(34, 211, 238, 1);
+  outline: 2px solid var(--card-c, var(--accent));
+  outline-offset: 2px;
+}

@@ -124,7 +124,7 @@ export function JakToDziala() {
                   Kroki nie konkurują z ofertą. Klasa .inf-card-quiet =
                   kontrakt partii A (globals: WARIANTY RAMEK v11). */}
               <div
-                className="inf-card inf-card-quiet mt-4 flex-1 p-6 text-left"
+                className="inf-card inf-card-quiet inf-card-static mt-4 flex-1 p-6 text-left"
                 style={{ '--card-c': KROK_C[i] ?? '#5ba4ff' } as CSSProperties}
               >
                 {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN

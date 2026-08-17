@@ -291,7 +291,7 @@ export function Hero() {
             neutralne). Reflektor .inf-spotlight jak na pozostałych kartach
             nieklikalnych. Treść 1:1. */}
         <Reveal eager delay={0.24} className="lg:col-span-3">
-          <div className="inf-card mx-auto mt-7 max-w-[46ch] p-5">
+          <div className="inf-card inf-card-static mx-auto mt-7 max-w-[46ch] p-5">
             {/* Reflektor za kursorem — pozycję (--mx/--my) ustawia delegowany
                 pointermove z MotionOrchestrator (desktop). Dekoracja. */}
             <div aria-hidden="true" className="inf-spotlight" />

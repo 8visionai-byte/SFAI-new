@@ -47,7 +47,7 @@ export function Dowod() {
             wzorca. Modyfikator -lg schodzi: -stat ma własną gramatykę hoveru
             (zasada łączenia partii A wymienia tylko parę -top + -lg). */}
         <div
-          className="inf-card inf-card-stat mx-auto max-w-wide p-6 md:p-10"
+          className="inf-card inf-card-stat inf-card-static mx-auto max-w-wide p-6 md:p-10"
           style={{ '--card-c': '#61edff' } as CSSProperties}
         >
           {/* Reflektor za kursorem: pozycję (--mx/--my) ustawia JEDEN delegowany
@@ -103,7 +103,7 @@ export function Dowod() {
             NIETKNIĘTA, teksty 1:1. */}
         <Reveal delay={0.05}>
           <article
-            className="inf-card inf-card-stat h-full p-6 md:p-8"
+            className="inf-card inf-card-stat inf-card-static h-full p-6 md:p-8"
             style={{ '--card-c': '#ffc120' } as CSSProperties}
           >
             <div aria-hidden="true" className="inf-spotlight" />
