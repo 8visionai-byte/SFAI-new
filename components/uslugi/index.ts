@@ -7,6 +7,7 @@ export { ServiceHero } from './ServiceHero';
 export { ServiceNarrative } from './ServiceNarrative';
 export { PorownanieTabela } from './PorownanieTabela';
 export { KrokiJakToDziala } from './KrokiJakToDziala';
+export { PodstronyPowiazane } from './PodstronyPowiazane';
 export { RamaCeny } from './RamaCeny';
 export { ServiceFAQ } from './ServiceFAQ';
 export { ServiceCTA } from './ServiceCTA';

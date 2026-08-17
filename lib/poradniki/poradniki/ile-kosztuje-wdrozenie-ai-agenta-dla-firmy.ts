@@ -23,7 +23,14 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
   lead:
     'AI agent kosztuje więcej niż chatbot, bo nie tylko odpowiada. Łączy się z kalendarzem, CRM i systemami i sam wykonuje zadania. Cenę liczymy od wartości, czyli ile godzin i leadów odzyskasz. Poniżej masz, od czego zależy koszt agenta, jak policzyć zwrot i po czym poznać, że wdrożenie się spina, zanim wydasz pierwszą złotówkę.',
 
-  metaTitle: 'Ile kosztuje wdrożenie AI agenta dla firmy',
+  /* SEO 2026-08-17d (Z7): tytuł wraca do konkretu, ale NIE do wersji sprzed
+     3b7fc61 („...dla firmy? Cena i zwrot" = 56 zn. + 16 zn. sufiksu marki =
+     72, czyli ucinane w SERP; skrócenie było świadome). Zamiast tego kwota
+     z NASZEGO cennika: „990 zł" stoi w renderowanej treści trzy razy (akapit
+     odpowiedzi, tabela widełek, blok „Zobacz też") i jest ceną startową
+     z lib/uslugi/chatboty.ts, więc tytuł nie kłamie. 43 zn. + 16 = 59,
+     mieści się w budżecie 60 (wariant „? Cena i zwrot" ma 62 i NIE mieści). */
+  metaTitle: 'Ile kosztuje wdrożenie AI agenta? Od 990 zł',
   metaDescription:
     'Ile kosztuje wdrożenie AI agenta dla firmy? Czym agent różni się od chatbota, od czego zależy koszt i jak policzyć zwrot, zanim zamówisz wdrożenie.',
 

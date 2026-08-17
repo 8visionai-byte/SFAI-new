@@ -13,6 +13,7 @@ import {
   KrokiJakToDziala,
   RamaCeny,
   ServiceFAQ,
+  PodstronyPowiazane,
   ServiceCTA,
 } from '@/components/uslugi';
 
@@ -103,6 +104,10 @@ export default async function UslugaPage({
       {/* (6) Rama ceny (value-based, bez zmyślonej kwoty)
           v7 „naczynia połączone": `slug` = ton kategorii dla karty sekcji. */}
       <RamaCeny ramaCeny={usluga.ramaCeny} slug={usluga.slug} />
+
+      {/* (6b) Podstrony tematyczne (jeśli usługa je ma) — zamyka sieroctwo
+          nowych stron pod konkretne intencje (kontrola v18, MAJ-2). */}
+      <PodstronyPowiazane slug={usluga.slug} />
 
       {/* (7) FAQ — 5–6 pytań, 1:1 z FAQPage JSON-LD (slug jw. — ton karty) */}
       <ServiceFAQ faq={usluga.faq} slug={usluga.slug} />

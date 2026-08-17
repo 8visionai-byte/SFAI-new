@@ -15,13 +15,14 @@ import type { Usluga } from './types';
  */
 export const voiceboty: Usluga = {
   slug: 'voiceboty',
+  dataAktualizacji: '2026-08-17',
   h1: 'Voicebot dla firmy, który odbiera telefon za Ciebie',
   kapsula:
     'Voicebot, nazywany też botem telefonicznym, to bot głosowy, który odbiera telefon, rozmawia po polsku i załatwia sprawę: umawia wizytę, przyjmuje zgłoszenie, odpowiada na pytanie. Gdy sprawa wymaga człowieka, zapisuje ją i wysyła Ci powiadomienie, żebyś oddzwonił przygotowany. Działa 24/7, nawet gdy jesteś u klienta. To nie nagranie ani „wciśnij jeden”. To Agent, który rozmawia i wykonuje zadanie, a potem przekazuje Ci tylko to, co ważne.',
 
   metaTitle: 'Voicebot od 2500 zł: bot telefoniczny 24/7',
   metaDescription:
-    'Voicebot dla firm od 2500 zł: bot telefoniczny odbiera połączenia po polsku 24/7, umawia wizyty i przekazuje pilne sprawy. Wycena po bezpłatnej diagnozie.',
+    'Voicebot dla firm od 2500 zł jednorazowo za wdrożenie, opieka od 99 zł/mies. Bot telefoniczny odbiera po polsku 24/7 i umawia wizyty. Bezpłatna diagnoza.',
 
   problem: {
     h2: 'Ile telefonów dziennie nie odbierasz?',
