@@ -143,6 +143,23 @@ export type Usluga = {
     tresc: string;
     /** Realna cena "od X" w PLN. Tylko gdy prawdziwa i spójna z UI. Inaczej undefined. */
     minPrice?: number;
+    /**
+     * SEO 2026-08-17 (linkowanie wewnętrzne usługa -> poradnik cenowy): JEDNO
+     * zdanie z linkiem, renderowane w components/uslugi/RamaCeny.tsx jako
+     * dokończenie tego samego akapitu co `tresc` (wygląd sekcji bez zmian).
+     * Osobne pole, bo `tresc` idzie do <p> jako czysty tekst (surowy <a> w
+     * stringu by się nie wyrenderował). `href` MUSI być realną trasą (200 OK).
+     */
+    linkPoradnik?: {
+      /** Tekst zdania przed linkiem (może być pustym stringiem). */
+      przed: string;
+      /** Opisowy tekst linku (anchor), nigdy "kliknij tutaj". */
+      etykieta: string;
+      /** Tekst po linku (zwykle kropka zamykająca zdanie). */
+      po: string;
+      /** Ścieżka wewnętrzna poradnika, np. '/poradniki/<slug>'. */
+      href: string;
+    };
   };
 
   /** Sekcja 7 — FAQ (5–6 pozycji). Tekst 1:1 z FAQPage JSON-LD. */

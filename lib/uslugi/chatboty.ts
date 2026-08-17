@@ -76,6 +76,14 @@ export const chatboty: Usluga = {
     tresc:
       'Pakiet startowy zaczyna się od 990 zł. W tej cenie dostajesz chatbota na stronę, uczonego na wiedzy Twojej firmy, razem z wdrożeniem i pierwszą konfiguracją. Chatbot z integracjami, który dodatkowo umawia i zapisuje wizyty oraz łączy się z kalendarzem czy CRM, to wyższa półka, wyceniana od zakresu. Dokładną wycenę podajemy po bezpłatnej diagnozie, zanim cokolwiek zamówisz. Każde nasze wdrożenie ma abonament opieki od 99 do 599 zł miesięcznie, bo nie zostawiamy klientów samych z botem. Bez ukrytych kosztów.',
     minPrice: 990, // pakiet startowy (locked 2026-08-16): kwota w UI + offers w Service JSON-LD.
+    /* SEO 2026-08-17: linkowanie wewnętrzne do poradnika cenowego (zdanie 1:1
+       z brief-seo-2026-08-17; render w RamaCeny.tsx w tym samym akapicie). */
+    linkPoradnik: {
+      przed: 'Pełny rozkład kosztów chatbota opisaliśmy w poradniku: ',
+      etykieta: 'ile kosztuje chatbot dla firmy w 2026',
+      po: '.',
+      href: '/poradniki/ile-kosztuje-chatbot-dla-firmy-2026',
+    },
   },
 
   faq: [

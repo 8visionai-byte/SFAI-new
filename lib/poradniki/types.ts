@@ -109,4 +109,12 @@ export type Poradnik = {
 
   /** Linki do powiązanych NARZĘDZI (kalkulatory, testy). Realne anchory. */
   powiazaneNarzedzia?: LinkKrzyzowy[];
+
+  /**
+   * SEO 2026-08-17: linki do SIOSTRZANYCH PORADNIKÓW (blok „Zobacz też" na dole,
+   * render w components/poradniki/LinkiKrzyzowe.tsx). Wzorzec konkurencji:
+   * artykuły cenowe linkują się nawzajem, żeby żaden nie był sierotą dla Google.
+   * `href` MUSI być slugiem z rejestru (realna trasa /poradniki/<slug>, 200 OK).
+   */
+  powiazanePoradniki?: LinkKrzyzowy[];
 };

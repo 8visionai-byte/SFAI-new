@@ -120,7 +120,7 @@ const KATEGORIA_DEKOR: Record<string, InfIkonaDekor> = {
   poradniki: INF_WIEDZA.poradniki,
   'ai-radar': INF_WIEDZA['ai-radar'],
   przemyslenia: INF_WIEDZA.blog,
-  'case-studies': { c: '#00c986', odcien: '#29ff77', ikona: 'wykres-strzalka' },
+  'case-studies': { c: '#00e096', odcien: '#29ff77', ikona: 'wykres-strzalka' },
 };
 const KATEGORIA_BADGE: Record<string, string> = {
   poradniki: INF_WIEDZA_BADGE.poradniki,

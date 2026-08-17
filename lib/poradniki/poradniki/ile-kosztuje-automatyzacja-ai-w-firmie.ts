@@ -250,4 +250,18 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
       opis: 'Policz, ile godzin i pieniędzy odzyska automatyzacja na Twoim procesie.',
     },
   ],
+
+  /* SEO 2026-08-17: blok „Zobacz też" — dwa pozostałe poradniki cenowe. */
+  powiazanePoradniki: [
+    {
+      etykieta: 'Ile kosztuje wdrożenie AI agenta dla firmy',
+      href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
+      opis: 'Widełki 2026 dla agenta AI, od czego zależy cena i jak policzyć zwrot.',
+    },
+    {
+      etykieta: 'Ile kosztuje chatbot dla firmy w 2026',
+      href: '/poradniki/ile-kosztuje-chatbot-dla-firmy-2026',
+      opis: 'Pakiet startowy od 990 zł, pełne widełki i koszty utrzymania chatbota.',
+    },
+  ],
 };

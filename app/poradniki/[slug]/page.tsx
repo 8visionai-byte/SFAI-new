@@ -93,10 +93,12 @@ export default async function PoradnikPage({
         <PostFAQ faq={poradnik.faq} typ="poradnik" />
       )}
 
-      {/* Linkowanie krzyżowe do oferty: powiązane usługi + narzędzia (realne trasy) */}
+      {/* Linkowanie krzyżowe do oferty: powiązane usługi + narzędzia (realne trasy)
+          + SEO 2026-08-17: siostrzane poradniki (blok „Zobacz też"). */}
       <LinkiKrzyzowe
         uslugi={poradnik.powiazaneUslugi}
         narzedzia={poradnik.powiazaneNarzedzia}
+        poradniki={poradnik.powiazanePoradniki}
       />
 
       {/* CTA domykające — jedno główne, wspólny flow diagnozy (#diagnoza) */}

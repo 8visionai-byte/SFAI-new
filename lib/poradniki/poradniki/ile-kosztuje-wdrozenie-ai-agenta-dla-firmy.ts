@@ -7,7 +7,14 @@ import type { Poradnik } from '../types';
  * niż istniejący wpis bloga (ile-kosztuje-wdrozenie-ai-w-malej-firmie-2026), który
  * mówi o „wdrożeniu AI" ogólnie. Ten poradnik jest KONKRETNIE o AGENCIE: różnica
  * agent vs chatbot, od czego zależy koszt, po czym poznać zwrot. Linkuje wzajemnie
- * z tamtym wpisem (zero kanibalizacji). ZERO zmyślonych widełek SimpleFast.
+ * z tamtym wpisem (zero kanibalizacji).
+ *
+ * SEO 2026-08-17 (brief-seo-2026-08-17): dochodzą REALNE widełki 1:1 z cenników
+ * usług (zero zmyślonych kwot): 990 zł (lib/uslugi/chatboty.ts, pakiet startowy),
+ * 2 500 zł (lib/uslugi/voiceboty.ts minPrice), 1 490 zł (lib/uslugi/audyt-ai.ts),
+ * opieka 99 do 599 zł/mies (lib/uslugi/automatyzacje.ts + chatboty/voiceboty).
+ * Zmiana kwoty w cenniku usługi = zaktualizować też ten poradnik (naczynia
+ * połączone).
  */
 export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
   slug: 'ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
@@ -21,7 +28,10 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
     'Ile kosztuje wdrożenie AI agenta dla firmy? Czym agent różni się od chatbota, od czego zależy koszt i jak policzyć zwrot, zanim zamówisz wdrożenie.',
 
   data: '2026-06-15',
-  dataAktualizacji: '2026-06-15',
+  /* SEO 2026-08-17: realna aktualizacja treści (widełki + sekcja ceny), więc
+     bump TYLKO dataAktualizacji (= Article.dateModified i sitemap lastmod);
+     `data` = prawdziwa data publikacji, nie ruszamy (zakaz fałszywej świeżości). */
+  dataAktualizacji: '2026-08-17',
   kategoria: 'Koszty i wycena',
   tagi: [
     'ile kosztuje AI agent',
@@ -34,7 +44,27 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
     {
       typ: 'akapit',
       tekst:
-        'Agent AI to nie chatbot. Chatbot odpowiada, agent działa. Dlatego nie kosztuje tyle co chatbot. Agent łączy się z kalendarzem, CRM i systemami i sam wykonuje zadania: umawia, pisze do bazy, prowadzi proces od początku do końca. Cena bierze się z tego, ile pracy realnie wykonuje i do ilu systemów się podłącza. My liczymy ją od wartości: ile godzin i leadów to odzyska dla firmy. Konkretne widełki dla Twojego przypadku podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
+        'Wdrożenie agenta AI dla firmy zaczyna się od 990 zł za agenta do jednego zadania, a agent z integracjami to koszt od 2 500 zł. Do tego dochodzi opieka od 99 zł miesięcznie. Agent AI to nie chatbot. Chatbot odpowiada, agent działa. Dlatego nie kosztuje tyle co chatbot. Agent łączy się z kalendarzem, CRM i systemami i sam wykonuje zadania: umawia, pisze do bazy, prowadzi proces od początku do końca. Cena bierze się z tego, ile pracy realnie wykonuje i do ilu systemów się podłącza. My liczymy ją od wartości: ile godzin i leadów to odzyska dla firmy. Konkretne widełki dla Twojego przypadku podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
+    },
+
+    {
+      typ: 'naglowek',
+      tekst: 'Ile kosztuje agent AI: widełki 2026',
+    },
+    {
+      typ: 'akapit',
+      tekst:
+        'To nasze realne widełki startowe, te same co w cennikach naszych usług. Dolna granica to agent do jednego wąskiego zadania, górna rośnie z liczbą integracji i scenariuszy. Audyt przed wdrożeniem odliczamy od ceny wdrożenia, więc przy współpracy w praktyce nic nie kosztuje.',
+    },
+    {
+      typ: 'tabela',
+      naglowki: ['Zakres', 'Cena'],
+      wiersze: [
+        ['Agent do jednego zadania (np. odpowiadanie na powtarzalne pytania)', 'od 990 zł'],
+        ['Agent z integracją (kalendarz, CRM, poczta)', 'od 2 500 zł'],
+        ['Audyt przed wdrożeniem (odliczany od wdrożenia)', '1 490 zł'],
+        ['Opieka miesięczna', '99 do 599 zł'],
+      ],
     },
 
     {
@@ -58,8 +88,11 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
     },
 
     {
+      /* SEO 2026-08-17 (brief pkt 4): H2 w brzmieniu z briefu zamiast dawnego
+         „Od czego zależy koszt AI agenta?" (jedna sekcja, zero duplikatu H2);
+         lista rozszerzona o scenariusze, wolumen rozmów i RODO. */
       typ: 'naglowek',
-      tekst: 'Od czego zależy koszt AI agenta?',
+      tekst: 'Od czego zależy cena agenta AI',
     },
     {
       typ: 'akapit',
@@ -69,9 +102,10 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
     {
       typ: 'lista',
       punkty: [
-        'Zakres zadań: jedno wąskie zadanie kontra prowadzenie całego procesu od zapytania do zamknięcia.',
         'Liczba integracji: każdy system (CRM, kalendarz, poczta, baza) to osobne połączenie i osobna robota.',
-        'Poziom pewności: im wyższa stawka błędu, tym więcej testów i zabezpieczeń, więc wyższy koszt.',
+        'Liczba scenariuszy: jedno wąskie zadanie kontra kilka procesów prowadzonych od zapytania do zamknięcia.',
+        'Wolumen rozmów i zadań: im więcej zapytań agent obsługuje, tym więcej testów przed startem i pracy przy utrzymaniu.',
+        'Wymagania RODO: praca na danych osobowych oznacza dodatkowe zabezpieczenia i zapisy w umowie powierzenia.',
         'Decyzyjność agenta: ile może zrobić sam, a co musi potwierdzić człowiek. Więcej autonomii to więcej pracy przy wdrożeniu.',
         'Jakość danych i procesów: uporządkowane skracają wdrożenie, bałagan je wydłuża i podnosi cenę.',
       ],
@@ -201,6 +235,20 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
       etykieta: 'Kalkulator oszczędności',
       href: '/narzedzia#kalkulator-oszczednosci',
       opis: 'Policz, ile godzin i pieniędzy odzyska agent na Twoim procesie.',
+    },
+  ],
+
+  /* SEO 2026-08-17: blok „Zobacz też" — dwa pozostałe poradniki cenowe. */
+  powiazanePoradniki: [
+    {
+      etykieta: 'Ile kosztuje chatbot dla firmy w 2026',
+      href: '/poradniki/ile-kosztuje-chatbot-dla-firmy-2026',
+      opis: 'Pakiet startowy od 990 zł, pełne widełki i koszty utrzymania chatbota.',
+    },
+    {
+      etykieta: 'Ile kosztuje automatyzacja AI w firmie',
+      href: '/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie',
+      opis: 'Realne widełki wdrożeń automatyzacji i to, od czego zależy cena.',
     },
   ],
 };

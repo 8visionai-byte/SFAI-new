@@ -81,6 +81,15 @@ export const automatyzacje: Usluga = {
       'Cenę liczymy od wartości, nie od godzin. Najpierw na bezpłatnej diagnozie liczymy, ile godzin i złotych miesięcznie zjada dany proces. Wdrożenie wyceniamy tak, żeby zwracało się tym, co odzyskujesz. Pojedynczy proces to inna półka niż kilka połączonych. Dokładne widełki podajemy na diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów. Po wdrożeniu dostajesz opiekę w abonamencie od 99 zł miesięcznie, nie zostawiamy klientów.',
     // INPUT PAWŁA: realne "od X zł" za pojedynczy proces → ustawić minPrice (number),
     // to włączy offers w Service JSON-LD spójnie z UI. Brak danej → undefined.
+    /* SEO 2026-08-17: linkowanie wewnętrzne do poradnika cenowego (zdanie 1:1
+       z brief-seo-2026-08-17; render w RamaCeny.tsx w tym samym akapicie).
+       Anchor = całe zdanie (opisowy, mówi dokładnie co jest w celu linku). */
+    linkPoradnik: {
+      przed: '',
+      etykieta: 'Widełki cen automatyzacji rozpisaliśmy w osobnym poradniku',
+      po: '.',
+      href: '/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie',
+    },
   },
 
   faq: [

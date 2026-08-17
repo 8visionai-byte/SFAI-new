@@ -243,4 +243,18 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
       opis: 'Policz, ile czasu zżera Cię ręczna obsługa pytań i ile odzyska bot.',
     },
   ],
+
+  /* SEO 2026-08-17: blok „Zobacz też" — dwa pozostałe poradniki cenowe. */
+  powiazanePoradniki: [
+    {
+      etykieta: 'Ile kosztuje wdrożenie AI agenta dla firmy',
+      href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
+      opis: 'Widełki 2026 dla agenta AI, od czego zależy cena i jak policzyć zwrot.',
+    },
+    {
+      etykieta: 'Ile kosztuje automatyzacja AI w firmie',
+      href: '/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie',
+      opis: 'Realne widełki wdrożeń automatyzacji i to, od czego zależy cena.',
+    },
+  ],
 };

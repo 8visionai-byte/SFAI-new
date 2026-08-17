@@ -184,4 +184,19 @@ export const aiWBiurzeRachunkowym: Poradnik = {
       opis: 'Sprawdź w kilka minut, czy Twoje biuro jest gotowe na pierwszą automatyzację.',
     },
   ],
+
+  /* SEO 2026-08-17: blok „Zobacz też" — dwa poradniki cenowe najbliższe tematom
+     biura (koszt automatyzacji procesów i koszt agenta prowadzącego proces). */
+  powiazanePoradniki: [
+    {
+      etykieta: 'Ile kosztuje automatyzacja AI w firmie',
+      href: '/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie',
+      opis: 'Realne widełki wdrożeń automatyzacji i to, od czego zależy cena.',
+    },
+    {
+      etykieta: 'Ile kosztuje wdrożenie AI agenta dla firmy',
+      href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
+      opis: 'Widełki 2026 dla agenta AI, od czego zależy cena i jak policzyć zwrot.',
+    },
+  ],
 };

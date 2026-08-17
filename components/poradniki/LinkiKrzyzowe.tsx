@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Section, Card } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import type { LinkKrzyzowy } from '@/lib/poradniki/types';
-import { INF_KATEGORIA, INF_NARZEDZIE, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { INF_KATEGORIA, INF_NARZEDZIE, INF_TYP, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
 
 /**
  * INFINITY v7 (audyt „naczynia połączone": na stronach poradników 4-7 kart szło
@@ -24,6 +24,9 @@ function dekorLinku(href: string): { c: string; odcien?: string } {
   if (usluga) return INF_KATEGORIA[usluga] ?? INF_KATEGORIA_DEFAULT;
   const narzedzie = href.match(/^\/narzedzia#([^/?]+)/)?.[1];
   if (narzedzie) return INF_NARZEDZIE[narzedzie] ?? INF_KATEGORIA_DEFAULT;
+  /* SEO 2026-08-17 („Zobacz też"): cel /poradniki/<slug> świeci tonem PORADNIKA
+     z INF_TYP — ten sam cyjan co karta poradnika na liście (naczynia połączone). */
+  if (/^\/poradniki\//.test(href)) return INF_TYP.poradnik;
   return INF_KATEGORIA_DEFAULT;
 }
 
@@ -40,11 +43,15 @@ function dekorLinku(href: string): { c: string; odcien?: string } {
 export function LinkiKrzyzowe({
   uslugi = [],
   narzedzia = [],
+  poradniki = [],
 }: {
   uslugi?: LinkKrzyzowy[];
   narzedzia?: LinkKrzyzowy[];
+  /* SEO 2026-08-17: siostrzane poradniki (blok „Zobacz też" na dole sekcji). */
+  poradniki?: LinkKrzyzowy[];
 }) {
-  if (uslugi.length === 0 && narzedzia.length === 0) return null;
+  if (uslugi.length === 0 && narzedzia.length === 0 && poradniki.length === 0)
+    return null;
 
   return (
     <Section tone="subtle">
@@ -79,6 +86,22 @@ export function LinkiKrzyzowe({
               {uslugi.map((link) => (
                 <li key={link.href}>
                   <LinkKafel link={link} cta="Zobacz usługę" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* SEO 2026-08-17: „Zobacz też" — siostrzane poradniki cenowe na dole
+            sekcji (wzorzec konkurencji: artykuły cenowe linkują się nawzajem).
+            Ten sam kafel .inf-card co wyżej, ton poradnika z INF_TYP. */}
+        {poradniki.length > 0 && (
+          <div className="mt-8">
+            <h3 className="text-h3">Zobacz też</h3>
+            <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+              {poradniki.map((link) => (
+                <li key={link.href}>
+                  <LinkKafel link={link} cta="Przeczytaj poradnik" />
                 </li>
               ))}
             </ul>

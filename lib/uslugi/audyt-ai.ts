@@ -76,6 +76,14 @@ export const audytAi: Usluga = {
     tresc:
       'Sprint Diagnostyczny kosztuje 1490 zł. To celowo niski próg, żebyś mógł sprawdzić, czy AI w Twojej firmie ma sens, bez wchodzenia od razu w duże wdrożenie. Najważniejsze: te 1490 zł odliczamy od kosztu wdrożenia, gdy zdecydujesz się z nami współpracować. W praktyce, jeśli wdrażasz, audyt nic Cię nie kosztuje. Jeśli nie wdrażasz, i tak wychodzisz z gotowym Action Planem, który możesz zrealizować sam. Bez abonamentu, bez ukrytych kosztów.',
     minPrice: 1490,
+    /* SEO 2026-08-17: linkowanie wewnętrzne do poradnika cenowego (zdanie 1:1
+       z brief-seo-2026-08-17; render w RamaCeny.tsx w tym samym akapicie). */
+    linkPoradnik: {
+      przed: 'Jak liczyć zwrot z wdrożenia AI, opisaliśmy w ',
+      etykieta: 'poradniku o kosztach agenta AI',
+      po: '.',
+      href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
+    },
   },
 
   faq: [

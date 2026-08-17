@@ -77,6 +77,14 @@ export const voiceboty: Usluga = {
     tresc:
       'Pakiet startowy zaczyna się od 2500 zł. W tej cenie dostajesz bota, który odbiera telefon 24/7 i rozmawia po polsku, umawianie wizyt oraz wdrożenie i konfigurację. Do tego dochodzi koszt działania zależny od liczby rozmów. Bot rozbudowany o zgłoszenia i powiadomienia to wyższa półka, wyceniana od zakresu. Dokładną wycenę podajemy po bezpłatnej diagnozie, zanim cokolwiek zamówisz. Każde nasze wdrożenie ma abonament opieki od 99 do 599 zł miesięcznie, bo nie zostawiamy klientów samych z botem. Bez ukrytych kosztów.',
     minPrice: 2500, // pakiet startowy (locked 2026-08-16): kwota w UI + offers w Service JSON-LD.
+    /* SEO 2026-08-17: linkowanie wewnętrzne do poradnika cenowego (zdanie 1:1
+       z brief-seo-2026-08-17; render w RamaCeny.tsx w tym samym akapicie). */
+    linkPoradnik: {
+      przed: 'Koszty wdrożeń AI rozpisaliśmy w ',
+      etykieta: 'poradniku o cenie agenta AI',
+      po: '.',
+      href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
+    },
   },
 
   faq: [

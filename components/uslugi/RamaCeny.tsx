@@ -1,8 +1,13 @@
 import type { CSSProperties } from 'react';
+import Link from 'next/link';
 import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import type { Usluga } from '@/lib/uslugi/types';
 import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+
+/** Styl frazowego linku w treści — 1:1 z components/sections/Rozwiazanie.tsx. */
+const LINK =
+  'font-medium text-accent underline decoration-1 underline-offset-2 hover:text-accent-hover';
 
 /**
  * RamaCeny — SEKCJA 6 szablonu (rama ceny value-based). H2 jak pytanie
@@ -67,8 +72,22 @@ export function RamaCeny({
               </p>
             )}
 
+            {/* SEO 2026-08-17: opcjonalne zdanie z linkiem do poradnika cenowego
+                dokleja się do TEGO SAMEGO akapitu (ta sama typografia i kolory,
+                wygląd sekcji bez zmian) — `tresc` zostaje czystym tekstem, link
+                idzie przez <Link>, nie przez surowy <a> w stringu. */}
             <p className={`text-lead text-fg-muted ${maKwote ? 'mt-5' : ''}`}>
               {ramaCeny.tresc}
+              {ramaCeny.linkPoradnik && (
+                <>
+                  {' '}
+                  {ramaCeny.linkPoradnik.przed}
+                  <Link href={ramaCeny.linkPoradnik.href} className={LINK}>
+                    {ramaCeny.linkPoradnik.etykieta}
+                  </Link>
+                  {ramaCeny.linkPoradnik.po}
+                </>
+              )}
             </p>
 
             <p className="mt-6 border-t border-border pt-5 text-caption text-fg-subtle">

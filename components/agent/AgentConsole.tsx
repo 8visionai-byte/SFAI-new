@@ -73,7 +73,7 @@ export function AgentConsole() {
           <div className="agent-console__workspace">
             {/* Lewa szyna: zakres wiedzy agenta (desktop) */}
             <aside className="agent-console__rail" aria-label="Zakres wiedzy Agenta">
-              <p className="agent-console__rail-label">/ 01—07</p>
+              <p className="agent-console__rail-label">/ 01-07</p>
               <p className="agent-console__rail-title">Zna ofertę.<br />Rozumie proces.<br />Nie zgaduje.</p>
               <ol className="agent-console__scope">
                 <li><span>01</span>Usługi i dobór rozwiązania</li>
@@ -81,7 +81,7 @@ export function AgentConsole() {
                 <li><span>03</span>Bezpieczeństwo i kontrola</li>
                 <li><span>04</span>Następny sensowny krok</li>
               </ol>
-              <p className="agent-console__rail-note">Ceny i terminy zależą od procesu. Agent nie wymyśla liczb — pomaga przygotować diagnozę.</p>
+              <p className="agent-console__rail-note">Ceny i terminy zależą od procesu. Agent nie wymyśla liczb, pomaga przygotować diagnozę.</p>
             </aside>
 
             <div className="agent-console__main">
