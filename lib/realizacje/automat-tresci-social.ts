@@ -71,4 +71,44 @@ export const automatTresciSocial: Realizacja = {
     'generowanie postów z newsów AI',
     'AI do tworzenia grafik i postów',
   ],
+
+  /**
+   * v22 (PLAN-v22 §3 P2 pkt 11): POWIĄZANIA CASE'A. Przed rundą ten case był
+   * ślepym zaułkiem: zero linków do poradnika, który tłumaczy teorię, i zero
+   * linków do siostrzanych wdrożeń. Usługę wyznacza `kategoria` i renderuje ją
+   * `PowiazanaUsluga`, więc tu jej nie dublujemy. Wszystkie href to realne trasy
+   * z rejestrów albo kotwice o potwierdzonym id= na /narzedzia.
+   */
+  powiazane: {
+    poradniki: [
+      {
+        etykieta: 'Ile kosztuje automatyzacja AI w firmie',
+        href: '/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie',
+        opis:
+          'Widełki cenowe i to, co realnie podnosi koszt takiego wdrożenia.',
+      },
+    ],
+    realizacje: [
+      {
+        etykieta: 'Generator leadów',
+        href: '/realizacje/lead-generator',
+        opis:
+          'Dane o potencjalnych klientach zbierane i porządkowane bez ręcznej pracy.',
+      },
+      {
+        etykieta: 'Automatyczne raporty',
+        href: '/realizacje/automatyczne-raporty',
+        opis:
+          'Raport składa się sam z danych, które i tak już macie.',
+      },
+    ],
+    narzedzia: [
+      {
+        etykieta: 'Generator promptów',
+        href: '/narzedzia#generator-promptow',
+        opis:
+          'Ułoży polecenie do AI, które daje powtarzalny wynik.',
+      },
+    ],
+  },
 };

@@ -33,23 +33,62 @@ export const promptyDlaWlasciciela: Material = {
   tresc: [
     {
       typ: 'akapit',
-      tekst:
-        'To 50 gotowych promptów dla właściciela firmy. Każdy rozwiązuje jedno zadanie. Skopiuj prompt, podmień to, co jest w nawiasach kwadratowych, na swoje dane i wklej do ChatGPT, Claude lub Gemini. Nawiasy to miejsca na Twoje informacje, nie część polecenia.',
+      tekst: 'To 50 gotowych promptów dla właściciela firmy. Każdy rozwiązuje jedno zadanie. Skopiuj prompt, podmień to, co jest w nawiasach kwadratowych, na swoje dane i wklej do ChatGPT, Claude lub Gemini. Nawiasy to miejsca na Twoje informacje, nie część polecenia.',
     },
     {
       typ: 'cytat',
-      tekst:
-        'Dobry prompt mówi AI trzy rzeczy: kim ma być, co ma zrobić i w jakiej formie ma to oddać. Te 50 promptów ma to wbudowane.',
+      tekst: 'Dobry prompt mówi AI trzy rzeczy: kim ma być, co ma zrobić i w jakiej formie ma to oddać. Te 50 promptów ma to wbudowane.',
     },
     {
       typ: 'akapit',
-      tekst:
-        'Jak czytać prompty niżej. Tekst w [nawiasach] zmieniasz na swoje. Reszta zostaje. Jeśli prompt prosi o dane, których nie masz pod ręką, dopisz na końcu zdanie: „Jeśli czegoś brakuje, dopytaj, zanim odpowiesz". Wtedy AI najpierw zapyta, a potem zrobi.',
+      tekst: 'Jak czytać prompty niżej. Tekst w [nawiasach] zmieniasz na swoje. Reszta zostaje. Jeśli prompt prosi o dane, których nie masz pod ręką, dopisz na końcu zdanie: „Jeśli czegoś brakuje, dopytaj, zanim odpowiesz". Wtedy AI najpierw zapyta, a potem zrobi.',
     },
-
-    { typ: 'naglowek', tekst: 'Sprzedaż (prompty 1-9)' },
     {
-      typ: 'lista',
+      typ: 'tabela',
+      naglowki: [
+        'Kategoria',
+        'Numery',
+        'Ile',
+      ],
+      wiersze: [
+        [
+          'Sprzedaż',
+          '1-9',
+          '9 promptów',
+        ],
+        [
+          'Marketing i pozyskiwanie klientów',
+          '10-18',
+          '9 promptów',
+        ],
+        [
+          'Obsługa klienta',
+          '19-27',
+          '9 promptów',
+        ],
+        [
+          'Treści i social media',
+          '28-36',
+          '9 promptów',
+        ],
+        [
+          'Zarządzanie i operacje',
+          '37-44',
+          '8 promptów',
+        ],
+        [
+          'Finanse, raporty i decyzje',
+          '45-50',
+          '6 promptów',
+        ],
+      ],
+      wKarcie: true,
+      podpis: 'Co znajdziesz w tym zestawie: 50 promptów w 6 kategoriach',
+    },
+    {
+      typ: 'sekcja',
+      naglowek: 'Sprzedaż (prompty 1-9)',
+      akapity: [],
       punkty: [
         '1. Wciel się w doświadczonego handlowca B2B. Napisz mail z ofertą dla [typ klienta] na [produkt lub usługa]. Cena to [cena], główna korzyść to [korzyść]. Mail ma mieć max 120 słów, jeden konkretny powód do odpowiedzi i pytanie na końcu.',
         '2. Mam rozmowę handlową z [typ klienta]. Wypisz 10 pytań, które powinienem zadać, żeby zrozumieć jego problem, zanim cokolwiek zaproponuję. Pogrupuj je: sytuacja, ból, budżet, decyzja.',
@@ -61,11 +100,12 @@ export const promptyDlaWlasciciela: Material = {
         '8. Pomóż mi wycenić [produkt lub usługa]. Zadaj mi pytania o koszty, czas pracy i wartość dla klienta, a potem zaproponuj 3 warianty cenowe: minimalny, standard i premium.',
         '9. Napisz propozycję wartości (jedno zdanie) dla mojej firmy. Robimy [co robisz] dla [dla kogo], a różnimy się tym, że [czym się różnisz]. Daj 5 wersji do wyboru.',
       ],
+      wariant: 'top',
     },
-
-    { typ: 'naglowek', tekst: 'Marketing i pozyskiwanie klientów (prompty 10-18)' },
     {
-      typ: 'lista',
+      typ: 'sekcja',
+      naglowek: 'Marketing i pozyskiwanie klientów (prompty 10-18)',
+      akapity: [],
       punkty: [
         '10. Zaplanuj kampanię na [kanał: Facebook / Google / mailing] dla [produkt lub usługa]. Podaj cel, grupę docelową, główny przekaz i 3 pomysły na kreację. Budżet to [budżet].',
         '11. Wypisz 15 pomysłów na posty dla mojej firmy z branży [branża]. Każdy pomysł w jednym zdaniu, z dopiskiem, jaki problem klienta rozwiązuje.',
@@ -77,11 +117,12 @@ export const promptyDlaWlasciciela: Material = {
         '17. Napisz opis firmy do Google (Wizytówka Firmy) w 750 znakach. Branża: [branża], lokalizacja: [miasto], to, co nas wyróżnia: [wyróżnik]. Naturalnie wpleć frazy, których ludzie szukają.',
         '18. Wymyśl 5 pomysłów na lokalny marketing dla firmy [branża] w [miasto], które nie wymagają dużego budżetu. Przy każdym napisz pierwszy krok do wykonania w tym tygodniu.',
       ],
+      wariant: 'edge',
     },
-
-    { typ: 'naglowek', tekst: 'Obsługa klienta (prompty 19-27)' },
     {
-      typ: 'lista',
+      typ: 'sekcja',
+      naglowek: 'Obsługa klienta (prompty 19-27)',
+      akapity: [],
       punkty: [
         '19. Klient napisał reklamację: „[treść reklamacji]". Napisz spokojną, ludzką odpowiedź. Przeproś za problem, nie za istnienie, zaproponuj konkretne rozwiązanie i termin.',
         '20. Zamień tę szorstką odpowiedź na uprzejmą, ale wciąż konkretną: „[wklej swoją odpowiedź]".',
@@ -93,11 +134,12 @@ export const promptyDlaWlasciciela: Material = {
         '26. Klient jest zdenerwowany i pisze emocjonalnie: „[treść]". Najpierw wypisz, co naprawdę chce powiedzieć między wierszami, a potem napisz odpowiedź, która go uspokoi.',
         '27. Stwórz zestaw 5 standardowych odpowiedzi na opinie w internecie: 2 na pozytywne, 2 na negatywne, 1 na niesprawiedliwą. Ton: ludzki, konkretny, bez kopiuj-wklej.',
       ],
+      wariant: 'top',
     },
-
-    { typ: 'naglowek', tekst: 'Treści i social media (prompty 28-36)' },
     {
-      typ: 'lista',
+      typ: 'sekcja',
+      naglowek: 'Treści i social media (prompty 28-36)',
+      akapity: [],
       punkty: [
         '28. Napisz post na [Facebook / LinkedIn / Instagram] o [temat]. Zacznij od zdania, które zatrzyma scroll. Pisz prosto, jedna myśl, na końcu pytanie do czytelnika.',
         '29. Z tego jednego pomysłu zrób 5 różnych postów na social media: „[Twój pomysł]". Każdy pod innym kątem, żeby nie brzmiały tak samo.',
@@ -109,11 +151,12 @@ export const promptyDlaWlasciciela: Material = {
         '35. Przygotuj plan postów na 2 tygodnie dla firmy [branża]. 3 posty w tygodniu, każdy z innym celem: edukacja, dowód, sprzedaż. Podaj temat i pierwsze zdanie każdego.',
         '36. Sprawdź ten tekst pod kątem prostoty. Wskaż zdania zbyt długie, żargon i miejsca, gdzie czytelnik się zgubi: „[wklej tekst]". Zaproponuj poprawki.',
       ],
+      wariant: 'edge',
     },
-
-    { typ: 'naglowek', tekst: 'Zarządzanie i operacje (prompty 37-44)' },
     {
-      typ: 'lista',
+      typ: 'sekcja',
+      naglowek: 'Zarządzanie i operacje (prompty 37-44)',
+      akapity: [],
       punkty: [
         '37. Pomóż mi rozpisać proces [nazwa procesu, np. obsługa nowego zamówienia] krok po kroku. Wypisz każdy etap, kto za niego odpowiada i co może pójść nie tak.',
         '38. Mam do zrobienia [opisz duże zadanie]. Rozbij to na konkretne kroki, ułóż je w kolejności i oznacz, które mogę oddać komuś innemu.',
@@ -124,11 +167,12 @@ export const promptyDlaWlasciciela: Material = {
         '43. Zamień te chaotyczne notatki ze spotkania na uporządkowane podsumowanie z listą zadań (kto, co, do kiedy): „[wklej notatki]".',
         '44. Pomóż mi przygotować agendę spotkania zespołu na temat [temat]. Maksymalnie 30 minut, z konkretnym celem i punktem decyzyjnym na końcu.',
       ],
+      wariant: 'top',
     },
-
-    { typ: 'naglowek', tekst: 'Finanse, raporty i decyzje (prompty 45-50)' },
     {
-      typ: 'lista',
+      typ: 'sekcja',
+      naglowek: 'Finanse, raporty i decyzje (prompty 45-50)',
+      akapity: [],
       punkty: [
         '45. Wyjaśnij mi prostym językiem, co oznaczają te liczby z mojego biznesu: „[wklej dane]". Powiedz, co jest dobre, co niepokojące i na co zwrócić uwagę.',
         '46. Pomóż mi policzyć, czy opłaca się [decyzja, np. zatrudnić kogoś / kupić sprzęt]. Zadaj mi pytania o koszty i korzyści, a potem podsumuj prostym rachunkiem.',
@@ -137,25 +181,23 @@ export const promptyDlaWlasciciela: Material = {
         '49. Pomóż mi przygotować prosty budżet na [projekt lub miesiąc]. Wypisz kategorie kosztów, o których łatwo zapomnieć w firmie [branża].',
         '50. Jestem przed decyzją: [opisz decyzję]. Zadaj mi 5 trudnych pytań, które powinienem sobie zadać, zanim ją podejmę. Nie odpowiadaj za mnie, tylko zmuś mnie do myślenia.',
       ],
-    },
-
-    {
-      typ: 'naglowek',
-      tekst: 'Jak wycisnąć z tych promptów więcej?',
+      wariant: 'edge',
     },
     {
-      typ: 'lista',
+      typ: 'sekcja',
+      naglowek: 'Jak wycisnąć z tych promptów więcej?',
+      akapity: [],
       punkty: [
         'Dodaj kontekst. Im więcej AI wie o Twojej firmie, tym lepsza odpowiedź. Na początek rozmowy wklej 3-4 zdania o tym, co robisz i dla kogo.',
         'Proś o kilka wersji. Dopisz „daj 3 wersje", a wybierzesz najlepszą zamiast brać pierwszą lepszą.',
         'Poprawiaj w dialogu. Pierwsza odpowiedź to szkic. Napisz „skróć", „bardziej bezpośrednio", „mniej formalnie", aż będzie Twoje.',
         'Zapisuj te, które działają. Gdy prompt da dobry efekt, wklej go do notatnika. Po miesiącu masz własną bibliotekę.',
       ],
+      wariant: 'quiet',
     },
     {
       typ: 'akapit',
-      tekst:
-        'Gotowy prompt to dobry start. Gotowy system, który robi to za Ciebie codziennie, to coś więcej. Jeśli któreś z tych zadań robisz co dzień ręcznie, to znak, że da się je zautomatyzować. Pokażemy gdzie, jeśli chcesz.',
+      tekst: 'Gotowy prompt to dobry start. Gotowy system, który robi to za Ciebie codziennie, to coś więcej. Jeśli któreś z tych zadań robisz co dzień ręcznie, to znak, że da się je zautomatyzować. Pokażemy gdzie, jeśli chcesz.',
     },
   ],
   faq: [
@@ -178,6 +220,39 @@ export const promptyDlaWlasciciela: Material = {
       pytanie: 'Prompt dał słabą odpowiedź, co robić?',
       odpowiedz:
         'Dopisz więcej kontekstu o swojej firmie i poproś o poprawkę w tej samej rozmowie. Napisz „skróć", „bardziej bezpośrednio" albo „dodaj konkretny przykład". Pierwsza odpowiedź to szkic, nie wynik końcowy.',
+    },
+  ],
+
+  /**
+   * v22 (PLAN-v22 §3 P2 pkt 12): POWIĄZANIA MATERIAŁU. Przed rundą magnet
+   * był ślepym zaułkiem: zero wyjść do oferty i do poradnika, który tłumaczy
+   * temat głębiej. Obie trasy są realne i stoją w rejestrach.
+   */
+  powiazaneUslugi: [
+    {
+      etykieta: 'Automatyzacje procesów AI',
+      href: '/uslugi/automatyzacje',
+      opis:
+        'Przejmujemy powtarzalną robotę, którą dziś klika u Ciebie człowiek.',
+    },
+  ],
+  powiazanePoradniki: [
+    {
+      etykieta: 'Ile kosztuje automatyzacja AI w firmie',
+      href: '/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie',
+      opis:
+        'Widełki cenowe, od czego zależy koszt i jak policzyć zwrot.',
+    },
+  ],
+  /* v22: te materialy odsylaja do narzedzi golym tekstem w zdaniu
+     (np. „w sekcji /narzedzia"), wiec sciezka byla nieklikalna. Zdania
+     zostaja nietkniete, a czytelnik dostaje realny link. */
+  powiazaneNarzedzia: [
+    {
+      etykieta: 'Generator promptów',
+      href: '/narzedzia#generator-promptow',
+      opis:
+        'Ułoży polecenie do AI według zasad z tego materiału, bez składania go ręcznie.',
     },
   ],
 };

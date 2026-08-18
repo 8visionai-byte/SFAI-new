@@ -69,4 +69,44 @@ export const leadGenerator: Realizacja = {
     'automatyzacja lead generation',
     'baza potencjalnych klientów automat',
   ],
+
+  /**
+   * v22 (PLAN-v22 §3 P2 pkt 11): POWIĄZANIA CASE'A. Przed rundą ten case był
+   * ślepym zaułkiem: zero linków do poradnika, który tłumaczy teorię, i zero
+   * linków do siostrzanych wdrożeń. Usługę wyznacza `kategoria` i renderuje ją
+   * `PowiazanaUsluga`, więc tu jej nie dublujemy. Wszystkie href to realne trasy
+   * z rejestrów albo kotwice o potwierdzonym id= na /narzedzia.
+   */
+  powiazane: {
+    poradniki: [
+      {
+        etykieta: 'Ile kosztuje automatyzacja AI w firmie',
+        href: '/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie',
+        opis:
+          'Widełki cenowe i to, co realnie podnosi koszt takiego wdrożenia.',
+      },
+    ],
+    realizacje: [
+      {
+        etykieta: 'Automatyczne raporty',
+        href: '/realizacje/automatyczne-raporty',
+        opis:
+          'Raport składa się sam z danych, które i tak już macie.',
+      },
+      {
+        etykieta: 'Automat treści na social media',
+        href: '/realizacje/automat-tresci-social',
+        opis:
+          'Wersje robocze postów gotowe do sprawdzenia i publikacji.',
+      },
+    ],
+    narzedzia: [
+      {
+        etykieta: 'Kalkulator procesu',
+        href: '/narzedzia#kalkulator-procesu',
+        opis:
+          'Sprawdź, ile trwa jeden Twój proces i ile z niego da się zdjąć.',
+      },
+    ],
+  },
 };

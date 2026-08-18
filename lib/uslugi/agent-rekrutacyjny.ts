@@ -18,7 +18,7 @@ import type { Usluga } from './types';
  */
 export const agentRekrutacyjny: Usluga = {
   slug: 'agent-rekrutacyjny',
-  dataAktualizacji: '2026-08-06',
+  dataAktualizacji: '2026-08-18',
   h1: 'Agent AI do rekrutacji i pierwszego kontaktu',
 
   kapsula:
@@ -80,6 +80,16 @@ export const agentRekrutacyjny: Usluga = {
     tresc:
       'Koszt zależy od zakresu. Inaczej wycenia się agent, który tylko czyta CV i robi wstępny scoring, inaczej taki, który dodatkowo odpowiada kandydatom, umawia rozmowy i łączy się z Twoim kalendarzem oraz systemem rekrutacyjnym. Najczęściej zaczynamy od Sprintu Diagnostycznego za 1490 zł, który odliczamy od wdrożenia, gdy wchodzimy we współpracę. Cenę liczymy od wartości: ile godzin miesięcznie zdejmuje z rekrutera i ilu dobrych kandydatów nie gubisz przez wolną reakcję (szac.). Dokładne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów.',
     // minPrice: undefined — brak realnej kwoty "od X" za samego agenta. Bez offers w Service JSON-LD.
+    /* v22 (linki §3, P2 #15): usługa -> poradnik było 4/13. Agent rekrutacyjny
+       to ten sam typ wdrożenia, co poradnik o koszcie agenta AI, więc widełki
+       i sposób liczenia zwrotu czytelnik znajdzie tam. Render: RamaCeny.tsx,
+       ten sam akapit co `tresc`. */
+    linkPoradnik: {
+      przed: 'Jak liczymy koszt i zwrot z wdrożenia agenta, rozpisaliśmy w poradniku: ',
+      etykieta: 'ile kosztuje wdrożenie AI agenta dla firmy',
+      po: '.',
+      href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
+    },
   },
 
   faq: [
@@ -131,4 +141,27 @@ export const agentRekrutacyjny: Usluga = {
     'agent AI do rekrutacji',
     'pierwszy kontakt z kandydatem AI',
   ],
+
+  /* v22 (linki §3, P2 #15): strona miała 1 link wychodzący (kontakt) i 3
+     wchodzące. Wdrożenie z rejestru dobrane po TYPIE systemu (agent AI
+     odpowiadający pierwszej linii), nie po branży: rekrutacyjnego case'a
+     w rejestrze nie ma i nie wymyślamy go. */
+  powiazane: {
+    realizacje: [
+      {
+        etykieta: 'Firmowi Agenci AI 24/7',
+        href: '/realizacje/agenci-ai-24-7',
+        opis:
+          'Agent odpowiada pierwszej linii o każdej porze i działa sam, bez czuwania zespołu przy stronie.',
+      },
+    ],
+    narzedzia: [
+      {
+        etykieta: 'Czy warto zautomatyzować ten proces?',
+        href: '/narzedzia#kalkulator-procesu',
+        opis:
+          'Policz roczny koszt pierwszej linii rekrutacji i to, po ilu miesiącach zwróci się wdrożenie.',
+      },
+    ],
+  },
 };

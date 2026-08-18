@@ -19,9 +19,14 @@
  * Bloki treści (`tresc[]`) reużywają `Blok` z lib/blog/types.ts — ten sam render
  * (PostBody-podobny) zamienia je na semantyczny HTML serwerowo.
  */
-import type { Blok } from '@/lib/blog/types';
+import type { Blok, LinkKrzyzowy } from '@/lib/blog/types';
 
 export type { Blok } from '@/lib/blog/types';
+/* v22 (PLAN-v22 §1.5): kontrakt linku krzyżowego mieszka w korzeniu grafu
+   importów treści (lib/blog/types) i jest wspólny dla poradników, wpisów,
+   realizacji i materiałów. Re-eksport, żeby moduły magnetów nie musiały sięgać
+   po niego przez dwa różne pakiety. */
+export type { LinkKrzyzowy } from '@/lib/blog/types';
 
 /**
  * Typ pliku materiału — etykieta na karcie huba i na przycisku pobrania.
@@ -103,6 +108,34 @@ export type Material = {
    * Pierwsza = primary (zgodna z `tytul`). Do dokumentacji i pomiaru cytowalności.
    */
   queries?: string[];
+
+  /**
+   * v22 (PLAN-v22 §1.6 i §3 P2 pkt 12): POWIĄZANIA MATERIAŁU.
+   *
+   * Pomiar linków przed rundą: materiał -> usługa 0/6. Sześć magnetów zbierało
+   * ruch na długi ogon („prompty AI dla firm", „checklista automatyzacji")
+   * i nie miało ani jednego wyjścia do oferty ani do poradnika, który tłumaczy
+   * temat głębiej. Czytelnik kończył materiał i strona się dla niego kończyła.
+   *
+   * Pola zasilają ISTNIEJĄCY komponent `LinkiKrzyzowe` (ten sam, co pod
+   * poradnikami i realizacjami), więc nie powstaje nowy silnik linkowania.
+   * Oba opcjonalne: magnet bez powiązań renderuje się jak dotąd.
+   *
+   * ŻELAZNE: `href` to realna trasa z rejestru (kryterium odbioru §5.3:
+   * zero martwych linków), a `etykieta` i `opis` to tekst nawigacyjny,
+   * nie nowy fakt o produkcie ani nowa obietnica.
+   */
+  powiazaneUslugi?: LinkKrzyzowy[];
+  powiazanePoradniki?: LinkKrzyzowy[];
+  /**
+   * v22: NARZĘDZIA, którymi czytelnik policzy to u siebie.
+   *
+   * To nie jest ozdoba, tylko naprawa realnej usterki: cztery materiały odsyłają
+   * dziś do narzędzi GOŁYM TEKSTEM w zdaniu („w kalkulatorze oszczędności
+   * w sekcji /narzedzia"), czyli podają ścieżkę, której nie da się kliknąć.
+   * Zdania zostają nietknięte, a link staje się linkiem.
+   */
+  powiazaneNarzedzia?: LinkKrzyzowy[];
 };
 
 /**

@@ -18,7 +18,7 @@ import type { Usluga } from './types';
  */
 export const dokumentyFaktury: Usluga = {
   slug: 'dokumenty-faktury',
-  dataAktualizacji: '2026-08-16',
+  dataAktualizacji: '2026-08-18',
   h1: 'Automatyzacja dokumentów i faktur (OCR, KSeF)',
 
   kapsula:
@@ -81,6 +81,16 @@ export const dokumentyFaktury: Usluga = {
     tresc:
       'Koszt zależy od skali i zakresu. Inaczej wycenia się sam odczyt faktur do arkusza, a inaczej pełny obieg: OCR, klasyfikacja kosztów, wpis do programu księgowego i eksport do KSeF dla wielu klientów biura. Pracę zaczynamy od Sprintu Diagnostycznego za 1490 zł, który odliczamy od wdrożenia, gdy wchodzimy we współpracę. Cenę liczymy od wartości: ile godzin miesięcznie schodzi z ręcznego przepisywania i ile błędów znika. Dokładne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów.',
     // minPrice: undefined — brak realnej kwoty "od X" za wdrożenie. Bez offers w Service JSON-LD.
+    /* v22 (linki §3, P1 #7): 74 wyświetlenia, pozycja 25,5, w raporcie SEO
+       „temat się nagrzewa". Poradnik o biurze rachunkowym linkuje TUTAJ od
+       sierpnia, brakowało kierunku powrotnego, a sam poradnik miał 1 link
+       wchodzący. Render: RamaCeny.tsx, ten sam akapit co `tresc`. */
+    linkPoradnik: {
+      przed: 'Które procesy w biurze rachunkowym zdejmuje AI najpierw, rozpisaliśmy w poradniku: ',
+      etykieta: 'AI w biurze rachunkowym',
+      po: '.',
+      href: '/poradniki/ai-w-biurze-rachunkowym-jakie-procesy-zautomatyzowac',
+    },
   },
 
   faq: [
@@ -132,4 +142,34 @@ export const dokumentyFaktury: Usluga = {
     'KSeF',
     'automatyczne księgowanie faktur',
   ],
+
+  /* v22 (linki §3, P2 #13 i #15): produkt `skaner-faktur-ksef` robi dokładnie
+     to, co ta usługa, i stał na hubie bez ani jednego linku z treści serwisu.
+     Kotwica '/produkty#<slug>' jest realna: ProduktCard renderuje id={slug}. */
+  powiazane: {
+    realizacje: [
+      {
+        etykieta: 'Automatyczne raporty zamiast ręcznych arkuszy',
+        href: '/realizacje/automatyczne-raporty',
+        opis:
+          'Ten sam schemat na innym dokumencie: dane spinają się same, zamiast być przepisywane do arkuszy.',
+      },
+    ],
+    produkty: [
+      {
+        etykieta: 'Skaner faktur, który przepisuje je za Ciebie i przygotowuje eksport do KSeF',
+        href: '/produkty#skaner-faktur-ksef',
+        opis:
+          'Wrzucasz zdjęcie albo skan, system wyciąga dane do arkusza, a raz w miesiącu składa eksport do KSeF.',
+      },
+    ],
+    narzedzia: [
+      {
+        etykieta: 'Kalkulator oszczędności z automatyzacji',
+        href: '/narzedzia#kalkulator-oszczednosci',
+        opis:
+          'Policz, ile złotych rocznie kosztuje Cię ręczne przepisywanie faktur do arkusza i księgowości.',
+      },
+    ],
+  },
 };

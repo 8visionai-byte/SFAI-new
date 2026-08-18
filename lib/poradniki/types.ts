@@ -117,4 +117,17 @@ export type Poradnik = {
    * `href` MUSI być slugiem z rejestru (realna trasa /poradniki/<slug>, 200 OK).
    */
   powiazanePoradniki?: LinkKrzyzowy[];
+
+  /**
+   * v22 (PLAN-v22 §1.5 i §3 P1 #5): linki do REALIZACJI, czyli wdrożeń, na
+   * których opisana tu rzecz już działa. Render: grupa „Zobacz to na wdrożeniu"
+   * w components/poradniki/LinkiKrzyzowe.tsx (partia A dodała tam obsługę
+   * `realizacje`, tu dochodzi tylko pole danych).
+   * Powód: pomiar linków przed rundą pokazał relację poradnik -> realizacja
+   * 0/4, czyli treść i dowody stały obok siebie bez ani jednego połączenia.
+   * `href` MUSI być slugiem z rejestru lib/realizacje (realna trasa 200 OK),
+   * a etykieta i opis pochodzą z pól tamtego rejestru (h1, metaDescription),
+   * żeby nie powstał drugi, rozjeżdżający się opis tego samego wdrożenia.
+   */
+  powiazaneRealizacje?: LinkKrzyzowy[];
 };

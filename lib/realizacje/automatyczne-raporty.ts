@@ -71,4 +71,44 @@ export const automatyczneRaporty: Realizacja = {
     'automat do zestawień zamiast Excela',
     'spinanie danych z wielu źródeł automat',
   ],
+
+  /**
+   * v22 (PLAN-v22 §3 P2 pkt 11): POWIĄZANIA CASE'A. Przed rundą ten case był
+   * ślepym zaułkiem: zero linków do poradnika, który tłumaczy teorię, i zero
+   * linków do siostrzanych wdrożeń. Usługę wyznacza `kategoria` i renderuje ją
+   * `PowiazanaUsluga`, więc tu jej nie dublujemy. Wszystkie href to realne trasy
+   * z rejestrów albo kotwice o potwierdzonym id= na /narzedzia.
+   */
+  powiazane: {
+    poradniki: [
+      {
+        etykieta: 'Ile kosztuje automatyzacja AI w firmie',
+        href: '/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie',
+        opis:
+          'Widełki cenowe i to, co realnie podnosi koszt takiego wdrożenia.',
+      },
+    ],
+    realizacje: [
+      {
+        etykieta: 'Automatyczne podsumowania spotkań',
+        href: '/realizacje/auto-podsumowania-spotkan',
+        opis:
+          'Z nagrania powstaje streszczenie z ustaleniami i listą zadań.',
+      },
+      {
+        etykieta: 'Generator leadów',
+        href: '/realizacje/lead-generator',
+        opis:
+          'Dane o potencjalnych klientach zbierane i porządkowane bez ręcznej pracy.',
+      },
+    ],
+    narzedzia: [
+      {
+        etykieta: 'Kalkulator oszczędności',
+        href: '/narzedzia#kalkulator-oszczednosci',
+        opis:
+          'Policz, ile godzin i pieniędzy zjada u Ciebie ta sama ręczna robota.',
+      },
+    ],
+  },
 };

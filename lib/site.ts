@@ -284,8 +284,14 @@ export const ROUTES: RouteEntry[] = [
 /**
  * Ścieżki stron prawnych — single source dla formularza (link zgody) i Footera.
  * Trasy są w ROUTES (sitemap). Strony do postawienia przez agenta budującego.
+ *
+ * v22 (raport `raporty/pomiary-v22-linki.md` §2, PLAN-v22 §3 P0 #3): pole
+ * `infoDuty: '/obowiazek-informacyjny'` USUNIĘTE. Wskazywało na trasę, która
+ * zwraca 404 (`live: false` w ROUTES, strona nigdy nie powstała). Dziś nie było
+ * użyte w żadnym JSX, ale pierwsze użycie zrobiłoby z niego martwy link w
+ * zgodzie RODO, czyli w najgorszym możliwym miejscu. Wraca w tej samej linijce,
+ * gdy strona realnie stanie i dostanie `live: true` w ROUTES.
  */
 export const LEGAL_ROUTES = {
   privacy: '/polityka-prywatnosci',
-  infoDuty: '/obowiazek-informacyjny',
 } as const;

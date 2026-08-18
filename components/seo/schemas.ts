@@ -147,6 +147,54 @@ export const faqSchema = (
 });
 
 /**
+ * v22 (PLAN-v22 §1.7b): ten sam FAQPage, ale z polskiego kontraktu treści
+ * (`{ pytanie, odpowiedz }`), którego używają wszystkie rejestry i komponent
+ * `HubFAQ`. Istnieje po to, żeby strona nie przepisywała ręcznie mapowania
+ * przy każdym hubie: jedna tablica idzie do renderu i do schemy, więc rozjazd
+ * schema <-> treść (karany przez Google) jest niemożliwy. Wzorzec 1:1
+ * z `postSchemas` / `realizacjaSchemas`, które robią to mapowanie u siebie.
+ */
+export const faqSchemaPl = (
+  items: { pytanie: string; odpowiedz: string }[],
+  path: string
+): Json => faqSchema(items.map((item) => ({ q: item.pytanie, a: item.odpowiedz })), path);
+
+/**
+ * ItemList — LISTA POZYCJI HUBA (v22, PLAN-v22 §2.6 i §5.4).
+ *
+ * Huby (/blog, /poradniki, /materialy, /realizacje, /produkty, /wiedza) to
+ * strony listujące. ItemList mówi wyszukiwarce wprost, CO jest na liście i pod
+ * jakimi adresami, zamiast kazać jej to wywnioskować z siatki kafli.
+ *
+ * ŻELAZNE: `pozycje` budujemy MAPOWANIEM REJESTRU (te same obiekty, które
+ * renderują karty), nigdy literałami. Wtedy `numberOfItems` jest z definicji
+ * prawdziwe, a lista nie rozjeżdża się z tym, co widać na stronie.
+ * Pozycje bez własnej trasy (zapowiedzi „wkrótce") do listy NIE wchodzą —
+ * ItemList z linkiem do nieistniejącej strony to martwy link w oczach Google.
+ */
+export const itemListSchema = (p: {
+  /** Ścieżka huba, np. '/poradniki'. */
+  path: string;
+  /** Nazwa listy (zwykle nagłówek huba). */
+  nazwa: string;
+  /** Pozycje w kolejności wyświetlania: nazwa + realna trasa 200 OK. */
+  pozycje: { nazwa: string; path: string }[];
+}): Json => ({
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  '@id': `${abs(p.path)}/#lista`,
+  name: p.nazwa,
+  numberOfItems: p.pozycje.length,
+  itemListOrder: 'https://schema.org/ItemListOrderAscending',
+  itemListElement: p.pozycje.map((poz, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: poz.nazwa,
+    url: abs(poz.path),
+  })),
+});
+
+/**
  * BreadcrumbList — każda strona poza '/'.
  */
 export const breadcrumbSchema = (

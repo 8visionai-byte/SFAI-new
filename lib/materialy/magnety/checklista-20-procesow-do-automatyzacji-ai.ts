@@ -31,22 +31,19 @@ export const checklista20Procesow: Material = {
   tresc: [
     {
       typ: 'akapit',
-      tekst:
-        'Nie widzisz, co da się zautomatyzować? To normalne. Robisz te procesy codziennie, więc przestajesz je zauważać. Ta checklista pokazuje 20 powtarzalnych rzeczy, które AI najczęściej zdejmuje z ludzi w małej i średniej firmie. Przejdź listę, zaznacz te, które robicie u siebie, i od razu wiesz, od czego zacząć.',
+      tekst: 'Nie widzisz, co da się zautomatyzować? To normalne. Robisz te procesy codziennie, więc przestajesz je zauważać. Ta checklista pokazuje 20 powtarzalnych rzeczy, które AI najczęściej zdejmuje z ludzi w małej i średniej firmie. Przejdź listę, zaznacz te, które robicie u siebie, i od razu wiesz, od czego zacząć.',
     },
     {
       typ: 'cytat',
-      tekst:
-        'AI nie zastępuje ludzi. AI zastępuje to, co ich zatrzymuje: przepisywanie, klepanie tych samych maili i ręczne układanie raportów.',
+      tekst: 'AI nie zastępuje ludzi. AI zastępuje to, co ich zatrzymuje: przepisywanie, klepanie tych samych maili i ręczne układanie raportów.',
     },
     {
-      typ: 'naglowek',
-      tekst: 'Jak czytać tę checklistę?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Jak czytać tę checklistę?',
+      akapity: [
         'Przy każdym procesie masz dwie rzeczy. Kryterium „czy to Twój przypadek", czyli prosty test, po którym poznasz, że to o Tobie. I „od czego zacząć", czyli pierwszy mały krok. Zaznacz każdy proces, przy którym kiwasz głową. Im więcej zaznaczeń, tym więcej czasu odzyskasz po automatyzacji. Dobry kandydat na start jest częsty, schematyczny i nie wymaga decyzji człowieka na każdym kroku.',
+      ],
+      wariant: 'top',
     },
     {
       typ: 'naglowek',
@@ -54,7 +51,12 @@ export const checklista20Procesow: Material = {
     },
     {
       typ: 'tabela',
-      naglowki: ['#', 'Proces', 'Czy to Twój przypadek?', 'Od czego zacząć'],
+      naglowki: [
+        '#',
+        'Proces',
+        'Czy to Twój przypadek?',
+        'Od czego zacząć',
+      ],
       wiersze: [
         [
           '1',
@@ -87,6 +89,8 @@ export const checklista20Procesow: Material = {
           'Ustal 3 kategorie zgłoszeń i co jest naprawdę pilne.',
         ],
       ],
+      wKarcie: true,
+      podpis: 'Obsługa klienta i komunikacja: 5 procesów do automatyzacji',
     },
     {
       typ: 'naglowek',
@@ -94,7 +98,12 @@ export const checklista20Procesow: Material = {
     },
     {
       typ: 'tabela',
-      naglowki: ['#', 'Proces', 'Czy to Twój przypadek?', 'Od czego zacząć'],
+      naglowki: [
+        '#',
+        'Proces',
+        'Czy to Twój przypadek?',
+        'Od czego zacząć',
+      ],
       wiersze: [
         [
           '6',
@@ -127,6 +136,8 @@ export const checklista20Procesow: Material = {
           'Wybierz 10 produktów, które najlepiej się sprzedają, na start.',
         ],
       ],
+      wKarcie: true,
+      podpis: 'Sprzedaż i oferty: 5 procesów do automatyzacji',
     },
     {
       typ: 'naglowek',
@@ -134,7 +145,12 @@ export const checklista20Procesow: Material = {
     },
     {
       typ: 'tabela',
-      naglowki: ['#', 'Proces', 'Czy to Twój przypadek?', 'Od czego zacząć'],
+      naglowki: [
+        '#',
+        'Proces',
+        'Czy to Twój przypadek?',
+        'Od czego zacząć',
+      ],
       wiersze: [
         [
           '11',
@@ -167,6 +183,8 @@ export const checklista20Procesow: Material = {
           'Wskaż dokumenty, w których najczęściej coś szukacie.',
         ],
       ],
+      wKarcie: true,
+      podpis: 'Dokumenty i administracja: 5 procesów do automatyzacji',
     },
     {
       typ: 'naglowek',
@@ -174,7 +192,12 @@ export const checklista20Procesow: Material = {
     },
     {
       typ: 'tabela',
-      naglowki: ['#', 'Proces', 'Czy to Twój przypadek?', 'Od czego zacząć'],
+      naglowki: [
+        '#',
+        'Proces',
+        'Czy to Twój przypadek?',
+        'Od czego zacząć',
+      ],
       wiersze: [
         [
           '16',
@@ -207,28 +230,25 @@ export const checklista20Procesow: Material = {
           'Spisz 10 pytań, które słyszysz od każdego nowego.',
         ],
       ],
+      wKarcie: true,
+      podpis: 'Treści, raporty i procesy wewnętrzne: 5 procesów do automatyzacji',
     },
     {
-      typ: 'naglowek',
-      tekst: 'Zaznaczyłeś kilka procesów. Co dalej?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Zaznaczyłeś kilka procesów. Co dalej?',
+      akapity: [
         'Nie automatyzuj wszystkiego naraz. To najczęstszy błąd. Wybierz jeden proces z tych, które zaznaczyłeś, najlepiej taki, na który najczęściej narzekasz, że zżera czas. Wdróż go z człowiekiem w pętli: AI przygotowuje wynik, Ty zatwierdzasz przed wysłaniem. Zmierz efekt po kilku tygodniach i dopiero wtedy bierz kolejny proces. Mały, odwracalny pierwszy krok daje szybki dowód, że to działa, i zero ryzyka.',
-    },
-    {
-      typ: 'lista',
+      ],
       punkty: [
         'Policz koszt jednego zaznaczonego procesu w kalkulatorze oszczędności w sekcji /narzedzia. Zobaczysz w złotówkach, ile zżera dziś.',
         'Zrób test gotowości do automatyzacji w sekcji /narzedzia, jeśli nie wiesz, który proces ruszyć pierwszy.',
         'Wybierz jeden proces, częsty i schematyczny, i wdróż go z kontrolą człowieka przed wysłaniem.',
       ],
+      wariant: 'quiet',
     },
     {
       typ: 'akapit',
-      tekst:
-        'Pełna treść tej checklisty jest wyżej na tej stronie. Czytasz ją teraz, za darmo, bez zapisu. Plik do pobrania jest tylko po to, żebyś miał ją pod ręką offline albo żebyś przeszedł listę z zespołem.',
+      tekst: 'Pełna treść tej checklisty jest wyżej na tej stronie. Czytasz ją teraz, za darmo, bez zapisu. Plik do pobrania jest tylko po to, żebyś miał ją pod ręką offline albo żebyś przeszedł listę z zespołem.',
     },
   ],
   faq: [
@@ -246,6 +266,45 @@ export const checklista20Procesow: Material = {
       pytanie: 'Ile procesów z tej listy warto automatyzować na raz?',
       odpowiedz:
         'Jeden. Automatyzowanie wszystkiego naraz to najczęstszy błąd przy wdrażaniu AI. Wybierz pojedynczy proces, zrób go dobrze, zbierz efekt i dopiero potem bierz następny. Mały, odwracalny pierwszy krok daje szybki dowód i zero ryzyka.',
+    },
+  ],
+
+  /**
+   * v22 (PLAN-v22 §3 P2 pkt 12): POWIĄZANIA MATERIAŁU. Przed rundą magnet
+   * był ślepym zaułkiem: zero wyjść do oferty i do poradnika, który tłumaczy
+   * temat głębiej. Obie trasy są realne i stoją w rejestrach.
+   */
+  powiazaneUslugi: [
+    {
+      etykieta: 'Automatyzacje procesów AI',
+      href: '/uslugi/automatyzacje',
+      opis:
+        'Przejmujemy powtarzalną robotę, którą dziś klika u Ciebie człowiek.',
+    },
+  ],
+  powiazanePoradniki: [
+    {
+      etykieta: 'Ile kosztuje automatyzacja AI w firmie',
+      href: '/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie',
+      opis:
+        'Widełki cenowe, od czego zależy koszt i jak policzyć zwrot.',
+    },
+  ],
+  /* v22: te materialy odsylaja do narzedzi golym tekstem w zdaniu
+     (np. „w sekcji /narzedzia"), wiec sciezka byla nieklikalna. Zdania
+     zostaja nietkniete, a czytelnik dostaje realny link. */
+  powiazaneNarzedzia: [
+    {
+      etykieta: 'Kalkulator oszczędności',
+      href: '/narzedzia#kalkulator-oszczednosci',
+      opis:
+        'Policz w złotówkach, ile zżera Cię dziś jeden ręczny proces.',
+    },
+    {
+      etykieta: 'Test gotowości AI',
+      href: '/narzedzia#test-gotowosci-ai',
+      opis:
+        'Sprawdź, który proces nadaje się do automatyzacji jako pierwszy.',
     },
   ],
 };

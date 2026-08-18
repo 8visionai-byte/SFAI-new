@@ -70,4 +70,44 @@ export const transkrypcjaRozmow: Realizacja = {
     'AI do analizy rozmów biznesowych',
     'transkrypcja spotkań AI',
   ],
+
+  /**
+   * v22 (PLAN-v22 §3 P2 pkt 11): POWIĄZANIA CASE'A. Przed rundą ten case był
+   * ślepym zaułkiem: zero linków do poradnika, który tłumaczy teorię, i zero
+   * linków do siostrzanych wdrożeń. Usługę wyznacza `kategoria` i renderuje ją
+   * `PowiazanaUsluga`, więc tu jej nie dublujemy. Wszystkie href to realne trasy
+   * z rejestrów albo kotwice o potwierdzonym id= na /narzedzia.
+   */
+  powiazane: {
+    poradniki: [
+      {
+        etykieta: 'Ile kosztuje wdrożenie AI agenta dla firmy',
+        href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
+        opis:
+          'Cena agenta i to, po czym poznać, że się zwróci.',
+      },
+    ],
+    realizacje: [
+      {
+        etykieta: 'Automatyczne podsumowania spotkań',
+        href: '/realizacje/auto-podsumowania-spotkan',
+        opis:
+          'Z nagrania powstaje streszczenie z ustaleniami i listą zadań.',
+      },
+      {
+        etykieta: 'Automatyczne raporty',
+        href: '/realizacje/automatyczne-raporty',
+        opis:
+          'Raport składa się sam z danych, które i tak już macie.',
+      },
+    ],
+    narzedzia: [
+      {
+        etykieta: 'Kalkulator procesu',
+        href: '/narzedzia#kalkulator-procesu',
+        opis:
+          'Sprawdź, ile trwa jeden Twój proces i ile z niego da się zdjąć.',
+      },
+    ],
+  },
 };

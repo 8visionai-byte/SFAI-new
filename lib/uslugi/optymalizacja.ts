@@ -21,7 +21,7 @@ import type { Usluga } from './types';
  */
 export const optymalizacja: Usluga = {
   slug: 'optymalizacja',
-  dataAktualizacji: '2026-08-16',
+  dataAktualizacji: '2026-08-18',
   h1: 'Pozycjonowanie pod AI: bądź cytowany w ChatGPT i Perplexity',
 
   kapsula:
@@ -132,4 +132,28 @@ export const optymalizacja: Usluga = {
     'optymalizacja SEO',
     'cytowalność w ChatGPT',
   ],
+
+  /* v22 (linki §3, P2 #15): strona miała 1 link wychodzący (kontakt) i 2
+     wchodzące. `linkPoradnik` zostaje PUSTY świadomie: w rejestrze poradników
+     są dziś wyłącznie poradniki cenowe, żaden nie dotyczy widoczności w AI,
+     a doklejanie poradnika o cenie chatbota do strony GEO byłoby linkiem
+     na siłę. Wchodzi, gdy powstanie poradnik o GEO. */
+  powiazane: {
+    narzedzia: [
+      {
+        etykieta: 'Audyt strony pod AI (GEO)',
+        href: '/narzedzia#audyt-strony-ai',
+        opis:
+          'Dziesięć pytań o Twojej stronie pokazuje, czy ChatGPT i Perplexity mogą ją cytować, i co naprawić najpierw.',
+      },
+    ],
+    uslugi: [
+      {
+        etykieta: 'Tworzenie stron WWW widocznych w Google i w AI',
+        href: '/uslugi/strony-www',
+        opis:
+          'Gdy strony nie da się już naprawić, budujemy nową: cała treść w kodzie od razu, ułożona pod cytowanie.',
+      },
+    ],
+  },
 };

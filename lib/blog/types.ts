@@ -49,12 +49,34 @@ export type Kategoria =
  *                 wiersz nagłówkowy, `wiersze[]` = komórki. Renderowana jako
  *                 prawdziwa <table> (scope), scroll poziomy na mobile.
  *  - 'cytat'    : wyróżniony cytat/teza (`tekst`, opcjonalnie `zrodlo`).
+ *
+ * v22 (PLAN-v22 §1.1-§1.4): cztery istniejące warianty dostają POLA
+ * OPCJONALNE. Żadne nie jest wymagane, więc rejestry sprzed v22 renderują się
+ * bit w bit tak samo — nowe pola to wyłącznie miejsce na informację, którą
+ * dziś strona i tak niesie, ale w formie ściany tekstu.
  */
 export type Blok =
   | { typ: 'naglowek'; tekst: string }
   | { typ: 'akapit'; tekst: string }
   | { typ: 'lista'; punkty: string[] }
-  | { typ: 'tabela'; naglowki: string[]; wiersze: string[][]; wKarcie?: boolean }
+  | {
+      typ: 'tabela';
+      naglowki: string[];
+      wiersze: string[][];
+      wKarcie?: boolean;
+      /**
+       * v22 (PLAN-v22 §1.4): WIDOCZNY podpis tabeli, renderowany jako
+       * <caption> wewnątrz <table>. Chwyt wzorca /vitalis §3.3 (cztery
+       * prawdziwe <table> z nazwanymi sekcjami).
+       * ZYSK BOTOWY, NIE DEKORACJA: <caption> to natywne, semantyczne
+       * powiązanie nazwy z tabelą — czytnik ekranu ogłasza je przy wejściu
+       * w tabelę, a bot dostaje zdanie mówiące, CZEGO tabela dotyczy.
+       * Gdy podpis jest, staje się też `aria-label` regionu ze scrollem
+       * (zamiast dzisiejszego stringa sklejanego z nagłówków kolumn).
+       * TREŚĆ: opis tabeli, która już stoi na stronie. Zero nowych faktów.
+       */
+      podpis?: string;
+    }
   | { typ: 'cytat'; tekst: string; zrodlo?: string }
   | {
       /**
@@ -73,6 +95,29 @@ export type Blok =
       punkty?: string[];
       /** Wariant ramki (v13): domyślnie 'top' (górna linia w kolorze). */
       wariant?: 'top' | 'edge' | 'quiet';
+      /**
+       * v22 (PLAN-v22 §1.3, chwyt wzorca /void §4.2 `.vd-neon-card`, nazwana
+       * w pomiarach „najbogatszą kartą wzorca"): CHIP KATEGORII nad nagłówkiem,
+       * mono, w kolorze karty. Zasada wzorca brzmi „kolor niesie chip, nagłówek
+       * zostaje biały", więc H2 nie zmienia koloru ani wagi.
+       * TREŚĆ: istniejąca kategoria / tag / etykieta z rejestru tej strony.
+       * NIGDY nowy termin, nigdy skrót wymyślony pod wygląd.
+       */
+      chip?: string;
+      /**
+       * v22: krótka META po prawej stronie chipa (np. „aktualizacja 2026-08",
+       * „czas czytania 4 min", jeśli takie dane są w rejestrze). Renderowana
+       * jako `.inf-tag`. Fakt musi już istnieć w danych strony.
+       */
+      meta?: string;
+      /**
+       * v22: STOPKA KARTY — separator 1px i siatka dwóch kolumn krótkich
+       * punktów pod treścią. Chwyt /void: jedna karta niesie cztery warstwy
+       * informacji zamiast ściany akapitów.
+       * ZYSK BOTOWY: to normalne <li> w <ul>, czyli rośnie licznik pozycji
+       * listy i liczba znaków w <main>. Zero treści chowanej za hoverem.
+       */
+      stopka?: string[];
     }
   | {
       /**
@@ -81,7 +126,20 @@ export type Blok =
        * poradnika; zero nowych danych.
        */
       typ: 'kafle';
-      kafle: { wartosc: string; opis: string }[];
+      kafle: {
+        wartosc: string;
+        opis: string;
+        /**
+         * v22 (PLAN-v22 §1.1, chwyt wzorca /freedom §5.3: trzeci wiersz kafla
+         * metryki, 10px, mikro-przypis pod liczbą): SKĄD TA LICZBA.
+         * MUSI odsyłać do faktu, który już stoi w treści tej strony albo
+         * w rejestrze (np. „z sekcji o kosztach", „arkusz kosztów, wiersz 3").
+         * Zero nowych danych, zero instytucji, których nie cytujemy.
+         * Renderowany klasą `.inf-stat-chip-zrodlo` (kontrast ok. 7:1, czyli
+         * LEPIEJ niż wzorcowe 50% alfy).
+         */
+        zrodlo?: string;
+      }[];
     }
   | {
       /**
@@ -90,8 +148,55 @@ export type Blok =
        * żeby kolejność była czytelna także dla bota.
        */
       typ: 'kroki';
-      kroki: { tytul: string; opis?: string }[];
+      /**
+       * v22 (PLAN-v22 §1.2): SPOSÓB PREZENTACJI kroków. Semantyka identyczna
+       * we wszystkich trzech (dalej <ol><li>), zmienia się wyłącznie forma
+       * numeru i układ wiersza.
+       *  - 'plytka' (DOMYŚLNY, stan v21): kwadratowa płytka `.inf-tile`
+       *    z numerem. Domyślny świadomie: cztery poradniki wyglądają po v22
+       *    tak samo jak przed nią, więc zero regresji bez zmiany danych.
+       *  - 'kolo': ten sam numer w KÓŁKU (chwyt /freedom §5.3, krok bootu:
+       *    ramka i radius 50%). Jedyna różnica w CSS to geometria.
+       *  - 'os': OŚ PIONOWA. Kropka statusu `.inf-status-dot` + tytuł + opis
+       *    + strzałka w dół jako dekoracja aria-hidden (chwyt /axiom §2.2
+       *    i /vitalis sec-pipeline). Linia łącząca jest UDAWANA strzałką,
+       *    nie pseudoelementem, czyli zero nowego CSS.
+       */
+      wariant?: 'plytka' | 'kolo' | 'os';
+      kroki: {
+        tytul: string;
+        opis?: string;
+        /**
+         * v22: krótka META wiersza (czas etapu, nazwa pliku, etykieta etapu).
+         * Chwyt /void: mono meta przy chipie kategorii. Renderowana jako
+         * `.inf-tag`. WYŁĄCZNIE dane, które już są w rejestrze albo w treści.
+         */
+        meta?: string;
+      }[];
     };
+
+/**
+ * LINK KRZYŻOWY treść -> oferta / narzędzie / inna treść.
+ *
+ * v22 (PLAN-v22 §1.5): typ mieszka TU, bo `lib/blog/types.ts` jest korzeniem
+ * grafu importów treści (lib/poradniki i lib/materialy już z niego importują
+ * `Blok`). `lib/poradniki/types.ts` ma dziś własną, IDENTYCZNĄ STRUKTURALNIE
+ * definicję pod tą samą nazwą, więc oba typy są wzajemnie przypisywalne i
+ * żaden istniejący import nie pęka. Docelowo poradniki re-eksportują ten typ
+ * jednym wierszem (`export type { LinkKrzyzowy } from '@/lib/blog/types'`) —
+ * ta jedna linia została dla partii, która jest właścicielem lib/poradniki.
+ *
+ * `href` MUSI wskazywać realną, istniejącą trasę albo anchor (zero martwych
+ * linków — kryterium odbioru §5.3 planu).
+ */
+export type LinkKrzyzowy = {
+  /** Etykieta linku widoczna dla użytkownika (głos marki, konkret). */
+  etykieta: string;
+  /** Ścieżka wewnętrzna lub anchor. Realna trasa 200 OK. */
+  href: string;
+  /** Krótki opis (1 zdanie), po co tam klikać. */
+  opis: string;
+};
 
 /** Pytanie + odpowiedź FAQ wpisu. `odpowiedz` trafia 1:1 na stronę (i może wejść do FAQPage). */
 export type PostFaq = {
@@ -159,6 +264,19 @@ export type Post = {
    * Pierwsza = primary (zgodna z `tytul`). Do dokumentacji i pomiaru cytowalności.
    */
   queries?: string[];
+
+  /**
+   * v22 (PLAN-v22 §1.6, pomiar linków §1.2): POWIĄZANIA WPISU.
+   * Diagnoza przed rundą: pięć wpisów bloga to ślepe zaułki, zero linków
+   * wychodzących z treści do oferty, narzędzi i realizacji. Te cztery pola
+   * zasilają istniejący komponent `LinkiKrzyzowe` (poradniki mają go od
+   * dawna), więc nie powstaje żaden nowy silnik linkowania.
+   * Wszystkie opcjonalne: wpis bez powiązań renderuje się jak dotąd.
+   */
+  powiazaneUslugi?: LinkKrzyzowy[];
+  powiazaneNarzedzia?: LinkKrzyzowy[];
+  powiazanePoradniki?: LinkKrzyzowy[];
+  powiazaneRealizacje?: LinkKrzyzowy[];
 };
 
 /**

@@ -18,7 +18,7 @@ import type { Usluga } from './types';
  */
 export const rozwiazania: Usluga = {
   slug: 'rozwiazania',
-  dataAktualizacji: '2026-08-16',
+  dataAktualizacji: '2026-08-18',
   h1: 'Indywidualne rozwiązania AI: aplikacje i wtyczki na zamówienie',
   kapsula:
     'Czasem gotowy chatbot czy automatyzacja nie wystarczą, bo Twój problem jest tylko Twój. Wtedy budujemy rozwiązanie na miarę: aplikację webową, wtyczkę do narzędzia, którego używasz, albo Agenta spiętego z kilkoma systemami naraz. Nie sprzedajemy pudełka z funkcjami. Projektujemy dokładnie to, czego potrzebuje Twój proces, i wdrażamy szybko. Zaczynamy od bezpłatnej diagnozy, na której mówimy wprost, czy warto budować od zera, czy taniej złożyć z gotowych klocków.',
@@ -80,6 +80,15 @@ export const rozwiazania: Usluga = {
       'Rozwiązanie na miarę wyceniamy indywidualnie, bo każde jest inne, ale nie zostawiamy Cię z „to zależy”. Na bezpłatnej diagnozie rozkładamy projekt na etapy i podajemy widełki dla pierwszej, najmniejszej działającej wersji, zanim cokolwiek zamówisz. Zaczynamy od małego zakresu, żeby koszt i ryzyko były policzalne, a nie z sufitu. Bez ukrytych kosztów i bez płacenia za funkcje na zapas.',
     // minPrice: undefined — brak realnych widełek od Pawła. Po ustaleniu wpisać
     // number → kwota „od X zł" pojawi się w UI i w offers Service JSON-LD spójnie.
+    /* v22 (linki §3, P1 #8): 32 wyświetlenia, pozycja 8,9, czyli TOP10 z zerowym
+       CTR. Etapowanie projektu i liczenie zwrotu opisuje poradnik o koszcie
+       agenta AI. Render: RamaCeny.tsx, ten sam akapit co `tresc`. */
+    linkPoradnik: {
+      przed: 'Po czym poznać, że wdrożenie się zwróci, rozpisaliśmy w poradniku: ',
+      etykieta: 'ile kosztuje wdrożenie AI agenta dla firmy',
+      po: '.',
+      href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
+    },
   },
 
   faq: [
@@ -131,4 +140,41 @@ export const rozwiazania: Usluga = {
     'aplikacja webowa na zamówienie',
     'wtyczka AI do CRM',
   ],
+
+  /* v22 (linki §3, P1 #8 i P2 #13): obie realizacje mają kategorię
+     `rozwiazania`, czyli linkują TUTAJ, a zwrotnie nie było nic. Link do
+     /produkty zamyka sierotę i pokazuje, z czego składamy custom (te same
+     klocki opisane na hubie produktów). */
+  powiazane: {
+    realizacje: [
+      {
+        etykieta: 'Auto-podsumowania spotkań na Meet, Zoom i Teams',
+        href: '/realizacje/auto-podsumowania-spotkan',
+        opis:
+          'Agent spisuje rozmowę i po spotkaniu wysyła raport z zadaniami przypisanymi do konkretnych osób.',
+      },
+      {
+        etykieta: 'Przechwytywanie i analiza rozmów',
+        href: '/realizacje/transkrypcja-rozmow',
+        opis:
+          'Aplikacja sama spisuje rozmowy, kategoryzuje je i wyciąga ustalenia, bez odsłuchiwania nagrań.',
+      },
+    ],
+    produkty: [
+      {
+        etykieta: 'Co zbudowaliśmy i co z tego możesz mieć u siebie',
+        href: '/produkty',
+        opis:
+          'Nasze własne produkty AI: co robią, dla kogo są i na jakim etapie dojrzałości stoją.',
+      },
+    ],
+    narzedzia: [
+      {
+        etykieta: 'Czy warto zautomatyzować ten proces?',
+        href: '/narzedzia#kalkulator-procesu',
+        opis:
+          'Policz roczny koszt swojego procesu i sprawdź, po ilu miesiącach zwróci się dowolna oferta wdrożenia.',
+      },
+    ],
+  },
 };

@@ -3,13 +3,17 @@ import Link from 'next/link';
 
 import { buildMetadata } from '@/lib/metadata';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { breadcrumbSchema } from '@/components/seo/schemas';
+import { breadcrumbSchema, faqSchemaPl } from '@/components/seo/schemas';
 import { SITE, HOME_CTA } from '@/lib/site';
-import { PRODUKTY, KLOCKI, KLOCKI_DISCLAIMER } from '@/lib/produkty';
+import { PRODUKTY, KLOCKI, KLOCKI_DISCLAIMER, DOJRZALOSC_LABEL } from '@/lib/produkty';
+import { INF_KATEGORIA } from '@/lib/inf-kategorie';
 
 import { Section, Card, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { ProduktCard, KlocekCard } from '@/components/produkty';
+import { PasekMetryk } from '@/components/sections/PasekMetryk';
+import { TabelaRejestru } from '@/components/sections/TabelaRejestru';
+import { HubFAQ } from '@/components/sections/HubFAQ';
 
 /**
  * STRONA /produkty — SSG (force-static). Cała treść w surowym HTML przy 1. żądaniu
@@ -39,6 +43,102 @@ export const metadata: Metadata = buildMetadata({
     'Cztery własne produkty AI SimpleFast.ai: skaner faktur do KSeF, apka coachingowa z agentami, składki zespołu i centrum dowodzenia głosem.',
   path: PATH,
 });
+
+/**
+ * TON HUBU = fiolet #e438ff / #dc7aff, ten sam, którym dropdown i karty malują
+ * „rozwiązania" (INF_KATEGORIA.rozwiazania). Produkty to dokładnie ta rodzina:
+ * disclaimer katalogu klocków odsyła wprost do usługi /uslugi/rozwiazania.
+ * Bierzemy istniejący wpis rejestru dekoracji, zero nowej mapy kolorów.
+ */
+const TON = INF_KATEGORIA.rozwiazania;
+
+/* ─────────────────────────────────────────────────────────────────────
+   LICZBY HUBU — POLICZONE Z REJESTRU PRZY BUILDZIE (PLAN-v22 §1.7a:
+   liczba wpisana z palca to zmyślona liczba). Dopisanie produktu albo
+   klocka w lib/produkty automatycznie przelicza kafle, tabelę i FAQ. */
+const LICZBA_PRODUKTOW = PRODUKTY.length;
+const LICZBA_KLOCKOW = KLOCKI.length;
+const LICZBA_DZIALA_U_NAS = PRODUKTY.filter((p) => p.dojrzalosc === 'dziala-u-nas').length;
+const LICZBA_MVP = PRODUKTY.filter((p) => p.dojrzalosc === 'mvp').length;
+
+const METRYKI_HUBU = [
+  { wartosc: String(LICZBA_PRODUKTOW), opis: 'własne produkty' },
+  {
+    wartosc: String(LICZBA_DZIALA_U_NAS),
+    opis: 'z nich używamy u siebie na co dzień',
+    zrodlo: 'etykieta „Działa u nas" na karcie',
+  },
+  {
+    wartosc: String(LICZBA_MVP),
+    opis: 'w wersji MVP, czyli działa rdzeń',
+    zrodlo: 'etykieta „MVP (działa rdzeń)" na karcie',
+  },
+  { wartosc: String(LICZBA_KLOCKOW), opis: 'klocki do złożenia pod Twój proces' },
+];
+
+/**
+ * Tabela orientacyjna produktów.
+ *
+ * ODSTĘPSTWO OD §2.6 PLANU, ŚWIADOME: plan proponował cztery kolumny
+ * (Produkt / Dla kogo / Co daje / Dojrzałość), ale `coDaje` to na kartach dwa
+ * pełne zdania z szacunkiem oszczędności. Wklejone do komórki dałoby tabelę
+ * szerszą niż ekran i DOSŁOWNY duplikat karty, czyli dokładnie to, czego zakazuje
+ * reguła z tego samego paragrafu („tabela NIE powiela kart"). Zostają trzy
+ * kolumny: nazwa funkcji, odbiorca i uczciwa dojrzałość. Wartość tabeli to
+ * PORÓWNANIE czterech produktów w jednym rzucie oka, którego siatka kart
+ * nie daje, plus pierwsza `<table>` na tej trasie (§5.1).
+ * Wiersze budowane mapowaniem rejestru, nigdy literałami.
+ */
+const WIERSZE_TABELI = PRODUKTY.map((p) => [
+  p.coRobi,
+  p.dlaKogo,
+  DOJRZALOSC_LABEL[p.dojrzalosc],
+]);
+
+/**
+ * FAQ HUBU — każda odpowiedź wyprowadzona ze źródła dopuszczonego w §2.6 planu:
+ * (a) liczba policzona z rejestru, (b) cena z listy locked, (c) zdanie stojące
+ * już na istniejącej stronie, (d) zasada zapisana w kontrakcie typu. Litera
+ * źródła stoi przy każdym pytaniu, żeby kontrola nie musiała zgadywać.
+ */
+const FAQ_HUBU = [
+  {
+    /* (d) lib/produkty/types.ts: „Każdy produkt to PUNKT WYJŚCIA DO CUSTOMU,
+       nie pudełkowy produkt z półki" + KLOCKI_DISCLAIMER. */
+    pytanie: 'Czy mogę kupić któryś z tych produktów od ręki?',
+    odpowiedz:
+      'Nie w takiej formie. To nie są pudełkowe produkty z półki, tylko punkt wyjścia do customu. Mechanizm mamy zbudowany i sprawdzony, a pod Twój proces, Twoje programy i Twój obieg dokumentów składamy go inaczej. Dlatego opisujemy je przez funkcję, a nie przez nazwę i cennik.',
+  },
+  {
+    /* (d) lib/produkty/types.ts, definicje Dojrzalosc: 'mvp' = działa rdzeń,
+       'dziala-u-nas' = używamy tego u siebie na co dzień. */
+    pytanie: 'Co znaczy „MVP" i „Działa u nas" przy produktach?',
+    odpowiedz: `To uczciwy sygnał, na jakim etapie jest dane narzędzie, a nie chwyt marketingowy. „Działa u nas" znaczy, że używamy tego u siebie na co dzień i jest sprawdzone w praktyce; takich produktów mamy ${LICZBA_DZIALA_U_NAS}. „MVP (działa rdzeń)" znaczy, że główna funkcja jest gotowa, a reszta w budowie; takich jest ${LICZBA_MVP}.`,
+  },
+  {
+    /* (b) ceny locked, zdania 1:1 z poradnika o koszcie automatyzacji. */
+    pytanie: 'Ile kosztuje zbudowanie takiego rozwiązania u mnie?',
+    odpowiedz:
+      'Wdrożenie własnego rozwiązania kosztuje zwykle od 3000 do 10000 zł, zależnie od liczby integracji i złożoności procesu. Pierwszą automatyzację na próbę robimy w pakiecie AI Start za 1990 zł, a mapę opłacalnych procesów daje audyt AI za 1490 zł, odliczany od wdrożenia. Dokładną kwotę podajemy po bezpłatnej diagnozie.',
+  },
+  {
+    /* (d) lib/produkty/types.ts: „Szacunki oszczędności oznaczamy (szac.)". */
+    pytanie: 'Skąd biorą się podane oszczędności czasu?',
+    odpowiedz:
+      'To szacunki z naszej pracy na tych narzędziach i dlatego są oznaczone skrótem „(szac.)" wprost w opisie. Nie podajemy ich jako twardych, zmierzonych wyników u klienta. Twarde liczby z realnych wdrożeń pokazujemy osobno, w dziale Realizacje.',
+  },
+  {
+    /* (c) dwa modele rozliczenia, zdanie 1:1 z /uslugi/chatboty. */
+    pytanie: 'Czy po zbudowaniu takiego narzędzia płacę abonament?',
+    odpowiedz:
+      'Masz to do wyboru. Przekazujemy Ci całą infrastrukturę i wtedy nie płacisz abonamentu, albo projekt zostaje u nas pod opieką i wtedy jest opłata utrzymaniowa od 99 do 599 zł miesięcznie. Decydujesz na etapie wyceny.',
+  },
+  {
+    /* (a) KLOCKI.length + KLOCKI_DISCLAIMER. */
+    pytanie: 'Ile klocków mogę połączyć w jednym rozwiązaniu?',
+    odpowiedz: `Katalog ma dziś ${LICZBA_KLOCKOW} klocków i nie ma sztywnego limitu, ile z nich wejdzie w jedno rozwiązanie. To pomysły i klocki, nie finalne wykonanie. Zwykle zaczynamy od jednego procesu, który boli najbardziej, i dokładamy kolejne, gdy pierwszy już działa.`,
+  },
+];
 
 export default function ProduktyPage() {
   return (
@@ -72,6 +172,13 @@ export default function ProduktyPage() {
               składamy rozwiązania na zamówienie.
             </p>
           </Reveal>
+
+          {/* v22 (PLAN-v22 §2.6 pkt 2): PAS METRYK pod hero. Wszystkie cztery
+              liczby policzone z rejestru, więc nie da się ich rozjechać z listą
+              produktów i katalogiem klocków niżej. */}
+          <Reveal delay={0.15}>
+            <PasekMetryk kafle={METRYKI_HUBU} ton={TON} className="mt-9" />
+          </Reveal>
         </div>
       </Section>
 
@@ -102,6 +209,34 @@ export default function ProduktyPage() {
             </Reveal>
           ))}
         </ul>
+      </Section>
+
+      {/* ───────────────────────────────────────────────────────────────
+          (2b) v22 (§2.6 pkt 4): TABELA ORIENTACYJNA. Przed rundą /produkty
+          miało 0 tabel. Zestawia cztery produkty w jednym rzucie oka: co robią,
+          dla kogo są i na jakim są etapie. Wiersze mapowane z rejestru. */}
+      <Section tone="base">
+        <div className="mx-auto max-w-narrow">
+          <Reveal>
+            <h2 className="text-h2">Który produkt jest dla kogo?</h2>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <p className="text-lead mt-4 text-fg-muted">
+              Te same cztery narzędzia co wyżej, ustawione obok siebie, żeby dało
+              się porównać odbiorcę i etap dojrzałości bez czytania całych kart.
+            </p>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="mt-8">
+              <TabelaRejestru
+                podpis={`Własne produkty SimpleFast.ai: dla kogo i na jakim etapie (${LICZBA_PRODUKTOW} pozycje)`}
+                naglowki={['Produkt', 'Dla kogo', 'Dojrzałość']}
+                wiersze={WIERSZE_TABELI}
+                ton={TON}
+              />
+            </div>
+          </Reveal>
+        </div>
       </Section>
 
       {/* ───────────────────────────────────────────────────────────────
@@ -170,6 +305,42 @@ export default function ProduktyPage() {
       </Section>
 
       {/* ───────────────────────────────────────────────────────────────
+          (3b) v22 (§2.6 pkt 5): FAQ HUBU w natywnych <details>. Przed rundą
+          /produkty miało zero. Odpowiedzi są w HTML od pierwszego żądania,
+          bez JS i bez bramki na klik; ta sama tablica idzie do FAQPage niżej. */}
+      <HubFAQ pytania={FAQ_HUBU} ton={TON} />
+
+      {/* ───────────────────────────────────────────────────────────────
+          (3c) v22 (§2.6 pkt 6 i §3 P2 pkt 15): LINKI REDAKCYJNE. /uslugi
+          i /wiedza były sierotami: miały wejścia wyłącznie z menu, stopki
+          i okruszków. Ten akapit daje im wejście z treści. */}
+      <Section tone="base">
+        <div className="mx-auto max-w-narrow">
+          <Reveal>
+            <h2 className="text-h2">Gdzie iść dalej?</h2>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <p className="text-lead mt-4 text-fg-muted">
+              Twarde liczby z wdrożeń u klientów są w dziale{' '}
+              <Link href="/realizacje" className="font-semibold text-accent-hover underline-offset-2 hover:underline">
+                realizacje
+              </Link>
+              . Pełny zakres tego, co robimy na zamówienie, znajdziesz na{' '}
+              <Link href="/uslugi" className="font-semibold text-accent-hover underline-offset-2 hover:underline">
+                liście usług
+              </Link>
+              . A jeśli chcesz najpierw policzyć, czy to się u Ciebie opłaca,
+              poradniki i kalkulatory czekają w{' '}
+              <Link href="/wiedza" className="font-semibold text-accent-hover underline-offset-2 hover:underline">
+                Centrum Wiedzy AI
+              </Link>
+              .
+            </p>
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* ───────────────────────────────────────────────────────────────
           (4) CTA DOMYKAJĄCE — jedno główne CTA, wspólny flow diagnozy (.surface-aurora). */}
       <Section tone="base" id="diagnoza" className="surface-aurora">
         <div className="mx-auto max-w-narrow text-center">
@@ -229,8 +400,14 @@ export default function ProduktyPage() {
         }}
       />
 
-      {/* Kanoniczny URL strony = absolutny (spójność z metadata). */}
-      <link rel="canonical" href={CANONICAL} />
+      {/* v22 (§3 P3 pkt 18): FAQPage z TEJ SAMEJ tablicy, którą renderuje HubFAQ.
+          Jedno źródło = zero rozjazdu treść/schema. */}
+      <JsonLd data={faqSchemaPl(FAQ_HUBU, PATH)} />
+
+      {/* v22 (§3 P0 pkt 2): ręczny <link rel="canonical"> USUNIĘTY — kanoniczny
+          URL wystawia już `buildMetadata` w `metadata` wyżej, więc ten znacznik
+          dawał w <head> DRUGI rel=canonical (kryterium odbioru §5.4: dokładnie
+          jeden na trasę). Stała CANONICAL zostaje: używa jej ItemList. */}
     </main>
   );
 }

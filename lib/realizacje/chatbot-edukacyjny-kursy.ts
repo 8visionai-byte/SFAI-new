@@ -71,4 +71,44 @@ export const chatbotEdukacyjnyKursy: Realizacja = {
     'asystent AI do platformy e-learning',
     'chatbot do nawigacji po materiałach VOD',
   ],
+
+  /**
+   * v22 (PLAN-v22 §3 P2 pkt 11): POWIĄZANIA CASE'A. Przed rundą ten case był
+   * ślepym zaułkiem: zero linków do poradnika, który tłumaczy teorię, i zero
+   * linków do siostrzanych wdrożeń. Usługę wyznacza `kategoria` i renderuje ją
+   * `PowiazanaUsluga`, więc tu jej nie dublujemy. Wszystkie href to realne trasy
+   * z rejestrów albo kotwice o potwierdzonym id= na /narzedzia.
+   */
+  powiazane: {
+    poradniki: [
+      {
+        etykieta: 'Ile kosztuje chatbot dla firmy w 2026',
+        href: '/poradniki/ile-kosztuje-chatbot-dla-firmy-2026',
+        opis:
+          'Od czego zaczynają się ceny chatbotów i co je podnosi.',
+      },
+    ],
+    realizacje: [
+      {
+        etykieta: 'Agenci AI 24/7',
+        href: '/realizacje/agenci-ai-24-7',
+        opis:
+          'Pierwsza linia obsługi, która nie śpi i nie ma weekendu.',
+      },
+      {
+        etykieta: 'Auto-email dla biura obsługi klienta',
+        href: '/realizacje/auto-email-bok',
+        opis:
+          'System pisze draft odpowiedzi, człowiek sprawdza i wysyła.',
+      },
+    ],
+    narzedzia: [
+      {
+        etykieta: 'Kalkulator procesu',
+        href: '/narzedzia#kalkulator-procesu',
+        opis:
+          'Sprawdź, ile trwa jeden Twój proces i ile z niego da się zdjąć.',
+      },
+    ],
+  },
 };

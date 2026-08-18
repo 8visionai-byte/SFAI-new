@@ -18,6 +18,13 @@
  *  - faq[].odpowiedz jest renderowane 1:1 jako tekst odpowiedzi w FAQPage JSON-LD.
  */
 
+/* v22 (PLAN-v22 §1.5-1.6): typ linku krzyżowego czytamy z KORZENIA grafu
+   importów treści (lib/blog/types), tak samo jak robią to lib/poradniki
+   i lib/realizacje. Jeden kształt linku w całym serwisie = jeden komponent
+   renderujący (components/poradniki/LinkiKrzyzowe) i zero drugiego silnika
+   linkowania. */
+import type { LinkKrzyzowy } from '@/lib/blog/types';
+
 /** Pytanie + odpowiedź FAQ. `odpowiedz` trafia 1:1 do FAQPage JSON-LD i na stronę. */
 export type FaqItem = {
   /** Pytanie klienta MŚP. Renderowane jako H3 / <summary> i jako Question.name. */
@@ -182,4 +189,38 @@ export type Usluga = {
    * Pierwsza = primary (zgodna z h1). Używane do dokumentacji i pomiaru cytowalności.
    */
   queries: string[];
+
+  /**
+   * v22 (PLAN-v22 §1.6 i §3, raport `raporty/pomiary-v22-linki.md`) — POWIĄZANIA
+   * WYCHODZĄCE strony usługi. Zamyka najsłabszy klaster serwisu: przed tą rundą
+   * usługa -> realizacja 0/13, usługa -> narzędzie 1/13, a hub /produkty nie miał
+   * ANI JEDNEGO linku redakcyjnego z całego serwisu (żył wyłącznie z menu).
+   *
+   * Renderuje to `components/uslugi/PodstronyPowiazane.tsx` przez istniejący
+   * `LinkiKrzyzowe` (te same kafle .inf-card, zero nowego CSS, zero nowego
+   * silnika linkowania).
+   *
+   * ŻELAZNE ZASADY POLA:
+   *  - `href` MUSI być realną trasą 200 OK albo kotwicą o potwierdzonym `id=`
+   *    (kryterium odbioru §5.3 planu: zero linków wewnętrznych z 404),
+   *  - `etykieta` bierze się z ISTNIEJĄCEGO tytułu celu (h1 realizacji, tytuł
+   *    narzędzia, tytuł poradnika), nigdy nowy slogan,
+   *  - `opis` to jedno zdanie faktu, który już stoi na stronie celu. Zero nowych
+   *    liczb, zero cen spoza listy locked.
+   *
+   * Podstrony usług (`lib/uslugi/podstrony`) dziedziczą ten kontrakt i mają
+   * WŁASNE `powiazane` (rodzic ich nie nadpisuje).
+   */
+  powiazane?: {
+    /** Wdrożenia, na których ta usługa realnie stoi (grupa „Zobacz to na wdrożeniu"). */
+    realizacje?: LinkKrzyzowy[];
+    /** Darmowe kalkulatory i testy z /narzedzia (kotwice '/narzedzia#<slug>'). */
+    narzedzia?: LinkKrzyzowy[];
+    /** Poradniki Centrum Wiedzy (grupa „Zobacz też"). */
+    poradniki?: LinkKrzyzowy[];
+    /** Gotowe produkty: hub '/produkty' albo kotwica '/produkty#<slug>'. */
+    produkty?: LinkKrzyzowy[];
+    /** Siostrzane usługi z tej samej rodziny tematycznej. */
+    uslugi?: LinkKrzyzowy[];
+  };
 };

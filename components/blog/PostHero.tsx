@@ -6,6 +6,7 @@ import { PostMeta } from './PostMeta';
 import type { Post } from '@/lib/blog/types';
 import { INF_TYP, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
 import { InfIcon } from '@/components/ui/InfIcons';
+import { KartaTagi, tagiPosta } from '@/components/sections/KartaCzesci';
 
 /**
  * PostHero — nagłówek artykułu (answer-first), wzorzec spójny z ServiceHero usług.
@@ -62,6 +63,23 @@ export function PostHero({ post }: { post: Post }) {
             data={post.data}
             dataAktualizacji={post.dataAktualizacji}
             className="mt-6 flex flex-wrap items-center gap-x-1 gap-y-1"
+          />
+        </Reveal>
+
+        {/* v22 (PLAN-v22 §0 pkt 3): TAGI WPISU na samej stronie wpisu.
+            Diagnoza: pole `tagi` żyło wyłącznie na karcie listy
+            (PostCard -> tagiPosta), a strona docelowa, czyli ta, która ma
+            rankować, nie pokazywała ich wcale. To nie jest nowy mechanizm ani
+            nowa treść: ten sam komponent `KartaTagi` i ta sama funkcja
+            `tagiPosta` co na karcie, więc etykiety są identyczne w obu
+            miejscach. Wariant `plaski` (mono caps bez ramki) jak na karcie
+            wpisu; `doDolu={false}`, bo hero nie jest kolumną flex. */}
+        <Reveal delay={0.2}>
+          <KartaTagi
+            tagi={tagiPosta(post)}
+            etykietaListy={`Tematy wpisu: ${post.tytul}`}
+            wariant="plaski"
+            doDolu={false}
           />
         </Reveal>
       </div>

@@ -11,6 +11,7 @@ import {
   INF_REALIZACJA_IKONA,
 } from '@/lib/inf-kategorie';
 import { InfIcon } from '@/components/ui/InfIcons';
+import { KartaTagi, tagiRealizacji } from '@/components/sections/KartaCzesci';
 
 /**
  * RealizacjaHero — SEKCJA 1 case study (answer-first).
@@ -69,7 +70,25 @@ export function RealizacjaHero({ realizacja }: { realizacja: Realizacja }) {
           <p className="text-lead mt-6 text-fg-muted">{realizacja.kapsula}</p>
         </Reveal>
 
+        {/* v22 (PLAN-v22 §2.4 pkt 1): TAGI CASE'A na samej stronie wdrożenia.
+            Ta sama diagnoza co przy wpisach: `tagiRealizacji()` żyło wyłącznie
+            na karcie listy (RealizacjaCard), a strona docelowa, czyli ta, która
+            ma rankować, nie pokazywała tagów wcale. Zero nowej treści i zero
+            nowego mechanizmu: ten sam komponent `KartaTagi` i ta sama funkcja
+            co na karcie, więc etykiety są identyczne w obu miejscach (branża
+            + money queries case'a, te same, które lecą do `keywords`
+            w CreativeWork JSON-LD). Wariant `plaski` i `doDolu={false}`,
+            bo hero nie jest kolumną flex. */}
         <Reveal delay={0.15}>
+          <KartaTagi
+            tagi={tagiRealizacji(realizacja)}
+            etykietaListy={`Tematy wdrożenia: ${realizacja.h1}`}
+            wariant="plaski"
+            doDolu={false}
+          />
+        </Reveal>
+
+        <Reveal delay={0.2}>
           <div className="mt-9 flex flex-col items-start gap-3">
             <MagneticButton
               variant="primary"

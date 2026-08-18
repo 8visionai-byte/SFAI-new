@@ -193,8 +193,11 @@ export function GeneratorPromptow() {
             >
               50 promptów AI dla właściciela firmy
             </Link>
+            {/* v22 (linki §2): slug miał na końcu '-mini-poradnik', czyli 404.
+                Jedyny martwy link wewnętrzny na produkcji, na stronie, do której
+                linkują wszystkie 4 poradniki. Teraz 1:1 z rejestrem lib/materialy. */}
             <Link
-              href="/materialy/jak-pisac-prompty-ktore-dzialaja-mini-poradnik"
+              href="/materialy/jak-pisac-prompty-ktore-dzialaja"
               className="text-caption font-semibold text-accent underline decoration-1 underline-offset-2 hover:text-accent-hover"
             >
               Jak pisać prompty, które działają

@@ -70,4 +70,44 @@ export const autoEmailBok: Realizacja = {
     'generowanie odpowiedzi mailowych AI',
     'automatyzacja obsługi klienta case study',
   ],
+
+  /**
+   * v22 (PLAN-v22 §3 P2 pkt 11): POWIĄZANIA CASE'A. Przed rundą ten case był
+   * ślepym zaułkiem: zero linków do poradnika, który tłumaczy teorię, i zero
+   * linków do siostrzanych wdrożeń. Usługę wyznacza `kategoria` i renderuje ją
+   * `PowiazanaUsluga`, więc tu jej nie dublujemy. Wszystkie href to realne trasy
+   * z rejestrów albo kotwice o potwierdzonym id= na /narzedzia.
+   */
+  powiazane: {
+    poradniki: [
+      {
+        etykieta: 'Ile kosztuje automatyzacja AI w firmie',
+        href: '/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie',
+        opis:
+          'Widełki cenowe i to, co realnie podnosi koszt takiego wdrożenia.',
+      },
+    ],
+    realizacje: [
+      {
+        etykieta: 'Agenci AI 24/7',
+        href: '/realizacje/agenci-ai-24-7',
+        opis:
+          'Pierwsza linia obsługi, która nie śpi i nie ma weekendu.',
+      },
+      {
+        etykieta: 'Chatbot edukacyjny dla kursów',
+        href: '/realizacje/chatbot-edukacyjny-kursy',
+        opis:
+          'Odpowiada kursantom na pytania o kursy o każdej porze.',
+      },
+    ],
+    narzedzia: [
+      {
+        etykieta: 'Kalkulator oszczędności',
+        href: '/narzedzia#kalkulator-oszczednosci',
+        opis:
+          'Policz, ile godzin i pieniędzy zjada u Ciebie ta sama ręczna robota.',
+      },
+    ],
+  },
 };

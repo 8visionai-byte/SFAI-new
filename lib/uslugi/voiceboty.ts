@@ -15,7 +15,7 @@ import type { Usluga } from './types';
  */
 export const voiceboty: Usluga = {
   slug: 'voiceboty',
-  dataAktualizacji: '2026-08-17',
+  dataAktualizacji: '2026-08-18',
   h1: 'Voicebot dla firmy, który odbiera telefon za Ciebie',
   kapsula:
     'Voicebot, nazywany też botem telefonicznym, to bot głosowy, który odbiera telefon, rozmawia po polsku i załatwia sprawę: umawia wizytę, przyjmuje zgłoszenie, odpowiada na pytanie. Gdy sprawa wymaga człowieka, zapisuje ją i wysyła Ci powiadomienie, żebyś oddzwonił przygotowany. Działa 24/7, nawet gdy jesteś u klienta. To nie nagranie ani „wciśnij jeden”. To Agent, który rozmawia i wykonuje zadanie, a potem przekazuje Ci tylko to, co ważne.',
@@ -145,4 +145,18 @@ export const voiceboty: Usluga = {
     'AI odbiera telefon',
     'czy voicebot dzwoni sam do klientów',
   ],
+
+  /* v22 (linki §3, P1 #4): 400 wyświetleń, pozycja 22,6. Poradnik cenowy stoi
+     już w ramie ceny, brakowało wyjścia do narzędzia. Realizacji z voicebotem
+     w rejestrze NIE MA, więc grupy wdrożeń tu nie ma (zero zmyślonych dowodów). */
+  powiazane: {
+    narzedzia: [
+      {
+        etykieta: 'Kalkulator oszczędności z automatyzacji',
+        href: '/narzedzia#kalkulator-oszczednosci',
+        opis:
+          'Policz, ile złotych rocznie zjada odbieranie tych samych telefonów i przepisywanie zgłoszeń.',
+      },
+    ],
+  },
 };

@@ -98,11 +98,15 @@ export default async function PoradnikPage({
       )}
 
       {/* Linkowanie krzyżowe do oferty: powiązane usługi + narzędzia (realne trasy)
-          + SEO 2026-08-17: siostrzane poradniki (blok „Zobacz też"). */}
+          + SEO 2026-08-17: siostrzane poradniki (blok „Zobacz też")
+          + v22 (PLAN-v22 §1.5, §3 P1 #5): realizacje, czyli grupa „Zobacz to
+          na wdrożeniu". Pomiar przed rundą: poradnik -> realizacja 0/4, więc
+          treść i dowód stały obok siebie bez ani jednego linku. */}
       <LinkiKrzyzowe
         uslugi={poradnik.powiazaneUslugi}
         narzedzia={poradnik.powiazaneNarzedzia}
         poradniki={poradnik.powiazanePoradniki}
+        realizacje={poradnik.powiazaneRealizacje}
       />
 
       {/* CTA domykające — jedno główne, wspólny flow diagnozy (#diagnoza) */}

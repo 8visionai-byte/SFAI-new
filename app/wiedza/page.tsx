@@ -2,13 +2,12 @@ import type { Metadata } from 'next';
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import type { InfIkonaDekor } from '@/lib/inf-kategorie';
-import { INF_WIEDZA, INF_WIEDZA_BADGE, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { INF_WIEDZA, INF_WIEDZA_BADGE, INF_KATEGORIA_DEFAULT, INF_TYP } from '@/lib/inf-kategorie';
 import { InfIcon } from '@/components/ui/InfIcons';
 
 import { buildMetadata } from '@/lib/metadata';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { breadcrumbSchema } from '@/components/seo/schemas';
-import { SITE } from '@/lib/site';
+import { breadcrumbSchema, itemListSchema, faqSchemaPl } from '@/components/seo/schemas';
 import { Section, Card, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { PoradnikBreadcrumbs } from '@/components/poradniki';
@@ -16,7 +15,13 @@ import { PoradnikCard } from '@/components/poradniki';
 import { PostCard } from '@/components/blog';
 import { PORADNIKI } from '@/lib/poradniki';
 import { POSTS } from '@/lib/blog';
+import { MATERIALY } from '@/lib/materialy';
+import { REALIZACJE } from '@/lib/realizacje';
+import { RADAR_NEWS } from '@/lib/ai-radar';
 import { HOME_CTA } from '@/lib/site';
+import { PasekMetryk } from '@/components/sections/PasekMetryk';
+import { TabelaRejestru } from '@/components/sections/TabelaRejestru';
+import { HubFAQ } from '@/components/sections/HubFAQ';
 
 /**
  * HUB /wiedza — CENTRUM WIEDZY AI (SSG, force-static). Jedno miejsce, które
@@ -40,7 +45,6 @@ import { HOME_CTA } from '@/lib/site';
 export const dynamic = 'force-static';
 
 const PATH = '/wiedza';
-const CANONICAL = `${SITE.url}${PATH}`;
 
 export const metadata: Metadata = buildMetadata({
   title: 'Wiedza o AI dla firm: poradniki i newsy',
@@ -219,6 +223,104 @@ function KategoriaKafel({ kategoria }: { kategoria: Kategoria }) {
   );
 }
 
+/**
+ * TON HUBU = cyjan poradników, czyli ton działu, który jest głównym wejściem
+ * Centrum Wiedzy i pierwszą kartą na liście. Ten sam hex (#00f0ff / #61edff)
+ * stoi w INF_WIEDZA.poradniki i w INF_TYP.poradnik; bierzemy INF_TYP, bo tylko
+ * on jest pełnym `InfDekor`, którego wymagają komponenty pasa metryk, tabeli
+ * i FAQ. Zero nowej palety, zero rozjazdu koloru z kartą działu obok.
+ */
+const TON = INF_TYP.poradnik;
+
+/* ─────────────────────────────────────────────────────────────────────
+   LICZBY HUBU — POLICZONE Z CZTERECH REJESTRÓW PRZY BUILDZIE.
+   To dokładnie te cztery liczby, które PLAN-v22 §1.7a wskazuje jako jedyne
+   dopuszczalne źródło wartości kafla na hubie. Dopisanie poradnika, wpisu,
+   materiału albo case'a przelicza pas metryk, tabelę i odpowiedzi FAQ. */
+const LICZBA_PORADNIKOW = PORADNIKI.length;
+const LICZBA_WPISOW = POSTS.length;
+const LICZBA_MATERIALOW = MATERIALY.length;
+const LICZBA_REALIZACJI = REALIZACJE.length;
+const LICZBA_RAZEM = LICZBA_PORADNIKOW + LICZBA_WPISOW + LICZBA_MATERIALOW + LICZBA_REALIZACJI;
+/* AI Radar startuje z wpisami oznaczonymi `szablon: true`, czyli pokazującymi
+   FORMAT działu, a nie realny news. Liczymy je osobno i nazywamy po imieniu,
+   zamiast wliczać do dorobku (spec v22: zero zawyżania). */
+const RADAR_SZABLONY = RADAR_NEWS.filter((n) => n.szablon).length;
+const RADAR_REALNE = RADAR_NEWS.length - RADAR_SZABLONY;
+
+const METRYKI_HUBU = [
+  { wartosc: String(LICZBA_PORADNIKOW), opis: 'poradniki krok po kroku' },
+  { wartosc: String(LICZBA_WPISOW), opis: 'przemyślenia na blogu' },
+  { wartosc: String(LICZBA_MATERIALOW), opis: 'materiały do pobrania' },
+  {
+    wartosc: String(LICZBA_REALIZACJI),
+    opis: 'wdrożenia z liczbami',
+    zrodlo: 'każde z efektem w tabeli',
+  },
+];
+
+/**
+ * Tabela orientacyjna działów: co jest w środku i ILE tego jest. Ostatnia
+ * kolumna to informacja, której karty kategorii nie niosą wcale, a jest
+ * pierwszym pytaniem czytelnika („czy tam w ogóle coś jest?").
+ * Wiersze mapowane z KATEGORIE i z rejestrów, nigdy literałami.
+ */
+const ILE_W_DZIALE: Record<string, string> = {
+  poradniki: `${LICZBA_PORADNIKOW} poradniki`,
+  /* Uczciwie: dział ma wpisy pokazujące format, a nie gotowe newsy. */
+  'ai-radar':
+    RADAR_REALNE > 0
+      ? `${RADAR_REALNE} newsów`
+      : `${RADAR_SZABLONY} wpisy pokazujące format działu`,
+  przemyslenia: `${LICZBA_WPISOW} wpisów`,
+  'case-studies': `${LICZBA_REALIZACJI} wdrożeń`,
+};
+
+const WIERSZE_TABELI = KATEGORIE.map((k) => [k.tytul, k.opis, ILE_W_DZIALE[k.id] ?? '']);
+
+/**
+ * FAQ HUBU — każda odpowiedź wyprowadzona ze źródła dopuszczonego w §2.6 planu:
+ * (a) liczba policzona z rejestru, (b) cena z listy locked, (c) zdanie stojące
+ * już na tej albo innej istniejącej stronie, (d) zasada z kontraktu typu.
+ */
+const FAQ_HUBU = [
+  {
+    /* (c) opisy działów stojące na kartach tej samej strony. */
+    pytanie: 'Czym różni się poradnik od wpisu na blogu?',
+    odpowiedz:
+      'Poradnik odpowiada krok po kroku na jedno konkretne pytanie właściciela firmy, na przykład ile kosztuje chatbot i od czego zacząć. Wpis na blogu to przemyślenie albo opinia: dlaczego coś działa tak, a nie inaczej. Poradnik bierzesz, gdy masz decyzję do podjęcia. Wpis, gdy chcesz zrozumieć temat.',
+  },
+  {
+    /* (a) cztery rejestry. */
+    pytanie: 'Ile treści jest w Centrum Wiedzy?',
+    odpowiedz: `Dziś ${LICZBA_RAZEM} pozycji: ${LICZBA_PORADNIKOW} poradniki, ${LICZBA_WPISOW} wpisów na blogu, ${LICZBA_MATERIALOW} materiałów do pobrania i ${LICZBA_REALIZACJI} opisanych wdrożeń. Wszystko czytasz w całości na stronie.`,
+  },
+  {
+    /* (d) lib/ai-radar/types.ts: wpisy startowe to SZABLONY formatu
+       z widocznym disclaimerem, realne newsy dokłada redakcja. */
+    pytanie: 'Czemu w AI Radarze nie ma jeszcze newsów?',
+    odpowiedz: `Bo dział dopiero rusza. Stoją tam ${RADAR_SZABLONY} wpisy pokazujące format, w jakim będziemy podawać newsy: co się stało, czemu to ważne, nasz filtr i co z tym zrobić. Mają widoczny disclaimer, żeby nikt nie wziął ich za realną wiadomość. Wolimy pusty dział niż zapychanie go treścią bez wartości.`,
+  },
+  {
+    /* (c) sekcja „Narzędzia i materiały" na tej stronie + reguła z lib/materialy. */
+    pytanie: 'Czy muszę się zapisywać, żeby to czytać?',
+    odpowiedz:
+      'Nie. Poradniki, wpisy, materiały i case studies czytasz w całości na stronie, za darmo i bez logowania. Kalkulatory i test gotowości AI też działają bez zapisu. Maila zostawiasz tylko wtedy, gdy chcesz dostać materiał w PDF na potem.',
+  },
+  {
+    /* (c) tytuł flagowego poradnika z rejestru + sekcja „Zacznij od tych". */
+    pytanie: 'Dopiero rozglądam się za AI. Od czego zacząć?',
+    odpowiedz:
+      'Od dwóch rzeczy. Najpierw poradnik o kosztach, żeby wiedzieć, jakie są widełki i od czego zależy cena. Potem kalkulator oszczędności w narzędziach, żeby zobaczyć w złotówkach, ile zżera Cię dziś jeden ręczny proces. Dopiero z tymi dwiema liczbami warto rozmawiać o wdrożeniu.',
+  },
+  {
+    /* (b) ceny locked, zdania 1:1 ze stron usług i poradnika o automatyzacji. */
+    pytanie: 'Ile kosztuje wdrożenie tego, o czym tu piszecie?',
+    odpowiedz:
+      'Chatbot startuje od 990 zł, voicebot od 2500 zł, a automatyzacja procesu kosztuje zwykle od 3000 do 10000 zł. Audyt AI z mapą opłacalnych procesów to 1490 zł i odliczamy go od wdrożenia, a pierwszą automatyzację na próbę robimy w pakiecie AI Start za 1990 zł. Dokładną wycenę podajemy po bezpłatnej diagnozie.',
+  },
+];
+
 export default function WiedzaPage() {
   // Wyróżnione pozycje: flagowy poradnik (najnowszy) + najnowsze przemyślenie z bloga.
   const flagowyPoradnik = PORADNIKI[0];
@@ -265,6 +367,13 @@ export default function WiedzaPage() {
               tłumaczymy to prostym językiem, z liczbami i bez owijania w bawełnę.
             </p>
           </Reveal>
+
+          {/* v22 (PLAN-v22 §2.6 pkt 2): PAS METRYK pod hero. Cztery liczby
+              policzone z czterech rejestrów przy buildzie, więc nie da się ich
+              rozjechać z tym, co realnie stoi w działach. */}
+          <Reveal delay={0.2}>
+            <PasekMetryk kafle={METRYKI_HUBU} ton={TON} className="mt-9" />
+          </Reveal>
         </div>
       </Section>
 
@@ -290,6 +399,34 @@ export default function WiedzaPage() {
             </Reveal>
           ))}
         </ul>
+      </Section>
+
+      {/* ───────────────────────────────────────────────────────────────
+          (2b) v22 (§2.6 pkt 4): TABELA ORIENTACYJNA DZIAŁÓW. Przed rundą hub
+          miał 0 tabel. Ostatnia kolumna odpowiada na pierwsze pytanie
+          czytelnika („czy tam w ogóle coś jest?"), którego karty nie niosą. */}
+      <Section tone="base">
+        <div className="mx-auto max-w-narrow">
+          <Reveal>
+            <h2 className="text-h2">Co dokładnie jest w każdym dziale?</h2>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <p className="text-lead mt-4 text-fg-muted">
+              Te same cztery działy co wyżej, z liczbą pozycji, która czeka
+              w każdym z nich. Liczby biorą się wprost z rejestrów treści.
+            </p>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="mt-8">
+              <TabelaRejestru
+                podpis={`Działy Centrum Wiedzy AI: zawartość i liczba pozycji (razem ${LICZBA_RAZEM})`}
+                naglowki={['Dział', 'Co znajdziesz', 'Ile pozycji']}
+                wiersze={WIERSZE_TABELI}
+                ton={TON}
+              />
+            </div>
+          </Reveal>
+        </div>
       </Section>
 
       {/* ───────────────────────────────────────────────────────────────
@@ -358,6 +495,42 @@ export default function WiedzaPage() {
       </Section>
 
       {/* ───────────────────────────────────────────────────────────────
+          (4b) v22 (§2.6 pkt 5): FAQ HUBU w natywnych <details>. Przed rundą
+          hub miał zero. Ta sama tablica idzie do FAQPage niżej. */}
+      <HubFAQ pytania={FAQ_HUBU} ton={TON} />
+
+      {/* ───────────────────────────────────────────────────────────────
+          (4c) v22 (§2.6 pkt 6 i §3 P2 pkt 14-15): LINKI REDAKCYJNE. /uslugi
+          i /produkty były sierotami: wejścia wyłącznie z menu, stopki
+          i okruszków. Ten akapit daje im wejście z treści. */}
+      <Section tone="base">
+        <div className="mx-auto max-w-narrow">
+          <Reveal>
+            <h2 className="text-h2">Wiedza to jedno. A co robimy?</h2>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <p className="text-lead mt-4 text-fg-muted">
+              Jeśli po lekturze wiesz już, czego szukasz, pełny zakres tego, co
+              robimy, jest na{' '}
+              <Link href="/uslugi" className="font-semibold text-accent-hover underline-offset-2 hover:underline">
+                liście usług
+              </Link>
+              . Narzędzia, które zbudowaliśmy dla siebie i składamy pod klienta,
+              opisujemy w dziale{' '}
+              <Link href="/produkty" className="font-semibold text-accent-hover underline-offset-2 hover:underline">
+                produkty
+              </Link>
+              . A dowody z liczbami czekają w{' '}
+              <Link href="/realizacje" className="font-semibold text-accent-hover underline-offset-2 hover:underline">
+                realizacjach
+              </Link>
+              .
+            </p>
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* ───────────────────────────────────────────────────────────────
           (5) CTA DOMYKAJĄCE — jedno główne, wspólny flow diagnozy (.surface-aurora). */}
       <Section tone="base" id="diagnoza" className="surface-aurora">
         <div className="mx-auto max-w-narrow text-center">
@@ -393,7 +566,25 @@ export default function WiedzaPage() {
           { name: 'Centrum Wiedzy', path: PATH },
         ])}
       />
-      <link rel="canonical" href={CANONICAL} />
+      {/* v22 (§3 P3 pkt 17): ItemList — cztery działy Centrum Wiedzy zbudowane
+          MAPOWANIEM tablicy KATEGORIE, więc lista w schemie nie może rozjechać
+          się z siatką kart. Pozycje bez trasy (`live: false`) do niej nie wchodzą. */}
+      <JsonLd
+        data={itemListSchema({
+          path: PATH,
+          nazwa: 'Działy Centrum Wiedzy AI',
+          pozycje: KATEGORIE.filter((k) => k.live).map((k) => ({
+            nazwa: k.tytul,
+            path: k.href,
+          })),
+        })}
+      />
+
+      {/* v22 (§3 P3 pkt 18): FAQPage z TEJ SAMEJ tablicy, którą renderuje HubFAQ. */}
+      <JsonLd data={faqSchemaPl(FAQ_HUBU, PATH)} />
+
+      {/* v22 (§3 P0 pkt 2): ręczny <link rel="canonical"> USUNIĘTY — kanoniczny
+          URL wystawia już `buildMetadata` w `metadata` wyżej. */}
     </main>
   );
 }

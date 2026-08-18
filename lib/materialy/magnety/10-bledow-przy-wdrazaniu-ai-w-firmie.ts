@@ -31,125 +31,159 @@ export const dziesiecBledow: Material = {
   tresc: [
     {
       typ: 'akapit',
-      tekst:
-        'Większość wdrożeń AI nie pada przez technologię. Pada przez te same kilka błędów, które popełnia firma za firmą. Dobra wiadomość: wszystkie są do uniknięcia, jeśli wiesz o nich wcześniej. Poniżej masz 10 najczęstszych. Przy każdym jest, jak go poznać u siebie, i co zrobić zamiast tego.',
+      tekst: 'Większość wdrożeń AI nie pada przez technologię. Pada przez te same kilka błędów, które popełnia firma za firmą. Dobra wiadomość: wszystkie są do uniknięcia, jeśli wiesz o nich wcześniej. Poniżej masz 10 najczęstszych. Przy każdym jest, jak go poznać u siebie, i co zrobić zamiast tego.',
     },
     {
       typ: 'cytat',
-      tekst:
-        'AI nie zastępuje ludzi. AI zastępuje to, co ich zatrzymuje. Wdrożenie pada nie wtedy, gdy model jest słaby, tylko gdy zaczynasz od narzędzia zamiast od problemu.',
+      tekst: 'AI nie zastępuje ludzi. AI zastępuje to, co ich zatrzymuje. Wdrożenie pada nie wtedy, gdy model jest słaby, tylko gdy zaczynasz od narzędzia zamiast od problemu.',
     },
     {
-      typ: 'naglowek',
-      tekst: 'Błąd 1: Zaczynasz od narzędzia, nie od problemu',
+      typ: 'tabela',
+      naglowki: [
+        'Nr',
+        'Błąd',
+      ],
+      wiersze: [
+        [
+          '1',
+          'Zaczynasz od narzędzia, nie od problemu',
+        ],
+        [
+          '2',
+          'Automatyzujesz wszystko naraz',
+        ],
+        [
+          '3',
+          'Wybierasz proces, który robisz rzadko',
+        ],
+        [
+          '4',
+          'Wpuszczasz AI bez kontroli człowieka',
+        ],
+        [
+          '5',
+          'Karmisz AI bałaganem zamiast danymi',
+        ],
+        [
+          '6',
+          'Nie liczysz, czy to się zwraca',
+        ],
+        [
+          '7',
+          'Mylisz chatbota z agentem',
+        ],
+        [
+          '8',
+          'Olewasz zespół i wdrażasz po cichu',
+        ],
+        [
+          '9',
+          'Oczekujesz 100% dokładności od pierwszego dnia',
+        ],
+        [
+          '10',
+          'Brak opieki po starcie',
+        ],
+      ],
+      wKarcie: true,
+      podpis: 'Wszystkie 10 błędów na jednej liście, zanim wejdziesz w szczegóły',
     },
     {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Błąd 1: Zaczynasz od narzędzia, nie od problemu',
+      akapity: [
         'Jak go poznać: mówisz „chcemy mieć chatbota" albo „wdróżmy AI", zanim wiesz, który problem ma rozwiązać. Co zrobić zamiast tego: zacznij od pytania, co zżera Ci najwięcej czasu albo gdzie tracisz pieniądze. Dopiero do tego problemu dobierz narzędzie. Narzędzie bez problemu to wydatek bez zwrotu.',
+      ],
+      wariant: 'top',
     },
     {
-      typ: 'naglowek',
-      tekst: 'Błąd 2: Automatyzujesz wszystko naraz',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Błąd 2: Automatyzujesz wszystko naraz',
+      akapity: [
         'Jak go poznać: chcesz w jednym projekcie zautomatyzować maile, oferty, raporty i obsługę naraz. Co zrobić zamiast tego: wybierz JEDEN proces, zrób go dobrze, zbierz efekt, dopiero potem bierz następny. Jeden działający proces przekonuje zespół bardziej niż dziesięć rozgrzebanych. Mały start, szybki dowód.',
+      ],
+      wariant: 'edge',
     },
     {
-      typ: 'naglowek',
-      tekst: 'Błąd 3: Wybierasz proces, który robisz rzadko',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Błąd 3: Wybierasz proces, który robisz rzadko',
+      akapity: [
         'Jak go poznać: automatyzujesz coś, co zdarza się raz na miesiąc, bo akurat było pod ręką. Co zrobić zamiast tego: bierz proces częsty i schematyczny. Mały zysk na sztuce razy duża liczba sztuk daje realny czas w miesiącu. Rzadki proces, nawet dobrze zautomatyzowany, zwraca się latami.',
+      ],
+      wariant: 'top',
     },
     {
-      typ: 'naglowek',
-      tekst: 'Błąd 4: Wpuszczasz AI bez kontroli człowieka',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Błąd 4: Wpuszczasz AI bez kontroli człowieka',
+      akapity: [
         'Jak go poznać: AI od pierwszego dnia samo wysyła maile do klientów, bez Twojego oka. Co zrobić zamiast tego: wdrażaj z człowiekiem w pętli. AI przygotowuje wynik, Ty albo zespół zatwierdzacie przed wysłaniem. Kontrolę zdejmujesz dopiero, gdy sam widzisz, że jakość jest pewna. Tak budujesz zaufanie i nic nie leci do klienta bez zgody.',
+      ],
+      wariant: 'edge',
     },
     {
-      typ: 'naglowek',
-      tekst: 'Błąd 5: Karmisz AI bałaganem zamiast danymi',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Błąd 5: Karmisz AI bałaganem zamiast danymi',
+      akapity: [
         'Jak go poznać: Twoje dane są w pięciu skrzynkach, dziesięciu arkuszach i czyjejś głowie. Co zrobić zamiast tego: zanim cokolwiek podłączysz, zbierz dane w jedno miejsce i uporządkuj. Rozproszone dane to pierwszy hamulec każdej automatyzacji. AI jest tak dobre, jak dane, które dostaje.',
+      ],
+      wariant: 'top',
     },
     {
-      typ: 'naglowek',
-      tekst: 'Błąd 6: Nie liczysz, czy to się zwraca',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Błąd 6: Nie liczysz, czy to się zwraca',
+      akapity: [
         'Jak go poznać: wdrażasz, bo „teraz wszyscy robią AI", bez policzenia kosztu i zysku. Co zrobić zamiast tego: policz, ile czasu i pieniędzy zżera proces dziś, i ile odzyskasz po automatyzacji. Dobre wdrożenie zwraca się szybko, bo działa codziennie. Kalkulator oszczędności w sekcji /narzedzia liczy to w kilka sekund.',
+      ],
+      wariant: 'edge',
     },
     {
-      typ: 'naglowek',
-      tekst: 'Błąd 7: Mylisz chatbota z agentem',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Błąd 7: Mylisz chatbota z agentem',
+      akapity: [
         'Jak go poznać: kupujesz prosty czat na FAQ, a oczekujesz, że sam umówi spotkanie, wpisze dane do CRM i wykona zadanie. Co zrobić zamiast tego: nazwij dokładnie, czego potrzebujesz. Chatbot odpowiada. Agent działa: czyta, rozumie kontekst i wykonuje. To inny zakres i inny koszt. Płać za to, czego naprawdę potrzebujesz.',
+      ],
+      wariant: 'top',
     },
     {
-      typ: 'naglowek',
-      tekst: 'Błąd 8: Olewasz zespół i wdrażasz po cichu',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Błąd 8: Olewasz zespół i wdrażasz po cichu',
+      akapity: [
         'Jak go poznać: ludzie dowiadują się o AI, gdy nagle pojawia się w ich pracy, i myślą, że to po nich. Co zrobić zamiast tego: pogadaj z zespołem wcześniej. Zapytaj, co zżera im najwięcej czasu, i pokaż, że AI zdejmuje najnudniejszą część dnia, a nie ich. Oni najlepiej wiedzą, co odciąć najpierw, i to oni będą z tego korzystać.',
+      ],
+      wariant: 'edge',
     },
     {
-      typ: 'naglowek',
-      tekst: 'Błąd 9: Oczekujesz 100% dokładności od pierwszego dnia',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Błąd 9: Oczekujesz 100% dokładności od pierwszego dnia',
+      akapity: [
         'Jak go poznać: po pierwszym błędzie AI mówisz „to nie działa" i wszystko wyłączasz. Co zrobić zamiast tego: testuj na małej próbce, zanim wpuścisz na produkcję. Sprawdź jakość na kilkudziesięciu przypadkach, popraw, dopiero potem skaluj. Dobre wdrożenie poprawia się w czasie, a człowiek pilnuje wyjątków. Cel to nie zero pomyłek, tylko realnie odzyskany czas.',
+      ],
+      wariant: 'top',
     },
     {
-      typ: 'naglowek',
-      tekst: 'Błąd 10: Brak opieki po starcie',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Błąd 10: Brak opieki po starcie',
+      akapity: [
         'Jak go poznać: wdrożenie ruszyło, ekipa zniknęła, a po miesiącu coś przestaje działać i nie ma kto tknąć. Co zrobić zamiast tego: ustal z góry, kto pilnuje rozwiązania po starcie. Procesy w firmie się zmieniają, więc automatyzacja też wymaga drobnych poprawek. Bez opieki dobre wdrożenie po cichu przestaje przynosić efekt.',
+      ],
+      wariant: 'edge',
     },
     {
-      typ: 'naglowek',
-      tekst: 'Co z tym zrobić w Twojej firmie?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Co z tym zrobić w Twojej firmie?',
+      akapity: [
         'Najwięcej tych błędów ma jeden korzeń: start od narzędzia, a nie od problemu, i brak pierwszego małego kroku. Zacznij od jednego procesu, który Cię najbardziej boli. Policz, ile zżera. Wdróż z człowiekiem w pętli i zmierz efekt. Tyle wystarczy, żeby ominąć większość pułapek z tej listy.',
-    },
-    {
-      typ: 'lista',
+      ],
       punkty: [
         'Wybierz jeden częsty, schematyczny proces, zamiast automatyzować wszystko naraz.',
         'Policz jego koszt w kalkulatorze oszczędności w sekcji /narzedzia, zanim wydasz pierwszą złotówkę.',
         'Wdróż z kontrolą człowieka przed wysłaniem i ustal, kto pilnuje rozwiązania po starcie.',
       ],
+      wariant: 'quiet',
     },
     {
       typ: 'akapit',
-      tekst:
-        'Nie chcesz wpaść w żaden z tych błędów u siebie? Umów krótką diagnozę w sekcji #diagnoza. Pokażę, gdzie tracisz czas i od którego procesu zacząć bez ryzyka. Pełna treść tego materiału jest wyżej na tej stronie, czytasz ją za darmo, bez zapisu. PDF to tylko wygodna wersja do druku albo do pokazania zespołowi.',
+      tekst: 'Nie chcesz wpaść w żaden z tych błędów u siebie? Umów krótką diagnozę w sekcji #diagnoza. Pokażę, gdzie tracisz czas i od którego procesu zacząć bez ryzyka. Pełna treść tego materiału jest wyżej na tej stronie, czytasz ją za darmo, bez zapisu. PDF to tylko wygodna wersja do druku albo do pokazania zespołowi.',
     },
   ],
   faq: [
@@ -167,6 +201,39 @@ export const dziesiecBledow: Material = {
       pytanie: 'Czy AI wdrożone w firmie zabierze pracę ludziom?',
       odpowiedz:
         'Dobrze wdrożone AI zdejmuje z ludzi najnudniejszą, powtarzalną część dnia, a nie ich samych. Najlepiej działa z człowiekiem w pętli: AI przygotowuje, człowiek zatwierdza i podejmuje decyzje. Dlatego warto rozmawiać z zespołem przed wdrożeniem, a nie wprowadzać AI po cichu.',
+    },
+  ],
+
+  /**
+   * v22 (PLAN-v22 §3 P2 pkt 12): POWIĄZANIA MATERIAŁU. Przed rundą magnet
+   * był ślepym zaułkiem: zero wyjść do oferty i do poradnika, który tłumaczy
+   * temat głębiej. Obie trasy są realne i stoją w rejestrach.
+   */
+  powiazaneUslugi: [
+    {
+      etykieta: 'Opieka AI',
+      href: '/uslugi/opieka-ai',
+      opis:
+        'Stałe utrzymanie i rozwój wdrożonych automatyzacji, żeby nie zostały bez gospodarza.',
+    },
+  ],
+  powiazanePoradniki: [
+    {
+      etykieta: 'Ile kosztuje wdrożenie AI agenta dla firmy',
+      href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
+      opis:
+        'Cena agenta i to, po czym poznać, że się zwróci.',
+    },
+  ],
+  /* v22: te materialy odsylaja do narzedzi golym tekstem w zdaniu
+     (np. „w sekcji /narzedzia"), wiec sciezka byla nieklikalna. Zdania
+     zostaja nietkniete, a czytelnik dostaje realny link. */
+  powiazaneNarzedzia: [
+    {
+      etykieta: 'Kalkulator oszczędności',
+      href: '/narzedzia#kalkulator-oszczednosci',
+      opis:
+        'Policz w złotówkach, ile zżera Cię dziś jeden ręczny proces.',
     },
   ],
 };

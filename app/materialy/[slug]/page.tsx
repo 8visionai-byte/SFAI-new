@@ -11,6 +11,7 @@ import { Reveal } from '@/components/motion/Reveal';
 import { Breadcrumbs } from '@/components/uslugi/Breadcrumbs';
 import { PostMeta } from '@/components/blog/PostMeta';
 import { MaterialBody, MaterialFAQ, PobierzMagnet } from '@/components/materialy';
+import { LinkiKrzyzowe } from '@/components/poradniki/LinkiKrzyzowe';
 import { MATERIALY_SLUGS, getMaterialBySlug } from '@/lib/materialy';
 import { materialSchemas } from '@/lib/materialy/schema';
 import { HOME_CTA } from '@/lib/site';
@@ -151,6 +152,33 @@ export default async function MaterialPage({
       </Section>
 
       {/* ───────────────────────────────────────────────────────────────
+          v22 (PLAN-v22 §2.3 pkt 2) — PO CO TO POBIERAĆ.
+          `material.zacheta` istnieje w rejestrze od początku, ale renderowała
+          się WYŁĄCZNIE na karcie huba: czytelnik, który wszedł tu z Google
+          prosto na podstronę, nigdy jej nie widział. Jedno zdanie, które mówi
+          wprost, jaki problem ten materiał rozwiązuje, trafia teraz nad treść.
+          ZERO nowej treści: to ten sam string, co na kafelku listy. */}
+      <Section tone="base">
+        <div className="mx-auto max-w-narrow">
+          <Reveal>
+            <div
+              className="inf-card inf-card-quiet p-6 md:p-7"
+              style={
+                {
+                  '--card-c': INF_TYP.material.c,
+                  '--card-c-l': INF_TYP.material.odcien ?? INF_TYP.material.c,
+                } as CSSProperties
+              }
+            >
+              <div aria-hidden="true" className="inf-spotlight" />
+              <h2 className="text-h2">Po co to pobierać?</h2>
+              <p className="mt-4 text-body text-fg-muted">{material.zacheta}</p>
+            </div>
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* ───────────────────────────────────────────────────────────────
           PEŁNA TREŚĆ MAGNETU — bloki renderowane serwerowo (cała wartość w HTML). */}
       <MaterialBody tresc={material.tresc} />
 
@@ -181,6 +209,17 @@ export default async function MaterialPage({
 
       {/* Opcjonalne FAQ — 1:1 z FAQPage JSON-LD (render tylko gdy są pytania). */}
       {material.faq && material.faq.length > 0 && <MaterialFAQ faq={material.faq} />}
+
+      {/* v22 (PLAN-v22 §2.3 pkt 6 i §3 P2 pkt 12) — LINKI KRZYŻOWE.
+          Przed rundą magnet był ślepym zaułkiem (materiał -> usługa 0/6).
+          Ten sam komponent, co pod poradnikami i realizacjami: jedna usługa,
+          która rozwiązuje ten problem u klienta, i jeden poradnik, który
+          tłumaczy temat głębiej. Zysk botowy: dodatkowe <h3> i linki w <main>. */}
+      <LinkiKrzyzowe
+        uslugi={material.powiazaneUslugi}
+        poradniki={material.powiazanePoradniki}
+        narzedzia={material.powiazaneNarzedzia}
+      />
 
       {/* ───────────────────────────────────────────────────────────────
           CTA DOMYKAJĄCE — jedno główne, wspólny flow diagnozy (.surface-aurora). */}

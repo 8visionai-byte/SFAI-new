@@ -15,7 +15,7 @@ import type { Usluga } from './types';
  */
 export const automatyzacje: Usluga = {
   slug: 'automatyzacje',
-  dataAktualizacji: '2026-08-17',
+  dataAktualizacji: '2026-08-18',
   h1: 'Automatyzacja procesów w firmie z AI',
 
   kapsula:
@@ -141,4 +141,48 @@ export const automatyzacje: Usluga = {
     'wdrożenie automatyzacji',
     'automatyzacja procesów w firmie',
   ],
+
+  /* v22 (linki §3, P1 #6 i P2 #13): 85 wyświetleń, pozycja 17,0, w raporcie SEO
+     wprost „brakuje treści". Trzy realizacje mają kategorię `automatyzacje`,
+     czyli linkują TUTAJ, a zwrotnie nie było ani jednego linku. Link do
+     /produkty zamyka jedyną prawdziwą sierotę serwisu (hub produktów nie miał
+     ŻADNEGO linku redakcyjnego, żył wyłącznie z menu i stopki). */
+  powiazane: {
+    realizacje: [
+      {
+        etykieta: 'Auto-email dla biura obsługi klienta',
+        href: '/realizacje/auto-email-bok',
+        opis:
+          '75% maili wymaga już tylko drobnej korekty przed wysłaniem, bo draft czeka gotowy do jednego kliknięcia.',
+      },
+      {
+        etykieta: 'Automatyczne raporty zamiast ręcznych arkuszy',
+        href: '/realizacje/automatyczne-raporty',
+        opis:
+          'Automat spina dane z wielu źródeł i co rano dostarcza gotowy raport, bez niczyjego udziału.',
+      },
+      {
+        etykieta: 'Automat treści na social media',
+        href: '/realizacje/automat-tresci-social',
+        opis:
+          'Gotowy post oparty na świeżych newsach, a człowiek tylko sprawdza go i publikuje jednym kliknięciem.',
+      },
+    ],
+    narzedzia: [
+      {
+        etykieta: 'Kalkulator oszczędności z automatyzacji',
+        href: '/narzedzia#kalkulator-oszczednosci',
+        opis:
+          'Wpisujesz, ile osób ile godzin tygodniowo traci na powtarzalnej robocie, a kalkulator liczy kwotę roczną.',
+      },
+    ],
+    produkty: [
+      {
+        etykieta: 'Co zbudowaliśmy i co z tego możesz mieć u siebie',
+        href: '/produkty',
+        opis:
+          'Nasze własne produkty AI: co robią, dla kogo są i na jakim etapie dojrzałości stoją.',
+      },
+    ],
+  },
 };

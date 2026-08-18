@@ -72,4 +72,44 @@ export const autoPodsumowaniaSpotkan: Realizacja = {
     'transkrypcja spotkań i zadania AI',
     'AI do raportów ze spotkań online',
   ],
+
+  /**
+   * v22 (PLAN-v22 §3 P2 pkt 11): POWIĄZANIA CASE'A. Przed rundą ten case był
+   * ślepym zaułkiem: zero linków do poradnika, który tłumaczy teorię, i zero
+   * linków do siostrzanych wdrożeń. Usługę wyznacza `kategoria` i renderuje ją
+   * `PowiazanaUsluga`, więc tu jej nie dublujemy. Wszystkie href to realne trasy
+   * z rejestrów albo kotwice o potwierdzonym id= na /narzedzia.
+   */
+  powiazane: {
+    poradniki: [
+      {
+        etykieta: 'Ile kosztuje wdrożenie AI agenta dla firmy',
+        href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
+        opis:
+          'Cena agenta i to, po czym poznać, że się zwróci.',
+      },
+    ],
+    realizacje: [
+      {
+        etykieta: 'Transkrypcja rozmów',
+        href: '/realizacje/transkrypcja-rozmow',
+        opis:
+          'Rozmowy i nagrania zamienione w tekst, który da się przeszukać.',
+      },
+      {
+        etykieta: 'Auto-email dla biura obsługi klienta',
+        href: '/realizacje/auto-email-bok',
+        opis:
+          'System pisze draft odpowiedzi, człowiek sprawdza i wysyła.',
+      },
+    ],
+    narzedzia: [
+      {
+        etykieta: 'Kalkulator oszczędności',
+        href: '/narzedzia#kalkulator-oszczednosci',
+        opis:
+          'Policz, ile godzin i pieniędzy zjada u Ciebie ta sama ręczna robota.',
+      },
+    ],
+  },
 };

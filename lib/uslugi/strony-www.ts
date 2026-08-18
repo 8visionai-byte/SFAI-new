@@ -17,7 +17,7 @@ import type { Usluga } from './types';
  */
 export const stronyWww: Usluga = {
   slug: 'strony-www',
-  dataAktualizacji: '2026-08-06',
+  dataAktualizacji: '2026-08-18',
   h1: 'Tworzenie stron WWW widocznych w Google i w AI',
   kapsula:
     'Budujemy strony widoczne nie tylko w Google, ale i w ChatGPT, Claude, Gemini oraz Perplexity. Większość stron jest dla AI niewidoczna, bo treść doczytuje się skryptem, a boty tego nie czytają. My oddajemy całą treść od razu w czystym kodzie, układamy ją pod cytowanie i robimy to szybko.',
@@ -128,4 +128,27 @@ export const stronyWww: Usluga = {
     'strona pod SEO/GEO',
     'strona pozycjonowana pod AI',
   ],
+
+  /* v22 (linki §3, P2 #15): strona miała 1 link wychodzący (kontakt) i 2
+     wchodzące, najsłabszy wynik wśród usług. `linkPoradnik` zostaje PUSTY
+     świadomie (patrz komentarz w optymalizacja.ts): nie ma poradnika o stronach
+     ani o GEO, a poradnik cenowy o chatbocie byłby linkiem na siłę. */
+  powiazane: {
+    narzedzia: [
+      {
+        etykieta: 'Audyt strony pod AI (GEO)',
+        href: '/narzedzia#audyt-strony-ai',
+        opis:
+          'Sprawdź na swojej obecnej stronie, czy AI ma co cytować, zanim zdecydujesz o budowie nowej.',
+      },
+    ],
+    uslugi: [
+      {
+        etykieta: 'Pozycjonowanie pod AI: bądź cytowany w ChatGPT i Perplexity',
+        href: '/uslugi/optymalizacja',
+        opis:
+          'Gdy stronę da się uratować, nie budujemy nowej, tylko naprawiamy widoczność na tym, co masz.',
+      },
+    ],
+  },
 };

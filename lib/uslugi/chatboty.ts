@@ -15,7 +15,7 @@ import type { Usluga } from './types';
  */
 export const chatboty: Usluga = {
   slug: 'chatboty',
-  dataAktualizacji: '2026-08-17',
+  dataAktualizacji: '2026-08-18',
   h1: 'Chatbot AI dla firmy',
 
   kapsula:
@@ -137,4 +137,33 @@ export const chatboty: Usluga = {
     'chatbot AI dla firmy',
     'chatbot na stronę www',
   ],
+
+  /* v22 (linki §3, P1 #5): 427 wyświetleń w GSC, najwięcej w serwisie, pozycja
+     16,6 i CTR 0,7%. Strona miała poradnik, ale ZERO dowodu wdrożenia i ZERO
+     narzędzia. Obie realizacje mają kategorię `chatboty`, czyli już dziś
+     linkują TUTAJ, tylko zwrotnie nie było nic. */
+  powiazane: {
+    realizacje: [
+      {
+        etykieta: 'Chatbot edukacyjny do kursów online',
+        href: '/realizacje/chatbot-edukacyjny-kursy',
+        opis:
+          'Kursant pyta chatbota i od razu trafia do właściwej lekcji, zamiast przeszukiwać setki materiałów VOD.',
+      },
+      {
+        etykieta: 'Firmowi Agenci AI 24/7',
+        href: '/realizacje/agenci-ai-24-7',
+        opis:
+          'Agent odpowiada nowym leadom o każdej porze, także w nocy i w weekend, bez czuwania zespołu.',
+      },
+    ],
+    narzedzia: [
+      {
+        etykieta: 'Czy warto zautomatyzować ten proces?',
+        href: '/narzedzia#kalkulator-procesu',
+        opis:
+          'Policz koszt jednego procesu rocznie i to, po ilu miesiącach zwróci się wdrożenie. Koszt podajesz Ty.',
+      },
+    ],
+  },
 };

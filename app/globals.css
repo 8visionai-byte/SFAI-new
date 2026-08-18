@@ -2981,6 +2981,19 @@ html.lenis body {
     height: 44px;
     font-size: 1.25rem;
   }
+  /* v22 §1.9 A (PLAN-v22, chwyt wzorca /freedom §5.3 „krok bootu"): numer
+     kroku w KÓŁKU zamiast kwadratowej płytki. Wzorzec robi to obwódką 2px,
+     tłem 12,5% i radiusem 50%; nasz .inf-tile ma już obwódkę 28%, gradientowe
+     tło 14->5% i łunę 16px/60%, czyli MOCNIEJ niż zmierzony wzorzec. Dlatego
+     wariant zmienia WYŁĄCZNIE GEOMETRIĘ: jedna deklaracja, zero ruchu
+     w kolorze i świetle, zero nowych zmiennych.
+     Selektor 2-klasowy (0,2,0) z tego samego powodu co .inf-tile-lg wyżej:
+     bazowy .inf-tile stoi NIŻEJ w pliku i przy pojedynczej klasie wygrywałby
+     kolejnością. Konsument: blok `kroki` z wariantem 'kolo'
+     (components/blog/PostBody.tsx). */
+  .inf-tile.inf-tile-round {
+    border-radius: 50%;
+  }
 
   /* ── .inf-overline — mono etykieta sekcji („// TYTUŁ • LICZBA").
      Wariant .inf-overline-lines: linie gradientowe po bokach (hero wzorca). */
@@ -3149,7 +3162,18 @@ html.lenis body {
      NIŻEJ w tym pliku. Przy równej specyficzności (0,1,0) wygrywała kolejność
      i podpis zostawał 11px w --fg-muted — zmierzone w realnym Chrome, nie
      zgadnięte. Tailwind spłaszcza @layer, więc kolejność rozstrzyga naprawdę. */
-  .inf-stat-chip .inf-stat-chip-zrodlo {
+  /* v22 §1.9 B (PLAN-v22): TA SAMA REGUŁA obejmuje teraz także kafel
+     `.inf-hero-stat`, bo blok `kafle` (components/blog/PostBody.tsx) dostał
+     trzeci wiersz „skąd ta liczba" (chwyt wzorca /freedom §5.3). ZERO nowych
+     deklaracji, wyłącznie druga pozycja na liście selektorów — ta sama
+     specyficzność (0,2,0), więc mechanika opisana niżej działa identycznie.
+     KONTRAST: tło `.inf-hero-stat` to rgba(8,15,25,.45) na --bg #05050c,
+     czyli CIEMNIEJSZE niż tintowane tło `.inf-stat-chip`, na którym policzono
+     ~7:1. Kontrast może tam więc tylko wzrosnąć. NIEZWERYFIKOWANE POMIAREM
+     NA ŻYWEJ STRONIE: kontrola v22 ma to potwierdzić sondą pierścieniową,
+     nie rachunkiem z hexa. */
+  .inf-stat-chip .inf-stat-chip-zrodlo,
+  .inf-hero-stat .inf-stat-chip-zrodlo {
     font-size: 0.625rem; /* 10px — „mikroskopijny podpis" z decyzji */
     /* Podpis to TREŚĆ (instytucja + rok), nie dekoracja: gołe --fg-muted na
        tinted tle chipa schodzi w okolice 4,5:1, czyli na styk progu AA dla

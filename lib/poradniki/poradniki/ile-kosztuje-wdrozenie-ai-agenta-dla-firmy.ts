@@ -56,6 +56,17 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
     'wdrożenie agenta AI',
   ],
 
+  /* v22 (PLAN-v22 §2.1, skarga Pawła 2026-08-18 o „jednej ścianie tekstu"):
+     ta sama treść, inne OPAKOWANIE. Nagłówek plus akapity plus lista jednej
+     sekcji jadą teraz w jednej karcie `.inf-card` z tonem poradnika (wzorzec
+     v21 z poradnika o chatbocie), tabele wjeżdżają w karty i dostają widoczny
+     <caption>, a lista, która jest sekwencją działań, jedzie jako <ol> z
+     numerami w kółkach.
+     ŻELAZNE: ZERO zmian słów. Ani jedno zdanie nie zostało przepisane, skrócone
+     ani dopisane. Kolejność merytoryczna 1:1 z poprzednią wersją, wszystkie H2
+     zostają H2, tabele zostają prawdziwymi <table> ze scope.
+     JEDYNE nowe widoczne napisy to dwa podpisy tabel, oba skopiowane ZNAK
+     W ZNAK z nagłówków H2 tej samej strony (patrz komentarze przy `podpis`). */
   tresc: [
     {
       typ: 'akapit',
@@ -64,16 +75,20 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Ile kosztuje agent AI: widełki 2026',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Ile kosztuje agent AI: widełki 2026',
+      akapity: [
         'To nasze realne widełki startowe, te same co w cennikach naszych usług. Dolna granica to agent do jednego wąskiego zadania, górna rośnie z liczbą integracji i scenariuszy. Audyt przed wdrożeniem odliczamy od ceny wdrożenia, więc przy współpracy w praktyce nic nie kosztuje.',
+      ],
     },
     {
       typ: 'tabela',
+      wKarcie: true,
+      /* v22 §1.4: podpis = TEN SAM string, co nagłówek H2 sekcji nad tabelą
+         (skopiowany znak w znak z pola `naglowek` powyżej). Zero nowych słów,
+         a <caption> daje botowi i czytnikowi ekranu zdanie mówiące, czego
+         tabela dotyczy, i nazywa region ze scrollem na mobile. */
+      podpis: 'Ile kosztuje agent AI: widełki 2026',
       naglowki: ['Zakres', 'Cena'],
       wiersze: [
         ['Agent do jednego zadania (np. odpowiadanie na powtarzalne pytania)', 'od 990 zł'],
@@ -84,16 +99,18 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Czym AI agent różni się od chatbota i czemu kosztuje więcej?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Czym AI agent różni się od chatbota i czemu kosztuje więcej?',
+      wariant: 'edge',
+      akapity: [
         'Najprościej: chatbot mówi, agent robi. Chatbot odpowie na pytanie o ofertę. Agent odbierze zapytanie, sprawdzi dostępność w kalendarzu, umówi spotkanie, zapisze klienta do CRM i wyśle potwierdzenie, bez udziału człowieka przy każdym kroku. Im więcej akcji i im więcej systemów w grze, tym więcej pracy przy wdrożeniu, więc wyższy koszt. To nie cena za rozmowę. To cena za pracę, którą agent wykonuje zamiast Twojego zespołu.',
+      ],
     },
     {
       typ: 'tabela',
+      wKarcie: true,
+      /* Podpis = nagłówek H2 sekcji nad tabelą, znak w znak. */
+      podpis: 'Czym AI agent różni się od chatbota i czemu kosztuje więcej?',
       naglowki: ['Cecha', 'Chatbot', 'AI agent'],
       wiersze: [
         ['Co robi', 'Odpowiada na pytania', 'Wykonuje zadania od początku do końca'],
@@ -106,17 +123,13 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
     {
       /* SEO 2026-08-17 (brief pkt 4): H2 w brzmieniu z briefu zamiast dawnego
          „Od czego zależy koszt AI agenta?" (jedna sekcja, zero duplikatu H2);
-         lista rozszerzona o scenariusze, wolumen rozmów i RODO. */
-      typ: 'naglowek',
-      tekst: 'Od czego zależy cena agenta AI',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+         lista rozszerzona o scenariusze, wolumen rozmów i RODO.
+         v22: nagłówek, akapit i lista tej sekcji siedzą w jednej karcie. */
+      typ: 'sekcja',
+      naglowek: 'Od czego zależy cena agenta AI',
+      akapity: [
         'Koszt agenta nie bierze się z liczby ekranów. Bierze się z zakresu pracy i głębokości integracji. Prosty agent do jednego zadania to inny budżet niż agent, który prowadzi cały proces obsługi klienta. Oto co realnie decyduje o cenie.',
-    },
-    {
-      typ: 'lista',
+      ],
       punkty: [
         'Liczba integracji: każdy system (CRM, kalendarz, poczta, baza) to osobne połączenie i osobna robota.',
         'Liczba scenariuszy: jedno wąskie zadanie kontra kilka procesów prowadzonych od zapytania do zamknięcia.',
@@ -128,36 +141,38 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Jak policzyć zwrot z AI agenta?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Jak policzyć zwrot z AI agenta?',
+      wariant: 'quiet',
+      akapity: [
         'Zwrot z agenta liczy się tak samo jak z każdej automatyzacji, tylko skala bywa większa, bo agent wykonuje cały ciąg pracy, nie pojedynczą odpowiedź. Bierzesz godziny, które dziś znikają na powtarzalnym procesie, mnożysz przez koszt godziny i dodajesz leady, które dziś przepadają, bo nikt nie zareagował na czas. To porównujesz z kosztem setupu i opieki. Nasze realne przykłady pokazują skalę: w projekcie Lead Generator zebranie 1000 rekordów zajęło 40 minut zamiast dwóch tygodni ręcznej pracy, a w automatyzacji obsługi e-maili 75 procent wiadomości wymaga już tylko drobnej korekty przed wysłaniem.',
+      ],
     },
     {
-      typ: 'lista',
-      punkty: [
-        'Policz godziny: ile czasu tygodniowo zżera dziś proces, który ma przejąć agent.',
-        'Przelicz na pieniądze: godziny razy koszt godziny pracy w Twojej firmie.',
-        'Dodaj utracone leady: ile zapytań przepada, bo reakcja przychodzi za późno albo wcale.',
-        'Porównaj z kosztem: setup plus opieka miesięczna kontra to, co odzyskujesz co miesiąc.',
-        'Sprawdź to liczbowo w kalkulatorze oszczędności, zanim zamówisz wdrożenie.',
+      /* Te pięć punktów to PROCEDURA liczenia („policz, przelicz, dodaj,
+         porównaj, sprawdź"), więc jadą jako <ol> z numerem w kółku (v22 §1.2,
+         wariant 'kolo'). Zdania 1:1 z dotychczasowej listy, zmienia się
+         wyłącznie forma znacznika: <ol> zamiast <ul>, numer zamiast kropki. */
+      typ: 'kroki',
+      wariant: 'kolo',
+      kroki: [
+        { tytul: 'Policz godziny: ile czasu tygodniowo zżera dziś proces, który ma przejąć agent.' },
+        { tytul: 'Przelicz na pieniądze: godziny razy koszt godziny pracy w Twojej firmie.' },
+        { tytul: 'Dodaj utracone leady: ile zapytań przepada, bo reakcja przychodzi za późno albo wcale.' },
+        {
+          tytul:
+            'Porównaj z kosztem: setup plus opieka miesięczna kontra to, co odzyskujesz co miesiąc.',
+        },
+        { tytul: 'Sprawdź to liczbowo w kalkulatorze oszczędności, zanim zamówisz wdrożenie.' },
       ],
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Po czym poznać, że wdrożenie agenta się spina?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Po czym poznać, że wdrożenie agenta się spina?',
+      akapity: [
         'Wdrożenie agenta spina się wtedy, kiedy proces jest powtarzalny, kosztuje realne godziny i da się go opisać krok po kroku. Jeśli zadanie jest jednorazowe albo za każdym razem wygląda inaczej, agent nie ma czego się nauczyć i zwrot będzie wątpliwy. Poniżej proste sygnały, że to dobry moment.',
-    },
-    {
-      typ: 'lista',
+      ],
       punkty: [
         'Proces jest powtarzalny i dzieje się regularnie, nie raz na kwartał.',
         'Da się go opisać krok po kroku, bo agent działa według reguł, nie domysłów.',
@@ -173,13 +188,12 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Od czego zacząć bez ryzyka?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Od czego zacząć bez ryzyka?',
+      wariant: 'edge',
+      akapity: [
         'Nie zaczynaj od pytania, ile kosztuje agent. Zacznij od pytania, który proces najbardziej Cię zatrzymuje. Wybierz jeden powtarzalny ciąg pracy, policz go i wdróż wąsko. Jeśli liczby się zgadzają, rozszerzasz zakres agenta o kolejne kroki. Jeśli szukasz szerszego kontekstu kosztów wdrożenia AI w firmie, nie tylko agenta, zajrzyj też do naszego wpisu o tym, ile kosztuje wdrożenie AI w małej firmie. Ten poradnik dotyczy konkretnie agenta, tamten wpis całego wdrożenia.',
+      ],
     },
   ],
 
@@ -265,6 +279,23 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
       etykieta: 'Ile kosztuje automatyzacja AI w firmie',
       href: '/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie',
       opis: 'Realne widełki wdrożeń automatyzacji i to, od czego zależy cena.',
+    },
+  ],
+
+  /* v22 (PLAN-v22 §3 P1 #5): dowód pod treścią, grupa „Zobacz to na wdrożeniu".
+     ETYKIETA I OPIS SĄ PRZEPISANE ZNAK W ZNAK z rejestru lib/realizacje:
+     etykieta = `h1` tamtej realizacji, opis = jej `metaDescription`. Zero
+     nowych zdań i zero drugiego opisu tego samego wdrożenia. */
+  powiazaneRealizacje: [
+    {
+      etykieta: 'Firmowi Agenci AI 24/7',
+      href: '/realizacje/agenci-ai-24-7',
+      opis: 'Agenci AI na firmowej stronie: znają strukturę firmy i odpowiadają nowym leadom całą dobę, bez nadzoru. Case study: żaden lead nie zostaje bez odpowiedzi.',
+    },
+    {
+      etykieta: 'Auto-email dla biura obsługi klienta',
+      href: '/realizacje/auto-email-bok',
+      opis: 'System AI dla biura obsługi klienta Instytutu Kryptografii: 75% maili wymaga tylko drobnej korekty, drafty gotowe do jednego kliknięcia. Case study.',
     },
   ],
 };

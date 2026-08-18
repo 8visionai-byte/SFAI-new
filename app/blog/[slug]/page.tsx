@@ -7,6 +7,8 @@ import { postSchemas } from '@/components/seo/schemas';
 import { POSTS_SLUGS, getPostBySlug } from '@/lib/blog';
 
 import { PostHero, PostBody, PostFAQ } from '@/components/blog';
+import { INF_TYP } from '@/lib/inf-kategorie';
+import { LinkiKrzyzowe } from '@/components/poradniki';
 
 /**
  * DYNAMICZNA TRASA WPISÓW BLOGA — jeden szablon, N wpisów, SSG.
@@ -81,11 +83,27 @@ export default async function PostPage({
       {/* Hero answer-first: breadcrumbs + kategoria + H1 + lead + meta (daty) */}
       <PostHero post={post} />
 
-      {/* Treść wpisu — bloki renderowane serwerowo (faza 4 wypełnia sekcje) */}
-      <PostBody tresc={post.tresc} />
+      {/* Treść wpisu — bloki renderowane serwerowo (faza 4 wypełnia sekcje).
+          v22 („naczynia połączone", PLAN-v22 §2.2): `ton` daje kartom w treści
+          kolor WPISU z INF_TYP, czyli ten sam fiolet, co karta tego wpisu na
+          liście /blog i karta FAQ niżej. Bez tego sekcje w kartach świeciłyby
+          fallbackowym akcentem, a poradniki obok mają swój cyjan. */}
+      <PostBody tresc={post.tresc} ton={INF_TYP.wpis} />
 
       {/* Opcjonalne FAQ — 1:1 z FAQPage JSON-LD (render tylko gdy są pytania) */}
       {post.faq && post.faq.length > 0 && <PostFAQ faq={post.faq} />}
+
+      {/* v22 (PLAN-v22 §2.2 pkt 4, §3 P2 #10): linkowanie krzyżowe wpisu.
+          Pomiar przed rundą: pięć wpisów bloga miało ZERO linków redakcyjnych
+          wychodzących z treści, czyli każdy był ślepym zaułkiem dla czytelnika
+          i dla Google. Reużyty komponent poradników (zero nowego silnika
+          linkowania), render tylko gdy wpis ma powiązania. */}
+      <LinkiKrzyzowe
+        uslugi={post.powiazaneUslugi}
+        narzedzia={post.powiazaneNarzedzia}
+        poradniki={post.powiazanePoradniki}
+        realizacje={post.powiazaneRealizacje}
+      />
 
       {/*
         JSON-LD wstrzyknięty SERWEROWO (w HTML przy 1. żądaniu, widoczny dla botów):

@@ -21,7 +21,7 @@ import type { Usluga } from './types';
  */
 export const opiekaAi: Usluga = {
   slug: 'opieka-ai',
-  dataAktualizacji: '2026-08-06',
+  dataAktualizacji: '2026-08-18',
   h1: 'Opieka AI: utrzymanie i rozwój automatyzacji',
 
   kapsula:
@@ -83,6 +83,15 @@ export const opiekaAi: Usluga = {
     tresc:
       'Opieka AI działa na ryczałcie godzin miesięcznie i im większy pakiet, tym niższa stawka za godzinę. 10 godzin to 3000 zł miesięcznie, czyli 300 zł za godzinę. 20 godzin to 5500 zł, czyli 275 zł za godzinę. 40 godzin to 10000 zł miesięcznie, czyli 250 zł za godzinę. Stawka bazowa poza ryczałtem to 350 zł za godzinę, więc ryczałt zawsze wychodzi taniej. Cały ryczałt pracuje co miesiąc nad Twoim AI: utrzymanie, rozwój, nowe automatyzacje i optymalizacje, a pod koniec miesiąca dostajesz raport ze zmianami. Ile godzin realnie potrzebujesz, ustalamy na bezpłatnej diagnozie. Bez ukrytych kosztów.',
     minPrice: 3000,
+    /* v22 (linki §3, P2 #15): poradnik o koszcie automatyzacji jako jedyny
+       rozpisuje opiekę w abonamencie 99-599 zł obok kosztu wdrożenia, więc to
+       naturalne przedłużenie tej sekcji. Render: RamaCeny.tsx, ten sam akapit. */
+    linkPoradnik: {
+      przed: 'Jak opieka wpisuje się w całkowity koszt wdrożenia, pokazujemy w poradniku: ',
+      etykieta: 'ile kosztuje automatyzacja AI w firmie',
+      po: '.',
+      href: '/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie',
+    },
   },
 
   faq: [
@@ -134,4 +143,26 @@ export const opiekaAi: Usluga = {
     'serwis AI dla firmy',
     'utrzymanie agentów AI',
   ],
+
+  /* v22 (linki §3, P2 #15): strona miała 1 link wychodzący (kontakt). Audyt to
+     wejście do opieki (mapa procesów przed ryczałtem), a kalkulator pokazuje
+     skalę roboty, którą opieka utrzymuje. */
+  powiazane: {
+    uslugi: [
+      {
+        etykieta: 'Audyt AI: mapa oszczędności czasu',
+        href: '/uslugi/audyt-ai',
+        opis:
+          'Sprint Diagnostyczny za 1490 zł kończy się Action Planem, a kwotę odliczamy od wdrożenia.',
+      },
+    ],
+    narzedzia: [
+      {
+        etykieta: 'Kalkulator oszczędności z automatyzacji',
+        href: '/narzedzia#kalkulator-oszczednosci',
+        opis:
+          'Zobacz, ile złotych rocznie pilnuje za Ciebie automatyzacja, którą utrzymujemy w ryczałcie.',
+      },
+    ],
+  },
 };

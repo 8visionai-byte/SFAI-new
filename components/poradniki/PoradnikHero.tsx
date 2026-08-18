@@ -6,6 +6,7 @@ import { PoradnikBreadcrumbs } from './PoradnikBreadcrumbs';
 import type { Poradnik } from '@/lib/poradniki/types';
 import { INF_TYP, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
 import { InfIcon } from '@/components/ui/InfIcons';
+import { KartaTagi, frazyDoTagow } from '@/components/sections/KartaCzesci';
 
 /**
  * PoradnikHero — nagłówek poradnika (answer-first), wzorzec spójny z PostHero bloga.
@@ -63,6 +64,24 @@ export function PoradnikHero({ poradnik }: { poradnik: Poradnik }) {
             data={poradnik.data}
             dataAktualizacji={poradnik.dataAktualizacji}
             className="mt-6 flex flex-wrap items-center gap-x-1 gap-y-1"
+          />
+        </Reveal>
+
+        {/* v22 (PLAN-v22 §0 pkt 3): TAGI PORADNIKA na stronie poradnika.
+            Ta sama zasada co w PostHero: pole `tagi` jest w rejestrze od
+            początku, a strona docelowa go nie pokazywała. Reguła wyboru fraz
+            1:1 z `tagiPosta` (frazyDoTagow: bez duplikatu tytułu i kategorii,
+            bez fraz za długich na pigułkę), tyle że dla typu `Poradnik`.
+            ZERO nowych stringów: brak tagów = brak rzędu (KartaTagi -> null). */}
+        <Reveal delay={0.2}>
+          <KartaTagi
+            tagi={frazyDoTagow(poradnik.tagi, {
+              limit: 3,
+              pomin: [poradnik.tytul, poradnik.kategoria],
+            })}
+            etykietaListy={`Tematy poradnika: ${poradnik.tytul}`}
+            wariant="plaski"
+            doDolu={false}
           />
         </Reveal>
       </div>

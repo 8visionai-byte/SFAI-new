@@ -28,6 +28,14 @@
  * MUSI pokrywać się ze slugiem realnej usługi w lib/uslugi (link wewnętrzny pod GEO).
  * Dziś realne mapowania: 'automatyzacje', 'chatboty', 'rozwiazania' → istniejące strony usług.
  */
+/* v22 (PLAN-v22 §1.5): typ linku krzyżowego czytamy z KORZENIA grafu importów
+   treści (lib/blog/types), tego samego, z którego korzystają poradniki, wpisy
+   i materiały. Jeden kontrakt linku w całym serwisie = `LinkiKrzyzowe` przyjmuje
+   powiązania każdego rejestru bez adapterów. */
+import type { LinkKrzyzowy } from '@/lib/blog/types';
+
+export type { LinkKrzyzowy } from '@/lib/blog/types';
+
 export type RealizacjaKategoria =
   | 'automatyzacje'
   | 'chatboty'
@@ -142,4 +150,32 @@ export type Realizacja = {
    * Pierwsza = primary. Używane do dokumentacji i pomiaru cytowalności.
    */
   queries: string[];
+
+  /**
+   * v22 (PLAN-v22 §1.6 i §3 P2 pkt 11): POWIĄZANIA CASE'A.
+   *
+   * Pomiar linków przed rundą: realizacja -> poradnik 0/8, realizacja ->
+   * realizacja 0/8. Osiem case'ów stało obok siebie bez ani jednego połączenia,
+   * więc czytelnik, który wszedł na jeden dowód, nie miał gdzie pójść dalej,
+   * a bot nie miał jak zobaczyć, że to jedna rodzina wdrożeń.
+   *
+   * Pola zasilają ISTNIEJĄCY komponent `LinkiKrzyzowe` (ten sam, co pod
+   * poradnikami), więc nie powstaje żaden nowy silnik linkowania. Grupa usług
+   * celowo NIE ma tu swojego pola: usługę case'a wyznacza `kategoria` i renderuje
+   * ją `PowiazanaUsluga`, więc drugie źródło prawdy byłoby zaproszeniem do rozjazdu.
+   *
+   * ŻELAZNE: każdy `href` to realna trasa z rejestru albo kotwica o potwierdzonym
+   * `id=` (kryterium odbioru §5.3 planu: zero martwych linków). Etykieta i opis
+   * to TEKST NAWIGACYJNY, nie nowy fakt o wdrożeniu.
+   *
+   * Wszystko opcjonalne: case bez powiązań renderuje się dokładnie jak dotąd.
+   */
+  powiazane?: {
+    /** Poradnik, który tłumaczy teorię stojącą za tym wdrożeniem. */
+    poradniki?: LinkKrzyzowy[];
+    /** Siostrzane wdrożenia (ten sam obszar albo ten sam klient). */
+    realizacje?: LinkKrzyzowy[];
+    /** Darmowe narzędzie, którym czytelnik policzy to u siebie. */
+    narzedzia?: LinkKrzyzowy[];
+  };
 };

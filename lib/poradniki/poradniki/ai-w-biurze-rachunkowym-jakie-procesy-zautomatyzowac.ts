@@ -30,6 +30,14 @@ export const aiWBiurzeRachunkowym: Poradnik = {
     'procesy do automatyzacji w księgowości',
   ],
 
+  /* v22 (PLAN-v22 §2.1, skarga Pawła 2026-08-18 o „jednej ścianie tekstu"):
+     ta sama treść, inne OPAKOWANIE. Każda sekcja (nagłówek plus akapit plus
+     ewentualna lista) jedzie w jednej karcie `.inf-card` z tonem poradnika,
+     tabela 12 procesów wjeżdża w kartę i dostaje widoczny <caption>, a lista
+     przygotowań jedzie jako <ol> z numerami w kółkach.
+     ŻELAZNE: ZERO zmian słów, kolejność merytoryczna 1:1, wszystkie H2 zostają
+     H2, tabela zostaje prawdziwą <table> ze scope. Jedyny nowy widoczny napis
+     to podpis tabeli, skopiowany znak w znak z nagłówka H2 tej strony. */
   tresc: [
     {
       typ: 'akapit',
@@ -38,26 +46,27 @@ export const aiWBiurzeRachunkowym: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Od czego zacząć automatyzację w biurze rachunkowym?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Od czego zacząć automatyzację w biurze rachunkowym?',
+      akapity: [
         'Zacznij od procesu, który jest jednocześnie powtarzalny i pochłania najwięcej czasu. W większości biur to odczyt faktur i segregacja poczty od klientów. Oba są przewidywalne, dzieją się codziennie i nie wymagają eksperckiej oceny przy każdej sztuce. To znaczy, że AI zdejmie z zespołu najnudniejszą część dnia, a człowiek zostaje tam, gdzie naprawdę jest potrzebny: przy kontroli i decyzji.',
+      ],
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Lista 12 procesów do automatyzacji od najszybszego zwrotu',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Lista 12 procesów do automatyzacji od najszybszego zwrotu',
+      akapity: [
         'Poniższa lista jest uszeregowana od najłatwiejszego zwrotu na górze. Czas wdrożenia to rząd wielkości, nie obietnica, bo zależy od tego, jak uporządkowane masz dane i ile systemów trzeba połączyć. Zaczynaj od góry, schodź w dół dopiero po pierwszym efekcie.',
+      ],
     },
     {
       typ: 'tabela',
+      wKarcie: true,
+      /* Podpis = nagłówek H2 sekcji nad tabelą, znak w znak. Ta tabela ma 12
+         wierszy i cztery kolumny, więc widoczny <caption> jest tu najbardziej
+         potrzebny: nazywa też region ze scrollem poziomym na mobile. */
+      podpis: 'Lista 12 procesów do automatyzacji od najszybszego zwrotu',
       naglowki: ['#', 'Proces', 'Dlaczego szybki zwrot', 'Czas wdrożenia'],
       wiersze: [
         ['1', 'Odczyt i wpinanie faktur', 'Codzienne, powtarzalne, dużo ręcznego przepisywania', 'krótki'],
@@ -76,16 +85,12 @@ export const aiWBiurzeRachunkowym: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Czego NIE automatyzować w biurze rachunkowym?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Czego NIE automatyzować w biurze rachunkowym?',
+      wariant: 'edge',
+      akapity: [
         'Nie wszystko warto oddawać automatowi. Zostaw człowiekowi to, co wymaga oceny, odpowiedzialności i kontaktu. AI dobrze przygotuje fakturę do zaksięgowania, ale ostateczna decyzja i podpis zostają po stronie księgowej. Dobrze wdrożone AI nie zwalnia tu nikogo. Zdejmuje najnudniejszą część dnia i oddaje czas na pracę, której nie da się zautomatyzować.',
-    },
-    {
-      typ: 'lista',
+      ],
       punkty: [
         'Ostateczna kontrola i zatwierdzenie zaksięgowanych dokumentów. Człowiek decyduje, AI przygotowuje.',
         'Doradztwo i interpretacja przepisów dla konkretnego klienta. To wymaga odpowiedzialności, nie szablonu.',
@@ -95,21 +100,28 @@ export const aiWBiurzeRachunkowym: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Co przygotować przed wdrożeniem AI w biurze?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Co przygotować przed wdrożeniem AI w biurze?',
+      wariant: 'quiet',
+      akapity: [
         'Im lepiej uporządkowane dane, tym tańsze i szybsze wdrożenie. Zanim ruszysz, zbierz to, czego automat będzie potrzebował, i wybierz jeden proces na pilotaż. Pilotaż na wąskim wycinku pokazuje efekt bez ryzyka, że zatrzymasz całe biuro.',
+      ],
     },
     {
-      typ: 'lista',
-      punkty: [
-        'Wybierz jeden proces na start, najlepiej odczyt faktur albo segregację maili.',
-        'Zbierz przykłady: jak dziś wyglądają dokumenty i maile, które ma obsłużyć AI.',
-        'Ustal, gdzie kończy się automat, a zaczyna kontrola człowieka.',
-        'Sprawdź efekt na próbie, zanim wpuścisz automat na całość. Najpierw pilotaż, potem skala.',
+      /* Cztery punkty przygotowania to PROCEDURA („wybierz, zbierz, ustal,
+         sprawdź"), więc jadą jako <ol> z numerem w kółku (v22 §1.2, wariant
+         'kolo'). Zdania 1:1 z dotychczasowej listy, zmienia się wyłącznie
+         znacznik: <ol> zamiast <ul>, numer zamiast kropki. */
+      typ: 'kroki',
+      wariant: 'kolo',
+      kroki: [
+        { tytul: 'Wybierz jeden proces na start, najlepiej odczyt faktur albo segregację maili.' },
+        { tytul: 'Zbierz przykłady: jak dziś wyglądają dokumenty i maile, które ma obsłużyć AI.' },
+        { tytul: 'Ustal, gdzie kończy się automat, a zaczyna kontrola człowieka.' },
+        {
+          tytul:
+            'Sprawdź efekt na próbie, zanim wpuścisz automat na całość. Najpierw pilotaż, potem skala.',
+        },
       ],
     },
     {
@@ -197,6 +209,24 @@ export const aiWBiurzeRachunkowym: Poradnik = {
       etykieta: 'Ile kosztuje wdrożenie AI agenta dla firmy',
       href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
       opis: 'Widełki 2026 dla agenta AI, od czego zależy cena i jak policzyć zwrot.',
+    },
+  ],
+
+  /* v22 (PLAN-v22 §1.5): grupa „Zobacz to na wdrożeniu". Dwa wdrożenia, które
+     robią dokładnie to, co stoi wysoko na liście 12 procesów: segregację
+     i odpowiedzi na maile (pozycje 2 i 4) oraz raporty dla klienta (pozycja 6).
+     ETYKIETA I OPIS PRZEPISANE ZNAK W ZNAK z rejestru lib/realizacje:
+     etykieta = `h1`, opis = `metaDescription`. */
+  powiazaneRealizacje: [
+    {
+      etykieta: 'Auto-email dla biura obsługi klienta',
+      href: '/realizacje/auto-email-bok',
+      opis: 'System AI dla biura obsługi klienta Instytutu Kryptografii: 75% maili wymaga tylko drobnej korekty, drafty gotowe do jednego kliknięcia. Case study.',
+    },
+    {
+      etykieta: 'Automatyczne raporty zamiast ręcznych arkuszy',
+      href: '/realizacje/automatyczne-raporty',
+      opis: 'Automatyczne raporty: automat spina dane z kilku źródeł i co rano dostarcza gotowy raport. Koniec ręcznego sklejania arkuszy. Case study wdrożenia.',
     },
   ],
 };

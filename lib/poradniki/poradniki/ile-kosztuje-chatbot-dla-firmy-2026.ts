@@ -250,4 +250,22 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
       opis: 'Realne widełki wdrożeń automatyzacji i to, od czego zależy cena.',
     },
   ],
+
+  /* v22 (PLAN-v22 §1.5): grupa „Zobacz to na wdrożeniu". Dwa wdrożenia
+     chatbotowe z rejestru realizacji, czyli dowód pod poradnikiem o cenie
+     chatbota (relacja poradnik -> realizacja była przed rundą 0/4).
+     ETYKIETA I OPIS PRZEPISANE ZNAK W ZNAK z rejestru lib/realizacje:
+     etykieta = `h1`, opis = `metaDescription`. Treść poradnika bez zmian. */
+  powiazaneRealizacje: [
+    {
+      etykieta: 'Chatbot edukacyjny do kursów online',
+      href: '/realizacje/chatbot-edukacyjny-kursy',
+      opis: 'Chatbot edukacyjny dla Instytutu Kryptografii: kursanci natychmiast znajdują właściwą lekcję w setkach materiałów VOD, bez przeszukiwania. Case study.',
+    },
+    {
+      etykieta: 'Firmowi Agenci AI 24/7',
+      href: '/realizacje/agenci-ai-24-7',
+      opis: 'Agenci AI na firmowej stronie: znają strukturę firmy i odpowiadają nowym leadom całą dobę, bez nadzoru. Case study: żaden lead nie zostaje bez odpowiedzi.',
+    },
+  ],
 };

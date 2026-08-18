@@ -40,6 +40,19 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
     'automatyzacja AI dla firm',
   ],
 
+  /* v22 (PLAN-v22 §2.1, skarga Pawła 2026-08-18 o „jednej ścianie tekstu"):
+     ta sama treść, inne OPAKOWANIE. Sekcje jadą w kartach `.inf-card` z tonem
+     poradnika, obie tabele wjeżdżają w karty i dostają widoczny <caption>,
+     a nad cennikiem stoi pas czterech kafli z cenami.
+     ŻELAZNE: ZERO zmian słów. Ani jedno zdanie nie zostało przepisane,
+     skrócone ani dopisane; kolejność merytoryczna 1:1, wszystkie H2 zostają H2,
+     tabele zostają prawdziwymi <table> ze scope.
+     NOWE WIDOCZNE NAPISY I ICH ŹRÓDŁA (wszystkie kopiowane znak w znak
+     z TEJ SAMEJ strony, zero nowych faktów):
+       - kafle: `wartosc` = kolumna „Cena", `opis` = kolumna „Pakiet"
+         z tabeli cennika niżej,
+       - `podpis` obu tabel = nagłówek H2 sekcji stojącej nad tabelą,
+       - `chip` trzech kart = nazwa pakietu z kolumny „Pakiet" tej samej tabeli. */
   tresc: [
     {
       typ: 'akapit',
@@ -48,16 +61,32 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Ile kosztuje automatyzacja AI w firmie? Cennik 2026',
+      /* PAS METRYK (v22 §1.1): cztery kafle = cztery wiersze cennika niżej.
+         Każda liczba i każda etykieta jest PRZEPISANA ZNAK W ZNAK z tabeli
+         „Pakiet / Co dostajesz / Cena" w tej samej treści, więc kafel nie
+         wnosi ani jednej nowej danej. Ceny z listy locked (1990 / 1490 /
+         3000-10000 / 99-599). */
+      typ: 'kafle',
+      kafle: [
+        { wartosc: '1990 zł', opis: 'AI Start' },
+        { wartosc: '1490 zł', opis: 'Audyt AI' },
+        { wartosc: 'od 3000 do 10000 zł', opis: 'Wdrożenie automatyzacji' },
+        { wartosc: 'od 99 do 599 zł/mies', opis: 'Opieka po wdrożeniu' },
+      ],
     },
+
     {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Ile kosztuje automatyzacja AI w firmie? Cennik 2026',
+      akapity: [
         'Poniższa tabela to nasz realny cennik, nie widełki wzięte z sufitu. Dokładną kwotę w tych ramach podajemy na bezpłatnej diagnozie, kiedy zobaczymy proces i policzymy, ile pracy zdejmie automatyzacja.',
+      ],
     },
     {
       typ: 'tabela',
+      wKarcie: true,
+      /* Podpis = nagłówek H2 sekcji nad tabelą, znak w znak. */
+      podpis: 'Ile kosztuje automatyzacja AI w firmie? Cennik 2026',
       naglowki: ['Pakiet', 'Co dostajesz', 'Cena'],
       wiersze: [
         [
@@ -84,16 +113,12 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Od czego zależy cena automatyzacji AI?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Od czego zależy cena automatyzacji AI?',
+      wariant: 'edge',
+      akapity: [
         'Cena nie bierze się z liczby ekranów ani z tego, jak „mądrze" brzmi nazwa narzędzia. Bierze się z tego, ile pracy trzeba włożyć, żeby proces działał sam i bezpiecznie. W górę ceny przesuwa głównie liczba systemów do połączenia. Oto co realnie decyduje o tym, czy wylądujesz bliżej 3000 czy 10000 zł.',
-    },
-    {
-      typ: 'lista',
+      ],
       punkty: [
         'Liczba integracji: każdy system (poczta, arkusz, CRM, kalendarz, baza) to osobne połączenie i osobna robota.',
         'Złożoność procesu: jeden wąski krok kontra ciąg zadań od zapytania klienta po gotowy raport.',
@@ -104,16 +129,17 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Co można zautomatyzować? Cztery realne wdrożenia',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Co można zautomatyzować? Cztery realne wdrożenia',
+      akapity: [
         'Zamiast teorii, cztery automatyzacje, które zbudowaliśmy dla klientów. Efekty poniżej pochodzą z realnych wdrożeń, a oszczędności czasu oznaczone „szac." to nasze szacunki, nie pomiar co do minuty.',
+      ],
     },
     {
       typ: 'tabela',
+      wKarcie: true,
+      /* Podpis = nagłówek H2 sekcji nad tabelą, znak w znak. */
+      podpis: 'Co można zautomatyzować? Cztery realne wdrożenia',
       naglowki: ['Automatyzacja', 'Co robi', 'Efekt'],
       wiersze: [
         [
@@ -145,33 +171,34 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Jak sprawdzić automatyzację za 1990 zł, zanim wydasz więcej?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      /* Chip = nazwa pakietu z kolumny „Pakiet" tabeli cennika wyżej
+         (znak w znak). Wzorzec /void: kolor niesie chip, nagłówek zostaje
+         biały. */
+      typ: 'sekcja',
+      chip: 'AI Start',
+      naglowek: 'Jak sprawdzić automatyzację za 1990 zł, zanim wydasz więcej?',
+      akapity: [
         'AI Start to pierwsza automatyzacja na próbę za 1990 zł. Wybieramy jeden wąski, powtarzalny proces, automatyzujemy go i pokazujemy efekt na Twoich danych, nie na naszych slajdach. To celowo mały, odwracalny krok: najpierw widzisz, jak automatyzacja działa u Ciebie, dopiero potem decydujesz o pełnym wdrożeniu za 3000 do 10000 zł. Jeśli po próbie uznasz, że to nie dla Ciebie, kończymy współpracę bez wchodzenia w większy budżet.',
+      ],
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Po co audyt AI za 1490 zł przed wdrożeniem?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      chip: 'Audyt AI',
+      wariant: 'quiet',
+      naglowek: 'Po co audyt AI za 1490 zł przed wdrożeniem?',
+      akapity: [
         'Audyt AI za 1490 zł to mapa przed podróżą. Rozkładamy Twoje procesy na czynniki i pokazujemy, gdzie automatyzacja da realny zysk, a gdzie to przepalanie pieniędzy. Dostajesz Action Plan ułożony od największego zwrotu. Cenę audytu odliczamy od wdrożenia, więc jeśli ruszamy z robotą, audyt w praktyce nic Cię nie kosztuje. Ma sens szczególnie wtedy, kiedy procesów do automatyzacji jest kilka i nie wiesz, od którego zacząć.',
+      ],
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Czy automatyzacja wymaga opieki po wdrożeniu?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      chip: 'Opieka po wdrożeniu',
+      naglowek: 'Czy automatyzacja wymaga opieki po wdrożeniu?',
+      akapity: [
         'Tak, i mówimy to wprost, bo to część realnego kosztu. Automatyzacja łączy się z narzędziami, które żyją: dostawca zmienia coś po swojej stronie, w firmie pojawia się nowy krok procesu, zmienia się arkusz albo skrzynka. Dlatego każde nasze wdrożenie ma dołączoną opiekę w abonamencie od 99 do 599 zł miesięcznie, zależnie od pakietu. Nie zostawiamy klientów z automatem, którego nikt nie pilnuje: monitorujemy działanie i poprawiamy to, co się zmieniło po stronie narzędzi. A firmy, które chcą co miesiąc rozwijać automatyzacje o kolejne procesy, mogą przejść na osobną usługę Opieki AI rozliczaną ryczałtem godzin.',
+      ],
     },
     {
       typ: 'cytat',
@@ -180,13 +207,12 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Jak policzyć, czy automatyzacja się zwróci?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Jak policzyć, czy automatyzacja się zwróci?',
+      wariant: 'edge',
+      akapity: [
         'Rachunek jest prosty. Policz godziny, które co tydzień znikają na przepisywaniu danych, składaniu raportów i odpowiadaniu na te same maile. Pomnóż przez koszt godziny pracy w Twojej firmie i porównaj z ceną wdrożenia oraz abonamentu opieki. Skalę pokazują nasze realizacje: generator leadów zebrał 1000 rekordów w 40 minut zamiast dwóch tygodni ręcznej pracy, a w biurze obsługi klienta 75% maili wymaga już tylko drobnej korekty. Jeśli rozważasz coś więcej niż automatyzację, czyli agenta AI, który sam prowadzi cały proces i podejmuje akcje w wielu systemach, zajrzyj też do naszego poradnika o koszcie wdrożenia AI agenta dla firmy.',
+      ],
     },
     {
       typ: 'akapit',
@@ -262,6 +288,36 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
       etykieta: 'Ile kosztuje chatbot dla firmy w 2026',
       href: '/poradniki/ile-kosztuje-chatbot-dla-firmy-2026',
       opis: 'Pakiet startowy od 990 zł, pełne widełki i koszty utrzymania chatbota.',
+    },
+  ],
+
+  /* v22 (PLAN-v22 §1.5): grupa „Zobacz to na wdrożeniu". To DOKŁADNIE te
+     cztery automatyzacje, które opisuje tabela „Co można zautomatyzować?
+     Cztery realne wdrożenia" wyżej, a zdanie pod tabelą mówi wprost „Pełne
+     opisy tych projektów znajdziesz w naszych realizacjach" i dotąd nie było
+     do czego kliknąć.
+     ETYKIETA I OPIS PRZEPISANE ZNAK W ZNAK z rejestru lib/realizacje:
+     etykieta = `h1`, opis = `metaDescription` tej realizacji. */
+  powiazaneRealizacje: [
+    {
+      etykieta: 'Auto-email dla biura obsługi klienta',
+      href: '/realizacje/auto-email-bok',
+      opis: 'System AI dla biura obsługi klienta Instytutu Kryptografii: 75% maili wymaga tylko drobnej korekty, drafty gotowe do jednego kliknięcia. Case study.',
+    },
+    {
+      etykieta: 'Błyskawiczny generator leadów',
+      href: '/realizacje/lead-generator',
+      opis: 'Automat do pozyskiwania leadów: 1000 rekordów potencjalnych klientów w 40 minut zamiast 2 tygodni ręcznej pracy. Case study, gotowa lista dla sprzedaży.',
+    },
+    {
+      etykieta: 'Automatyczne raporty zamiast ręcznych arkuszy',
+      href: '/realizacje/automatyczne-raporty',
+      opis: 'Automatyczne raporty: automat spina dane z kilku źródeł i co rano dostarcza gotowy raport. Koniec ręcznego sklejania arkuszy. Case study wdrożenia.',
+    },
+    {
+      etykieta: 'Auto-podsumowania spotkań na Meet, Zoom i Teams',
+      href: '/realizacje/auto-podsumowania-spotkan',
+      opis: 'Agent AI dołącza do spotkań na Meet, Zoom lub Teams, spisuje je i wysyła raport z zadaniami per uczestnik. Case study: mniej godzin na ręczne notatki.',
     },
   ],
 };

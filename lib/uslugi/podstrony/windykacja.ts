@@ -204,4 +204,25 @@ export const windykacja: PodstronaUslugi = {
     'voicebot odbiera telefon w sprawie płatności',
     'czy voicebot dzwoni do dłużników',
   ],
+
+  /* v22 (linki §3, P1 #4): podstrona miała 3 linki wchodzące (rodzic + dwie
+     siostry) i ZERO wyjścia do poradnika oraz narzędzia. `linkPoradnik` w ramie
+     ceny trzyma powrót do rodzica, więc poradnik i kalkulator wchodzą tędy. */
+  powiazane: {
+    poradniki: [
+      {
+        etykieta: 'Ile kosztuje wdrożenie AI agenta dla firmy',
+        href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
+        opis: 'Widełki 2026, od czego zależy cena i jak policzyć zwrot z wdrożenia.',
+      },
+    ],
+    narzedzia: [
+      {
+        etykieta: 'Kalkulator oszczędności z automatyzacji',
+        href: '/narzedzia#kalkulator-oszczednosci',
+        opis:
+          'Policz, ile złotych rocznie zjada odbieranie telefonów w sprawie płatności i spisywanie ustaleń.',
+      },
+    ],
+  },
 };

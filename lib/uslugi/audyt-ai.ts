@@ -15,7 +15,7 @@ import type { Usluga } from './types';
  */
 export const audytAi: Usluga = {
   slug: 'audyt-ai',
-  dataAktualizacji: '2026-08-17',
+  dataAktualizacji: '2026-08-18',
   h1: 'Audyt AI firmy: mapa oszczędności czasu',
 
   kapsula:
@@ -136,4 +136,24 @@ export const audytAi: Usluga = {
     'audyt AI dla firmy',
     'gdzie wdrożyć AI w firmie',
   ],
+
+  /* v22 (linki §3, P2 #15): usługa -> narzędzie było 1/13 w całym serwisie.
+     Audyt to płatna wersja tego, co test i kalkulator pokazują za darmo, więc
+     to najbliższa para w rejestrze narzędzi. */
+  powiazane: {
+    narzedzia: [
+      {
+        etykieta: 'Test gotowości firmy na AI',
+        href: '/narzedzia#test-gotowosci-ai',
+        opis:
+          'Osiem pytań o procesy, dane i ludzi. Na koniec poziom gotowości i trzy rekomendacje, od czego zacząć.',
+      },
+      {
+        etykieta: 'Kalkulator oszczędności z automatyzacji',
+        href: '/narzedzia#kalkulator-oszczednosci',
+        opis:
+          'Wpisujesz godziny tracone na powtarzalnej robocie, a kalkulator pokazuje kwotę roczną do odzyskania.',
+      },
+    ],
+  },
 };
