@@ -36,17 +36,22 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
         'Pytasz o cenę, bo nie chcesz przepłacić. Dobrze. Krótka odpowiedź: u nas chatbot zaczyna się od 990 zł w pakiecie startowym, a rozbudowane wdrożenia z integracjami mieszczą się zwykle między 3000 a 10000 zł. Na rynku rozstrzał jest dużo większy: publiczne cenniki agencji AI w Polsce zaczynają się od 1990 zł i dochodzą do 45000 zł. Skąd taka różnica i za co właściwie płacisz, rozkładamy poniżej.',
     },
 
+    /* v21 (skarga Pawła 2026-08-18: „jedna ściana tekstu (...) ma być na
+       zasadzie ramek, które mamy na stronie głównej"): sekcje treści jadą
+       w kartach `.inf-card` z tonem poradnika, tabela w karcie, porady jako
+       kroki z numerami. TREŚĆ 1:1 — zmienia się wyłącznie opakowanie
+       i podział; ani jedno zdanie nie zostało przepisane, kolejność bloków
+       zachowana (H2 dalej po kolei, tabela dalej prawdziwą <table>). */
     {
-      typ: 'naglowek',
-      tekst: 'Jakie są widełki cenowe chatbota w Polsce w 2026?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Jakie są widełki cenowe chatbota w Polsce w 2026?',
+      akapity: [
         'Zacznijmy od tła rynkowego. Agencje w Polsce, które publikują cenniki chatbotów, podają bardzo różne kwoty: jedna zaczyna od 1990 zł, inna pokazuje widełki od 3500 do 45000 zł za rozbudowane wdrożenia. Do tego dochodzą abonamenty narzędzi i utrzymania, na rynku zwykle od około 100 do 2500 zł miesięcznie. Ten rozstrzał nie bierze się z powietrza: górne kwoty to boty z wieloma integracjami, wieloma kanałami i dużym ruchem. Na tym tle nasz cennik wygląda tak.',
+      ],
     },
     {
       typ: 'tabela',
+      wKarcie: true,
       naglowki: ['Zakres', 'Co obejmuje', 'Cena'],
       wiersze: [
         ['Rynek: agencje AI w Polsce', 'Publiczne cenniki wdrożeń chatbotów, od prostych botów po duże projekty', 'od 1990 do 45000 zł'],
@@ -62,16 +67,11 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Co wpływa na cenę chatbota? Pięć rzeczy',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Co wpływa na cenę chatbota? Pięć rzeczy',
+      akapity: [
         'Cena nie bierze się z liczby okienek na ekranie. Bierze się z tego, jak głęboko bot wchodzi w Twoją firmę i ile decyzji ma podejmować. Oto pięć rzeczy, które realnie podnoszą koszt.',
-    },
-    {
-      typ: 'lista',
+      ],
       punkty: [
         'Integracje: sam czat na stronie jest najtańszy. Każde połączenie z kalendarzem, CRM czy systemem rezerwacji to dodatkowa robota.',
         'Akcje zamiast odpowiedzi: bot, który tylko odpowiada, jest tani. Bot, który umawia, wysyła i aktualizuje dane, kosztuje więcej.',
@@ -82,26 +82,20 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Jednorazowo czy w abonamencie: za co się płaci?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Jednorazowo czy w abonamencie: za co się płaci?',
+      wariant: 'edge',
+      akapity: [
         'Koszt chatbota ma dwie części. Jednorazowy setup to zbudowanie bota: nauczenie go Twoich treści, podłączenie kanałów i systemów, testy. Opieka miesięczna to utrzymanie: poprawki odpowiedzi, aktualizacje, reakcja kiedy coś po stronie Twoich narzędzi się zmieni. Chatbot to nie mebel, który stawiasz raz i zapominasz. Im lepiej dostrojony, tym lepiej pracuje. Dlatego przy porównywaniu ofert zawsze pytaj o obie kwoty: za wdrożenie i za miesiąc opieki. Dopiero razem mówią, ile bot naprawdę kosztuje.',
+      ],
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Jakie są ukryte koszty chatbota?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Jakie są ukryte koszty chatbota?',
+      akapity: [
         'Najwięcej nieporozumień przy chatbotach nie dotyczy ceny wdrożenia, tylko tego, co dzieje się po starcie. Oferta na tanie wdrożenie często nie mówi, kto będzie bota utrzymywał i za ile. A bot zostawiony sam sobie szybko się starzeje: zmieniasz cennik, a on podaje stary. Zmieniasz ofertę, a on o niej nie wie. Oto koszty, o które warto zapytać, zanim podpiszesz.',
-    },
-    {
-      typ: 'lista',
+      ],
       punkty: [
         'Utrzymanie i poprawki: ktoś musi na bieżąco poprawiać odpowiedzi, które schodzą z tonu albo mijają się z prawdą.',
         'Aktualizacja wiedzy: każda zmiana cennika, oferty czy godzin pracy musi trafić do bota, inaczej wprowadza klientów w błąd.',
@@ -116,16 +110,11 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Nasz pakiet startowy: chatbot od 990 zł. Co dostajesz?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Nasz pakiet startowy: chatbot od 990 zł. Co dostajesz?',
+      akapity: [
         'Pakiet startowy zbudowaliśmy tak, żeby próg wejścia był niski, a efekt widoczny od razu. Za 990 zł dostajesz działającego chatbota na swojej stronie, nie prezentację o chatbotach.',
-    },
-    {
-      typ: 'lista',
+      ],
       punkty: [
         'Chatbot na Twojej stronie www, gotowy do rozmowy z klientami.',
         'Nauczony Twojej wiedzy: oferty, cennika i najczęstszych pytań klientów.',
@@ -141,13 +130,12 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Kiedy chatbot się zwraca?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Kiedy chatbot się zwraca?',
+      wariant: 'quiet',
+      akapity: [
         'Chatbot zwraca się wtedy, kiedy zdejmuje powtarzalną robotę albo łapie leady, które dziś przepadają. Zwrot liczysz prosto: bierzesz czas, który dziś znika na odpowiadaniu na te same pytania, mnożysz przez koszt godziny i porównujesz z kosztem bota. Do tego dochodzą leady, które dziś giną, bo nikt nie odpisał na czas. Bot odpowiada od razu, też wieczorem i w weekend, więc te zapytania nie wyparowują.',
+      ],
     },
     {
       typ: 'cytat',
@@ -156,21 +144,26 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
     },
 
     {
-      typ: 'naglowek',
-      tekst: 'Jak nie przepłacić za chatbota?',
-    },
-    {
-      typ: 'akapit',
-      tekst:
+      typ: 'sekcja',
+      naglowek: 'Jak nie przepłacić za chatbota?',
+      akapity: [
         'Najczęstszy błąd to zamawianie funkcji, których nie użyjesz. Nie zaczynaj od pytania, co bot potrafi. Zacznij od pytania, co Cię najbardziej zatrzymuje. Jeśli tracisz czas na te same pytania klientów, wystarczy pakiet startowy od 990 zł. Jeśli gubisz leady wieczorami i chcesz, żeby bot umawiał wizyty, potrzebujesz wdrożenia z integracjami. Wdrażaj wąsko, sprawdź efekt na swoich liczbach i rozszerzaj dopiero wtedy, kiedy pierwszy krok się spina.',
+      ],
     },
+    /* Te cztery punkty to sekwencja działań („zacznij, policz, wybierz,
+       pytaj"), więc jadą jako KROKI z numerami — wzorzec KrokiJakToDziala ze
+       stron usług. Zdania 1:1 z dotychczasowej listy, zmienia się tylko forma
+       (<ol> zamiast <ul>, numer w płytce). */
     {
-      typ: 'lista',
-      punkty: [
-        'Zacznij od jednego problemu, który realnie boli, nie od listy funkcji.',
-        'Policz zwrot zanim zamówisz: ile godzin i leadów bot odzyska co miesiąc.',
-        'Wybierz wąski zakres na start, rozszerzaj po pierwszym efekcie.',
-        'Pytaj o koszt opieki, nie tylko o setup. To opieka decyduje o tym, czy bot działa po roku.',
+      typ: 'kroki',
+      kroki: [
+        { tytul: 'Zacznij od jednego problemu, który realnie boli, nie od listy funkcji.' },
+        { tytul: 'Policz zwrot zanim zamówisz: ile godzin i leadów bot odzyska co miesiąc.' },
+        { tytul: 'Wybierz wąski zakres na start, rozszerzaj po pierwszym efekcie.' },
+        {
+          tytul:
+            'Pytaj o koszt opieki, nie tylko o setup. To opieka decyduje o tym, czy bot działa po roku.',
+        },
       ],
     },
     {

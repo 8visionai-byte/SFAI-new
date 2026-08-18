@@ -1,6 +1,8 @@
+import type { CSSProperties } from 'react';
 import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import type { Blok } from '@/lib/blog/types';
+import type { InfDekor } from '@/lib/inf-kategorie';
 
 /**
  * PostBody — render treści artykułu z tablicy bloków (`Post['tresc']`).
@@ -17,12 +19,20 @@ import type { Blok } from '@/lib/blog/types';
  * `noUncheckedIndexedAccess` jest włączony, więc dostęp do komórek tabeli jest
  * bezpieczny (pierwszy wiersz traktujemy jako nagłówkowy, reszta jako dane).
  */
-export function PostBody({ tresc }: { tresc: Blok[] }) {
+export function PostBody({ tresc, ton }: { tresc: Blok[]; ton?: InfDekor }) {
   if (tresc.length === 0) return null;
+
+  /* v21: ton strony (kolor kategorii/typu) wchodzi jako custom property na
+     wspólnym wrapperze, więc każda karta w treści świeci tym samym kolorem co
+     reszta serwisu („naczynia połączone"). Bez propa `ton` render jest 1:1
+     jak dotąd — blog i pozostałe poradniki wyglądają identycznie. */
+  const styl = ton
+    ? ({ '--card-c': ton.c, '--card-c-l': ton.odcien ?? ton.c } as CSSProperties)
+    : undefined;
 
   return (
     <Section tone="base">
-      <div className="mx-auto flex max-w-narrow flex-col gap-6">
+      <div className="mx-auto flex max-w-narrow flex-col gap-6" style={styl}>
         {tresc.map((blok, i) => (
           <Reveal key={i} delay={Math.min(i * 0.03, 0.15)}>
             <BlokRender blok={blok} />
@@ -73,6 +83,78 @@ function BlokRender({ blok }: { blok: Blok }) {
         </ul>
       );
 
+    /* v21 — SEKCJA W KARCIE: nagłówek + akapity (+ lista) w `.inf-card`
+       z wariantem ramki i tonem strony. Zero nowych reguł CSS: te same klasy,
+       co karty na home i stronach usług (kątowniki, hover, sweep, reflektor
+       wchodzą z globals). Semantyka bez zmian: h2 + p + ul. */
+    case 'sekcja': {
+      const wariant =
+        blok.wariant === 'edge'
+          ? 'inf-card-edge'
+          : blok.wariant === 'quiet'
+            ? 'inf-card-quiet'
+            : 'inf-card-top';
+      return (
+        <section className={`inf-card ${wariant} p-6 md:p-8`}>
+          <div aria-hidden="true" className="inf-spotlight" />
+          <h2 className="text-h2">{blok.naglowek}</h2>
+          {blok.akapity.map((tekst, i) => (
+            <p key={i} className={`text-body text-fg-muted ${i === 0 ? 'mt-4' : 'mt-3'}`}>
+              {tekst}
+            </p>
+          ))}
+          {blok.punkty && blok.punkty.length > 0 && (
+            <ul className="mt-4 ml-5 list-disc space-y-2 text-body text-fg-muted marker:text-[color:var(--card-c,var(--accent))]">
+              {blok.punkty.map((punkt, i) => (
+                <li key={i}>{punkt}</li>
+              ))}
+            </ul>
+          )}
+        </section>
+      );
+    }
+
+    /* v21 — KAFLE LICZB: pudełka `.inf-hero-stat` (jak hero usług), liczba na
+       żywej `.inf-counter-value` (mono, pełny kolor, poświata), label na
+       `.inf-counter-label`. Lista <ul>, żeby bot czytał to jako zbiór faktów. */
+    case 'kafle':
+      return (
+        <ul className="grid grid-cols-2 gap-[10px] sm:grid-cols-4">
+          {blok.kafle.map((kafel, i) => (
+            <li key={i} className="inf-hero-stat text-center">
+              <span className="inf-counter-value block text-[24px] font-black leading-none">
+                {kafel.wartosc}
+              </span>
+              <span className="inf-counter-label mt-[6px] block">{kafel.opis}</span>
+            </li>
+          ))}
+        </ul>
+      );
+
+    /* v21 — KROKI: numer w płytce `.inf-tile` + tytuł i opis, wzorzec
+       KrokiJakToDziala. <ol> zachowuje kolejność dla czytnika i bota. */
+    case 'kroki':
+      return (
+        <ol className="flex flex-col gap-4">
+          {blok.kroki.map((krok, i) => (
+            <li key={i} className="inf-card inf-card-edge flex gap-4 p-5">
+              <span
+                aria-hidden="true"
+                className="inf-tile flex h-[40px] w-[40px] flex-none items-center justify-center font-mono text-[15px] font-extrabold"
+              >
+                {i + 1}
+              </span>
+              <span className="min-w-0">
+                <span className="text-ui block font-extrabold">{krok.tytul}</span>
+                {krok.opis && (
+                  <span className="text-body-sm mt-1 block text-fg-muted">{krok.opis}</span>
+                )}
+              </span>
+            </li>
+          ))}
+        </ol>
+      );
+
     case 'tabela': {
       const [naglowekWiersz, ...wierszeDanych] = [blok.naglowki, ...blok.wiersze];
       // Liczba kolumn = najszerszy wiersz (nagłówek albo dane) — steruje min-w.
@@ -87,7 +169,12 @@ function BlokRender({ blok }: { blok: Blok }) {
          POCHODZI z wiersza nagłówkowego TEJ tabeli (wpis może mieć ich kilka),
          więc rozróżnia tabele i nie wnosi ani jednego nowego stringa treści. */
       const nazwaTabeli = (naglowekWiersz ?? []).filter(Boolean).join(', ');
-      return (
+      /* v21: `wKarcie` owija tabelę w `.inf-card` z tonem strony — ten sam
+         język, co PorownanieTabela na stronach usług. Tabela pozostaje
+         PRAWDZIWĄ <table> ze scope (bot czyta ją tak samo), karta dokłada
+         wyłącznie ramkę, kątowniki i reflektor. Stare tabele (bez pola)
+         renderują się dokładnie jak dotąd — zero regresji na blogu. */
+      const tabelaEl = (
         /* INFINITY v6 (spec §PARTIA D zad. 2): tabela wpisu w tym samym języku
            co tabele home i usług — bez pudełka z ramką, nagłówki mono
            .inf-overline (AA: --fg-muted zamiast dekoracyjnego --fg-subtle),
@@ -148,6 +235,13 @@ function BlokRender({ blok }: { blok: Blok }) {
               ))}
             </tbody>
           </table>
+        </div>
+      );
+      if (!blok.wKarcie) return tabelaEl;
+      return (
+        <div className="inf-card inf-card-top p-5 md:p-6">
+          <div aria-hidden="true" className="inf-spotlight" />
+          {tabelaEl}
         </div>
       );
     }

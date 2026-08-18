@@ -159,6 +159,54 @@ function BlokRender({ blok }: { blok: Blok }) {
         </blockquote>
       );
 
+    /* v21: bloki wprowadzone dla poradników (sekcja w karcie, kafle liczb,
+       kroki). Materiały mają własny, spokojniejszy język wizualny (to strony
+       pobrania pliku, nie treść do czytania), więc renderują je w formie
+       PODSTAWOWEJ: ta sama semantyka (h2 / p / ul / ol), zero kart. Chodzi
+       o to, żeby treść NIGDY nie zniknęła, gdyby ktoś użył nowego bloku
+       w materiale — wyczerpujący switch niżej dalej pilnuje kompletności. */
+    case 'sekcja':
+      return (
+        <section>
+          <h2 className="text-h2 mt-4">{blok.naglowek}</h2>
+          {blok.akapity.map((tekst, i) => (
+            <p key={i} className="text-body mt-3 text-fg-muted">
+              {tekst}
+            </p>
+          ))}
+          {blok.punkty && blok.punkty.length > 0 && (
+            <ul className="mt-3 ml-5 list-disc space-y-2 text-body text-fg-muted marker:text-accent">
+              {blok.punkty.map((punkt, i) => (
+                <li key={i}>{punkt}</li>
+              ))}
+            </ul>
+          )}
+        </section>
+      );
+
+    case 'kafle':
+      return (
+        <ul className="ml-5 list-disc space-y-2 text-body text-fg-muted marker:text-accent">
+          {blok.kafle.map((kafel, i) => (
+            <li key={i}>
+              <strong className="text-fg">{kafel.wartosc}</strong> {kafel.opis}
+            </li>
+          ))}
+        </ul>
+      );
+
+    case 'kroki':
+      return (
+        <ol className="ml-5 list-decimal space-y-2 text-body text-fg-muted marker:text-accent">
+          {blok.kroki.map((krok, i) => (
+            <li key={i}>
+              <span className="text-fg">{krok.tytul}</span>
+              {krok.opis && <span className="block text-body-sm">{krok.opis}</span>}
+            </li>
+          ))}
+        </ol>
+      );
+
     default: {
       // Wyczerpujący switch — gdy dojdzie nowy wariant Blok, TS zgłosi błąd tutaj.
       const _exhaustive: never = blok;

@@ -7,6 +7,7 @@ import { poradnikSchemas } from '@/components/seo/schemas';
 import { PORADNIKI_SLUGS, getPoradnikBySlug } from '@/lib/poradniki';
 
 import { PostBody, PostFAQ } from '@/components/blog';
+import { INF_TYP } from '@/lib/inf-kategorie';
 import { PoradnikHero, LinkiKrzyzowe, PoradnikCTA } from '@/components/poradniki';
 
 /**
@@ -82,8 +83,11 @@ export default async function PoradnikPage({
       {/* Hero answer-first: breadcrumbs (Centrum Wiedzy -> Poradniki) + kategoria + H1 + lead + meta */}
       <PoradnikHero poradnik={poradnik} />
 
-      {/* Treść poradnika — bloki renderowane serwerowo (reużyty PostBody bloga) */}
-      <PostBody tresc={poradnik.tresc} />
+      {/* Treść poradnika — bloki renderowane serwerowo (reużyty PostBody bloga).
+          v21 („naczynia połączone"): `ton` daje kartom w treści kolor PORADNIKA
+          z INF_TYP — ten sam cyjan, co karta tego poradnika na liście i karta
+          FAQ niżej. Bez tego sekcje w kartach świeciłyby fallbackowym akcentem. */}
+      <PostBody tresc={poradnik.tresc} ton={INF_TYP.poradnik} />
 
       {/* Opcjonalne FAQ — 1:1 z FAQPage JSON-LD (reużyty PostFAQ bloga).
           INFINITY v7 („naczynia połączone"): `typ` daje karcie FAQ ton

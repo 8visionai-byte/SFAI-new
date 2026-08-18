@@ -54,8 +54,44 @@ export type Blok =
   | { typ: 'naglowek'; tekst: string }
   | { typ: 'akapit'; tekst: string }
   | { typ: 'lista'; punkty: string[] }
-  | { typ: 'tabela'; naglowki: string[]; wiersze: string[][] }
-  | { typ: 'cytat'; tekst: string; zrodlo?: string };
+  | { typ: 'tabela'; naglowki: string[]; wiersze: string[][]; wKarcie?: boolean }
+  | { typ: 'cytat'; tekst: string; zrodlo?: string }
+  | {
+      /**
+       * SEKCJA W KARCIE — nagłówek + akapity + opcjonalna lista w jednej
+       * `.inf-card` z tonem strony (v21). Powód: poradniki renderowały się
+       * jako ciąg akapitów pod nagłówkami, czyli „ściana tekstu" (skarga
+       * Pawła 2026-08-18), gdy home i strony usług podają tę samą treść
+       * w kartach z kolorem, kątownikami i hoverem.
+       * SEMANTYKA BEZ ZMIAN: nagłówek to nadal <h2>, akapity to <p>, lista
+       * to <ul><li> — bot czyta identycznie jak dotąd, zmienia się wyłącznie
+       * opakowanie (kontrola v21 mierzy progi czytelności).
+       */
+      typ: 'sekcja';
+      naglowek: string;
+      akapity: string[];
+      punkty?: string[];
+      /** Wariant ramki (v13): domyślnie 'top' (górna linia w kolorze). */
+      wariant?: 'top' | 'edge' | 'quiet';
+    }
+  | {
+      /**
+       * KAFLE LICZB — te same pudełka co kafle statystyk w hero usług
+       * (`.inf-hero-stat`). Liczby WYŁĄCZNIE takie, które już stoją w treści
+       * poradnika; zero nowych danych.
+       */
+      typ: 'kafle';
+      kafle: { wartosc: string; opis: string }[];
+    }
+  | {
+      /**
+       * KROKI NUMEROWANE — lista pozycji z numerem w płytce, wzorzec
+       * `KrokiJakToDziala` ze stron usług. Renderowana jako <ol><li>,
+       * żeby kolejność była czytelna także dla bota.
+       */
+      typ: 'kroki';
+      kroki: { tytul: string; opis?: string }[];
+    };
 
 /** Pytanie + odpowiedź FAQ wpisu. `odpowiedz` trafia 1:1 na stronę (i może wejść do FAQPage). */
 export type PostFaq = {
