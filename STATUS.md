@@ -1,3 +1,51 @@
+# STATUS — v22 (2b2c1b4) + dogrywka v22b (d487273) — PRODUKCJA
+
+ZLECENIE PAWŁA: podstrony w języku wzorca (5 podstron infinitytechstack.uk),
+więcej ramek, linkowanie ma współgrać, „najważniejsze boty i Google mają to
+czytać", core nietykalny.
+
+PROCES: 13 agentów. Runda główna: 3 rozpoznania (wzorzec / nasze podstrony /
+linkowanie) -> architekt złożył PLAN-v22.md z kryteriami odbioru -> silnik ->
+3 partie treści -> kontrola (SHIP WITH MINORS, 4 kryteria niespełnione, bo
+3 trasy wypadły przez lukę w podziale pracy). Dogrywka v22b: 3 agenty na
+brakujące trasy + kontrola (NO-SHIP: sitemap i 2 majory) -> fixy sesji głównej.
+
+ZYSK DLA BOTÓW (GPTBot bez JS, 49 tras, 18 metryk): ZERO SPADKÓW.
+Blog: karty 1->14-20, H3 0->4, tabela 0->1, linki 2->8-9. Realizacje:
+karty 4->11. Materiały: karty 1->10-18. Huby: details 0->5-6, JSON-LD 1->3.
+Produkcja po wdrożeniu: /uslugi 11201 znaków (było 7608), /narzedzia 21259
+(18229), /kontakt 10534 (5194), blog 13511, materiały 12174 z 6 tabelami.
+
+ODKRYCIE AUDYTU: components/materialy/MaterialBody był 217-liniowym FORKIEM
+PostBody, który CELOWO degradował bloki do gołego HTML — stąd 6 materiałów
+z jedną kartą i 11 tys. znaków ściany tekstu. Teraz cienkie opakowanie
+PostBody: jeden render treści w całym serwisie.
+
+CORE NIETYKALNY (zmierzone): home 29445 = 29445 znaków co do znaku, computed
+10 typów elementów zero różnic, 53 karty porównane PO TREŚCI — zero zmian.
+
+NAPRAWIONE W DOGRYWCE (znaleziska własnej kontroli):
+1. RYZYKO PRAWNE: „Twoje dane zostają u nas i nie trafiają do nikogo" było
+   nieprawdziwe (api/lead POST-uje do Make.com, a polityka prywatności wprost
+   opisuje to powierzenie). Zdanie rozszerzono w dogrywce z 1 miejsca do 3,
+   w tym do FAQPage JSON-LD. Zamienione na wersję zgodną z faktami; poprawione
+   TAKŻE wystąpienie sprzed rundy w DiagnozaForm.
+2. „Pod KAŻDYM wynikiem stoi zastrzeżenie" — grep: 2 z 5 narzędzi. Zawężone.
+3. Daty w mapie witryny: 15 rejestrów przebudowanych w 2b2c1b4 mówiło Google
+   „bez zmian"; 4 trasy statyczne wyrównane do historii repo. Po fixie jedna
+   czerwcowa data w mapie i jest prawdziwa (/o-nas).
+4. Metryka „61 pytań" pomijała 18 pytań z podstron voicebotów.
+
+LINKI: 68 celów sprawdzonych żądaniem — zero martwych, sieroty domknięte,
+sitemap 50 URL. Po wdrożeniu: IndexNow 50 adresów + Bing 12, oba 200.
+
+CZEKA NA PAWŁA: ocena wizualna podstron (blog, realizacje, materiały, huby);
+GSC — zgłosić kluczowe adresy po tej przebudowie.
+DŁUG: Realizacja nie ma pola dataAktualizacji (wspólna stała dla 8 case'ów);
+5 ostrzeżeń lint w app/uslugi/voiceboty/[podstrona]/page.tsx (sprzed rundy).
+
+---
+
 # STATUS — v19 (4980c59) + treści/okruszki (ade91c3) — PRODUKCJA
 
 DESIGN v19: kątowniki dwa tryby (ukryty: 0%/14px -> hover 60%/8px, kreski
