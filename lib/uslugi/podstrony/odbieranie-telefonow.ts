@@ -33,24 +33,40 @@ import type { PodstronaUslugi } from './types';
  *  - „bot NIE dzwoni sam, obsługuje wyłącznie połączenia przychodzące,
  *    nigdy nie obiecuj kampanii wychodzących ani obdzwaniania bazy":
  *    api/_knowledge.mjs linia 56 (twarda reguła) + voiceboty.ts faq #2,
- *  - cena: pakiet startowy od 2500 zł jednorazowo za wdrożenie + opieka
- *    od 99 do 599 zł miesięcznie (lib/uslugi/voiceboty.ts ramaCeny,
- *    minPrice locked 2026-08-16).
+ *  - cena: pakiet startowy od 2500 zł jednorazowo za wdrożenie
+ *    (lib/uslugi/voiceboty.ts ramaCeny, minPrice locked 2026-08-16),
+ *  - DWA MODELE ROZLICZENIA (v20): „przekazujemy całą infrastrukturę i wtedy
+ *    nie płacisz abonamentu ALBO projekt zostaje u nas z opłatą utrzymaniową
+ *    od 99 do 599 zł miesięcznie" — lib/agent/knowledge.ts linia 104 (wpis
+ *    voicebotów), api/_knowledge.mjs linia 336 (reguła cenowa agenta) oraz
+ *    lib/uslugi/audyt-ai.ts (ramaCeny). Zero nowej kwoty: to przeredagowanie
+ *    dotychczasowego „każde wdrożenie ma abonament", sprzecznego z tą regułą.
  *
  * ŻELAZNA GRANICA: strona mówi wyraźnie, że bot obsługuje telefon PRZYCHODZĄCY
  * i nie wydzwania do nikogo. Fraza „boty dzwoniące na telefon" przyciąga ludzi
  * szukających kampanii wychodzących, a tego nie robimy. Lepiej odfiltrować
  * złe zapytanie na stronie niż na rozmowie.
+ *
+ * v20 (SPEC v20, skarga Pawła „tekstów jest naprawdę dużo"): objętość ścięta
+ * do poziomu strony macierzystej; `kroki[1].opis` był najdłuższym opisem kroku
+ * w całym zestawie (36 słów przy 20 u rodzica). Wycięta wata: powtórzone
+ * zaprzeczenie o połączeniach wychodzących (zostaje jedno w treści, jedno
+ * w kapsule, jedno w FAQ) i zdania, które komponent RamaCeny.tsx sam drukuje
+ * pod kartą („Dokładną cenę poznasz na bezpłatnej diagnozie, zanim cokolwiek
+ * zamówisz. Bez ukrytych kosztów.").
  */
 export const odbieranieTelefonow: PodstronaUslugi = {
   rodzic: 'voiceboty',
   slug: 'odbieranie-telefonow',
-  dataAktualizacji: '2026-08-17',
+  dataAktualizacji: '2026-08-18',
 
-  h1: 'Bot telefoniczny, który odbiera telefon, gdy Ty nie możesz',
+  // v20: 58 -> 44 znaków (pomiar §4b: 4 linie -> 3 na 1440, 5 -> 4 na 375/320).
+  // Fraza obowiązkowa „bot telefoniczny" zostaje NA POCZĄTKU (poz. 16,9 w GSC),
+  // „24/7" jest już w metaTitle, kapsule, tabeli i FAQ tej strony.
+  h1: 'Bot telefoniczny, który odbiera telefon 24/7',
 
   kapsula:
-    'Bot telefoniczny do odbierania połączeń odbiera każdy telefon przychodzący, także po godzinach i w weekend. Rozmawia po polsku, mówi wprost, że jest asystentem AI, odpowiada na powtarzalne pytania z Twojego scenariusza i spisuje sprawę. Po rozmowie dostajesz podsumowanie z numerem i tym, czego dotyczyła. Bot nie dzwoni sam, obsługuje wyłącznie połączenia przychodzące.',
+    'Bot telefoniczny odbiera każdy telefon przychodzący, także po godzinach. Rozmawia po polsku, mówi, że jest asystentem AI, odpowiada na powtarzalne pytania z Twojego scenariusza i spisuje sprawę. Po rozmowie dostajesz podsumowanie. Bot nie dzwoni sam, obsługuje wyłącznie połączenia przychodzące.',
 
   metaTitle: 'Bot telefoniczny: odbiera połączenia 24/7',
   metaDescription:
@@ -59,49 +75,57 @@ export const odbieranieTelefonow: PodstronaUslugi = {
   problem: {
     h2: 'Ile zapytań tracisz, bo nikt nie odebrał telefonu?',
     tresc:
-      'Telefon dzwoni, gdy jesteś u klienta, za kierownicą albo w gabinecie z pacjentem. Nie odbierasz, bo nie możesz. Dzwoniący nie zostawia wiadomości, tylko wybiera następny numer z listy, a ten numer należy do kogoś innego. Najgorsze jest to, że tego nie widzisz w żadnym zestawieniu: nieodebrany telefon nie zostawia śladu w CRM ani w skrzynce. Do tego połowa tych rozmów to za każdym razem to samo: czy jest wolny termin, ile to kosztuje, gdzie jesteście, do której pracujecie.',
+      'Nie odbierasz, bo jesteś u klienta, za kierownicą albo w gabinecie z pacjentem. Dzwoniący nie zostawia wiadomości, tylko wybiera następny numer z listy. Nieodebrany telefon nie zostawia śladu w CRM ani w skrzynce, więc nawet tego nie widzisz. Połowa tych rozmów to w kółko to samo: czy jest wolny termin, ile to kosztuje, do której pracujecie.',
   },
 
   rozwiazanie: {
     h2: 'Co się dzieje, gdy telefon odbiera bot?',
     tresc:
-      'Bot odbiera od pierwszego sygnału, o każdej porze. Na starcie mówi, że jest asystentem AI. Potem pyta, w czym może pomóc, i odpowiada na to, co sam wpiszesz do scenariusza: godziny otwarcia, dojazd, zakres usług, orientacyjne ceny. Sprawy, których nie ma w scenariuszu, spisuje i przekazuje dalej, więc wraca do Ciebie gotowy temat, a nie sam numer na wyświetlaczu. Po każdej rozmowie dostajesz podsumowanie: kto dzwonił, o co pytał i co bot ustalił. Ty decydujesz, co bot może powiedzieć, a czego nie mówi nigdy. Bot nie dzwoni sam do nikogo. Obsługuje wyłącznie połączenia przychodzące.',
+      'Bot odbiera o każdej porze i na starcie mówi, że jest asystentem AI. Pyta, w czym może pomóc, i odpowiada na to, co wpiszesz do scenariusza: godziny otwarcia, dojazd, zakres usług, orientacyjne ceny. Sprawy spoza scenariusza spisuje i przekazuje dalej. Po każdej rozmowie dostajesz podsumowanie: kto dzwonił, o co pytał i co bot ustalił. Bot nie dzwoni sam do nikogo: obsługuje wyłącznie połączenia przychodzące.',
   },
 
+  /* v20 — DWIE poprawki, obie zmierzone (raporty/pomiary-v20.md):
+     1. `wiersze[0].zNami` MUSI zawierać „24/7". Poprzednie brzmienie („Odebrane
+        i zapisane, też w nocy i w weekend") tego ciągu nie miało, więc bramka
+        w ServiceHero.kafleStatystyk nie łapała wiersza i hero tej podstrony
+        renderowało 3 kafle zamiast 4 (u rodzica i u dwóch sióstr: 4). Zero
+        nowego faktu: 24/7 stoi już w H1, metaTitle, kapsule i FAQ tej strony.
+     2. `cecha` średnio 25 znaków przy 12 u rodzica: komórki łamały się na dwie
+        linie i sekcja tabeli była najwyższa w całym zestawie (860 px vs 728). */
   tabelaPorownawcza: {
     h2: 'Nieodebrany telefon a telefon odebrany przez bota',
     naglowekBez: 'Telefon bez odbioru',
     naglowekZNami: 'Bot telefoniczny od SimpleFast.ai',
     wiersze: [
       {
-        cecha: 'Połączenie po godzinach',
+        cecha: 'Godziny',
         bez: 'Sygnał albo poczta głosowa',
-        zNami: 'Odebrane i zapisane, też w nocy i w weekend',
+        zNami: '24/7, też w nocy i w weekend',
       },
       {
-        cecha: 'Dzwoniący, który się spieszy',
+        cecha: 'Dzwoniący',
         bez: 'Wybiera kolejny numer z listy',
         zNami: 'Dostaje odpowiedź od razu',
       },
       {
-        cecha: 'Powtarzalne pytania',
-        bez: 'Za każdym razem odpowiadasz sam',
-        zNami: 'Bot odpowiada z Twojego scenariusza',
+        cecha: 'Częste pytania',
+        bez: 'Za każdym razem Ty',
+        zNami: 'Bot odpowiada ze scenariusza',
       },
       {
         cecha: 'Ślad po rozmowie',
-        bez: 'Nieodebrane połączenie i tyle',
-        zNami: 'Podsumowanie: kto dzwonił i w jakiej sprawie',
+        bez: 'Nieodebrane i tyle',
+        zNami: 'Podsumowanie: kto dzwonił i po co',
       },
       {
-        cecha: 'Sprawa trudna albo nietypowa',
-        bez: 'Trzeba oddzwonić i zacząć od zera',
-        zNami: 'Spisana i przekazana człowiekowi z notatką',
+        cecha: 'Sprawa nietypowa',
+        bez: 'Oddzwaniasz i zaczynasz od zera',
+        zNami: 'Spisana i przekazana z notatką',
       },
       {
-        cecha: 'Praca w trakcie rozmowy z klientem',
-        bez: 'Telefon przerywa spotkanie',
-        zNami: 'Bot odbiera, Ty kończysz spokojnie',
+        cecha: 'Spotkanie z klientem',
+        bez: 'Telefon przerywa rozmowę',
+        zNami: 'Bot odbiera, Ty kończysz',
       },
     ],
   },
@@ -112,25 +136,30 @@ export const odbieranieTelefonow: PodstronaUslugi = {
       {
         tytul: 'Diagnoza (bezpłatna)',
         opis:
-          'Sprawdzamy, ile połączeń zostaje u Ciebie bez odbioru i o co dzwoniący pytają najczęściej. Mówimy wprost, czy bot telefoniczny się tu opłaca, zanim cokolwiek zamówisz.',
+          'Sprawdzamy, ile połączeń zostaje bez odbioru i o co dzwoniący pytają najczęściej. Mówimy wprost, czy bot się opłaca.',
       },
       {
         tytul: 'Scenariusz i numer',
         opis:
-          'Wpisujemy odpowiedzi na pytania, które padają najczęściej, i ustawiamy granice: co bot mówi, a czego nie mówi nigdy. Podłączamy numer i miejsce, do którego mają trafiać podsumowania rozmów. Testujemy na żywo, aż brzmi tak, jak chcesz.',
+          'Wpisujemy odpowiedzi na najczęstsze pytania i ustawiamy granice: co bot mówi, a czego nie mówi nigdy. Podłączamy numer. Testujemy na żywo.',
       },
       {
         tytul: 'Opieka i rozwój',
         opis:
-          'Słuchamy rozmów, poprawiamy odpowiedzi i dokładamy scenariusze. Ty widzisz, które sprawy bot załatwił sam, a które przekazał człowiekowi.',
+          'Słuchamy rozmów, poprawiamy odpowiedzi i dokładamy scenariusze. Widzisz, które sprawy bot załatwił sam, a które przekazał człowiekowi.',
       },
     ],
   },
 
   ramaCeny: {
     h2: 'Ile kosztuje bot do odbierania telefonów?',
+    /* v20: kwota NA POCZĄTEK (H2 pyta „ile kosztuje"). Wycięte: „Cena jest ta
+       sama co przy każdym naszym voicebocie" oraz „Dokładną wycenę podajemy po
+       bezpłatnej diagnozie. Bez ukrytych kosztów." — to zdanie RamaCeny.tsx
+       drukuje pod kartą na sztywno. Sformułowanie „2500 zł jednorazowo za
+       wdrożenie" ZOSTAJE (należy do modelu dwóch rozliczeń). */
     tresc:
-      'Cena jest ta sama co przy każdym naszym voicebocie. Pakiet startowy zaczyna się od 2500 zł jednorazowo za wdrożenie: bot odbierający telefon 24/7 i rozmawiający po polsku, konfiguracja scenariuszy i podłączenie numeru. Do tego dochodzi koszt działania zależny od liczby rozmów. Każde wdrożenie ma abonament opieki od 99 do 599 zł miesięcznie, bo nie zostawiamy klientów samych z botem. Dokładną wycenę podajemy po bezpłatnej diagnozie. Bez ukrytych kosztów.',
+      'Pakiet startowy zaczyna się od 2500 zł jednorazowo za wdrożenie: bot odbierający telefon 24/7 i rozmawiający po polsku, konfiguracja scenariuszy i podłączenie numeru. Do tego koszt działania zależny od liczby rozmów. Opiekę rozliczasz na dwa sposoby: bez abonamentu, gdy przekazujemy Ci całą infrastrukturę, albo za 99 do 599 zł miesięcznie, gdy projekt zostaje u nas.',
     minPrice: 2500,
     /* Link powrotny do usługi macierzystej (wymóg podstrony: każda wraca do
        rodzica realnym odnośnikiem). Pole `linkPoradnik` to jedyny slot na link
@@ -148,12 +177,12 @@ export const odbieranieTelefonow: PodstronaUslugi = {
     {
       pytanie: 'Czy bot telefoniczny dzwoni sam do klientów?',
       odpowiedz:
-        'Nie. Nasz bot obsługuje wyłącznie połączenia przychodzące. Nie robimy botów, które same wydzwaniają do ludzi, bo to psuje zaufanie do firmy. Jeśli szukasz rozwiązania do obdzwaniania bazy, to nie jest usługa dla Ciebie i wolimy powiedzieć to od razu.',
+        'Nie. Nasz bot obsługuje wyłącznie połączenia przychodzące. Nie robimy botów, które same wydzwaniają do ludzi, bo to psuje zaufanie do firmy. Jeśli szukasz rozwiązania do obdzwaniania bazy, to nie jest usługa dla Ciebie.',
     },
     {
       pytanie: 'Czy dzwoniący pozna, że rozmawia z botem?',
       odpowiedz:
-        'Tak, i tak ma być. Bot na początku rozmowy mówi, że jest asystentem AI. Tego wymaga AI Act, a my się tego trzymamy. Brzmi naturalnie i po polsku, ale nikogo nie udaje.',
+        'Tak, i tak ma być. Bot na początku rozmowy mówi, że jest asystentem AI. Tego wymaga AI Act. Brzmi naturalnie i po polsku, ale nikogo nie udaje.',
     },
     {
       pytanie: 'Co się dzieje, gdy bot nie zna odpowiedzi?',
@@ -168,12 +197,12 @@ export const odbieranieTelefonow: PodstronaUslugi = {
     {
       pytanie: 'Czy nagrania rozmów są bezpieczne pod kątem RODO?',
       odpowiedz:
-        'Tak. Dane z rozmów zostają w Unii Europejskiej i przetwarzamy je zgodnie z RODO oraz AI Act. Podpisujemy umowę powierzenia danych, a Ty decydujesz, co bot nagrywa i przechowuje. W każdej chwili masz wgląd i kontrolę.',
+        'Tak. Dane z rozmów zostają w Unii Europejskiej i przetwarzamy je zgodnie z RODO oraz AI Act. Podpisujemy umowę powierzenia danych, a Ty decydujesz, co bot nagrywa i przechowuje.',
     },
     {
       pytanie: 'Ile kosztuje bot do odbierania telefonów?',
       odpowiedz:
-        'Pakiet startowy kosztuje od 2500 zł jednorazowo za wdrożenie. W tej cenie jest bot, który odbiera telefon 24/7 i rozmawia po polsku, konfiguracja scenariuszy i podłączenie numeru. Do tego dochodzi koszt działania zależny od liczby rozmów, a każde wdrożenie ma abonament opieki od 99 do 599 zł miesięcznie. Dokładną wycenę podajemy po bezpłatnej diagnozie.',
+        'Pakiet startowy kosztuje od 2500 zł jednorazowo za wdrożenie: bot odbierający telefon 24/7 po polsku, konfiguracja scenariuszy i podłączenie numeru. Do tego koszt działania zależny od liczby rozmów. Opiekę rozliczasz bez abonamentu, gdy przekazujemy Ci infrastrukturę, albo za 99 do 599 zł miesięcznie, gdy projekt zostaje u nas. Dokładną wycenę podajemy po bezpłatnej diagnozie.',
     },
   ],
 
@@ -181,7 +210,7 @@ export const odbieranieTelefonow: PodstronaUslugi = {
     label: 'Policz moje nieodebrane telefony',
     href: '#diagnoza',
     mikrokopia:
-      'Sprawdzimy, ile połączeń zostaje dziś u Ciebie bez odbioru i ile z nich odbierze za Ciebie bot. Bez zobowiązań.',
+      'Sprawdzimy, ile połączeń zostaje dziś bez odbioru i ile z nich odbierze bot. Bez zobowiązań.',
     dowod:
       'Każde wdrożenie zaczynamy od bezpłatnej diagnozy. Najpierw liczby, potem decyzja.',
   },

@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react';
 import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import type { Usluga } from '@/lib/uslugi/types';
-import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { dekorUslugi } from '@/lib/inf-kategorie';
 
 /**
  * ServiceFAQ — SEKCJA 7 szablonu (5–6 pytań, answer-first).
@@ -23,8 +23,17 @@ import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
  * `divide-y` zeszło na wewnętrzny wrapper — reflektor jest dzieckiem karty, więc
  * na liście dzielonej kreską dokładałby linię nad pierwszym pytaniem.
  */
-export function ServiceFAQ({ faq, slug }: { faq: Usluga['faq']; slug: Usluga['slug'] }) {
-  const dekor = INF_KATEGORIA[slug] ?? INF_KATEGORIA_DEFAULT;
+export function ServiceFAQ({
+  faq,
+  slug,
+  rodzic,
+}: {
+  faq: Usluga['faq'];
+  slug: Usluga['slug'];
+  /** Slug usługi macierzystej (podstrony) — ton dziedziczy się z rodziny. */
+  rodzic?: string;
+}) {
+  const dekor = dekorUslugi(slug, rodzic);
   return (
     <Section tone="subtle">
       <div className="mx-auto max-w-narrow">

@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react';
 import { Section, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { POSITIONING } from '@/lib/site';
-import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { dekorUslugi } from '@/lib/inf-kategorie';
 import { Breadcrumbs } from './Breadcrumbs';
 import type { Usluga } from '@/lib/uslugi/types';
 
@@ -82,6 +82,13 @@ const H1_KOLOR: Record<string, string> = {
   rozwiazania: 'aplikacje i wtyczki na zamówienie',
   'strony-www': 'widocznych w Google i w AI',
   optymalizacja: 'bądź cytowany w ChatGPT i Perplexity',
+  /* v20 (kontrola, MINOR-2): PODSTRONY voicebotów, klucz = ich slug. Rodzic
+     i wszystkie strony usług mają kolorowy człon H1; podstrony świeciły
+     w całości szarym, co czytało się jak inna rodzina stron. Fragment musi
+     być dokładną końcówką h1 z rejestru (dzielH1 to sprawdza). */
+  'odbieranie-telefonow': 'odbiera telefon 24/7',
+  windykacja: 'odbiera telefon 24/7',
+  'potwierdzanie-wizyt': 'wizyt 24/7',
 };
 
 /** Dzieli h1 na część neutralną i kolorową końcówkę; przy braku dopasowania
@@ -172,7 +179,8 @@ export function ServiceHero({
   // Kolor przewodni usługi = c z rejestru dekoracji (ten sam, co karta tej
   // usługi na home). To DEKORACJA: kolor nie niesie treści, kontrast tekstu
   // stoi na tokenach/wartościach policzonych w komentarzu nagłówkowym.
-  const c = (INF_KATEGORIA[usluga.slug] ?? INF_KATEGORIA_DEFAULT).c;
+  // Podstrona (ma pole `rodzic`) dziedziczy kolor rodziny — patrz dekorUslugi.
+  const c = dekorUslugi(usluga.slug, (usluga as { rodzic?: string }).rodzic).c;
   const h1 = dzielH1(usluga.slug, usluga.h1);
   const kafle = kafleStatystyk(usluga);
 

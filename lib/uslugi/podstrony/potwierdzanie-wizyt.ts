@@ -17,8 +17,14 @@ import type { PodstronaUslugi } from './types';
  *  - potwierdzenia i przypomnienia wychodzą same, tekstem, z automatu:
  *    lib/uslugi/automatyzacje.ts (rozwiazanie.tresc, faq),
  *  - cena: pakiet startowy od 2500 zł (bot 24/7 po polsku, umawianie wizyt,
- *    wdrożenie i konfiguracja) + opieka od 99 do 599 zł miesięcznie:
- *    lib/uslugi/voiceboty.ts ramaCeny (minPrice locked 2026-08-16).
+ *    wdrożenie i konfiguracja): lib/uslugi/voiceboty.ts ramaCeny
+ *    (minPrice locked 2026-08-16),
+ *  - DWA MODELE ROZLICZENIA (v20): „przekazujemy całą infrastrukturę i wtedy
+ *    nie płacisz abonamentu ALBO projekt zostaje u nas z opłatą utrzymaniową
+ *    od 99 do 599 zł miesięcznie" — lib/agent/knowledge.ts linia 104 (wpis
+ *    voicebotów), api/_knowledge.mjs linia 336 (reguła cenowa agenta) oraz
+ *    lib/uslugi/audyt-ai.ts (ramaCeny). Zero nowej kwoty: to przeredagowanie
+ *    dotychczasowego „każde wdrożenie ma abonament", sprzecznego z tą regułą.
  *
  * ŻELAZNA GRANICA TEJ PODSTRONY (decyzja Pawła):
  *  Rynek pod frazą „potwierdzanie wizyt" rozumie zwykle bota, który OBDZWANIA
@@ -27,16 +33,26 @@ import type { PodstronaUslugi } from './types';
  *  przychodzącej, potwierdzenie wysłane tekstem oraz obsługa odwołań i zmian,
  *  gdy klient dzwoni. Zdanie o braku połączeń wychodzących stoi w kapsule,
  *  w treści i w pierwszym pytaniu FAQ.
+ *
+ * v20 (SPEC v20, skarga Pawła „tekstów jest naprawdę dużo"): objętość ścięta
+ * do poziomu strony macierzystej. Wycięta wata: scenki wprowadzające w
+ * `problem`, drugie zaprzeczenie o połączeniach wychodzących w `rozwiazanie`
+ * (zostaje jedno) i zdania, które komponent RamaCeny.tsx sam drukuje pod kartą
+ * („Dokładną cenę poznasz na bezpłatnej diagnozie... Bez ukrytych kosztów.").
  */
 export const potwierdzanieWizyt: PodstronaUslugi = {
   rodzic: 'voiceboty',
   slug: 'potwierdzanie-wizyt',
-  dataAktualizacji: '2026-08-17',
+  dataAktualizacji: '2026-08-18',
 
-  h1: 'Voicebot do potwierdzania wizyt, który umawia i pilnuje terminów',
+  // v20: 64 -> 36 znaków. Jedyny kandydat z pomiaru (§4b), który łamie się na
+  // 3 linie na WSZYSTKICH trzech szerokościach (1440/375/320) i nie zostawia
+  // sieroty. Fraza główna „voicebot do potwierdzania wizyt" w całości na
+  // początku; „24/7" jest już w metaTitle, kapsule, tabeli i FAQ tej strony.
+  h1: 'Voicebot do potwierdzania wizyt 24/7',
 
   kapsula:
-    'Voicebot do potwierdzania wizyt odbiera telefon 24/7, umawia termin i zapisuje go w Twoim kalendarzu, a zaraz po rozmowie wysyła potwierdzenie. Gdy klient dzwoni, żeby przełożyć albo odwołać wizytę, bot załatwia to bez Ciebie i zwalnia godzinę w grafiku. Rozmawia po polsku i mówi wprost, że jest asystentem AI. Nie dzwoni sam: potwierdzenia i przypomnienia idą tekstem.',
+    'Voicebot do potwierdzania wizyt odbiera telefon 24/7, umawia termin, zapisuje go w Twoim kalendarzu i wysyła potwierdzenie. Odwołania i zmiany terminu załatwia bez Ciebie. Rozmawia po polsku i mówi, że jest asystentem AI. Nie dzwoni sam: potwierdzenia i przypomnienia idą tekstem.',
 
   metaTitle: 'Voicebot do potwierdzania wizyt: umawia 24/7',
   metaDescription:
@@ -45,15 +61,20 @@ export const potwierdzanieWizyt: PodstronaUslugi = {
   problem: {
     h2: 'Ile wizyt przepada, bo nikt nie odebrał telefonu?',
     tresc:
-      'Klient dzwoni, żeby się umówić, i trafia na sygnał, bo akurat jesteś przy pracy. Drugi dzwoni wieczorem, żeby odwołać jutrzejszy termin, i zostawia to na poczcie głosowej, której nikt nie odsłucha przed rankiem. Rano stoisz z pustą godziną w grafiku, której już nikomu nie sprzedasz. Do tego ręczne wpisywanie terminów i te same pytania w kółko: kiedy, gdzie, ile to trwa. Dzień zjedzony, a kalendarz i tak się rozjeżdża.',
+      'Klient dzwoni, żeby się umówić, i trafia na sygnał. Drugi odwołuje jutrzejszy termin wieczorem, na poczcie głosowej, której nikt nie odsłucha przed rankiem. Rano stoisz z pustą godziną w grafiku, której już nikomu nie sprzedasz. Do tego te same pytania w kółko: kiedy, gdzie, ile to trwa.',
   },
 
   rozwiazanie: {
     h2: 'Jak voicebot umawia i potwierdza wizytę?',
     tresc:
-      'Voicebot odbiera telefon, także po godzinach. Widzi wolne terminy w Twoim kalendarzu, proponuje je dzwoniącemu i zapisuje wizytę od razu w trakcie rozmowy. Zaraz po niej wychodzi potwierdzenie tekstem, można ustawić SMS z numerem Twojej firmy. Gdy klient dzwoni, żeby przełożyć albo odwołać termin, bot zmienia wpis i zwalnia godzinę, więc możesz ją komuś oddać jeszcze tego samego dnia. Sprawy, których nie ma w scenariuszu, przekazuje Tobie razem z notatką z rozmowy. Voicebot nie dzwoni sam z przypomnieniem o wizycie. Przypomnienie idzie tekstem, a rozmowę zaczyna klient, który oddzwania.',
+      'Voicebot odbiera telefon, także po godzinach. Widzi wolne terminy w Twoim kalendarzu, proponuje je dzwoniącemu i zapisuje wizytę w trakcie rozmowy. Potwierdzenie wychodzi tekstem, można ustawić SMS z numerem Twojej firmy. Gdy klient dzwoni, żeby przełożyć albo odwołać termin, bot zmienia wpis i zwalnia godzinę. Sprawy spoza scenariusza przekazuje Tobie z notatką z rozmowy. Voicebot nie dzwoni sam: przypomnienie o wizycie idzie tekstem.',
   },
 
+  /* v20: komórki skrócone do długości rodzica (cecha ~12 zn, zNami ~30 zn),
+     żeby wiersze nie łamały się na dwie linie (pomiar §2d: +79 px na sekcji).
+     Wiersz 1 MUSI zawierać „24/7" w kolumnie zNami: to bramka czwartego kafla
+     statystyk w hero (ServiceHero.kafleStatystyk), a etykietą kafla jest
+     `cecha` tego wiersza. */
   tabelaPorownawcza: {
     h2: 'Umawianie i potwierdzanie wizyt ręcznie a z voicebotem',
     naglowekBez: 'Kalendarz prowadzony ręcznie',
@@ -61,33 +82,33 @@ export const potwierdzanieWizyt: PodstronaUslugi = {
     wiersze: [
       {
         cecha: 'Telefon od klienta',
-        bez: 'Odbierasz, gdy akurat możesz',
-        zNami: 'Odbierany 24/7, też wieczorem i w weekend',
+        bez: 'Odbierasz, gdy możesz',
+        zNami: '24/7, też wieczorem i w weekend',
       },
       {
         cecha: 'Zapis terminu',
-        bez: 'Ręcznie, w przerwie między klientami',
-        zNami: 'Bot zapisuje w kalendarzu w trakcie rozmowy',
+        bez: 'Ręcznie, w przerwie',
+        zNami: 'Zapis w kalendarzu od razu',
       },
       {
-        cecha: 'Potwierdzenie terminu',
-        bez: 'Jeśli ktoś zdąży je wysłać',
-        zNami: 'Wychodzi tekstem zaraz po rozmowie',
+        cecha: 'Potwierdzenie',
+        bez: 'Jeśli ktoś zdąży',
+        zNami: 'Wychodzi tekstem po rozmowie',
       },
       {
         cecha: 'Odwołanie wizyty',
         bez: 'Poczta głosowa odsłuchana rano',
-        zNami: 'Bot odwołuje i zwalnia termin od razu',
+        zNami: 'Bot zwalnia termin od razu',
       },
       {
         cecha: 'Zmiana terminu',
-        bez: 'Telefon do Ciebie i ustalanie od nowa',
-        zNami: 'Bot proponuje wolne godziny z kalendarza',
+        bez: 'Telefon i ustalanie od nowa',
+        zNami: 'Bot proponuje wolne godziny',
       },
       {
         cecha: 'Pytania o wizytę',
-        bez: 'Za każdym razem odpowiadasz Ty',
-        zNami: 'Bot odpowiada z Twojego scenariusza',
+        bez: 'Za każdym razem Ty',
+        zNami: 'Bot odpowiada ze scenariusza',
       },
     ],
   },
@@ -98,25 +119,30 @@ export const potwierdzanieWizyt: PodstronaUslugi = {
       {
         tytul: 'Diagnoza (bezpłatna)',
         opis:
-          'Sprawdzamy, ile telefonów o wizyty odbierasz, ile z nich przepada i jak dziś prowadzisz kalendarz. Mówimy wprost, czy voicebot się u Ciebie opłaca.',
+          'Sprawdzamy, ile telefonów o wizyty przepada i jak dziś prowadzisz kalendarz. Mówimy wprost, czy voicebot się opłaca.',
       },
       {
         tytul: 'Kalendarz i scenariusze',
         opis:
-          'Podłączamy kalendarz i numer, ustawiamy zasady: jakie terminy bot może proponować, ile trwa wizyta, co robi przy odwołaniu. Testujemy na żywo, aż brzmi tak, jak chcesz.',
+          'Podłączamy kalendarz i numer, ustawiamy zasady: jakie terminy bot proponuje, ile trwa wizyta, co robi przy odwołaniu. Testujemy na żywo.',
       },
       {
         tytul: 'Opieka i rozwój',
         opis:
-          'Słuchamy rozmów, poprawiamy odpowiedzi, dokładamy scenariusze. Ty widzisz, ile wizyt bot umówił i ile terminów zwolnił do ponownej sprzedaży.',
+          'Słuchamy rozmów, poprawiamy odpowiedzi, dokładamy scenariusze. Widzisz, ile wizyt bot umówił i ile terminów zwolnił.',
       },
     ],
   },
 
   ramaCeny: {
     h2: 'Ile kosztuje voicebot do potwierdzania wizyt?',
+    /* v20: kwota NA POCZĄTEK (H2 pyta „ile kosztuje"). Wycięte: „Cena jest ta
+       sama co przy każdym naszym voicebocie" oraz „Dokładną wycenę podajemy po
+       bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów." —
+       to zdanie RamaCeny.tsx drukuje pod kartą na sztywno (dublowało się).
+       Kwoty 2500 i 99-599 bez zmian. */
     tresc:
-      'Cena jest ta sama co przy każdym naszym voicebocie. Pakiet startowy zaczyna się od 2500 zł: bot odbierający telefon 24/7 i rozmawiający po polsku, umawianie wizyt oraz wdrożenie i konfiguracja. Do tego dochodzi koszt działania zależny od liczby rozmów. Każde wdrożenie ma abonament opieki od 99 do 599 zł miesięcznie, bo nie zostawiamy klientów samych z botem. Dokładną wycenę podajemy po bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów.',
+      'Pakiet startowy zaczyna się od 2500 zł: bot odbierający telefon 24/7 i rozmawiający po polsku, umawianie wizyt oraz wdrożenie i konfiguracja. Do tego koszt działania zależny od liczby rozmów. Opiekę rozliczasz na dwa sposoby: bez abonamentu, gdy przekazujemy Ci całą infrastrukturę, albo za 99 do 599 zł miesięcznie, gdy projekt zostaje u nas.',
     minPrice: 2500,
     /* Link powrotny do usługi macierzystej (wymóg podstrony). `linkPoradnik`
        to jedyny slot na link w kontrakcie `Usluga`, renderowany w RamaCeny.tsx
@@ -143,22 +169,22 @@ export const potwierdzanieWizyt: PodstronaUslugi = {
     {
       pytanie: 'Co się dzieje, gdy klient chce odwołać albo przełożyć wizytę?',
       odpowiedz:
-        'Bot przyjmuje odwołanie w rozmowie, zwalnia termin w kalendarzu, a przy przełożeniu proponuje wolne godziny i zapisuje nowy termin. Zmianę widzisz od razu, bez odsłuchiwania poczty głosowej nad ranem.',
+        'Bot przyjmuje odwołanie w rozmowie i zwalnia termin w kalendarzu, a przy przełożeniu proponuje wolne godziny i zapisuje nowy termin. Zmianę widzisz od razu.',
     },
     {
       pytanie: 'Czy dzwoniący pozna, że rozmawia z botem?',
       odpowiedz:
-        'Tak, i tak ma być. Voicebot na początku rozmowy mówi, że jest asystentem AI. Tego wymaga AI Act, a my się tego trzymamy. Brzmi naturalnie i po polsku, ale nikogo nie udaje.',
+        'Tak, i tak ma być. Voicebot na początku rozmowy mówi, że jest asystentem AI. Tego wymaga AI Act. Brzmi naturalnie i po polsku, ale nikogo nie udaje.',
     },
     {
       pytanie: 'Co, jeśli sprawa jest zbyt trudna dla bota?',
       odpowiedz:
-        'Wtedy voicebot nie udaje, że wie. Bierze kontakt, zapisuje, czego dotyczy sprawa, i mówi klientowi, że oddzwonisz. Ty dostajesz podsumowanie i oddzwaniasz przygotowany. Ustawiasz z góry, które sprawy bot ma przekazywać dalej.',
+        'Wtedy voicebot nie udaje, że wie. Bierze kontakt, zapisuje, czego dotyczy sprawa, i mówi klientowi, że oddzwonisz. Ty dostajesz podsumowanie i oddzwaniasz przygotowany. Z góry ustawiasz, które sprawy bot ma przekazywać dalej.',
     },
     {
       pytanie: 'Ile kosztuje voicebot do potwierdzania wizyt?',
       odpowiedz:
-        'Pakiet startowy kosztuje od 2500 zł. W tej cenie jest bot, który odbiera telefon 24/7 i rozmawia po polsku, umawianie wizyt oraz wdrożenie i konfiguracja. Do tego dochodzi koszt działania zależny od liczby rozmów, a każde wdrożenie ma abonament opieki od 99 do 599 zł miesięcznie. Dokładną wycenę podajemy po bezpłatnej diagnozie.',
+        'Pakiet startowy kosztuje od 2500 zł: bot odbierający telefon 24/7 po polsku, umawianie wizyt oraz wdrożenie i konfiguracja. Do tego koszt działania zależny od liczby rozmów. Opiekę rozliczasz bez abonamentu, gdy przekazujemy Ci infrastrukturę, albo za 99 do 599 zł miesięcznie, gdy projekt zostaje u nas. Dokładną wycenę podajemy po bezpłatnej diagnozie.',
     },
   ],
 
@@ -166,7 +192,7 @@ export const potwierdzanieWizyt: PodstronaUslugi = {
     label: 'Pokaż mi, gdzie tracę czas',
     href: '#diagnoza',
     mikrokopia:
-      'Policzymy, ile telefonów o wizyty tracisz w miesiącu i ile z nich umówi za Ciebie voicebot. Bez zobowiązań.',
+      'Policzymy, ile telefonów o wizyty tracisz i ile z nich umówi voicebot. Bez zobowiązań.',
     dowod:
       'Każde wdrożenie zaczynamy od bezpłatnej diagnozy. Najpierw liczby, potem decyzja.',
   },

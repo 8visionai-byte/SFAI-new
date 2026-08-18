@@ -161,11 +161,6 @@ export type InfIkonaDekor = { c: string; odcien?: string; ikona: InfIconName; em
 export const INF_KATEGORIA: Record<string, InfDekor> = {
   chatboty: { c: '#00f0ff', odcien: '#61edff', emoji: '💬', ikona: 'chat-dymek' },
   voiceboty: { c: '#e438ff', odcien: '#dc7aff', emoji: '🎙️', ikona: 'sluchawka-fala' },
-  // v18 (kontrola: podstrony /uslugi/voiceboty/* renderowaly sie DOMYSLNYM cyjanem,
-  // czyli kolorem rodziny chatbotow — mylacy sygnal wizualny). Podstrony dziedzicza
-  // kolor rodzica: ten sam fiolet co /uslugi/voiceboty.
-  windykacja: { c: '#e438ff', odcien: '#dc7aff', emoji: '🎙️', ikona: 'sluchawka-fala' },
-  'potwierdzanie-wizyt': { c: '#e438ff', odcien: '#dc7aff', emoji: '🎙️', ikona: 'sluchawka-fala' },
   'agent-rekrutacyjny': { c: '#dc7aff', odcien: '#ff00e5', emoji: '🤝', ikona: 'osoba-check' },
   automatyzacje: { c: '#39ff14', odcien: '#29ff77', emoji: '⚡', ikona: 'blyskawica' },
   'dokumenty-faktury': { c: '#ffa101', odcien: '#ffc120', emoji: '📄', ikona: 'dokument-skan' },
@@ -176,6 +171,23 @@ export const INF_KATEGORIA: Record<string, InfDekor> = {
   'strony-www': { c: '#00f0ff', odcien: '#70b0ff', emoji: '🌐', ikona: 'glob-siatka' },
   optymalizacja: { c: '#00f0ff', odcien: '#61edff', emoji: '📈', ikona: 'wykres-strzalka' },
 };
+
+/**
+ * Dekor usługi ALBO jej podstrony (/uslugi/<rodzic>/<slug>).
+ *
+ * DLACZEGO FUNKCJA, A NIE WPIS W MAPIE (brief SEO 2026-08-18 §1): podstrony
+ * dopisywaliśmy do INF_KATEGORIA ręcznie i przy trzeciej (odbieranie-telefonow)
+ * wpis wypadł — nagłówek zaświecił domyślnym cyjanem, czyli kolorem rodziny
+ * CHATBOTÓW na stronie voicebota. Typ tego nie wymuszał, bo mapa to zwykły
+ * Record<string, InfDekor>. Od teraz podstrona bierze dekor RODZICA, którego
+ * i tak zna z rejestru (lib/uslugi/podstrony/types.ts: pole `rodzic`), więc
+ * każda kolejna podstrona ma kolor rodziny automatycznie i nie da się o tym
+ * zapomnieć. Własny wpis w mapie nadal wygrywa — gdyby kiedyś jakaś podstrona
+ * miała świadomie świecić inaczej.
+ */
+export function dekorUslugi(slug: string, rodzic?: string): InfDekor {
+  return INF_KATEGORIA[slug] ?? (rodzic ? INF_KATEGORIA[rodzic] : undefined) ?? INF_KATEGORIA_DEFAULT;
+}
 
 /** Fallback dla slugów spoza map (nowe wpisy rejestrów). */
 export const INF_KATEGORIA_DEFAULT: Required<InfDekor> = {

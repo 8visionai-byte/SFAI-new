@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import type { Usluga } from '@/lib/uslugi/types';
-import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { dekorUslugi } from '@/lib/inf-kategorie';
 
 /** Styl frazowego linku w treści — 1:1 z components/sections/Rozwiazanie.tsx. */
 const LINK =
@@ -28,12 +28,15 @@ const LINK =
 export function RamaCeny({
   ramaCeny,
   slug,
+  rodzic,
 }: {
   ramaCeny: Usluga['ramaCeny'];
   slug: Usluga['slug'];
+  /** Slug usługi macierzystej (podstrony) — ton dziedziczy się z rodziny. */
+  rodzic?: string;
 }) {
   const maKwote = typeof ramaCeny.minPrice === 'number';
-  const dekor = INF_KATEGORIA[slug] ?? INF_KATEGORIA_DEFAULT;
+  const dekor = dekorUslugi(slug, rodzic);
 
   return (
     <Section tone="base">

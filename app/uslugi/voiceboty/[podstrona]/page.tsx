@@ -1,4 +1,6 @@
+import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { buildMetadata } from '@/lib/metadata';
@@ -6,6 +8,9 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { serviceSchema, faqSchema, breadcrumbSchema } from '@/components/seo/schemas';
 import { getPodstrona, getPodstronyRodzica } from '@/lib/uslugi/podstrony';
 import { okruszkiPodstrony } from '@/lib/uslugi/podstrony/okruszki';
+import { dekorUslugi } from '@/lib/inf-kategorie';
+import { Section } from '@/components/ui';
+import { Reveal } from '@/components/motion/Reveal';
 
 import {
   ServiceHero,
@@ -15,6 +20,7 @@ import {
   RamaCeny,
   ServiceFAQ,
   ServiceCTA,
+  PodstronyPowiazane,
 } from '@/components/uslugi';
 
 /**
@@ -37,9 +43,14 @@ import {
  * (generateStaticParams dziecka dostaje `params` rodzica) i dotykał katalogu
  * `[usluga]/`, w którym równolegle pracuje inny zakres.
  *
- * SILNIK: te same komponenty co 10 stron usług (components/uslugi/*), te same
- * 8 sekcji, ten sam kontrakt treści (`Usluga` rozszerzony o `rodzic`
- * i `dataAktualizacji`). Zero nowych stylów, zero zmian CSS.
+ * SILNIK: te same komponenty co 10 stron usług (components/uslugi/*), ten sam
+ * kontrakt treści (`Usluga` rozszerzony o `rodzic` i `dataAktualizacji`).
+ * Zero nowych stylów, zero zmian CSS.
+ *
+ * v20: sekcji jest 9, nie 8 — doszła „Konkretne zastosowania" (siostrzane
+ * podstrony) dokładnie w tym miejscu kolejności, w którym stoi u rodzica.
+ * Powód i pomiar: raporty/pomiary-v20.md §1b, komentarz przy komponencie
+ * `SiostrzanePodstrony` niżej.
  */
 export const dynamic = 'force-static';
 export const dynamicParams = false;
@@ -142,10 +153,16 @@ export default async function PodstronaUslugiPage({
       <KrokiJakToDziala kroki={podstrona.kroki} />
 
       {/* (6) Rama ceny + link powrotny do usługi macierzystej (linkPoradnik) */}
-      <RamaCeny ramaCeny={podstrona.ramaCeny} slug={podstrona.slug} />
+      <RamaCeny ramaCeny={podstrona.ramaCeny} slug={podstrona.slug} rodzic={podstrona.rodzic} />
+
+      {/* (6b) Konkretne zastosowania — siostrzane podstrony. KOLEJNOŚĆ 1:1
+          z rodzicem (app/uslugi/[usluga]/page.tsx: RamaCeny -> PodstronyPowiazane
+          -> ServiceFAQ), ten sam ton `subtle` i ten sam wariant ramki
+          `.inf-card-edge`, którego podstronom brakowało. */}
+      <PodstronyPowiazane slug={podstrona.rodzic} pomin={podstrona.slug} wariant="kompakt" />
 
       {/* (7) FAQ — 6 pytań, 1:1 z FAQPage JSON-LD */}
-      <ServiceFAQ faq={podstrona.faq} slug={podstrona.slug} />
+      <ServiceFAQ faq={podstrona.faq} slug={podstrona.slug} rodzic={podstrona.rodzic} />
 
       {/* (8) CTA — jedno główne, z dowodem */}
       <ServiceCTA cta={podstrona.cta} />

@@ -15,24 +15,41 @@ import type { PodstronaUslugi } from './types';
  *    api/_knowledge.mjs linia 56 (twarda reguła) + voiceboty.ts faq #2,
  *  - przypomnienia i potwierdzenia wychodzą tekstem (SMS/mail) z automatu:
  *    lib/uslugi/automatyzacje.ts (rozwiazanie.tresc, faq),
- *  - cena: pakiet startowy od 2500 zł + opieka od 99 do 599 zł miesięcznie
- *    (lib/uslugi/voiceboty.ts ramaCeny, minPrice locked 2026-08-16).
+ *  - cena: pakiet startowy od 2500 zł (lib/uslugi/voiceboty.ts ramaCeny,
+ *    minPrice locked 2026-08-16),
+ *  - DWA MODELE ROZLICZENIA (v20): „przekazujemy całą infrastrukturę i wtedy
+ *    nie płacisz abonamentu ALBO projekt zostaje u nas z opłatą utrzymaniową
+ *    od 99 do 599 zł miesięcznie" — lib/agent/knowledge.ts linia 104 (wpis
+ *    voicebotów), api/_knowledge.mjs linia 336 (reguła cenowa agenta) oraz
+ *    lib/uslugi/audyt-ai.ts (ramaCeny, to samo zdanie już w rejestrze usług).
+ *    Zero nowej kwoty: to przeredagowanie dotychczasowego „każde wdrożenie ma
+ *    abonament", które było sprzeczne z regułą dwóch modeli.
  *
  * ŻELAZNA GRANICA TEJ PODSTRONY (decyzja Pawła + prawo):
  *  Strona NIE sprzedaje obdzwaniania dłużników. Voicebot obsługuje telefon
  *  PRZYCHODZĄCY w sprawie płatności. Zdanie „nie wydzwaniamy do dłużników"
  *  stoi w kapsule, w tabeli, w treści i w FAQ celowo: to jednocześnie granica
  *  produktu, ochrona marki i filtr złych zapytań.
+ *
+ * v20 (SPEC v20, skarga Pawła „tekstów jest naprawdę dużo"): objętość ścięta
+ * do poziomu strony macierzystej. Zasada cięcia: zdanie odpowiadające WPROST
+ * zostaje na początku, liczby zostają, wylatuje wata (scenki wprowadzające,
+ * zdania powtarzające FAQ, zdania powtarzane przez komponent RamaCeny.tsx,
+ * który sam dokleja „Dokładną cenę poznasz na bezpłatnej diagnozie, zanim
+ * cokolwiek zamówisz. Bez ukrytych kosztów."). Zero usuniętych faktów.
  */
 export const windykacja: PodstronaUslugi = {
   rodzic: 'voiceboty',
   slug: 'windykacja',
-  dataAktualizacji: '2026-08-17',
+  dataAktualizacji: '2026-08-18',
 
-  h1: 'Voicebot do windykacji, który odbiera telefon w sprawie płatności',
+  // v20: 65 -> 50 znaków (pomiar raporty/pomiary-v20.md §4b: 4 linie -> 3 na
+  // 1440, 6 -> 4 na 320). Fraza główna „voicebot do windykacji" zostaje NA
+  // POCZĄTKU, „24/7" to fakt obecny już w metaTitle, tabeli i FAQ tej strony.
+  h1: 'Voicebot do windykacji, który odbiera telefon 24/7',
 
   kapsula:
-    'Voicebot do windykacji odbiera telefony przychodzące w sprawie zaległych płatności. Rozmawia po polsku 24/7, mówi wprost, że jest asystentem AI, spisuje ustalenia i deklarowany termin zapłaty, a sprawy sporne przekazuje osobie, która je prowadzi. Po każdej rozmowie dostajesz podsumowanie. Nie wydzwaniamy do dłużników: bot obsługuje wyłącznie połączenia przychodzące.',
+    'Voicebot do windykacji odbiera telefony w sprawie zaległych płatności. Rozmawia po polsku 24/7, mówi wprost, że jest asystentem AI, spisuje ustalenia i termin zapłaty, a sprawy sporne przekazuje osobie, która je prowadzi. Nie wydzwaniamy do dłużników: bot obsługuje wyłącznie połączenia przychodzące.',
 
   metaTitle: 'Voicebot do windykacji: odbiera telefon 24/7',
   metaDescription:
@@ -41,47 +58,52 @@ export const windykacja: PodstronaUslugi = {
   problem: {
     h2: 'Ile telefonów w sprawie płatności zostaje bez odbioru?',
     tresc:
-      'Wysyłasz przypomnienie o zapłacie i zaczyna się ruch. Klient oddzwania wieczorem, w sobotę albo w środku Twojego spotkania. Nikt nie odbiera, więc sprawa stoi kolejny tydzień, a pieniądze dalej są u kogoś innego. Część tych telefonów to w kółko to samo: za co jest ta faktura, na jaki numer konta zapłacić, czy da się rozłożyć na raty. Twój człowiek odpowiada na to po raz setny zamiast zająć się sprawami, które naprawdę wymagają rozmowy.',
+      'Klient oddzwania po przypomnieniu o zapłacie wieczorem albo w środku Twojego spotkania. Nikt nie odbiera, więc sprawa stoi kolejny tydzień, a pieniądze dalej są u kogoś innego. Część tych telefonów to w kółko to samo: za co jest faktura, na jaki numer konta zapłacić, czy da się rozłożyć na raty.',
   },
 
   rozwiazanie: {
     h2: 'Co robi voicebot, gdy klient oddzwania w sprawie faktury?',
     tresc:
-      'Voicebot odbiera każde połączenie, także po godzinach pracy działu. Na starcie mówi, że jest asystentem AI. Pyta, czego dotyczy sprawa, i spisuje to, co usłyszy: deklarowany termin zapłaty, prośbę o rozłożenie na raty, informację o przelewie, który już poszedł. Odpowiada na pytania, które sam wpiszesz do scenariusza. Tego, co drażliwe, nie mówi z siebie, bo to Ty ustawiasz, co bot może powiedzieć, a czego nie. Sprawy sporne trafiają do osoby prowadzącej sprawę razem z notatką z rozmowy, więc wraca do niej gotowy temat, a nie karteczka z numerem. Voicebot nie dzwoni sam do dłużników. Obsługuje wyłącznie połączenia przychodzące, a przypomnienia o płatności wychodzą tak jak dziś, tekstem.',
+      'Voicebot odbiera każde połączenie, także po godzinach, i na starcie mówi, że jest asystentem AI. Pyta, czego dotyczy sprawa, i spisuje to, co usłyszy: deklarowany termin zapłaty, prośbę o raty, potwierdzenie przelewu. Odpowiada z Twojego scenariusza, a sprawy sporne przekazuje osobie prowadzącej z notatką. Voicebot nie dzwoni sam do dłużników: obsługuje wyłącznie połączenia przychodzące, a przypomnienia o płatności wychodzą tak jak dziś, tekstem.',
   },
 
+  /* v20: komórki skrócone do długości rodzica (cecha ~12 zn, zNami ~30 zn),
+     żeby wiersze nie łamały się na dwie linie (pomiar §2d: sekcja tabeli
+     rosła przez to o 79 px). Treść i kolejność wierszy bez zmian.
+     Wiersz 1 MUSI zawierać „24/7" w kolumnie zNami: to bramka czwartego
+     kafla statystyk w hero (ServiceHero.kafleStatystyk). */
   tabelaPorownawcza: {
     h2: 'Telefon w sprawie należności ręcznie a z voicebotem',
     naglowekBez: 'Telefon odbierany ręcznie',
     naglowekZNami: 'Voicebot od SimpleFast.ai',
     wiersze: [
       {
-        cecha: 'Odbieranie połączeń',
-        bez: 'Tylko w godzinach pracy działu',
+        cecha: 'Godziny',
+        bez: 'Tylko w godzinach pracy',
         zNami: '24/7, też wieczorem i w weekend',
       },
       {
-        cecha: 'Klient, który oddzwania',
-        bez: 'Trafia na sygnał albo pocztę głosową',
+        cecha: 'Oddzwaniający',
+        bez: 'Sygnał albo poczta głosowa',
         zNami: 'Rozmawia od razu, sprawa zapisana',
       },
       {
-        cecha: 'Ustalenia z rozmowy',
+        cecha: 'Ustalenia',
         bez: 'W głowie albo na kartce',
-        zNami: 'Notatka i podsumowanie po każdej rozmowie',
+        zNami: 'Notatka i podsumowanie z rozmowy',
       },
       {
-        cecha: 'Powtarzalne pytania',
-        bez: 'Za każdym razem odpowiada człowiek',
-        zNami: 'Bot odpowiada z Twojego scenariusza',
+        cecha: 'Częste pytania',
+        bez: 'Za każdym razem człowiek',
+        zNami: 'Bot odpowiada ze scenariusza',
       },
       {
         cecha: 'Sprawy sporne',
-        bez: 'Czekają, aż ktoś zdąży oddzwonić',
-        zNami: 'Idą do osoby prowadzącej sprawę z notatką',
+        bez: 'Czekają na oddzwonienie',
+        zNami: 'Do osoby prowadzącej, z notatką',
       },
       {
-        cecha: 'Dzwonienie do dłużników',
+        cecha: 'Telefon do dłużnika',
         bez: 'Ręcznie, przez pracownika',
         zNami: 'Też ręcznie, bot nie dzwoni sam',
       },
@@ -94,25 +116,31 @@ export const windykacja: PodstronaUslugi = {
       {
         tytul: 'Diagnoza (bezpłatna)',
         opis:
-          'Liczymy, ile telefonów w sprawie płatności zostaje u Ciebie bez odbioru i o co dzwoniący pytają najczęściej. Mówimy wprost, czy voicebot się tu opłaca.',
+          'Liczymy, ile telefonów w sprawie płatności zostaje bez odbioru i o co pytają dzwoniący. Mówimy wprost, czy voicebot się opłaca.',
       },
       {
         tytul: 'Scenariusze i granice',
         opis:
-          'Ustawiamy, co bot mówi, a czego nie mówi nigdy. Podłączamy numer i miejsce, w którym mają lądować notatki ze spraw. Testujemy na żywo, aż rozmowa brzmi tak, jak chcesz.',
+          'Ustawiamy, co bot mówi, a czego nie mówi nigdy. Podłączamy numer i miejsce na notatki ze spraw. Testujemy na żywo.',
       },
       {
         tytul: 'Opieka i rozwój',
         opis:
-          'Słuchamy rozmów, poprawiamy odpowiedzi, dokładamy scenariusze. Ty widzisz, co bot załatwił sam i które sprawy poszły do człowieka.',
+          'Słuchamy rozmów, poprawiamy odpowiedzi, dokładamy scenariusze. Widzisz, co bot załatwił sam, a co poszło do człowieka.',
       },
     ],
   },
 
   ramaCeny: {
     h2: 'Ile kosztuje voicebot do windykacji?',
+    /* v20: kwota NA POCZĄTEK (H2 pyta „ile kosztuje", więc odpowiedź nie może
+       stać w drugim zdaniu). Wycięte: „Cena jest ta sama co przy każdym naszym
+       voicebocie" (nie odpowiada na pytanie) oraz „Dokładną wycenę podajemy po
+       bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów." —
+       to zdanie komponent RamaCeny.tsx drukuje pod kartą na sztywno, więc
+       stało na stronie dwa razy. Kwoty 2500 i 99-599 bez zmian. */
     tresc:
-      'Cena jest ta sama co przy każdym naszym voicebocie. Pakiet startowy zaczyna się od 2500 zł: bot odbierający telefon 24/7 i rozmawiający po polsku, wdrożenie i konfiguracja scenariuszy. Do tego dochodzi koszt działania zależny od liczby rozmów. Każde wdrożenie ma abonament opieki od 99 do 599 zł miesięcznie, bo nie zostawiamy klientów samych z botem. Dokładną wycenę podajemy po bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów.',
+      'Pakiet startowy zaczyna się od 2500 zł: bot odbierający telefon 24/7 i rozmawiający po polsku, wdrożenie i konfiguracja scenariuszy. Do tego koszt działania zależny od liczby rozmów. Opiekę rozliczasz na dwa sposoby: bez abonamentu, gdy przekazujemy Ci całą infrastrukturę, albo za 99 do 599 zł miesięcznie, gdy projekt zostaje u nas.',
     minPrice: 2500,
     /* Link powrotny do usługi macierzystej (wymóg podstrony: każda wraca do
        rodzica realnym odnośnikiem). Pole `linkPoradnik` to jedyny slot na
@@ -130,32 +158,32 @@ export const windykacja: PodstronaUslugi = {
     {
       pytanie: 'Czy voicebot dzwoni do dłużników?',
       odpowiedz:
-        'Nie. Nasz voicebot obsługuje wyłącznie połączenia przychodzące. Nie robimy botów, które same wydzwaniają do ludzi, bo to psuje zaufanie do firmy. Przypomnienia o płatności wysyłasz tak jak dziś, tekstem, a gdy klient oddzwania, telefon odbiera bot, spisuje sprawę i przekazuje ją dalej.',
+        'Nie. Nasz voicebot obsługuje wyłącznie połączenia przychodzące. Nie robimy botów, które same wydzwaniają do ludzi, bo to psuje zaufanie do firmy. Przypomnienia o płatności wysyłasz tak jak dziś, tekstem, a gdy klient oddzwania, telefon odbiera bot i spisuje sprawę.',
     },
     {
       pytanie: 'Co voicebot może powiedzieć o zadłużeniu?',
       odpowiedz:
-        'Tylko to, na co mu pozwolisz. Zakres ustalamy przy wdrożeniu i zapisujemy w scenariuszu: co bot potwierdza, o co dopytuje i czego nie mówi nigdy. Sprawy drażliwe oraz sporne przekazuje człowiekowi razem z notatką z rozmowy.',
+        'Tylko to, na co mu pozwolisz. Zakres ustalamy przy wdrożeniu i zapisujemy w scenariuszu: co bot potwierdza, o co dopytuje i czego nie mówi nigdy. Sprawy drażliwe i sporne przekazuje człowiekowi z notatką z rozmowy.',
     },
     {
       pytanie: 'Czy dzwoniący pozna, że rozmawia z botem?',
       odpowiedz:
-        'Tak, i tak ma być. Voicebot na początku rozmowy mówi, że jest asystentem AI. Tego wymaga AI Act, a my się tego trzymamy. Brzmi naturalnie i po polsku, ale nikogo nie udaje.',
+        'Tak, i tak ma być. Voicebot na początku rozmowy mówi, że jest asystentem AI. Tego wymaga AI Act. Brzmi naturalnie i po polsku, ale nikogo nie udaje.',
     },
     {
       pytanie: 'Co, jeśli klient chce rozłożyć płatność na raty?',
       odpowiedz:
-        'Bot tego nie ustala. Spisuje prośbę i to, co klient deklaruje, a potem przekazuje sprawę osobie, która ją prowadzi. Ty dostajesz podsumowanie i oddzwaniasz przygotowany, zamiast zaczynać rozmowę od zera.',
+        'Bot tego nie ustala. Spisuje prośbę i to, co klient deklaruje, i przekazuje sprawę osobie, która ją prowadzi. Ty dostajesz podsumowanie i oddzwaniasz przygotowany.',
     },
     {
       pytanie: 'Czy rozmowy o płatnościach są bezpieczne pod kątem RODO?',
       odpowiedz:
-        'Tak. Dane z rozmów zostają w Unii Europejskiej i przetwarzamy je zgodnie z RODO oraz AI Act. Podpisujemy umowę powierzenia danych, a Ty decydujesz, co bot nagrywa i przechowuje. W każdej chwili masz wgląd i kontrolę.',
+        'Tak. Dane z rozmów zostają w Unii Europejskiej i przetwarzamy je zgodnie z RODO oraz AI Act. Podpisujemy umowę powierzenia danych, a Ty decydujesz, co bot nagrywa i przechowuje.',
     },
     {
       pytanie: 'Ile kosztuje voicebot do windykacji?',
       odpowiedz:
-        'Pakiet startowy kosztuje od 2500 zł. W tej cenie jest bot, który odbiera telefon 24/7 i rozmawia po polsku, oraz wdrożenie i konfiguracja scenariuszy. Do tego dochodzi koszt działania zależny od liczby rozmów, a każde wdrożenie ma abonament opieki od 99 do 599 zł miesięcznie. Dokładną wycenę podajemy po bezpłatnej diagnozie.',
+        'Pakiet startowy kosztuje od 2500 zł: bot odbierający telefon 24/7 po polsku, wdrożenie i konfiguracja scenariuszy. Do tego koszt działania zależny od liczby rozmów. Opiekę rozliczasz bez abonamentu, gdy przekazujemy Ci infrastrukturę, albo za 99 do 599 zł miesięcznie, gdy projekt zostaje u nas. Dokładną wycenę podajemy po bezpłatnej diagnozie.',
     },
   ],
 
@@ -163,7 +191,7 @@ export const windykacja: PodstronaUslugi = {
     label: 'Pokaż mi, gdzie tracę czas',
     href: '#diagnoza',
     mikrokopia:
-      'Policzymy, ile telefonów w sprawie płatności zostaje dziś bez odbioru i ile z nich odbierze za Ciebie voicebot. Bez zobowiązań.',
+      'Policzymy, ile telefonów w sprawie płatności tracisz i ile z nich odbierze voicebot. Bez zobowiązań.',
     dowod:
       'Każde wdrożenie zaczynamy od bezpłatnej diagnozy. Najpierw liczby, potem decyzja.',
   },
