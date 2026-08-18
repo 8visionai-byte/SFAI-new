@@ -5,9 +5,10 @@ import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
 
 import { buildMetadata } from '@/lib/metadata';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { breadcrumbSchema } from '@/components/seo/schemas';
+import { breadcrumbSchema, faqSchemaPl } from '@/components/seo/schemas';
 import { SITE } from '@/lib/site';
-import { getUslugaBySlug } from '@/lib/uslugi';
+import { getUslugaBySlug, USLUGI } from '@/lib/uslugi';
+import { PODSTRONY } from '@/lib/uslugi/podstrony';
 import type { Usluga } from '@/lib/uslugi/types';
 import { INF_USLUGA_BADGE } from '@/lib/inf-kategorie';
 import { InfIcon } from '@/components/ui/InfIcons';
@@ -15,6 +16,9 @@ import { InfIcon } from '@/components/ui/InfIcons';
 import { Section, Card, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { Breadcrumbs } from '@/components/uslugi/Breadcrumbs';
+import { PasekMetryk } from '@/components/sections/PasekMetryk';
+import { TabelaRejestru } from '@/components/sections/TabelaRejestru';
+import { HubFAQ } from '@/components/sections/HubFAQ';
 import { HOME_CTA } from '@/lib/site';
 
 /**
@@ -54,6 +58,13 @@ type Klaster = {
   id: string;
   /** H2 jak pytanie (north star: naglowki jak pytania). */
   h2: string;
+  /**
+   * v22: nazwa grupy prostym jezykiem, do kolumny "Grupa" w tabeli orientacyjnej.
+   * ZERO nowej tresci: te trzy nazwy stoja juz w kapsule hero tej strony
+   * ("trzy grupach: obsluga 24/7, back-office i procesy, budowa i strategia").
+   * H2 klastra jest PYTANIEM, wiec do komorki tabeli sie nie nadaje.
+   */
+  etykieta: string;
   /** Zdanie answer-first pod naglowkiem klastra. */
   intro: string;
   slugs: string[];
@@ -62,6 +73,7 @@ type Klaster = {
 const KLASTRY: Klaster[] = [
   {
     id: 'obsluga',
+    etykieta: 'Obsługa 24/7',
     h2: 'Kto odbierze klienta, telefon i kandydata 24/7?',
     intro:
       'Pierwsza linia, która odpowiada od razu, też wieczorem i w weekend. Agent zbiera leady, umawia, odpowiada na powtarzalne pytania. Człowiek decyduje, agent robi resztę.',
@@ -69,6 +81,7 @@ const KLASTRY: Klaster[] = [
   },
   {
     id: 'back-office',
+    etykieta: 'Back-office i procesy',
     h2: 'Co zdejmie z zespołu powtarzalną robotę za kulisami?',
     intro:
       'Przepisywanie danych, faktury, potwierdzenia, terminy. To, co zjada godziny i nie buduje firmy. Automat robi to po cichu, a my pilnujemy, żeby działał.',
@@ -76,10 +89,171 @@ const KLASTRY: Klaster[] = [
   },
   {
     id: 'budowa',
+    etykieta: 'Budowa i strategia',
     h2: 'Od czego zacząć i co zbudować, żeby nie przepalić kasy?',
     intro:
       'Najpierw mapa, gdzie AI da zysk. Potem to, czego nie ma na półce: aplikacje, wtyczki, strony cytowalne przez AI. Najpierw plan, potem wydatek.',
     slugs: ['audyt-ai', 'rozwiazania', 'strony-www', 'optymalizacja'],
+  },
+];
+
+/**
+ * TON HUBU = fallback dekoracji rejestru (INF_KATEGORIA_DEFAULT, czyli akcent
+ * marki na tokenach CSS). /uslugi to ROZDROZE: kazda z dziesieciu uslug ma tu
+ * swoj wlasny kolor na kaflu, wiec pas metryk, tabela i FAQ nie moga przejac
+ * zadnego z nich, bo faworyzowalyby jedna rodzine. Zero nowej mapy kolorow.
+ */
+const TON = INF_KATEGORIA_DEFAULT;
+
+/* ─────────────────────────────────────────────────────────────────────
+   LICZBY HUBU: POLICZONE Z REJESTRU PRZY BUILDZIE (PLAN-v22 §1.7a:
+   liczba wpisana z palca to zmyslona liczba). Dopisanie uslugi w
+   lib/uslugi albo podstrony w lib/uslugi/podstrony automatycznie
+   przelicza pas metryk, tabele i odpowiedzi FAQ. */
+
+/** 10 uslug: lib/uslugi/index.ts USLUGI (chatboty ... optymalizacja). */
+const LICZBA_USLUG = USLUGI.length;
+
+/** 3 podstrony voicebotow: lib/uslugi/podstrony/index.ts PODSTRONY. */
+const LICZBA_PODSTRON = PODSTRONY.length;
+
+/** Strony z pelnym opisem uslugi = 10 uslug + 3 podstrony (wszystkie SSG, 200 OK). */
+const LICZBA_STRON = LICZBA_USLUG + LICZBA_PODSTRON;
+
+/** Uslugi z kwota podana wprost = ramaCeny.minPrice ustawione w rejestrze. */
+const LICZBA_Z_CENA = USLUGI.filter((u) => typeof u.ramaCeny.minPrice === 'number').length;
+
+/** Suma pozycji FAQ ze WSZYSTKICH stron uslug: 10 uslug + podstrony.
+ *  v22b (kontrola: MINOR-2): liczylo tylko USLUGI, wiec metryka mowila 61,
+ *  gdy sasiednia metryka chwalila sie 13 stronami — trzy podstrony voicebotow
+ *  maja po 6 pytan i wypadaly z licznika. Teraz obie liczby opisuja ten sam
+ *  zbior stron. */
+const LICZBA_PYTAN =
+  USLUGI.reduce((suma, u) => suma + u.faq.length, 0) +
+  PODSTRONY.reduce((suma, p) => suma + p.faq.length, 0);
+
+const METRYKI_HUBU = [
+  { wartosc: String(LICZBA_USLUG), opis: 'usługi AI w ofercie' },
+  {
+    wartosc: String(LICZBA_STRON),
+    opis: 'strony z pełnym opisem usługi',
+    zrodlo: `${LICZBA_USLUG} usług i ${LICZBA_PODSTRON} podstrony voicebotów`,
+  },
+  {
+    wartosc: String(LICZBA_Z_CENA),
+    opis: 'usługi z ceną podaną wprost',
+    zrodlo: 'kwota „od" w ramie ceny',
+  },
+  {
+    wartosc: String(LICZBA_PYTAN),
+    opis: 'pytania z odpowiedziami',
+    zrodlo: 'sekcje FAQ na stronach usług',
+  },
+];
+
+/**
+ * Kwota w kolumnie „Cena": WYLACZNIE z pola `ramaCeny.minPrice` rejestru.
+ *
+ * Sam `minPrice` to goly number, a rejestr niesie DWA rozne rodzaje kwoty:
+ * jednorazowa (pakiet startowy chatbota i voicebota), stala (Sprint
+ * Diagnostyczny) i miesieczna (ryczalt Opieki AI). Wyswietlenie wszystkich
+ * jako „od X zl" zrobiloby z ryczaltu 3000 zl miesiecznie jednorazowa oplate,
+ * czyli falszywy fakt. Rozroznienie kopiujemy 1:1 z ISTNIEJACEJ konwencji
+ * `KAFEL_CENY` (components/uslugi/ServiceHero.tsx:108-113), ktora maluje kafel
+ * ceny w hero kazdej z tych uslug. Zero nowych slow.
+ */
+const CENA_FORMAT: Record<string, { prefiks: '' | 'od '; sufiks: string }> = {
+  chatboty: { prefiks: 'od ', sufiks: '' }, // pakiet startowy
+  voiceboty: { prefiks: 'od ', sufiks: '' }, // pakiet startowy
+  'audyt-ai': { prefiks: '', sufiks: '' }, // Sprint Diagnostyczny: cena stala
+  'opieka-ai': { prefiks: 'od ', sufiks: ' miesięcznie' }, // ryczalt miesieczny
+};
+
+/** Grupa (klaster) po slugu: z tej samej tablicy KLASTRY, ktora rysuje sekcje. */
+const GRUPA_PO_SLUGU = new Map<string, string>(
+  KLASTRY.flatMap((k) => k.slugs.map((slug) => [slug, k.etykieta] as [string, string]))
+);
+
+function cenaZRejestru(usluga: Usluga): string {
+  const kwota = usluga.ramaCeny.minPrice;
+  // Brak kwoty w rejestrze = brak kwoty na stronie. Zdanie 1:1 z mechaniki
+  // opisanej w ramaCeny.tresc tych uslug („dokladne widelki podajemy na
+  // bezplatnej diagnozie"), zero zmyslonej liczby.
+  if (typeof kwota !== 'number') return 'wycena po bezpłatnej diagnozie';
+  const format = CENA_FORMAT[usluga.slug] ?? { prefiks: 'od ' as const, sufiks: '' };
+  return `${format.prefiks}${kwota.toLocaleString('pl-PL')} zł${format.sufiks}`;
+}
+
+/**
+ * Tabela orientacyjna uslug (PLAN-v22 §2.6 pkt 4). Wiersze budowane MAPOWANIEM
+ * REJESTRU `USLUGI`, nigdy literalami, wiec dopisanie uslugi dopisuje wiersz.
+ *
+ * KOLUMNY, KTORYCH NIE MA I DLACZEGO: plan sugerowal „dla kogo" i „czas
+ * wdrozenia". ZADNE z tych pol nie istnieje w typie `Usluga`
+ * (lib/uslugi/types.ts), a wyciagniecie ich z prozy `problem.tresc` albo
+ * `kroki` byloby zgadywaniem. Kolumny wypadaja, brak zglaszamy kontroli.
+ *
+ * TABELA NIE POWIELA KART: kafel pokazuje h1 + problem.h2 + badge, tabela
+ * pokazuje h1 + grupe + KWOTE, ktorej na kaflach nie ma w ogole.
+ */
+const WIERSZE_TABELI: string[][] = USLUGI.map((u) => [
+  u.h1,
+  GRUPA_PO_SLUGU.get(u.slug) ?? 'poza grupami',
+  cenaZRejestru(u),
+]);
+
+/**
+ * FAQ HUBU (PLAN-v22 §2.6 pkt 5): kazda odpowiedz wyprowadzona ze zrodla
+ * dopuszczonego regula (a)-(d): (a) liczba policzona z rejestru, (b) cena
+ * z listy locked, (c) zdanie stojace juz na istniejacej stronie, (d) zasada
+ * zapisana w kontrakcie typu albo w bazie wiedzy agenta. Zrodlo z numerem
+ * linii stoi przy kazdym pytaniu, zeby kontrola nie musiala zgadywac.
+ * Ta sama tablica idzie do renderu i do FAQPage, wiec rozjazd jest niemozliwy.
+ */
+const FAQ_HUBU = [
+  {
+    /* (b)+(c) lib/uslugi/audyt-ai.ts:78 (ramaCeny.tresc: „Sprint Diagnostyczny
+       kosztuje 1490 zl [...] odliczamy od kosztu wdrozenia"); api/_knowledge.mjs:37
+       (AI Start 1990 zl, pierwsza automatyzacja na probe); kapsula hero tej
+       strony („Zaczynasz od jednej rzeczy, ktora zzera najwiecej czasu"). */
+    pytanie: 'Od czego zacząć, jeśli nie wiem, która usługa jest dla mnie?',
+    odpowiedz:
+      'Od bezpłatnej diagnozy. Mówimy wprost, czy w ogóle warto budować, i pokazujemy jedną rzecz, która zżera Ci najwięcej czasu. Jeśli chcesz mapę całej firmy, robimy audyt AI za 1490 zł, a tę kwotę odliczamy od kosztu wdrożenia, gdy ruszamy dalej. Jeśli wolisz zobaczyć efekt na jednym procesie, zaczynamy od pierwszej automatyzacji na próbę w pakiecie AI Start za 1990 zł. Nie musisz wybierać wszystkiego dziś.',
+  },
+  {
+    /* (c) lib/uslugi/chatboty.ts:22 (kapsula: chatbot tekstowy na stronie
+       i w komunikatorach, pierwszy krok do Agenta); lib/uslugi/voiceboty.ts:21
+       (kapsula: bot glosowy odbiera telefon, umawia wizyte); kapsula hero tej
+       strony („Agent wykonuje prace pod nadzorem czlowieka"). */
+    pytanie: 'Czym różni się chatbot od voicebota i od agenta AI?',
+    odpowiedz:
+      'Chatbot jest tekstowy: odpowiada klientom na stronie i w komunikatorach, tłumaczy ofertę, zbiera leady. Voicebot jest głosowy: odbiera telefon, rozmawia po polsku, umawia wizytę i zapisuje ją w kalendarzu. Agent AI to kolejny poziom obu: nie tylko odpowiada, ale wykonuje pracę pod nadzorem człowieka, czyli umawia, zapisuje i przekazuje sprawę dalej. Chatbot i voicebot to zwykle pierwszy krok do Agenta.',
+  },
+  {
+    /* (a) LICZBA_Z_CENA policzone z rejestru; (b) ceny locked: chatboty.ts:79
+       minPrice 990, voiceboty.ts:80 minPrice 2500, audyt-ai.ts:79 minPrice 1490,
+       opieka-ai.ts:84 minPrice 3000; api/_knowledge.mjs:37 (AI Start 1990)
+       i api/_knowledge.mjs:42 (automatyzacja 3000-10000 zl). */
+    pytanie: 'Ile kosztuje wdrożenie AI w małej firmie?',
+    odpowiedz: `${LICZBA_Z_CENA} usługi mają kwotę podaną wprost: chatbot od 990 zł, voicebot od 2500 zł, audyt AI 1490 zł i Opieka AI od 3000 zł miesięcznie za ryczałt 10 godzin. Pierwsza automatyzacja na próbę w pakiecie AI Start to 1990 zł, a większe wdrożenie automatyzacji kosztuje zwykle od 3000 do 10000 zł, zależnie od liczby integracji. Resztę wyceniamy po bezpłatnej diagnozie, zanim cokolwiek zamówisz.`,
+  },
+  {
+    /* (d) api/_knowledge.mjs:336 (dwa modele rozliczenia) i api/_knowledge.mjs:38
+       (opieka 99-599 zl); (c) lib/uslugi/audyt-ai.ts:78, zdanie 1:1:
+       „przekazujemy Ci cala infrastrukture i wtedy nie placisz abonamentu";
+       lib/uslugi/opieka-ai.ts:83 (ryczalt 10 h = 3000 zl miesiecznie). */
+    pytanie: 'Czy po wdrożeniu płacę abonament?',
+    odpowiedz:
+      'Masz wybór. Przekazujemy Ci całą infrastrukturę i wtedy nie płacisz abonamentu, albo projekt zostaje u nas pod opieką i wtedy jest opłata utrzymaniowa od 99 do 599 zł miesięcznie. Decydujesz na etapie wyceny, nie po fakcie. Czym innym jest Opieka AI jako osobna usługa: to ryczałt godzin miesięcznie na utrzymanie i rozwój, od 3000 zł za 10 godzin.',
+  },
+  {
+    /* (c) lib/uslugi/voiceboty.ts:100 (FAQ „Czy voicebot dzwoni sam do
+       klientow?": obsluguje polaczenia przychodzace, nie wydzwaniamy);
+       lib/uslugi/voiceboty.ts:39 („Klient zawsze slyszy, ze rozmawia
+       z asystentem AI"); api/_knowledge.mjs:23. */
+    pytanie: 'Czy voicebot będzie sam wydzwaniał do moich klientów?',
+    odpowiedz:
+      'Nie. Nasze voiceboty obsługują wyłącznie połączenia przychodzące: bot odbiera telefon i prowadzi rozmowę. Nie robimy botów, które same wydzwaniają do ludzi, bo to psuje zaufanie do firmy. Gdy sprawa wymaga kontaktu zwrotnego, bot ją zapisuje i wysyła powiadomienie, a rozmowę zaczyna człowiek albo klient, który oddzwania. Klient na starcie słyszy, że rozmawia z asystentem AI.',
   },
 ];
 
@@ -172,6 +346,13 @@ export default function UslugiHubPage() {
               zostają w Unii Europejskiej, a pierwszy krok jest mały i odwracalny.
             </p>
           </Reveal>
+
+          {/* v22 (PLAN-v22 §2.6 pkt 2): PAS METRYK pod hero. Wszystkie cztery
+              liczby policzone z rejestru przy buildzie, wiec nie da sie ich
+              rozjechac z lista kafli nizej ani z sekcjami FAQ na podstronach. */}
+          <Reveal delay={0.15}>
+            <PasekMetryk kafle={METRYKI_HUBU} ton={TON} className="mt-9" />
+          </Reveal>
         </div>
       </Section>
 
@@ -243,6 +424,43 @@ export default function UslugiHubPage() {
       })}
 
       {/* ───────────────────────────────────────────────────────────────
+          (3b) v22 (§2.6 pkt 4): TABELA ORIENTACYJNA. Przed ta runda /uslugi
+          bylo jedynym hubem bez ani jednej <table>. Zestawia dziesiec uslug
+          w jednym rzucie oka i dokłada kolumne, ktorej NIE MA na kaflach:
+          kwote z rejestru. Wiersze mapowane z USLUGI, nigdy literalami. */}
+      <Section tone="base">
+        <div className="mx-auto max-w-narrow">
+          <Reveal>
+            <h2 className="text-h2">Która usługa ile kosztuje?</h2>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <p className="text-lead mt-4 text-fg-muted">
+              Wszystkie {LICZBA_USLUG} usług z tej strony, ustawione obok siebie. Tam,
+              gdzie mamy jawną kwotę, stoi ona wprost. Tam, gdzie cena zależy od liczby
+              integracji i wielkości procesu, mówimy to otwarcie zamiast wpisywać
+              liczbę z sufitu.
+            </p>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="mt-8">
+              <TabelaRejestru
+                podpis={`Usługi AI SimpleFast.ai: grupa i cena wyjściowa (${LICZBA_USLUG} pozycji)`}
+                naglowki={['Usługa', 'Grupa', 'Cena']}
+                wiersze={WIERSZE_TABELI}
+                ton={TON}
+              />
+            </div>
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* ───────────────────────────────────────────────────────────────
+          (3c) v22 (§2.6 pkt 5): FAQ HUBU w natywnych <details>. Przed ta runda
+          /uslugi mialo zero. Odpowiedzi sa w HTML od pierwszego zadania, bez JS
+          i bez bramki na klik; ta sama tablica idzie do FAQPage nizej. */}
+      <HubFAQ pytania={FAQ_HUBU} ton={TON} />
+
+      {/* ───────────────────────────────────────────────────────────────
           (4) CTA DOMYKAJĄCE — jedno główne, wspólny flow diagnozy (.surface-aurora). */}
       <Section tone="base" id="diagnoza" className="surface-aurora">
         <div className="mx-auto max-w-narrow text-center">
@@ -278,8 +496,40 @@ export default function UslugiHubPage() {
           { name: 'Usługi', path: PATH },
         ])}
       />
-      {/* Kanoniczny URL hubu = absolutny (spójność z metadata). */}
-      <link rel="canonical" href={CANONICAL} />
+
+      {/*
+        v22 (§2.6 pkt 8 i §3 P3 pkt 17): ItemList JSON-LD: lista dziesieciu uslug
+        wprost z rejestru `USLUGI`. `name` = h1 strony docelowej, `description` =
+        jej metaDescription, `url` = realna trasa /uslugi/<slug> (SSG, 200 OK),
+        wiec kazdy string jest prawdziwy i kazdy link istnieje. Kolejnosc
+        pozycji = kolejnosc rejestru = kolejnosc kafli w trzech klastrach wyzej.
+      */}
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          '@id': `${CANONICAL}/#lista`,
+          name: 'Usługi AI SimpleFast.ai',
+          itemListOrder: 'https://schema.org/ItemListOrderAscending',
+          numberOfItems: USLUGI.length,
+          itemListElement: USLUGI.map((usluga, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: usluga.h1,
+            description: usluga.metaDescription,
+            url: `${SITE.url}${PATH}/${usluga.slug}`,
+          })),
+        }}
+      />
+
+      {/* v22 (§3 P3 pkt 18): FAQPage z TEJ SAMEJ tablicy, ktora renderuje HubFAQ.
+          Jedno zrodlo = zero rozjazdu tresc/schema. */}
+      <JsonLd data={faqSchemaPl(FAQ_HUBU, PATH)} />
+
+      {/* v22 (§3 P0 pkt 2, kryterium odbioru §5.4): reczny <link rel="canonical">
+          USUNIETY. Kanoniczny URL wystawia juz `buildMetadata` w `metadata`
+          wyzej (alternates.canonical), wiec ten znacznik dawal w <head> DRUGI
+          rel=canonical. Stala CANONICAL zostaje: uzywa jej @id ItemListy. */}
     </main>
   );
 }

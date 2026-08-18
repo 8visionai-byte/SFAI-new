@@ -31,7 +31,7 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
     'Ile kosztuje automatyzacja AI w firmie? Wdrożenie to 3000 do 10000 zł, pierwsza automatyzacja na próbę 1990 zł, audyt 1490 zł. Realne widełki i przykłady.',
 
   data: '2026-08-16',
-  dataAktualizacji: '2026-08-16',
+  dataAktualizacji: '2026-08-18',
   kategoria: 'Koszty i wycena',
   tagi: [
     'ile kosztuje automatyzacja AI',

@@ -23,7 +23,7 @@ export const promptyDlaWlasciciela: Material = {
   metaDescription:
     '50 gotowych promptów AI dla właściciela firmy: sprzedaż, marketing, obsługa klienta i finanse. Kopiujesz, podmieniasz dane, wklejasz do ChatGPT. Za darmo.',
   data: '2026-06-16',
-  dataAktualizacji: '2026-06-16',
+  dataAktualizacji: '2026-08-18',
   queries: [
     'prompty AI dla firm',
     'gotowe prompty AI dla właściciela firmy',

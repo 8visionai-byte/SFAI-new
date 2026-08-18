@@ -24,7 +24,7 @@ export const arkuszKosztRecznychZadan: Material = {
   metaDescription:
     'Arkusz do policzenia kosztu ręcznych zadań w firmie: wpisujesz czas i koszt godziny, liczysz roczny koszt i oszczędność po automatyzacji. Wzór i przykład.',
   data: '2026-06-16',
-  dataAktualizacji: '2026-06-16',
+  dataAktualizacji: '2026-08-18',
   queries: [
     'ile kosztują ręczne zadania',
     'koszt ręcznej pracy w firmie',

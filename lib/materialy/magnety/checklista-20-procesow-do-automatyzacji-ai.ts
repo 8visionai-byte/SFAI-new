@@ -21,7 +21,7 @@ export const checklista20Procesow: Material = {
   metaDescription:
     'Checklista 20 procesów do automatyzacji AI: od maili i ofert po faktury i raporty. Przy każdym kryterium, czy to Twój przypadek, i pierwszy krok. Za darmo.',
   data: '2026-06-16',
-  dataAktualizacji: '2026-06-16',
+  dataAktualizacji: '2026-08-18',
   queries: [
     'co zautomatyzować w firmie',
     'procesy do automatyzacji ai',

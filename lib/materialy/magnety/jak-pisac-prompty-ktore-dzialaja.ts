@@ -21,7 +21,7 @@ export const jakPisacPrompty: Material = {
   metaDescription:
     'Jak pisać dobre prompty: 6 zasad z przykładami przed i po. Zamień ogólne polecenie w prompt, który daje powtarzalny wynik. Prompt engineering po polsku.',
   data: '2026-06-16',
-  dataAktualizacji: '2026-06-16',
+  dataAktualizacji: '2026-08-18',
   queries: [
     'jak pisać prompty',
     'jak pisać dobre prompty',

@@ -21,7 +21,7 @@ export const aiWBiurzeRachunkowym: Poradnik = {
     'AI w biurze rachunkowym: 12 procesów do automatyzacji od najszybszego zwrotu. Odczyt faktur, segregacja maili, przypomnienia. Konkret, bez żargonu.',
 
   data: '2026-06-15',
-  dataAktualizacji: '2026-06-15',
+  dataAktualizacji: '2026-08-18',
   kategoria: 'Branże',
   tagi: [
     'AI w biurze rachunkowym',

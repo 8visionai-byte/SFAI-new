@@ -1,17 +1,20 @@
 import type { Metadata } from 'next';
 import type { ComponentType, CSSProperties } from 'react';
+import type { InfDekor } from '@/lib/inf-kategorie';
 import { INF_NARZEDZIE, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
 import { InfIcon } from '@/components/ui/InfIcons';
 
 import { buildMetadata } from '@/lib/metadata';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { breadcrumbSchema } from '@/components/seo/schemas';
-import { SITE, HOME_CTA } from '@/lib/site';
+import { breadcrumbSchema, itemListSchema, faqSchemaPl } from '@/components/seo/schemas';
+import { HOME_CTA } from '@/lib/site';
 import { NARZEDZIA } from '@/lib/narzedzia';
 
 import { Section, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { KartaStatus } from '@/components/sections/KartaCzesci';
+import { PasekMetryk } from '@/components/sections/PasekMetryk';
+import { HubFAQ } from '@/components/sections/HubFAQ';
 
 import { KalkulatorOszczednosci } from '@/components/narzedzia/KalkulatorOszczednosci';
 import { KalkulatorProcesu } from '@/components/narzedzia/KalkulatorProcesu';
@@ -33,17 +36,142 @@ import { PRZYKLADY } from '@/lib/narzedzia/generator-promptow';
  */
 export const dynamic = 'force-static';
 
+const PATH = '/narzedzia';
+
 export const metadata: Metadata = buildMetadata({
   title: 'Darmowe narzędzia AI dla firm',
   description:
     'Darmowe narzędzia AI: kalkulator oszczędności, test gotowości firmy na AI i audyt strony pod cytowanie w ChatGPT. Sprawdź sam, bez maila.',
-  path: '/narzedzia',
+  path: PATH,
 });
 
 /* INFINITY v5 (spec §4): lokalna mapa dekoru WYPADŁA — dekorację (kolor +
    jasny odcień + UNIKALNA ikona SVG per slug) niesie single source
    lib/inf-kategorie (INF_NARZEDZIE — ta sama mapa co dropdown "Narzędzia").
    Kolor i ikona to WYŁĄCZNIE dekoracja (aria-hidden / custom property). */
+
+/**
+ * TON HUBU = dekor FLAGOWCA, czyli pierwszego wpisu rejestru
+ * (INF_NARZEDZIE['kalkulator-oszczednosci'], cyjan #00f0ff). Pięć narzędzi ma
+ * pięć różnych tonów, więc hub nie ma „własnego" koloru: bierzemy ten, którym
+ * świeci pierwsza karta listy, zamiast dokładać nową mapę kolorów.
+ * Sama dekoracja (custom property), zero wpływu na treść.
+ */
+const DEKOR_FLAGOWCA = INF_NARZEDZIE[NARZEDZIA[0]?.slug ?? ''] ?? INF_KATEGORIA_DEFAULT;
+const TON: InfDekor = {
+  c: DEKOR_FLAGOWCA.c,
+  odcien: DEKOR_FLAGOWCA.odcien ?? DEKOR_FLAGOWCA.c,
+  /* INF_NARZEDZIE ma typ InfIkonaDekor (emoji opcjonalne), a PasekMetryk/HubFAQ
+     przyjmują InfDekor (emoji wymagane). Pas metryk i FAQ nie renderują emoji
+     w ogóle, czytają wyłącznie `c` i `odcien`, więc to pole jest tu tylko po to,
+     żeby nie forkować typu ani nie ruszać rejestru dekoracji. */
+  emoji: DEKOR_FLAGOWCA.emoji ?? INF_KATEGORIA_DEFAULT.emoji,
+  ikona: DEKOR_FLAGOWCA.ikona,
+};
+
+/* ─────────────────────────────────────────────────────────────────────
+   LICZBY HUBU, POLICZONE Z REJESTRU PRZY BUILDZIE (PLAN-v22 §1.7a:
+   „liczba wpisana z palca to zmyślona liczba"). Jedyne pole rejestru, które
+   dzieli narzędzia na rodzaje, to `kategoria` (lib/narzedzia/types.ts:11:
+   'kalkulator' | 'test' | 'audyt' | 'generator'), więc podział idzie po nim.
+   Dopisanie narzędzia do lib/narzedzia przelicza pas metryk i FAQ samo. */
+const LICZBA_NARZEDZI = NARZEDZIA.length;
+const LICZBA_KALKULATOROW = NARZEDZIA.filter((n) => n.kategoria === 'kalkulator').length;
+const LICZBA_SAMOOCEN = NARZEDZIA.filter(
+  (n) => n.kategoria === 'test' || n.kategoria === 'audyt'
+).length;
+const LICZBA_GENERATOROW = NARZEDZIA.filter((n) => n.kategoria === 'generator').length;
+
+/**
+ * PAS METRYK POD HERO (PLAN-v22 §2.6 pkt 2).
+ *
+ * Wszystkie cztery liczby liczone wyżej z rejestru i sumujące się do
+ * `LICZBA_NARZEDZI` (2 + 2 + 1 = 5), więc pas nie może rozjechać się z listą
+ * kotwic pod nim. `zrodlo` mówi wprost, skąd liczba, i nie wnosi nowego faktu:
+ * „ZA DARMO" to status, który ta strona renderuje na KAŻDEJ karcie (niżej,
+ * KartaStatus w mapowaniu NARZEDZIA), a nazwy kategorii są w rejestrze.
+ * Słowo „samoocena" jest wzięte z DISCLAIMER_QUIZ (lib/narzedzia/stale.ts:47:
+ * „To szybka samoocena, nie audyt"), nie wymyślone tutaj.
+ */
+const METRYKI_HUBU = [
+  {
+    wartosc: String(LICZBA_NARZEDZI),
+    opis: 'darmowe narzędzia na tej stronie',
+    zrodlo: 'status „ZA DARMO" na każdej karcie',
+  },
+  {
+    wartosc: String(LICZBA_KALKULATOROW),
+    opis: 'kalkulatory: oszczędność i zwrot z procesu',
+    zrodlo: 'kategoria „kalkulator" w rejestrze',
+  },
+  {
+    wartosc: String(LICZBA_SAMOOCEN),
+    opis: 'samooceny: gotowość firmy i strona pod AI',
+    zrodlo: 'kategorie „test" i „audyt"',
+  },
+  {
+    wartosc: String(LICZBA_GENERATOROW),
+    opis: 'generator gotowych promptów',
+    zrodlo: 'kategoria „generator"',
+  },
+];
+
+/**
+ * FAQ HUBU (PLAN-v22 §2.6 pkt 5 + reguła treści (a)-(d)). Każda odpowiedź da
+ * się wyprowadzić z liczby policzonej z rejestru (a), ceny z listy locked (b),
+ * zdania, które już stoi na stronie w repo (c), albo zasady zapisanej
+ * w kontrakcie/komentarzu kodu (d). Źródło stoi przy każdym pytaniu, żeby
+ * kontrola nie musiała zgadywać. Ta sama tablica idzie do FAQPage niżej.
+ */
+const FAQ_HUBU = [
+  {
+    /* (a) NARZEDZIA.length. (c) H1 tej strony „Darmowe narzędzia AI" + lead
+       „Bez maila, bez zobowiązań" + istniejąca odpowiedź w sekcji generatora
+       („Tak. Bez logowania, bez limitu, bez maila."). (d) GeneratorPromptow.tsx:36
+       „zero logowania, zero czekania". */
+    pytanie: 'Czy te narzędzia są naprawdę darmowe?',
+    odpowiedz: `Tak, wszystkie ${LICZBA_NARZEDZI}. Bez logowania, bez limitu, bez maila. Wchodzisz, liczysz, przepisujesz albo kopiujesz wynik i wychodzisz. Każde z nich działa w pełnej wersji od razu, nic nie jest schowane za kontem ani za opłatą.`,
+  },
+  {
+    /* (d) CaptureMaila.tsx:8-10: „opcjonalny lead magnet (...) Sama
+       kalkulacja/wynik działa w 100% bez tego pola". (d) TestGotowosciAI.tsx:32
+       „Zero danych osobowych do wyniku". (d) AudytStronyAI.tsx:29 „ZERO fetchu
+       cudzej domeny (CORS) i ZERO kluczy"; w całym components/narzedzia nie ma
+       ani jednego wywołania fetch, więc liczby nie opuszczają przeglądarki.
+       (c) lead tej strony: „Bez maila, bez zobowiązań, w kilka minut". */
+    pytanie: 'Muszę zostawić maila, żeby zobaczyć wynik?',
+    odpowiedz:
+      'Nie. Wynik liczy się w Twojej przeglądarce i pokazuje od razu, bez maila, bez konta i bez czekania. Twoje liczby nigdzie nie wychodzą, bo narzędzia niczego nie wysyłają na serwer. Pod gotowym wynikiem stoi jeszcze opcjonalne pole na adres e-mail, ale możesz je spokojnie pominąć: całą ścieżkę przechodzisz do końca, nie podając o sobie niczego.',
+  },
+  {
+    /* (a) liczby z rejestru. (c) opisy answer-first 1:1 z lib/narzedzia/index.ts
+       (kalkulator oszczędności :32, kalkulator procesu :43, test gotowości :53,
+       audyt strony :63, generator :73) oraz korzyść testu :54 („nawet gdy nie
+       znasz swoich liczb"). */
+    pytanie: 'Czym różni się kalkulator od testu i audytu?',
+    odpowiedz: `Kalkulatory (${LICZBA_KALKULATOROW}) pracują na Twoich liczbach: pierwszy pokazuje, ile złotych rocznie odzyskasz po automatyzacji powtarzalnej roboty, drugi liczy jeden konkretny proces i to, po ilu miesiącach zwróci się wdrożenie, którego koszt podajesz Ty. Test gotowości i audyt strony (${LICZBA_SAMOOCEN}) nie potrzebują żadnych liczb, tylko odpowiedzi: test to osiem pytań o procesy, dane, ludzi i pierwszy proces do zdjęcia, a audyt to dziesięć pytań o Twojej stronie i o to, czy ChatGPT oraz Perplexity mogą ją cytować. Generator promptów niczego nie liczy: składa gotowe polecenie do skopiowania.`,
+  },
+  {
+    /* (c) opisy rejestru jak wyżej. (d) KalkulatorOszczednosci.tsx:277-289:
+       rozwijany blok „Jak to liczę?" z jawnym wzorem i wykres kosztu dziś kontra
+       po (:243-249). (d) KalkulatorProcesu.tsx:34: „koszt wdrożenia i opieka
+       pochodzą WYŁĄCZNIE od użytkownika". (c) DISCLAIMER pod każdym wynikiem,
+       lib/narzedzia/stale.ts:43-44, cytowany tu 1:1. */
+    pytanie: 'Co dostaję po wypełnieniu narzędzia?',
+    odpowiedz:
+      'Konkretny wynik na ekranie, od razu. Kalkulator oszczędności pokazuje kwotę roczną i miesięczną, odzyskane godziny oraz wykres kosztu dziś kontra po automatyzacji, a pod nim rozwijany wzór „Jak to liczę?", żebyś mógł sprawdzić rachunek co do liczby. Kalkulator procesu podaje koszt procesu rocznie i moment zwrotu wdrożenia. Test gotowości daje poziom gotowości i trzy konkretne rekomendacje, audyt strony wynik punktowy i trzy rzeczy do naprawy najpierw, a generator gotowy prompt do wklejenia. Pod wynikiem kalkulatorów stoi to samo zastrzeżenie: to Twoje liczby, nie nasza obietnica, więc służą do rozmowy, a nie jako gwarancja.',
+  },
+  {
+    /* (c) nagłówek i podpis CTA tej strony: „Liczby się zgadzają? Pogadajmy
+       o konkretach." + „Bezpłatna diagnoza. Najpierw liczby, potem decyzja."
+       (c) AudytStronyAI.tsx:251-253: „Pełny techniczny audyt robimy na
+       bezpłatnej diagnozie." (b)+(c) dwa modele rozliczenia, zdanie 1:1
+       z lib/uslugi/chatboty.ts:78 i lib/uslugi/audyt-ai.ts:78. */
+    pytanie: 'Policzyłem i mam wynik. Co dalej?',
+    odpowiedz:
+      'Wynik zostaje u Ciebie i możesz z nim zrobić, co chcesz: pokazać księgowej, wrzucić do własnej analizy albo odłożyć na później. Nic nie dzieje się automatycznie, bo narzędzia niczego o Tobie nie zapisują. Jeśli liczby się zgadzają, następny krok to bezpłatna diagnoza: przechodzimy Twój proces i mówimy, czy warto go automatyzować, zanim cokolwiek zamówisz. Przy samym wdrożeniu masz wybór, jak je rozliczyć: przekazujemy Ci całą infrastrukturę i wtedy nie płacisz abonamentu, albo projekt zostaje u nas pod opieką i wtedy dochodzi opłata utrzymaniowa od 99 do 599 zł miesięcznie.',
+  },
+];
 
 /** Mapa slug -> wyspa narzędzia. Slug zgodny z rejestrem lib/narzedzia. */
 const WYSPY: Record<string, ComponentType> = {
@@ -71,6 +199,13 @@ export default function NarzedziaPage() {
               automatyzacja się spina i czy AI w ogóle widzi Twoją stronę. Bez maila,
               bez zobowiązań, w kilka minut.
             </p>
+          </Reveal>
+
+          {/* v22 (PLAN-v22 §2.6 pkt 2): PAS METRYK pod hero. Cztery liczby
+              policzone z rejestru po polu `kategoria`, sumujące się do liczby
+              kotwic w spisie niżej, więc nie da się ich rozjechać z listą. */}
+          <Reveal delay={0.08}>
+            <PasekMetryk kafle={METRYKI_HUBU} ton={TON} className="mt-9" />
           </Reveal>
 
           {/* Spis narzędzi — kotwice w HTML (linki dla botów i ludzi).
@@ -282,6 +417,13 @@ export default function NarzedziaPage() {
         );
       })}
 
+      {/* v22 (§2.6 pkt 5): FAQ HUBU w natywnych <details>. Przed rundą cała
+          trasa miała JEDEN element rozwijany (wzór „Jak to liczę?" w kalkulatorze
+          oszczędności), przy progu odbioru >= 4. Odpowiedzi są w surowym HTML od
+          pierwszego żądania, bez JS i bez bramki na klik; ta sama tablica idzie
+          do FAQPage niżej, więc treść i schema nie mogą się rozjechać. */}
+      <HubFAQ pytania={FAQ_HUBU} ton={TON} />
+
       {/* CTA domykające (jasna sekcja premium .surface-aurora), wspólny flow diagnozy */}
       <Section tone="base" id="diagnoza" className="surface-aurora">
         <div className="mx-auto max-w-narrow text-center">
@@ -310,10 +452,32 @@ export default function NarzedziaPage() {
       <JsonLd
         data={breadcrumbSchema([
           { name: 'Strona główna', path: '/' },
-          { name: 'Narzędzia', path: '/narzedzia' },
+          { name: 'Narzędzia', path: PATH },
         ])}
       />
-      <link rel="canonical" href={`${SITE.url}/narzedzia`} />
+
+      {/* v22 (§3 P3 pkt 17): ItemList, czyli lista narzędzi zbudowana MAPOWANIEM
+          rejestru, więc `numberOfItems` jest z definicji prawdziwe. URL pozycji
+          to kotwica #slug na tej stronie (narzędzie nie ma osobnej trasy), czyli
+          realnie istniejące miejsce w dokumencie, do którego prowadzi też kafel
+          w spisie pod hero. */}
+      <JsonLd
+        data={itemListSchema({
+          path: PATH,
+          nazwa: 'Darmowe narzędzia AI SimpleFast.ai',
+          pozycje: NARZEDZIA.map((n) => ({ nazwa: n.tytul, path: `${PATH}#${n.slug}` })),
+        })}
+      />
+
+      {/* v22 (§3 P3 pkt 18): FAQPage z TEJ SAMEJ tablicy, którą renderuje HubFAQ.
+          Jedno źródło = zero rozjazdu treść/schema. */}
+      <JsonLd data={faqSchemaPl(FAQ_HUBU, PATH)} />
+
+      {/* v22 (§3 P0 pkt 2, ta trasa była wymieniona wprost): ręczny
+          <link rel="canonical"> USUNIĘTY. Kanoniczny URL wystawia już
+          `buildMetadata` przez `alternates.canonical` (lib/metadata.ts:38),
+          więc ten znacznik dawał w <head> DRUGI rel=canonical, wbrew kryterium
+          odbioru §5.4 („dokładnie jeden na trasę"). */}
     </main>
   );
 }

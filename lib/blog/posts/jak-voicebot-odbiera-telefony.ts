@@ -19,7 +19,7 @@ export const jakVoicebotOdbieraTelefony: Post = {
     'Jak voicebot odbiera telefony, gdy pracujesz, i czy klienci to akceptują. Kiedy łączy z człowiekiem i co zrobić, żeby brzmiał naturalnie po polsku.',
 
   data: '2026-06-15',
-  dataAktualizacji: '2026-06-15',
+  dataAktualizacji: '2026-08-18',
   kategoria: 'Voiceboty',
   tagi: ['voicebot', 'odbieranie telefonów', 'asystent głosowy', 'obsługa połączeń'],
 

@@ -21,7 +21,7 @@ export const dziesiecBledow: Material = {
   metaDescription:
     '10 błędów przy wdrażaniu AI w firmie i jak ich uniknąć: od startu od narzędzia zamiast od problemu po brak opieki po wdrożeniu. Przy każdym antidotum.',
   data: '2026-06-16',
-  dataAktualizacji: '2026-06-16',
+  dataAktualizacji: '2026-08-18',
   queries: [
     'błędy przy wdrażaniu ai',
     'jak wdrożyć ai w firmie',

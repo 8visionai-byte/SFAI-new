@@ -19,7 +19,7 @@ export const ileKosztujeWdrozenieAi: Post = {
     'Ile kosztuje wdrożenie AI w małej firmie w 2026? Co wpływa na cenę chatbota, voicebota i automatyzacji, jak liczyć zwrot i od czego zacząć bez ryzyka.',
 
   data: '2026-06-15',
-  dataAktualizacji: '2026-06-15',
+  dataAktualizacji: '2026-08-18',
   kategoria: 'Koszty i wycena',
   tagi: ['koszt wdrożenia AI', 'cennik AI dla firm', 'AI w MŚP', 'zwrot z AI'],
 

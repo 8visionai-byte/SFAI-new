@@ -23,7 +23,7 @@ export const automatyzacjaProcesowAi: Post = {
     'Automatyzacja procesów AI: od czego zacząć w małej firmie, co automatyzować najpierw, jak wybrać pierwszy krok i szybko zobaczyć efekt bez ryzyka.',
 
   data: '2026-06-15',
-  dataAktualizacji: '2026-06-15',
+  dataAktualizacji: '2026-08-18',
   kategoria: 'Automatyzacja',
   tagi: ['automatyzacja procesów AI', 'automatyzacja w MŚP', 'od czego zacząć', 'AI w firmie'],
 

@@ -19,7 +19,7 @@ export const chatbotCzyAiAgent: Post = {
     'Chatbot czy AI Agent dla firmy? Czym dokładnie się różnią, co każdy z nich robi i czego nie, oraz jak wybrać i zacząć od mniejszego, odwracalnego kroku.',
 
   data: '2026-06-15',
-  dataAktualizacji: '2026-06-15',
+  dataAktualizacji: '2026-08-18',
   kategoria: 'Chatboty i Agenci',
   tagi: ['chatbot', 'AI Agent', 'różnice chatbot agent', 'co wybrać dla firmy'],
 

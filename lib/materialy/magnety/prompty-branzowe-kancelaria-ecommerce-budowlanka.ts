@@ -24,7 +24,7 @@ export const promptyBranzowe: Material = {
   metaDescription:
     'Gotowe prompty AI dla trzech branż: kancelaria, e-commerce i budowlanka. Pismo, opis produktu, kosztorys. Kopiujesz, podmieniasz dane, wklejasz do ChatGPT.',
   data: '2026-06-16',
-  dataAktualizacji: '2026-06-16',
+  dataAktualizacji: '2026-08-18',
   queries: [
     'prompty dla kancelarii',
     'prompty AI dla e-commerce',

@@ -25,7 +25,7 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
     'Chatbot dla firmy kosztuje u nas od 990 zł, rynkowo od 1990 do 45000 zł. Sprawdź, co wpływa na cenę, ile kosztuje utrzymanie i jakie są ukryte koszty.',
 
   data: '2026-06-15',
-  dataAktualizacji: '2026-08-16',
+  dataAktualizacji: '2026-08-18',
   kategoria: 'Koszty i wycena',
   tagi: ['ile kosztuje chatbot', 'cena chatbota 2026', 'chatbot dla firmy koszt', 'chatbot na stronę'],
 

@@ -392,7 +392,7 @@ export function DiagnozaForm() {
             </Button>
           </div>
           <p className="text-caption text-fg-subtle">
-            Bez zobowiązań. Odpowiadam w kilka minut. Twoje dane zostają u nas, w UE, i nie trafiają do nikogo.
+            Bez zobowiązań. Odpowiadam w kilka minut. Twoje dane zostają w UE i nie sprzedajemy ich nikomu.
           </p>
         </fieldset>
       )}

@@ -47,7 +47,7 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
   /* SEO 2026-08-17: realna aktualizacja treści (widełki + sekcja ceny), więc
      bump TYLKO dataAktualizacji (= Article.dateModified i sitemap lastmod);
      `data` = prawdziwa data publikacji, nie ruszamy (zakaz fałszywej świeżości). */
-  dataAktualizacji: '2026-08-17',
+  dataAktualizacji: '2026-08-18',
   kategoria: 'Koszty i wycena',
   tagi: [
     'ile kosztuje AI agent',
