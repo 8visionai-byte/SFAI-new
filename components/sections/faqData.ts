@@ -18,7 +18,7 @@ export const FAQ_ITEMS: { q: string; a: string }[] = [
   },
   {
     q: 'Ile to kosztuje?',
-    a: 'Koszt zależy od zakresu: inaczej wycenia się pojedynczy chatbot, inaczej pełnego Agenta obsługującego telefon i kalendarz. Dokładną cenę i widełki podajemy na bezpłatnej diagnozie, kiedy znamy już Twój proces, zanim cokolwiek zamówisz. Bez ukrytych kosztów. Po wdrożeniu dostajesz opiekę w abonamencie od 99 zł miesięcznie, nie zostawiamy klientów.',
+    a: 'Koszt zależy od zakresu: inaczej wycenia się pojedynczy chatbot, inaczej pełnego Agenta obsługującego telefon i kalendarz. Dokładną cenę i widełki podajemy na bezpłatnej diagnozie, kiedy znamy już Twój proces, zanim cokolwiek zamówisz. Bez ukrytych kosztów. Po wdrożeniu masz wybór: przekazujemy Ci całą infrastrukturę i wtedy nie płacisz abonamentu, albo projekt zostaje u nas pod opieką i wtedy jest opłata utrzymaniowa od 99 do 599 zł netto miesięcznie przy chatbotach i automatyzacjach, a od 299 do 1500 zł netto przy voicebotach.',
   },
   {
     q: 'Ile trwa wdrożenie?',

@@ -19,7 +19,7 @@ export const ileKosztujeWdrozenieAi: Post = {
     'Ile kosztuje wdrożenie AI w małej firmie w 2026? Co wpływa na cenę chatbota, voicebota i automatyzacji, jak liczyć zwrot i od czego zacząć bez ryzyka.',
 
   data: '2026-06-15',
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
   kategoria: 'Koszty i wycena',
   tagi: ['koszt wdrożenia AI', 'cennik AI dla firm', 'AI w MŚP', 'zwrot z AI'],
 
@@ -207,7 +207,7 @@ export const ileKosztujeWdrozenieAi: Post = {
     {
       etykieta: 'Ile kosztuje chatbot dla firmy w 2026',
       href: '/poradniki/ile-kosztuje-chatbot-dla-firmy-2026',
-      opis: 'Pakiet startowy od 990 zł, pełne widełki i koszty utrzymania chatbota.',
+      opis: 'Chatbot prosty 1790 zł netto i 1-2 dni robocze, pełne widełki i koszty utrzymania.',
     },
     {
       etykieta: 'Ile kosztuje wdrożenie AI agenta dla firmy',

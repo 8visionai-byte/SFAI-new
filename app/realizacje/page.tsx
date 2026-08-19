@@ -120,13 +120,13 @@ const FAQ_HUBU = [
     /* (b) ceny locked, zdania 1:1 z /uslugi/chatboty, /uslugi/voiceboty i poradnika o automatyzacji */
     pytanie: 'Ile kosztuje podobne wdrożenie u mnie?',
     odpowiedz:
-      'Zależy od obszaru. Chatbot startuje od 990 zł, voicebot od 2500 zł, a automatyzacja procesu kosztuje zwykle od 3000 do 10000 zł. Audyt AI, który daje mapę opłacalnych procesów, to 1490 zł i odliczamy go od wdrożenia. Dokładną wycenę podajemy po bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
+      'Zależy od obszaru. Chatbot na stronę startuje od 1790 zł netto i powstaje w 1 do 2 dni roboczych, wdrożenie średnie to 3000 do 6000 zł netto, a duże z integracjami 8000 do 15000 zł netto. Voicebot to 2500 zł netto w wersji prostej i 5000 do 9000 zł netto z integracjami. Automatyzacja procesu kosztuje zwykle od 3000 do 10000 zł, audyt AI to 1490 zł netto i odliczamy go od wdrożenia, a pakiet AI Start z pierwszą automatyzacją na próbę to 1990 zł. Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy. Dokładną wycenę podajemy po bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
   },
   {
     /* (c) dwa modele rozliczenia, zdanie 1:1 z /uslugi/chatboty */
     pytanie: 'Czy po takim wdrożeniu płacę abonament?',
     odpowiedz:
-      'Masz to do wyboru. Przekazujemy Ci całą infrastrukturę i wtedy nie płacisz abonamentu, albo projekt zostaje u nas pod opieką i wtedy jest opłata utrzymaniowa od 99 do 599 zł miesięcznie. Decydujesz na etapie wyceny, nie po fakcie.',
+      'Masz to do wyboru. Przekazujemy Ci całą infrastrukturę i wtedy nie płacisz abonamentu, albo projekt zostaje u nas pod opieką i wtedy jest opłata utrzymaniowa: chatboty i automatyzacje od 99 do 599 zł netto miesięcznie, voiceboty od 299 do 1500 zł netto miesięcznie. Decydujesz na etapie wyceny, nie po fakcie.',
   },
   {
     /* (d) HOME_CTA z lib/site.ts */

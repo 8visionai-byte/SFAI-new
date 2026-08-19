@@ -15,15 +15,17 @@ import type { PodstronaUslugi } from './types';
  *    api/_knowledge.mjs linia 56 (twarda reguła) + voiceboty.ts faq #2,
  *  - przypomnienia i potwierdzenia wychodzą tekstem (SMS/mail) z automatu:
  *    lib/uslugi/automatyzacje.ts (rozwiazanie.tresc, faq),
- *  - cena: pakiet startowy od 2500 zł (lib/uslugi/voiceboty.ts ramaCeny,
- *    minPrice locked 2026-08-16),
- *  - DWA MODELE ROZLICZENIA (v20): „przekazujemy całą infrastrukturę i wtedy
- *    nie płacisz abonamentu ALBO projekt zostaje u nas z opłatą utrzymaniową
- *    od 99 do 599 zł miesięcznie" — lib/agent/knowledge.ts linia 104 (wpis
- *    voicebotów), api/_knowledge.mjs linia 336 (reguła cenowa agenta) oraz
- *    lib/uslugi/audyt-ai.ts (ramaCeny, to samo zdanie już w rejestrze usług).
- *    Zero nowej kwoty: to przeredagowanie dotychczasowego „każde wdrożenie ma
- *    abonament", które było sprzeczne z regułą dwóch modeli.
+ *  - cena: TRZY OSOBNE POZYCJE voicebota (audyt
+ *    `.seo-przeglad/AUDYT-WDROZENIOWY-2026-08-18.md` §2, decyzje Pawła
+ *    2026-08-19), wszystkie NETTO: stworzenie 2500 zł (prosty) albo
+ *    5000-9000 zł (z integracjami), utrzymanie 299-1500 zł/mies. przy
+ *    infrastrukturze u nas ALBO 0 zł/mies. przy przekazaniu jej klientowi
+ *    (poprawki wtedy 350 zł netto za godzinę), zużycie (tokeny i minuty)
+ *    wg realnego użycia po stronie klienta. Widełki 99-599 zł/mies. NIE
+ *    dotyczą już voicebotów (zostają przy chatbotach). `minPrice` 2500
+ *    bez zmian.
+ *  - BRAK DANEJ (nie zmyślać): audyt nie podaje czasu wdrożenia voicebota
+ *    w dniach roboczych. Zostaje sama zasada liczenia czasu.
  *
  * ŻELAZNA GRANICA TEJ PODSTRONY (decyzja Pawła + prawo):
  *  Strona NIE sprzedaje obdzwaniania dłużników. Voicebot obsługuje telefon
@@ -41,7 +43,7 @@ import type { PodstronaUslugi } from './types';
 export const windykacja: PodstronaUslugi = {
   rodzic: 'voiceboty',
   slug: 'windykacja',
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
 
   // v20: 65 -> 50 znaków (pomiar raporty/pomiary-v20.md §4b: 4 linie -> 3 na
   // 1440, 6 -> 4 na 320). Fraza główna „voicebot do windykacji" zostaje NA
@@ -53,7 +55,7 @@ export const windykacja: PodstronaUslugi = {
 
   metaTitle: 'Voicebot do windykacji: odbiera telefon 24/7',
   metaDescription:
-    'Voicebot do windykacji odbiera telefony w sprawie płatności 24/7, spisuje ustalenia i przekazuje sprawy sporne. Nie wydzwania do dłużników. Od 2500 zł.',
+    'Voicebot do windykacji odbiera telefony w sprawie płatności 24/7, spisuje ustalenia i przekazuje sprawy sporne. Nie wydzwania do dłużników. Od 2500 zł netto.',
 
   problem: {
     h2: 'Ile telefonów w sprawie płatności zostaje bez odbioru?',
@@ -138,9 +140,12 @@ export const windykacja: PodstronaUslugi = {
        voicebocie" (nie odpowiada na pytanie) oraz „Dokładną wycenę podajemy po
        bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów." —
        to zdanie komponent RamaCeny.tsx drukuje pod kartą na sztywno, więc
-       stało na stronie dwa razy. Kwoty 2500 i 99-599 bez zmian. */
+       stało na stronie dwa razy.
+       2026-08-19 (audyt §2): rozliczenie rozbite na TRZY JAWNE POZYCJE,
+       utrzymanie przestawione z 99-599 na model voicebotowy, każda kwota
+       oznaczona jako netto. */
     tresc:
-      'Pakiet startowy zaczyna się od 2500 zł: bot odbierający telefon 24/7 i rozmawiający po polsku, wdrożenie i konfiguracja scenariuszy. Do tego koszt działania zależny od liczby rozmów. Opiekę rozliczasz na dwa sposoby: bez abonamentu, gdy przekazujemy Ci całą infrastrukturę, albo za 99 do 599 zł miesięcznie, gdy projekt zostaje u nas.',
+      'Voicebot ma trzy osobne pozycje. Stworzenie bota: 2500 zł netto jednorazowo za wersję prostą, czyli bota odbierającego telefon 24/7 po polsku, z wdrożeniem i konfiguracją scenariuszy, albo 5000 do 9000 zł netto za wersję z integracjami i rozbudowanymi scenariuszami. Utrzymanie: 299 do 1500 zł netto miesięcznie, gdy infrastruktura zostaje u nas, albo 0 zł miesięcznie, gdy przekazujemy ją Tobie, a poprawki zamawiasz wtedy po 350 zł netto za godzinę. Zużycie: tokeny i minuty rozmów według realnego użycia, po Twojej stronie. Czas wdrożenia liczymy od przekazania kompletu materiałów, a w cenie są dwie rundy poprawek.',
     minPrice: 2500,
     /* Link powrotny do usługi macierzystej (wymóg podstrony: każda wraca do
        rodzica realnym odnośnikiem). Pole `linkPoradnik` to jedyny slot na
@@ -183,7 +188,7 @@ export const windykacja: PodstronaUslugi = {
     {
       pytanie: 'Ile kosztuje voicebot do windykacji?',
       odpowiedz:
-        'Pakiet startowy kosztuje od 2500 zł: bot odbierający telefon 24/7 po polsku, wdrożenie i konfiguracja scenariuszy. Do tego koszt działania zależny od liczby rozmów. Opiekę rozliczasz bez abonamentu, gdy przekazujemy Ci infrastrukturę, albo za 99 do 599 zł miesięcznie, gdy projekt zostaje u nas. Dokładną wycenę podajemy po bezpłatnej diagnozie.',
+        'Koszt dzieli się na trzy osobne pozycje. Stworzenie bota: 2500 zł netto jednorazowo za wersję prostą albo 5000 do 9000 zł netto za wersję z integracjami. Utrzymanie: 299 do 1500 zł netto miesięcznie, gdy infrastruktura zostaje u nas, albo 0 zł, gdy przekazujemy ją Tobie. Zużycie: tokeny i minuty rozmów według realnego użycia, po Twojej stronie.',
     },
   ],
 

@@ -6,24 +6,44 @@ import type { Usluga } from './types';
  * Pozycjonowanie kategorii: chatbot odpowiada, AI Agent działa.
  * Answer-first, głos Pawła, zero em-dash, zero zmyślonych liczb i cen.
  *
+ * CENNIK OBOWIĄZUJĄCY (audyt `.seo-przeglad/AUDYT-WDROZENIOWY-2026-08-18.md` §1
+ * plus decyzje Pawła z 2026-08-19). Każda kwota NETTO:
+ *  - prosty  1790 zł        / 1-2 dni robocze,
+ *  - średni  3000-6000 zł   / 3-4 dni robocze,
+ *  - duży    8000-15000 zł  / 5-10 dni roboczych,
+ *  - opieka  99-599 zł/mies. gdy projekt zostaje u nas, 0 zł gdy przekazujemy
+ *    klientowi całą infrastrukturę (decyzja Pawła: widełki chatbota ZOSTAJĄ,
+ *    bo chatbot jest prostszy w utrzymaniu niż voicebot, który ma 299-1500 zł).
+ * Kwota 990 zł ZNIKA z cennika chatbota (audyt §1: leżała poniżej pasma
+ * rynkowego, przez co modele AI odrzucały ją jako wartość odstającą).
+ * `ramaCeny.minPrice` = 1790 -> kafel ceny w hero, kolumna „Cena" na /uslugi
+ * ORAZ `offers.minPrice` w Service JSON-LD (jedna liczba, cztery miejsca).
+ *
+ * ZASADA CZASU i RUNDY POPRAWEK (audyt §1, nasze własne zobowiązania, czyli
+ * materiał do cytowania): czas liczymy OD PRZEKAZANIA KOMPLETU MATERIAŁÓW
+ * przez klienta, nie od podpisania umowy; dwie rundy poprawek są w cenie
+ * wdrożenia; poprawki tego, co nie zadziałało po naszej stronie, robimy zawsze,
+ * także po odbiorze; nowe funkcje to rozbudowa wyceniana osobno.
+ *
  * INPUT PAWŁA (do uzupełnienia przed shipem, NIE renderowane):
- *  - ramaCeny.minPrice: 990 USTAWIONE (pakiet startowy, decyzja Pawła i Marcina
- *    z 2026-08-16, locked). Kwota w UI i `offers` w Service JSON-LD włączone.
- *  - osobne "od X zł" za chatbota z integracjami (kalendarz/CRM) — do treści ceny.
  *  - cta.dowod: realna liczba z wdrożenia (np. zapytań/mc obsłużonych przez chatbota
  *    klienta) ALBO case z liczbą + zgodą. Do tego czasu uczciwe zdanie o diagnozie.
  */
 export const chatboty: Usluga = {
   slug: 'chatboty',
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
   h1: 'Chatbot AI dla firmy',
 
+  /* BLOK KRÓTKIEJ ODPOWIEDZI (audyt §9 etap 1 pkt 2): pierwszy akapit po H1
+     MUSI nieść cztery wielkości naraz, żeby model mógł wyciąć go jako gotową
+     odpowiedź: dolny próg, górny próg, koszt miesięczny, czas wdrożenia.
+     Przed tą zmianą kapsuła miała 0 z 4 (raport `raporty/stan-etapu1`). */
   kapsula:
-    'Chatbot AI dla firmy to asystent, który odpowiada klientom na stronie i w komunikatorach przez całą dobę: tłumaczy ofertę, podaje ceny i godziny, zbiera leady, nawet o 22:00. U nas chatbot to pierwszy krok do Agenta, który nie tylko odpowiada, ale i działa: umawia, zapisuje, przekazuje sprawę dalej. Wdrażamy go w dni, uczymy na Twojej wiedzy, a dane zostają w Unii Europejskiej.',
+    'Chatbot AI dla firmy kosztuje u nas od 1790 zł netto za wersję prostą do 15000 zł netto za wdrożenie z integracjami, a samo wdrożenie trwa od 1 do 10 dni roboczych, licząc od przekazania kompletu materiałów. Opieka po wdrożeniu to 99 do 599 zł netto miesięcznie, gdy projekt zostaje u nas, albo 0 zł, gdy przekazujemy Ci całą infrastrukturę. Chatbot odpowiada klientom na stronie i w komunikatorach przez całą dobę, zbiera leady i uczy się na Twojej wiedzy, a dane zostają w Unii Europejskiej.',
 
   metaTitle: 'Chatbot AI dla firm: cena i wdrożenie',
   metaDescription:
-    'Chatbot AI dla firm, który odpowiada klientom 24/7 i zbiera leady. Ile kosztuje, ile trwa wdrożenie i czym różni się od Agenta. Sprawdź przykłady.',
+    'Chatbot AI dla firm od 1790 zł netto, wdrożenie od 1 do 10 dni roboczych. Odpowiada klientom 24/7 i zbiera leady. Opieka 99 do 599 zł netto miesięcznie.',
 
   problem: {
     h2: 'Ile razy dziennie odpowiadasz na to samo pytanie?',
@@ -48,6 +68,16 @@ export const chatboty: Usluga = {
       { cecha: 'Leady wieczorem', bez: 'Często przepadają', zNami: 'Bot zbiera kontakt od razu' },
       { cecha: 'Skok zapytań', bez: 'Kolejka i stres', zNami: 'Ten sam bot, bez kolejki' },
       { cecha: 'Rozwój', bez: 'Zostaje obsługą czatu', zNami: 'Rośnie do Agenta, który działa' },
+      /* 2026-08-19 (audyt §9 etap 1 pkt 1): dwa DOŁOŻONE wiersze wnoszą do
+         tabeli dolny próg ceny i czas wdrożenia w dniach roboczych. Zero
+         usuniętych wierszy, zero zmian w istniejących. Pełna drabina trzech
+         progów nie mieści się w kontrakcie `tabelaPorownawcza` (trzy kolumny:
+         cecha / bez / z nami) i stoi w `ramaCeny.tresc` oraz w FAQ.
+         Uwaga na bramkę hero: `ServiceHero.kafleStatystyk` szuka PIERWSZEGO
+         wiersza z „24/7" w kolumnie zNami (wiersz „Dostępność"), więc
+         dokładanie wierszy na końcu jej nie rusza. */
+      { cecha: 'Koszt startu', bez: 'Twój czas i czas zespołu', zNami: 'Od 1790 zł netto jednorazowo' },
+      { cecha: 'Czas wdrożenia', bez: 'Robota zostaje z Tobą na stałe', zNami: 'Od 1 do 10 dni roboczych' },
     ],
   },
 
@@ -74,9 +104,12 @@ export const chatboty: Usluga = {
 
   ramaCeny: {
     h2: 'Ile kosztuje wdrożenie chatbota?',
+    /* DRABINA TRZECH PROGÓW (audyt §1). Fraza „pakiet startowy" zostaje
+       w treści celowo: `ServiceHero.KAFEL_CENY` opisuje kafel ceny chatbotów
+       słowami 1:1 z tego akapitu („od 1790 zł / pakiet startowy"). */
     tresc:
-      'Pakiet startowy zaczyna się od 990 zł. W tej cenie dostajesz chatbota na stronę, uczonego na wiedzy Twojej firmy, razem z wdrożeniem i pierwszą konfiguracją. Chatbot z integracjami, który dodatkowo umawia i zapisuje wizyty oraz łączy się z kalendarzem czy CRM, to wyższa półka, wyceniana od zakresu. Dokładną wycenę podajemy po bezpłatnej diagnozie, zanim cokolwiek zamówisz. Opiekę rozliczasz na dwa sposoby: bez abonamentu, gdy przekazujemy Ci całą infrastrukturę, albo za 99 do 599 zł miesięcznie, gdy projekt zostaje u nas i my go pilnujemy. Bez ukrytych kosztów.',
-    minPrice: 990, // pakiet startowy (locked 2026-08-16): kwota w UI + offers w Service JSON-LD.
+      'Chatbot ma trzy progi, a każdy z nich ma swój czas wdrożenia. Prosty, czyli pakiet startowy: 1790 zł netto, 1 do 2 dni roboczych, bot na stronę WWW z podpiętą przez nas bazą wiedzy, zbieraniem leadów i odsyłaniem klienta do właściwych miejsc na stronie. Średni: 3000 do 6000 zł netto, 3 do 4 dni roboczych, to co wyżej plus rozbudowana baza wiedzy i dodatkowe funkcje. Duży: 8000 do 15000 zł netto, 5 do 10 dni roboczych, pełny zakres z integracjami, zależnie od liczby elementów do zbudowania. Czas liczymy od przekazania kompletu materiałów przez Ciebie, czyli bazy wiedzy, treści i dostępów, a nie od podpisania umowy. W cenie wdrożenia są dwie rundy poprawek. Opiekę rozliczasz na dwa sposoby: bez abonamentu, gdy przekazujemy Ci całą infrastrukturę, albo za 99 do 599 zł netto miesięcznie, gdy projekt zostaje u nas i my go pilnujemy. Opieka chatbota jest tańsza niż opieka voicebota, która kosztuje 299 do 1500 zł netto miesięcznie, bo chatbot jest po prostu prostszy: nie ma telefonii, minut rozmów ani scenariuszy głosowych.',
+    minPrice: 1790, // próg „prosty" (audyt §1, 2026-08-19): kwota w UI + offers w Service JSON-LD.
     /* SEO 2026-08-17: linkowanie wewnętrzne do poradnika cenowego (zdanie 1:1
        z brief-seo-2026-08-17; render w RamaCeny.tsx w tym samym akapicie). */
     linkPoradnik: {
@@ -91,7 +124,7 @@ export const chatboty: Usluga = {
     {
       pytanie: 'Ile kosztuje chatbot AI dla firmy?',
       odpowiedz:
-        'Pakiet startowy kosztuje od 990 zł. W tej cenie jest chatbot na stronę, uczony na wiedzy Twojej firmy, z wdrożeniem i pierwszą konfiguracją. Pełny Agent, który umawia wizyty i łączy się z kalendarzem czy CRM, to wyższa półka, wyceniana od zakresu. Dokładną wycenę podajemy po bezpłatnej diagnozie, zanim cokolwiek zamówisz. Opiekę rozliczasz na dwa sposoby: bez abonamentu, gdy przekazujemy Ci całą infrastrukturę, albo za 99 do 599 zł miesięcznie, gdy projekt zostaje u nas. Bez ukrytych kosztów.',
+        'Chatbot prosty kosztuje 1790 zł netto i wdrażamy go w 1 do 2 dni roboczych. Chatbot średni, z rozbudowaną bazą wiedzy i dodatkowymi funkcjami, to 3000 do 6000 zł netto i 3 do 4 dni roboczych. Chatbot duży, z pełnymi integracjami, to 8000 do 15000 zł netto i 5 do 10 dni roboczych. Opieka po wdrożeniu kosztuje 99 do 599 zł netto miesięcznie albo 0 zł, gdy przekazujemy Ci całą infrastrukturę.',
     },
     {
       pytanie: 'Czym chatbot różni się od AI Agenta?',
@@ -111,12 +144,26 @@ export const chatboty: Usluga = {
     {
       pytanie: 'Ile trwa wdrożenie chatbota AI dla firmy?',
       odpowiedz:
-        'Wdrożenie liczymy w dniach, nie miesiącach. Prosty chatbot na stronie potrafi działać w kilka dni, więc pierwszy działający krok widzisz szybko. Bot z integracjami i umawianiem wizyt zajmuje trochę dłużej, bo dochodzi łączenie z kalendarzem czy CRM. Dokładny termin podajemy na bezpłatnej diagnozie.',
+        'Od 1 do 10 dni roboczych, zależnie od progu. Chatbot prosty na stronę: 1 do 2 dni roboczych. Chatbot średni, z rozbudowaną bazą wiedzy: 3 do 4 dni roboczych. Chatbot duży, z integracjami: 5 do 10 dni roboczych. Czas liczymy od przekazania kompletu materiałów przez Ciebie, czyli bazy wiedzy, treści i dostępów, a nie od podpisania umowy.',
     },
     {
       pytanie: 'Czy chatbot zastąpi moją obsługę klienta?',
       odpowiedz:
         'Nie zastąpi, odciąży. Bierze na siebie powtarzalne pytania i nocne wiadomości, a Twoi ludzie zajmują się trudniejszymi sprawami i relacją z klientem. Zespół ma mniej powtarzalnej roboty, nie mniej pracy do zwolnień.',
+    },
+    /* 2026-08-19 (audyt §1 i §9 etap 1 pkt 4): DWA DOŁOŻONE pytania. Rundy
+       poprawek i zasada liczenia czasu to nasze własne zobowiązania, czyli
+       materiał, który model może zacytować jako fakt o dostawcy. Żadne
+       istniejące pytanie nie zostało usunięte. */
+    {
+      pytanie: 'Ile rund poprawek jest w cenie wdrożenia?',
+      odpowiedz:
+        'Dwie. Testujesz bota przez tydzień i zapisujesz uwagi, my je wdrażamy. Testujesz drugi tydzień i zgłaszasz kolejne, wdrażamy je i wtedy jest odbiór. Poprawki tego, co nie zadziałało po naszej stronie, robimy zawsze, także po odbiorze. Nowe funkcje, których nie było w pierwszej rozmowie, to rozbudowa wyceniana osobno.',
+    },
+    {
+      pytanie: 'Ile kosztuje opieka nad chatbotem i czym różni się od opieki nad voicebotem?',
+      odpowiedz:
+        'Opieka nad chatbotem kosztuje 99 do 599 zł netto miesięcznie, gdy projekt zostaje u nas. Opieka nad voicebotem to 299 do 1500 zł netto miesięcznie, bo voicebot jest trudniejszy w utrzymaniu: dochodzi telefonia, minuty rozmów i scenariusze głosowe. W obu przypadkach możesz zamiast tego wziąć całą infrastrukturę do siebie i wtedy nie płacisz nam abonamentu.',
     },
   ],
 

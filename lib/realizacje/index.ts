@@ -23,6 +23,12 @@ import { agenciAi247 } from './agenci-ai-24-7';
 import { autoPodsumowaniaSpotkan } from './auto-podsumowania-spotkan';
 import { automatTresciSocial } from './automat-tresci-social';
 import { automatyczneRaporty } from './automatyczne-raporty';
+/* Partia GEO (audyt 2026-08-18 §6.1 i §9 etap 2 pkt 7): trzy dowody
+   cytowalności, których strona /uslugi/optymalizacja dotąd nie miała.
+   Kolejność siły z audytu: Lenart Motors, Fichtelgebirgshaus.de, Trockenhaus. */
+import { stronaCytowanaPrzezChatgpt } from './strona-cytowana-przez-chatgpt';
+import { top10GoogleIWidocznoscWGpt } from './top10-google-i-widocznosc-w-gpt';
+import { zNiewidocznejStronyDoTop3Google } from './z-niewidocznej-strony-do-top3-google';
 
 export type {
   Realizacja,
@@ -35,8 +41,19 @@ export { KATEGORIA_LABEL } from './types';
 /**
  * Wszystkie realizacje, w kolejności prezentacji na liście /realizacje.
  * Kolejność: najmocniejsze dowody z liczbą najpierw (75%, 1000/40 min), potem reszta.
+ *
+ * PARTIA GEO (audyt 2026-08-18 §6.1: „to jest najcenniejszy materiał w całym
+ * audycie"): trzy dowody cytowalności wchodzą NA POCZĄTEK listy, w kolejności
+ * siły podanej przez audyt (Lenart Motors, Fichtelgebirgshaus.de, Trockenhaus).
+ * Powód: to jedyne case'y z nazwanym klientem i wynikiem w silniku AI, a hub
+ * /realizacje pokazuje pierwsze karty jako wizytówkę. Liczniki w serwisie
+ * (HeroLiczniki, /kontakt, /wiedza, /realizacje) liczą `REALIZACJE.length`,
+ * więc same przechodzą z 8 na 11 nazwanych wdrożeń (audyt §7).
  */
 export const REALIZACJE: readonly Realizacja[] = [
+  stronaCytowanaPrzezChatgpt,
+  top10GoogleIWidocznoscWGpt,
+  zNiewidocznejStronyDoTop3Google,
   autoEmailBok,
   leadGenerator,
   autoPodsumowaniaSpotkan,

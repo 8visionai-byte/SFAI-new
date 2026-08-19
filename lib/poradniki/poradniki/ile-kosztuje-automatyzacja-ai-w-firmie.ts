@@ -24,14 +24,14 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
     'Ile kosztuje automatyzacja AI w firmie? Widełki 2026: od 3000 do 10000 zł',
 
   lead:
-    'Automatyzacja AI w firmie kosztuje u nas od 3000 do 10000 zł za wdrożenie, zależnie od liczby integracji i złożoności procesu. Pierwszą automatyzację na próbę robimy w pakiecie AI Start za 1990 zł, a mapę opłacalnych procesów daje audyt AI za 1490 zł, odliczany od wdrożenia. Do każdego wdrożenia dołączamy opiekę w abonamencie od 99 do 599 zł miesięcznie. Poniżej masz pełne widełki, to, od czego zależy cena, i przykłady z naszych realnych wdrożeń.',
+    'Automatyzacja AI w firmie kosztuje u nas od 3000 do 10000 zł za wdrożenie, zależnie od liczby integracji i złożoności procesu. Pierwszą automatyzację na próbę robimy w pakiecie AI Start za 1990 zł, a mapę opłacalnych procesów daje audyt AI za 1490 zł, odliczany od wdrożenia. Po wdrożeniu wybierasz: opieka u nas w abonamencie od 99 do 599 zł netto miesięcznie albo przekazanie Ci całej infrastruktury i wtedy 0 zł abonamentu. Poniżej masz pełne widełki, to, od czego zależy cena, i przykłady z naszych realnych wdrożeń.',
 
   metaTitle: 'Ile kosztuje automatyzacja AI? Widełki 2026: 3000-10000 zł',
   metaDescription:
     'Ile kosztuje automatyzacja AI w firmie? Wdrożenie to 3000 do 10000 zł, pierwsza automatyzacja na próbę 1990 zł, audyt 1490 zł. Realne widełki i przykłady.',
 
   data: '2026-08-16',
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
   kategoria: 'Koszty i wycena',
   tagi: [
     'ile kosztuje automatyzacja AI',
@@ -197,7 +197,7 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
       chip: 'Opieka po wdrożeniu',
       naglowek: 'Czy automatyzacja wymaga opieki po wdrożeniu?',
       akapity: [
-        'Tak, i mówimy to wprost, bo to część realnego kosztu. Automatyzacja łączy się z narzędziami, które żyją: dostawca zmienia coś po swojej stronie, w firmie pojawia się nowy krok procesu, zmienia się arkusz albo skrzynka. Dlatego każde nasze wdrożenie ma dołączoną opiekę w abonamencie od 99 do 599 zł miesięcznie, zależnie od pakietu. Nie zostawiamy klientów z automatem, którego nikt nie pilnuje: monitorujemy działanie i poprawiamy to, co się zmieniło po stronie narzędzi. A firmy, które chcą co miesiąc rozwijać automatyzacje o kolejne procesy, mogą przejść na osobną usługę Opieki AI rozliczaną ryczałtem godzin.',
+        'Tak, i mówimy to wprost, bo to część realnego kosztu. Automatyzacja łączy się z narzędziami, które żyją: dostawca zmienia coś po swojej stronie, w firmie pojawia się nowy krok procesu, zmienia się arkusz albo skrzynka. Dlatego do każdego wdrożenia proponujemy opiekę w abonamencie od 99 do 599 zł netto miesięcznie, zależnie od pakietu, a gdy wolisz wziąć infrastrukturę do siebie, nie płacisz nam abonamentu. Nie zostawiamy klientów z automatem, którego nikt nie pilnuje: monitorujemy działanie i poprawiamy to, co się zmieniło po stronie narzędzi. A firmy, które chcą co miesiąc rozwijać automatyzacje o kolejne procesy, mogą przejść na osobną usługę Opieki AI rozliczaną ryczałtem godzin.',
       ],
     },
     {
@@ -225,7 +225,7 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
     {
       pytanie: 'Ile kosztuje automatyzacja AI w firmie?',
       odpowiedz:
-        'Wdrożenie automatyzacji AI kosztuje u nas od 3000 do 10000 zł, zależnie od liczby integracji i złożoności procesu. Pierwsza automatyzacja na próbę w pakiecie AI Start to 1990 zł, a audyt AI, który daje mapę opłacalnych procesów, kosztuje 1490 zł i jest odliczany od wdrożenia. Do każdego wdrożenia dołączamy opiekę w abonamencie od 99 do 599 zł miesięcznie.',
+        'Wdrożenie automatyzacji AI kosztuje u nas od 3000 do 10000 zł, zależnie od liczby integracji i złożoności procesu. Pierwsza automatyzacja na próbę w pakiecie AI Start to 1990 zł, a audyt AI, który daje mapę opłacalnych procesów, kosztuje 1490 zł netto i jest odliczany od wdrożenia. Po wdrożeniu opieka kosztuje od 99 do 599 zł netto miesięcznie, gdy projekt zostaje u nas, albo 0 zł, gdy przekazujemy Ci infrastrukturę.',
     },
     {
       pytanie: 'Od czego zależy cena automatyzacji AI?',
@@ -240,7 +240,7 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
     {
       pytanie: 'Czy automatyzacja AI wymaga opieki po wdrożeniu?',
       odpowiedz:
-        'Tak. Narzędzia, z którymi łączy się automatyzacja, zmieniają się z czasem, więc automat bez opieki prędzej czy później się wysypie. Dlatego każde nasze wdrożenie ma dołączoną opiekę w abonamencie od 99 do 599 zł miesięcznie: monitorujemy działanie i poprawiamy to, co się zmieniło po stronie narzędzi. Nie zostawiamy klientów z automatem bez opiekuna.',
+        'Tak. Narzędzia, z którymi łączy się automatyzacja, zmieniają się z czasem, więc automat bez opieki prędzej czy później się wysypie. Dlatego do każdego wdrożenia proponujemy opiekę w abonamencie od 99 do 599 zł netto miesięcznie: monitorujemy działanie i poprawiamy to, co się zmieniło po stronie narzędzi. Możesz też wziąć całą infrastrukturę do siebie i wtedy nie płacisz nam abonamentu. Nie zostawiamy klientów z automatem bez opiekuna.',
     },
   ],
 
@@ -287,7 +287,7 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
     {
       etykieta: 'Ile kosztuje chatbot dla firmy w 2026',
       href: '/poradniki/ile-kosztuje-chatbot-dla-firmy-2026',
-      opis: 'Pakiet startowy od 990 zł, pełne widełki i koszty utrzymania chatbota.',
+      opis: 'Chatbot prosty 1790 zł netto i 1-2 dni robocze, pełne widełki i koszty utrzymania.',
     },
   ],
 

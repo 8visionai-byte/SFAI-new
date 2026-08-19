@@ -11,6 +11,15 @@
  *  - TYLKO o SimpleFast.ai i AI dla firm.
  *  - ZERO myslnika (em-dash) w tresci.
  *  - ZERO zmyslonych liczb: kwoty i metryki sa wziete 1:1 z rejestrow.
+ *  - CENNIK (aktualizacja 2026-08-19, zrodlo: .seo-przeglad/AUDYT-WDROZENIOWY-2026-08-18.md
+ *    plus decyzje Pawla z 2026-08-19). Kazda kwota NETTO. Chatbot: 1790 / 3000-6000 /
+ *    8000-15000 zl (1-2 / 3-4 / 5-10 dni roboczych), opieka 99-599 zl/mies. Voicebot:
+ *    stworzenie 2500 albo 5000-9000 zl, utrzymanie 299-1500 zl/mies. albo 0 zl/mies.
+ *    przy przekazaniu infrastruktury (poprawki 350 zl/h), zuzycie po stronie klienta.
+ *    Audyt AI: 1490 zl, 5 dni roboczych, raport PDF z mapa procesow. Dolny prog
+ *    chatbota to 1790 zl, kazda nizsza kwota jest nieaktualna. 1990 zl (AI Start)
+ *    i 3000-10000 zl (automatyzacje) to OSOBNE produkty, nigdy nie podmieniac ich
+ *    na progi chatbota.
  *  - Linki = realne sciezki. Slugi uslug zweryfikowane 1:1 z lib/uslugi/*.ts (slug
  *    w module = trasa SSG /uslugi/[usluga]). Produkty/narzedzia zyja na hubach z
  *    kotwicami #<slug> (brak tras per-slug), wiec deep-linki to /produkty#<slug>
@@ -84,7 +93,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Uslugi',
     title: 'Chatbot AI dla firmy',
     summary:
-      'Chatbot AI dla firmy to asystent, ktory odpowiada klientom na stronie i w komunikatorach przez cala dobe: tlumaczy oferte, podaje ceny i godziny, zbiera leady, nawet o 22:00. U nas chatbot to pierwszy krok do Agenta, ktory nie tylko odpowiada, ale i dziala: umawia, zapisuje, przekazuje sprawe dalej. Wdrazamy go w dni, uczymy na Twojej wiedzy, a dane zostaja w Unii Europejskiej. Pakiet startowy od 990 zl (chatbot na strone, uczony na wiedzy firmy, wdrozenie i pierwsza konfiguracja), dokladna wycena po bezplatnej diagnozie. Rozliczenie masz do wyboru: przekazujemy Ci cala infrastrukture i wtedy nie placisz abonamentu, albo projekt zostaje u nas pod opieka i wtedy jest oplata utrzymaniowa od 99 do 599 zl miesiecznie.',
+      'Chatbot AI dla firmy to asystent, ktory odpowiada klientom na stronie i w komunikatorach przez cala dobe: tlumaczy oferte, podaje ceny i godziny, zbiera leady, nawet o 22:00. U nas chatbot to pierwszy krok do Agenta, ktory nie tylko odpowiada, ale i dziala: umawia, zapisuje, przekazuje sprawe dalej. Uczymy go na Twojej wiedzy, a dane zostaja w Unii Europejskiej. Cennik ma trzy progi, wszystkie kwoty netto: prosty 1790 zl w 1-2 dni robocze (bot na strone www, baza wiedzy podpieta przez nas, zbieranie leadow, odsylanie do wlasciwych miejsc na stronie), sredni 3000-6000 zl w 3-4 dni robocze (to co wyzej plus rozbudowana baza wiedzy i dodatkowe funkcje), duzy 8000-15000 zl w 5-10 dni roboczych (pelny zakres z integracjami, zaleznie od liczby elementow do zbudowania). Czas liczymy od przekazania kompletu materialow, nie od podpisania umowy, a w cenie wdrozenia sa dwie rundy poprawek. Rozliczenie masz do wyboru: przekazujemy Ci cala infrastrukture i wtedy nie placisz abonamentu, albo projekt zostaje u nas pod opieka i wtedy jest oplata utrzymaniowa od 99 do 599 zl netto miesiecznie. Opieka chatbota jest tansza niz utrzymanie voicebota, bo chatbot jest prostszy: nie ma telefonii, minut rozmow ani syntezy glosu do pilnowania.',
     url: '/uslugi/chatboty',
     intents: [
       'chatbot dla firmy',
@@ -94,6 +103,9 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
       'chatbot na strone www',
       'bot odpowiadajacy klientom',
       'chatbot a agent AI',
+      'ile trwa wdrozenie chatbota',
+      'jak dlugo buduje sie chatbota',
+      'cennik chatbota progi',
     ],
   },
   {
@@ -101,7 +113,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Uslugi',
     title: 'Voicebot dla firmy, ktory odbiera telefon za Ciebie',
     summary:
-      'Voicebot, nazywany tez botem telefonicznym albo agentem glosowym, to bot glosowy, ktory odbiera telefon, rozmawia po polsku i zalatwia sprawe: umawia wizyte, przyjmuje zgloszenie, odpowiada na pytanie. Gdy sprawa wymaga czlowieka, zapisuje ja i wysyla powiadomienie, zebys oddzwonil przygotowany. Voicebot obsluguje polaczenia przychodzace i nie dzwoni sam do klientow. Dziala 24/7, tez gdy jestes u klienta, i to nie nagranie ani menu wcisnij jeden. Klient zawsze slyszy, ze rozmawia z asystentem AI, a po rozmowie dostajesz krotkie podsumowanie. Pakiet startowy od 2500 zl (bot odbierajacy telefon 24/7 po polsku, umawianie wizyt, wdrozenie i konfiguracja), dokladna wycena po bezplatnej diagnozie. Rozliczenie do wyboru: przekazanie calej infrastruktury do Ciebie (bez abonamentu) albo opieka u nas z oplata utrzymaniowa od 99 do 599 zl miesiecznie.',
+      'Voicebot, nazywany tez botem telefonicznym albo agentem glosowym, to bot glosowy, ktory odbiera telefon, rozmawia po polsku i zalatwia sprawe: umawia wizyte, przyjmuje zgloszenie, odpowiada na pytanie. Gdy sprawa wymaga czlowieka, zapisuje ja i wysyla powiadomienie, zebys oddzwonil przygotowany. Voicebot obsluguje polaczenia przychodzace i nie dzwoni sam do klientow. Dziala 24/7, tez gdy jestes u klienta, i to nie nagranie ani menu wcisnij jeden. Klient zawsze slyszy, ze rozmawia z asystentem AI, a po rozmowie dostajesz krotkie podsumowanie. Voicebot ma trzy osobne pozycje kosztowe, nie jeden abonament, i wszystkie kwoty sa netto. Pierwsza: stworzenie bota, 2500 zl w wersji prostej (prosta baza wiedzy, kierowanie klientow, odpowiedzi na powtarzalny zestaw pytan) albo 5000-9000 zl z integracjami (kalendarz, bardziej rozbudowane scenariusze). Druga: utrzymanie, do wyboru 299-1500 zl miesiecznie, gdy infrastruktura zostaje u nas i my pilnujemy calosci, albo 0 zl miesiecznie, gdy przekazujemy infrastrukture Tobie i utrzymujesz ja sam, a poprawki zamawiasz godzinowo po 350 zl za godzine. Trzecia: zuzycie, czyli tokeny i minuty rozmow, rozliczane wedlug realnego uzycia i zawsze po Twojej stronie. Czas liczymy od przekazania kompletu materialow, nie od podpisania umowy, a w cenie wdrozenia sa dwie rundy poprawek.',
     url: '/uslugi/voiceboty',
     intents: [
       'voicebot dla firmy',
@@ -113,6 +125,9 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
       'automatyczne odbieranie telefonu',
       'bot telefoniczny',
       'umawianie wizyt przez telefon',
+      'utrzymanie voicebota',
+      'czy voicebot ma abonament',
+      'ile kosztuje voicebot miesiecznie',
     ],
   },
   {
@@ -188,7 +203,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Uslugi',
     title: 'Audyt AI firmy: mapa oszczednosci czasu',
     summary:
-      'Audyt AI firmy to platny Sprint Diagnostyczny za 1490 zl, w ktorym rozkladamy Twoje procesy na czynniki i pokazujemy, gdzie AI da realny zysk, a gdzie to przepalanie kasy. Dostajesz Action Plan: mape oszczednosci czasu z konkretnymi miejscami do automatyzacji, ulozonymi od najwiekszego zwrotu. Cena 1490 zl odliczana jest od wdrozenia, gdy ruszamy z robota, wiec najpierw mapa, potem decyzja, dopiero potem wydatek.',
+      'Audyt AI firmy to platny Sprint Diagnostyczny za 1490 zl netto, w ktorym rozkladamy Twoje procesy na czynniki i pokazujemy, gdzie AI da realny zysk, a gdzie to przepalanie kasy. Trwa 5 dni roboczych i konczy sie raportem PDF z mapa procesow: Action Plan z konkretnymi miejscami do automatyzacji, ulozonymi od najwiekszego zwrotu. Cena 1490 zl odliczana jest od wdrozenia, gdy ruszamy z robota, wiec najpierw mapa, potem decyzja, dopiero potem wydatek.',
     url: '/uslugi/audyt-ai',
     intents: [
       'audyt AI firmy',
@@ -199,6 +214,8 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
       'sprint diagnostyczny',
       'od czego zaczac z AI',
       'action plan AI',
+      'ile trwa audyt AI',
+      'co dostaje po audycie',
     ],
   },
   {
@@ -252,6 +269,41 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
       'widocznosc w Perplexity',
       'SEO dla AI',
       'jak byc polecanym przez AI',
+    ],
+  },
+  {
+    id: 'uslugi-czasy-wdrozenia',
+    section: 'Uslugi',
+    title: 'Ile trwa wdrozenie i jak liczymy czas',
+    summary:
+      'Czas liczymy od przekazania kompletu materialow przez Ciebie (baza wiedzy, tresci, dostepy), nie od podpisania umowy, wiec termin zalezy tez od Ciebie. Konkretne widelki: prosty chatbot 1-2 dni robocze, sredni 3-4 dni robocze, duzy z integracjami 5-10 dni roboczych, audyt AI (Sprint Diagnostyczny) 5 dni roboczych. Strony www: prosty landing 1 dzien, strona biznesowa 2-4 dni, zaawansowana ze sklepem albo wpietymi narzedziami 5-10 dni roboczych. Termin voicebota i wdrozen szytych na miare podajemy po bezplatnej diagnozie, gdy znamy zakres.',
+    url: '/uslugi',
+    intents: [
+      'ile trwa wdrozenie',
+      'jak dlugo trwa wdrozenie',
+      'kiedy bedzie gotowe',
+      'czas realizacji',
+      'termin wdrozenia',
+      'ile dni zajmie chatbot',
+      'ile trwa zrobienie strony',
+      'od kiedy liczycie czas',
+    ],
+  },
+  {
+    id: 'uslugi-rundy-poprawek',
+    section: 'Uslugi',
+    title: 'Dwie rundy poprawek w cenie wdrozenia',
+    summary:
+      'W cenie kazdego wdrozenia sa dwie rundy poprawek. Testujesz bota przez tydzien i zapisujesz uwagi, my je wdrazamy; testujesz drugi tydzien i zglaszasz kolejne, my je wdrazamy; potem jest finalny odbior. Poprawki tego, co nie zadzialalo po naszej stronie, robimy zawsze, takze po odbiorze. Nowe funkcjonalnosci, ktore nie wyszly w pierwszej rozmowie, to rozbudowa projektu wyceniana osobno: bota mozna rozbudowywac dowolnie, ale zakres i cene ustalamy indywidualnie.',
+    url: '/uslugi',
+    intents: [
+      'rundy poprawek',
+      'ile poprawek w cenie',
+      'co jesli cos nie dziala',
+      'poprawki po odbiorze',
+      'gwarancja na wdrozenie',
+      'co jesli bede chcial zmiany',
+      'rozbudowa bota',
     ],
   },
 

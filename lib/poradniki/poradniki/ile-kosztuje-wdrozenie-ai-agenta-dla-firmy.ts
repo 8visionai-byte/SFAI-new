@@ -10,11 +10,22 @@ import type { Poradnik } from '../types';
  * z tamtym wpisem (zero kanibalizacji).
  *
  * SEO 2026-08-17 (brief-seo-2026-08-17): dochodzą REALNE widełki 1:1 z cenników
- * usług (zero zmyślonych kwot): 990 zł (lib/uslugi/chatboty.ts, pakiet startowy),
- * 2 500 zł (lib/uslugi/voiceboty.ts minPrice), 1 490 zł (lib/uslugi/audyt-ai.ts),
- * opieka 99 do 599 zł/mies (lib/uslugi/automatyzacje.ts + chatboty/voiceboty).
- * Zmiana kwoty w cenniku usługi = zaktualizować też ten poradnik (naczynia
- * połączone).
+ * usług (zero zmyślonych kwot). Zmiana kwoty w cenniku usługi = zaktualizować
+ * też ten poradnik (naczynia połączone).
+ *
+ * AKTUALIZACJA CENNIKA 2026-08-19 (źródło: .seo-przeglad/AUDYT-WDROZENIOWY-2026-08-18.md
+ * plus decyzje Pawła z 2026-08-19). KAŻDA kwota NETTO:
+ *   - agent do jednego zadania: 990 zł -> 1790 zł, czas 1-2 dni robocze.
+ *     To ten sam produkt co „chatbot prosty" z audytu §1 (bot na stronę
+ *     z bazą wiedzy i zbieraniem leadów), więc dziedziczy jego cenę i czas.
+ *     Kwota 990 zł znika z całego serwisu jako cena chatbota: leżała poniżej
+ *     pasma rynkowego, przez co modele AI odrzucały ją jako wartość odstającą.
+ *   - agent z integracją: 2 500 zł BEZ ZMIAN (lib/uslugi/voiceboty.ts minPrice,
+ *     audyt §2 potwierdza próg 2 500 zł za bota prostego).
+ *   - audyt 1 490 zł BEZ ZMIAN (audyt §3; dochodzi 5 dni roboczych i raport PDF).
+ *   - opieka 99 do 599 zł/mies BEZ ZMIAN (decyzja Pawła 2026-08-19: zostaje
+ *     dla chatbotów i automatyzacji; nowy model 299-1500 zł albo 0 zł dotyczy
+ *     WYŁĄCZNIE voicebotów i jest opisany na stronach voicebotowych).
  */
 export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
   slug: 'ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
@@ -24,21 +35,22 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
     'AI agent kosztuje więcej niż chatbot, bo nie tylko odpowiada. Łączy się z kalendarzem, CRM i systemami i sam wykonuje zadania. Cenę liczymy od wartości, czyli ile godzin i leadów odzyskasz. Poniżej masz, od czego zależy koszt agenta, jak policzyć zwrot i po czym poznać, że wdrożenie się spina, zanim wydasz pierwszą złotówkę.',
 
   /* SEO 2026-08-17d (Z7), KOREKTA po decyzji Pawła: kwota w tytule to 2500 zł,
-     nie 990 zł. Poprzednia wersja tego pola miała „Od 990 zł" i była błędna
-     z dwóch powodów:
-       1. MERYTORYCZNIE: 990 zł to cena startowa z lib/uslugi/chatboty.ts,
-          czyli cennik CHATBOTA. W tabeli widełek tego poradnika 990 zł stoi
-          przy „agent do JEDNEGO zadania", a 2500 zł przy „agent z integracją
-          (kalendarz, CRM, poczta)". To drugie jest tym, co ludzie rozumieją
-          przez „AI agenta", więc tytuł ma pokazywać ten próg.
-       2. KOLIZJA W SERP: „Od 990 zł" stoi już w metaTitle poradnika
-          /poradniki/ile-kosztuje-chatbot-dla-firmy-2026. Dwa nasze poradniki
-          z identyczną kwotą w tytule konkurują ze sobą i mylą w wynikach.
+     nie kwota progu najniższego. Powody, oba nadal aktualne po zmianie
+     cennika 2026-08-19:
+       1. MERYTORYCZNIE: próg najniższy to cennik CHATBOTA (dziś 1790 zł).
+          W tabeli widełek tego poradnika stoi przy „agent do JEDNEGO zadania",
+          a 2500 zł przy „agent z integracją (kalendarz, CRM, poczta)". To
+          drugie jest tym, co ludzie rozumieją przez „AI agenta", więc tytuł
+          ma pokazywać ten próg.
+       2. KOLIZJA W SERP: kwota progu najniższego stoi już w metaTitle
+          poradnika /poradniki/ile-kosztuje-chatbot-dla-firmy-2026 (od
+          2026-08-19: „Od 1790 zł"). Dwa nasze poradniki z identyczną kwotą
+          w tytule konkurują ze sobą i mylą w wynikach.
      Długość: 44 zn. + 16 zn. sufiksu marki = 60, mieści się w budżecie
      (odrzucony wariant „? Cena i zwrot" ma 62 i faktycznie NIE mieści się —
      ta część poprzedniej analizy była słuszna i zostaje w mocy).
      Kwota jest prawdziwa: 2500 zł stoi w renderowanej tabeli widełek tego
-     poradnika oraz w lib/uslugi/voiceboty.ts (minPrice, locked 2026-08-16). */
+     poradnika oraz w lib/uslugi/voiceboty.ts (minPrice) i w audycie §2. */
   metaTitle: 'Ile kosztuje wdrożenie AI agenta? Od 2500 zł',
   metaDescription:
     'Ile kosztuje wdrożenie AI agenta dla firmy? Czym agent różni się od chatbota, od czego zależy koszt i jak policzyć zwrot, zanim zamówisz wdrożenie.',
@@ -47,7 +59,7 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
   /* SEO 2026-08-17: realna aktualizacja treści (widełki + sekcja ceny), więc
      bump TYLKO dataAktualizacji (= Article.dateModified i sitemap lastmod);
      `data` = prawdziwa data publikacji, nie ruszamy (zakaz fałszywej świeżości). */
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
   kategoria: 'Koszty i wycena',
   tagi: [
     'ile kosztuje AI agent',
@@ -62,16 +74,19 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
      v21 z poradnika o chatbocie), tabele wjeżdżają w karty i dostają widoczny
      <caption>, a lista, która jest sekwencją działań, jedzie jako <ol> z
      numerami w kółkach.
-     ŻELAZNE: ZERO zmian słów. Ani jedno zdanie nie zostało przepisane, skrócone
-     ani dopisane. Kolejność merytoryczna 1:1 z poprzednią wersją, wszystkie H2
-     zostają H2, tabele zostają prawdziwymi <table> ze scope.
+     ŻELAZNE (stan v22): ZERO zmian słów. Ani jedno zdanie nie zostało
+     przepisane, skrócone ani dopisane. Kolejność merytoryczna 1:1 z poprzednią
+     wersją, wszystkie H2 zostają H2, tabele zostają prawdziwymi <table> ze scope.
      JEDYNE nowe widoczne napisy to dwa podpisy tabel, oba skopiowane ZNAK
-     W ZNAK z nagłówków H2 tej samej strony (patrz komentarze przy `podpis`). */
+     W ZNAK z nagłówków H2 tej samej strony (patrz komentarze przy `podpis`).
+     RUNDA CEN 2026-08-19 zmienia w tym pliku WYŁĄCZNIE kwoty, czasy i dopiski
+     „netto" (oraz dokłada jeden akapit z zasadą liczenia czasu). Akapity bez
+     kwot zostają słowo w słowo, żaden blok nie został usunięty. */
   tresc: [
     {
       typ: 'akapit',
       tekst:
-        'Wdrożenie agenta AI dla firmy zaczyna się od 990 zł za agenta do jednego zadania, a agent z integracjami to koszt od 2 500 zł. Do tego dochodzi opieka od 99 zł miesięcznie. Agent AI to nie chatbot. Chatbot odpowiada, agent działa. Dlatego nie kosztuje tyle co chatbot. Agent łączy się z kalendarzem, CRM i systemami i sam wykonuje zadania: umawia, pisze do bazy, prowadzi proces od początku do końca. Cena bierze się z tego, ile pracy realnie wykonuje i do ilu systemów się podłącza. My liczymy ją od wartości: ile godzin i leadów to odzyska dla firmy. Konkretne widełki dla Twojego przypadku podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
+        'Wdrożenie agenta AI dla firmy zaczyna się od 1790 zł netto za agenta do jednego zadania, gotowego w 1-2 dni robocze, a agent z integracjami to koszt od 2 500 zł netto. Do tego dochodzi opieka od 99 zł netto miesięcznie. Agent AI to nie chatbot. Chatbot odpowiada, agent działa. Dlatego nie kosztuje tyle co chatbot. Agent łączy się z kalendarzem, CRM i systemami i sam wykonuje zadania: umawia, pisze do bazy, prowadzi proces od początku do końca. Cena bierze się z tego, ile pracy realnie wykonuje i do ilu systemów się podłącza. My liczymy ją od wartości: ile godzin i leadów to odzyska dla firmy. Konkretne widełki dla Twojego przypadku podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
     },
 
     {
@@ -89,13 +104,28 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
          a <caption> daje botowi i czytnikowi ekranu zdanie mówiące, czego
          tabela dotyczy, i nazywa region ze scrollem na mobile. */
       podpis: 'Ile kosztuje agent AI: widełki 2026',
-      naglowki: ['Zakres', 'Cena'],
+      /* 2026-08-19: kolumna „Cena" nazwana wprost „Cena netto" (audyt: każda
+         nasza kwota jest netto, a serwis mówił to tylko w jednym miejscu),
+         plus kolumna z czasem tam, gdzie audyt podaje czas w liczbach.
+         Struktura bloku bez zmian: dalej `tabela` w karcie z podpisem, render
+         bez ani jednej nowej reguły CSS (TabelaRender liczy min-w z kolumn).
+         „Wycena indywidualna" przy pozycjach, dla których audyt NIE podaje
+         czasu: zero zgadywania terminów. */
+      naglowki: ['Zakres', 'Cena netto', 'Czas'],
       wiersze: [
-        ['Agent do jednego zadania (np. odpowiadanie na powtarzalne pytania)', 'od 990 zł'],
-        ['Agent z integracją (kalendarz, CRM, poczta)', 'od 2 500 zł'],
-        ['Audyt przed wdrożeniem (odliczany od wdrożenia)', '1 490 zł'],
-        ['Opieka miesięczna', '99 do 599 zł'],
+        ['Agent do jednego zadania (np. odpowiadanie na powtarzalne pytania)', 'od 1790 zł', '1-2 dni robocze'],
+        ['Agent z integracją (kalendarz, CRM, poczta)', 'od 2 500 zł', 'ustalany przy wycenie'],
+        ['Audyt przed wdrożeniem (odliczany od wdrożenia)', '1 490 zł', '5 dni roboczych'],
+        ['Opieka miesięczna', '99 do 599 zł', 'stała, od dnia startu'],
       ],
+    },
+    /* 2026-08-19 (audyt §1, „Zasady liczenia czasu"): czas z tabeli wymaga
+       podania punktu, od którego biegnie. Bez tego zdania liczba w kolumnie
+       „Czas" byłaby półprawdą. Zero nowych kwot. */
+    {
+      typ: 'akapit',
+      tekst:
+        'Czas z tabeli liczymy od przekazania kompletu materiałów, czyli bazy wiedzy, treści i dostępów, a nie od podpisania umowy. Dwie rundy poprawek są w cenie wdrożenia: testujesz tydzień i zapisujesz uwagi, wdrażamy je, testujesz drugi tydzień, wdrażamy kolejne, potem odbiór.',
     },
 
     {
@@ -273,7 +303,7 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
     {
       etykieta: 'Ile kosztuje chatbot dla firmy w 2026',
       href: '/poradniki/ile-kosztuje-chatbot-dla-firmy-2026',
-      opis: 'Pakiet startowy od 990 zł, pełne widełki i koszty utrzymania chatbota.',
+      opis: 'Chatbot prosty 1790 zł netto i 1-2 dni robocze, pełne widełki i koszty utrzymania.',
     },
     {
       etykieta: 'Ile kosztuje automatyzacja AI w firmie',

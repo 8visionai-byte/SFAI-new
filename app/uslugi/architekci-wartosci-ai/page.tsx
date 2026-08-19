@@ -576,7 +576,7 @@ export default function ArchitekciWartosciAiPage() {
                 <Reveal key={item.pytanie} delay={Math.min(i * 0.03, 0.15)}>
                   <details className="sf-faq group py-2">
                     <summary className="-mx-2 flex cursor-pointer list-none items-center justify-between gap-4 rounded-sm px-2 py-3 text-h3 font-medium text-fg transition-colors duration-fast hover:bg-bg-subtle [&::-webkit-details-marker]:hidden">
-                      <span>{item.pytanie}</span>
+                      <h3 className="font-sans !font-medium !text-fg [text-wrap:wrap]">{item.pytanie}</h3>
                       <svg
                         width="22"
                         height="22"

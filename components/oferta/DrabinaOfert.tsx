@@ -160,6 +160,7 @@ export function DrabinaOfert() {
       <p className="mx-auto mt-8 max-w-narrow text-caption text-fg-subtle">
         Każdy wyższy szczebel jest opcją, nie zobowiązaniem. Większość firm zaczyna
         od L1 albo L3 i dokłada kolejne dopiero, gdy pierwszy efekt już działa.
+        Ceny netto.
       </p>
     </Section>
   );

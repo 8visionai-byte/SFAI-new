@@ -71,7 +71,7 @@ export function RamaCeny({
                  odcień palety na korpusie karty daje 4,55:1 — AA z zapasem.
                  Poświata gaśnie w Windows High Contrast, jak reszta glow-ów. */
               <p className="font-display text-h2 font-semibold tabular-nums text-[color:var(--card-c-l,var(--card-c,var(--accent)))] [text-shadow:0_0_12px_currentColor] forced-colors:[text-shadow:none]">
-                od {ramaCeny.minPrice!.toLocaleString('pl-PL')} zł
+                od {ramaCeny.minPrice!.toLocaleString('pl-PL')} zł netto
               </p>
             )}
 

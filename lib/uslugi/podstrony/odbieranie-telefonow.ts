@@ -33,14 +33,18 @@ import type { PodstronaUslugi } from './types';
  *  - „bot NIE dzwoni sam, obsługuje wyłącznie połączenia przychodzące,
  *    nigdy nie obiecuj kampanii wychodzących ani obdzwaniania bazy":
  *    api/_knowledge.mjs linia 56 (twarda reguła) + voiceboty.ts faq #2,
- *  - cena: pakiet startowy od 2500 zł jednorazowo za wdrożenie
- *    (lib/uslugi/voiceboty.ts ramaCeny, minPrice locked 2026-08-16),
- *  - DWA MODELE ROZLICZENIA (v20): „przekazujemy całą infrastrukturę i wtedy
- *    nie płacisz abonamentu ALBO projekt zostaje u nas z opłatą utrzymaniową
- *    od 99 do 599 zł miesięcznie" — lib/agent/knowledge.ts linia 104 (wpis
- *    voicebotów), api/_knowledge.mjs linia 336 (reguła cenowa agenta) oraz
- *    lib/uslugi/audyt-ai.ts (ramaCeny). Zero nowej kwoty: to przeredagowanie
- *    dotychczasowego „każde wdrożenie ma abonament", sprzecznego z tą regułą.
+ *  - cena: TRZY OSOBNE POZYCJE voicebota (audyt
+ *    `.seo-przeglad/AUDYT-WDROZENIOWY-2026-08-18.md` §2, decyzje Pawła
+ *    2026-08-19), wszystkie NETTO: stworzenie 2500 zł (prosty) albo
+ *    5000-9000 zł (z integracjami), utrzymanie 299-1500 zł/mies. przy
+ *    infrastrukturze u nas ALBO 0 zł/mies. przy przekazaniu jej klientowi
+ *    (poprawki wtedy 350 zł netto za godzinę), zużycie (tokeny i minuty)
+ *    wg realnego użycia po stronie klienta. Widełki 99-599 zł/mies. NIE
+ *    dotyczą już voicebotów (zostają przy chatbotach, prostszych
+ *    w utrzymaniu). `minPrice` 2500 bez zmian.
+ *  - BRAK DANEJ (nie zmyślać): audyt nie podaje czasu wdrożenia voicebota
+ *    w dniach roboczych. Strona mówi wyłącznie zasadę liczenia czasu (od
+ *    przekazania kompletu materiałów) i kieruje po termin na diagnozę.
  *
  * ŻELAZNA GRANICA: strona mówi wyraźnie, że bot obsługuje telefon PRZYCHODZĄCY
  * i nie wydzwania do nikogo. Fraza „boty dzwoniące na telefon" przyciąga ludzi
@@ -58,7 +62,7 @@ import type { PodstronaUslugi } from './types';
 export const odbieranieTelefonow: PodstronaUslugi = {
   rodzic: 'voiceboty',
   slug: 'odbieranie-telefonow',
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
 
   // v20: 58 -> 44 znaków (pomiar §4b: 4 linie -> 3 na 1440, 5 -> 4 na 375/320).
   // Fraza obowiązkowa „bot telefoniczny" zostaje NA POCZĄTKU (poz. 16,9 w GSC),
@@ -70,7 +74,7 @@ export const odbieranieTelefonow: PodstronaUslugi = {
 
   metaTitle: 'Bot telefoniczny: odbiera połączenia 24/7',
   metaDescription:
-    'Bot telefoniczny odbiera połączenia 24/7 po polsku, odpowiada na powtarzalne pytania i spisuje sprawę. Po rozmowie masz podsumowanie. Od 2500 zł za wdrożenie.',
+    'Bot telefoniczny odbiera połączenia 24/7 po polsku, odpowiada na powtarzalne pytania i spisuje sprawę. Po rozmowie masz podsumowanie. Od 2500 zł netto.',
 
   problem: {
     h2: 'Ile zapytań tracisz, bo nikt nie odebrał telefonu?',
@@ -156,10 +160,12 @@ export const odbieranieTelefonow: PodstronaUslugi = {
     /* v20: kwota NA POCZĄTEK (H2 pyta „ile kosztuje"). Wycięte: „Cena jest ta
        sama co przy każdym naszym voicebocie" oraz „Dokładną wycenę podajemy po
        bezpłatnej diagnozie. Bez ukrytych kosztów." — to zdanie RamaCeny.tsx
-       drukuje pod kartą na sztywno. Sformułowanie „2500 zł jednorazowo za
-       wdrożenie" ZOSTAJE (należy do modelu dwóch rozliczeń). */
+       drukuje pod kartą na sztywno.
+       2026-08-19 (audyt §2): rozliczenie rozbite na TRZY JAWNE POZYCJE,
+       utrzymanie przestawione z 99-599 na model voicebotowy, każda kwota
+       oznaczona jako netto. */
     tresc:
-      'Pakiet startowy zaczyna się od 2500 zł jednorazowo za wdrożenie: bot odbierający telefon 24/7 i rozmawiający po polsku, konfiguracja scenariuszy i podłączenie numeru. Do tego koszt działania zależny od liczby rozmów. Opiekę rozliczasz na dwa sposoby: bez abonamentu, gdy przekazujemy Ci całą infrastrukturę, albo za 99 do 599 zł miesięcznie, gdy projekt zostaje u nas.',
+      'Voicebot ma trzy osobne pozycje. Stworzenie bota: 2500 zł netto jednorazowo za wersję prostą, czyli bota odbierającego telefon 24/7 po polsku, z konfiguracją scenariuszy i podłączeniem numeru, albo 5000 do 9000 zł netto za wersję z integracjami i rozbudowanymi scenariuszami. Utrzymanie: 299 do 1500 zł netto miesięcznie, gdy infrastruktura zostaje u nas, albo 0 zł miesięcznie, gdy przekazujemy ją Tobie, a poprawki zamawiasz wtedy po 350 zł netto za godzinę. Zużycie: tokeny i minuty rozmów według realnego użycia, po Twojej stronie. Czas wdrożenia liczymy od przekazania kompletu materiałów, a w cenie są dwie rundy poprawek.',
     minPrice: 2500,
     /* Link powrotny do usługi macierzystej (wymóg podstrony: każda wraca do
        rodzica realnym odnośnikiem). Pole `linkPoradnik` to jedyny slot na link
@@ -202,7 +208,7 @@ export const odbieranieTelefonow: PodstronaUslugi = {
     {
       pytanie: 'Ile kosztuje bot do odbierania telefonów?',
       odpowiedz:
-        'Pakiet startowy kosztuje od 2500 zł jednorazowo za wdrożenie: bot odbierający telefon 24/7 po polsku, konfiguracja scenariuszy i podłączenie numeru. Do tego koszt działania zależny od liczby rozmów. Opiekę rozliczasz bez abonamentu, gdy przekazujemy Ci infrastrukturę, albo za 99 do 599 zł miesięcznie, gdy projekt zostaje u nas. Dokładną wycenę podajemy po bezpłatnej diagnozie.',
+        'Koszt dzieli się na trzy osobne pozycje. Stworzenie bota: 2500 zł netto jednorazowo za wersję prostą albo 5000 do 9000 zł netto za wersję z integracjami. Utrzymanie: 299 do 1500 zł netto miesięcznie, gdy infrastruktura zostaje u nas, albo 0 zł, gdy przekazujemy ją Tobie. Zużycie: tokeny i minuty rozmów według realnego użycia, po Twojej stronie.',
     },
   ],
 

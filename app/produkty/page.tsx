@@ -131,7 +131,7 @@ const FAQ_HUBU = [
     /* (c) dwa modele rozliczenia, zdanie 1:1 z /uslugi/chatboty. */
     pytanie: 'Czy po zbudowaniu takiego narzędzia płacę abonament?',
     odpowiedz:
-      'Masz to do wyboru. Przekazujemy Ci całą infrastrukturę i wtedy nie płacisz abonamentu, albo projekt zostaje u nas pod opieką i wtedy jest opłata utrzymaniowa od 99 do 599 zł miesięcznie. Decydujesz na etapie wyceny.',
+      'Masz to do wyboru. Przekazujemy Ci całą infrastrukturę i wtedy nie płacisz abonamentu, albo projekt zostaje u nas pod opieką i wtedy jest opłata utrzymaniowa: chatboty i automatyzacje od 99 do 599 zł netto miesięcznie, voiceboty od 299 do 1500 zł netto miesięcznie. Decydujesz na etapie wyceny.',
   },
   {
     /* (a) KLOCKI.length + KLOCKI_DISCLAIMER. */

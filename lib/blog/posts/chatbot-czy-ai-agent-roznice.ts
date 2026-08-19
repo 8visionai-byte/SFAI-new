@@ -19,7 +19,7 @@ export const chatbotCzyAiAgent: Post = {
     'Chatbot czy AI Agent dla firmy? Czym dokładnie się różnią, co każdy z nich robi i czego nie, oraz jak wybrać i zacząć od mniejszego, odwracalnego kroku.',
 
   data: '2026-06-15',
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
   kategoria: 'Chatboty i Agenci',
   tagi: ['chatbot', 'AI Agent', 'różnice chatbot agent', 'co wybrać dla firmy'],
 
@@ -211,7 +211,7 @@ export const chatbotCzyAiAgent: Post = {
     {
       etykieta: 'Ile kosztuje chatbot dla firmy w 2026',
       href: '/poradniki/ile-kosztuje-chatbot-dla-firmy-2026',
-      opis: 'Pakiet startowy od 990 zł, pełne widełki i koszty utrzymania chatbota.',
+      opis: 'Chatbot prosty 1790 zł netto i 1-2 dni robocze, pełne widełki i koszty utrzymania.',
     },
   ],
 

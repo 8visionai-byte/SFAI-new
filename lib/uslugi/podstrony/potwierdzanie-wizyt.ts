@@ -16,15 +16,18 @@ import type { PodstronaUslugi } from './types';
  *    voiceboty.ts faq #2,
  *  - potwierdzenia i przypomnienia wychodzą same, tekstem, z automatu:
  *    lib/uslugi/automatyzacje.ts (rozwiazanie.tresc, faq),
- *  - cena: pakiet startowy od 2500 zł (bot 24/7 po polsku, umawianie wizyt,
- *    wdrożenie i konfiguracja): lib/uslugi/voiceboty.ts ramaCeny
- *    (minPrice locked 2026-08-16),
- *  - DWA MODELE ROZLICZENIA (v20): „przekazujemy całą infrastrukturę i wtedy
- *    nie płacisz abonamentu ALBO projekt zostaje u nas z opłatą utrzymaniową
- *    od 99 do 599 zł miesięcznie" — lib/agent/knowledge.ts linia 104 (wpis
- *    voicebotów), api/_knowledge.mjs linia 336 (reguła cenowa agenta) oraz
- *    lib/uslugi/audyt-ai.ts (ramaCeny). Zero nowej kwoty: to przeredagowanie
- *    dotychczasowego „każde wdrożenie ma abonament", sprzecznego z tą regułą.
+ *  - cena: TRZY OSOBNE POZYCJE voicebota (audyt
+ *    `.seo-przeglad/AUDYT-WDROZENIOWY-2026-08-18.md` §2, decyzje Pawła
+ *    2026-08-19), wszystkie NETTO: stworzenie 2500 zł (prosty) albo
+ *    5000-9000 zł (z integracjami; TA podstrona sprzedaje wprost integrację
+ *    z kalendarzem, więc próg wyższy jest tu realną opcją, nie ozdobą),
+ *    utrzymanie 299-1500 zł/mies. przy infrastrukturze u nas ALBO 0 zł/mies.
+ *    przy przekazaniu jej klientowi (poprawki wtedy 350 zł netto za godzinę),
+ *    zużycie (tokeny i minuty) wg realnego użycia po stronie klienta.
+ *    Widełki 99-599 zł/mies. NIE dotyczą już voicebotów (zostają przy
+ *    chatbotach). `minPrice` 2500 bez zmian.
+ *  - BRAK DANEJ (nie zmyślać): audyt nie podaje czasu wdrożenia voicebota
+ *    w dniach roboczych. Zostaje sama zasada liczenia czasu.
  *
  * ŻELAZNA GRANICA TEJ PODSTRONY (decyzja Pawła):
  *  Rynek pod frazą „potwierdzanie wizyt" rozumie zwykle bota, który OBDZWANIA
@@ -43,7 +46,7 @@ import type { PodstronaUslugi } from './types';
 export const potwierdzanieWizyt: PodstronaUslugi = {
   rodzic: 'voiceboty',
   slug: 'potwierdzanie-wizyt',
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
 
   // v20: 64 -> 36 znaków. Jedyny kandydat z pomiaru (§4b), który łamie się na
   // 3 linie na WSZYSTKICH trzech szerokościach (1440/375/320) i nie zostawia
@@ -56,7 +59,7 @@ export const potwierdzanieWizyt: PodstronaUslugi = {
 
   metaTitle: 'Voicebot do potwierdzania wizyt: umawia 24/7',
   metaDescription:
-    'Voicebot do potwierdzania wizyt odbiera telefon 24/7, zapisuje termin w kalendarzu i wysyła potwierdzenie. Odwołania załatwia bez Ciebie. Od 2500 zł.',
+    'Voicebot do potwierdzania wizyt odbiera telefon 24/7, zapisuje termin w kalendarzu i wysyła potwierdzenie. Odwołania załatwia bez Ciebie. Od 2500 zł netto.',
 
   problem: {
     h2: 'Ile wizyt przepada, bo nikt nie odebrał telefonu?',
@@ -140,9 +143,12 @@ export const potwierdzanieWizyt: PodstronaUslugi = {
        sama co przy każdym naszym voicebocie" oraz „Dokładną wycenę podajemy po
        bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów." —
        to zdanie RamaCeny.tsx drukuje pod kartą na sztywno (dublowało się).
-       Kwoty 2500 i 99-599 bez zmian. */
+       2026-08-19 (audyt §2): rozliczenie rozbite na TRZY JAWNE POZYCJE,
+       utrzymanie przestawione z 99-599 na model voicebotowy, każda kwota
+       oznaczona jako netto. Integracja z kalendarzem jest tu sednem usługi,
+       więc próg „z integracjami" stoi w treści wprost. */
     tresc:
-      'Pakiet startowy zaczyna się od 2500 zł: bot odbierający telefon 24/7 i rozmawiający po polsku, umawianie wizyt oraz wdrożenie i konfiguracja. Do tego koszt działania zależny od liczby rozmów. Opiekę rozliczasz na dwa sposoby: bez abonamentu, gdy przekazujemy Ci całą infrastrukturę, albo za 99 do 599 zł miesięcznie, gdy projekt zostaje u nas.',
+      'Voicebot ma trzy osobne pozycje. Stworzenie bota: 2500 zł netto jednorazowo za wersję prostą, czyli bota odbierającego telefon 24/7 po polsku, z wdrożeniem i konfiguracją, albo 5000 do 9000 zł netto za wersję z integracjami, na przykład z Twoim kalendarzem, i z rozbudowanymi scenariuszami. Utrzymanie: 299 do 1500 zł netto miesięcznie, gdy infrastruktura zostaje u nas, albo 0 zł miesięcznie, gdy przekazujemy ją Tobie, a poprawki zamawiasz wtedy po 350 zł netto za godzinę. Zużycie: tokeny i minuty rozmów według realnego użycia, po Twojej stronie. Czas wdrożenia liczymy od przekazania kompletu materiałów, a w cenie są dwie rundy poprawek.',
     minPrice: 2500,
     /* Link powrotny do usługi macierzystej (wymóg podstrony). `linkPoradnik`
        to jedyny slot na link w kontrakcie `Usluga`, renderowany w RamaCeny.tsx
@@ -184,7 +190,7 @@ export const potwierdzanieWizyt: PodstronaUslugi = {
     {
       pytanie: 'Ile kosztuje voicebot do potwierdzania wizyt?',
       odpowiedz:
-        'Pakiet startowy kosztuje od 2500 zł: bot odbierający telefon 24/7 po polsku, umawianie wizyt oraz wdrożenie i konfiguracja. Do tego koszt działania zależny od liczby rozmów. Opiekę rozliczasz bez abonamentu, gdy przekazujemy Ci infrastrukturę, albo za 99 do 599 zł miesięcznie, gdy projekt zostaje u nas. Dokładną wycenę podajemy po bezpłatnej diagnozie.',
+        'Koszt dzieli się na trzy osobne pozycje. Stworzenie bota: 2500 zł netto jednorazowo za wersję prostą albo 5000 do 9000 zł netto za wersję z integracją z kalendarzem. Utrzymanie: 299 do 1500 zł netto miesięcznie, gdy infrastruktura zostaje u nas, albo 0 zł, gdy przekazujemy ją Tobie. Zużycie: tokeny i minuty rozmów według realnego użycia, po Twojej stronie.',
     },
   ],
 

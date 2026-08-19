@@ -169,7 +169,7 @@ const FAQ_HUBU = [
        z lib/uslugi/chatboty.ts:78 i lib/uslugi/audyt-ai.ts:78. */
     pytanie: 'Policzyłem i mam wynik. Co dalej?',
     odpowiedz:
-      'Wynik zostaje u Ciebie i możesz z nim zrobić, co chcesz: pokazać księgowej, wrzucić do własnej analizy albo odłożyć na później. Nic nie dzieje się automatycznie, bo narzędzia niczego o Tobie nie zapisują. Jeśli liczby się zgadzają, następny krok to bezpłatna diagnoza: przechodzimy Twój proces i mówimy, czy warto go automatyzować, zanim cokolwiek zamówisz. Przy samym wdrożeniu masz wybór, jak je rozliczyć: przekazujemy Ci całą infrastrukturę i wtedy nie płacisz abonamentu, albo projekt zostaje u nas pod opieką i wtedy dochodzi opłata utrzymaniowa od 99 do 599 zł miesięcznie.',
+      'Wynik zostaje u Ciebie i możesz z nim zrobić, co chcesz: pokazać księgowej, wrzucić do własnej analizy albo odłożyć na później. Nic nie dzieje się automatycznie, bo narzędzia niczego o Tobie nie zapisują. Jeśli liczby się zgadzają, następny krok to bezpłatna diagnoza: przechodzimy Twój proces i mówimy, czy warto go automatyzować, zanim cokolwiek zamówisz. Przy samym wdrożeniu masz wybór, jak je rozliczyć: przekazujemy Ci całą infrastrukturę i wtedy nie płacisz abonamentu, albo projekt zostaje u nas pod opieką i wtedy dochodzi opłata utrzymaniowa: chatboty i automatyzacje od 99 do 599 zł netto miesięcznie, voiceboty od 299 do 1500 zł netto miesięcznie.',
   },
 ];
 

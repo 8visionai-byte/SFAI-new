@@ -1,31 +1,49 @@
 import type { Poradnik } from '../types';
 
 /**
- * PORADNIK 1: Ile kosztuje chatbot dla firmy w 2026? (od 990 zł)
+ * PORADNIK 1: Ile kosztuje chatbot dla firmy w 2026? (od 1790 zł netto)
  *
  * Money query primary: „ile kosztuje chatbot dla firmy". Evergreen, answer-first.
- * CENY = wyłącznie lista locked z decyzji Pawła i Marcina (2026-08-16):
- * pakiet startowy chatbota od 990 zł, wdrożenia z integracjami 3000-10000 zł,
- * audyt AI 1490 zł (odliczany od wdrożenia), abonament opieki 99-599 zł/mies
- * (każde wdrożenie z opieką, komunikat „nie zostawiamy klientów").
+ *
+ * CENNIK 2026-08-19 (jedyne źródło: .seo-przeglad/AUDYT-WDROZENIOWY-2026-08-18.md
+ * §1 i §3 plus decyzje Pawła z 2026-08-19). KAŻDA kwota NETTO:
+ *   - chatbot prosty  1790 zł        / 1-2 dni robocze
+ *   - chatbot średni  3000-6000 zł   / 3-4 dni robocze
+ *   - chatbot duży    8000-15000 zł  / 5-10 dni roboczych
+ *   - opieka chatbota 99-599 zł/mies (zostaje: chatbot jest prostszy w utrzymaniu
+ *     niż voicebot, gdzie utrzymanie to 299-1500 zł/mies albo 0 zł po przekazaniu
+ *     infrastruktury; ta różnica jest wyjaśniona w treści)
+ *   - audyt AI 1490 zł / 5 dni roboczych / raport PDF z mapą procesów,
+ *     odliczany od wdrożenia
+ * ZASADA CZASU: liczymy od przekazania kompletu materiałów przez klienta
+ * (baza wiedzy, treści, dostępy), NIE od podpisania umowy (audyt §1).
+ * RUNDY POPRAWEK: dwie w cenie wdrożenia (tydzień testów, poprawki, drugi
+ * tydzień testów, poprawki, odbiór). Poprawki tego, co nie zadziałało po
+ * naszej stronie: zawsze, także po odbiorze. Nowe funkcjonalności = rozbudowa
+ * wyceniana osobno (audyt §1).
+ *
+ * KWOTA 990 ZŁ ZNIKA z całego serwisu jako cena chatbota (audyt: leżała poniżej
+ * pasma rynkowego 2000-3500 zł, więc modele AI odrzucały ją jako wartość
+ * odstającą, co kosztowało nas cytowania).
+ *
  * Tło rynkowe 1990-45000 zł z researchu .seo-przeglad/KONKURENCJA-2026-08-16.md,
  * przypisane opisowo „agencje w Polsce" (bez nazywania i linkowania konkurencji).
- * Cen voicebota NIE podawać (Paweł jeszcze nie wybrał).
+ * To CUDZE kwoty: nie oznaczamy ich jako netto, bo nie znamy ich podstawy.
  * Linkuje do /uslugi/chatboty, /uslugi/audyt-ai i kalkulatora procesu.
  */
 export const ileKosztujeChatbotDlaFirmy: Poradnik = {
   slug: 'ile-kosztuje-chatbot-dla-firmy-2026',
-  tytul: 'Ile kosztuje chatbot dla firmy w 2026? Od 990 zł i co wpływa na cenę',
+  tytul: 'Ile kosztuje chatbot dla firmy w 2026? Od 1790 zł i co wpływa na cenę',
 
   lead:
-    'Chatbot dla firmy kosztuje u nas od 990 zł w pakiecie startowym, a wdrożenia z integracjami zwykle od 3000 do 10000 zł. Publiczne cenniki agencji AI w Polsce zaczynają się od 1990 zł i dochodzą do 45000 zł. Do tego dochodzi utrzymanie: u nas abonament opieki od 99 do 599 zł miesięcznie, dołączony do każdego wdrożenia. Poniżej masz pełne widełki, ukryte koszty i prosty sposób, żeby policzyć zwrot, zanim zamówisz.',
+    'Chatbot dla firmy kosztuje u nas 1790 zł netto za prostego bota na stronę, 3000 do 6000 zł netto za wdrożenie średnie i 8000 do 15000 zł netto za duże wdrożenie z integracjami. Czas wdrożenia to kolejno 1-2, 3-4 i 5-10 dni roboczych, liczonych od przekazania kompletu materiałów, nie od podpisania umowy. Dwie rundy poprawek są w cenie wdrożenia. Publiczne cenniki agencji AI w Polsce zaczynają się od 1990 zł i dochodzą do 45000 zł. Do tego dochodzi utrzymanie i tu wybierasz: abonament opieki od 99 do 599 zł netto miesięcznie, gdy projekt zostaje u nas, albo 0 zł, gdy przekazujemy Ci całą infrastrukturę. Poniżej masz pełne widełki, ukryte koszty i prosty sposób, żeby policzyć zwrot, zanim zamówisz.',
 
-  metaTitle: 'Ile kosztuje chatbot AI dla firmy? Od 990 zł',
+  metaTitle: 'Ile kosztuje chatbot AI dla firmy? Od 1790 zł',
   metaDescription:
-    'Chatbot dla firmy kosztuje u nas od 990 zł, rynkowo od 1990 do 45000 zł. Sprawdź, co wpływa na cenę, ile kosztuje utrzymanie i jakie są ukryte koszty.',
+    'Chatbot dla firmy kosztuje u nas od 1790 zł netto, wdrożenie w 1-2 dni robocze. Sprawdź pełne widełki, czas wdrożenia, koszt utrzymania i ukryte koszty.',
 
   data: '2026-06-15',
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
   kategoria: 'Koszty i wycena',
   tagi: ['ile kosztuje chatbot', 'cena chatbota 2026', 'chatbot dla firmy koszt', 'chatbot na stronę'],
 
@@ -33,7 +51,7 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
     {
       typ: 'akapit',
       tekst:
-        'Pytasz o cenę, bo nie chcesz przepłacić. Dobrze. Krótka odpowiedź: u nas chatbot zaczyna się od 990 zł w pakiecie startowym, a rozbudowane wdrożenia z integracjami mieszczą się zwykle między 3000 a 10000 zł. Na rynku rozstrzał jest dużo większy: publiczne cenniki agencji AI w Polsce zaczynają się od 1990 zł i dochodzą do 45000 zł. Skąd taka różnica i za co właściwie płacisz, rozkładamy poniżej.',
+        'Pytasz o cenę, bo nie chcesz przepłacić. Dobrze. Krótka odpowiedź: u nas prosty chatbot na stronę kosztuje 1790 zł netto i powstaje w 1-2 dni robocze, wdrożenie średnie to 3000 do 6000 zł netto i 3-4 dni robocze, a duże wdrożenie z integracjami to 8000 do 15000 zł netto i 5-10 dni roboczych. Na rynku rozstrzał jest dużo większy: publiczne cenniki agencji AI w Polsce zaczynają się od 1990 zł i dochodzą do 45000 zł. Skąd taka różnica i za co właściwie płacisz, rozkładamy poniżej.',
     },
 
     /* v21 (skarga Pawła 2026-08-18: „jedna ściana tekstu (...) ma być na
@@ -49,16 +67,34 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
         'Zacznijmy od tła rynkowego. Agencje w Polsce, które publikują cenniki chatbotów, podają bardzo różne kwoty: jedna zaczyna od 1990 zł, inna pokazuje widełki od 3500 do 45000 zł za rozbudowane wdrożenia. Do tego dochodzą abonamenty narzędzi i utrzymania, na rynku zwykle od około 100 do 2500 zł miesięcznie. Ten rozstrzał nie bierze się z powietrza: górne kwoty to boty z wieloma integracjami, wieloma kanałami i dużym ruchem. Na tym tle nasz cennik wygląda tak.',
       ],
     },
+    /* 2026-08-19 (audyt §1): tabela dostaje DRABINĘ TRZECH PROGÓW zamiast pary
+       „pakiet startowy plus wdrożenia z integracjami" oraz KOLUMNĘ Z CZASEM
+       WDROŻENIA (6 z 7 cytowanych przez AI konkurentów podaje czas, my nie
+       podawaliśmy go nigdzie). Struktura bloku bez zmian: dalej `tabela`
+       w karcie, dalej prawdziwa <table> ze scope, render bez ani jednej nowej
+       reguły CSS (TabelaRender liczy `min-w` z liczby kolumn).
+       Wiersz rynkowy zostaje BEZ dopisku „netto": to cudze kwoty i nie znamy
+       ich podstawy, więc nie orzekamy o niej za konkurencję. */
     {
       typ: 'tabela',
       wKarcie: true,
-      naglowki: ['Zakres', 'Co obejmuje', 'Cena'],
+      podpis: 'Ile kosztuje chatbot dla firmy: nasz cennik 2026 i tło rynkowe',
+      naglowki: ['Zakres', 'Co obejmuje', 'Cena', 'Czas wdrożenia'],
       wiersze: [
-        ['Rynek: agencje AI w Polsce', 'Publiczne cenniki wdrożeń chatbotów, od prostych botów po duże projekty', 'od 1990 do 45000 zł'],
-        ['U nas: pakiet startowy', 'Chatbot na Twojej stronie, nauczony Twojej wiedzy, zbiera leady 24/7', 'od 990 zł'],
-        ['U nas: chatbot z integracjami', 'Kalendarz, CRM, umawianie wizyt, więcej kanałów', 'zwykle 3000 do 10000 zł'],
-        ['U nas: opieka po wdrożeniu', 'Poprawki odpowiedzi, aktualizacja wiedzy bota, reakcja na zmiany', 'od 99 do 599 zł miesięcznie'],
+        ['Rynek: agencje AI w Polsce', 'Publiczne cenniki wdrożeń chatbotów, od prostych botów po duże projekty', 'od 1990 do 45000 zł', 'zwykle nie podawany'],
+        ['U nas: chatbot prosty', 'Bot na Twojej stronie, Twoja baza wiedzy podpięta przez nas, zbieranie leadów 24/7, odsyłanie do właściwych miejsc na stronie', '1790 zł netto', '1-2 dni robocze'],
+        ['U nas: chatbot średni', 'To, co wyżej, plus rozbudowana baza wiedzy i dodatkowe funkcje', '3000 do 6000 zł netto', '3-4 dni robocze'],
+        ['U nas: chatbot duży', 'Pełny zakres z integracjami, zależnie od liczby elementów do zbudowania', '8000 do 15000 zł netto', '5-10 dni roboczych'],
+        ['U nas: opieka po wdrożeniu', 'Poprawki odpowiedzi, aktualizacja wiedzy bota, reakcja na zmiany', 'od 99 do 599 zł netto miesięcznie albo 0 zł przy przekazaniu infrastruktury', 'stała, od dnia startu'],
       ],
+    },
+    /* 2026-08-19 (audyt §1, „Zasady liczenia czasu" i „Rundy poprawek"):
+       nowy akapit z dwiema zasadami, których strona nie mówiła nigdzie wprost.
+       Zero nowych kwot: obie zasady są w audycie słowo w słowo. */
+    {
+      typ: 'akapit',
+      tekst:
+        'Czas wdrożenia liczymy od przekazania kompletu materiałów: bazy wiedzy, treści i dostępów. Nie od podpisania umowy, bo to Ty decydujesz, kiedy materiały do nas trafią. W cenie każdego wdrożenia są dwie rundy poprawek: testujesz bota przez tydzień i zapisujesz uwagi, my je wdrażamy, testujesz drugi tydzień i zgłaszasz kolejne, my je wdrażamy, potem finalny odbiór. Poprawki tego, co nie zadziałało po naszej stronie, robimy zawsze, także po odbiorze. Nowe funkcjonalności, których nie było w pierwszej rozmowie, to rozbudowa projektu i wyceniamy ją osobno.',
     },
     {
       typ: 'akapit',
@@ -106,27 +142,29 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
     {
       typ: 'akapit',
       tekst:
-        'U nas ten temat jest policzony z góry. Każde wdrożenie ma opiekę w pakiecie, bo nie zostawiamy klientów z botem bez opieki. Abonament opieki to od 99 do 599 zł miesięcznie, zależnie od pakietu. W ramach opieki poprawiamy odpowiedzi, aktualizujemy wiedzę bota i reagujemy, gdy coś się zmienia po stronie Twoich narzędzi. Wiesz z góry, ile płacisz i za co.',
+        'U nas ten temat jest policzony z góry. Każde wdrożenie ma opiekę w pakiecie, bo nie zostawiamy klientów z botem bez opieki. Abonament opieki to od 99 do 599 zł netto miesięcznie, zależnie od pakietu. W ramach opieki poprawiamy odpowiedzi, aktualizujemy wiedzę bota i reagujemy, gdy coś się zmienia po stronie Twoich narzędzi. Wiesz z góry, ile płacisz i za co. Opieka nad chatbotem kosztuje mniej niż nad voicebotem, bo chatbot jest prostszy w utrzymaniu: nie ma po jego stronie telefonii, minut rozmów ani rozpoznawania mowy. Przy voicebocie utrzymanie to 299 do 1500 zł netto miesięcznie, gdy infrastruktura stoi u nas, albo 0 zł miesięcznie, gdy przekazujemy ją do Ciebie.',
     },
 
     {
       typ: 'sekcja',
-      naglowek: 'Nasz pakiet startowy: chatbot od 990 zł. Co dostajesz?',
+      naglowek: 'Nasz chatbot prosty za 1790 zł netto. Co dostajesz?',
       akapity: [
-        'Pakiet startowy zbudowaliśmy tak, żeby próg wejścia był niski, a efekt widoczny od razu. Za 990 zł dostajesz działającego chatbota na swojej stronie, nie prezentację o chatbotach.',
+        'Najniższy próg wejścia zbudowaliśmy tak, żeby był realny, a efekt widoczny od razu. Za 1790 zł netto dostajesz działającego chatbota na swojej stronie, nie prezentację o chatbotach.',
       ],
       punkty: [
         'Chatbot na Twojej stronie www, gotowy do rozmowy z klientami.',
         'Nauczony Twojej wiedzy: oferty, cennika i najczęstszych pytań klientów.',
         'Odpowiada po polsku przez całą dobę i zbiera kontakty do leadów, też wieczorem i w weekend.',
-        'Wdrożenie w kilka dni i testy na żywo: ustawiasz ton i granice bota.',
-        'Opieka od startu w abonamencie od 99 do 599 zł miesięcznie: poprawki i aktualizacja wiedzy.',
+        'Odsyła do właściwych miejsc na Twojej stronie, zamiast zostawiać klienta z ogólnikiem.',
+        'Wdrożenie w 1-2 dni robocze od przekazania materiałów i testy na żywo: ustawiasz ton i granice bota.',
+        'Dwie rundy poprawek w cenie: tydzień testów, poprawki, drugi tydzień testów, poprawki, odbiór.',
+        'Opieka od startu w abonamencie od 99 do 599 zł netto miesięcznie albo 0 zł, gdy przekazujemy Ci infrastrukturę.',
       ],
     },
     {
       typ: 'akapit',
       tekst:
-        'Potrzebujesz więcej? Chatbot, który umawia wizyty i łączy się z kalendarzem czy CRM, to wdrożenie zwykle między 3000 a 10000 zł, zależnie od liczby integracji. A jeśli nie wiesz, od czego zacząć, audyt AI za 1490 zł pokaże, gdzie bot da w Twojej firmie największy zwrot. Kwotę audytu odliczamy od wdrożenia, gdy ruszamy ze współpracą.',
+        'Potrzebujesz więcej? Chatbot z rozbudowaną bazą wiedzy i dodatkowymi funkcjami to 3000 do 6000 zł netto i 3-4 dni robocze. Pełne wdrożenie z integracjami, na przykład z kalendarzem czy CRM, to 8000 do 15000 zł netto i 5-10 dni roboczych, zależnie od liczby elementów do zbudowania. A jeśli nie wiesz, od czego zacząć, audyt AI za 1490 zł netto pokaże, gdzie bot da w Twojej firmie największy zwrot. Dostajesz raport PDF z mapą procesów w 5 dni roboczych, a kwotę audytu odliczamy od wdrożenia, gdy ruszamy ze współpracą.',
     },
 
     {
@@ -147,7 +185,7 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
       typ: 'sekcja',
       naglowek: 'Jak nie przepłacić za chatbota?',
       akapity: [
-        'Najczęstszy błąd to zamawianie funkcji, których nie użyjesz. Nie zaczynaj od pytania, co bot potrafi. Zacznij od pytania, co Cię najbardziej zatrzymuje. Jeśli tracisz czas na te same pytania klientów, wystarczy pakiet startowy od 990 zł. Jeśli gubisz leady wieczorami i chcesz, żeby bot umawiał wizyty, potrzebujesz wdrożenia z integracjami. Wdrażaj wąsko, sprawdź efekt na swoich liczbach i rozszerzaj dopiero wtedy, kiedy pierwszy krok się spina.',
+        'Najczęstszy błąd to zamawianie funkcji, których nie użyjesz. Nie zaczynaj od pytania, co bot potrafi. Zacznij od pytania, co Cię najbardziej zatrzymuje. Jeśli tracisz czas na te same pytania klientów, wystarczy chatbot prosty za 1790 zł netto, gotowy w 1-2 dni robocze. Jeśli gubisz leady wieczorami i chcesz, żeby bot umawiał wizyty, potrzebujesz wdrożenia z integracjami. Wdrażaj wąsko, sprawdź efekt na swoich liczbach i rozszerzaj dopiero wtedy, kiedy pierwszy krok się spina.',
       ],
     },
     /* Te cztery punkty to sekwencja działań („zacznij, policz, wybierz,
@@ -177,7 +215,22 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
     {
       pytanie: 'Ile kosztuje chatbot AI dla firmy?',
       odpowiedz:
-        'U nas prosty chatbot na stronę zaczyna się od 990 zł w pakiecie startowym, a wdrożenia z integracjami, na przykład z kalendarzem czy CRM, mieszczą się zwykle między 3000 a 10000 zł. Publiczne cenniki agencji AI w Polsce zaczynają się od 1990 zł i dochodzą do 45000 zł przy dużych wdrożeniach. Do tego trzeba doliczyć utrzymanie: u nas to abonament opieki od 99 do 599 zł miesięcznie.',
+        'U nas prosty chatbot na stronę kosztuje 1790 zł netto, wdrożenie średnie z rozbudowaną bazą wiedzy i dodatkowymi funkcjami to 3000 do 6000 zł netto, a duże wdrożenie z integracjami, na przykład z kalendarzem czy CRM, to 8000 do 15000 zł netto. Czas wdrożenia to kolejno 1-2, 3-4 i 5-10 dni roboczych, liczonych od przekazania kompletu materiałów. Publiczne cenniki agencji AI w Polsce zaczynają się od 1990 zł i dochodzą do 45000 zł przy dużych wdrożeniach. Do tego trzeba doliczyć utrzymanie: u nas to abonament opieki od 99 do 599 zł netto miesięcznie.',
+    },
+    /* 2026-08-19 (audyt §1): dwie NOWE pozycje FAQ o czasie wdrożenia i rundach
+       poprawek. Powód z audytu: 6 z 7 konkurentów cytowanych przez wyszukiwarki
+       AI podaje czas w liczbach, my nie podawaliśmy go nigdzie. FAQ idzie 1:1
+       do FAQPage JSON-LD, więc to najkrótsza droga tej informacji do modeli.
+       Istniejące pozycje FAQ zostają co do jednej (zakaz usuwania). */
+    {
+      pytanie: 'Ile trwa wdrożenie chatbota?',
+      odpowiedz:
+        'Prosty chatbot na stronę robimy w 1-2 dni robocze, wdrożenie średnie w 3-4 dni robocze, a duże z integracjami w 5-10 dni roboczych. Czas liczymy od przekazania kompletu materiałów, czyli bazy wiedzy, treści i dostępów, a nie od podpisania umowy. Dzięki temu wiesz, że termin zależy od jednej rzeczy, na którą oboje mamy wpływ.',
+    },
+    {
+      pytanie: 'Ile poprawek jest w cenie wdrożenia chatbota?',
+      odpowiedz:
+        'Dwie rundy poprawek są w cenie wdrożenia. Testujesz bota przez tydzień i zapisujesz uwagi, my je wdrażamy. Testujesz drugi tydzień i zgłaszasz kolejne, my je wdrażamy, potem jest finalny odbiór. Poprawki tego, co nie zadziałało po naszej stronie, robimy zawsze, także po odbiorze. Nowe funkcjonalności, których nie było w pierwszej rozmowie, to rozbudowa projektu i wyceniamy ją osobno.',
     },
     {
       pytanie: 'Co wpływa na cenę chatbota?',
@@ -187,12 +240,12 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
     {
       pytanie: 'Ile kosztuje utrzymanie chatbota?',
       odpowiedz:
-        'U nas opieka nad chatbotem to abonament od 99 do 599 zł miesięcznie, zależnie od pakietu, i jest dołączona do każdego wdrożenia, bo nie zostawiamy klientów z botem bez opieki. W ramach opieki poprawiamy odpowiedzi, aktualizujemy wiedzę bota i reagujemy na zmiany w Twoich narzędziach. Na rynku abonamenty narzędzi i utrzymania to zwykle od około 100 do 2500 zł miesięcznie.',
+        'U nas opieka nad chatbotem to abonament od 99 do 599 zł netto miesięcznie, zależnie od pakietu, gdy projekt zostaje u nas pod opieką, bo nie zostawiamy klientów z botem bez opiekuna. Gdy wolisz wziąć całą infrastrukturę do siebie, nie płacisz nam abonamentu w ogóle. W ramach opieki poprawiamy odpowiedzi, aktualizujemy wiedzę bota i reagujemy na zmiany w Twoich narzędziach. Chatbot jest prostszy w utrzymaniu niż voicebot, dlatego kosztuje mniej: przy voicebocie utrzymanie to 299 do 1500 zł netto miesięcznie albo 0 zł, gdy przekazujemy infrastrukturę klientowi. Na rynku abonamenty narzędzi i utrzymania to zwykle od około 100 do 2500 zł miesięcznie.',
     },
     {
       pytanie: 'Czy przy chatbocie są ukryte koszty?',
       odpowiedz:
-        'Bywają, dlatego pytaj o nie przed zamówieniem. Najczęstsze to utrzymanie i poprawki po starcie, aktualizacja wiedzy bota po każdej zmianie oferty czy cennika oraz abonamenty narzędzi, które rosną z liczbą rozmów. U nas cena pakietu i abonament opieki od 99 do 599 zł miesięcznie są podane z góry, więc wiesz, ile płacisz i za co.',
+        'Bywają, dlatego pytaj o nie przed zamówieniem. Najczęstsze to utrzymanie i poprawki po starcie, aktualizacja wiedzy bota po każdej zmianie oferty czy cennika oraz abonamenty narzędzi, które rosną z liczbą rozmów. U nas cena wdrożenia i abonament opieki od 99 do 599 zł netto miesięcznie, gdy projekt zostaje u nas, są podane z góry, a dwie rundy poprawek są w cenie wdrożenia, więc nie doliczamy ich osobno. Wiesz, ile płacisz i za co.',
     },
     {
       pytanie: 'Kiedy chatbot zwraca się firmie?',
@@ -214,18 +267,22 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
     'chatbot dla firmy koszt',
     'ile kosztuje utrzymanie chatbota',
     'ukryte koszty chatbota',
+    /* 2026-08-19: nowe money query pod czas wdrożenia (audyt §1, luka „czas
+       w liczbach"). Odpowiedź stoi w tabeli, w akapicie o zasadach liczenia
+       czasu i w FAQ „Ile trwa wdrożenie chatbota?". */
+    'ile trwa wdrożenie chatbota',
   ],
 
   powiazaneUslugi: [
     {
       etykieta: 'Chatboty dla firm',
       href: '/uslugi/chatboty',
-      opis: 'Zobacz, jak budujemy chatboty od 990 zł, które odpowiadają 24/7 i zbierają leady.',
+      opis: 'Zobacz, jak budujemy chatboty od 1790 zł netto, które odpowiadają 24/7 i zbierają leady.',
     },
     {
       etykieta: 'Audyt AI: mapa oszczędności czasu',
       href: '/uslugi/audyt-ai',
-      opis: 'Za 1490 zł zobaczysz, gdzie AI da w Twojej firmie największy zwrot, a kwotę odliczamy od wdrożenia.',
+      opis: 'Za 1490 zł netto w 5 dni roboczych zobaczysz, gdzie AI da największy zwrot, a kwotę odliczamy od wdrożenia.',
     },
   ],
 

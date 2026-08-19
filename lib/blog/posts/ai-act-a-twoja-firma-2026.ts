@@ -19,7 +19,7 @@ export const aiActATwojaFirma: Post = {
     'AI Act a Twoja firma w 2026: co oznaczają kategorie ryzyka, jakie obowiązki dotyczą MŚP i o co zadbać, zanim wdrożysz chatbota lub automatyzację.',
 
   data: '2026-06-15',
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
   kategoria: 'Prawo i AI Act',
   tagi: ['AI Act', 'zgodność AI', 'prawo AI 2026', 'wdrożenie AI a przepisy'],
 
@@ -304,7 +304,7 @@ export const aiActATwojaFirma: Post = {
     {
       etykieta: 'Ile kosztuje chatbot dla firmy w 2026',
       href: '/poradniki/ile-kosztuje-chatbot-dla-firmy-2026',
-      opis: 'Pakiet startowy od 990 zł, pełne widełki i koszty utrzymania chatbota.',
+      opis: 'Chatbot prosty 1790 zł netto i 1-2 dni robocze, pełne widełki i koszty utrzymania.',
     },
   ],
 

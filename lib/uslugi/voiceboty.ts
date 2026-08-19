@@ -5,24 +5,54 @@ import type { Usluga } from './types';
  * Treść fazy 3 z 06-copy-hero-uslugi.md §"USŁUGA 3".
  * Answer-first, głos Pawła, zero em-dash, zero zmyślonych liczb i cen.
  *
+ * CENNIK OBOWIĄZUJĄCY (audyt `.seo-przeglad/AUDYT-WDROZENIOWY-2026-08-18.md` §2
+ * plus decyzje Pawła z 2026-08-19). TRZY OSOBNE POZYCJE, nie jeden abonament.
+ * To jest nasza największa przewaga komunikacyjna: konkurencja miesza wszystko
+ * w jeden ryczałt 499-1700 zł/mies., przez co klient nie wie, za co płaci.
+ * Każda kwota NETTO:
+ *  1. STWORZENIE (jednorazowo): prosty 2500 zł, z integracjami 5000-9000 zł,
+ *  2. UTRZYMANIE: 299-1500 zł/mies. gdy infrastruktura zostaje u nas, ALBO
+ *     0 zł/mies. gdy przekazujemy infrastrukturę klientowi (poprawki wtedy
+ *     350 zł netto za godzinę),
+ *  3. ZUŻYCIE: tokeny i minuty rozmów wg realnego użycia, po stronie klienta.
+ * Widełki 99-599 zł/mies. NIE dotyczą już voicebotów (zostają przy chatbotach,
+ * które są prostsze w utrzymaniu). `ramaCeny.minPrice` = 2500 bez zmian.
+ *
+ * ZASADA CZASU i RUNDY POPRAWEK (audyt §1, obowiązują całe wdrożenia): czas
+ * liczymy OD PRZEKAZANIA KOMPLETU MATERIAŁÓW przez klienta, nie od podpisania
+ * umowy; dwie rundy poprawek są w cenie wdrożenia.
+ *
+ * BRAK DANEJ (zgłoszone, NIE zmyślać): audyt podaje czasy wdrożenia w dniach
+ * roboczych dla chatbotów (§1) i audytu AI (§3), ale NIE dla voicebotów. Dopóki
+ * Paweł nie poda liczby, strona mówi wyłącznie zasadę liczenia czasu i kieruje
+ * po termin na bezpłatną diagnozę. Żadnej liczby dni nie wolno tu dopisać
+ * z głowy ani przenieść z chatbotów (inna usługa).
+ *
  * INPUT PAWŁA (nie renderowane, do uzupełnienia przed shipem):
- *  - ramaCeny.minPrice: 2500 USTAWIONE (pakiet startowy, decyzja Pawła
- *    z 2026-08-16, locked). Kwota w UI i `offers` w Service JSON-LD włączone.
- *  - Model kosztu działania: abonament czy stawka za minutę/rozmowę (do rozmowy na diagnozie).
+ *  - CZAS WDROŻENIA VOICEBOTA w dniach roboczych, per próg (patrz wyżej).
  *  - cta.dowod: gdy będzie realna liczba operacyjna (np. połączeń odebranych przez
  *    voicebota klienta w miesiącu) albo case z imieniem i firmą za zgodą, podmienić
  *    uczciwe zdanie o diagnozie na ten dowód. Do tego czasu bez atrapy liczby.
  */
 export const voiceboty: Usluga = {
   slug: 'voiceboty',
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
   h1: 'Voicebot dla firmy, który odbiera telefon za Ciebie',
+  /* BLOK KRÓTKIEJ ODPOWIEDZI (audyt §9 etap 1 pkt 2 i §2): pierwszy akapit po
+     H1 rozbija koszt na TRZY JAWNE POZYCJE, bo to jedyna rzecz, której nie ma
+     żaden konkurent z top10 (wszyscy podają jeden abonament). Przed tą zmianą
+     kapsuła miała 0 z 4 wielkości i była definicją, nie ofertą. */
   kapsula:
-    'Voicebot, nazywany też botem telefonicznym, to bot głosowy, który odbiera telefon, rozmawia po polsku i załatwia sprawę: umawia wizytę, przyjmuje zgłoszenie, odpowiada na pytanie. Gdy sprawa wymaga człowieka, zapisuje ją i wysyła Ci powiadomienie, żebyś oddzwonił przygotowany. Działa 24/7, nawet gdy jesteś u klienta. To nie nagranie ani „wciśnij jeden”. To Agent, który rozmawia i wykonuje zadanie, a potem przekazuje Ci tylko to, co ważne.',
+    'Voicebot dla firmy ma trzy osobne koszty, a nie jeden abonament. Stworzenie: 2500 zł netto za bota prostego albo 5000 do 9000 zł netto za bota z integracjami, płatne raz. Utrzymanie: 299 do 1500 zł netto miesięcznie, gdy infrastruktura zostaje u nas, albo 0 zł, gdy przekazujemy ją Tobie. Zużycie: tokeny i minuty rozmów według realnego użycia, po Twojej stronie. Czas wdrożenia liczymy od przekazania kompletu materiałów i podajemy go na bezpłatnej diagnozie. Bot odbiera telefon 24/7, rozmawia po polsku i sam załatwia sprawę.',
 
-  metaTitle: 'Voicebot od 2500 zł: bot telefoniczny 24/7',
+  /* metaTitle 2026-08-19: dopisane „netto" do kwoty (audyt §9 etap 1 pkt 4).
+     „24/7" wypadło z tytułu, bo z sufiksem marki („ · SimpleFast.ai", 16 zn.)
+     wersja z 24/7 miała 64 znaki, czyli powyżej progu obcięcia w SERP.
+     Fraza pieniężna „bot telefoniczny" ZOSTAJE, a 24/7 stoi w opisie, H1,
+     kapsule, tabeli i FAQ tej strony. */
+  metaTitle: 'Voicebot od 2500 zł netto: bot telefoniczny',
   metaDescription:
-    'Voicebot dla firm od 2500 zł jednorazowo za wdrożenie, opieka od 99 zł/mies. Bot telefoniczny odbiera po polsku 24/7 i umawia wizyty. Bezpłatna diagnoza.',
+    'Voicebot dla firm: stworzenie od 2500 zł netto, utrzymanie 299 do 1500 zł netto miesięcznie albo 0 zł przy przekazaniu infrastruktury. Odbiera telefon 24/7.',
 
   problem: {
     h2: 'Ile telefonów dziennie nie odbierasz?',
@@ -49,6 +79,14 @@ export const voiceboty: Usluga = {
       { cecha: 'Oddzwanianie', bez: 'Na ślepo, jeśli ktoś zdąży', zNami: 'Oddzwaniasz z gotową notatką ze sprawy' },
       { cecha: 'Koszt', bez: 'Etat albo Twój czas', zNami: 'Bot, bez etatu na odbieranie' },
       { cecha: 'Po rozmowie', bez: 'Pamiętasz albo nie', zNami: 'Krótkie podsumowanie do Ciebie' },
+      /* 2026-08-19 (audyt §2): trzy DOŁOŻONE wiersze wnoszą do tabeli trzy
+         jawne pozycje kosztu. Zero usuniętych wierszy, zero zmian
+         w istniejących. Bramka „24/7" w `ServiceHero.kafleStatystyk` bierze
+         PIERWSZY pasujący wiersz („Godziny"), więc dokładanie na końcu jej
+         nie rusza. */
+      { cecha: 'Stworzenie bota', bez: 'Rekrutacja i wdrożenie osoby', zNami: 'Od 2500 zł netto, płatne raz' },
+      { cecha: 'Koszt miesięczny', bez: 'Pensja co miesiąc', zNami: '299 do 1500 zł netto albo 0 zł' },
+      { cecha: 'Rozliczenie', bez: 'Jedna wypłata za wszystko', zNami: 'Trzy jawne pozycje, nie ryczałt' },
     ],
   },
 
@@ -75,9 +113,12 @@ export const voiceboty: Usluga = {
 
   ramaCeny: {
     h2: 'Ile kosztuje voicebot dla firmy?',
+    /* TRZY OSOBNE POZYCJE (audyt §2). Fraza „pakiet startowy" zostaje w treści
+       celowo: `ServiceHero.KAFEL_CENY` opisuje kafel ceny voicebotów słowami
+       1:1 z tego akapitu („od 2500 zł / pakiet startowy"). */
     tresc:
-      'Pakiet startowy zaczyna się od 2500 zł. W tej cenie dostajesz bota, który odbiera telefon 24/7 i rozmawia po polsku, umawianie wizyt oraz wdrożenie i konfigurację. Do tego dochodzi koszt działania zależny od liczby rozmów. Bot rozbudowany o zgłoszenia i powiadomienia to wyższa półka, wyceniana od zakresu. Dokładną wycenę podajemy po bezpłatnej diagnozie, zanim cokolwiek zamówisz. Opiekę rozliczasz na dwa sposoby: bez abonamentu, gdy przekazujemy Ci całą infrastrukturę, albo za 99 do 599 zł miesięcznie, gdy projekt zostaje u nas i my go pilnujemy. Bez ukrytych kosztów.',
-    minPrice: 2500, // pakiet startowy (locked 2026-08-16): kwota w UI + offers w Service JSON-LD.
+      'Voicebot ma trzy osobne pozycje, a nie jeden abonament, w którym wszystko jest schowane. Pierwsza to stworzenie bota. Prosty, czyli pakiet startowy, z prostą bazą wiedzy, kierowaniem rozmów i odpowiedziami na powtarzalny zestaw pytań, kosztuje 2500 zł netto jednorazowo. Bot z integracjami, na przykład z kalendarzem, i z rozbudowanymi scenariuszami to 5000 do 9000 zł netto jednorazowo. Druga pozycja to utrzymanie i tu wybierasz. Gdy infrastruktura zostaje u nas i my ją pilnujemy, płacisz 299 do 1500 zł netto miesięcznie. Gdy przekazujemy infrastrukturę Tobie, nie płacisz nam abonamentu w ogóle, czyli 0 zł miesięcznie, a poprawki zamawiasz godzinowo po 350 zł netto za godzinę. Trzecia pozycja to zużycie: tokeny i minuty rozmów rozliczane według realnego użycia, po Twojej stronie, bo płacisz za to, ile bot faktycznie przepracuje. Czas wdrożenia liczymy od przekazania kompletu materiałów przez Ciebie, czyli scenariuszy, treści i dostępów, a nie od podpisania umowy. W cenie wdrożenia są dwie rundy poprawek.',
+    minPrice: 2500, // pakiet startowy (locked 2026-08-16, audyt §2 potwierdza): UI + offers w JSON-LD.
     /* SEO 2026-08-17: linkowanie wewnętrzne do poradnika cenowego (zdanie 1:1
        z brief-seo-2026-08-17; render w RamaCeny.tsx w tym samym akapicie). */
     linkPoradnik: {
@@ -117,12 +158,31 @@ export const voiceboty: Usluga = {
     {
       pytanie: 'Ile kosztuje voicebot?',
       odpowiedz:
-        'Pakiet startowy kosztuje od 2500 zł. W tej cenie jest bot, który odbiera telefon 24/7 i rozmawia po polsku, umawianie wizyt oraz wdrożenie i konfiguracja. Do tego dochodzi koszt działania zależny od liczby rozmów. Dokładną wycenę podajemy po bezpłatnej diagnozie, zanim cokolwiek zamówisz. Opiekę rozliczasz na dwa sposoby: bez abonamentu, gdy przekazujemy Ci całą infrastrukturę, albo za 99 do 599 zł miesięcznie, gdy projekt zostaje u nas. Bez ukrytych kosztów.',
+        'Voicebot ma trzy osobne koszty. Stworzenie bota: 2500 zł netto za wersję prostą albo 5000 do 9000 zł netto za wersję z integracjami, płatne raz. Utrzymanie: 299 do 1500 zł netto miesięcznie, gdy infrastruktura zostaje u nas, albo 0 zł, gdy przekazujemy ją Tobie. Zużycie: tokeny i minuty rozmów według realnego użycia, po Twojej stronie.',
     },
     {
       pytanie: 'Czy moje rozmowy i dane będą bezpieczne?',
       odpowiedz:
         'Tak. Dane z rozmów zostają w Unii Europejskiej i przetwarzamy je zgodnie z RODO oraz AI Act. Podpisujemy umowę powierzenia danych, a Ty decydujesz, co bot nagrywa i przechowuje. W każdej chwili masz wgląd i kontrolę.',
+    },
+    /* 2026-08-19 (audyt §2 i §1): TRZY DOŁOŻONE pytania. Wyjście z abonamentu,
+       koszt zużycia i rundy poprawek to fakty, których nie podaje żaden
+       konkurent z top10, a my mamy je potwierdzone przez Pawła. Żadne
+       istniejące pytanie nie zostało usunięte. */
+    {
+      pytanie: 'Czy muszę płacić abonament co miesiąc?',
+      odpowiedz:
+        'Nie musisz. Masz dwie drogi. Infrastruktura zostaje u nas, my ją trzymamy i pilnujemy, a Ty płacisz 299 do 1500 zł netto miesięcznie. Albo przekazujemy Ci całą infrastrukturę, utrzymujesz ją sam i płacisz nam 0 zł miesięcznie, a poprawki zamawiasz wtedy godzinowo po 350 zł netto za godzinę. U większości firm z abonamentu nie da się wyjść, u nas da się.',
+    },
+    {
+      pytanie: 'Za co dokładnie płacę przy voicebocie?',
+      odpowiedz:
+        'Za trzy osobne rzeczy, każdą widzisz z osobna. Za stworzenie bota, czyli 2500 zł netto albo 5000 do 9000 zł netto z integracjami, płatne raz. Za utrzymanie, czyli 299 do 1500 zł netto miesięcznie albo 0 zł przy przekazaniu infrastruktury. Za zużycie, czyli tokeny i minuty rozmów według realnego użycia. Przy ofercie z jednym abonamentem miesięcznym zużycie też płacisz, tylko tego nie widać.',
+    },
+    {
+      pytanie: 'Ile rund poprawek jest w cenie wdrożenia?',
+      odpowiedz:
+        'Dwie. Testujesz bota przez tydzień i zapisujesz uwagi, my je wdrażamy. Testujesz drugi tydzień i zgłaszasz kolejne, wdrażamy je i wtedy jest odbiór. Poprawki tego, co nie zadziałało po naszej stronie, robimy zawsze, także po odbiorze. Nowe funkcje, których nie było w pierwszej rozmowie, to rozbudowa wyceniana osobno.',
     },
   ],
 

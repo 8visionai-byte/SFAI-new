@@ -18,14 +18,35 @@ import type { Usluga } from './types';
  *    2. cta.dowod — żywy scorecard /dowod: realne frazy, w których cytuje nas AI
  *       (nasza własna strona = najmocniejszy dowód GEO). Gdy frazy gotowe, podmienić
  *       na konkret + link "Zobacz nasz wynik na żywo".
+ *
+ * ── PARTIA GEO 2026-08-19 (audyt `.seo-przeglad/AUDYT-WDROZENIOWY-2026-08-18.md`
+ *    §6.1 oraz §9 etap 2 pkt 7): strona sprzedawała pozycjonowanie pod AI, mając
+ *    3 liczby i ZERO dowodów. Dołożone WYŁĄCZNIE z audytu §6.1 i §7:
+ *      - Lenart Motors: ChatGPT wskazuje firmę na pytanie o najlepszego blacharza
+ *        i lakiernika premium, efekt po OKOŁO 3 TYGODNIACH od zbudowania strony
+ *        i wrzucenia jej do sieci,
+ *      - Fichtelgebirgshaus.de (DE): pierwsza dziesiątka Google na frazy umówione
+ *        z klientem w umowie plus widoczność w GPT,
+ *      - Trockenhaus (DE): z NIEWIDOCZNEJ w Google do PIERWSZEJ TRÓJKI na frazę
+ *        „Trockenhaus".
+ *    Trzy nowe case'y stoją w lib/realizacje (kategoria `optymalizacja`), więc
+ *    `powiazane.realizacje` poniżej robi z tego dowód o jedno kliknięcie.
+ *    Nazwana też nieużywana przewaga z §7: pracujemy na rynku polskim
+ *    i niemieckim (dwa z trzech dowodów GEO to klienci niemieccy).
+ *
+ * ── OBIEKCJA ZGŁOSZONA, NIE NAPRAWIONA (poza zakresem partii GEO): `cta.dowod`
+ *    obiecuje „Zobacz na żywo, w jakich frazach cytuje nas AI", a trasa /dowod
+ *    ma w lib/site.ts `live: false` i nie ma dokąd prowadzić. Do decyzji Pawła:
+ *    albo postawić /dowod, albo przepisać `cta.dowod` na obietnicę bez „na żywo".
+ *    Pole zostaje nietknięte świadomie (cudza własność w tej rundzie).
  */
 export const optymalizacja: Usluga = {
   slug: 'optymalizacja',
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
   h1: 'Pozycjonowanie pod AI: bądź cytowany w ChatGPT i Perplexity',
 
   kapsula:
-    'Pozycjonowanie pod AI (GEO) to ustawienie Twojej strony tak, żeby ChatGPT, Claude, Gemini i Perplexity polecały ją w odpowiedziach, a nie tylko Google w wynikach. Nie musisz budować strony od nowa. Bierzemy to, co masz, i naprawiamy trzy rzeczy: czy boty AI w ogóle widzą Twoją treść, czy jest ułożona tak, by dało się ją zacytować, i czy masz autorytet poza własną stroną. Potem mierzymy, czy realnie zaczynasz padać w odpowiedziach.',
+    'Pozycjonowanie pod AI (GEO) to ustawienie Twojej strony tak, żeby ChatGPT, Claude, Gemini i Perplexity polecały ją w odpowiedziach, a nie tylko Google w wynikach. Nie musisz budować strony od nowa. Bierzemy to, co masz, i naprawiamy trzy rzeczy: czy boty AI w ogóle widzą Twoją treść, czy jest ułożona tak, by dało się ją zacytować, i czy masz autorytet poza własną stroną. Potem mierzymy, czy realnie zaczynasz padać w odpowiedziach. Że to działa, wiemy z konkretu: strona, którą zbudowaliśmy dla Lenart Motors, była wskazywana przez ChatGPT na pytanie o najlepszego blacharza i lakiernika premium po około trzech tygodniach od wrzucenia jej do sieci.',
 
   metaTitle: 'Pozycjonowanie pod AI: cytowanie w ChatGPT',
   metaDescription:
@@ -40,7 +61,7 @@ export const optymalizacja: Usluga = {
   rozwiazanie: {
     h2: 'Jak sprawiamy, że AI zaczyna Cię cytować?',
     tresc:
-      'Najpierw sprawdzamy, czy boty AI w ogóle widzą Twoją stronę, i odblokowujemy je tam, gdzie są blokowane. Potem przepisujemy kluczowe strony na format, który AI cytuje: bezpośrednia odpowiedź na początku, konkretne liczby, tabele, jasne nagłówki-pytania. Dokładamy świeżość, bo AI woli treść aktualną. Na końcu bierzemy się za autorytet poza stroną: wejście do rankingów i zestawień, z których AI bierze rekomendacje. I mierzymy to co tydzień, ręcznie, w czterech silnikach.',
+      'Najpierw sprawdzamy, czy boty AI w ogóle widzą Twoją stronę, i odblokowujemy je tam, gdzie są blokowane. Potem przepisujemy kluczowe strony na format, który AI cytuje: bezpośrednia odpowiedź na początku, konkretne liczby, tabele, jasne nagłówki-pytania. Dokładamy świeżość, bo AI woli treść aktualną. Na końcu bierzemy się za autorytet poza stroną: wejście do rankingów i zestawień, z których AI bierze rekomendacje. I mierzymy to co tydzień, ręcznie, w czterech silnikach. Mamy z tego trzy wyniki u klientów, każdy z nazwiskiem firmy: Lenart Motors wskazywany przez ChatGPT po około trzech tygodniach, Fichtelgebirgshaus.de w pierwszej dziesiątce Google na frazy z umowy i widoczny w GPT, Trockenhaus z niewidocznej strony w pierwszej trójce na frazę Trockenhaus. Dwa z tych trzech wdrożeń to klienci z rynku niemieckiego, bo pracujemy po polsku i po niemiecku.',
   },
 
   tabelaPorownawcza: {
@@ -115,6 +136,19 @@ export const optymalizacja: Usluga = {
       odpowiedz:
         'Nikt uczciwy nie da gwarancji konkretnej pozycji w AI, bo nie kontrolujemy silników. Możemy zagwarantować robotę: czytelność dla botów, treść pod cytowanie, autorytet poza stroną i twardy pomiar co tydzień. Pokazujemy trend i to, co realnie się zmienia, a nie puste obietnice „będziesz numerem jeden”.',
     },
+    /* PARTIA GEO 2026-08-19: dwa nowe pytania. Nic nie zostało usunięte ani
+       przestawione. Liczby WYŁĄCZNIE z audytu §6.1 i §7, każda z kontekstem
+       (zasada audytu §10 pkt 2: nigdy sam procent, nigdy sama liczba). */
+    {
+      pytanie: 'Macie dowód, że to działa?',
+      odpowiedz:
+        'Mamy trzy, każdy z nazwą klienta. Lenart Motors: ChatGPT wskazywał tę firmę na pytanie o najlepszego blacharza i lakiernika premium, po około trzech tygodniach od zbudowania strony i wrzucenia jej do sieci. Fichtelgebirgshaus.de: pierwsza dziesiątka Google na frazy umówione z klientem w umowie, plus widoczność w GPT. Trockenhaus: z niewidocznej w Google do pierwszej trójki na frazę Trockenhaus. Każdy z tych przypadków opisaliśmy osobno w realizacjach.',
+    },
+    {
+      pytanie: 'Robicie to tylko po polsku?',
+      odpowiedz:
+        'Nie. Pracujemy na rynku polskim i niemieckim. Dwa z trzech naszych dowodów widoczności w AI to klienci z Niemiec: Fichtelgebirgshaus.de i Trockenhaus. Sposób pracy nad treścią jest ten sam w obu językach, bo silniki AI czytają jedno i drugie i w obu szukają tego samego: konkretu, jasnej struktury i odpowiedzi postawionej wysoko.',
+    },
   ],
 
   cta: {
@@ -131,6 +165,10 @@ export const optymalizacja: Usluga = {
     'GEO',
     'optymalizacja SEO',
     'cytowalność w ChatGPT',
+    /* PARTIA GEO 2026-08-19: fraza, pod którą pracuje nowy case Lenart Motors.
+       Tagi karty biorą pierwsze 3 pozycje (tagiUslugi limit=3), więc dopisek
+       na końcu niczego nie zmienia w renderze. */
+    'strona cytowana przez ChatGPT',
   ],
 
   /* v22 (linki §3, P2 #15): strona miała 1 link wychodzący (kontakt) i 2
@@ -139,6 +177,31 @@ export const optymalizacja: Usluga = {
      a doklejanie poradnika o cenie chatbota do strony GEO byłoby linkiem
      na siłę. Wchodzi, gdy powstanie poradnik o GEO. */
   powiazane: {
+    /* PARTIA GEO 2026-08-19 (audyt §9 etap 2 pkt 7): trzy dowody cytowalności
+       o jedno kliknięcie od oferty, w kolejności siły z audytu §6.1. Etykiety
+       to h1 nowych case'ów (nigdy nowy slogan), opisy to fakty, które stoją
+       na stronie celu. Trasy powstają z rejestru lib/realizacje (SSG), więc
+       zero martwych linków. */
+    realizacje: [
+      {
+        etykieta: 'Strona cytowana przez ChatGPT po trzech tygodniach',
+        href: '/realizacje/strona-cytowana-przez-chatgpt',
+        opis:
+          'Lenart Motors: około trzy tygodnie od wrzucenia strony do sieci do wskazania firmy przez ChatGPT.',
+      },
+      {
+        etykieta: 'Strona w pierwszej dziesiątce Google i widoczna w GPT',
+        href: '/realizacje/top10-google-i-widocznosc-w-gpt',
+        opis:
+          'Fichtelgebirgshaus.de: frazy umówione w umowie w pierwszej dziesiątce Google, plus widoczność w GPT.',
+      },
+      {
+        etykieta: 'Z niewidocznej strony do pierwszej trójki w Google',
+        href: '/realizacje/z-niewidocznej-strony-do-top3-google',
+        opis:
+          'Trockenhaus: z braku widoczności do pierwszej trójki na frazę Trockenhaus.',
+      },
+    ],
     narzedzia: [
       {
         etykieta: 'Audyt strony pod AI (GEO)',

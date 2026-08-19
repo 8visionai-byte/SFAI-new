@@ -317,7 +317,7 @@ const FAQ_HUBU = [
     /* (b) ceny locked, zdania 1:1 ze stron usług i poradnika o automatyzacji. */
     pytanie: 'Ile kosztuje wdrożenie tego, o czym tu piszecie?',
     odpowiedz:
-      'Chatbot startuje od 990 zł, voicebot od 2500 zł, a automatyzacja procesu kosztuje zwykle od 3000 do 10000 zł. Audyt AI z mapą opłacalnych procesów to 1490 zł i odliczamy go od wdrożenia, a pierwszą automatyzację na próbę robimy w pakiecie AI Start za 1990 zł. Dokładną wycenę podajemy po bezpłatnej diagnozie.',
+      'Chatbot na stronę startuje od 1790 zł netto i powstaje w 1 do 2 dni roboczych, wdrożenie średnie to 3000 do 6000 zł netto, a duże z integracjami 8000 do 15000 zł netto. Voicebot to 2500 zł netto w wersji prostej i 5000 do 9000 zł netto z integracjami. Automatyzacja procesu kosztuje zwykle od 3000 do 10000 zł, audyt AI to 1490 zł netto i odliczamy go od wdrożenia, a pakiet AI Start z pierwszą automatyzacją na próbę to 1990 zł. Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy. Dokładną wycenę podajemy po bezpłatnej diagnozie.',
   },
 ];
 

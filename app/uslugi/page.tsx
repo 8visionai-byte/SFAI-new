@@ -230,12 +230,12 @@ const FAQ_HUBU = [
       'Chatbot jest tekstowy: odpowiada klientom na stronie i w komunikatorach, tłumaczy ofertę, zbiera leady. Voicebot jest głosowy: odbiera telefon, rozmawia po polsku, umawia wizytę i zapisuje ją w kalendarzu. Agent AI to kolejny poziom obu: nie tylko odpowiada, ale wykonuje pracę pod nadzorem człowieka, czyli umawia, zapisuje i przekazuje sprawę dalej. Chatbot i voicebot to zwykle pierwszy krok do Agenta.',
   },
   {
-    /* (a) LICZBA_Z_CENA policzone z rejestru; (b) ceny locked: chatboty.ts:79
-       minPrice 990, voiceboty.ts:80 minPrice 2500, audyt-ai.ts:79 minPrice 1490,
+    /* (a) LICZBA_Z_CENA policzone z rejestru; (b) ceny z audytu 2026-08-18:
+       chatboty.ts minPrice 1790, voiceboty.ts minPrice 2500, audyt-ai.ts 1490,
        opieka-ai.ts:84 minPrice 3000; api/_knowledge.mjs:37 (AI Start 1990)
        i api/_knowledge.mjs:42 (automatyzacja 3000-10000 zl). */
     pytanie: 'Ile kosztuje wdrożenie AI w małej firmie?',
-    odpowiedz: `${LICZBA_Z_CENA} usługi mają kwotę podaną wprost: chatbot od 990 zł, voicebot od 2500 zł, audyt AI 1490 zł i Opieka AI od 3000 zł miesięcznie za ryczałt 10 godzin. Pierwsza automatyzacja na próbę w pakiecie AI Start to 1990 zł, a większe wdrożenie automatyzacji kosztuje zwykle od 3000 do 10000 zł, zależnie od liczby integracji. Resztę wyceniamy po bezpłatnej diagnozie, zanim cokolwiek zamówisz.`,
+    odpowiedz: `${LICZBA_Z_CENA} usługi mają kwotę podaną wprost. Chatbot na stronę startuje od 1790 zł netto i powstaje w 1 do 2 dni roboczych, wdrożenie średnie to 3000 do 6000 zł netto, a duże z integracjami 8000 do 15000 zł netto. Voicebot to 2500 zł netto w wersji prostej i 5000 do 9000 zł netto z integracjami. Audyt AI kosztuje 1490 zł netto, a Opieka AI od 3000 zł miesięcznie za ryczałt 10 godzin. Pierwsza automatyzacja na próbę w pakiecie AI Start to 1990 zł, a większe wdrożenie automatyzacji kosztuje zwykle od 3000 do 10000 zł, zależnie od liczby integracji. Czas wdrożenia liczymy od przekazania kompletu materiałów. Resztę wyceniamy po bezpłatnej diagnozie, zanim cokolwiek zamówisz.`,
   },
   {
     /* (d) api/_knowledge.mjs:336 (dwa modele rozliczenia) i api/_knowledge.mjs:38
@@ -244,7 +244,7 @@ const FAQ_HUBU = [
        lib/uslugi/opieka-ai.ts:83 (ryczalt 10 h = 3000 zl miesiecznie). */
     pytanie: 'Czy po wdrożeniu płacę abonament?',
     odpowiedz:
-      'Masz wybór. Przekazujemy Ci całą infrastrukturę i wtedy nie płacisz abonamentu, albo projekt zostaje u nas pod opieką i wtedy jest opłata utrzymaniowa od 99 do 599 zł miesięcznie. Decydujesz na etapie wyceny, nie po fakcie. Czym innym jest Opieka AI jako osobna usługa: to ryczałt godzin miesięcznie na utrzymanie i rozwój, od 3000 zł za 10 godzin.',
+      'Masz wybór. Przekazujemy Ci całą infrastrukturę i wtedy nie płacisz abonamentu, albo projekt zostaje u nas pod opieką i wtedy jest opłata utrzymaniowa: chatboty i automatyzacje od 99 do 599 zł netto miesięcznie, voiceboty od 299 do 1500 zł netto miesięcznie. Decydujesz na etapie wyceny, nie po fakcie. Czym innym jest Opieka AI jako osobna usługa: to ryczałt godzin miesięcznie na utrzymanie i rozwój, od 3000 zł za 10 godzin.',
   },
   {
     /* (c) lib/uslugi/voiceboty.ts:100 (FAQ „Czy voicebot dzwoni sam do

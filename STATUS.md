@@ -1,3 +1,77 @@
+# STATUS — SEO etap 1 + 2 (audyt 2026-08-18) — DO WDROŻENIA
+
+ZLECENIE PAWŁA: sesja wdrożeniowa audytu SEO. Etap 1 = domknięcie luki
+cytowalności (drabina trzech progów z czasami, blok krótkiej odpowiedzi,
+netto, case Instytutu Kryptografii, FAQ jako widoczne nagłówki), etap 2 =
+uzbrojenie strony GEO w dowody. Zakazy: zero zmian designu, zero zmyślonych
+liczb, bez skracania stron, bez em-dash, commit tylko własnych plików.
+
+PROCES: 4 partie (usługi / poradniki / wiedza-agenta / GEO) + kontrola
+adwersaryjna. Kontrola dała NO-SHIP z 1 blokerem i 5 majorami. Wszystkie
+domknięte w sesji głównej przed commitem (31 podmian treści + 7 rendererów FAQ).
+
+CO ZNALAZŁA KONTROLA I CO Z TYM ZROBIONE:
+1. BLOKER: 990 zł jako cena chatbota jechało dalej na 7 hubach w widocznym FAQ
+   i w FAQPage JSON-LD; /usługi przeczyło samo sobie na jednym ekranie (tabela
+   „od 1790 zł" vs FAQ „chatbot od 990 zł"). Naprawione: 990 zł jako cena
+   chatbota = ZERO wystąpień w całym serwisie (pomiar: 22 trasy, regex bez
+   trafień na 1990 zł; produkcja ma dziś 45 wystąpień na samym poradniku).
+2. MAJOR: najbardziej eksponowana kwota szła bez „netto". Karta cennika
+   (RamaCeny) renderuje teraz „od 1790 zł netto". Pomiar: akapit ma
+   630x46 px na 1440 i 269x37 px na 390 — CO DO PIKSELA jak na produkcji,
+   bez zawijania wiersza.
+3. MAJOR: opieka 99-599 zł podawana jako jedyny model dla WSZYSTKIEGO. Teraz
+   9 hubów, home (Oferta + faqData) i 2 poradniki rozróżniają: przekazanie
+   infrastruktury = 0 zł, opieka u nas = 99-599 zł netto (chatboty,
+   automatyzacje) albo 299-1500 zł netto (voiceboty).
+4. MAJOR: poradniki mówiły „opieka dołączona do KAŻDEGO wdrożenia", co kasowało
+   drugi model rozliczenia. 9 zdań przepisanych.
+5. MAJOR: punkt 6 etapu 1 (pytania FAQ jako widoczne nagłówki) nie zrobiła żadna
+   partia. Zrobione: 7 rendererów FAQ, <span> -> <h3>. Pokrycie: 22 trasy,
+   wszystkie <summary> mają <h3> poza jednym („Jak to liczę?" w kalkulatorze,
+   to nie jest pytanie FAQ). Kolejność nagłówków bez przeskoków.
+
+DOWÓD, ŻE DESIGN STOI (Chrome, lokalnie vs produkcja, 1440 i 390 px):
+- pytanie FAQ: computed style i geometria ZERO RÓŻNIC na 5 trasach x 2
+  szerokości, w spoczynku i po rozwinięciu (Inter 18px/600, #e4e4f0,
+  text-wrap: wrap, akcent #00f0ff po otwarciu, wysokość summary 62 px).
+  H3 dostał komplet nadpisań, bo baza CSS przestawiłaby naglówek na Jakartę,
+  wagę 800, kolor #f2f4fb i text-wrap: balance.
+- /uslugi/audyt-ai: kafle hero co do piksela jak produkcja (194/158/187 px).
+- strona nie przewija się w poziomie na żadnej mierzonej trasie.
+
+ZMIANY GEOMETRII, KTÓRE SĄ SKUTKIEM TREŚCI, NIE STYLU (zgłaszam, nie ukrywam):
+- /uslugi/chatboty kafel ceny: 201 -> 218 px na 1440, a na 390 wiersz kafli
+  129 -> 157 px. Powód: „od 1790 zł" jest o znak dłuższe niż „od 990 zł" i na
+  telefonie łamie się na dwie linie. Kontrola negatywna: audyt-ai (cena bez
+  zmian) ma kafle identyczne.
+- /realizacje kafle: 129 -> 130 px na 390 (licznik 8 -> 11 wdrożeń).
+- tabela kosztów w poradniku o chatbocie ma 4 kolumnę „Czas wdrożenia"
+  (wymóg audytu §1), przez co ma 736 px w kolumnie 694 px i przewija się
+  w poziomie WEWNĄTRZ ramki na desktopie. Produkcja tego nie robi, bo ma 3
+  kolumny. PYTANIE DO PAWŁA: zostawiamy przewijanie, czy zwężam próg dla
+  tabel 4-kolumnowych z 46 rem na 42 rem (zmieści się bez przewijania).
+
+COFNIĘTE ŚWIADOMIE: kafel ceny w hero miał dostać „netto" w podpisie, ale
+pomiar pokazał kafel szerszy o 17-50 px i wiersz wyższy o 44 px na telefonie.
+To zmiana wyglądu, więc ServiceHero.tsx wrócił do stanu z HEAD. Kwota netto
+stoi w karcie cennika, tabeli, FAQ, leadzie i opisie meta.
+
+CZEKA NA PAWŁA:
+- CZAS WDROŻENIA VOICEBOTA w dniach roboczych. Audyt podaje czasy dla
+  chatbotów i audytu AI, dla voicebotów NIE. Partia odmówiła zmyślenia liczby
+  i słusznie. Do czasu odpowiedzi /uslugi/voiceboty mówi tylko zasadę liczenia.
+- decyzja o tabeli 4-kolumnowej (wyżej).
+- decyzja o „netto" przy kafelku ceny w hero (wyżej).
+
+NIERUSZONE: etap 3 audytu, czyli nowe adresy /uslugi/leady-b2b
+i /uslugi/asystent-prezesa, rozbudowa /realizacje do 11 nazwanych klientów
+i rozbudowa /produkty. Do zrobienia w następnym kroku.
+
+NIE COMMITUJĘ (praca sesji SEO, nie mojej): .seo-przeglad/** i tools/*.js.
+
+---
+
 # STATUS — v22 (2b2c1b4) + dogrywka v22b (d487273) — PRODUKCJA
 
 ZLECENIE PAWŁA: podstrony w języku wzorca (5 podstron infinitytechstack.uk),

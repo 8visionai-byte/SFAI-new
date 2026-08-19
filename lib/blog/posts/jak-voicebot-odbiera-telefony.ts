@@ -19,7 +19,7 @@ export const jakVoicebotOdbieraTelefony: Post = {
     'Jak voicebot odbiera telefony, gdy pracujesz, i czy klienci to akceptują. Kiedy łączy z człowiekiem i co zrobić, żeby brzmiał naturalnie po polsku.',
 
   data: '2026-06-15',
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
   kategoria: 'Voiceboty',
   tagi: ['voicebot', 'odbieranie telefonów', 'asystent głosowy', 'obsługa połączeń'],
 
@@ -192,7 +192,11 @@ export const jakVoicebotOdbieraTelefony: Post = {
     {
       etykieta: 'Voicebot dla firmy, który odbiera telefon za Ciebie',
       href: '/uslugi/voiceboty',
-      opis: 'Voicebot dla firm od 2500 zł jednorazowo za wdrożenie, opieka od 99 zł/mies. Bot telefoniczny odbiera po polsku 24/7 i umawia wizyty. Bezpłatna diagnoza.',
+      /* 2026-08-19 (audyt §2): stary opis mówił „opieka od 99 zł/mies", czyli
+         cennik CHATBOTA. Voicebot ma od tej rundy własny, trzyczęściowy model
+         (stworzenie, utrzymanie, zużycie), więc kopia metaDescription musiała
+         pójść za nim. Kwota 2500 zł bez zmian. */
+      opis: 'Voicebot dla firm od 2500 zł netto jednorazowo za wdrożenie, utrzymanie 299 do 1500 zł netto/mies. albo 0 zł, gdy przekażemy infrastrukturę Tobie.',
     },
     {
       /* Podstrona voicebotów 1:1 z tematem wpisu (odbieranie połączeń).
@@ -200,7 +204,7 @@ export const jakVoicebotOdbieraTelefony: Post = {
          lib/uslugi/podstrony/odbieranie-telefonow.ts. */
       etykieta: 'Bot telefoniczny, który odbiera telefon 24/7',
       href: '/uslugi/voiceboty/odbieranie-telefonow',
-      opis: 'Bot telefoniczny odbiera połączenia 24/7 po polsku, odpowiada na powtarzalne pytania i spisuje sprawę. Po rozmowie masz podsumowanie. Od 2500 zł za wdrożenie.',
+      opis: 'Bot telefoniczny odbiera połączenia 24/7 po polsku, odpowiada na powtarzalne pytania i spisuje sprawę. Po rozmowie masz podsumowanie. Od 2500 zł netto za wdrożenie.',
     },
   ],
 
