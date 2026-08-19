@@ -13,19 +13,29 @@ const path = require('node:path');
 
 const SITE = 'https://www.simplefast.ai';
 
-/** Adresy o najwyższym priorytecie: świeża treść z kwotami + nowe podstrony. */
+/**
+ * Adresy o najwyższym priorytecie: świeża treść z kwotami + nowe podstrony.
+ * Aktualizacja 2026-08-19 (runda SEO, etapy 1-3): dochodzą dwa nowe adresy
+ * i huby, na których zmienił się cennik w widocznym FAQ oraz w FAQPage JSON-LD.
+ * USUNIĘTY /cennik: sprawdzone żądaniem na produkcji, zwraca 404, więc było to
+ * zgłaszanie martwego adresu. Każdy adres z tej listy ma zwracać 200.
+ */
 const URLE = [
   '/',
   '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
   '/poradniki/ile-kosztuje-chatbot-dla-firmy-2026',
   '/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie',
+  '/uslugi',
   '/uslugi/chatboty',
   '/uslugi/voiceboty',
   '/uslugi/voiceboty/windykacja',
   '/uslugi/voiceboty/potwierdzanie-wizyt',
   '/uslugi/automatyzacje',
   '/uslugi/audyt-ai',
-  '/cennik',
+  '/uslugi/leady-b2b',
+  '/uslugi/asystent-prezesa',
+  '/produkty',
+  '/realizacje',
   '/llms.txt',
 ];
 
