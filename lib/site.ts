@@ -235,6 +235,15 @@ export const TRESC_SIERPIEN_2026 = '2026-08-17';
 export const V22_LAST_MODIFIED = '2026-08-18';
 
 /**
+ * Runda SEO z audytu 2026-08-18 (etapy 1-3, wdrożona 2026-08-19): nowy cennik
+ * chatbotów, oznaczenie netto, rozdzielenie dwóch modeli opieki, pytania FAQ
+ * jako nagłówki H3, dwie nowe usługi i cztery nowe karty narzędzi portfolio.
+ * Dotyczy tras STATYCZNYCH — strony usług i wpisy treści mają własne
+ * `dataAktualizacji` w rejestrach.
+ */
+export const SEO_ETAPY_1_3 = '2026-08-19';
+
+/**
  * Data ostatniej realnej rewizji huba /ai-radar (Centrum Wiedzy -> AI Radar).
  * Hub startuje z 2 wpisami-szablonami formatu (data 2026-06-16). Trzymamy literal
  * (lib/site.ts bez zaleznosci od warstwy tresci); pojedyncze wpisy /ai-radar/[slug]
@@ -248,7 +257,7 @@ export const AI_RADAR_LAST_MODIFIED = '2026-08-16';
  * przelaczana na `live: true` przy stawianiu kazdej podstrony.
  */
 export const ROUTES: RouteEntry[] = [
-  { path: '/', priority: 1.0, changeFrequency: 'weekly', live: true, lastModified: HOME_LAST_MODIFIED },
+  { path: '/', priority: 1.0, changeFrequency: 'weekly', live: true, lastModified: SEO_ETAPY_1_3 },
 
   // Hub /uslugi (rozdroze) — zbudowany (app/uslugi/page.tsx, SSG): rozdroze 3 klastrow
   // + wejscie do strony-parasola. live:true -> wchodzi do sitemapy.
@@ -258,12 +267,12 @@ export const ROUTES: RouteEntry[] = [
   // wyeksportowana, bo opisuje datę POSTAWIENIA 6 stron usług i nie jest już
   // datą tego huba. GDYBY przebudowa /uslugi nie weszła do commita, ta jedna
   // linia wraca na USLUGI_LAST_MODIFIED.
-  { path: '/uslugi', priority: 0.9, changeFrequency: 'monthly', live: true, lastModified: V22_LAST_MODIFIED },
+  { path: '/uslugi', priority: 0.9, changeFrequency: 'monthly', live: true, lastModified: SEO_ETAPY_1_3 },
 
   // Strona-parasol "Architekci Wartosci AI" (app/uslugi/architekci-wartosci-ai/page.tsx, SSG).
   // CELOWO poza rejestrem lib/uslugi (to centrum oferty, nie szablonowa usluga), wiec
   // jej URL wpisujemy tu recznie. live:true -> wchodzi do sitemapy.
-  { path: '/uslugi/architekci-wartosci-ai', priority: 0.9, changeFrequency: 'monthly', live: true, lastModified: TRESC_SIERPIEN_2026 },
+  { path: '/uslugi/architekci-wartosci-ai', priority: 0.9, changeFrequency: 'monthly', live: true, lastModified: SEO_ETAPY_1_3 },
 
   // 6 stron uslug (/uslugi/<slug>) NIE jest tu wpisanych pojedynczo — zrodlem prawdy
   // ich URL-i jest rejestr lib/uslugi (USLUGI_SLUGS), a sitemap (app/sitemap.ts) dolacza
@@ -279,14 +288,14 @@ export const ROUTES: RouteEntry[] = [
   // = +169 linii w drzewie roboczym). Trasa raportowała czerwiec, mimo że sam
   // plik strony git log datuje na 2026-08-17. GDYBY ta przebudowa nie weszła do
   // commita, linia wraca na HOME_LAST_MODIFIED.
-  { path: '/narzedzia', priority: 0.7, changeFrequency: 'monthly', live: true, lastModified: V22_LAST_MODIFIED },
+  { path: '/narzedzia', priority: 0.7, changeFrequency: 'monthly', live: true, lastModified: SEO_ETAPY_1_3 },
 
   // Hub /produkty (gotowe produkty AID) — zbudowany (app/produkty/page.tsx, SSG).
   // live:true -> wchodzi do sitemapy. W menu (NAV_LINKS) jako "Produkty".
   // v22 dogrywka (MAJOR-4): hub /produkty PRZEBUDOWANY w commicie 2b2c1b4
   // (app/produkty/page.tsx +185 linii: pas metryk, tabela rejestru, FAQ, ItemList),
   // a raportował czerwiec. Data rundy, nie `new Date()`.
-  { path: '/produkty', priority: 0.8, changeFrequency: 'monthly', live: true, lastModified: V22_LAST_MODIFIED },
+  { path: '/produkty', priority: 0.8, changeFrequency: 'monthly', live: true, lastModified: SEO_ETAPY_1_3 },
 
   // Centrum Wiedzy AI — hub /wiedza organizuje 4 dzialy (Poradniki, AI Radar,
   // Przemyslenia=/blog, Case studies=/realizacje). Hub i Poradniki zbudowane (SSG):
@@ -297,8 +306,8 @@ export const ROUTES: RouteEntry[] = [
   // v22 dogrywka (MAJOR-4): oba huby PRZEBUDOWANE w commicie 2b2c1b4
   // (app/wiedza/page.tsx +201, app/poradniki/page.tsx +161). /poradniki stało
   // na 2026-08-17, czyli na dacie POPRZEDNIEJ rundy, mimo pełnej przebudowy.
-  { path: '/wiedza', priority: 0.8, changeFrequency: 'monthly', live: true, lastModified: V22_LAST_MODIFIED },
-  { path: '/poradniki', priority: 0.7, changeFrequency: 'monthly', live: true, lastModified: V22_LAST_MODIFIED },
+  { path: '/wiedza', priority: 0.8, changeFrequency: 'monthly', live: true, lastModified: SEO_ETAPY_1_3 },
+  { path: '/poradniki', priority: 0.7, changeFrequency: 'monthly', live: true, lastModified: SEO_ETAPY_1_3 },
 
   // AI Radar (silnik newsow „AI o 19:00") — hub /ai-radar zbudowany (SSG, 200 OK):
   // app/ai-radar/page.tsx + app/ai-radar/[slug]. Startuje z 2 wpisami-SZABLONAMI
@@ -312,20 +321,20 @@ export const ROUTES: RouteEntry[] = [
   // v22 dogrywka (MAJOR-4): hub PRZEBUDOWANY w commicie 2b2c1b4
   // (app/materialy/page.tsx +199 linii). Literał '2026-06-16' był datą
   // postawienia huba i po przebudowie mówił botom „bez zmian".
-  { path: '/materialy', priority: 0.6, changeFrequency: 'monthly', live: true, lastModified: V22_LAST_MODIFIED },
+  { path: '/materialy', priority: 0.6, changeFrequency: 'monthly', live: true, lastModified: SEO_ETAPY_1_3 },
 
   // Dowod i konwersja.
   // v22 dogrywka (MAJOR-4): oba huby PRZEBUDOWANE w commicie 2b2c1b4
   // (app/realizacje/page.tsx +211, app/blog/page.tsx +165).
-  { path: '/realizacje', priority: 0.8, changeFrequency: 'weekly', live: true, lastModified: V22_LAST_MODIFIED },
-  { path: '/blog', priority: 0.6, changeFrequency: 'weekly', live: true, lastModified: V22_LAST_MODIFIED },
+  { path: '/realizacje', priority: 0.8, changeFrequency: 'weekly', live: true, lastModified: SEO_ETAPY_1_3 },
+  { path: '/blog', priority: 0.6, changeFrequency: 'weekly', live: true, lastModified: SEO_ETAPY_1_3 },
   // /o-nas i /dowod: v22 ich NIE tknęła, więc daty zostają (patrz polityka wyżej).
   { path: '/o-nas', priority: 0.6, changeFrequency: 'monthly', live: true, lastModified: '2026-06-16' },
   { path: '/dowod', priority: 0.5, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
   // v22 dogrywka: /kontakt przebudowany w tej rundzie (sekcja „Zanim wypełnisz
   // formularz", kroki po wysłaniu, FAQ w <details> + FAQPage). Literał
   // '2026-06-19' był datą postawienia strony.
-  { path: '/kontakt', priority: 0.6, changeFrequency: 'monthly', live: true, lastModified: V22_LAST_MODIFIED },
+  { path: '/kontakt', priority: 0.6, changeFrequency: 'monthly', live: true, lastModified: SEO_ETAPY_1_3 },
 
   // Strony prawne (RODO art. 13). Wymagane PRZED zbieraniem danych w formularzu.
   // INPUT/BUILD: postawić treść stron, potem ustawić live: true (wejdą do sitemapy).

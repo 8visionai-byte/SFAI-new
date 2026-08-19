@@ -85,7 +85,7 @@ const METRYKI_HUBU = [
  * szerszą niż ekran i DOSŁOWNY duplikat karty, czyli dokładnie to, czego zakazuje
  * reguła z tego samego paragrafu („tabela NIE powiela kart"). Zostają trzy
  * kolumny: nazwa funkcji, odbiorca i uczciwa dojrzałość. Wartość tabeli to
- * PORÓWNANIE czterech produktów w jednym rzucie oka, którego siatka kart
+ * PORÓWNANIE wszystkich produktów w jednym rzucie oka, którego siatka kart
  * nie daje, plus pierwsza `<table>` na tej trasie (§5.1).
  * Wiersze budowane mapowaniem rejestru, nigdy literałami.
  */
@@ -213,7 +213,7 @@ export default function ProduktyPage() {
 
       {/* ───────────────────────────────────────────────────────────────
           (2b) v22 (§2.6 pkt 4): TABELA ORIENTACYJNA. Przed rundą /produkty
-          miało 0 tabel. Zestawia cztery produkty w jednym rzucie oka: co robią,
+          miało 0 tabel. Zestawia wszystkie produkty w jednym rzucie oka: co robią,
           dla kogo są i na jakim są etapie. Wiersze mapowane z rejestru. */}
       <Section tone="base">
         <div className="mx-auto max-w-narrow">

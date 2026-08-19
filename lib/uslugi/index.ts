@@ -28,6 +28,10 @@ import { opiekaAi } from './opieka-ai';
 import { dokumentyFaktury } from './dokumenty-faktury';
 import { agentRekrutacyjny } from './agent-rekrutacyjny';
 import { audytAi } from './audyt-ai';
+/* Etap 3 audytu 2026-08-18: dwie usługi, których na stronie w ogóle nie było,
+   a są gotowe (§4 leady B2B, §5 prywatny asystent dla prezesa). */
+import { leadyB2b } from './leady-b2b';
+import { asystentPrezesa } from './asystent-prezesa';
 
 export type { Usluga, FaqItem, TabelaWiersz, Krok, Cta } from './types';
 
@@ -44,10 +48,12 @@ export const USLUGI: readonly Usluga[] = [
   // Back-office i procesy (powtarzalna robota za kulisami)
   automatyzacje,
   dokumentyFaktury,
+  leadyB2b,
   opiekaAi,
   // Budowa i strategia (od czego zacząć, co zbudować, gdzie być widocznym)
   audytAi,
   rozwiazania,
+  asystentPrezesa,
   stronyWww,
   optymalizacja,
 ] as const;

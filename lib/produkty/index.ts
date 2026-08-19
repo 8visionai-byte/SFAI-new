@@ -2,7 +2,7 @@
  * REJESTR PRODUKTÓW — single source of truth dla strony /produkty.
  *
  * Importuje moduły treści (każdy = jeden obiekt `Produkt`) i eksportuje:
- *  - PRODUKTY: tablica 4 własnych produktów (kolejność = kolejność na stronie),
+ *  - PRODUKTY: tablica własnych produktów (kolejność = kolejność na stronie),
  *  - getProduktBySlug(slug): getter po slug (zwraca Produkt | undefined),
  *  - KLOCKI: katalog klocków-możliwości (sekcja pod produktami),
  *  - KLOCKI_DISCLAIMER: jawny disclaimer pod katalogiem klocków.
@@ -19,18 +19,31 @@ import { appCoachingowa } from './app-coachingowa';
 import { skanerFakturKsef } from './skaner-faktur-ksef';
 import { apkaObecnosciSkladek } from './apka-obecnosci-skladek';
 import { centrumDowodzenia } from './centrum-dowodzenia';
+/* Etap 3 audytu 2026-08-18 §8: cztery narzędzia z portfolio, opisane bezosobowo
+   („mamy w portfolio zbudowane takie narzędzie"), każde z problemem, który
+   rozwiązuje. Piąte z listy audytu, apka dla klubów sportowych, stoi już wyżej
+   jako apka-obecnosci-skladek. */
+import { kampanieSocialILeady } from './kampanie-social-i-leady';
+import { drugiMozgGlosowy } from './drugi-mozg-glosowy';
+import { ksefIBankRozliczenia } from './ksef-i-bank-rozliczenia';
+import { kalendarzFizjoterapeuty } from './kalendarz-fizjoterapeuty';
 
 export type { Produkt, Dojrzalosc } from './types';
 export { DOJRZALOSC_LABEL } from './types';
 
 /**
- * Cztery własne produkty, w kolejności prezentacji na /produkty.
- * Kolejność: najpierw te z twardym efektem operacyjnym (faktury), potem reszta.
+ * Własne produkty, w kolejności prezentacji na /produkty.
+ * Kolejność: najpierw te z twardym efektem operacyjnym (faktury i rozliczenia),
+ * potem narzędzia do sprzedaży i wiedzy, na końcu apki dla mniejszych zespołów.
  */
 export const PRODUKTY: readonly Produkt[] = [
   skanerFakturKsef,
+  ksefIBankRozliczenia,
+  kampanieSocialILeady,
+  drugiMozgGlosowy,
   appCoachingowa,
   apkaObecnosciSkladek,
+  kalendarzFizjoterapeuty,
   centrumDowodzenia,
 ] as const;
 

@@ -85,7 +85,7 @@ const KLASTRY: Klaster[] = [
     h2: 'Co zdejmie z zespołu powtarzalną robotę za kulisami?',
     intro:
       'Przepisywanie danych, faktury, potwierdzenia, terminy. To, co zjada godziny i nie buduje firmy. Automat robi to po cichu, a my pilnujemy, żeby działał.',
-    slugs: ['automatyzacje', 'dokumenty-faktury', 'opieka-ai'],
+    slugs: ['automatyzacje', 'dokumenty-faktury', 'leady-b2b', 'opieka-ai'],
   },
   {
     id: 'budowa',
@@ -93,7 +93,7 @@ const KLASTRY: Klaster[] = [
     h2: 'Od czego zacząć i co zbudować, żeby nie przepalić kasy?',
     intro:
       'Najpierw mapa, gdzie AI da zysk. Potem to, czego nie ma na półce: aplikacje, wtyczki, strony cytowalne przez AI. Najpierw plan, potem wydatek.',
-    slugs: ['audyt-ai', 'rozwiazania', 'strony-www', 'optymalizacja'],
+    slugs: ['audyt-ai', 'rozwiazania', 'asystent-prezesa', 'strony-www', 'optymalizacja'],
   },
 ];
 
@@ -334,7 +334,7 @@ export default function UslugiHubPage() {
               Budujemy chatboty, voiceboty i automatyzacje, które łączymy w Agentów AI.
               Agent wykonuje pracę pod nadzorem
               człowieka: odbiera telefon, umawia, pilnuje faktur, odsiewa CV. Poniżej
-              dziesięć usług w trzech grupach: obsługa 24/7, back-office i procesy,
+              dwanaście usług w trzech grupach: obsługa 24/7, back-office i procesy,
               budowa i strategia. Nie musisz wybierać dziś. Zaczynasz od jednej rzeczy,
               która zżera najwięcej czasu.
             </p>

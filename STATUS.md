@@ -1,3 +1,74 @@
+# STATUS — SEO etap 3 (audyt 2026-08-18) — DO WDROŻENIA
+
+ZLECENIE: etap 3 audytu, czyli nowe adresy pod treści, których na stronie
+w ogóle nie było. Etapy 1 i 2 poszły na produkcję commitem 1736293.
+
+CO WESZŁO:
+1. /uslugi/leady-b2b (audyt §4 i §6.9). Ceny netto za paczkę rekordów:
+   1000 = 169 zł (0,169 zł/rekord), 5000 = 699 zł (0,140), 10000 = 1390 zł
+   (0,139). Czas: 20-30 minut na 1000 rekordów po naszej stronie wobec około
+   3 minut ręcznie na JEDEN rekord, czyli około 50 godzin na 1000 i 250 godzin
+   na 5000. Zakres: publiczne wizytówki Google Maps. Ograniczenie „wyłącznie
+   dla firm sprzedających B2B" stoi WPROST w czterech miejscach strony, bo
+   audyt każe odfiltrować złe zapytania.
+2. /uslugi/asystent-prezesa (audyt §5). Stworzenie 7999 zł netto, budowa 5-10
+   dni roboczych, serwery 199 zł netto miesięcznie, zużycie według cennika API
+   modeli po stronie klienta. Model rozliczenia identyczny jak przy voicebotach,
+   bota przekazujemy klientowi.
+3. /produkty: cztery nowe karty narzędzi portfolio (audyt §8), pisane
+   BEZOSOBOWO („mamy w portfolio zbudowane takie narzędzie"), zgodnie
+   z instrukcją redakcyjną Pawła: zestawienie KSeF z bankiem, kampanie
+   i social media, głosowy agent z wiedzą o firmie, kalendarz gabinetu.
+   Piąte narzędzie z audytu (apka dla klubów sportowych) NIE zostało dodane,
+   bo stoi już na stronie jako apka-obecnosci-skladek i byłby to duplikat.
+
+DOWÓD (pomiar lokalnie vs produkcja, 1440 i 390 px, ALARMÓW: 0):
+- nowe trasy 200, 12659 i 13166 znaków dla bota, po 6 pytań FAQ w H3,
+  po 10 bloków JSON-LD; obie w mapie witryny i linkowane z huba,
+- /produkty urosło z 14946 do 21045 znaków, 4 z 4 nowych kotwic obecne,
+  tabela orientacyjna ma teraz 8 wierszy produktów,
+- 37 linków na nowych trasach, ZERO martwych,
+- istniejące strony: pytanie FAQ i kafle hero co do piksela jak na produkcji,
+  zero przewijania w poziomie,
+- build / typecheck / lint: exit 0 (5 ostrzeżeń sprzed rundy).
+
+NACZYNIA POŁĄCZONE (co jeszcze musiało się zmienić, żeby nic nie zostało w tyle):
+rejestr USLUGI i PRODUKTY, rejestr kolorów INF_KATEGORIA i INF_PRODUKT (bez tego
+nowa strona świeci domyślnym cyjanem, czyli kolorem rodziny chatbotów), klastry
+na hubie /uslugi, dropdowny nawigacji, liczby w treści („dwanaście usług"),
+baza wiedzy bota (api/_knowledge.mjs, lib/agent/knowledge.ts), pliki dla modeli
+(public/llms.txt, public/wiedza-agenta.txt) i daty w mapie witryny dla 11 tras
+statycznych, które ta runda realnie zmieniła.
+
+CZEKA NA PAWŁA (pytania, nie zgadywanie):
+1. NETTO przy nowych kwotach. Audyt §4 i §5 nie zapisuje wprost, czy 169 / 699 /
+   1390 / 7999 / 199 zł są netto. Reszta cennika jest netto i komponent karty
+   cennika dokleja to słowo automatycznie, więc strony są spójne: netto wszędzie.
+   Jedno słowo potwierdzenia zamyka temat, a gdyby kwoty były brutto, poprawka
+   to usunięcie etykiety.
+2. CENY NARZĘDZI z §8. Audyt każe podać przy każdym „jaki problem rozwiązuje
+   i ile kosztuje", ale sam nie zawiera ani jednej kwoty. Karty mówią dziś
+   prawdę: zakres i wycena po bezpłatnej diagnozie.
+3. DOJRZAŁOŚĆ tych narzędzi. Wszystkie dostały ostrożniejszy badge „MVP
+   (działa rdzeń)", bo audyt nie mówi, które są dojrzałe.
+4. REALIZACJE, 11 NAZWANYCH KLIENTÓW (audyt §7, etap 3 pkt 11) — NIE ZROBIONE
+   i to jest świadoma decyzja. Strona ma dziś 11 case'ów, ale nazwanych jest
+   pięć (Instytut Kryptografii dwa razy, Lenart Motors, Fichtelgebirgshaus,
+   Trockenhaus). Pozostałe sześć jest anonimowych, a audyt wymienia siedmiu
+   klientów, których na stronie nie widać z nazwy: Y-Ads, Onyx, KNF Team,
+   ZB Bielizsy, Desant.pl, Przystań Jurgen, Waste Return. Żeby to domknąć,
+   muszę wiedzieć, KTÓRY anonimowy case należy do KTÓREGO klienta. Przypisanie
+   nazwy prawdziwej firmy na podstawie podobieństwa opisu to zgadywanie na
+   cudzym nazwisku i tego nie zrobię bez Twojej listy.
+5. CZAS WDROŻENIA VOICEBOTA w dniach roboczych (nadal brak, z etapu 1).
+6. Tabela 4-kolumnowa w poradniku o chatbocie przewija się w poziomie wewnątrz
+   ramki na desktopie (736 px w kolumnie 694 px). Zostawiamy czy zwężam próg
+   dla tabel 4-kolumnowych z 46 rem na 42 rem?
+
+NIE COMMITUJĘ (praca sesji SEO, nie mojej): .seo-przeglad/** i tools/*.js.
+
+---
+
 # STATUS — SEO etap 1 + 2 (audyt 2026-08-18) — DO WDROŻENIA
 
 ZLECENIE PAWŁA: sesja wdrożeniowa audytu SEO. Etap 1 = domknięcie luki

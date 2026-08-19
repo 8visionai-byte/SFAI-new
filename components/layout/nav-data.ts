@@ -137,6 +137,18 @@ const NAV_USLUGI_KROTKIE: Record<string, DdKrotki> = {
     tytul: 'Tworzenie stron WWW',
     opis: 'Widoczne w Google i w AI',
   },
+  // Etap 3 audytu 2026-08-18. Tytuł: h1 bez słowa "branżowe"; podpis:
+  // kapsula "Paczka 1000 rekordów kosztuje 169 zł (...) w 20 do 30 minut".
+  'leady-b2b': {
+    tytul: 'Leady B2B',
+    opis: '1000 rekordów firm od 169 zł',
+  },
+  // Tytuł: h1 bez słowa "prywatny"; podpis: kapsula "agent (...), który uczy
+  // się zachowań jednej konkretnej osoby".
+  'asystent-prezesa': {
+    tytul: 'Asystent AI dla prezesa',
+    opis: 'Uczy się zachowań jednej osoby',
+  },
   // Tytuł: kapsula "Pozycjonowanie pod AI (GEO)"; podpis: reszta h1
   // "bądź cytowany w ChatGPT i Perplexity" (1:1).
   optymalizacja: {
@@ -151,6 +163,23 @@ const NAV_USLUGI_KROTKIE: Record<string, DdKrotki> = {
  * (nazwaRobocza) zostaje osobno, więc tytuł nie może go dublować.
  */
 const NAV_PRODUKTY_KROTKIE: Record<string, DdKrotki> = {
+  // Etap 3 audytu 2026-08-18 §8; tytuł i podpis = głowa i ogon coRobi.
+  'ksef-i-bank-rozliczenia': {
+    tytul: 'KSeF plus bank',
+    opis: 'Pokazuje, które faktury są już opłacone',
+  },
+  'kampanie-social-i-leady': {
+    tytul: 'Kampanie i social media',
+    opis: 'Jedno wrzucenie publikuje na wszystkich kanałach',
+  },
+  'drugi-mozg-glosowy': {
+    tytul: 'Drugi mózg',
+    opis: 'Głosowy agent z wiedzą o całej firmie',
+  },
+  'kalendarz-fizjoterapeuty': {
+    tytul: 'Kalendarz gabinetu',
+    opis: 'Wizyty zawodowe i prywatne w jednym miejscu',
+  },
   // coRobi "Skaner faktur, który przepisuje je za Ciebie i przygotowuje
   // eksport do KSeF" = głowa + ogon zdania.
   'skaner-faktur-ksef': {

@@ -167,6 +167,11 @@ export const INF_KATEGORIA: Record<string, InfDekor> = {
   // v5 (spec §2): emoji opieki 🛡️ -> 🛠️ (lista emoji dropdownu Usługi 1:1 ze spec).
   'opieka-ai': { c: '#39ff14', odcien: '#29ff77', emoji: '🛠️', ikona: 'tarcza-serce' },
   'audyt-ai': { c: '#ffa101', odcien: '#ffc120', emoji: '🔍', ikona: 'lupa-wykres' },
+  /* Etap 3 audytu 2026-08-18. Kolory dobrane tak, żeby w klastrze nie stały
+     obok siebie dwa te same: back-office idzie zielony, pomarańczowy, CYJAN,
+     zielony; budowa idzie pomarańczowy, fiolet, ZIELONY, cyjan, cyjan. */
+  'leady-b2b': { c: '#00f0ff', odcien: '#61edff', emoji: '📦', ikona: 'pudelko-3d' },
+  'asystent-prezesa': { c: '#39ff14', odcien: '#29ff77', emoji: '🧭', ikona: 'gwiazda-kompas' },
   rozwiazania: { c: '#e438ff', odcien: '#dc7aff', emoji: '🧩', ikona: 'puzzle' },
   'strony-www': { c: '#00f0ff', odcien: '#70b0ff', emoji: '🌐', ikona: 'glob-siatka' },
   optymalizacja: { c: '#00f0ff', odcien: '#61edff', emoji: '📈', ikona: 'wykres-strzalka' },
@@ -217,6 +222,12 @@ export const INF_PRODUKT: Record<string, InfIkonaDekor> = {
   'app-coachingowa-z-agentami': { c: '#dc7aff', odcien: '#ff00e5', ikona: 'gwiazda-kompas', emoji: '🗓️' },
   'apka-obecnosci-skladek': { c: '#39ff14', odcien: '#29ff77', ikona: 'kalendarz-check', emoji: '✅' },
   'centrum-dowodzenia': { c: '#00f0ff', odcien: '#61edff', ikona: 'radar', emoji: '🎛️' },
+  /* Etap 3 audytu 2026-08-18 §8. Kolory z palety kategorii, glify unikalne
+     w obrębie tej mapy, jak reszta wpisów. */
+  'ksef-i-bank-rozliczenia': { c: '#ffa101', odcien: '#ffc120', ikona: 'folder-kod', emoji: '🏦' },
+  'kampanie-social-i-leady': { c: '#dc7aff', odcien: '#ff00e5', ikona: 'wykres-strzalka', emoji: '📣' },
+  'drugi-mozg-glosowy': { c: '#39ff14', odcien: '#29ff77', ikona: 'mikrofon-fale', emoji: '🧠' },
+  'kalendarz-fizjoterapeuty': { c: '#00f0ff', odcien: '#61edff', ikona: 'kalendarz-check', emoji: '🩺' },
 };
 
 /**
@@ -282,6 +293,9 @@ export const INF_USLUGA_BADGE: Record<string, string> = {
   'dokumenty-faktury': 'OCR',
   'opieka-ai': 'OPIEKA',
   'audyt-ai': 'AUDYT',
+  /* Etap 3 audytu 2026-08-18, pochodne slugów jak reszta listy. */
+  'leady-b2b': 'LEADY',
+  'asystent-prezesa': 'ASYSTENT',
   rozwiazania: 'APKI',
   'strony-www': 'WWW',
   optymalizacja: 'SEO',

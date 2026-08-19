@@ -218,6 +218,41 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
       'co dostaje po audycie',
     ],
   },
+  /* Etap 3 audytu 2026-08-18 (§4 i §5): dwie uslugi, ktorych do 2026-08-19
+     w ogole nie bylo na stronie, wiec bot nie mial czym odpowiadac. */
+  {
+    id: 'uslugi-leady-b2b',
+    section: 'Uslugi',
+    title: 'Leady branzowe B2B: gotowa paczka rekordow firm',
+    summary:
+      'Mowisz, jaka branza i jaki obszar, a my zbieramy rekordy firm z publicznych wizytowek Google Maps i przekazujemy gotowa paczke. Ceny netto za paczke: 1000 rekordow 169 zl (0,169 zl za rekord), 5000 rekordow 699 zl (0,140 zl za rekord), 10000 rekordow 1390 zl (0,139 zl za rekord). Oplata jest jednorazowa, bez abonamentu za dostep. Tysiac rekordow zbieramy w 20 do 30 minut, a recznie jeden rekord zajmuje okolo 3 minut, czyli okolo 50 godzin na tysiac. Usluge robimy WYLACZNIE dla firm sprzedajacych innym firmom i mowimy to wprost.',
+    url: '/uslugi/leady-b2b',
+    intents: [
+      'leady B2B',
+      'baza firm',
+      'gotowa baza leadow',
+      'ile kosztuje 1000 leadow',
+      'pozyskiwanie leadow',
+      'rekordy firm z Google Maps',
+      'scrapowanie leadow',
+    ],
+  },
+  {
+    id: 'uslugi-asystent-prezesa',
+    section: 'Uslugi',
+    title: 'Prywatny asystent AI dla prezesa',
+    summary:
+      'Agent z wlasnym interfejsem, przypisany do jednej osoby: pisze maile, robi research, przygotowuje do rozmow, tworzy prezentacje i prowadzi badania, a do tego wchodzi w udostepnione pliki i dziala na nich. Uczy sie jak nowo przyjeta asystentka: na poczatku opowiadasz mu, czym sie zajmujesz, a jego wiedza rosnie z kazdym uzyciem. Rozliczenie jak przy voicebotach, trzy osobne pozycje: stworzenie 7999 zl netto, utrzymanie serwerow 199 zl netto miesiecznie, zuzycie wedlug cennika API modeli po stronie klienta. Budowa trwa 5 do 10 dni roboczych, a bota przekazujemy klientowi. To nie jest voicebot ani chatbot.',
+    url: '/uslugi/asystent-prezesa',
+    intents: [
+      'asystent AI dla prezesa',
+      'osobisty asystent AI',
+      'agent AI dla zarzadu',
+      'AI ktore pisze maile',
+      'AI do prezentacji',
+      'asystent AI ile kosztuje',
+    ],
+  },
   {
     id: 'uslugi-rozwiazania',
     section: 'Uslugi',
@@ -387,6 +422,67 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
       'agent zapisujacy zadania',
       'glosowe notatki z priorytetem',
       'zarzadzanie zadaniami glosem',
+    ],
+  },
+  /* Etap 3 audytu 2026-08-18 §8: narzedzia z portfolio, opisane bezosobowo
+     (instrukcja redakcyjna Pawla: nie „zbudowalismy dla siebie"). Cen tych
+     narzedzi audyt NIE PODAJE, wiec bot ma kierowac na diagnoze, nie zgadywac. */
+  {
+    id: 'produkt-ksef-i-bank',
+    section: 'Produkty i narzedzia',
+    title: 'Zestawienie KSeF z bankiem',
+    summary:
+      'Narzedzie pobiera dane z KSeF i z banku, a potem samo sprawdza, ktore faktury zostaly oplacone i czy dana wplata dotyczy naszej faktury. Interfejs jest celowo prosty: lista i stan, bez kolejnego systemu do nauczenia sie. To co innego niz skaner faktur, ktory odczytuje dokument i przygotowuje eksport do KSeF. Zakres i wycene ustalamy na bezplatnej diagnozie.',
+    url: '/produkty#ksef-i-bank-rozliczenia',
+    intents: [
+      'KSeF i bank',
+      'ktore faktury sa oplacone',
+      'uzgadnianie platnosci',
+      'rozliczenie faktur z wyciagiem',
+      'KSeF dla malej firmy',
+    ],
+  },
+  {
+    id: 'produkt-kampanie-social',
+    section: 'Produkty i narzedzia',
+    title: 'Kampanie, social media i leady w jednym miejscu',
+    summary:
+      'Narzedzie z portfolio, w ktorym jedno wrzucenie filmu publikuje go na wszystkich podpietych kanalach, materialy powstaja z prostego polecenia, a z tego samego miejsca tworzysz i wysylasz kampanie do leadow oraz zbierasz leady z Google. Zakres i wycene ustalamy na bezplatnej diagnozie, bo dwa kanaly to inna robota niz osiem.',
+    url: '/produkty#kampanie-social-i-leady',
+    intents: [
+      'publikowanie na wszystkich kanalach',
+      'automatyzacja social media',
+      'kampanie do leadow',
+      'generowanie materialow marketingowych',
+    ],
+  },
+  {
+    id: 'produkt-drugi-mozg',
+    section: 'Produkty i narzedzia',
+    title: 'Glosowy agent z wiedza o calej firmie',
+    summary:
+      'Narzedzie z portfolio: spersonalizowany agent glosowy, z ktorym rozmawiasz zamiast pisac do przypadkowego czatu. Kazda rozmowa jest analizowana i powieksza baze wiedzy, wiec nastepnym razem agent wie wiecej. Mozna w nim zlozyc wirtualny zespol, na przyklad od marketingu, researchu i copywritingu. To nie jest voicebot odbierajacy telefon od klientow ani prywatny asystent prezesa z wlasnym interfejsem. Zakres i wycene ustalamy na bezplatnej diagnozie.',
+    url: '/produkty#drugi-mozg-glosowy',
+    intents: [
+      'drugi mozg',
+      'agent glosowy dla siebie',
+      'baza wiedzy firmy',
+      'rozmowa glosem z AI',
+      'wirtualny zespol AI',
+    ],
+  },
+  {
+    id: 'produkt-kalendarz-gabinetu',
+    section: 'Produkty i narzedzia',
+    title: 'Kalendarz gabinetu: wizyty zawodowe i prywatne razem',
+    summary:
+      'Narzedzie z portfolio, ktore trzyma wizyty zawodowe i prywatne w jednym kalendarzu zamiast w dwoch aplikacjach. Da sie do niego podpiac rodzine: widzi dostepnosc, zeby planowac wspolne sprawy, ale bez wgladu w to, kto i po co przychodzi. Rozdzielenie tych widokow jest wbudowane. Zbudowane pierwotnie dla fizjoterapeuty, dziala tak samo w innym gabinecie jednoosobowym. Zakres i wycene ustalamy na bezplatnej diagnozie.',
+    url: '/produkty#kalendarz-fizjoterapeuty',
+    intents: [
+      'kalendarz dla fizjoterapeuty',
+      'kalendarz gabinetu',
+      'wizyty prywatne i zawodowe',
+      'grafik dla gabinetu',
     ],
   },
   {
