@@ -17,7 +17,7 @@ import type { Usluga } from './types';
  */
 export const stronyWww: Usluga = {
   slug: 'strony-www',
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
   h1: 'Tworzenie stron WWW widocznych w Google i w AI',
   kapsula:
     'Budujemy strony widoczne nie tylko w Google, ale i w ChatGPT, Claude, Gemini oraz Perplexity. Większość stron jest dla AI niewidoczna, bo treść doczytuje się skryptem, a boty tego nie czytają. My oddajemy całą treść od razu w czystym kodzie, układamy ją pod cytowanie i robimy to szybko.',
@@ -29,13 +29,75 @@ export const stronyWww: Usluga = {
   problem: {
     h2: 'Dlaczego Twojej strony nie widać w AI?',
     tresc:
-      'Coraz więcej ludzi nie wpisuje pytań w Google, tylko pyta ChatGPT albo Perplexity „kto zrobi mi X w mojej okolicy”. Jeśli Twoja strona jest dla tych botów pusta, nie istniejesz w ich odpowiedziach. A bywa pusta z prostego powodu: stoi na kreatorze, który całą treść dorysowuje skryptem już w przeglądarce. Bot wchodzi, widzi puste miejsce i idzie dalej. Twoja konkurencja, której stronę widać, dostaje to polecenie.',
+      'Twojej strony nie widać w AI najczęściej dlatego, że treść dorysowuje się skryptem dopiero w przeglądarce, a boty ChatGPT czy Perplexity skryptów nie wykonują i widzą pustą stronę. Skoro nie mają czego przeczytać, nie mają czego zacytować.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'akapit',
+        tekst: 'Coraz więcej ludzi nie wpisuje pytań w Google, tylko pyta ChatGPT albo Perplexity, kto zrobi im X w okolicy. Jeśli Twoja strona jest dla tych botów pusta, nie istniejesz w ich odpowiedziach.',
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Dlaczego mojej obecnej strony nie widać w AI?',
+        wariant: 'edge',
+        akapity: [
+          'Powody są zwykle trzy i wszystkie są techniczne. Strona internetowa AI, czyli strona pozycjonowana pod AI, różni się od typowej strony z kreatora dokładnie w tych trzech miejscach.',
+        ],
+        punkty: [
+          'Strona stoi na kreatorze, który całą treść dorysowuje skryptem dopiero w przeglądarce, więc bot widzi puste miejsce.',
+          'Brak struktury pod cytowanie: bez bezpośrednich odpowiedzi na pytania klientów, bez tabel i liczb, które AI cytuje najchętniej.',
+          'Boty AI bywają blokowane, więc nawet dobra treść nie ma wstępu.',
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Kończy się to zawsze tak samo: bot wchodzi, widzi pustkę i idzie dalej, a polecenie dostaje konkurencja, której stronę widać.',
+      },
+    ],
   },
 
   rozwiazanie: {
     h2: 'Jak budujemy stronę, którą cytuje AI?',
     tresc:
-      'Stawiamy stronę tak, że cała treść jest w kodzie przy pierwszym wejściu, a nie doczytywana skryptem. Każdą podstronę zaczynamy od krótkiej, bezpośredniej odpowiedzi na pytanie klienta, dokładamy tabele i konkretne liczby, bo to AI cytuje najchętniej. Dbamy o szybkość, bo wolna strona traci i ludzi, i miejsce w wynikach. Wpuszczamy boty AI tam, gdzie inni je blokują. Na koniec sprawdzamy, czy strona realnie pada w odpowiedziach silników.',
+      'Budujemy stronę tak, że cała treść jest w kodzie już przy pierwszym wejściu, a nie doczytywana skryptem. Każdą podstronę zaczynamy od krótkiej, bezpośredniej odpowiedzi na pytanie klienta, bo dokładnie taki format AI cytuje najchętniej.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'lista',
+        punkty: [
+          'Tworzenie stron z AI zaczynamy od techniki: cała treść stoi w kodzie od razu i jest czytelna dla botów, bez doczytywania skryptem.',
+          'Treść układamy jako bezpośrednie odpowiedzi na pytania, z tabelami i konkretnymi liczbami, bo to AI cytuje najchętniej.',
+          'Szybka strona internetowa to u nas wymóg, nie dodatek: robimy ją lekką, bo wolna strona traci i ludzi, i miejsce w wynikach.',
+          'Wpuszczamy boty AI świadomie tam, gdzie inni je blokują.',
+          'Po starcie sprawdzamy, czy strona realnie pada w odpowiedziach silników.',
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Czy strona będzie widoczna też w zwykłym Google?',
+        wariant: 'quiet',
+        akapity: [
+          'Tak. Robimy jedno i drugie naraz: klasyczne pozycjonowanie w Google i widoczność w odpowiedziach AI. Strona pod SEO/GEO to jeden projekt, nie dwa osobne.',
+          'Ta sama, dobrze ułożona treść pracuje na oba kanały. Nie wybierasz między Google a ChatGPT, masz oba.',
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Trzy strony, które już widać w Google i w AI',
+        wariant: 'top',
+        chip: 'STRONY WWW',
+        akapity: [
+          'To realne wyniki klientów z nazwami, nie obietnica terminu. Strona cytowana przez ChatGPT to u nas mierzony efekt, a dwie z tych realizacji to rynek niemiecki: działamy w Polsce i w Niemczech.',
+        ],
+        punkty: [
+          'Lenart Motors: cytowany przez ChatGPT po około 3 tygodniach od publikacji strony.',
+          'Fichtelgebirgshaus.de: top10 Google na frazy z umowy plus widoczność w GPT.',
+          'Trockenhaus: z niewidocznej do top3 Google.',
+        ],
+      },
+    ],
   },
 
   tabelaPorownawcza: {
@@ -76,7 +138,71 @@ export const stronyWww: Usluga = {
   ramaCeny: {
     h2: 'Ile kosztuje strona pod SEO i AI?',
     tresc:
-      'Cenę liczymy od zakresu i od tego, ile pytań ma „obsługiwać” strona. Inaczej wycenia się prostą wizytówkę, inaczej rozbudowany serwis z wieloma podstronami pod różne frazy. Do tego dochodzi opieka, bo widoczność w AI to nie jednorazowy strzał, tylko rytm aktualizacji. Dokładne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów.',
+      'Cenę liczymy od zakresu i od tego, ile pytań ma obsługiwać strona: inaczej wycenia się prostą wizytówkę, inaczej serwis z wieloma podstronami pod różne frazy. Dokładne widełki podajemy na bezpłatnej diagnozie (0 zł, około 30 minut), zanim cokolwiek zamówisz.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'naglowek',
+        tekst: 'Czy zbudujecie stronę szybko? Czasy budowy w dniach',
+      },
+      {
+        typ: 'tabela',
+        naglowki: [
+          'Zakres strony',
+          'Co obejmuje',
+          'Czas budowy',
+        ],
+        wiersze: [
+          [
+            'Prosty landing',
+            'Jedna strona z ofertą i formularzem',
+            '1 dzień',
+          ],
+          [
+            'Strona biznesowa',
+            'Kilka podstron pod różne pytania klientów',
+            '2-4 dni',
+          ],
+          [
+            'Strona zaawansowana',
+            'Sklep, wpięte narzędzia',
+            '5-10 dni',
+          ],
+        ],
+        wKarcie: true,
+        podpis: 'Czas budowy liczymy od przekazania kompletu materiałów, nie od podpisania umowy.',
+      },
+      {
+        typ: 'kafle',
+        kafle: [
+          {
+            wartosc: '1-4 dni robocze',
+            opis: 'tyle trwały wszystkie dotychczasowe realizacje stron',
+            zrodlo: 'czasy budowy z cennika',
+          },
+          {
+            wartosc: '0 zł',
+            opis: 'bezpłatna diagnoza, około 30 minut, z listą rzeczy do poprawy',
+            zrodlo: 'pierwszy krok przed wyceną',
+          },
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Dwie rundy poprawek w cenie i zero ukrytych kosztów',
+        wariant: 'edge',
+        chip: 'ZASADA',
+        akapity: [
+          'Do ceny budowy dochodzi opieka, bo widoczność w AI to nie jednorazowy strzał, tylko rytm aktualizacji. Zakres opieki ustalamy na tej samej bezpłatnej diagnozie.',
+        ],
+        punkty: [
+          'Dwie rundy poprawek w cenie wdrożenia: tydzień testów, poprawki, drugi tydzień testów, poprawki, odbiór.',
+          'Poprawki tego, co nie zadziałało po naszej stronie, robimy zawsze, także po odbiorze.',
+          'Nowe funkcje to rozbudowa, którą wyceniamy osobno.',
+        ],
+      },
+    ],
     // INPUT PAWŁA: realne "od X zł" za stronę + model opieki → ustawić minPrice (włączy offers w Service JSON-LD).
   },
 

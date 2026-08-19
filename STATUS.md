@@ -1,3 +1,68 @@
+# STATUS — RUNDA STRUKTURY TREŚCI (zespoły 4-osobowe) — DO WDROŻENIA
+
+ZLECENIE PAWŁA: ściany tekstu na strukturę, praca zespołowa (copywriter,
+walidator z konspektem firmy, badacz SEO od słów kluczowych, architekt
+struktury), design ogólny nietykalny, podstrony mogą rosnąć w stylu INFINITY,
+cel: „każda podstrona jakby była usługą, najlepszą, jaką można wygooglować".
+
+ODPOWIEDŹ NA PYTANIE PAWŁA (czy ściany są ok wg raportów): NIE. Raport
+konkurencji P8: mediana akapitu u cytowanej konkurencji 128-156 znaków, u nas
+257; „każdy akapit ma być zamkniętą myślą". Ale zasada audytu nr 5 zakazuje
+skracania. Więc: ta sama treść, więcej struktury, zero cięcia faktów.
+
+PROCES: 104 agentów w jednym przebiegu, zero padniętych.
+1. Badacz SEO: mapa słów z REALNYCH danych (Search Console: 68 zapytań, w tym
+   33 z zerowym CTR = 580 straconych wyświetleń; raport konkurencji; audyt).
+2. Konspekt faktów (biblia walidatora): cennik, 11 klientów z liczbami,
+   tone of voice, 10 twardych zakazów, inwarianty kodu.
+3. 18 zespołów (12 usług + 3 podstrony voicebotów + 3 poradniki cenowe):
+   architekt struktury -> copywriter -> [walidator SEO || adwersaryjny
+   walidator faktów] -> poprawki -> ponowna kontrola faktów.
+4. Integrator deterministyczny (własna mechaniczna walidacja: kształty bloków,
+   zakazy, progi słów, frazy-kontrakty z kodem hero) + emiter TS.
+
+SILNIK (nowe, jeden render w całym serwisie):
+- Usluga.problem/rozwiazanie/ramaCeny dostały opcjonalne bloki?: Blok[]
+  (słownik poradników: sekcja/kafle/kroki/tabela/lista), renderowane przez
+  wyodrębnione <Bloki> z PostBody, w tonie kategorii, nagłówki H3 pod H2
+  sekcji (hierarchia bez przeskoków, mierzona: 0 przeskoków na 4 próbkach).
+- PostBody bez zmiany DOM (poradniki/blog/materiały renderują się jak dotąd).
+
+WYNIK ZMIERZONY (lokalnie vs produkcja, GPTBot bez JS, 18 tras):
+- ściany (% tekstu w akapitach >400 zn): chatboty 36->12, voiceboty 29->7,
+  opieka 58->23, audyt 45->8, asystent 49->8, poradnik chatbotowy 61->22,
+  automatyzacje/leady/strony-www/windykacja/potwierdzanie -> 0.
+- mediana akapitu: z 204-326 do 155-209 na większości tras.
+- SŁOWA WSZĘDZIE W GÓRĘ (zakaz skracania dotrzymany): np. chatboty 1204->1763,
+  strony-www 878->1287, poradnik automatyzacji 1666->2094.
+- każda strona usługi ma teraz 2 tabele (progi cen z podpisem-zasadą liczenia
+  czasu + tabela porównawcza) i nagłówki-pytania z realnych zapytań.
+- em-dash: 0. Kontrola integracji: 18/18 stron ma KAŻDY string zespołów
+  w wyrenderowanym HTML. Kolory kart: nowe bloki = kolor kategorii 1:1,
+  karty w innych kolorach są identyczne z produkcją (kroki, linki krzyżowe).
+- design nietkniętych sekcji: h1/kafle hero/FAQ/tabela porównawcza computed
+  1:1 z produkcją na 1440 i 390 px, zero poziomego przewijania, zero błędów
+  konsoli. Build/tsc/lint exit 0 (4 ostrzeżenia sprzed rundy).
+
+ZNALEZISKA KONTROLI DOMKNIĘTE PRZED COMMITEM: 2 ubytki faktów na chatbotach
+(zdolność Agenta „umawia i zapisuje w kalendarzu", „scenariusze głosowe" jako
+trzeci powód droższej opieki voicebota) — przywrócone słowami z pliku
+źródłowego. 25 drobnych znalezisk kosmetycznych odnotowanych, nie blokują.
+
+ŚWIADOME DECYZJE:
+- kapsuły hero i leady poradników (bloki krótkiej odpowiedzi 450-790 zn)
+  ZOSTAJĄ długie: audyt każe nieść 4 wielkości w jednym akapicie do wycięcia.
+- home, FAQ, tabele porównawcze, kapsuły, meta: NIETKNIĘTE (inwariant rundy).
+- daty aktualizacji zbite na 2026-08-19 w 18 rejestrach (mapa witryny mówi
+  prawdę o dzisiejszej przebudowie).
+
+CZEKA NA PAWŁA (bez zmian z poprzednich rund): czas wdrożenia voicebota
+w dniach; netto przy 169/699/1390/7999/199; ceny i dojrzałość narzędzi z §8;
+przypisanie 6 anonimowych case do nazwanych klientów; decyzja o tabeli
+4-kolumnowej w poradniku (przewija się wewnątrz ramki na desktopie).
+
+---
+
 # STATUS — SEO etap 3 (audyt 2026-08-18) — DO WDROŻENIA
 
 ZLECENIE: etap 3 audytu, czyli nowe adresy pod treści, których na stronie

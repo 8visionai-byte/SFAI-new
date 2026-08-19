@@ -60,13 +60,66 @@ export const windykacja: PodstronaUslugi = {
   problem: {
     h2: 'Ile telefonów w sprawie płatności zostaje bez odbioru?',
     tresc:
-      'Klient oddzwania po przypomnieniu o zapłacie wieczorem albo w środku Twojego spotkania. Nikt nie odbiera, więc sprawa stoi kolejny tydzień, a pieniądze dalej są u kogoś innego. Część tych telefonów to w kółko to samo: za co jest faktura, na jaki numer konta zapłacić, czy da się rozłożyć na raty.',
+      'Telefony w sprawie zaległych płatności przychodzą wtedy, gdy nie możesz ich odebrać: wieczorem, w weekend, w środku spotkania. Nieodebrana rozmowa to sprawa, która stoi kolejny tydzień, a pieniądze dalej są u kogoś innego.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'akapit',
+        tekst: 'Klient oddzwania po przypomnieniu o zapłacie poza Twoimi godzinami pracy. Nikt nie odbiera, więc ustalenia nie zapadają, a windykacja przesuwa się o kolejne dni.',
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'O co pytają dzwoniący w sprawie płatności?',
+        akapity: [
+          'Dzwoniący pytają w kółko o to samo. Duża część tych rozmów nie potrzebuje człowieka, tylko konkretnej odpowiedzi na jedno z trzech pytań.',
+        ],
+        punkty: [
+          'Za co jest ta faktura',
+          'Na jaki numer konta zapłacić',
+          'Czy da się rozłożyć płatność na raty',
+        ],
+        wariant: 'quiet',
+      },
+    ],
   },
 
   rozwiazanie: {
     h2: 'Co robi voicebot, gdy klient oddzwania w sprawie faktury?',
     tresc:
-      'Voicebot odbiera każde połączenie, także po godzinach, i na starcie mówi, że jest asystentem AI. Pyta, czego dotyczy sprawa, i spisuje to, co usłyszy: deklarowany termin zapłaty, prośbę o raty, potwierdzenie przelewu. Odpowiada z Twojego scenariusza, a sprawy sporne przekazuje osobie prowadzącej z notatką. Voicebot nie dzwoni sam do dłużników: obsługuje wyłącznie połączenia przychodzące, a przypomnienia o płatności wychodzą tak jak dziś, tekstem.',
+      'Voicebot do windykacji odbiera każde połączenie przychodzące, także po godzinach, i na starcie mówi, że jest asystentem AI. Odpowiada z Twojego scenariusza, a sprawy sporne przekazuje osobie prowadzącej z notatką.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'sekcja',
+        naglowek: 'Co voicebot spisuje z rozmowy o płatności?',
+        akapity: [
+          'Voicebot spisuje to, co klient deklaruje w rozmowie. Gdy odbiera telefon w sprawie płatności, pyta, czego dotyczy sprawa, i notuje odpowiedzi. Po rozmowie masz gotowe podsumowanie, najczęściej z jedną z trzech informacji:',
+        ],
+        punkty: [
+          'deklarowany termin zapłaty',
+          'prośbę o rozłożenie płatności na raty',
+          'potwierdzenie wykonanego przelewu',
+        ],
+        wariant: 'top',
+        chip: 'VOICEBOT',
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Bot telefoniczny w windykacji mówi tylko to, co masz w scenariuszu. Sprawy drażliwe i sporne od razu przekazuje osobie, która je prowadzi, razem z notatką z rozmowy. Ty oddzwaniasz przygotowany.',
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Voicebot nie dzwoni sam do dłużników',
+        akapity: [
+          'Bot obsługuje wyłącznie połączenia przychodzące. Działa jak infolinia windykacyjna 24/7: czeka na telefon i odbiera go o każdej porze, ale nie robimy botów, które same wydzwaniają do ludzi.',
+          'Przypomnienia o płatności wychodzą tak jak dziś, tekstem. Gdy klient oddzwania, telefon odbiera bot i spisuje sprawę.',
+        ],
+        wariant: 'edge',
+        chip: 'ZASADA',
+      },
+    ],
   },
 
   /* v20: komórki skrócone do długości rodzica (cecha ~12 zn, zNami ~30 zn),
@@ -145,7 +198,42 @@ export const windykacja: PodstronaUslugi = {
        utrzymanie przestawione z 99-599 na model voicebotowy, każda kwota
        oznaczona jako netto. */
     tresc:
-      'Voicebot ma trzy osobne pozycje. Stworzenie bota: 2500 zł netto jednorazowo za wersję prostą, czyli bota odbierającego telefon 24/7 po polsku, z wdrożeniem i konfiguracją scenariuszy, albo 5000 do 9000 zł netto za wersję z integracjami i rozbudowanymi scenariuszami. Utrzymanie: 299 do 1500 zł netto miesięcznie, gdy infrastruktura zostaje u nas, albo 0 zł miesięcznie, gdy przekazujemy ją Tobie, a poprawki zamawiasz wtedy po 350 zł netto za godzinę. Zużycie: tokeny i minuty rozmów według realnego użycia, po Twojej stronie. Czas wdrożenia liczymy od przekazania kompletu materiałów, a w cenie są dwie rundy poprawek.',
+      'Voicebot do windykacji kosztuje od 2500 zł netto jednorazowo za pakiet startowy, a pełny koszt dzieli się na trzy osobne pozycje: stworzenie, utrzymanie i zużycie.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'tabela',
+        naglowki: [
+          'Pozycja',
+          'Ile płacisz',
+          'Kiedy',
+        ],
+        wiersze: [
+          [
+            'Stworzenie bota',
+            '2500 zł netto (pakiet startowy: prosty bot odbierający 24/7 po polsku, z wdrożeniem i konfiguracją scenariuszy w cenie) albo 5000-9000 zł netto z integracjami i rozbudowanymi scenariuszami',
+            'jednorazowo',
+          ],
+          [
+            'Utrzymanie',
+            '299-1500 zł netto/mies. przy infrastrukturze u nas albo 0 zł/mies. po przekazaniu jej Tobie (poprawki wtedy 350 zł netto za godzinę)',
+            'co miesiąc albo wcale',
+          ],
+          [
+            'Zużycie',
+            'tokeny i minuty rozmów według realnego użycia',
+            'po Twojej stronie, wg użycia',
+          ],
+        ],
+        wKarcie: true,
+        podpis: 'Trzy pozycje kosztu voicebota do windykacji. Wszystkie kwoty netto.',
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy. W cenie są dwie rundy poprawek: tydzień testów, poprawki, drugi tydzień testów, poprawki i odbiór.',
+      },
+    ],
     minPrice: 2500,
     /* Link powrotny do usługi macierzystej (wymóg podstrony: każda wraca do
        rodzica realnym odnośnikiem). Pole `linkPoradnik` to jedyny slot na

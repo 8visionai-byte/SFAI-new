@@ -79,13 +79,83 @@ export const odbieranieTelefonow: PodstronaUslugi = {
   problem: {
     h2: 'Ile zapytań tracisz, bo nikt nie odebrał telefonu?',
     tresc:
-      'Nie odbierasz, bo jesteś u klienta, za kierownicą albo w gabinecie z pacjentem. Dzwoniący nie zostawia wiadomości, tylko wybiera następny numer z listy. Nieodebrany telefon nie zostawia śladu w CRM ani w skrzynce, więc nawet tego nie widzisz. Połowa tych rozmów to w kółko to samo: czy jest wolny termin, ile to kosztuje, do której pracujecie.',
+      'Nieodebrany telefon rzadko wraca: dzwoniący nie zostawia wiadomości, tylko wybiera następny numer z listy. Nie widzisz nawet skali strat, bo nieodebrane połączenie nie zostawia śladu w CRM ani w skrzynce.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'akapit',
+        tekst: 'Nie odbierasz, bo jesteś u klienta, za kierownicą albo w gabinecie z pacjentem. Po godzinach pracy telefonu nie odbiera nikt, a dzwoniący nie czeka do rana. Wieczory i weekendy to zapytania, których nawet nie zobaczysz.',
+      },
+      {
+        typ: 'lista',
+        punkty: [
+          'Dzwoniący wybiera kolejny numer z listy, zamiast czekać, aż oddzwonisz.',
+          'W CRM i w skrzynce nie zostaje żaden ślad, więc nie policzysz, ile spraw przepadło.',
+          'Jeśli oddzwaniasz, zaczynasz rozmowę od zera, bez wiedzy, o co chodziło.',
+          'Telefon w trakcie spotkania przerywa rozmowę z klientem, który siedzi przed Tobą.',
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Połowa tych rozmów to w kółko te same pytania',
+        akapity: [
+          'Dzwoniący pytają zwykle o to samo: czy jest wolny termin, ile to kosztuje i do której pracujecie. Odpowiadasz na te pytania po raz kolejny tego samego dnia.',
+          'W gabinecie wygląda to tak samo: rejestracja pacjentów, wolne terminy i godziny przyjęć wracają w co drugiej rozmowie. To odpowiedzi, które się nie zmieniają.',
+        ],
+        wariant: 'quiet',
+      },
+    ],
   },
 
   rozwiazanie: {
     h2: 'Co się dzieje, gdy telefon odbiera bot?',
     tresc:
-      'Bot odbiera o każdej porze i na starcie mówi, że jest asystentem AI. Pyta, w czym może pomóc, i odpowiada na to, co wpiszesz do scenariusza: godziny otwarcia, dojazd, zakres usług, orientacyjne ceny. Sprawy spoza scenariusza spisuje i przekazuje dalej. Po każdej rozmowie dostajesz podsumowanie: kto dzwonił, o co pytał i co bot ustalił. Bot nie dzwoni sam do nikogo: obsługuje wyłącznie połączenia przychodzące.',
+      'Bot telefoniczny odbiera każde połączenie przychodzące 24/7, na starcie mówi, że jest asystentem AI, i odpowiada na powtarzalne pytania z Twojego scenariusza. To obsługa klienta 24/7 przez voicebota: bot odbiera, a Ty po każdej rozmowie dostajesz podsumowanie.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'kroki',
+        wariant: 'os',
+        kroki: [
+          {
+            tytul: 'Bot odbiera o każdej porze',
+            opis: 'Na starcie rozmowy mówi, że jest asystentem AI. Tego wymaga AI Act i tak ma być.',
+          },
+          {
+            tytul: 'Odpowiada ze scenariusza',
+            opis: 'Mówi to, co do niego wpiszesz: godziny otwarcia, dojazd, zakres usług, orientacyjne ceny.',
+          },
+          {
+            tytul: 'Sprawę nietypową spisuje',
+            opis: 'Pytanie spoza scenariusza przekazuje dalej razem z notatką z rozmowy.',
+          },
+          {
+            tytul: 'Ty dostajesz podsumowanie',
+            opis: 'Po każdej rozmowie widzisz, kto dzwonił, o co pytał i co bot ustalił.',
+          },
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Granice ustawiasz Ty: bot mówi tylko to, co jest w scenariuszu',
+        akapity: [
+          'Bot nie zmyśla odpowiedzi. Gdy pytanie wykracza poza scenariusz, spisuje sprawę i przekazuje ją człowiekowi. Takie AI do odbierania telefonów mówi tylko to, co zatwierdzisz, i nic ponad to.',
+          'Dzięki notatce oddzwaniasz przygotowany, zamiast zaczynać od pytania, w czym mogę pomóc. Bot zdejmuje z Ciebie pytania powtarzalne, a trudne sprawy zostawia Tobie.',
+        ],
+        wariant: 'top',
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Bot nie dzwoni sam do nikogo',
+        akapity: [
+          'Bot obsługuje wyłącznie połączenia przychodzące. Sprawę do oddzwonienia zapisuje i powiadamia Cię, a kontakt zaczyna człowiek. Nie budujemy botów do obdzwaniania bazy.',
+        ],
+        wariant: 'quiet',
+        chip: 'ZASADA',
+      },
+    ],
   },
 
   /* v20 — DWIE poprawki, obie zmierzone (raporty/pomiary-v20.md):
@@ -165,7 +235,70 @@ export const odbieranieTelefonow: PodstronaUslugi = {
        utrzymanie przestawione z 99-599 na model voicebotowy, każda kwota
        oznaczona jako netto. */
     tresc:
-      'Voicebot ma trzy osobne pozycje. Stworzenie bota: 2500 zł netto jednorazowo za wersję prostą, czyli bota odbierającego telefon 24/7 po polsku, z konfiguracją scenariuszy i podłączeniem numeru, albo 5000 do 9000 zł netto za wersję z integracjami i rozbudowanymi scenariuszami. Utrzymanie: 299 do 1500 zł netto miesięcznie, gdy infrastruktura zostaje u nas, albo 0 zł miesięcznie, gdy przekazujemy ją Tobie, a poprawki zamawiasz wtedy po 350 zł netto za godzinę. Zużycie: tokeny i minuty rozmów według realnego użycia, po Twojej stronie. Czas wdrożenia liczymy od przekazania kompletu materiałów, a w cenie są dwie rundy poprawek.',
+      'Stworzenie bota to jednorazowo 2500 zł netto za wersję prostą, czyli pakiet startowy: bot odbiera telefon 24/7 po polsku, ma skonfigurowane scenariusze i podłączony numer. Wersja z integracjami i rozbudowanymi scenariuszami to 5000 do 9000 zł netto. Płacisz trzy osobne pozycje: stworzenie, utrzymanie i zużycie, nie jeden abonament.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'kafle',
+        kafle: [
+          {
+            wartosc: '2500 zł netto',
+            opis: 'stworzenie bota, pakiet startowy',
+          },
+          {
+            wartosc: '0 zł/mies.',
+            opis: 'utrzymanie po przekazaniu infrastruktury Tobie',
+          },
+          {
+            wartosc: '350 zł netto/h',
+            opis: 'poprawki po przekazaniu infrastruktury',
+          },
+        ],
+      },
+      {
+        typ: 'tabela',
+        naglowki: [
+          'Pozycja',
+          'Ile płacisz',
+          'Charakter',
+        ],
+        wiersze: [
+          [
+            'Stworzenie',
+            '2500 zł netto za wersję prostą albo 5000-9000 zł netto z integracjami',
+            'jednorazowo',
+          ],
+          [
+            'Utrzymanie',
+            '299-1500 zł netto/mies. u nas albo 0 zł/mies. po przekazaniu infrastruktury (poprawki 350 zł netto/h)',
+            'miesięcznie, dwa modele do wyboru',
+          ],
+          [
+            'Zużycie',
+            'tokeny i minuty rozmów według realnego użycia',
+            'po Twojej stronie',
+          ],
+        ],
+        wKarcie: true,
+        podpis: 'Trzy osobne pozycje kosztu bota telefonicznego, wszystkie kwoty netto.',
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Dwie rundy poprawek w cenie, czas liczony od kompletu materiałów',
+        akapity: [
+          'Mówimy wprost, co jest w cenie, zanim cokolwiek zamówisz. Te zasady dotyczą każdego bota telefonicznego, którego budujemy.',
+        ],
+        punkty: [
+          'W cenie wdrożenia są dwie rundy poprawek: tydzień testów, poprawki, drugi tydzień testów, poprawki i odbiór.',
+          'Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy.',
+          'Poprawki tego, co nie zadziałało po naszej stronie, robimy zawsze, także po odbiorze.',
+          'Termin dla Twojego scenariusza ustalamy na bezpłatnej diagnozie: 0 zł, około 30 minut.',
+        ],
+        wariant: 'edge',
+        chip: 'ZASADA',
+      },
+    ],
     minPrice: 2500,
     /* Link powrotny do usługi macierzystej (wymóg podstrony: każda wraca do
        rodzica realnym odnośnikiem). Pole `linkPoradnik` to jedyny slot na link

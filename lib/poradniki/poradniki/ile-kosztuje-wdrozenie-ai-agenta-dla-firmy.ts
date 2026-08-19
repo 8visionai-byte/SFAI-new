@@ -83,82 +83,148 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
      „netto" (oraz dokłada jeden akapit z zasadą liczenia czasu). Akapity bez
      kwot zostają słowo w słowo, żaden blok nie został usunięty. */
   tresc: [
+    /* Runda struktury 2026-08-19 (raport P8: mediana akapitu ~150 zn, strona miała
+       do 61% tekstu w akapitach >400 zn): treść przełożona na bloki, fakty 1:1,
+       istniejące tabele/kafle/kroki zachowane. Poprzednia wersja: git blame. */
     {
       typ: 'akapit',
-      tekst:
-        'Wdrożenie agenta AI dla firmy zaczyna się od 1790 zł netto za agenta do jednego zadania, gotowego w 1-2 dni robocze, a agent z integracjami to koszt od 2 500 zł netto. Do tego dochodzi opieka od 99 zł netto miesięcznie. Agent AI to nie chatbot. Chatbot odpowiada, agent działa. Dlatego nie kosztuje tyle co chatbot. Agent łączy się z kalendarzem, CRM i systemami i sam wykonuje zadania: umawia, pisze do bazy, prowadzi proces od początku do końca. Cena bierze się z tego, ile pracy realnie wykonuje i do ilu systemów się podłącza. My liczymy ją od wartości: ile godzin i leadów to odzyska dla firmy. Konkretne widełki dla Twojego przypadku podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
+      tekst: 'Wdrożenie AI agenta dla firmy zaczyna się od 1790 zł netto za agenta do jednego zadania, gotowego w 1-2 dni robocze. Agent z integracjami to koszt od 2500 zł netto. Opieka to 99-599 zł netto miesięcznie, gdy infrastruktura zostaje u nas, albo 0 zł, jeśli przekażemy Ci infrastrukturę.',
     },
-
+    {
+      typ: 'kafle',
+      kafle: [
+        {
+          wartosc: 'od 1790 zł netto',
+          opis: 'agent do jednego zadania, gotowy w 1-2 dni robocze',
+          zrodlo: 'widełki 2026 niżej na tej stronie',
+        },
+        {
+          wartosc: 'od 2500 zł netto',
+          opis: 'agent z integracją (kalendarz, CRM, poczta)',
+          zrodlo: 'widełki 2026 niżej na tej stronie',
+        },
+        {
+          wartosc: '1490 zł netto',
+          opis: 'audyt przed wdrożeniem, odliczany od ceny wdrożenia',
+          zrodlo: 'widełki 2026 niżej na tej stronie',
+        },
+        {
+          wartosc: '99-599 zł netto/mies.',
+          opis: 'opieka, gdy projekt zostaje u nas; 0 zł po przekazaniu infrastruktury',
+          zrodlo: 'widełki 2026 niżej na tej stronie',
+        },
+      ],
+    },
+    {
+      typ: 'akapit',
+      tekst: 'Agent AI to nie chatbot. Chatbot odpowiada, agent działa. Agent łączy się z kalendarzem, CRM i systemami i sam wykonuje zadania: umawia, pisze do bazy, prowadzi proces od początku do końca. Dlatego nie kosztuje tyle co chatbot.',
+    },
+    {
+      typ: 'akapit',
+      tekst: 'Cena bierze się z tego, ile pracy agent realnie wykonuje i do ilu systemów się podłącza. My liczymy ją od wartości: ile godzin i leadów to odzyska dla firmy. Konkretne widełki dla Twojego przypadku podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
+    },
     {
       typ: 'sekcja',
       naglowek: 'Ile kosztuje agent AI: widełki 2026',
+      chip: 'CENNIK',
+      wariant: 'top',
       akapity: [
-        'To nasze realne widełki startowe, te same co w cennikach naszych usług. Dolna granica to agent do jednego wąskiego zadania, górna rośnie z liczbą integracji i scenariuszy. Audyt przed wdrożeniem odliczamy od ceny wdrożenia, więc przy współpracy w praktyce nic nie kosztuje.',
+        'To nasze realne widełki startowe, te same co w cennikach naszych usług. Dolna granica to agent do jednego wąskiego zadania, a cena wdrożenia agenta AI rośnie z liczbą integracji i scenariuszy.',
+        'Audyt przed wdrożeniem odliczamy od ceny wdrożenia, więc przy współpracy w praktyce nic nie kosztuje.',
       ],
     },
     {
       typ: 'tabela',
       wKarcie: true,
-      /* v22 §1.4: podpis = TEN SAM string, co nagłówek H2 sekcji nad tabelą
-         (skopiowany znak w znak z pola `naglowek` powyżej). Zero nowych słów,
-         a <caption> daje botowi i czytnikowi ekranu zdanie mówiące, czego
-         tabela dotyczy, i nazywa region ze scrollem na mobile. */
       podpis: 'Ile kosztuje agent AI: widełki 2026',
-      /* 2026-08-19: kolumna „Cena" nazwana wprost „Cena netto" (audyt: każda
-         nasza kwota jest netto, a serwis mówił to tylko w jednym miejscu),
-         plus kolumna z czasem tam, gdzie audyt podaje czas w liczbach.
-         Struktura bloku bez zmian: dalej `tabela` w karcie z podpisem, render
-         bez ani jednej nowej reguły CSS (TabelaRender liczy min-w z kolumn).
-         „Wycena indywidualna" przy pozycjach, dla których audyt NIE podaje
-         czasu: zero zgadywania terminów. */
-      naglowki: ['Zakres', 'Cena netto', 'Czas'],
+      naglowki: [
+        'Zakres',
+        'Cena netto',
+        'Czas',
+      ],
       wiersze: [
-        ['Agent do jednego zadania (np. odpowiadanie na powtarzalne pytania)', 'od 1790 zł', '1-2 dni robocze'],
-        ['Agent z integracją (kalendarz, CRM, poczta)', 'od 2 500 zł', 'ustalany przy wycenie'],
-        ['Audyt przed wdrożeniem (odliczany od wdrożenia)', '1 490 zł', '5 dni roboczych'],
-        ['Opieka miesięczna', '99 do 599 zł', 'stała, od dnia startu'],
+        [
+          'Agent do jednego zadania (np. odpowiadanie na powtarzalne pytania)',
+          'od 1790 zł',
+          '1-2 dni robocze',
+        ],
+        [
+          'Agent z integracją (kalendarz, CRM, poczta)',
+          'od 2500 zł',
+          'ustalany przy wycenie',
+        ],
+        [
+          'Audyt przed wdrożeniem (odliczany od wdrożenia)',
+          '1490 zł',
+          '5 dni roboczych',
+        ],
+        [
+          'Opieka miesięczna',
+          '99 do 599 zł',
+          'od startu, albo 0 zł po przekazaniu infrastruktury',
+        ],
       ],
     },
-    /* 2026-08-19 (audyt §1, „Zasady liczenia czasu"): czas z tabeli wymaga
-       podania punktu, od którego biegnie. Bez tego zdania liczba w kolumnie
-       „Czas" byłaby półprawdą. Zero nowych kwot. */
     {
-      typ: 'akapit',
-      tekst:
-        'Czas z tabeli liczymy od przekazania kompletu materiałów, czyli bazy wiedzy, treści i dostępów, a nie od podpisania umowy. Dwie rundy poprawek są w cenie wdrożenia: testujesz tydzień i zapisujesz uwagi, wdrażamy je, testujesz drugi tydzień, wdrażamy kolejne, potem odbiór.',
+      typ: 'sekcja',
+      naglowek: 'Ile trwa wdrożenie agenta AI?',
+      chip: 'ZASADA',
+      wariant: 'quiet',
+      akapity: [
+        'Agent do jednego zadania jest gotowy w 1-2 dni robocze. Czas z tabeli liczymy od przekazania kompletu materiałów, czyli bazy wiedzy, treści i dostępów, a nie od podpisania umowy.',
+        'Dwie rundy poprawek są w cenie wdrożenia: testujesz tydzień i zapisujesz uwagi, wdrażamy je, testujesz drugi tydzień, wdrażamy kolejne, potem odbiór.',
+        'Po starcie wybierasz jedną z dwóch dróg: infrastruktura zostaje u nas i płacisz opiekę 99-599 zł netto miesięcznie, albo przekazujemy Ci infrastrukturę i abonament wynosi 0 zł.',
+      ],
     },
-
     {
       typ: 'sekcja',
       naglowek: 'Czym AI agent różni się od chatbota i czemu kosztuje więcej?',
       wariant: 'edge',
       akapity: [
-        'Najprościej: chatbot mówi, agent robi. Chatbot odpowie na pytanie o ofertę. Agent odbierze zapytanie, sprawdzi dostępność w kalendarzu, umówi spotkanie, zapisze klienta do CRM i wyśle potwierdzenie, bez udziału człowieka przy każdym kroku. Im więcej akcji i im więcej systemów w grze, tym więcej pracy przy wdrożeniu, więc wyższy koszt. To nie cena za rozmowę. To cena za pracę, którą agent wykonuje zamiast Twojego zespołu.',
+        'Najprościej: chatbot mówi, agent robi. Chatbot odpowie na pytanie o ofertę.',
+        'Agent odbierze zapytanie, sprawdzi dostępność w kalendarzu, umówi spotkanie, zapisze klienta do CRM i wyśle potwierdzenie, bez udziału człowieka przy każdym kroku.',
+        'Im więcej akcji i im więcej systemów w grze, tym więcej pracy przy wdrożeniu, więc wyższy koszt. To nie cena za rozmowę. To cena za pracę, którą agent wykonuje zamiast Twojego zespołu.',
       ],
     },
     {
       typ: 'tabela',
       wKarcie: true,
-      /* Podpis = nagłówek H2 sekcji nad tabelą, znak w znak. */
       podpis: 'Czym AI agent różni się od chatbota i czemu kosztuje więcej?',
-      naglowki: ['Cecha', 'Chatbot', 'AI agent'],
+      naglowki: [
+        'Cecha',
+        'Chatbot',
+        'AI agent',
+      ],
       wiersze: [
-        ['Co robi', 'Odpowiada na pytania', 'Wykonuje zadania od początku do końca'],
-        ['Integracje', 'Zwykle sama strona lub czat', 'Kalendarz, CRM, systemy, poczta'],
-        ['Decyzje', 'Podaje informację', 'Podejmuje akcje w ustalonych granicach'],
-        ['Koszt', 'Niższy próg', 'Wyższy, bo robi pracę człowieka'],
+        [
+          'Co robi',
+          'Odpowiada na pytania',
+          'Wykonuje zadania od początku do końca',
+        ],
+        [
+          'Integracje',
+          'Zwykle sama strona lub czat',
+          'Kalendarz, CRM, systemy, poczta',
+        ],
+        [
+          'Decyzje',
+          'Podaje informację',
+          'Podejmuje akcje w ustalonych granicach',
+        ],
+        [
+          'Koszt',
+          'Niższy próg',
+          'Wyższy, bo robi pracę człowieka',
+        ],
       ],
     },
-
     {
-      /* SEO 2026-08-17 (brief pkt 4): H2 w brzmieniu z briefu zamiast dawnego
-         „Od czego zależy koszt AI agenta?" (jedna sekcja, zero duplikatu H2);
-         lista rozszerzona o scenariusze, wolumen rozmów i RODO.
-         v22: nagłówek, akapit i lista tej sekcji siedzą w jednej karcie. */
       typ: 'sekcja',
       naglowek: 'Od czego zależy cena agenta AI',
+      wariant: 'top',
       akapity: [
-        'Koszt agenta nie bierze się z liczby ekranów. Bierze się z zakresu pracy i głębokości integracji. Prosty agent do jednego zadania to inny budżet niż agent, który prowadzi cały proces obsługi klienta. Oto co realnie decyduje o cenie.',
+        'Koszt AI agenta nie bierze się z liczby ekranów. Bierze się z zakresu pracy i głębokości integracji.',
+        'Prosty agent do jednego zadania to inny budżet niż agent, który prowadzi cały proces obsługi klienta. Oto co realnie decyduje o cenie.',
       ],
       punkty: [
         'Liczba integracji: każdy system (CRM, kalendarz, poczta, baza) to osobne połączenie i osobna robota.',
@@ -169,39 +235,76 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
         'Jakość danych i procesów: uporządkowane skracają wdrożenie, bałagan je wydłuża i podnosi cenę.',
       ],
     },
-
+    {
+      typ: 'sekcja',
+      naglowek: 'Ile kosztuje stworzenie asystenta AI dla firmy i kto to robi w Polsce?',
+      chip: 'Asystent prezesa',
+      wariant: 'edge',
+      akapity: [
+        'Osobisty asystent AI dla jednej osoby, na przykład prezesa, to odmiana agenta. Stworzenie kosztuje 7999 zł netto, a budowa zajmuje 5-10 dni roboczych.',
+        'Po wdrożeniu bota przekazujemy klientowi. Zostają serwery za 199 zł netto miesięcznie i zużycie rozliczane według cennika API modeli, po stronie klienta. Asystent uczy się jednej osoby.',
+        'Robimy to my, SimpleFast.ai: wdrożenia AI dla polskich małych i średnich firm. Działamy na rynku polskim i niemieckim.',
+      ],
+    },
+    {
+      typ: 'kafle',
+      kafle: [
+        {
+          wartosc: '7999 zł netto',
+          opis: 'stworzenie asystenta prezesa',
+          zrodlo: 'cennik usługi Asystent prezesa',
+        },
+        {
+          wartosc: '5-10 dni roboczych',
+          opis: 'budowa asystenta',
+          zrodlo: 'cennik usługi Asystent prezesa',
+        },
+        {
+          wartosc: '199 zł netto/mies.',
+          opis: 'serwery po przekazaniu bota',
+          zrodlo: 'cennik usługi Asystent prezesa',
+        },
+      ],
+    },
     {
       typ: 'sekcja',
       naglowek: 'Jak policzyć zwrot z AI agenta?',
       wariant: 'quiet',
       akapity: [
-        'Zwrot z agenta liczy się tak samo jak z każdej automatyzacji, tylko skala bywa większa, bo agent wykonuje cały ciąg pracy, nie pojedynczą odpowiedź. Bierzesz godziny, które dziś znikają na powtarzalnym procesie, mnożysz przez koszt godziny i dodajesz leady, które dziś przepadają, bo nikt nie zareagował na czas. To porównujesz z kosztem setupu i opieki. Nasze realne przykłady pokazują skalę: w projekcie Lead Generator zebranie 1000 rekordów zajęło 40 minut zamiast dwóch tygodni ręcznej pracy, a w automatyzacji obsługi e-maili 75 procent wiadomości wymaga już tylko drobnej korekty przed wysłaniem.',
+        'Zwrot z agenta liczy się tak samo jak z każdej automatyzacji, tylko skala bywa większa, bo agent wykonuje cały ciąg pracy, nie pojedynczą odpowiedź.',
+        'Bierzesz godziny, które dziś znikają na powtarzalnym procesie, mnożysz przez koszt godziny i dodajesz leady, które dziś przepadają, bo nikt nie zareagował na czas. To porównujesz z kosztem setupu i opieki.',
+        'Nasze realne przykłady pokazują skalę: zebranie 1000 rekordów firm z publicznych wizytówek Google Maps zajmuje u nas 20-30 minut, ręcznie to około 3 minuty na rekord, czyli około 50 godzin.',
+        'Drugi przykład: w Instytucie Kryptografii 80% draftów e-maili jest gotowych do wysyłki przy 580 mailach tygodniowo w szczycie.',
       ],
     },
     {
-      /* Te pięć punktów to PROCEDURA liczenia („policz, przelicz, dodaj,
-         porównaj, sprawdź"), więc jadą jako <ol> z numerem w kółku (v22 §1.2,
-         wariant 'kolo'). Zdania 1:1 z dotychczasowej listy, zmienia się
-         wyłącznie forma znacznika: <ol> zamiast <ul>, numer zamiast kropki. */
       typ: 'kroki',
       wariant: 'kolo',
       kroki: [
-        { tytul: 'Policz godziny: ile czasu tygodniowo zżera dziś proces, który ma przejąć agent.' },
-        { tytul: 'Przelicz na pieniądze: godziny razy koszt godziny pracy w Twojej firmie.' },
-        { tytul: 'Dodaj utracone leady: ile zapytań przepada, bo reakcja przychodzi za późno albo wcale.' },
         {
-          tytul:
-            'Porównaj z kosztem: setup plus opieka miesięczna kontra to, co odzyskujesz co miesiąc.',
+          tytul: 'Policz godziny: ile czasu tygodniowo zżera dziś proces, który ma przejąć agent.',
         },
-        { tytul: 'Sprawdź to liczbowo w kalkulatorze oszczędności, zanim zamówisz wdrożenie.' },
+        {
+          tytul: 'Przelicz na pieniądze: godziny razy koszt godziny pracy w Twojej firmie.',
+        },
+        {
+          tytul: 'Dodaj utracone leady: ile zapytań przepada, bo reakcja przychodzi za późno albo wcale.',
+        },
+        {
+          tytul: 'Porównaj z kosztem: setup plus opieka miesięczna kontra to, co odzyskujesz co miesiąc.',
+        },
+        {
+          tytul: 'Sprawdź to liczbowo w kalkulatorze oszczędności, zanim zamówisz wdrożenie.',
+        },
       ],
     },
-
     {
       typ: 'sekcja',
-      naglowek: 'Po czym poznać, że wdrożenie agenta się spina?',
+      naglowek: 'Po czym poznać, że agent AI się zwróci?',
+      wariant: 'top',
       akapity: [
-        'Wdrożenie agenta spina się wtedy, kiedy proces jest powtarzalny, kosztuje realne godziny i da się go opisać krok po kroku. Jeśli zadanie jest jednorazowe albo za każdym razem wygląda inaczej, agent nie ma czego się nauczyć i zwrot będzie wątpliwy. Poniżej proste sygnały, że to dobry moment.',
+        'Wdrożenie agenta spina się wtedy, kiedy proces jest powtarzalny, kosztuje realne godziny i da się go opisać krok po kroku.',
+        'Jeśli zadanie jest jednorazowe albo za każdym razem wygląda inaczej, agent nie ma czego się nauczyć i zwrot będzie wątpliwy. Poniżej proste sygnały, że to dobry moment.',
       ],
       punkty: [
         'Proces jest powtarzalny i dzieje się regularnie, nie raz na kwartał.',
@@ -213,16 +316,16 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
     },
     {
       typ: 'cytat',
-      tekst:
-        'Agent AI nie kosztuje za rozmowę. Kosztuje za pracę, którą wykonuje zamiast Twojego zespołu.',
+      tekst: 'Agent AI nie kosztuje za rozmowę. Kosztuje za pracę, którą wykonuje zamiast Twojego zespołu.',
     },
-
     {
       typ: 'sekcja',
       naglowek: 'Od czego zacząć bez ryzyka?',
       wariant: 'edge',
       akapity: [
-        'Nie zaczynaj od pytania, ile kosztuje agent. Zacznij od pytania, który proces najbardziej Cię zatrzymuje. Wybierz jeden powtarzalny ciąg pracy, policz go i wdróż wąsko. Jeśli liczby się zgadzają, rozszerzasz zakres agenta o kolejne kroki. Jeśli szukasz szerszego kontekstu kosztów wdrożenia AI w firmie, nie tylko agenta, zajrzyj też do naszego wpisu o tym, ile kosztuje wdrożenie AI w małej firmie. Ten poradnik dotyczy konkretnie agenta, tamten wpis całego wdrożenia.',
+        'Nie zaczynaj od pytania, ile kosztuje agent. Zacznij od pytania, który proces najbardziej Cię zatrzymuje. Wybierz jeden powtarzalny ciąg pracy, policz go i wdróż wąsko. Jeśli liczby się zgadzają, rozszerzasz zakres agenta o kolejne kroki.',
+        'Pierwszy krok nic nie kosztuje: bezpłatna diagnoza to 0 zł, około 30 minut i kończy się konkretną listą rzeczy do automatyzacji.',
+        'Jeśli szukasz szerszego kontekstu kosztów wdrożenia AI w firmie, nie tylko agenta, zajrzyj też do naszego wpisu o tym, ile kosztuje wdrożenie AI w małej firmie. Ten poradnik dotyczy konkretnie agenta, tamten wpis całego wdrożenia.',
       ],
     },
   ],

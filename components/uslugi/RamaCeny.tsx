@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { Section } from '@/components/ui';
+import { Bloki } from '@/components/blog/PostBody';
 import { Reveal } from '@/components/motion/Reveal';
 import type { Usluga } from '@/lib/uslugi/types';
 import { dekorUslugi } from '@/lib/inf-kategorie';
@@ -99,6 +100,17 @@ export function RamaCeny({
             </p>
           </div>
         </Reveal>
+
+        {/* Runda struktury 2026-08-19 (raport P8/P10): szczegóły cennika schodzą
+            z akapitu-ściany do bloków POD kartą — ten sam silnik co poradniki
+            (PostBody/Bloki), ten sam ton kategorii, zero nowego CSS. Usługa bez
+            `bloki` renderuje się jak dotąd. */}
+        {ramaCeny.bloki && ramaCeny.bloki.length > 0 && (
+          <div className="mt-8">
+            {/* naglowki="h3": blok siedzi POD H2 sekcji cennika — hierarchia bez przeskoków. */}
+            <Bloki tresc={ramaCeny.bloki} ton={dekor} naglowki="h3" />
+          </div>
+        )}
       </div>
     </Section>
   );

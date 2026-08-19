@@ -5,6 +5,7 @@ import { buildMetadata } from '@/lib/metadata';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { uslugaSchemas } from '@/components/seo/schemas';
 import { USLUGI_SLUGS, getUslugaBySlug } from '@/lib/uslugi';
+import { dekorUslugi } from '@/lib/inf-kategorie';
 
 import {
   ServiceHero,
@@ -89,11 +90,23 @@ export default async function UslugaPage({
       {/* (1) Hero answer-first: breadcrumbs + badge + H1 + kapsuła + CTA */}
       <ServiceHero usluga={usluga} />
 
-      {/* (2) Problem (H2 jak pytanie) */}
-      <ServiceNarrative h2={usluga.problem.h2} tresc={usluga.problem.tresc} tone="subtle" />
+      {/* (2) Problem (H2 jak pytanie). Runda struktury 2026-08-19: opcjonalne
+          bloki sekcji renderują się silnikiem poradników w tonie kategorii. */}
+      <ServiceNarrative
+        h2={usluga.problem.h2}
+        tresc={usluga.problem.tresc}
+        tone="subtle"
+        bloki={usluga.problem.bloki}
+        ton={dekorUslugi(usluga.slug)}
+      />
 
       {/* (3) Rozwiązanie (H2 jak pytanie) */}
-      <ServiceNarrative h2={usluga.rozwiazanie.h2} tresc={usluga.rozwiazanie.tresc} />
+      <ServiceNarrative
+        h2={usluga.rozwiazanie.h2}
+        tresc={usluga.rozwiazanie.tresc}
+        bloki={usluga.rozwiazanie.bloki}
+        ton={dekorUslugi(usluga.slug)}
+      />
 
       {/* (4) Tabela porównawcza (obowiązkowa, surowy HTML) */}
       <PorownanieTabela tabela={usluga.tabelaPorownawcza} />

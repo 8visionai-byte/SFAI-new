@@ -140,11 +140,23 @@ export default async function PodstronaUslugiPage({
       {/* (1) Hero answer-first: breadcrumbs + badge + H1 + kapsuła + CTA */}
       <ServiceHero usluga={podstrona} okruszki={okruszkiWidok} />
 
-      {/* (2) Problem (H2 jak pytanie) */}
-      <ServiceNarrative h2={podstrona.problem.h2} tresc={podstrona.problem.tresc} tone="subtle" />
+      {/* (2) Problem (H2 jak pytanie). Runda struktury 2026-08-19: opcjonalne
+          bloki sekcji renderują się silnikiem poradników w tonie rodziny. */}
+      <ServiceNarrative
+        h2={podstrona.problem.h2}
+        tresc={podstrona.problem.tresc}
+        tone="subtle"
+        bloki={podstrona.problem.bloki}
+        ton={dekorUslugi(podstrona.slug, podstrona.rodzic)}
+      />
 
       {/* (3) Rozwiązanie (H2 jak pytanie) */}
-      <ServiceNarrative h2={podstrona.rozwiazanie.h2} tresc={podstrona.rozwiazanie.tresc} />
+      <ServiceNarrative
+        h2={podstrona.rozwiazanie.h2}
+        tresc={podstrona.rozwiazanie.tresc}
+        bloki={podstrona.rozwiazanie.bloki}
+        ton={dekorUslugi(podstrona.slug, podstrona.rodzic)}
+      />
 
       {/* (4) Tabela porównawcza (obowiązkowa, surowy HTML) */}
       <PorownanieTabela tabela={podstrona.tabelaPorownawcza} />

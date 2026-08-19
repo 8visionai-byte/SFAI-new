@@ -57,13 +57,71 @@ export const voiceboty: Usluga = {
   problem: {
     h2: 'Ile telefonów dziennie nie odbierasz?',
     tresc:
-      'Telefon dzwoni, kiedy jesteś u klienta albo masz ręce zajęte. Połowy połączeń nie odbierasz, a to są pieniądze, które uciekają do konkurencji, która odebrała. Klient, który nie dodzwonił się raz, często nie dzwoni drugi. Nagrywarka nic nie załatwia, a etat tylko po to, żeby odbierać telefon, to koszt, na który mała firma nie zawsze ma miejsce.',
+      'Telefon dzwoni, kiedy jesteś u klienta albo masz ręce zajęte, i połowy połączeń nie odbierasz. To pieniądze, które uciekają do konkurencji, która odebrała.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'lista',
+        punkty: [
+          'Jesteś u klienta albo masz ręce zajęte. Telefon dzwoni właśnie wtedy i nikt go nie odbiera, bo w małej firmie nie ma kto.',
+          'Wieczory i weekendy. Telefon odbierany ręcznie działa tylko wtedy, gdy ktoś przy nim siedzi, a klienci dzwonią też po godzinach.',
+          'Klient, który nie dodzwonił się raz, często nie dzwoni drugi. Wybiera firmę, która odebrała od razu.',
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Nagrywarka nic nie załatwia. Klient zostawia wiadomość albo się rozłącza, a sprawa i tak czeka na Ciebie. Zamiast załatwionego tematu masz kolejną rzecz do odsłuchania i oddzwonienia.',
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Etat tylko do odbierania telefonu to koszt, na który mała firma nie zawsze ma miejsce',
+        akapity: [
+          'Alternatywa jest dziś prosta: albo ktoś siedzi przy telefonie na etacie, albo odbierasz sam i płacisz za to własnym czasem. Obie drogi kosztują, tylko w różnej walucie.',
+          'Dlatego nieodebrany telefon to nie kwestia wygody, tylko utracony klient. Każde takie połączenie to sprawa, która trafiła gdzie indziej, i pieniądze, które zarobił ktoś inny.',
+        ],
+        wariant: 'quiet',
+      },
+    ],
   },
 
   rozwiazanie: {
     h2: 'Co robi bot telefoniczny, gdy nie możesz odebrać?',
     tresc:
-      'Voicebot odbiera każde połączenie, rozmawia naturalnie po polsku i robi to, co trzeba: umawia termin i zapisuje go w kalendarzu, przyjmuje zgłoszenie z konkretami, odpowiada na częste pytania. Jeśli sprawa jest trudna, bierze kontakt i mówi, że oddzwonisz. Po rozmowie dostajesz krótkie podsumowanie, więc wiesz, co się działo. Klient zawsze słyszy, że rozmawia z asystentem AI, a Ty ustawiasz, co bot może, a czego nie.',
+      'Voicebot odbiera każde połączenie, rozmawia naturalnie po polsku i sam załatwia sprawę do końca. Działa 24/7, także wieczorem i w weekend.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'lista',
+        punkty: [
+          'Umawia termin i od razu zapisuje go w Twoim kalendarzu, a klientowi wysyła potwierdzenie.',
+          'Przyjmuje zgłoszenie z konkretami: kto dzwonił, w jakiej sprawie i czego potrzebuje.',
+          'Odpowiada na częste pytania, więc bot do odbierania telefonów zdejmuje z Ciebie powtarzalne rozmowy.',
+          'Po rozmowie wysyła Ci krótkie podsumowanie, więc wiesz, co się działo, nawet gdy nie było Cię przy telefonie.',
+          'Nie ma godzin pracy. Obsługa klienta 24/7 przez voicebota znaczy, że klient załatwia sprawę wtedy, kiedy dzwoni, także po godzinach.',
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Czy voicebot dzwoni sam do klientów?',
+        akapity: [
+          'Nie. Voicebot tylko odbiera: obsługuje wyłącznie połączenia przychodzące. Nie robimy botów, które same wydzwaniają do ludzi, bo to psuje zaufanie do firmy.',
+          'Gdy sprawa wymaga kontaktu zwrotnego, bot ją zapisuje i wysyła Ci powiadomienie. Rozmowę zaczyna wtedy człowiek albo klient, który oddzwania.',
+        ],
+        wariant: 'edge',
+        chip: 'ZASADA',
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Co, jeśli sprawa jest zbyt trudna dla bota?',
+        akapity: [
+          'Bot nie udaje, że wie. Bierze kontakt, zapisuje, czego dotyczy sprawa, i mówi klientowi, że oddzwonisz. Ty oddzwaniasz z gotową notatką, więc rozmowę zaczynasz przygotowany.',
+          'Ty ustawiasz z góry, co bot może, a czego nie. Klient zawsze słyszy na początku, że rozmawia z asystentem AI. Tego wymaga AI Act i my się tego trzymamy.',
+        ],
+        wariant: 'top',
+      },
+    ],
   },
 
   tabelaPorownawcza: {
@@ -117,7 +175,76 @@ export const voiceboty: Usluga = {
        celowo: `ServiceHero.KAFEL_CENY` opisuje kafel ceny voicebotów słowami
        1:1 z tego akapitu („od 2500 zł / pakiet startowy"). */
     tresc:
-      'Voicebot ma trzy osobne pozycje, a nie jeden abonament, w którym wszystko jest schowane. Pierwsza to stworzenie bota. Prosty, czyli pakiet startowy, z prostą bazą wiedzy, kierowaniem rozmów i odpowiedziami na powtarzalny zestaw pytań, kosztuje 2500 zł netto jednorazowo. Bot z integracjami, na przykład z kalendarzem, i z rozbudowanymi scenariuszami to 5000 do 9000 zł netto jednorazowo. Druga pozycja to utrzymanie i tu wybierasz. Gdy infrastruktura zostaje u nas i my ją pilnujemy, płacisz 299 do 1500 zł netto miesięcznie. Gdy przekazujemy infrastrukturę Tobie, nie płacisz nam abonamentu w ogóle, czyli 0 zł miesięcznie, a poprawki zamawiasz godzinowo po 350 zł netto za godzinę. Trzecia pozycja to zużycie: tokeny i minuty rozmów rozliczane według realnego użycia, po Twojej stronie, bo płacisz za to, ile bot faktycznie przepracuje. Czas wdrożenia liczymy od przekazania kompletu materiałów przez Ciebie, czyli scenariuszy, treści i dostępów, a nie od podpisania umowy. W cenie wdrożenia są dwie rundy poprawek.',
+      'Voicebot ma trzy osobne pozycje kosztu, a nie jeden abonament, w którym wszystko jest schowane: stworzenie od 2500 zł netto za pakiet startowy, płatne raz, utrzymanie 299 do 1500 zł netto miesięcznie albo 0 zł, oraz zużycie tokenów i minut rozliczane według realnego użycia.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'tabela',
+        naglowki: [
+          'Pozycja',
+          'Ile płacisz',
+          'Kiedy',
+        ],
+        wiersze: [
+          [
+            'Stworzenie: bot prosty (pakiet startowy)',
+            '2500 zł netto',
+            'raz, przy wdrożeniu',
+          ],
+          [
+            'Stworzenie: bot z integracjami, np. z kalendarzem',
+            '5000 do 9000 zł netto',
+            'raz, przy wdrożeniu',
+          ],
+          [
+            'Utrzymanie: infrastruktura u nas',
+            '299 do 1500 zł netto',
+            'co miesiąc',
+          ],
+          [
+            'Utrzymanie: infrastruktura przekazana Tobie',
+            '0 zł miesięcznie, poprawki 350 zł netto za godzinę',
+            'tylko gdy zamawiasz poprawki',
+          ],
+          [
+            'Zużycie: tokeny i minuty rozmów',
+            'według realnego użycia',
+            'po Twojej stronie, co miesiąc',
+          ],
+        ],
+        wKarcie: true,
+        podpis: 'Trzy osobne pozycje kosztu voicebota. Każda kwota netto.',
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Pakiet startowy za 2500 zł netto to prosta baza wiedzy, kierowanie rozmów i odpowiedzi na powtarzalny zestaw pytań. Bot z integracjami, na przykład z kalendarzem, i z rozbudowanymi scenariuszami to 5000 do 9000 zł netto, płatne raz przy wdrożeniu.',
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Czy muszę płacić abonament co miesiąc?',
+        akapity: [
+          'Nie musisz, wybierasz jedną z dwóch dróg. Pierwsza: infrastruktura zostaje u nas, my ją trzymamy i pilnujemy, a Ty płacisz 299 do 1500 zł netto miesięcznie.',
+          'Druga: przekazujemy Ci całą infrastrukturę i płacisz nam 0 zł miesięcznie. Poprawki zamawiasz wtedy godzinowo, po 350 zł netto za godzinę, tylko gdy ich potrzebujesz.',
+          'Trzecia pozycja, zużycie, w obu drogach zostaje po Twojej stronie: tokeny i minuty rozmów według realnego użycia. Przy ofercie z jednym abonamentem zużycie też płacisz, tylko tego nie widać.',
+        ],
+        wariant: 'top',
+        chip: 'CENNIK',
+        stopka: [
+          'U większości firm z abonamentu nie da się wyjść, u nas da się.',
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Czas liczymy od przekazania kompletu materiałów, a dwie rundy poprawek są w cenie',
+        akapity: [
+          'Czas wdrożenia liczymy od momentu, w którym przekazujesz nam komplet materiałów: scenariusze, treści i dostępy. Nie od podpisania umowy. Konkretny termin dla Twojego bota podajemy na bezpłatnej diagnozie.',
+          'W cenie wdrożenia są dwie rundy poprawek: tydzień testów i poprawki, drugi tydzień i kolejne poprawki, potem odbiór. To, co nie zadziałało po naszej stronie, poprawiamy zawsze, także po odbiorze.',
+        ],
+        wariant: 'edge',
+        chip: 'ZASADA',
+      },
+    ],
     minPrice: 2500, // pakiet startowy (locked 2026-08-16, audyt §2 potwierdza): UI + offers w JSON-LD.
     /* SEO 2026-08-17: linkowanie wewnętrzne do poradnika cenowego (zdanie 1:1
        z brief-seo-2026-08-17; render w RamaCeny.tsx w tym samym akapicie). */

@@ -18,7 +18,7 @@ import type { Usluga } from './types';
  */
 export const agentRekrutacyjny: Usluga = {
   slug: 'agent-rekrutacyjny',
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
   h1: 'Agent AI do rekrutacji i pierwszego kontaktu',
 
   kapsula:
@@ -31,13 +31,72 @@ export const agentRekrutacyjny: Usluga = {
   problem: {
     h2: 'Na czym naprawdę tracisz czas w rekrutacji?',
     tresc:
-      'Wrzucasz ogłoszenie i wpada sto CV. Większość nie pasuje, ale i tak trzeba je przeczytać. Do tego maile od kandydatów: o widełki, o tryb pracy, o etapy. Te same pytania w kółko. Dobry kandydat pisze i czeka. Jak czeka za długo, idzie do konkurencji, bo ktoś odpisał szybciej. Pierwsza linia rekrutacji zjada godziny, a najlepszych ludzi i tak gubisz przez wolną reakcję.',
+      'Czas w rekrutacji zjada pierwsza linia: czytanie CV, które nie pasują, odpisywanie na te same pytania i wolna reakcja, przez którą najlepsi kandydaci odchodzą do konkurencji. Zanim usiądziesz do rozmów, godziny już zniknęły.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'akapit',
+        tekst: 'Wrzucasz ogłoszenie i wpada sto CV. Większość nie pasuje, ale i tak trzeba je przeczytać po kolei, ręcznie. Odsiew zjada czas, zanim w ogóle dojdziesz do ludzi, z którymi warto rozmawiać.',
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Te same pytania kandydatów w kółko',
+        wariant: 'edge',
+        akapity: [
+          'Maile od kandydatów przychodzą niezależnie od tego, czy masz czas. Treść jest prawie zawsze ta sama, a każdy kandydat czeka na odpowiedź.',
+        ],
+        punkty: [
+          'pytania o widełki wynagrodzenia',
+          'pytania o tryb pracy',
+          'pytania o etapy rekrutacji',
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Dobry kandydat pisze i czeka. Jak czeka za długo, idzie do konkurencji, bo ktoś odpisał szybciej. Pierwszy kontakt z kandydatem decyduje: najlepszych ludzi gubisz przez wolną reakcję, nie przez brak kandydatów.',
+      },
+    ],
   },
 
   rozwiazanie: {
     h2: 'Co dokładnie robi agent rekrutacyjny?',
     tresc:
-      'Agent przejmuje pierwszą linię. Zbiera CV z formularza i ze skrzynki, czyta je pod Twoje kryteria i robi wstępny scoring, żebyś najpierw widział tych, którzy pasują. Odpowiada kandydatom na pytania o ofertę, etapy i widełki, po polsku i w Twoim tonie. Umawia rozmowy w Twoim kalendarzu i wysyła potwierdzenia. Pod każdego kandydata przygotowuje krótką notatkę, więc na rozmowę wchodzisz przygotowany. Agent nie odrzuca nikogo sam. Selekcję i decyzję o zatrudnieniu zostawia człowiekowi.',
+      'Agent rekrutacyjny AI przejmuje pierwszą linię: zbiera CV, robi wstępny scoring pod Twoje kryteria, odpowiada kandydatom, umawia rozmowy i przygotowuje notatkę dla rekrutera. Decyzja o zatrudnieniu zawsze zostaje u Ciebie.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'lista',
+        punkty: [
+          'Zbiera CV z formularza i ze skrzynki, więc automatyzacja rekrutacji obejmuje wszystkie zgłoszenia, nie tylko te z jednego kanału.',
+          'Czyta CV pod Twoje kryteria i nadaje wstępny scoring, żebyś najpierw widział tych, którzy pasują.',
+          'Odpowiada kandydatom na pytania o ofertę, etapy i widełki, po polsku i w Twoim tonie.',
+          'Umawia rozmowy w Twoim kalendarzu i wysyła potwierdzenia, bez maili w tę i z powrotem.',
+          'Pierwszą linię telefoniczną może przejąć voicebot AI rekrutacyjny: odbiera telefony od kandydatów i zapisuje sprawy do oddzwonienia. Sam nie dzwoni, kontakt zwrotny zaczyna człowiek.',
+          'Pod każdego kandydata przygotowuje krótką notatkę, więc na rozmowę wchodzisz przygotowany. Tak pracuje agent AI do rekrutacji: przygotowuje, nie decyduje.',
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Czy AI może odrzucać kandydatów?',
+        wariant: 'top',
+        chip: 'ZASADA',
+        akapity: [
+          'Nie. Agent nie odrzuca nikogo sam. Robi pierwszy odsiew i wstępny scoring, a selekcję i decyzję o zatrudnieniu zawsze podejmuje człowiek.',
+          'Agent odciąża pierwszą linię, nie zastępuje rekrutera. Ty widzisz, dlaczego dany kandydat wskoczył wyżej, i możesz zmienić kryteria w każdej chwili.',
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'AI w rekrutacji a RODO: dane kandydatów zostają w Unii Europejskiej',
+        wariant: 'quiet',
+        akapity: [
+          'Dane kandydatów przetwarzamy zgodnie z RODO i AI Act, który obowiązuje w pełni od 2 sierpnia 2026. Infrastruktura stoi w Unii Europejskiej.',
+          'Kandydat wie, że pierwszy kontakt prowadzi agent AI. Ty kontrolujesz, co jest przechowywane i jak długo. Szczegóły ustalamy na diagnozie.',
+        ],
+      },
+    ],
   },
 
   tabelaPorownawcza: {
@@ -78,7 +137,56 @@ export const agentRekrutacyjny: Usluga = {
   ramaCeny: {
     h2: 'Ile kosztuje agent rekrutacyjny?',
     tresc:
-      'Koszt zależy od zakresu. Inaczej wycenia się agent, który tylko czyta CV i robi wstępny scoring, inaczej taki, który dodatkowo odpowiada kandydatom, umawia rozmowy i łączy się z Twoim kalendarzem oraz systemem rekrutacyjnym. Najczęściej zaczynamy od Sprintu Diagnostycznego za 1490 zł, który odliczamy od wdrożenia, gdy wchodzimy we współpracę. Cenę liczymy od wartości: ile godzin miesięcznie zdejmuje z rekrutera i ilu dobrych kandydatów nie gubisz przez wolną reakcję (szac.). Dokładne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów.',
+      'Koszt zależy od zakresu: sam scoring CV to inna półka niż agent, który dodatkowo odpowiada kandydatom, umawia rozmowy i łączy się z kalendarzem oraz systemem rekrutacyjnym. Dokładne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'kafle',
+        kafle: [
+          {
+            wartosc: '0 zł',
+            opis: 'bezpłatna diagnoza, około 30 minut',
+          },
+          {
+            wartosc: '1490 zł netto',
+            opis: 'Sprint Diagnostyczny, 5 dni roboczych',
+            zrodlo: 'kwota odliczana w całości od wdrożenia',
+          },
+          {
+            wartosc: '2 rundy',
+            opis: 'poprawek w cenie wdrożenia',
+            zrodlo: 'zasada cennika SimpleFast.ai',
+          },
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Co wpływa na cenę agenta rekrutacyjnego?',
+        wariant: 'edge',
+        chip: 'CENNIK',
+        akapity: [
+          'Cenę liczymy od wartości: ile godzin miesięcznie agent zdejmuje z rekrutera i ilu dobrych kandydatów nie gubisz przez wolną reakcję (szac.).',
+          'W cenie wdrożenia masz dwie rundy poprawek: tydzień testów, poprawki, drugi tydzień testów, poprawki i odbiór. Nowe funkcje to rozbudowa, którą wyceniamy osobno.',
+        ],
+        punkty: [
+          'zakres pracy agenta: tylko scoring CV czy też odpowiedzi kandydatom i umawianie rozmów',
+          'liczba integracji: formularz, skrzynka, kalendarz, system rekrutacyjny',
+          'model rozliczenia po wdrożeniu: przekazanie infrastruktury i 0 zł abonamentu albo projekt u nas z opłatą utrzymaniową',
+        ],
+        stopka: [
+          'Poprawki tego, co nie zadziałało po naszej stronie: zawsze, także po odbiorze.',
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Zaczynamy od bezpłatnej diagnozy: 0 zł, około 30 minut, a na koniec dostajesz konkretną listę rzeczy do automatyzacji w Twojej rekrutacji.',
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Najczęściej pierwszym płatnym krokiem jest Sprint Diagnostyczny za 1490 zł netto: 5 dni roboczych i raport PDF z mapą procesów. Kwotę odliczamy w całości od wdrożenia, gdy wchodzimy we współpracę. Bez ukrytych kosztów.',
+      },
+    ],
     // minPrice: undefined — brak realnej kwoty "od X" za samego agenta. Bez offers w Service JSON-LD.
     /* v22 (linki §3, P2 #15): usługa -> poradnik było 4/13. Agent rekrutacyjny
        to ten sam typ wdrożenia, co poradnik o koszcie agenta AI, więc widełki

@@ -54,40 +54,64 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
        - `podpis` obu tabel = nagłówek H2 sekcji stojącej nad tabelą,
        - `chip` trzech kart = nazwa pakietu z kolumny „Pakiet" tej samej tabeli. */
   tresc: [
+    /* Runda struktury 2026-08-19 (raport P8: mediana akapitu ~150 zn, strona miała
+       do 61% tekstu w akapitach >400 zn): treść przełożona na bloki, fakty 1:1,
+       istniejące tabele/kafle/kroki zachowane. Poprzednia wersja: git blame. */
     {
       typ: 'akapit',
-      tekst:
-        'Odpowiadamy liczbami, bo sami nie lubimy cenników w stylu „to zależy". Wdrożenie automatyzacji AI kosztuje u nas od 3000 do 10000 zł. Dolna granica to pojedynczy, prosty proces z jedną lub dwiema integracjami. Górna to kilka połączonych procesów albo automatyzacja, w której koszt błędu jest wysoki, więc dochodzą testy i zabezpieczenia. Jeśli chcesz zacząć taniej, pierwsza automatyzacja na próbę w pakiecie AI Start kosztuje 1990 zł. A jeśli nie wiesz, od czego zacząć, audyt AI za 1490 zł daje mapę procesów z największym zwrotem i jest odliczany od wdrożenia.',
+      tekst: 'Jeśli pytasz, ile kosztuje automatyzacja AI, odpowiadamy liczbami, bo sami nie lubimy cenników w stylu „to zależy": wdrożenie automatyzacji AI kosztuje u nas od 3000 do 10000 zł netto. Cena zależy od liczby integracji i złożoności procesu.',
     },
-
     {
-      /* PAS METRYK (v22 §1.1): cztery kafle = cztery wiersze cennika niżej.
-         Każda liczba i każda etykieta jest PRZEPISANA ZNAK W ZNAK z tabeli
-         „Pakiet / Co dostajesz / Cena" w tej samej treści, więc kafel nie
-         wnosi ani jednej nowej danej. Ceny z listy locked (1990 / 1490 /
-         3000-10000 / 99-599). */
+      typ: 'akapit',
+      tekst: 'Dolna granica to pojedynczy, prosty proces z jedną lub dwiema integracjami. Górna to kilka połączonych procesów albo automatyzacja, w której koszt błędu jest wysoki, więc dochodzą testy i zabezpieczenia. Pojedynczy proces wdrażamy w dni, nie w miesiące.',
+    },
+    {
+      typ: 'akapit',
+      tekst: 'Jeśli chcesz zacząć taniej, pierwsza automatyzacja na próbę w pakiecie AI Start kosztuje 1990 zł i automatyzuje jeden wąski proces wewnątrz firmy, zanim wydasz od 3000 do 10000 zł netto. AI Start to inny produkt niż chatbot na stronę od 1790 zł netto.',
+    },
+    {
+      typ: 'akapit',
+      tekst: 'A jeśli nie wiesz, od czego zacząć, audyt AI za 1490 zł netto daje mapę procesów z największym zwrotem i jest odliczany od wdrożenia.',
+    },
+    {
       typ: 'kafle',
       kafle: [
-        { wartosc: '1990 zł', opis: 'AI Start' },
-        { wartosc: '1490 zł', opis: 'Audyt AI' },
-        { wartosc: 'od 3000 do 10000 zł', opis: 'Wdrożenie automatyzacji' },
-        { wartosc: 'od 99 do 599 zł/mies', opis: 'Opieka po wdrożeniu' },
+        {
+          wartosc: '1990 zł',
+          opis: 'AI Start',
+        },
+        {
+          wartosc: '1490 zł netto',
+          opis: 'Audyt AI',
+        },
+        {
+          wartosc: 'od 3000 do 10000 zł netto',
+          opis: 'Wdrożenie automatyzacji',
+        },
+        {
+          wartosc: 'od 99 do 599 zł netto/mies.',
+          opis: 'Opieka po wdrożeniu',
+        },
       ],
     },
-
     {
       typ: 'sekcja',
       naglowek: 'Ile kosztuje automatyzacja AI w firmie? Cennik 2026',
+      chip: 'CENNIK',
       akapity: [
         'Poniższa tabela to nasz realny cennik, nie widełki wzięte z sufitu. Dokładną kwotę w tych ramach podajemy na bezpłatnej diagnozie, kiedy zobaczymy proces i policzymy, ile pracy zdejmie automatyzacja.',
+        'Cennik czytaj razem z czasem: pojedynczy proces wdrażamy w dni, nie w miesiące. Obok kwoty od razu wiesz więc, jak szybko automatyzacja zacznie pracować.',
       ],
     },
     {
       typ: 'tabela',
       wKarcie: true,
-      /* Podpis = nagłówek H2 sekcji nad tabelą, znak w znak. */
       podpis: 'Ile kosztuje automatyzacja AI w firmie? Cennik 2026',
-      naglowki: ['Pakiet', 'Co dostajesz', 'Cena'],
+      naglowki: [
+        'Pakiet',
+        'Co dostajesz',
+        'Cena',
+      ],
       wiersze: [
         [
           'AI Start',
@@ -97,27 +121,27 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
         [
           'Audyt AI',
           'Mapa procesów z największym zwrotem plus Action Plan. Cena odliczana od wdrożenia',
-          '1490 zł',
+          '1490 zł netto',
         ],
         [
           'Wdrożenie automatyzacji',
           'Działający proces end-to-end: od projektu po testy i uruchomienie',
-          'od 3000 do 10000 zł',
+          'od 3000 do 10000 zł netto',
         ],
         [
           'Opieka po wdrożeniu',
           'Abonament dołączony do wdrożenia: monitoring i poprawki, nie zostawiamy klientów',
-          'od 99 do 599 zł/mies',
+          'od 99 do 599 zł netto/mies.',
         ],
       ],
     },
-
     {
       typ: 'sekcja',
       naglowek: 'Od czego zależy cena automatyzacji AI?',
       wariant: 'edge',
       akapity: [
-        'Cena nie bierze się z liczby ekranów ani z tego, jak „mądrze" brzmi nazwa narzędzia. Bierze się z tego, ile pracy trzeba włożyć, żeby proces działał sam i bezpiecznie. W górę ceny przesuwa głównie liczba systemów do połączenia. Oto co realnie decyduje o tym, czy wylądujesz bliżej 3000 czy 10000 zł.',
+        'Cena nie bierze się z liczby ekranów ani z tego, jak „mądrze" brzmi nazwa narzędzia. Bierze się z tego, ile pracy trzeba włożyć, żeby proces działał sam i bezpiecznie.',
+        'Koszt automatyzacji procesów AI w górę przesuwa głównie liczba systemów do połączenia. Oto co realnie decyduje o tym, czy wylądujesz bliżej 3000 czy 10000 zł netto.',
       ],
       punkty: [
         'Liczba integracji: każdy system (poczta, arkusz, CRM, kalendarz, baza) to osobne połączenie i osobna robota.',
@@ -127,20 +151,23 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
         'Liczba procesów: pojedynczy proces to dolna półka widełek, kilka połączonych procesów to górna.',
       ],
     },
-
     {
       typ: 'sekcja',
-      naglowek: 'Co można zautomatyzować? Cztery realne wdrożenia',
+      naglowek: 'Jakie procesy zautomatyzować w firmie?',
       akapity: [
-        'Zamiast teorii, cztery automatyzacje, które zbudowaliśmy dla klientów. Efekty poniżej pochodzą z realnych wdrożeń, a oszczędności czasu oznaczone „szac." to nasze szacunki, nie pomiar co do minuty.',
+        'Najszybciej zwracają się automatyzacje odpowiedzi na maile, zbierania leadów, raportów i notatek ze spotkań. Pokazujemy je na czterech realnych wdrożeniach dla klientów. Tak w praktyce wygląda automatyzacja AI dla firm.',
+        'Efekty poniżej pochodzą z realnych wdrożeń, a oszczędności czasu oznaczone „szac." to nasze szacunki, nie pomiar co do minuty.',
       ],
     },
     {
       typ: 'tabela',
       wKarcie: true,
-      /* Podpis = nagłówek H2 sekcji nad tabelą, znak w znak. */
-      podpis: 'Co można zautomatyzować? Cztery realne wdrożenia',
-      naglowki: ['Automatyzacja', 'Co robi', 'Efekt'],
+      podpis: 'Jakie procesy zautomatyzować w firmie?',
+      naglowki: [
+        'Automatyzacja',
+        'Co robi',
+        'Efekt',
+      ],
       wiersze: [
         [
           'Auto-email dla biura obsługi klienta',
@@ -166,58 +193,133 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
     },
     {
       typ: 'akapit',
-      tekst:
-        'Każde z tych wdrożeń zaczynało się od jednego procesu, który bolał najbardziej. Takie automatyzacje wyceniamy w widełkach od 3000 do 10000 zł, a dokładna kwota zależy od liczby integracji i zakresu. Pełne opisy tych projektów znajdziesz w naszych realizacjach.',
+      tekst: 'Każde z tych wdrożeń zaczynało się od jednego procesu, który bolał najbardziej. Takie automatyzacje wyceniamy w widełkach od 3000 do 10000 zł netto, a dokładna kwota zależy od liczby integracji i zakresu. Pełne opisy tych projektów znajdziesz w naszych realizacjach.',
     },
-
     {
-      /* Chip = nazwa pakietu z kolumny „Pakiet" tabeli cennika wyżej
-         (znak w znak). Wzorzec /void: kolor niesie chip, nagłówek zostaje
-         biały. */
+      typ: 'sekcja',
+      naglowek: 'Ile kosztuje automatyzacja faktur?',
+      wariant: 'top',
+      akapity: [
+        'Automatyzacja faktur to ten sam mechanizm wyceny: mieści się w widełkach od 3000 do 10000 zł netto, a o kwocie decyduje liczba integracji, na przykład odczyt dokumentów, program księgowy i bank.',
+        'Dokładną kwotę w tych widełkach podajemy na bezpłatnej diagnozie, kiedy zobaczymy, jak wygląda obieg dokumentów w Twojej firmie i które systemy trzeba połączyć.',
+        'Pełny opis tej usługi, razem z tym, jak działa odczyt dokumentów i jakie liczby dało realne wdrożenie, znajdziesz na naszej stronie automatyzacji faktur i dokumentów.',
+      ],
+    },
+    {
+      typ: 'naglowek',
+      tekst: 'Który proces automatyzować najpierw?',
+    },
+    {
+      typ: 'akapit',
+      tekst: 'Zaczynaj od procesu, który boli najbardziej i powtarza się co tydzień. Tak zaczynało się każde z czterech wdrożeń opisanych wyżej. Do wyboru wystarczą trzy kroki.',
+    },
+    {
+      typ: 'kroki',
+      wariant: 'plytka',
+      kroki: [
+        {
+          tytul: 'Policz godziny',
+          opis: 'Wypisz czynności powtarzane co tydzień: przepisywanie danych, składanie raportów, odpowiadanie na te same maile.',
+        },
+        {
+          tytul: 'Wybierz jeden wąski proces',
+          opis: 'Ten najczęstszy i najbardziej bolesny, nie największy. Pojedynczy proces to dolna półka widełek.',
+        },
+        {
+          tytul: 'Zrób mały, odwracalny krok',
+          opis: 'AI Start za 1990 zł sprawdza automatyzację na próbę. Gdy procesów jest kilka i nie wiesz, od którego zacząć, wybierz audyt AI za 1490 zł netto.',
+        },
+      ],
+    },
+    {
       typ: 'sekcja',
       chip: 'AI Start',
       naglowek: 'Jak sprawdzić automatyzację za 1990 zł, zanim wydasz więcej?',
       akapity: [
-        'AI Start to pierwsza automatyzacja na próbę za 1990 zł. Wybieramy jeden wąski, powtarzalny proces, automatyzujemy go i pokazujemy efekt na Twoich danych, nie na naszych slajdach. To celowo mały, odwracalny krok: najpierw widzisz, jak automatyzacja działa u Ciebie, dopiero potem decydujesz o pełnym wdrożeniu za 3000 do 10000 zł. Jeśli po próbie uznasz, że to nie dla Ciebie, kończymy współpracę bez wchodzenia w większy budżet.',
+        'AI Start to pierwsza automatyzacja na próbę za 1990 zł. Wybieramy jeden wąski, powtarzalny proces, automatyzujemy go i pokazujemy efekt na Twoich danych, nie na naszych slajdach.',
+        'To celowo mały, odwracalny krok: najpierw widzisz, jak automatyzacja działa u Ciebie, dopiero potem decydujesz o pełnym wdrożeniu za 3000 do 10000 zł netto. Jeśli po próbie uznasz, że to nie dla Ciebie, kończymy współpracę bez wchodzenia w większy budżet.',
       ],
     },
-
     {
       typ: 'sekcja',
       chip: 'Audyt AI',
       wariant: 'quiet',
-      naglowek: 'Po co audyt AI za 1490 zł przed wdrożeniem?',
+      naglowek: 'Po co audyt AI za 1490 zł netto przed wdrożeniem?',
       akapity: [
-        'Audyt AI za 1490 zł to mapa przed podróżą. Rozkładamy Twoje procesy na czynniki i pokazujemy, gdzie automatyzacja da realny zysk, a gdzie to przepalanie pieniędzy. Dostajesz Action Plan ułożony od największego zwrotu. Cenę audytu odliczamy od wdrożenia, więc jeśli ruszamy z robotą, audyt w praktyce nic Cię nie kosztuje. Ma sens szczególnie wtedy, kiedy procesów do automatyzacji jest kilka i nie wiesz, od którego zacząć.',
+        'Audyt AI za 1490 zł netto to mapa przed podróżą. W 5 dni roboczych rozkładamy Twoje procesy na czynniki i pokazujemy, gdzie automatyzacja da realny zysk, a gdzie to przepalanie pieniędzy. Dostajesz raport PDF z Action Planem ułożonym od największego zwrotu.',
+        'Cenę audytu odliczamy w całości od wdrożenia, więc jeśli ruszamy z robotą, audyt w praktyce nic Cię nie kosztuje. Ma sens szczególnie wtedy, kiedy procesów do automatyzacji jest kilka i nie wiesz, od którego zacząć.',
       ],
     },
-
     {
       typ: 'sekcja',
       chip: 'Opieka po wdrożeniu',
       naglowek: 'Czy automatyzacja wymaga opieki po wdrożeniu?',
       akapity: [
-        'Tak, i mówimy to wprost, bo to część realnego kosztu. Automatyzacja łączy się z narzędziami, które żyją: dostawca zmienia coś po swojej stronie, w firmie pojawia się nowy krok procesu, zmienia się arkusz albo skrzynka. Dlatego do każdego wdrożenia proponujemy opiekę w abonamencie od 99 do 599 zł netto miesięcznie, zależnie od pakietu, a gdy wolisz wziąć infrastrukturę do siebie, nie płacisz nam abonamentu. Nie zostawiamy klientów z automatem, którego nikt nie pilnuje: monitorujemy działanie i poprawiamy to, co się zmieniło po stronie narzędzi. A firmy, które chcą co miesiąc rozwijać automatyzacje o kolejne procesy, mogą przejść na osobną usługę Opieki AI rozliczaną ryczałtem godzin.',
+        'Tak, i mówimy to wprost, bo to część realnego kosztu. Automatyzacja łączy się z narzędziami, które żyją: dostawca zmienia coś po swojej stronie, w firmie pojawia się nowy krok procesu, zmienia się arkusz albo skrzynka.',
+        'Dlatego do każdego wdrożenia proponujemy opiekę w abonamencie od 99 do 599 zł netto miesięcznie, zależnie od pakietu, a gdy wolisz wziąć infrastrukturę do siebie, nie płacisz nam abonamentu. Zawsze pokazujemy oba modele rozliczenia.',
+        'Nie zostawiamy klientów z automatem, którego nikt nie pilnuje: monitorujemy działanie i poprawiamy to, co się zmieniło po stronie narzędzi.',
+      ],
+      stopka: [
+        'Firmy, które chcą co miesiąc rozwijać automatyzacje o kolejne procesy, mogą przejść na osobną usługę Opieki AI rozliczaną ryczałtem godzin.',
+      ],
+    },
+    {
+      typ: 'tabela',
+      wKarcie: true,
+      podpis: 'Dwa modele rozliczenia po wdrożeniu',
+      naglowki: [
+        'Model',
+        'Co to znaczy',
+        'Koszt miesięczny',
+      ],
+      wiersze: [
+        [
+          'Projekt u nas',
+          'Monitoring i poprawki tego, co zmieniło się po stronie narzędzi',
+          'od 99 do 599 zł netto/mies.',
+        ],
+        [
+          'Przekazanie infrastruktury',
+          'Bierzesz całość do siebie, my jej nie utrzymujemy',
+          '0 zł abonamentu',
+        ],
       ],
     },
     {
       typ: 'cytat',
-      tekst:
-        'Automatyzacja kosztuje raz. Ręczna robota kosztuje co miesiąc, bez końca.',
+      tekst: 'Automatyzacja kosztuje raz. Ręczna robota kosztuje co miesiąc, bez końca.',
     },
-
     {
       typ: 'sekcja',
       naglowek: 'Jak policzyć, czy automatyzacja się zwróci?',
       wariant: 'edge',
       akapity: [
-        'Rachunek jest prosty. Policz godziny, które co tydzień znikają na przepisywaniu danych, składaniu raportów i odpowiadaniu na te same maile. Pomnóż przez koszt godziny pracy w Twojej firmie i porównaj z ceną wdrożenia oraz abonamentu opieki. Skalę pokazują nasze realizacje: generator leadów zebrał 1000 rekordów w 40 minut zamiast dwóch tygodni ręcznej pracy, a w biurze obsługi klienta 75% maili wymaga już tylko drobnej korekty. Jeśli rozważasz coś więcej niż automatyzację, czyli agenta AI, który sam prowadzi cały proces i podejmuje akcje w wielu systemach, zajrzyj też do naszego poradnika o koszcie wdrożenia AI agenta dla firmy.',
+        'Rachunek jest prosty. Policz godziny, które co tydzień znikają na przepisywaniu danych, składaniu raportów i odpowiadaniu na te same maile. Pomnóż przez koszt godziny pracy w Twojej firmie i porównaj z ceną wdrożenia oraz abonamentu opieki. Skalę pokazują nasze realizacje:',
+        'Jeśli rozważasz coś więcej niż automatyzację, czyli agenta AI, który sam prowadzi cały proces i podejmuje akcje w wielu systemach, zajrzyj też do naszego poradnika o koszcie wdrożenia AI agenta dla firmy.',
+      ],
+      punkty: [
+        'Auto-email w Instytucie Kryptografii: 80% draftów odpowiedzi jest gotowych do wysyłki przy 580 mailach tygodniowo, a 75% maili wymaga już tylko drobnej korekty przed wysłaniem.',
+        'Generator leadów: 1000 rekordów w 40 minut zamiast 2 tygodni ręcznej pracy.',
+      ],
+    },
+    {
+      typ: 'sekcja',
+      naglowek: 'Ile trwa wdrożenie automatyzacji?',
+      chip: 'ZASADA',
+      wariant: 'quiet',
+      akapity: [
+        'Pojedynczy proces wdrażamy w dni, nie w miesiące. Dokładny termin zależy od liczby integracji i od tego, jak uporządkowane są materiały po Twojej stronie.',
+        'Czas liczymy od przekazania kompletu materiałów, nie od podpisania umowy. W cenie wdrożenia są dwie rundy poprawek.',
+      ],
+      punkty: [
+        'Tydzień testów po uruchomieniu, potem pierwsza runda poprawek.',
+        'Drugi tydzień testów, druga runda poprawek i odbiór.',
+        'Konkretny termin dla Twojego procesu ustalamy na bezpłatnej diagnozie.',
       ],
     },
     {
       typ: 'akapit',
-      tekst:
-        'Chcesz znać dokładną kwotę w tych widełkach dla swojego procesu? Policz najpierw oszczędności w naszym darmowym kalkulatorze, a potem umów bezpłatną diagnozę. Pokażemy wycenę na Twoich danych, zanim cokolwiek zamówisz.',
+      tekst: 'Chcesz znać dokładną kwotę w tych widełkach dla swojego procesu? Policz najpierw oszczędności w naszym darmowym kalkulatorze, a potem umów bezpłatną diagnozę. Pokażemy wycenę na Twoich danych, zanim cokolwiek zamówisz.',
     },
   ],
 

@@ -55,13 +55,95 @@ export const optymalizacja: Usluga = {
   problem: {
     h2: 'Klienci pytają AI, a AI poleca kogoś innego?',
     tresc:
-      'Ludzie coraz częściej pytają ChatGPT albo Perplexity „polećcie firmę do X”. Jeśli w tych odpowiedziach pada konkurencja, a nie Ty, tracisz klientów, których nawet nie widzisz, bo nigdy do Ciebie nie trafili. Klasyczne pozycjonowanie w Google tego nie załatwia. To inna gra: liczy się, czy Twoja treść jest dla AI czytelna, konkretna i poparta autorytetem z zewnątrz.',
+      'Ludzie coraz częściej pytają ChatGPT albo Perplexity „polećcie firmę do X”. Jeśli w tych odpowiedziach pada konkurencja, a nie Ty, tracisz klientów, których nawet nie widzisz, bo nigdy do Ciebie nie trafili.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'akapit',
+        tekst: 'Klasyczne pozycjonowanie w Google tego nie załatwia. Pozycjonowanie pod AI to inna gra: nie walczysz o miejsce w wynikach wyszukiwania, tylko o miejsce w odpowiedzi, którą buduje AI.',
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Czym różni się GEO od SEO?',
+        wariant: 'edge',
+        chip: 'GEO',
+        akapity: [
+          'W GEO liczy się, czy Twoja treść jest dla AI czytelna, konkretna i poparta autorytetem z zewnątrz. AI składa odpowiedź z konkretnych liczb, dobrej struktury i tego, co mówią o Tobie źródła spoza Twojej strony.',
+          'Słowa kluczowe upychane na siłę tu nie działają, a bywają wręcz minusem. Optymalizacja pod ChatGPT to pisanie pod cytat, nie pod kliknięcie: bezpośrednia odpowiedź na początku, potem konkret, który da się zacytować.',
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Dobra wiadomość: nie musisz budować strony od nowa. Bierzemy to, co masz, i naprawiamy to, co dziś blokuje cytowanie. Twój punkt wyjścia pokażemy Ci czarno na białym, zanim cokolwiek zamówisz.',
+      },
+    ],
   },
 
   rozwiazanie: {
     h2: 'Jak sprawiamy, że AI zaczyna Cię cytować?',
     tresc:
-      'Najpierw sprawdzamy, czy boty AI w ogóle widzą Twoją stronę, i odblokowujemy je tam, gdzie są blokowane. Potem przepisujemy kluczowe strony na format, który AI cytuje: bezpośrednia odpowiedź na początku, konkretne liczby, tabele, jasne nagłówki-pytania. Dokładamy świeżość, bo AI woli treść aktualną. Na końcu bierzemy się za autorytet poza stroną: wejście do rankingów i zestawień, z których AI bierze rekomendacje. I mierzymy to co tydzień, ręcznie, w czterech silnikach. Mamy z tego trzy wyniki u klientów, każdy z nazwiskiem firmy: Lenart Motors wskazywany przez ChatGPT po około trzech tygodniach, Fichtelgebirgshaus.de w pierwszej dziesiątce Google na frazy z umowy i widoczny w GPT, Trockenhaus z niewidocznej strony w pierwszej trójce na frazę Trockenhaus. Dwa z tych trzech wdrożeń to klienci z rynku niemieckiego, bo pracujemy po polsku i po niemiecku.',
+      'Naprawiamy trzy rzeczy: czy boty AI w ogóle widzą Twoją stronę, czy treść jest ułożona pod cytat i czy masz autorytet poza własną stroną. Potem co tydzień mierzymy, czy realnie padasz w odpowiedziach.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'sekcja',
+        naglowek: 'Jak być cytowanym w ChatGPT?',
+        wariant: 'top',
+        chip: 'GEO',
+        akapity: [
+          'Twoja treść musi być widoczna dla botów, ułożona pod cytat i poparta autorytetem spoza strony. Dokładnie w tej kolejności nad tym pracujemy:',
+        ],
+        punkty: [
+          'Odblokowujemy boty AI tam, gdzie Twoja strona je blokuje. Najpierw sprawdzamy, czy w ogóle widzą Twoją treść.',
+          'Przepisujemy kluczowe strony na format, który AI cytuje: bezpośrednia odpowiedź na początku, konkretne liczby, tabele, jasne nagłówki-pytania. To jest optymalizacja strony pod ChatGPT w praktyce.',
+          'Dokładamy świeżość, bo AI woli treść aktualną.',
+          'Budujemy autorytet poza stroną: wprowadzamy Cię do rankingów i zestawień, z których AI bierze rekomendacje.',
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Efekt mierzymy co tydzień, ręcznie. Wpisujemy Twoje kluczowe pytania w cztery silniki AI i zapisujemy, czy padasz w odpowiedziach i kto jest wymieniany zamiast Ciebie. Tak sprawdzamy cytowalność w ChatGPT: trend czarno na białym, a nie obietnice.',
+      },
+      {
+        typ: 'kafle',
+        kafle: [
+          {
+            wartosc: 'ok. 3 tygodnie',
+            opis: 'od publikacji strony Lenart Motors do wskazania firmy przez ChatGPT',
+            zrodlo: 'Lenart Motors',
+          },
+          {
+            wartosc: 'top10 Google',
+            opis: 'frazy z umowy plus widoczność w GPT',
+            zrodlo: 'Fichtelgebirgshaus.de',
+          },
+          {
+            wartosc: 'top3 Google',
+            opis: 'z niewidocznej strony na frazę Trockenhaus',
+            zrodlo: 'Trockenhaus',
+          },
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Trzy wyniki klientów, każdy z nazwą firmy',
+        wariant: 'edge',
+        chip: 'GEO',
+        akapity: [
+          'Liczby z kafli powyżej to realne wdrożenia, nie testy. Każde opisaliśmy osobno w realizacjach, więc możesz je sprawdzić, zanim cokolwiek zamówisz.',
+        ],
+        punkty: [
+          'Lenart Motors: model wskazywał firmę na konkretne pytanie klienta, o najlepszego blacharza i lakiernika premium, a nie na samą nazwę firmy.',
+          'Fichtelgebirgshaus.de: frazy nie były przypadkowe, tylko umówione z klientem w umowie. Bierzemy odpowiedzialność za konkretny zakres.',
+          'Trockenhaus: mała firma, co mówimy wprost. Widoczność zbudowała treść z konkretem, nie wielkość serwisu.',
+        ],
+        stopka: [
+          'Dwa z trzech wdrożeń to klienci z rynku niemieckiego. Pracujemy po polsku i po niemiecku.',
+        ],
+      },
+    ],
   },
 
   tabelaPorownawcza: {
@@ -102,7 +184,65 @@ export const optymalizacja: Usluga = {
   ramaCeny: {
     h2: 'Ile kosztuje pozycjonowanie pod AI?',
     tresc:
-      'To zwykle praca w rytmie miesięcznym, bo cytowalność buduje się autorytetem, który rośnie z czasem, a nie jednym strzałem. Cenę liczymy od zakresu: ile stron przepisujemy, jak szeroko ruszamy autorytet poza stroną, jak często mierzymy. Inaczej wygląda jednorazowy audyt i naprawa, inaczej stała opieka GEO. Dokładne widełki podajemy na bezpłatnej diagnozie, po tym jak pokażemy Ci Twój punkt wyjścia. Bez ukrytych kosztów.',
+      'Cenę liczymy od zakresu pracy, a dokładne widełki podajemy na bezpłatnej diagnozie, po tym jak pokażemy Ci Twój punkt wyjścia. To zwykle praca w rytmie miesięcznym, bo autorytet rośnie z czasem, nie jednym strzałem.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'sekcja',
+        naglowek: 'Od czego zależy cena pozycjonowania pod AI?',
+        wariant: 'quiet',
+        chip: 'ZASADA',
+        akapity: [
+          'Cena zależy od zakresu pracy. Na wycenę wpływają trzy rzeczy:',
+        ],
+        punkty: [
+          'ile stron przepisujemy pod cytowanie',
+          'jak szeroko ruszamy autorytet poza stroną, czyli rankingi i zestawienia',
+          'jak często mierzymy, czy padasz w odpowiedziach czterech silników AI',
+        ],
+      },
+      {
+        typ: 'tabela',
+        naglowki: [
+          'Model pracy',
+          'Co obejmuje',
+          'Kiedy pasuje',
+        ],
+        wiersze: [
+          [
+            'Audyt widoczności AI i naprawa',
+            'Odblokowanie botów, przepisanie kluczowych stron pod cytowanie, konkretne liczby i struktura',
+            'Gdy strona wymaga naprawy na start',
+          ],
+          [
+            'Stała opieka GEO',
+            'Praca w rytmie miesięcznym, autorytet poza stroną, pomiar co tydzień w czterech silnikach AI',
+            'Gdy chcesz rosnąć w cytowaniach',
+          ],
+        ],
+        wKarcie: true,
+        podpis: 'Dokładne widełki dla obu modeli, czyli Twój cennik GEO, poznasz na bezpłatnej diagnozie',
+      },
+      {
+        typ: 'kafle',
+        kafle: [
+          {
+            wartosc: '0 zł',
+            opis: 'bezpłatna diagnoza: sprawdzamy w czterech silnikach AI, czy Cię polecają, czy konkurencję',
+            zrodlo: 'diagnoza',
+          },
+          {
+            wartosc: 'ok. 30 minut',
+            opis: 'tyle trwa diagnoza; kończy się konkretną listą rzeczy do zrobienia',
+          },
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Bez ukrytych kosztów. I uczciwie, zanim cokolwiek zamówisz: cytowalność to praca na kwartały, nie na dni. Dlatego mierzymy co tydzień, żebyś widział trend, a nie czekał na obietnice.',
+      },
+    ],
   },
 
   faq: [

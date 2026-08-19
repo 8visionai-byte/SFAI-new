@@ -18,7 +18,7 @@ import type { Usluga } from './types';
  */
 export const rozwiazania: Usluga = {
   slug: 'rozwiazania',
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
   h1: 'Indywidualne rozwiązania AI: aplikacje i wtyczki na zamówienie',
   kapsula:
     'Czasem gotowy chatbot czy automatyzacja nie wystarczą, bo Twój problem jest tylko Twój. Wtedy budujemy rozwiązanie na miarę: aplikację webową, wtyczkę do narzędzia, którego używasz, albo Agenta spiętego z kilkoma systemami naraz. Nie sprzedajemy pudełka z funkcjami. Projektujemy dokładnie to, czego potrzebuje Twój proces, i wdrażamy szybko. Zaczynamy od bezpłatnej diagnozy, na której mówimy wprost, czy warto budować od zera, czy taniej złożyć z gotowych klocków.',
@@ -30,13 +30,79 @@ export const rozwiazania: Usluga = {
   problem: {
     h2: 'Gotowe narzędzia nie pasują do Twojego procesu?',
     tresc:
-      'Twoja firma robi coś po swojemu, a gotowe narzędzia wymuszają, żebyś to po swojemu zmienił. Płacisz za abonamenty za funkcje, których nie używasz, i ręcznie sklejasz to, co powinno działać samo. Albo masz pomysł na apkę czy wtyczkę, która zdjęłaby konkretną robotę, ale nie wiesz, czy to się opłaca i od czego zacząć. Standardowe rozwiązanie nie istnieje, bo Twój przypadek jest niestandardowy.',
+      'Twoja firma robi coś po swojemu, a gotowe narzędzia wymuszają, żebyś to po swojemu zmienił. Standardowe rozwiązanie nie istnieje, bo Twój przypadek jest niestandardowy.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'lista',
+        punkty: [
+          'Płacisz abonamenty za funkcje, których nie używasz, bo pakiet z półki zawsze zawiera więcej, niż potrzebujesz.',
+          'Ręcznie sklejasz to, co powinno działać samo, bo narzędzia z półki nie gadają z Twoimi systemami.',
+          'Masz pomysł na apkę albo wtyczkę, która zdjęłaby konkretną robotę, ale nie wiesz, czy to się opłaca i od czego zacząć.',
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Rozwiązania na zamówienie mają sens dokładnie wtedy, gdy narzędzie ma dopasować się do procesu, a nie proces do narzędzia. Gotowe z półki tego nie zrobi, bo powstało dla wszystkich, nie dla Ciebie.',
+      },
+    ],
   },
 
   rozwiazanie: {
     h2: 'Co budujemy na zamówienie?',
     tresc:
-      'Budujemy to, czego nie ma na półce: aplikację webową pod Twój konkretny proces, wtyczkę, która dokłada AI do narzędzia, w którym już pracujesz, albo Agenta spinającego kilka systemów w jeden ciąg. Najpierw projektujemy, jak to ma działać, potem stawiamy najmniejszą wersję, która rozwiązuje problem, i rozwijamy ją z Tobą. Bez przepłacania za funkcje, których nigdy nie użyjesz. Twoje dane i kod zostają pod Twoją kontrolą, w Unii Europejskiej.',
+      'Budujemy to, czego nie ma na półce: rozwiązania na zamówienie pod Twój konkretny proces. Na bezpłatnej diagnozie mówimy wprost, czy warto budować od zera, czy taniej złożyć z gotowych klocków.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'sekcja',
+        naglowek: 'Czym jest indywidualne rozwiązanie AI?',
+        akapity: [
+          'Indywidualne rozwiązanie AI to narzędzie zbudowane pod jeden proces Twojej firmy. Wybierasz je, gdy policzysz, że abonamenty za gotowe narzędzia kosztują Cię więcej, niż są warte funkcje, których naprawdę używasz, albo gdy ręcznie sklejasz to, co powinno działać samo. W praktyce przyjmuje jedną z trzech form:',
+        ],
+        punkty: [
+          'Aplikacja webowa na zamówienie: pod jeden konkretny proces Twojej firmy, bez zbędnych funkcji.',
+          'Wtyczki AI do narzędzi, których już używasz, na przykład wtyczka AI do CRM, żeby nie zmieniać całego systemu.',
+          'Agent AI spinający kilka systemów naraz w jeden ciąg pracy, pod nadzorem człowieka.',
+        ],
+        wariant: 'top',
+      },
+      {
+        typ: 'naglowek',
+        tekst: 'Oferta z 2-4 godzin do 20 minut: przykład narzędzia na zamówienie',
+      },
+      {
+        typ: 'kafle',
+        kafle: [
+          {
+            wartosc: '20 minut',
+            opis: 'przygotowanie oferty, wcześniej 2-4 godziny',
+            zrodlo: 'Trockenhaus (DE), narzędzie do kosztorysowania',
+          },
+          {
+            wartosc: '5 minut',
+            opis: 'wystawienie rachunku, wcześniej około 1 godziny',
+            zrodlo: 'Trockenhaus (DE)',
+          },
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Narzędzie do kosztorysowania zbudowaliśmy dla Trockenhaus, małej firmy z Niemiec. Cenniki są wgrane do narzędzia, które samo sprawdza aktualne ceny w hurtowniach. Oferta powstaje w 20 minut zamiast 2-4 godzin, rachunek w około 5 minut zamiast godziny. Skala to 1-8 ofert i 1-5 rachunków miesięcznie, mówimy to wprost.',
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Zaczynamy od najmniejszej działającej wersji',
+        akapity: [
+          'Najpierw projektujemy, jak rozwiązanie ma działać, potem stawiamy najmniejszą wersję, która realnie rozwiązuje problem, i rozwijamy ją z Tobą. Tak budujemy wszystkie indywidualne rozwiązania AI: bez płacenia za funkcje na zapas.',
+          'Aplikacje AI dla firm budujemy tak, żeby Twoje dane i kod zostały pod Twoją kontrolą, w Unii Europejskiej. Przetwarzanie jest zgodne z RODO i AI Act.',
+        ],
+        wariant: 'quiet',
+        chip: 'ZASADA',
+      },
+    ],
   },
 
   tabelaPorownawcza: {
@@ -77,7 +143,68 @@ export const rozwiazania: Usluga = {
   ramaCeny: {
     h2: 'Ile kosztuje indywidualne rozwiązanie AI?',
     tresc:
-      'Rozwiązanie na miarę wyceniamy indywidualnie, bo każde jest inne, ale nie zostawiamy Cię z „to zależy”. Na bezpłatnej diagnozie rozkładamy projekt na etapy i podajemy widełki dla pierwszej, najmniejszej działającej wersji, zanim cokolwiek zamówisz. Zaczynamy od małego zakresu, żeby koszt i ryzyko były policzalne, a nie z sufitu. Bez ukrytych kosztów i bez płacenia za funkcje na zapas.',
+      'Rozwiązanie na miarę wyceniamy indywidualnie, bo każde jest inne, ale nie zostawiamy Cię z „to zależy”. Widełki dla pierwszej, najmniejszej działającej wersji dostajesz na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'kafle',
+        kafle: [
+          {
+            wartosc: '0 zł',
+            opis: 'bezpłatna diagnoza przed jakąkolwiek wyceną',
+          },
+          {
+            wartosc: 'około 30 minut',
+            opis: 'tyle trwa rozmowa diagnostyczna',
+          },
+          {
+            wartosc: '2 rundy poprawek',
+            opis: 'w cenie każdego wdrożenia',
+          },
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Co dostajesz w cenie wdrożenia?',
+        akapity: [
+          'W cenie wdrożenia masz 2 rundy poprawek i jasne zasady liczenia czasu. Nowe funkcje to rozbudowa, którą wyceniamy osobno, więc od początku wiesz, za co płacisz.',
+        ],
+        punkty: [
+          'Dwie rundy poprawek w cenie: tydzień testów, poprawki, drugi tydzień, poprawki, odbiór.',
+          'Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy.',
+          'Poprawki tego, co nie zadziałało po naszej stronie, robimy zawsze, także po odbiorze.',
+        ],
+        wariant: 'edge',
+        chip: 'ZASADA',
+      },
+      {
+        typ: 'tabela',
+        naglowki: [
+          'Model po wdrożeniu',
+          'Abonament',
+          'Dla kogo',
+        ],
+        wiersze: [
+          [
+            'Przekazanie infrastruktury Tobie',
+            '0 zł miesięcznie',
+            'Gdy chcesz pełnej niezależności od dostawcy',
+          ],
+          [
+            'Projekt zostaje u nas',
+            'Opłata utrzymaniowa dopasowana do zakresu',
+            'Gdy nie chcesz zajmować się serwerami i aktualizacjami',
+          ],
+        ],
+        wKarcie: true,
+        podpis: 'Dwa modele rozliczenia po wdrożeniu: wybierasz na diagnozie, oba opisujemy zawsze.',
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Diagnoza kosztuje 0 zł i trwa około 30 minut. Rozkładamy na niej projekt na etapy, żeby koszt i ryzyko były policzalne, a nie z sufitu. Bez ukrytych kosztów i bez płacenia za funkcje na zapas.',
+      },
+    ],
     // minPrice: undefined — brak realnych widełek od Pawła. Po ustaleniu wpisać
     // number → kwota „od X zł" pojawi się w UI i w offers Service JSON-LD spójnie.
     /* v22 (linki §3, P1 #8): 32 wyświetlenia, pozycja 8,9, czyli TOP10 z zerowym

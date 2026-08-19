@@ -49,13 +49,68 @@ export const asystentPrezesa: Usluga = {
   problem: {
     h2: 'Na czym schodzi dzień osoby, która prowadzi firmę?',
     tresc:
-      'Nie na decyzjach. Na dojściu do nich. Przeczytanie wątku, żeby wiedzieć, o co chodzi. Napisanie maila, który mógłby napisać ktokolwiek, gdyby znał kontekst. Sprawdzenie, kim jest firma przed spotkaniem. Zebranie liczb z trzech plików do jednej tabeli. Poskładanie prezentacji z rzeczy, które i tak już są. Każda z tych rzeczy trwa kwadrans i żadna nie posuwa firmy do przodu, a razem zjadają pół dnia. Asystent-człowiek to rozwiązuje, ale trzeba go znaleźć, wdrożyć i wprowadzić w kontekst, a wrażliwe rzeczy i tak zostają po Twojej stronie. Zwykły czat AI też nie rozwiązuje, bo za każdym razem zaczynasz od tłumaczenia, czym się zajmujesz.',
+      'Nie na decyzjach, tylko na dojściu do nich. Drobne zadania, które wymagają znajomości kontekstu firmy, zjadają razem pół dnia.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'lista',
+        punkty: [
+          'Przeczytanie całego wątku tylko po to, żeby wiedzieć, o co w ogóle chodzi.',
+          'Napisanie maila, który mógłby napisać ktokolwiek, gdyby znał kontekst.',
+          'Sprawdzenie, kim jest firma, z którą masz spotkanie.',
+          'Zebranie liczb z trzech plików do jednej tabeli.',
+          'Poskładanie prezentacji z rzeczy, które i tak już są.',
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Każda z tych rzeczy trwa kwadrans i żadna nie posuwa firmy do przodu. Osobno wyglądają niewinnie, ale razem zjadają pół dnia.',
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Dlaczego asystent-człowiek i zwykły czat AI tego nie rozwiązują?',
+        wariant: 'quiet',
+        akapity: [
+          'Asystent-człowiek to rozwiązuje, ale najpierw trzeba go znaleźć, wdrożyć i wprowadzić w kontekst firmy. A wrażliwe rzeczy i tak zostają po Twojej stronie.',
+          'Zwykły czat AI też tego nie rozwiązuje, bo nie zna Twojej firmy. Za każdym razem zaczynasz od tłumaczenia, czym się zajmujesz, a to tłumaczenie samo w sobie jest kolejnym drobnym zadaniem.',
+        ],
+      },
+    ],
   },
 
   rozwiazanie: {
     h2: 'Co dokładnie robi prywatny asystent AI?',
     tresc:
-      'Budujemy agenta z własnym interfejsem, przypisanego do jednej osoby. Pisze maile w Twoim tonie, robi research, przygotowuje Cię do rozmów, składa prezentacje i prowadzi badania na materiale, który mu dasz. Ma funkcje wykonawcze, czyli wchodzi w udostępnione pliki i działa na nich, zamiast tylko podpowiadać, co zrobić. Zakres dopasowujemy indywidualnie: co ma umieć, do czego ma mieć dostęp i czego nie ma dotykać. Najważniejsze jest to, jak się uczy. Działa jak nowo przyjęta asystentka albo student. Na początku opowiadasz mu, czym się zajmujesz, i musisz go poprawiać. Z każdym użyciem jego wiedza rośnie, aż po jakimś czasie zna firmę na tyle, że można mu powierzać coraz więcej. To nie jest narzędzie, które działa w pełni od pierwszego dnia. To jest narzędzie, które z każdym tygodniem robi więcej.',
+      'Budujemy agenta z własnym interfejsem, przypisanego do jednej konkretnej osoby. To osobisty agent AI dla firmy: pisze maile w Twoim tonie, robi research i pracuje na plikach, które mu udostępnisz.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'lista',
+        punkty: [
+          'Pisze maile w Twoim tonie.',
+          'Robi research i prowadzi badania na materiale, który mu dasz.',
+          'Przygotowuje Cię do rozmów i spotkań.',
+          'Składa prezentacje z materiałów, które już masz.',
+          'Ma funkcje wykonawcze: wchodzi w udostępnione pliki i działa na nich, zamiast tylko podpowiadać, co zrobić.',
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Zakres dopasowujemy indywidualnie. Na starcie ustalamy, co asystent ma umieć, do czego ma mieć dostęp i czego nie ma dotykać. Czego mu nie udostępnisz, tego nie dotknie.',
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Czy asystent działa od razu w pełni?',
+        wariant: 'top',
+        chip: 'ZASADA',
+        akapity: [
+          'Nie, i mówimy to wprost. Asystent działa jak nowo przyjęta asystentka albo student. Na początku opowiadasz mu, czym się zajmujesz, i musisz go poprawiać, tak jak poprawia się nową osobę w zespole.',
+          'To nie jest narzędzie, które działa w pełni od pierwszego dnia. To narzędzie, które z każdym tygodniem robi więcej, bo jego wiedza rośnie z każdym użyciem, aż zna firmę na tyle, że można mu powierzać coraz więcej.',
+        ],
+      },
+    ],
   },
 
   tabelaPorownawcza: {
@@ -98,7 +153,59 @@ export const asystentPrezesa: Usluga = {
   ramaCeny: {
     h2: 'Ile kosztuje prywatny asystent AI dla prezesa?',
     tresc:
-      'Koszt dzieli się na trzy osobne pozycje, tak samo jak przy voicebotach, i każdą widzisz z osobna. Pierwsza to stworzenie asystenta: 7999 zł netto, płatne raz. Budowa trwa 5 do 10 dni roboczych, liczonych od przekazania kompletu materiałów i dostępów. Druga pozycja to utrzymanie serwerów: 199 zł netto miesięcznie. Trzecia to zużycie, czyli rozliczenie według cennika API modeli, po Twojej stronie, bo płacisz za tyle, ile asystent faktycznie przepracuje. Nie chowamy zużycia w jednym abonamencie, bo wtedy nie widać, za co się płaci. Bota przekazujemy Tobie, więc nie kupujesz dostępu do konta, tylko narzędzie, które zostaje po Twojej stronie. W cenie budowy są dwie rundy poprawek. Nowe funkcje dokładane później to rozbudowa, wyceniana osobno. Zanim cokolwiek zamówisz, na bezpłatnej diagnozie przechodzimy Twój tydzień i mówimy wprost, czy w Twoim przypadku ten asystent zwróci się szybciej niż tańsze wdrożenie z innego obszaru.',
+      'Stworzenie asystenta kosztuje 7999 zł netto i płacisz to raz, a budowa trwa 5 do 10 dni roboczych. Do tego dochodzi utrzymanie serwerów za 199 zł netto miesięcznie oraz zużycie modeli, rozliczane według realnego użycia po Twojej stronie.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'tabela',
+        naglowki: [
+          'Pozycja',
+          'Ile',
+          'Co obejmuje',
+        ],
+        wiersze: [
+          [
+            'Stworzenie asystenta',
+            '7999 zł netto, płatne raz',
+            'Budowa w 5 do 10 dni roboczych, liczonych od przekazania kompletu materiałów i dostępów',
+          ],
+          [
+            'Utrzymanie serwerów',
+            '199 zł netto miesięcznie',
+            'Infrastruktura, na której działa Twój asystent',
+          ],
+          [
+            'Zużycie',
+            'Według cennika API modeli, po Twojej stronie',
+            'Płacisz za tyle, ile asystent faktycznie przepracuje',
+          ],
+        ],
+        wKarcie: true,
+        podpis: 'Trzy osobne pozycje kosztu asystenta, ten sam model rozliczenia co przy voicebotach',
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Dlaczego trzy pozycje zamiast jednego abonamentu? Bo w abonamencie zużycie jest schowane i nie widać, za co się płaci. Tutaj każdą pozycję widzisz z osobna.',
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Kto jest właścicielem asystenta po wdrożeniu?',
+        wariant: 'edge',
+        chip: 'CENNIK',
+        akapity: [
+          'Ty. Bota przekazujemy Tobie, więc nie kupujesz dostępu do cudzego konta, tylko narzędzie, które zostaje po Twojej stronie. Jeśli kiedyś zdecydujesz inaczej, możesz po prostu przestać płacić za utrzymanie.',
+        ],
+        punkty: [
+          'W cenie budowy są dwie rundy poprawek.',
+          'Nowe funkcje dokładane później to rozbudowa, wyceniana osobno.',
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Zanim cokolwiek zamówisz, na bezpłatnej diagnozie przechodzimy Twój tydzień i mówimy wprost, czy w Twoim przypadku asystent zwróci się szybciej niż tańsze wdrożenie z innego obszaru. Diagnoza trwa około 30 minut, kosztuje 0 zł i kończy się konkretną listą rzeczy do automatyzacji.',
+      },
+    ],
     minPrice: 7999,
     linkPoradnik: {
       przed: 'Jak liczyć zwrot z wdrożenia agenta AI, rozpisaliśmy w ',

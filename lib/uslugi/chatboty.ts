@@ -48,13 +48,79 @@ export const chatboty: Usluga = {
   problem: {
     h2: 'Ile razy dziennie odpowiadasz na to samo pytanie?',
     tresc:
-      'Ci sami ludzie pytają o to samo. O godziny, o cennik, o dojazd, o dostępność. Codziennie, od nowa. Klient pisze wieczorem, a Ty odpowiadasz rano, bo spałeś. Konkurencja czasem odpowiada szybciej i to ona dostaje zlecenie. Każde pytanie bez odpowiedzi w porę to potencjalny klient, który poszedł dalej.',
+      'Te same pytania wracają codziennie: o godziny, o cennik, o dojazd, o dostępność. Każde pytanie bez odpowiedzi w porę to potencjalny klient, który poszedł dalej.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'akapit',
+        tekst: 'Klient pisze wieczorem, a Ty odpowiadasz rano, bo spałeś. Konkurencja czasem odpowiada szybciej i to ona dostaje zlecenie. Tak wygląda doba firmy, w której na wiadomości odpowiada tylko człowiek.',
+      },
+      {
+        typ: 'lista',
+        punkty: [
+          'Te same pytania w kółko: o godziny, cennik, dojazd i dostępność, codziennie od nowa.',
+          'Wiadomości po godzinach i w weekend czekają na odpowiedź do rana.',
+          'Leady wieczorne często przepadają, bo nikt nie zbiera kontaktu.',
+          'Skok zapytań to kolejka i stres zespołu.',
+          'Bez chatbota na stronie firmowej odpowiadasz tylko w godzinach pracy.',
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Czy chatbot zastąpi moją obsługę klienta?',
+        wariant: 'quiet',
+        akapity: [
+          'Nie. Bot zdejmuje z zespołu dokładnie to, co widzisz na liście wyżej: pytania w kółko o to samo i wiadomości spoza godzin pracy. Wycena nietypowego zlecenia, reklamacja albo rozmowa, która wymaga wyczucia, dalej należą do Twoich ludzi.',
+          'Gdy sprawa przerasta bota, ten zapisuje kontakt do klienta i przekazuje temat Tobie. Rano zaczynasz dzień od krótkiej listy spraw dla człowieka, a nie od skrzynki pełnej pytań o godziny otwarcia.',
+        ],
+      },
+    ],
   },
 
   rozwiazanie: {
     h2: 'Co robi nasz chatbot, czego nie robi zwykły bot?',
     tresc:
-      'Uczymy chatbota na Twojej wiedzy: ofercie, cenniku, najczęstszych pytaniach. Odpowiada po polsku, konkretnie, w Twoim tonie, i zbiera kontakt do klienta, zamiast go gubić. Nie wymyśla. Gdy nie zna odpowiedzi, mówi to wprost i przekazuje sprawę do Ciebie. A kiedy będziesz gotowy, ten sam bot urośnie do Agenta, który umawia wizyty i zapisuje je w kalendarzu, a nie tylko gada.',
+      'Chatbot dla firmy uczy się na Twojej wiedzy: ofercie, cenniku, najczęstszych pytaniach. Zwykły bot odtwarza sztywny skrypt, nasz odpowiada po polsku, w Twoim tonie, i zbiera kontakt do klienta, zamiast go gubić.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'lista',
+        punkty: [
+          'Odpowiada klientom 24/7, także nocą i w weekend.',
+          'Działa jako chatbot na stronę www i w komunikatorach: jedna wiedza, ten sam bot, wiele kanałów.',
+          'Zbiera leady i kontakt do klienta od razu, nawet po godzinach.',
+          'Odsyła klienta do właściwych miejsc na stronie, zamiast kazać mu szukać.',
+          'To chatbot na własnych danych firmy: uczy się z Twoich materiałów, a dane zostają w Unii Europejskiej.',
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Czy chatbot będzie zmyślał odpowiedzi?',
+        wariant: 'top',
+        chip: 'ZASADA',
+        akapity: [
+          'Nie, bo nie odpowiada z głowy. Przy wdrożeniu podpinamy botowi bazę wiedzy: Twoją ofertę, cennik i odpowiedzi na pytania, które klienci zadają najczęściej. Każdą odpowiedź bot buduje z tych materiałów, nie z własnych domysłów.',
+          'Pytanie spoza bazy? Bot przyznaje, że tego nie wie, zapisuje kontakt i zostawia sprawę Tobie. Baza rośnie razem z botem: gdy jakieś pytanie wraca, dokładamy odpowiedź i następnym razem bot już je obsługuje.',
+          'Rozmówca od pierwszej wiadomości wie, że pisze z AI. Bot nie podszywa się pod pracownika.',
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Czym chatbot różni się od AI Agenta?',
+        wariant: 'edge',
+        akapity: [
+          'Chatbot to warstwa odpowiedzi, AI Agent to warstwa działania: nie tylko udziela informacji, ale doprowadza całe zadanie do końca, na przykład umawia wizytę i zapisuje ją w kalendarzu, pod nadzorem człowieka.',
+          'U nas wdrożenie chatbota w firmie to pierwszy, mały krok. Ten sam bot dostaje potem kolejne integracje i uprawnienia, aż urośnie do Agenta, kiedy będziesz gotowy. Nie budujesz od zera i nie musisz wybierać wszystkiego na starcie.',
+          'Rozbudowę do Agenta wyceniamy osobno, jak każdą nową funkcję. Zaczynasz od progu, którego potrzebujesz dziś.',
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Tak działa to u Instytutu Kryptografii, dla którego zbudowaliśmy trzy boty na transkrypcjach kursów. Kursant pyta chatbota i od razu trafia do właściwej lekcji, zamiast przeszukiwać setki materiałów VOD.',
+      },
+    ],
   },
 
   tabelaPorownawcza: {
@@ -108,7 +174,71 @@ export const chatboty: Usluga = {
        w treści celowo: `ServiceHero.KAFEL_CENY` opisuje kafel ceny chatbotów
        słowami 1:1 z tego akapitu („od 1790 zł / pakiet startowy"). */
     tresc:
-      'Chatbot ma trzy progi, a każdy z nich ma swój czas wdrożenia. Prosty, czyli pakiet startowy: 1790 zł netto, 1 do 2 dni roboczych, bot na stronę WWW z podpiętą przez nas bazą wiedzy, zbieraniem leadów i odsyłaniem klienta do właściwych miejsc na stronie. Średni: 3000 do 6000 zł netto, 3 do 4 dni roboczych, to co wyżej plus rozbudowana baza wiedzy i dodatkowe funkcje. Duży: 8000 do 15000 zł netto, 5 do 10 dni roboczych, pełny zakres z integracjami, zależnie od liczby elementów do zbudowania. Czas liczymy od przekazania kompletu materiałów przez Ciebie, czyli bazy wiedzy, treści i dostępów, a nie od podpisania umowy. W cenie wdrożenia są dwie rundy poprawek. Opiekę rozliczasz na dwa sposoby: bez abonamentu, gdy przekazujemy Ci całą infrastrukturę, albo za 99 do 599 zł netto miesięcznie, gdy projekt zostaje u nas i my go pilnujemy. Opieka chatbota jest tańsza niż opieka voicebota, która kosztuje 299 do 1500 zł netto miesięcznie, bo chatbot jest po prostu prostszy: nie ma telefonii, minut rozmów ani scenariuszy głosowych.',
+      'Chatbot AI dla firmy kosztuje od 1790 zł netto za pakiet startowy do 15000 zł netto za wdrożenie z integracjami. Każdy próg ma swój czas: od 1 do 2 dni roboczych przy prostym bocie do 10 dni roboczych przy pełnych integracjach.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'tabela',
+        naglowki: [
+          'Próg',
+          'Cena netto',
+          'Czas wdrożenia',
+          'Co dostajesz',
+        ],
+        wiersze: [
+          [
+            'Prosty (pakiet startowy)',
+            '1790 zł',
+            '1-2 dni robocze',
+            'bot na stronę WWW, baza wiedzy podpięta przez nas, zbieranie leadów, odsyłanie do miejsc na stronie',
+          ],
+          [
+            'Średni',
+            '3000-6000 zł',
+            '3-4 dni robocze',
+            'to co wyżej plus rozbudowana baza wiedzy i dodatkowe funkcje',
+          ],
+          [
+            'Duży z integracjami',
+            '8000-15000 zł',
+            '5-10 dni roboczych',
+            'pełny zakres, zależnie od liczby elementów do zbudowania',
+          ],
+        ],
+        wKarcie: true,
+        podpis: 'Tak wyceniamy chatboty AI dla firm: wszystkie kwoty netto. Czas liczymy od przekazania kompletu materiałów, czyli bazy wiedzy, treści i dostępów, nie od podpisania umowy.',
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Ile rund poprawek jest w cenie wdrożenia?',
+        wariant: 'top',
+        chip: 'ZASADA',
+        akapity: [
+          'Dwie, i obie masz w cenie wdrożenia, nie jako płatny dodatek. Harmonogram wygląda tak: pierwszy tydzień testujesz bota u siebie i spisujesz uwagi, my je wdrażamy. Drugi tydzień testów przynosi drugą porcję poprawek, a na końcu jest odbiór.',
+          'Co liczy się jako poprawka? Wszystko, co miało działać i nie działa: zła odpowiedź, zgubiony kontakt, odesłanie w niewłaściwe miejsce na stronie. Takie rzeczy naprawiamy zawsze, także po odbiorze.',
+          'Rozbudowa to co innego: nowa funkcja, której nie było w pierwszej rozmowie. Ją wyceniamy osobno.',
+        ],
+        stopka: [
+          'czas liczymy od przekazania kompletu materiałów',
+          'dwie rundy poprawek w cenie',
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Opieka po wdrożeniu: 99 do 599 zł netto miesięcznie albo 0 zł',
+        wariant: 'edge',
+        chip: 'CENNIK',
+        akapity: [
+          'Opiekę rozliczasz na jeden z dwóch sposobów i zawsze pokazujemy oba. Pierwszy: przekazujemy Ci całą infrastrukturę i abonament wynosi 0 zł. Drugi: projekt zostaje u nas za 99 do 599 zł netto miesięcznie, a my pilnujemy bota i dokładamy odpowiedzi na pytania, które klienci faktycznie zadają.',
+          'Dla porównania: utrzymanie voicebota kosztuje 299 do 1500 zł netto miesięcznie, bo po stronie głosowej dochodzi telefonia, minuty rozmów i scenariusze głosowe. Opieka chatbota zaczyna się od 99 zł netto, bo pilnowania jest po prostu mniej.',
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Żeby nie pomylić produktów: chatbot dla firmy za 1790 zł netto odpowiada Twoim klientom na stronie, a AI Start za 1990 zł to pierwsza automatyzacja jednego procesu wewnątrz firmy, na próbę.',
+      },
+    ],
     minPrice: 1790, // próg „prosty" (audyt §1, 2026-08-19): kwota w UI + offers w Service JSON-LD.
     /* SEO 2026-08-17: linkowanie wewnętrzne do poradnika cenowego (zdanie 1:1
        z brief-seo-2026-08-17; render w RamaCeny.tsx w tym samym akapicie). */

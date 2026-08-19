@@ -18,7 +18,7 @@ import type { Usluga } from './types';
  */
 export const dokumentyFaktury: Usluga = {
   slug: 'dokumenty-faktury',
-  dataAktualizacji: '2026-08-18',
+  dataAktualizacji: '2026-08-19',
   h1: 'Automatyzacja dokumentów i faktur (OCR, KSeF)',
 
   kapsula:
@@ -31,13 +31,83 @@ export const dokumentyFaktury: Usluga = {
   problem: {
     h2: 'Ile godzin miesięcznie przepisujesz faktury z ręki?',
     tresc:
-      'Faktura przychodzi mailem, w PDF, na zdjęciu albo na papierze. Ktoś otwiera ją, czyta, przepisuje numer, NIP, kwotę netto, VAT i datę do arkusza albo do programu księgowego. Potem zgaduje, do której kategorii kosztu to wrzucić. Przy jednej fakturze to chwila. Przy stu dziennie to cały etat na przepisywaniu. A człowiek się myli: literówka w NIP, zła kwota VAT, faktura wpisana dwa razy. W biurze rachunkowym ten ręczny przepis to najdroższa i najmniej wdzięczna część roboty, a do tego dochodzi obowiązkowy KSeF.',
+      'Ktoś w Twojej firmie otwiera każdą fakturę, czyta ją i przepisuje numer, NIP, kwoty netto, VAT i datę do arkusza albo programu księgowego. Przy jednej fakturze to chwila, przy stu dziennie to cały etat na przepisywaniu.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'akapit',
+        tekst: 'Faktura przychodzi mailem, w PDF, na zdjęciu albo na papierze. Bez automatyzacji procesu faktur każdy z tych formatów obrabiasz z ręki, a po przepisaniu ktoś jeszcze zgaduje, do której kategorii kosztu wrzucić dokument.',
+      },
+      {
+        typ: 'lista',
+        punkty: [
+          'Literówka w NIP, która blokuje rozliczenie i wraca do poprawki.',
+          'Zła kwota VAT, przepisana z pola obok na fakturze.',
+          'Ta sama faktura wpisana dwa razy, bo przy stu dokumentach łatwo przeoczyć duplikat.',
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'W biurze rachunkowym ręczny przepis to najdroższa część roboty',
+        wariant: 'edge',
+        chip: 'KSeF',
+        akapity: [
+          'W biurze rachunkowym przepisywanie faktur klientów to najdroższa i najmniej wdzięczna część pracy. Dlatego automatyzacja faktur w biurze rachunkowym daje najjaśniejszy zysk: te same dokumenty, miesiąc po miesiącu, u wielu klientów naraz.',
+          'Do tego dochodzi obowiązkowy KSeF. Jeśli nic się nie zmieni, to kolejny ręczny krok przy każdej fakturze, doklejony do przepisywania, które już dziś zjada czas.',
+        ],
+      },
+    ],
   },
 
   rozwiazanie: {
     h2: 'Co dokładnie robi automat z fakturą?',
     tresc:
-      'Automat odbiera fakturę z maila, folderu albo zdjęcia, odczytuje ją OCR-em i wyciąga dane: sprzedawcę, NIP, numer, daty, kwoty netto, VAT i brutto. Sam przypisuje koszt do kategorii, którą ustawiamy pod Twój plan kont. Wpisuje fakturę do arkusza i do programu księgowego, a potem przygotowuje ją do wysyłki do KSeF. Faktury z błędem albo nietypowe odkłada na bok i pokazuje człowiekowi do zatwierdzenia, zamiast wpisywać je w ciemno. Ty decydujesz, co automat robi sam, a co tylko podsuwa do akceptacji. Kontrola zostaje po Twojej stronie.',
+      'Automatyzacja faktur AI działa tak: automat odbiera fakturę z maila, folderu albo zdjęcia, odczytuje ją OCR-em, przypisuje koszt do kategorii i wpisuje do arkusza oraz programu księgowego. Na koniec przygotowuje fakturę do wysyłki do KSeF.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'kroki',
+        wariant: 'os',
+        kroki: [
+          {
+            tytul: 'Odczyt OCR',
+            opis: 'OCR faktur AI czyta skan, PDF i zdjęcie z telefonu. Z każdego formatu wyciąga sprzedawcę, NIP, numer, daty oraz kwoty netto, VAT i brutto. Automatyczny odczyt faktur zastępuje czytanie i przepisywanie.',
+          },
+          {
+            tytul: 'Kategoria kosztu',
+            opis: 'Automat przypisuje koszt według planu kont, który ustawiamy pod Twoją firmę. Nikt nie zgaduje przy każdej fakturze, do której kategorii ją wrzucić.',
+          },
+          {
+            tytul: 'Wpis do arkusza i księgowości',
+            opis: 'Faktura ląduje w arkuszu i w programie księgowym bez drugiego przepisywania. Automatyczne księgowanie faktur oznacza, że dane wpisane raz trafiają wszędzie, gdzie mają być.',
+          },
+          {
+            tytul: 'Eksport do KSeF',
+            opis: 'Na koniec automat przygotowuje fakturę do wysyłki do KSeF, zgodnie z tym, jak rozliczasz dokumenty.',
+          },
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Czy automat sam przypisze koszt do właściwej kategorii?',
+        wariant: 'top',
+        chip: 'ZASADA',
+        akapity: [
+          'Typowe faktury przypisuje sam, bo zna Twój plan kont i reguły, według których księgujesz koszty.',
+          'Faktury z błędem albo nietypowe odkłada na bok i pokazuje człowiekowi do zatwierdzenia, zamiast wpisywać je w ciemno.',
+        ],
+        punkty: [
+          'Ty decydujesz, co automat robi sam, a co tylko podsuwa do akceptacji.',
+          'Kontrola zostaje po Twojej stronie.',
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Dane Twoich faktur przetwarzamy w Unii Europejskiej. Automat łączy się tylko z narzędziami, na które się umówimy: arkuszem, programem księgowym i KSeF, a dostęp ustawiamy minimalny.',
+      },
+    ],
   },
 
   tabelaPorownawcza: {
@@ -79,7 +149,56 @@ export const dokumentyFaktury: Usluga = {
   ramaCeny: {
     h2: 'Ile kosztuje automatyzacja faktur?',
     tresc:
-      'Koszt zależy od skali i zakresu. Inaczej wycenia się sam odczyt faktur do arkusza, a inaczej pełny obieg: OCR, klasyfikacja kosztów, wpis do programu księgowego i eksport do KSeF dla wielu klientów biura. Pracę zaczynamy od Sprintu Diagnostycznego za 1490 zł, który odliczamy od wdrożenia, gdy wchodzimy we współpracę. Cenę liczymy od wartości: ile godzin miesięcznie schodzi z ręcznego przepisywania i ile błędów znika. Dokładne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów.',
+      'Automatyzacja procesu faktur to zwykle 3000-10000 zł netto, a pracę zaczynamy od Sprintu Diagnostycznego za 1490 zł netto, odliczanego w całości od wdrożenia. Sam odczyt faktur do arkusza to inna półka niż pełny obieg z księgowością i KSeF dla wielu klientów biura. Dokładne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'tabela',
+        wKarcie: true,
+        podpis: 'Ile kosztuje automatyzacja faktur: punkty startu',
+        naglowki: [
+          'Etap',
+          'Cena',
+          'Co dostajesz',
+        ],
+        wiersze: [
+          [
+            'Sprint Diagnostyczny',
+            '1490 zł netto',
+            '5 dni roboczych, raport PDF z mapą procesów, kwota odliczana w całości od wdrożenia',
+          ],
+          [
+            'Automatyzacja procesu',
+            'zwykle 3000-10000 zł netto',
+            'zależnie od liczby integracji: arkusz, program księgowy, KSeF',
+          ],
+          [
+            'Opieka po wdrożeniu',
+            '99-599 zł netto/mies. albo 0 zł',
+            '0 zł przy przekazaniu infrastruktury Tobie',
+          ],
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Dwie rundy poprawek w cenie i czas liczony od kompletu materiałów',
+        wariant: 'quiet',
+        chip: 'CENNIK',
+        akapity: [
+          'Trzy zasady, które mówimy wprost przy każdym wdrożeniu automatyzacji faktur.',
+        ],
+        punkty: [
+          'Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy.',
+          'Dwie rundy poprawek są w cenie wdrożenia: tydzień testów, poprawki, drugi tydzień, poprawki, odbiór.',
+          'Po wdrożeniu wybierasz jeden z dwóch modeli: przekazanie infrastruktury Tobie bez abonamentu albo projekt u nas z opłatą utrzymaniową.',
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Cenę liczymy od wartości: od tego, ile godzin miesięcznie schodzi z ręcznego przepisywania i ile błędów znika. Sprint Diagnostyczny odliczamy od wdrożenia, gdy wchodzimy we współpracę. Bez ukrytych kosztów.',
+      },
+    ],
     // minPrice: undefined — brak realnej kwoty "od X" za wdrożenie. Bez offers w Service JSON-LD.
     /* v22 (linki §3, P1 #7): 74 wyświetlenia, pozycja 25,5, w raporcie SEO
        „temat się nagrzewa". Poradnik o biurze rachunkowym linkuje TUTAJ od

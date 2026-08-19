@@ -64,13 +64,75 @@ export const potwierdzanieWizyt: PodstronaUslugi = {
   problem: {
     h2: 'Ile wizyt przepada, bo nikt nie odebrał telefonu?',
     tresc:
-      'Klient dzwoni, żeby się umówić, i trafia na sygnał. Drugi odwołuje jutrzejszy termin wieczorem, na poczcie głosowej, której nikt nie odsłucha przed rankiem. Rano stoisz z pustą godziną w grafiku, której już nikomu nie sprzedasz. Do tego te same pytania w kółko: kiedy, gdzie, ile to trwa.',
+      'Wizyta przepada w trzech momentach: gdy nikt nie odbiera telefonu, gdy odwołanie ląduje wieczorem na poczcie głosowej i gdy rano zostaje pusta godzina w grafiku. Każdy z nich kosztuje Cię realny termin, którego już nikomu nie sprzedasz.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'akapit',
+        tekst: 'Klient dzwoni, żeby się umówić, i trafia na sygnał. Drugi odwołuje jutrzejszy termin wieczorem, na poczcie głosowej, której nikt nie odsłucha przed rankiem. Rano w grafiku stoi dziura.',
+      },
+      {
+        typ: 'lista',
+        punkty: [
+          'Telefon dzwoni, gdy recepcja jest zajęta albo gabinet już zamknięty. Klient nie czeka na sygnał, tylko umawia się tam, gdzie ktoś odebrał.',
+          'Odwołanie nagrane wieczorem na pocztę głosową odsłuchasz dopiero rano. W grafiku zostaje pusta godzina, której nie zdążysz nikomu oddać.',
+          'Rejestracja odpowiada w kółko na te same pytania: kiedy, gdzie, ile trwa wizyta. Każda taka rozmowa blokuje telefon dla klienta, który chce się umówić.',
+        ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Ten problem ma każde miejsce, które żyje z kalendarza: gabinet, salon, serwis, przychodnia. Potwierdzanie wizyt bez recepcji to alternatywa dla dokładania etatu. Stawka jest prosta: pełny grafik zamiast pustych godzin.',
+      },
+    ],
   },
 
   rozwiazanie: {
     h2: 'Jak voicebot umawia i potwierdza wizytę?',
     tresc:
-      'Voicebot odbiera telefon, także po godzinach. Widzi wolne terminy w Twoim kalendarzu, proponuje je dzwoniącemu i zapisuje wizytę w trakcie rozmowy. Potwierdzenie wychodzi tekstem, można ustawić SMS z numerem Twojej firmy. Gdy klient dzwoni, żeby przełożyć albo odwołać termin, bot zmienia wpis i zwalnia godzinę. Sprawy spoza scenariusza przekazuje Tobie z notatką z rozmowy. Voicebot nie dzwoni sam: przypomnienie o wizycie idzie tekstem.',
+      'Voicebot do umawiania wizyt odbiera telefon 24/7, widzi wolne terminy w Twoim kalendarzu i zapisuje wizytę w trakcie rozmowy. Potwierdzenie wychodzi tekstem od razu po rozmowie.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'sekcja',
+        naglowek: 'Czy voicebot umówi wizytę w moim kalendarzu?',
+        wariant: 'top',
+        chip: 'VOICEBOTY',
+        akapity: [
+          'Tak. Bot telefoniczny umawia wizyty prosto w Twoim kalendarzu. Łączymy voicebota z Twoim grafikiem, więc bot nie zgaduje terminów, tylko naprawdę je widzi. Dzięki integracji z kalendarzem wizyta trafia do grafiku bez ręcznego wpisywania.',
+        ],
+        punkty: [
+          'Automatyczne umawianie wizyt przez telefon działa także po godzinach i w weekend, gdy gabinet jest już zamknięty.',
+          'Widzi wolne terminy i proponuje je dzwoniącemu.',
+          'Zapisuje wizytę w trakcie rozmowy, nie po niej.',
+          'Potwierdzenie idzie tekstem, można ustawić SMS z numerem Twojej firmy.',
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Co się dzieje, gdy klient chce odwołać albo przełożyć wizytę?',
+        wariant: 'edge',
+        akapity: [
+          'Gdy klient dzwoni odwołać wizytę, bot przyjmuje odwołanie w rozmowie i od razu zwalnia termin w kalendarzu. Przy przełożeniu proponuje wolne godziny i zapisuje nowy termin, a Ty widzisz zmianę w grafiku.',
+          'Tak wygląda rejestracja bez recepcji: działa także wtedy, gdy wszyscy są zajęci albo w gabinecie nie ma już nikogo.',
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Voicebot nie dzwoni sam i nie udaje człowieka',
+        wariant: 'quiet',
+        chip: 'ZASADA',
+        akapity: [
+          'Rynek często rozumie potwierdzanie wizyt jako bota, który obdzwania klientów dzień przed terminem. My takich botów nie robimy i mówimy to wprost.',
+        ],
+        punkty: [
+          'Voicebot obsługuje wyłącznie połączenia przychodzące. Przypomnienie o wizycie idzie tekstem.',
+          'Na początku rozmowy mówi, że jest asystentem AI. Tego wymaga AI Act.',
+          'Sprawy spoza scenariusza przekazuje Tobie z notatką z rozmowy.',
+        ],
+      },
+    ],
   },
 
   /* v20: komórki skrócone do długości rodzica (cecha ~12 zn, zNami ~30 zn),
@@ -148,7 +210,69 @@ export const potwierdzanieWizyt: PodstronaUslugi = {
        oznaczona jako netto. Integracja z kalendarzem jest tu sednem usługi,
        więc próg „z integracjami" stoi w treści wprost. */
     tresc:
-      'Voicebot ma trzy osobne pozycje. Stworzenie bota: 2500 zł netto jednorazowo za wersję prostą, czyli bota odbierającego telefon 24/7 po polsku, z wdrożeniem i konfiguracją, albo 5000 do 9000 zł netto za wersję z integracjami, na przykład z Twoim kalendarzem, i z rozbudowanymi scenariuszami. Utrzymanie: 299 do 1500 zł netto miesięcznie, gdy infrastruktura zostaje u nas, albo 0 zł miesięcznie, gdy przekazujemy ją Tobie, a poprawki zamawiasz wtedy po 350 zł netto za godzinę. Zużycie: tokeny i minuty rozmów według realnego użycia, po Twojej stronie. Czas wdrożenia liczymy od przekazania kompletu materiałów, a w cenie są dwie rundy poprawek.',
+      'Stworzenie voicebota do potwierdzania wizyt to 2500 zł netto jednorazowo za pakiet startowy z wdrożeniem i konfiguracją albo 5000 do 9000 zł netto za wersję z integracją z Twoim kalendarzem. Do tego dochodzą dwie osobne pozycje: utrzymanie i zużycie, obie policzone niżej.',
+    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+    bloki: [
+      {
+        typ: 'tabela',
+        naglowki: [
+          'Pozycja',
+          'Ile',
+          'Kiedy płacisz',
+        ],
+        wiersze: [
+          [
+            'Stworzenie bota',
+            '2500 zł netto (pakiet startowy) albo 5000-9000 zł netto z integracją z kalendarzem',
+            'jednorazowo',
+          ],
+          [
+            'Utrzymanie',
+            '299-1500 zł netto/mies. przy infrastrukturze u nas albo 0 zł/mies. po jej przekazaniu Tobie',
+            'co miesiąc albo wcale',
+          ],
+          [
+            'Zużycie',
+            'tokeny i minuty rozmów według realnego użycia',
+            'po Twojej stronie, wg użycia',
+          ],
+        ],
+        wKarcie: true,
+        podpis: 'Trzy osobne pozycje kosztu voicebota, każda kwota netto',
+      },
+      {
+        typ: 'kafle',
+        kafle: [
+          {
+            wartosc: '2500 zł netto',
+            opis: 'pakiet startowy: bot odbiera telefon 24/7 po polsku, z wdrożeniem i konfiguracją',
+          },
+          {
+            wartosc: '5000-9000 zł netto',
+            opis: 'wersja z integracją z kalendarzem i rozbudowanymi scenariuszami',
+          },
+          {
+            wartosc: '0 zł/mies.',
+            opis: 'utrzymanie po przekazaniu Ci infrastruktury',
+          },
+          {
+            wartosc: '350 zł netto/h',
+            opis: 'poprawki, gdy infrastruktura jest po Twojej stronie',
+          },
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Dwie rundy poprawek w cenie, czas liczony od kompletu materiałów',
+        wariant: 'top',
+        chip: 'CENNIK',
+        akapity: [
+          'Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy. Konkretny termin dla Twojego kalendarza i scenariuszy podajemy po bezpłatnej diagnozie.',
+          'W cenie wdrożenia są dwie rundy poprawek: tydzień testów, poprawki, drugi tydzień testów, poprawki i odbiór. To, co nie zadziałało po naszej stronie, poprawiamy zawsze, także po odbiorze.',
+        ],
+      },
+    ],
     minPrice: 2500,
     /* Link powrotny do usługi macierzystej (wymóg podstrony). `linkPoradnik`
        to jedyny slot na link w kontrakcie `Usluga`, renderowany w RamaCeny.tsx

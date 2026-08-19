@@ -23,7 +23,7 @@
    i lib/realizacje. Jeden kształt linku w całym serwisie = jeden komponent
    renderujący (components/poradniki/LinkiKrzyzowe) i zero drugiego silnika
    linkowania. */
-import type { LinkKrzyzowy } from '@/lib/blog/types';
+import type { Blok, LinkKrzyzowy } from '@/lib/blog/types';
 
 /** Pytanie + odpowiedź FAQ. `odpowiedz` trafia 1:1 do FAQPage JSON-LD i na stronę. */
 export type FaqItem = {
@@ -116,16 +116,30 @@ export type Usluga = {
   problem: {
     /** H2 jak pytanie klienta, np. "Na czym naprawdę tracisz czas każdego dnia?". */
     h2: string;
-    /** Treść problemu (loss aversion, język klienta). */
+    /**
+     * Treść problemu (loss aversion, język klienta).
+     * Od rundy struktury 2026-08-19 (raport konkurencji P8: mediana akapitu
+     * ~150 znaków, „każdy akapit ma być zamkniętą myślą") to KRÓTKI LEAD
+     * odpowiadający na pytanie z h2 — reszta treści schodzi do `bloki`.
+     */
     tresc: string;
+    /**
+     * Struktura sekcji po leadzie: te same bloki co silnik treści poradników
+     * (lib/blog/types Blok), renderowane przez PostBody/Bloki w tonie kategorii
+     * usługi. Zero nowego CSS — karty, kafle, tabele i kroki 1:1 z resztą
+     * serwisu. Pole opcjonalne: usługa bez bloków renderuje się jak dotąd.
+     */
+    bloki?: Blok[];
   };
 
   /** Sekcja 3 — ROZWIĄZANIE. H2 jak pytanie. */
   rozwiazanie: {
     /** H2 jak pytanie, np. "Co dokładnie automatyzujemy?". */
     h2: string;
-    /** Treść rozwiązania (co robimy, kontrola po stronie klienta). */
+    /** Treść rozwiązania (co robimy, kontrola po stronie klienta). Lead — jak w `problem`. */
     tresc: string;
+    /** Struktura sekcji po leadzie — kontrakt jak w `problem.bloki`. */
+    bloki?: Blok[];
   };
 
   /**
@@ -176,6 +190,13 @@ export type Usluga = {
       /** Ścieżka wewnętrzna poradnika, np. '/poradniki/<slug>'. */
       href: string;
     };
+    /**
+     * Runda struktury 2026-08-19: bloki renderowane POD kartą cennika, w tej
+     * samej sekcji i tonie (np. tabela progów z czasami — raport P10: „trzy
+     * progi opisane czterema parametrami"). Kontrakt jak w `problem.bloki`.
+     * `tresc` zostaje kartą z ceną; szczegóły schodzą tutaj.
+     */
+    bloki?: Blok[];
   };
 
   /** Sekcja 7 — FAQ (5–6 pozycji). Tekst 1:1 z FAQPage JSON-LD. */

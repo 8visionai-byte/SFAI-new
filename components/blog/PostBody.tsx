@@ -34,6 +34,35 @@ import type { InfDekor } from '@/lib/inf-kategorie';
 export function PostBody({ tresc, ton }: { tresc: Blok[]; ton?: InfDekor }) {
   if (tresc.length === 0) return null;
 
+  return (
+    <Section tone="base">
+      <Bloki tresc={tresc} ton={ton} />
+    </Section>
+  );
+}
+
+/**
+ * Bloki — kolumna bloków BEZ własnej sekcji (runda struktury 2026-08-19).
+ * Wyodrębnione z PostBody, żeby sekcje stron usług (ServiceNarrative, RamaCeny)
+ * mogły renderować te same bloki WEWNĄTRZ własnych sekcji — jeden silnik
+ * treści w całym serwisie, zero drugiego renderu (lekcja forka MaterialBody).
+ * DOM PostBody bez zmian: Section > ta sama kolumna co dotąd.
+ */
+export function Bloki({
+  tresc,
+  ton,
+  naglowki = 'h2',
+}: {
+  tresc: Blok[];
+  ton?: InfDekor;
+  /**
+   * Poziom nagłówków bloków 'naglowek' i 'sekcja'. Domyślnie 'h2' (artykuły:
+   * poradniki, blog, materiały — bez zmian). Sekcje stron usług podają 'h3',
+   * bo blok siedzi POD istniejącym H2 sekcji — hierarchia nagłówków dla botów
+   * zostaje czysta (h1 > h2 > h3, zero przeskoków).
+   */
+  naglowki?: 'h2' | 'h3';
+}) {
   /* v21: ton strony (kolor kategorii/typu) wchodzi jako custom property na
      wspólnym wrapperze, więc każda karta w treści świeci tym samym kolorem co
      reszta serwisu („naczynia połączone"). Bez propa `ton` render jest 1:1
@@ -43,22 +72,25 @@ export function PostBody({ tresc, ton }: { tresc: Blok[]; ton?: InfDekor }) {
     : undefined;
 
   return (
-    <Section tone="base">
-      <div className="mx-auto flex max-w-narrow flex-col gap-6" style={styl}>
-        {tresc.map((blok, i) => (
-          <Reveal key={i} delay={Math.min(i * 0.03, 0.15)}>
-            <BlokRender blok={blok} />
-          </Reveal>
-        ))}
-      </div>
-    </Section>
+    <div className="mx-auto flex max-w-narrow flex-col gap-6" style={styl}>
+      {tresc.map((blok, i) => (
+        <Reveal key={i} delay={Math.min(i * 0.03, 0.15)}>
+          <BlokRender blok={blok} naglowki={naglowki} />
+        </Reveal>
+      ))}
+    </div>
   );
 }
 
-function BlokRender({ blok }: { blok: Blok }) {
+function BlokRender({ blok, naglowki = 'h2' }: { blok: Blok; naglowki?: 'h2' | 'h3' }) {
+  /* Dynamiczny poziom nagłówka (patrz komentarz przy `Bloki.naglowki`).
+     Klasa idzie za poziomem: text-h2 dla artykułów, text-h3 w sekcjach usług
+     (ta sama skala co tytuły kart; .inf-card i tak wymusza wagę 800 w karcie). */
+  const Naglowek = naglowki;
+  const klasaNaglowka = naglowki === 'h2' ? 'text-h2' : 'text-h3';
   switch (blok.typ) {
     case 'naglowek':
-      return <h2 className="text-h2 mt-4">{blok.tekst}</h2>;
+      return <Naglowek className={`${klasaNaglowka} mt-4`}>{blok.tekst}</Naglowek>;
 
     case 'akapit':
       return <p className="text-body text-fg-muted">{blok.tekst}</p>;
@@ -108,7 +140,7 @@ function BlokRender({ blok }: { blok: Blok }) {
             </div>
           )}
 
-          <h2 className="text-h2">{blok.naglowek}</h2>
+          <Naglowek className={klasaNaglowka}>{blok.naglowek}</Naglowek>
           {blok.akapity.map((tekst, i) => (
             <p key={i} className={`text-body text-fg-muted ${i === 0 ? 'mt-4' : 'mt-3'}`}>
               {tekst}
