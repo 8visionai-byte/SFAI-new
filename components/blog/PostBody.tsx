@@ -2,8 +2,21 @@ import type { CSSProperties } from 'react';
 import { Section } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
 import { TabelaRender } from './TabelaRender';
+import { InfIcon } from '@/components/ui/InfIcons';
 import type { Blok } from '@/lib/blog/types';
 import type { InfDekor } from '@/lib/inf-kategorie';
+
+/**
+ * v23 — TONY METRYK: nazwa -> hex 1:1 z paletą kategorii (lib/inf-kategorie).
+ * Wzorzec /void stawia w jednym pasie cztery liczby w czterech barwach; u nas
+ * pas metryk może zrobić to samo, nie wychodząc poza paletę marki.
+ */
+const TONY = {
+  cyan: '#00f0ff',
+  violet: '#e438ff',
+  green: '#39ff14',
+  amber: '#ffa101',
+} as const;
 
 /**
  * PostBody — render treści artykułu z tablicy bloków (`Post['tresc']`).
@@ -52,6 +65,7 @@ export function Bloki({
   tresc,
   ton,
   naglowki = 'h2',
+  szerokosc = 'narrow',
 }: {
   tresc: Blok[];
   ton?: InfDekor;
@@ -62,17 +76,31 @@ export function Bloki({
    * zostaje czysta (h1 > h2 > h3, zero przeskoków).
    */
   naglowki?: 'h2' | 'h3';
+  /**
+   * v23 — SZEROKOŚĆ kolumny bloków. 'narrow' (760px) to stan sprzed v23:
+   * artykuły czyta się ciągiem, więc zostają. Sekcje stron usług podają
+   * 'wide' (980px), bo pomiar wzorca pokazał siatki 3-4 kolumn na ~1200px,
+   * a nasze sekcje stały w kolumnie 760px z ~660px pustych marginesów
+   * na ekranie 1440px (zrzut `ref/w-NASZ-chatboty-1.png`).
+   */
+  szerokosc?: 'narrow' | 'wide';
 }) {
   /* v21: ton strony (kolor kategorii/typu) wchodzi jako custom property na
      wspólnym wrapperze, więc każda karta w treści świeci tym samym kolorem co
      reszta serwisu („naczynia połączone"). Bez propa `ton` render jest 1:1
      jak dotąd — blog i pozostałe poradniki wyglądają identycznie. */
   const styl = ton
-    ? ({ '--card-c': ton.c, '--card-c-l': ton.odcien ?? ton.c } as CSSProperties)
+    ? ({
+        '--card-c': ton.c,
+        '--card-c-l': ton.odcien ?? ton.c,
+      } as CSSProperties)
     : undefined;
 
   return (
-    <div className="mx-auto flex max-w-narrow flex-col gap-6" style={styl}>
+    <div
+      className={`mx-auto flex flex-col gap-6 ${szerokosc === 'wide' ? 'max-w-wide' : 'max-w-narrow'}`}
+      style={styl}
+    >
       {tresc.map((blok, i) => (
         <Reveal key={i} delay={Math.min(i * 0.03, 0.15)}>
           <BlokRender blok={blok} naglowki={naglowki} />
@@ -89,8 +117,34 @@ function BlokRender({ blok, naglowki = 'h2' }: { blok: Blok; naglowki?: 'h2' | '
   const Naglowek = naglowki;
   const klasaNaglowka = naglowki === 'h2' ? 'text-h2' : 'text-h3';
   switch (blok.typ) {
-    case 'naglowek':
-      return <Naglowek className={`${klasaNaglowka} mt-4`}>{blok.tekst}</Naglowek>;
+    case 'naglowek': {
+      /* v23 — GŁOWA SEKCJI (pomiar wzorca /praxis, /void): u wzorca nagłówek
+         sekcji to płytka z glifem + tytuł W KOLORZE + pigułka-etykieta, a nad
+         tym mono overline. Bez tych pól render jest 1:1 jak przed v23, więc
+         istniejące poradniki i wpisy się nie ruszają. */
+      const ozdobny = Boolean(blok.ikona || blok.chip || blok.overline);
+      if (!ozdobny) {
+        return <Naglowek className={`${klasaNaglowka} mt-4`}>{blok.tekst}</Naglowek>;
+      }
+      return (
+        <div className="mt-4">
+          {blok.overline && <p className="inf-overline mb-2">{blok.overline}</p>}
+          <div className="inf-sekcja-glowa">
+            {blok.ikona && (
+              <span aria-hidden="true" className="inf-sekcja-glif">
+                <InfIcon name={blok.ikona} size={20} />
+              </span>
+            )}
+            <Naglowek className={`${klasaNaglowka} inf-h-kolor min-w-0`}>{blok.tekst}</Naglowek>
+            {blok.chip && (
+              <span className="inf-chip" style={{ '--chip-c': 'var(--card-c)' } as CSSProperties}>
+                {blok.chip}
+              </span>
+            )}
+          </div>
+        </div>
+      );
+    }
 
     case 'akapit':
       return <p className="text-body text-fg-muted">{blok.tekst}</p>;
@@ -227,9 +281,7 @@ function BlokRender({ blok, naglowki = 'h2' }: { blok: Blok; naglowki?: 'h2' | '
                       <span className="text-ui font-extrabold">{krok.tytul}</span>
                       {krok.meta && <span className="inf-tag">{krok.meta}</span>}
                     </div>
-                    {krok.opis && (
-                      <p className="text-body-sm mt-1 text-fg-muted">{krok.opis}</p>
-                    )}
+                    {krok.opis && <p className="text-body-sm mt-1 text-fg-muted">{krok.opis}</p>}
                   </div>
                 </div>
                 {i < blok.kroki.length - 1 && (
@@ -249,8 +301,7 @@ function BlokRender({ blok, naglowki = 'h2' }: { blok: Blok; naglowki?: 'h2' | '
       /* 'plytka' (domyślny, stan v21) i 'kolo' (chwyt /freedom §5.3: ten sam
          numer w kółku). Różnica to JEDNA deklaracja CSS (border-radius 50%),
          reszta pudełka, koloru i światła bez zmian. */
-      const klasaNumeru =
-        blok.wariant === 'kolo' ? 'inf-tile inf-tile-round' : 'inf-tile';
+      const klasaNumeru = blok.wariant === 'kolo' ? 'inf-tile inf-tile-round' : 'inf-tile';
       return (
         <ol className="flex flex-col gap-4">
           {blok.kroki.map((krok, i) => (
@@ -287,16 +338,120 @@ function BlokRender({ blok, naglowki = 'h2' }: { blok: Blok; naglowki?: 'h2' | '
       );
     }
 
+    /* ── v23: PAS METRYK. Pomiar wzorca /void: cztery liczby w czterech
+       RÓŻNYCH kolorach palety pod nagłówkiem sekcji. Semantyka to zwykła
+       <ul><li>, więc bot dostaje liczbę i jej opis obok siebie. */
+    case 'pasMetryk': {
+      const n = Math.min(Math.max(blok.metryki.length, 2), 4);
+      return (
+        <ul className="inf-pas-metryk" data-kolumn={String(n)}>
+          {blok.metryki.map((m, i) => (
+            <li
+              key={i}
+              className="inf-metryka"
+              style={m.ton ? ({ '--m-c': TONY[m.ton] } as CSSProperties) : undefined}
+            >
+              <span className="inf-metryka-wartosc">{m.wartosc}</span>
+              <span className="inf-metryka-opis">{m.opis}</span>
+              {m.zrodlo && <span className="inf-metryka-zrodlo">{m.zrodlo}</span>}
+            </li>
+          ))}
+        </ul>
+      );
+    }
+
+    /* ── v23: PRZEŁĄCZNIK bez JS (radio + :checked). Chwyt /praxis „Five
+       Stages". Treść wszystkich paneli jest w HTML od pierwszego żądania,
+       więc bot czyta komplet, a klawiatura dostaje natywną grupę radio.
+       <fieldset>/<legend> daje czytnikowi ekranu nazwę grupy wyboru. */
+    case 'przelacznik': {
+      const n = Math.min(Math.max(blok.opcje.length, 2), 5);
+      /* UKŁAD DOM JEST KONTRAKTEM Z CSS: wszystkie <input> i wszystkie
+         <section> muszą być BEZPOŚREDNIM rodzeństwem wewnątrz .inf-przel,
+         bo reguły w globals.css łączą je przez
+         `input:nth-of-type(k):checked ~ section:nth-of-type(k)`.
+         Etykiety siedzą w osobnym <div>, a ich stan wybrany łapie ta sama
+         rodzina reguł. Zmiana zagnieżdżenia = przełącznik przestaje działać. */
+      return (
+        <fieldset className="inf-przel border-0 p-0">
+          <legend className="sr-only">Wybierz wariant, żeby zobaczyć szczegóły</legend>
+          {blok.opcje.map((o, i) => (
+            <input
+              key={`r${i}`}
+              type="radio"
+              name={blok.grupa}
+              id={`${blok.grupa}-${i}`}
+              defaultChecked={i === 0}
+              className="inf-przel-radio"
+            />
+          ))}
+          <div className="inf-przel-karty" data-n={String(n)}>
+            {blok.opcje.map((o, i) => (
+              <label key={`l${i}`} htmlFor={`${blok.grupa}-${i}`} className="inf-przel-karta">
+                {o.numer && <span className="inf-przel-numer">{o.numer}</span>}
+                <span className="inf-przel-tytul">{o.tytul}</span>
+                {o.podtytul && <span className="inf-przel-podtytul">{o.podtytul}</span>}
+              </label>
+            ))}
+          </div>
+          {blok.opcje.map((o, i) => (
+            <section key={`p${i}`} className="inf-przel-panel">
+              <h4 className="text-h4 inf-h-kolor">{o.naglowek}</h4>
+              {o.akapity.map((t, j) => (
+                <p key={j} className={`text-body-sm text-fg-muted ${j === 0 ? 'mt-3' : 'mt-2'}`}>
+                  {t}
+                </p>
+              ))}
+              {o.punkty && o.punkty.length > 0 && (
+                <ul className="mt-3 ml-5 list-disc space-y-1.5 text-body-sm text-fg-muted marker:text-[color:var(--card-c,var(--accent))]">
+                  {o.punkty.map((p, j) => (
+                    <li key={j}>{p}</li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          ))}
+        </fieldset>
+      );
+    }
+
+    /* ── v23: SIATKA KART na pełnej szerokości (chwyt akademii wzorca:
+       moduły w 4 kolumnach zamiast ściany w kolumnie 760 px). */
+    case 'siatka':
+      return (
+        <ul className="inf-siatka" data-kolumn={String(blok.kolumny ?? 3)}>
+          {blok.karty.map((k, i) => (
+            <li key={i} className="inf-card inf-card-quiet p-5">
+              <div aria-hidden="true" className="inf-spotlight" />
+              <h3 className="inf-siatka-tytul">{k.naglowek}</h3>
+              {k.akapity?.map((t, j) => (
+                <p key={j} className="text-body-sm mt-2 text-fg-muted">
+                  {t}
+                </p>
+              ))}
+              {k.punkty && k.punkty.length > 0 && (
+                <ul className="mt-3 space-y-1.5 text-body-sm text-fg-muted">
+                  {k.punkty.map((p, j) => (
+                    <li key={j} className="flex gap-2">
+                      <span aria-hidden="true" className="text-[color:var(--card-c,var(--accent))]">
+                        ▸
+                      </span>
+                      <span className="min-w-0">{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      );
+
     case 'tabela': {
       /* v22: render tabeli przeniesiony do `TabelaRender` — jedno źródło dla
          PostBody, MaterialBody (przez PostBody) i tabel hubów. Zachowanie,
          klasy i semantyka 1:1 jak w v21; nowość to opcjonalny <caption>. */
       const tabelaEl = (
-        <TabelaRender
-          naglowki={blok.naglowki}
-          wiersze={blok.wiersze}
-          podpis={blok.podpis}
-        />
+        <TabelaRender naglowki={blok.naglowki} wiersze={blok.wiersze} podpis={blok.podpis} />
       );
       /* v21: `wKarcie` owija tabelę w `.inf-card` z tonem strony — ten sam
          język, co PorownanieTabela na stronach usług. Tabela pozostaje

@@ -23,6 +23,11 @@
  * komponenty) jest gotowy i się kompiluje bez treści.
  */
 
+/* v23: głowa sekcji może nieść glif z zestawu INFINITY (płytka przed tytułem),
+   więc nazwa ikony jest typowana tym samym unionem co reszta serwisu — literówka
+   w nazwie glifu nie przejdzie przez build. */
+import type { InfIconName } from '@/components/ui/InfIcons';
+
 /**
  * Kategoria wpisu — etykieta renderowana jako Badge na karcie i w hero artykułu.
  * Zamknięty zbiór trzyma spójność filtrów/etykiet (zero literówek-rozjazdów).
@@ -56,7 +61,23 @@ export type Kategoria =
  * dziś strona i tak niesie, ale w formie ściany tekstu.
  */
 export type Blok =
-  | { typ: 'naglowek'; tekst: string }
+  | {
+      typ: 'naglowek';
+      tekst: string;
+      /**
+       * v23 (pomiar wzorca /praxis, /void): nagłówek sekcji u wzorca to nie
+       * goły biały tekst, tylko GŁOWA SEKCJI — kwadratowa płytka z glifem,
+       * tytuł W KOLORZE sekcji i pigułka-etykieta obok („LIVE SIMULATOR",
+       * „CLICK A STAGE"). Wszystkie trzy pola opcjonalne, więc nagłówki bez
+       * nich renderują się 1:1 jak przed v23.
+       */
+      /** Nazwa glifu z components/ui/InfIcons (płytka przed tytułem). */
+      ikona?: InfIconName;
+      /** Pigułka po tytule. ISTNIEJĄCA etykieta strony, nigdy nowy termin. */
+      chip?: string;
+      /** Mono overline nad tytułem (np. „CENNIK · TRZY PROGI"). */
+      overline?: string;
+    }
   | { typ: 'akapit'; tekst: string }
   | { typ: 'lista'; punkty: string[] }
   | {
@@ -172,6 +193,79 @@ export type Blok =
          * `.inf-tag`. WYŁĄCZNIE dane, które już są w rejestrze albo w treści.
          */
         meta?: string;
+      }[];
+    }
+  | {
+      /**
+       * v23 — PAS METRYK (pomiar wzorca /void: cztery liczby w CZTERECH
+       * RÓŻNYCH kolorach palety zaraz pod nagłówkiem sekcji; u nas kafle
+       * liczb istniały wyłącznie w hero usług).
+       *
+       * RÓŻNICA WOBEC BLOKU `kafle`: `kafle` renderują się w jednym kolorze
+       * sekcji i siedzą w kolumnie tekstu. `pasMetryk` idzie na pełną
+       * szerokość sekcji, a KAŻDA metryka może mieć własny kolor z palety
+       * (pole `ton`), tak jak u wzorca. Blok `kafle` zostaje nietknięty,
+       * więc istniejące strony renderują się bit w bit jak dotąd.
+       *
+       * ŻELAZNA ZASADA: liczby WYŁĄCZNIE takie, które już stoją w treści tej
+       * strony albo w rejestrze. Zero nowych danych, zero szacunków bez „(szac.)".
+       */
+      typ: 'pasMetryk';
+      metryki: {
+        /** Liczba z jednostką, np. „1790 zł netto", „24/7", „3-5 dni". */
+        wartosc: string;
+        /** Czego liczba dotyczy. Bez tego liczba nie jest cytowalna. */
+        opis: string;
+        /** Skąd ta liczba (fakt z tej samej strony). Mikro-podpis pod opisem. */
+        zrodlo?: string;
+        /**
+         * Kolor metryki z palety kategorii. Domyślnie kolor sekcji.
+         * 'cyan' | 'violet' | 'green' | 'amber' — nazwy 1:1 z paletą
+         * lib/inf-kategorie (#00f0ff / #e438ff / #39ff14 / #ffa101).
+         */
+        ton?: 'cyan' | 'violet' | 'green' | 'amber';
+      }[];
+    }
+  | {
+      /**
+       * v23 — PRZEŁĄCZNIK (chwyt wzorca /praxis §„Five Stages, One Direction":
+       * rząd klikalnych kart, a pod nimi panel wybranej karty z kreską w jej
+       * kolorze). Zamówiony przez Pawła wprost: „kliknięcie było z jednej
+       * strony, przechodziło nam do drugą i rozwijało całą sekcję".
+       *
+       * MECHANIKA: radio + `:checked ~` w CSS, ZERO JavaScriptu. Treść
+       * WSZYSTKICH paneli jest w HTML przy pierwszym żądaniu (SSG), więc bot
+       * czyta komplet, a użytkownik bez JS ma pełną obsługę klawiaturą.
+       *
+       * `grupa` MUSI być unikalna w obrębie strony (nazwa grupy radio).
+       */
+      typ: 'przelacznik';
+      grupa: string;
+      opcje: {
+        /** Tytuł na karcie wyboru (krótki, 1-3 słowa). */
+        tytul: string;
+        /** Numer/etykieta nad tytułem, np. „KROK 1", „PRÓG A". */
+        numer?: string;
+        /** Mono-podtytuł pod tytułem, np. cena progu albo czas. */
+        podtytul?: string;
+        /** Nagłówek panelu (H3/H4 w kolorze sekcji). */
+        naglowek: string;
+        akapity: string[];
+        punkty?: string[];
+      }[];
+    }
+  | {
+      /**
+       * v23 — SIATKA KART (chwyt akademii wzorca: 4-kolumnowa siatka modułów
+       * z tytułem w kolorze i listą pozycji). Rozbija ścianę tekstu w poziomie,
+       * zamiast ciągnąć ją w dół w kolumnie 760 px.
+       */
+      typ: 'siatka';
+      kolumny?: 2 | 3 | 4;
+      karty: {
+        naglowek: string;
+        akapity?: string[];
+        punkty?: string[];
       }[];
     };
 

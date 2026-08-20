@@ -36,17 +36,24 @@ export function ServiceNarrative({
 }) {
   return (
     <Section tone={tone} id={id}>
-      <div className="mx-auto max-w-narrow">
-        <Reveal>
-          <h2 className="text-h2">{h2}</h2>
-        </Reveal>
-        <Reveal delay={0.05}>
-          <p className="text-lead mt-5 text-fg-muted">{tresc}</p>
-        </Reveal>
+      {/* v23: OŚ SEKCJI idzie na `wide` (980px), ale NAGŁÓWEK I LEAD zostają
+          w `narrow` (760px) — tekst ciągły powyżej ~75 znaków w wierszu czyta
+          się gorzej, a wzorzec też trzyma akapity wąsko i rozpycha dopiero
+          siatki. Dzięki temu kafle, tabele i przełączniki dostają pełną oś,
+          a zdania nie robią się za szerokie. */}
+      <div className="mx-auto max-w-wide">
+        <div className="mx-auto max-w-narrow">
+          <Reveal>
+            <h2 className="text-h2">{h2}</h2>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <p className="text-lead mt-5 text-fg-muted">{tresc}</p>
+          </Reveal>
+        </div>
         {bloki && bloki.length > 0 && (
           <div className="mt-8">
             {/* naglowki="h3": blok siedzi POD H2 tej sekcji — hierarchia bez przeskoków. */}
-            <Bloki tresc={bloki} ton={ton} naglowki="h3" />
+            <Bloki tresc={bloki} ton={ton} naglowki="h3" szerokosc="wide" />
           </div>
         )}
       </div>

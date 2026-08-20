@@ -176,8 +176,76 @@ export const chatboty: Usluga = {
     tresc:
       'Chatbot AI dla firmy kosztuje od 1790 zł netto za pakiet startowy do 15000 zł netto za wdrożenie z integracjami. Każdy próg ma swój czas: od 1 do 2 dni roboczych przy prostym bocie do 10 dni roboczych przy pełnych integracjach.',
     /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę.
+       v23 (2026-08-20): na wejściu sekcji stoi PAS METRYK i PRZEŁĄCZNIK progów,
+       czyli chwyty zmierzone u wzorca (/void pas czterech liczb w czterech
+       barwach, /praxis rząd klikalnych kart z panelem wybranej). Liczby 1:1
+       z drabiny progów, która i tak stoi niżej w tabeli. */
     bloki: [
+      {
+        typ: 'pasMetryk',
+        metryki: [
+          { wartosc: '1790 zł', opis: 'chatbot prosty, netto', zrodlo: 'próg 1 z tabeli niżej', ton: 'cyan' },
+          { wartosc: '1-2 dni', opis: 'wdrożenie progu prostego', zrodlo: 'od przekazania materiałów', ton: 'green' },
+          { wartosc: '99-599 zł', opis: 'opieka miesięcznie, netto', zrodlo: 'albo 0 zł po przekazaniu', ton: 'amber' },
+          { wartosc: '2 rundy', opis: 'poprawek w cenie wdrożenia', ton: 'violet' },
+        ],
+      },
+      {
+        typ: 'naglowek',
+        tekst: 'Który próg pasuje do Twojej firmy?',
+        ikona: 'lupa-wykres',
+        chip: 'WYBIERZ PRÓG',
+        overline: 'CENNIK · TRZY PROGI',
+      },
+      {
+        typ: 'przelacznik',
+        grupa: 'chatbot-progi',
+        opcje: [
+          {
+            numer: 'PRÓG 1',
+            tytul: 'Prosty',
+            podtytul: '1790 zł netto',
+            naglowek: 'Chatbot prosty: 1790 zł netto, 1 do 2 dni roboczych',
+            akapity: [
+              'Bot na stronę www z bazą wiedzy, którą podpinamy my. Odpowiada na powtarzalne pytania, zbiera leady i odsyła klienta we właściwe miejsce na stronie.',
+            ],
+            punkty: [
+              'Baza wiedzy z Twoich materiałów, podpięta przez nas.',
+              'Zbieranie leadów i kontaktu do klienta.',
+              'Odsyłanie do właściwych miejsc na stronie.',
+            ],
+          },
+          {
+            numer: 'PRÓG 2',
+            tytul: 'Średni',
+            podtytul: '3000-6000 zł netto',
+            naglowek: 'Chatbot średni: 3000 do 6000 zł netto, 3 do 4 dni roboczych',
+            akapity: [
+              'To, co w progu prostym, plus rozbudowana baza wiedzy i dodatkowe funkcje dopasowane do tego, o co realnie pytają Twoi klienci.',
+            ],
+            punkty: [
+              'Wszystko z progu prostego.',
+              'Rozbudowana baza wiedzy.',
+              'Dodatkowe funkcje pod Twój proces.',
+            ],
+          },
+          {
+            numer: 'PRÓG 3',
+            tytul: 'Duży',
+            podtytul: '8000-15000 zł netto',
+            naglowek: 'Chatbot duży: 8000 do 15000 zł netto, 5 do 10 dni roboczych',
+            akapity: [
+              'Pełny zakres z integracjami. Cena zależy od liczby elementów do zbudowania i od tego, z iloma systemami bot ma się połączyć.',
+            ],
+            punkty: [
+              'Pełne integracje z Twoimi systemami.',
+              'Zakres i termin ustalamy na diagnozie.',
+              'Dwie rundy poprawek w cenie, jak w każdym progu.',
+            ],
+          },
+        ],
+      },
       {
         typ: 'tabela',
         naglowki: [

@@ -6107,3 +6107,321 @@ a.inf-card:focus-visible {
   outline: 2px solid var(--card-c, var(--accent));
   outline-offset: 2px;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INFINITY v23 — JĘZYK PODSTRON (pomiar wzorca: praxis, void, vitalis, axiom,
+   7 akademii; raport `raporty/pomiary-v23-wzorzec.md`).
+
+   CO ZMIERZYŁEM I DLACZEGO TO DOKŁADAM (cytat Pawła: „nasze podstrony mega od
+   tego odbiegają", „u nas jest wielka dalej ściana tekstu"):
+   1. NAGŁÓWEK SEKCJI: u wzorca to ikona w kwadratowej płytce + tytuł
+      W KOLORZE SEKCJI + pigułka-etykieta obok („LIVE SIMULATOR", „CLICK
+      A STAGE"). U nas: goły biały H2. Stąd `.inf-sekcja-glowa`.
+   2. PAS METRYK: wzorzec stawia 3-4 liczby W RÓŻNYCH KOLORACH palety zaraz
+      pod nagłówkiem (void: RAW BYTES / SUBWORD TOKENS / COMPRESSION RATIO /
+      VOCAB SCOPE). U nas kafle istnieją tylko w hero. Stąd `.inf-pas-metryk`.
+   3. PRZEŁĄCZNIK: praxis „Five Stages, One Direction" — rząd klikalnych kart
+      ze strzałkami, a pod nimi panel wybranej karty z kreską w jej kolorze.
+      Zamówione przez Pawła wprost: „kliknięcie było z jednej strony,
+      przechodziło nam do drugą i rozwijało całą sekcję". Stąd `.inf-przel-*`.
+      MECHANIKA BEZ JS: radio + `:checked ~` (SSG, treść wszystkich paneli
+      jest w HTML przy pierwszym żądaniu, więc bot czyta komplet).
+   4. SZEROKOŚĆ: wzorzec jedzie siatkami 3-4 kolumn na ~1200px. Nasze sekcje
+      stały w kolumnie 760px z ~660px pustych marginesów na 1440px.
+   Zero nowych tokenów: kolory z --card-c/--card-c-l, odstępy z siatki repo.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── (1) GŁOWA SEKCJI: płytka z ikoną + tytuł w kolorze + pigułka ────────── */
+.inf-sekcja-glowa {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+/* Kwadratowa płytka glifu, geometria 1:1 z `.inf-tile` (36px, radius 10px),
+   ale własny selektor: płytka nagłówka NIE obraca się przy hoverze karty. */
+.inf-sekcja-glif {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: none;
+  border-radius: 0.625rem;
+  color: var(--card-c-l, var(--card-c, var(--accent)));
+  border: 1px solid color-mix(in srgb, var(--card-c, var(--accent)) 45%, transparent);
+  background-color: color-mix(in srgb, var(--card-c, var(--accent)) 14%, transparent);
+  box-shadow: 0 0 14px -4px color-mix(in srgb, var(--card-c, var(--accent)) 60%, transparent);
+}
+/* Tytuł sekcji W KOLORZE (wzorzec: „Interactive CLI & Engine Terminal" cyan,
+   „Privacy Enforced In Code" zielony). Poświata jak przy liczniku hero, żeby
+   kolor nie wyglądał na wyblakły.
+   KONTRAST: to tekst DUŻY (>=24px, waga >=700), próg AA to 3:1. Najciemniejszy
+   odcień palety (#ffa101) na korpusie karty daje 8,6:1, fiolet #e438ff 5,1:1 —
+   AA z zapasem. Poświata gaśnie w Windows High Contrast (reguła niżej). */
+.inf-h-kolor {
+  color: var(--card-c-l, var(--card-c, var(--accent)));
+  text-shadow: 0 0 16px color-mix(in srgb, currentcolor 55%, transparent);
+}
+@media (forced-colors: active) {
+  .inf-h-kolor {
+    color: CanvasText;
+    text-shadow: none;
+  }
+  .inf-sekcja-glif {
+    box-shadow: none;
+  }
+}
+
+/* ── (2) PAS METRYK: liczby w RÓŻNYCH kolorach palety ────────────────────── */
+.inf-pas-metryk {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.625rem;
+}
+@media (min-width: 768px) {
+  .inf-pas-metryk[data-kolumn='3'] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .inf-pas-metryk[data-kolumn='4'] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+/* Pudełko metryki = anatomia `.inf-hero-stat`, ale kolor bierze z --m-c,
+   czyli PER METRYKA (wzorzec /void §pas metryk: cztery liczby, cztery barwy). */
+.inf-metryka {
+  --m-c: var(--card-c, var(--accent));
+  position: relative;
+  padding: 1rem 0.875rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  border: 1px solid color-mix(in srgb, var(--m-c) 30%, var(--border));
+  background-color: rgba(8, 15, 25, 0.45);
+  background-image: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--m-c) 9%, transparent),
+    transparent 62%
+  );
+}
+.inf-metryka-wartosc {
+  display: block;
+  font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
+  font-size: 1.5rem; /* 24px */
+  font-weight: 800;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+  color: var(--m-c);
+  text-shadow: 0 0 12px currentcolor;
+}
+.inf-metryka-opis {
+  display: block;
+  margin-top: 0.375rem;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--fg-muted);
+}
+.inf-metryka-zrodlo {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.625rem;
+  line-height: 1.3;
+  color: color-mix(in srgb, var(--fg-muted) 70%, var(--fg));
+}
+@media (forced-colors: active) {
+  .inf-metryka-wartosc {
+    color: CanvasText;
+    text-shadow: none;
+  }
+}
+
+/* ── (3) PRZEŁĄCZNIK bez JS: karty + panel wybranej karty ─────────────────
+   Radio siedzi w DOM przed listą kart i panelami (`:checked ~`), a sam input
+   jest schowany wizualnie, nie usunięty — klawiatura dostaje natywną obsługę
+   strzałkami, jak przy każdej grupie radio. Treść WSZYSTKICH paneli jedzie
+   w HTML przy pierwszym żądaniu (SSG), więc bot czyta komplet. */
+.inf-przel-radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+.inf-przel-karty {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.625rem;
+}
+@media (min-width: 900px) {
+  .inf-przel-karty[data-n='3'] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .inf-przel-karty[data-n='4'] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .inf-przel-karty[data-n='5'] {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+/* Karta wyboru w spoczynku: wygaszona, jak nieaktywne STAGE 2-5 u wzorca. */
+.inf-przel-karta {
+  display: block;
+  cursor: pointer;
+  padding: 0.875rem 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background-color: rgba(8, 15, 25, 0.4);
+  text-align: center;
+  transition:
+    border-color 0.28s var(--ease-out),
+    box-shadow 0.28s var(--ease-out),
+    background-color 0.28s var(--ease-out),
+    transform 0.28s var(--ease-out);
+}
+.inf-przel-numer {
+  display: block;
+  font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+.inf-przel-tytul {
+  display: block;
+  margin-top: 0.375rem;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--fg-muted);
+  transition: color 0.28s var(--ease-out);
+}
+.inf-przel-podtytul {
+  display: block;
+  margin-top: 0.125rem;
+  font-family: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
+  font-size: 0.6875rem;
+  color: var(--fg-subtle);
+}
+@media (hover: hover) and (pointer: fine) {
+  .inf-przel-karta:hover {
+    border-color: color-mix(in srgb, var(--card-c, var(--accent)) 55%, transparent);
+    background-color: rgba(12, 20, 32, 0.55);
+  }
+  .inf-przel-karta:hover .inf-przel-tytul {
+    color: var(--fg);
+  }
+}
+/* STAN WYBRANY (wzorzec: STAGE 1 ma pełną ramkę w kolorze + poświatę). */
+/* Panel: domyślnie schowany, pokazuje go wybrane radio tej samej grupy.
+   Lewa kreska w kolorze sekcji — chwyt panelu „Voice-to-Context" z praxis. */
+.inf-przel-panel {
+  display: none;
+  margin-top: 0.75rem;
+  padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--card-c, var(--accent)) 26%, var(--border));
+  border-left: 3px solid var(--card-c-l, var(--card-c, var(--accent)));
+  background-color: rgba(10, 16, 28, 0.55);
+  background-image: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--card-c, var(--accent)) 7%, transparent),
+    transparent 55%
+  );
+}
+@media (prefers-reduced-motion: no-preference) {
+  .inf-przel-panel {
+    animation: infPanelWejscie 0.32s var(--ease-out) both;
+  }
+}
+@keyframes infPanelWejscie {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── (4) SIATKA KART na pełnej szerokości ────────────────────────────────── */
+.inf-siatka {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+}
+@media (min-width: 640px) {
+  .inf-siatka {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 960px) {
+  .inf-siatka[data-kolumn='3'] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .inf-siatka[data-kolumn='4'] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+/* Tytuł karty w siatce: kolor sekcji, jak moduły akademii u wzorca. */
+.inf-siatka-tytul {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--card-c-l, var(--card-c, var(--accent)));
+}
+@media (forced-colors: active) {
+  .inf-siatka-tytul {
+    color: CanvasText;
+  }
+}
+
+/* ── v23: WIĄZANIE PRZEŁĄCZNIKA (radio -> karta -> panel), bez JS ─────────
+   KONTRAKT Z DOM (components/blog/PostBody.tsx, case 'przelacznik'):
+   .inf-przel > [wszystkie input] + [div.inf-przel-karty > label...] +
+   [wszystkie section.inf-przel-panel]. Inputy i sekcje są rodzeństwem, więc
+   `~` je łączy, a `nth-of-type` wiąże k-ty input z k-tą sekcją i k-tą etykietą.
+   Pięć powtórzeń, bo typ dopuszcza 2-5 opcji (`data-n` w markupie).
+   Dlaczego nie `:has()`: reguła musiałaby znać nazwę grupy, a ta jest
+   generowana per blok treści. `nth-of-type` jest statyczne i działa też
+   w starszych silnikach. */
+.inf-przel input:nth-of-type(1):checked ~ section.inf-przel-panel:nth-of-type(1),
+.inf-przel input:nth-of-type(2):checked ~ section.inf-przel-panel:nth-of-type(2),
+.inf-przel input:nth-of-type(3):checked ~ section.inf-przel-panel:nth-of-type(3),
+.inf-przel input:nth-of-type(4):checked ~ section.inf-przel-panel:nth-of-type(4),
+.inf-przel input:nth-of-type(5):checked ~ section.inf-przel-panel:nth-of-type(5) {
+  display: block;
+}
+/* Stan WYBRANY etykiety (ramka w kolorze + poświata, jak STAGE 1 u wzorca). */
+.inf-przel input:nth-of-type(1):checked ~ .inf-przel-karty .inf-przel-karta:nth-of-type(1),
+.inf-przel input:nth-of-type(2):checked ~ .inf-przel-karty .inf-przel-karta:nth-of-type(2),
+.inf-przel input:nth-of-type(3):checked ~ .inf-przel-karty .inf-przel-karta:nth-of-type(3),
+.inf-przel input:nth-of-type(4):checked ~ .inf-przel-karty .inf-przel-karta:nth-of-type(4),
+.inf-przel input:nth-of-type(5):checked ~ .inf-przel-karty .inf-przel-karta:nth-of-type(5) {
+  border-color: var(--card-c-l, var(--card-c, var(--accent)));
+  background-color: color-mix(in srgb, var(--card-c, var(--accent)) 12%, rgba(8, 15, 25, 0.5));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--card-c, var(--accent)) 40%, transparent),
+    0 0 26px -6px color-mix(in srgb, var(--card-c, var(--accent)) 70%, transparent);
+}
+.inf-przel input:nth-of-type(1):checked ~ .inf-przel-karty .inf-przel-karta:nth-of-type(1) .inf-przel-tytul,
+.inf-przel input:nth-of-type(2):checked ~ .inf-przel-karty .inf-przel-karta:nth-of-type(2) .inf-przel-tytul,
+.inf-przel input:nth-of-type(3):checked ~ .inf-przel-karty .inf-przel-karta:nth-of-type(3) .inf-przel-tytul,
+.inf-przel input:nth-of-type(4):checked ~ .inf-przel-karty .inf-przel-karta:nth-of-type(4) .inf-przel-tytul,
+.inf-przel input:nth-of-type(5):checked ~ .inf-przel-karty .inf-przel-karta:nth-of-type(5) .inf-przel-tytul {
+  color: var(--card-c-l, var(--card-c, var(--accent)));
+}
+/* Fokus klawiatury musi być widoczny NA ETYKIECIE, bo input jest schowany. */
+.inf-przel input:nth-of-type(1):focus-visible ~ .inf-przel-karty .inf-przel-karta:nth-of-type(1),
+.inf-przel input:nth-of-type(2):focus-visible ~ .inf-przel-karty .inf-przel-karta:nth-of-type(2),
+.inf-przel input:nth-of-type(3):focus-visible ~ .inf-przel-karty .inf-przel-karta:nth-of-type(3),
+.inf-przel input:nth-of-type(4):focus-visible ~ .inf-przel-karty .inf-przel-karta:nth-of-type(4),
+.inf-przel input:nth-of-type(5):focus-visible ~ .inf-przel-karty .inf-przel-karta:nth-of-type(5) {
+  outline: 2px solid var(--card-c, var(--accent));
+  outline-offset: 2px;
+}
