@@ -17,7 +17,7 @@ import type { Usluga } from './types';
  */
 export const stronyWww: Usluga = {
   slug: 'strony-www',
-  dataAktualizacji: '2026-08-19',
+  dataAktualizacji: '2026-08-21',
   h1: 'Tworzenie stron WWW widocznych w Google i w AI',
   kapsula:
     'Budujemy strony widoczne nie tylko w Google, ale i w ChatGPT, Claude, Gemini oraz Perplexity. Większość stron jest dla AI niewidoczna, bo treść doczytuje się skryptem, a boty tego nie czytają. My oddajemy całą treść od razu w czystym kodzie, układamy ją pod cytowanie i robimy to szybko.',
@@ -28,22 +28,48 @@ export const stronyWww: Usluga = {
 
   problem: {
     h2: 'Dlaczego Twojej strony nie widać w AI?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Twojej strony nie widać w AI najczęściej dlatego, że treść dorysowuje się skryptem dopiero w przeglądarce, a boty ChatGPT czy Perplexity skryptów nie wykonują i widzą pustą stronę. Skoro nie mają czego przeczytać, nie mają czego zacytować.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
-        typ: 'akapit',
-        tekst: 'Coraz więcej ludzi nie wpisuje pytań w Google, tylko pyta ChatGPT albo Perplexity, kto zrobi im X w okolicy. Jeśli Twoja strona jest dla tych botów pusta, nie istniejesz w ich odpowiedziach.',
+        typ: 'pasMetryk',
+        metryki: [
+          {
+            wartosc: '4 silniki AI',
+            opis: 'ChatGPT, Claude, Gemini i Perplexity szukają odpowiedzi u kogoś, kogo widzą',
+            zrodlo: 'z kapsuły tej strony',
+            ton: 'cyan',
+          },
+          {
+            wartosc: '0 zł',
+            opis: 'tyle kosztuje sprawdzenie, czy Twoją stronę widać w AI, około 30 minut i konkretna lista rzeczy do poprawy',
+            zrodlo: 'bezpłatna diagnoza opisana w sekcji o cenie',
+            ton: 'amber',
+          },
+          {
+            wartosc: 'około 3 tygodnie',
+            opis: 'tyle minęło, zanim ChatGPT zaczął cytować Lenart Motors; to wynik jednego klienta, nie obiecywany termin',
+            zrodlo: 'realizacja Lenart Motors w sekcji niżej',
+            ton: 'green',
+          },
+        ],
       },
       {
-        typ: 'sekcja',
-        naglowek: 'Dlaczego mojej obecnej strony nie widać w AI?',
-        wariant: 'edge',
-        akapity: [
-          'Powody są zwykle trzy i wszystkie są techniczne. Strona internetowa AI, czyli strona pozycjonowana pod AI, różni się od typowej strony z kreatora dokładnie w tych trzech miejscach.',
-        ],
+        typ: 'naglowek',
+        tekst: 'Dlaczego mojej obecnej strony nie widać w AI?',
+        ikona: 'lupa-wykres',
+        chip: 'DIAGNOZA',
+        overline: 'TRZY POWODY · WSZYSTKIE TECHNICZNE',
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Powody są zwykle trzy i wszystkie są techniczne. Strona internetowa AI, czyli strona pozycjonowana pod AI, różni się od typowej strony z kreatora dokładnie w tych trzech miejscach.',
+      },
+      {
+        typ: 'lista',
         punkty: [
           'Strona stoi na kreatorze, który całą treść dorysowuje skryptem dopiero w przeglądarce, więc bot widzi puste miejsce.',
           'Brak struktury pod cytowanie: bez bezpośrednich odpowiedzi na pytania klientów, bez tabel i liczb, które AI cytuje najchętniej.',
@@ -51,27 +77,67 @@ export const stronyWww: Usluga = {
         ],
       },
       {
-        typ: 'akapit',
-        tekst: 'Kończy się to zawsze tak samo: bot wchodzi, widzi pustkę i idzie dalej, a polecenie dostaje konkurencja, której stronę widać.',
+        typ: 'sekcja',
+        naglowek: 'Co się dzieje, gdy bot wchodzi na pustą stronę?',
+        wariant: 'edge',
+        chip: 'STRONY WWW',
+        akapity: [
+          'Coraz więcej ludzi nie wpisuje pytań w Google, tylko pyta ChatGPT albo Perplexity, kto zrobi im X w okolicy. Jeśli Twoja strona jest dla tych botów pusta, nie istniejesz w ich odpowiedziach.',
+          'Kończy się to zawsze tak samo: bot wchodzi, widzi pustkę i idzie dalej, a polecenie dostaje konkurencja, której stronę widać.',
+        ],
       },
     ],
   },
 
   rozwiazanie: {
     h2: 'Jak budujemy stronę, którą cytuje AI?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Budujemy stronę tak, że cała treść jest w kodzie już przy pierwszym wejściu, a nie doczytywana skryptem. Każdą podstronę zaczynamy od krótkiej, bezpośredniej odpowiedzi na pytanie klienta, bo dokładnie taki format AI cytuje najchętniej.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
-        typ: 'lista',
-        punkty: [
-          'Tworzenie stron z AI zaczynamy od techniki: cała treść stoi w kodzie od razu i jest czytelna dla botów, bez doczytywania skryptem.',
-          'Treść układamy jako bezpośrednie odpowiedzi na pytania, z tabelami i konkretnymi liczbami, bo to AI cytuje najchętniej.',
-          'Szybka strona internetowa to u nas wymóg, nie dodatek: robimy ją lekką, bo wolna strona traci i ludzi, i miejsce w wynikach.',
-          'Wpuszczamy boty AI świadomie tam, gdzie inni je blokują.',
-          'Po starcie sprawdzamy, czy strona realnie pada w odpowiedziach silników.',
+        typ: 'naglowek',
+        tekst: 'Co robimy inaczej niż kreator stron?',
+        ikona: 'glob-siatka',
+        chip: 'SEO + GEO',
+        overline: 'TREŚĆ W KODZIE · ANSWER-FIRST',
+      },
+      {
+        typ: 'siatka',
+        kolumny: 3,
+        karty: [
+          {
+            naglowek: 'Treść w kodzie od razu',
+            akapity: [
+              'Tworzenie stron z AI zaczynamy od techniki: cała treść stoi w kodzie od razu i jest czytelna dla botów, bez doczytywania skryptem.',
+            ],
+          },
+          {
+            naglowek: 'Answer-first, tabele i liczby',
+            akapity: [
+              'Treść układamy jako bezpośrednie odpowiedzi na pytania, z tabelami i konkretnymi liczbami, bo to AI cytuje najchętniej.',
+            ],
+          },
+          {
+            naglowek: 'Szybka strona internetowa',
+            akapity: [
+              'Szybka strona internetowa to u nas wymóg, nie dodatek: robimy ją lekką, bo wolna strona traci i ludzi, i miejsce w wynikach.',
+            ],
+          },
+          {
+            naglowek: 'Boty wpuszczone świadomie',
+            akapity: [
+              'Wpuszczamy boty AI świadomie tam, gdzie inni je blokują.',
+            ],
+          },
+          {
+            naglowek: 'Pomiar po starcie',
+            akapity: [
+              'Po starcie sprawdzamy, czy strona realnie pada w odpowiedziach silników.',
+            ],
+          },
         ],
       },
       {
@@ -84,17 +150,42 @@ export const stronyWww: Usluga = {
         ],
       },
       {
-        typ: 'sekcja',
-        naglowek: 'Trzy strony, które już widać w Google i w AI',
-        wariant: 'top',
-        chip: 'STRONY WWW',
-        akapity: [
-          'To realne wyniki klientów z nazwami, nie obietnica terminu. Strona cytowana przez ChatGPT to u nas mierzony efekt, a dwie z tych realizacji to rynek niemiecki: działamy w Polsce i w Niemczech.',
-        ],
-        punkty: [
-          'Lenart Motors: cytowany przez ChatGPT po około 3 tygodniach od publikacji strony.',
-          'Fichtelgebirgshaus.de: top10 Google na frazy z umowy plus widoczność w GPT.',
-          'Trockenhaus: z niewidocznej do top3 Google.',
+        typ: 'przelacznik',
+        grupa: 'strony-www-realizacje',
+        opcje: [
+          {
+            numer: 'REALIZACJA 1',
+            tytul: 'Lenart Motors',
+            podtytul: 'cytowany przez ChatGPT',
+            naglowek: 'ChatGPT zaczął cytować Lenart Motors po około 3 tygodniach od publikacji strony.',
+            akapity: [
+              'To zmierzony wynik jednego klienta, a nie termin, który obiecujemy przy kolejnych wdrożeniach. Pokazujemy go, bo widoczność w AI da się sprawdzić, a nie tylko zadeklarować.',
+              'Dokładnie tak wygląda strona cytowana przez ChatGPT: model ma co przeczytać i ma co podać dalej. Nie było w tym żadnej sztuczki, tylko treść dostępna w kodzie od pierwszego wejścia bota i ułożona jako bezpośrednie odpowiedzi na pytania klientów.',
+            ],
+            punkty: [
+              'Zakres: strona WWW z treścią w kodzie od pierwszego wejścia.',
+            ],
+          },
+          {
+            numer: 'REALIZACJA 2',
+            tytul: 'Fichtelgebirgshaus.de',
+            podtytul: 'top10 Google plus GPT',
+            naglowek: 'Fichtelgebirgshaus.de jest w top10 Google na frazy z umowy i widoczny w GPT.',
+            akapity: [
+              'To ten sam projekt na dwa kanały: uzgodnione w umowie frazy w Google i obecność w odpowiedziach modelu. Nie budowaliśmy dwóch osobnych stron.',
+              'Działamy na rynku polskim i niemieckim, a dwie z naszych realizacji stron to firmy niemieckie. Jeśli sprzedajesz też za granicą, robimy to samo dla tamtego rynku.',
+            ],
+          },
+          {
+            numer: 'REALIZACJA 3',
+            tytul: 'Trockenhaus',
+            podtytul: 'z niewidocznej do top3',
+            naglowek: 'Trockenhaus przeszedł z niewidocznej strony do top3 w Google.',
+            akapity: [
+              'Poza stroną zbudowaliśmy tam narzędzie do kosztorysowania i chatbota. Oferta powstaje w około 20 minut zamiast 2 do 4 godzin, a rachunek w około 5 minut zamiast godziny.',
+              'Mówimy wprost, jaka to skala: mała firma, od 1 do 8 ofert i od 1 do 5 rachunków miesięcznie. Liczby mają być prawdziwe, a nie duże.',
+            ],
+          },
         ],
       },
     ],
@@ -137,56 +228,119 @@ export const stronyWww: Usluga = {
 
   ramaCeny: {
     h2: 'Ile kosztuje strona pod SEO i AI?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Cenę liczymy od zakresu i od tego, ile pytań ma obsługiwać strona: inaczej wycenia się prostą wizytówkę, inaczej serwis z wieloma podstronami pod różne frazy. Dokładne widełki podajemy na bezpłatnej diagnozie (0 zł, około 30 minut), zanim cokolwiek zamówisz.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
+        typ: 'pasMetryk',
+        metryki: [
+          {
+            wartosc: '0 zł',
+            opis: 'bezpłatna diagnoza, około 30 minut, z listą rzeczy do poprawy',
+            zrodlo: 'pierwszy krok przed wyceną',
+            ton: 'cyan',
+          },
+          {
+            wartosc: '1 dzień',
+            opis: 'tyle trwa budowa prostego landingu z ofertą i formularzem',
+            zrodlo: 'pierwszy wiersz tabeli czasów niżej',
+            ton: 'green',
+          },
+          {
+            wartosc: '1-4 dni robocze',
+            opis: 'tyle realnie trwały nasze dotychczasowe wdrożenia stron, przy zakresie do strony biznesowej',
+            zrodlo: 'nasze dotychczasowe realizacje, tabela czasów niżej',
+            ton: 'amber',
+          },
+          {
+            wartosc: '2 rundy poprawek',
+            opis: 'tyle jest w cenie wdrożenia, zanim odbierzesz stronę',
+            zrodlo: 'zasada opisana na dole sekcji',
+            ton: 'violet',
+          },
+        ],
+      },
+      {
         typ: 'naglowek',
-        tekst: 'Czy zbudujecie stronę szybko? Czasy budowy w dniach',
+        tekst: 'Czy zbudujecie stronę szybko?',
+        ikona: 'kalendarz-check',
+        chip: 'CZASY BUDOWY',
+        overline: 'TRZY ZAKRESY · CZAS W DNIACH ROBOCZYCH',
+      },
+      {
+        typ: 'przelacznik',
+        grupa: 'strony-www-zakres',
+        opcje: [
+          {
+            numer: 'ZAKRES 1',
+            tytul: 'Prosty landing',
+            podtytul: '1 dzień',
+            naglowek: 'Prosty landing z ofertą i formularzem budujemy w 1 dzień.',
+            akapity: [
+              'Jedna strona, jedna odpowiedź na jedno pytanie klienta i formularz. Treść stoi w kodzie od razu, więc bot ma co przeczytać już pierwszego dnia.',
+            ],
+            punkty: [
+              'Jedna strona z ofertą i formularzem.',
+              'Pierwszy akapit to od razu bezpośrednia odpowiedź na pytanie klienta, bo taki format cytuje AI.',
+            ],
+          },
+          {
+            numer: 'ZAKRES 2',
+            tytul: 'Strona biznesowa',
+            podtytul: '2-4 dni',
+            naglowek: 'Stronę biznesową z kilkoma podstronami budujemy w 2-4 dni.',
+            akapity: [
+              'Każda podstrona odpowiada na inne pytanie klienta i zaczyna się od krótkiej, bezpośredniej odpowiedzi. Tak układa się treść, którą AI cytuje najchętniej.',
+            ],
+            punkty: [
+              'Kilka podstron pod różne pytania klientów.',
+              'Tabele i liczby tam, gdzie ułatwiają cytowanie.',
+            ],
+          },
+          {
+            numer: 'ZAKRES 3',
+            tytul: 'Strona zaawansowana',
+            podtytul: '5-10 dni',
+            naglowek: 'Stronę zaawansowaną ze sklepem i wpiętymi narzędziami budujemy w 5-10 dni.',
+            akapity: [
+              'Tu dochodzi sklep albo narzędzia wpięte w stronę, więc pracy jest więcej niż przy wizytówce. Zakres ustalamy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
+            ],
+            punkty: [
+              'Sklep, wpięte narzędzia.',
+              'Dokładny termin podajemy, gdy znamy zakres.',
+            ],
+          },
+        ],
       },
       {
         typ: 'tabela',
         naglowki: [
           'Zakres strony',
-          'Co obejmuje',
+          'Dla kogo to jest',
           'Czas budowy',
         ],
         wiersze: [
           [
             'Prosty landing',
-            'Jedna strona z ofertą i formularzem',
+            'jedna oferta, jeden formularz',
             '1 dzień',
           ],
           [
             'Strona biznesowa',
-            'Kilka podstron pod różne pytania klientów',
+            'kilka pytań klientów, kilka podstron',
             '2-4 dni',
           ],
           [
             'Strona zaawansowana',
-            'Sklep, wpięte narzędzia',
+            'sprzedaż online albo narzędzie wpięte w stronę',
             '5-10 dni',
           ],
         ],
         wKarcie: true,
-        podpis: 'Czas budowy liczymy od przekazania kompletu materiałów, nie od podpisania umowy.',
-      },
-      {
-        typ: 'kafle',
-        kafle: [
-          {
-            wartosc: '1-4 dni robocze',
-            opis: 'tyle trwały wszystkie dotychczasowe realizacje stron',
-            zrodlo: 'czasy budowy z cennika',
-          },
-          {
-            wartosc: '0 zł',
-            opis: 'bezpłatna diagnoza, około 30 minut, z listą rzeczy do poprawy',
-            zrodlo: 'pierwszy krok przed wyceną',
-          },
-        ],
+        podpis: 'Czas budowy liczymy od przekazania kompletu materiałów, nie od podpisania umowy. Dotychczasowe realizacje mieściły się w 1-4 dniach roboczych; 5-10 dni dotyczy zakresu ze sklepem i wpiętymi narzędziami.',
       },
       {
         typ: 'sekcja',
@@ -195,6 +349,7 @@ export const stronyWww: Usluga = {
         chip: 'ZASADA',
         akapity: [
           'Do ceny budowy dochodzi opieka, bo widoczność w AI to nie jednorazowy strzał, tylko rytm aktualizacji. Zakres opieki ustalamy na tej samej bezpłatnej diagnozie.',
+          'Po odbiorze masz dwie drogi i obie są uczciwe. Przekazujemy Ci stronę i wtedy nie płacisz nam abonamentu, albo zostaje pod naszą opieką i wtedy jest stała opłata miesięczna. Kwotę podajemy przy wycenie, zanim zdecydujesz.',
         ],
         punkty: [
           'Dwie rundy poprawek w cenie wdrożenia: tydzień testów, poprawki, drugi tydzień testów, poprawki, odbiór.',
@@ -203,7 +358,6 @@ export const stronyWww: Usluga = {
         ],
       },
     ],
-    // INPUT PAWŁA: realne "od X zł" za stronę + model opieki → ustawić minPrice (włączy offers w Service JSON-LD).
   },
 
   faq: [

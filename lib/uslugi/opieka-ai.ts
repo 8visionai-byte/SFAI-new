@@ -21,7 +21,7 @@ import type { Usluga } from './types';
  */
 export const opiekaAi: Usluga = {
   slug: 'opieka-ai',
-  dataAktualizacji: '2026-08-20',
+  dataAktualizacji: '2026-08-21',
   h1: 'Opieka AI: utrzymanie i rozwój automatyzacji',
 
   kapsula:
@@ -33,26 +33,90 @@ export const opiekaAi: Usluga = {
 
   problem: {
     h2: 'Co się dzieje z automatyzacją, gdy nikt jej nie pilnuje?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Bez opieki automatyzacja po cichu przestaje robić to, za co zapłaciłeś. Nie psuje się z hukiem, tylko stopniowo, i pierwszy zauważa to Twój klient, nie Ty.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
         typ: 'naglowek',
         tekst: 'Automatyzacja psuje się bez niczyjej winy',
+        ikona: 'lupa-wykres',
+        chip: 'BEZ OPIEKI',
+        overline: 'TRZY TYPOWE AWARIE · PIERWSZY ZAUWAŻA KLIENT, NIE TY',
       },
       {
-        typ: 'lista',
-        punkty: [
-          'Klient zmienia stronę i bot przestaje czytać formularz.',
-          'Dostawca aktualizuje system i integracja się sypie.',
-          'Model dostaje nową wersję i odpowiedzi nagle są gorsze.',
+        typ: 'pasMetryk',
+        metryki: [
+          {
+            wartosc: '350 zł netto',
+            opis: 'godzina naprawy poza ryczałtem',
+            zrodlo: 'wiersz poza ryczałtem w tabeli cen niżej',
+            ton: 'amber',
+          },
+          {
+            wartosc: '0 zł',
+            opis: 'diagnoza, zanim cokolwiek zamówisz',
+            zrodlo: 'bezpłatna diagnoza z sekcji o cenie',
+            ton: 'green',
+          },
+          {
+            wartosc: 'około 30 minut',
+            opis: 'tyle trwa ustalenie zakresu opieki',
+            zrodlo: 'bezpłatna diagnoza z sekcji o cenie',
+            ton: 'cyan',
+          },
+        ],
+      },
+      {
+        typ: 'przelacznik',
+        grupa: 'opieka-ai-awarie',
+        opcje: [
+          {
+            numer: 'AWARIA 1',
+            tytul: 'Zmiana na stronie',
+            podtytul: 'Bot przestaje czytać formularz',
+            naglowek: 'Klient zmienia stronę i bot przestaje czytać formularz.',
+            akapity: [
+              'Sam tego nie zauważysz na czas. Zauważy klient, który nie dostał odpowiedzi, albo lead, który przepadł.',
+            ],
+            punkty: [
+              'Bot dalej odpowiada na stronie, ale danych z formularza już nie widzi.',
+              'Poznasz to po zgłoszeniach, które przestały do Ciebie docierać.',
+            ],
+          },
+          {
+            numer: 'AWARIA 2',
+            tytul: 'Zmiana u dostawcy',
+            podtytul: 'Integracja się sypie',
+            naglowek: 'Dostawca aktualizuje system i integracja się sypie.',
+            akapity: [
+              'Nic nie zgłasza błędu na Twoim ekranie. Dane po prostu przestają dochodzić tam, gdzie miały dochodzić.',
+            ],
+            punkty: [
+              'Połączenie zrywa się w miejscu, którego nie masz na żadnym ekranie.',
+              'Poznasz to po rekordach, których brakuje w docelowym systemie.',
+            ],
+          },
+          {
+            numer: 'AWARIA 3',
+            tytul: 'Nowa wersja modelu',
+            podtytul: 'Odpowiedzi schodzą z tonu',
+            naglowek: 'Model dostaje nową wersję i odpowiedzi nagle są gorsze.',
+            akapity: [
+              'To najcichsza z awarii, bo wszystko formalnie działa. Zmienia się tylko jakość, a tego nie widać w żadnym alercie.',
+            ],
+            punkty: [
+              'Bot odpowiada dalej, tylko mija się z tym, o co pytał człowiek.',
+              'Poznasz to dopiero po rozmowach, które nie kończą się kontaktem.',
+            ],
+          },
         ],
       },
       {
         typ: 'akapit',
-        tekst: 'Sam tego nie zauważysz na czas. Zauważy klient, który nie dostał odpowiedzi, albo lead, który przepadł. Dlatego utrzymanie automatyzacji to praca, która nie kończy się w dniu wdrożenia.',
+        tekst: 'Dlatego utrzymanie automatyzacji to praca, która nie kończy się w dniu wdrożenia. Ktoś musi patrzeć na to, co działa, także wtedy, gdy nikt się nie skarży.',
       },
       {
         typ: 'sekcja',
@@ -60,7 +124,8 @@ export const opiekaAi: Usluga = {
         wariant: 'quiet',
         chip: 'ZASADA',
         akapity: [
-          'Tego nie wiesz z góry i w tym jest problem. Bez opieki naprawa to nagła faktura, która przychodzi w najgorszym momencie: wtedy, gdy coś już nie działa. Z opieką płacisz stały ryczałt, który znasz z góry, a awarię łapiemy, zanim zaszkodzi.',
+          'Tego nie wiesz z góry i w tym jest problem. Bez opieki naprawa to nagła faktura, która przychodzi w najgorszym momencie: wtedy, gdy coś już nie działa.',
+          'Z opieką płacisz stały ryczałt, który znasz z góry, a awarię łapiemy, zanim zaszkodzi.',
         ],
       },
     ],
@@ -68,35 +133,105 @@ export const opiekaAi: Usluga = {
 
   rozwiazanie: {
     h2: 'Co dokładnie robimy w ramach opieki?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Bierzemy na siebie utrzymanie agentów AI i automatyzacji w Twojej firmie w ramach jednego ryczałtu godzin: monitorujemy, poprawiamy i rozwijamy. Działa to jak outsourcing działu AI: tak jak księgowość oddajesz biuru rachunkowemu, tak utrzymanie i rozwój AI oddajesz nam. To serwis AI dla firmy.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
         typ: 'naglowek',
         tekst: 'Co obejmuje utrzymanie automatyzacji?',
+        ikona: 'tarcza-serce',
+        chip: 'OPIEKA AI',
+        overline: 'OUTSOURCING DZIAŁU AI · JAK KSIĘGOWOŚĆ W BIURZE RACHUNKOWYM',
       },
       {
-        typ: 'lista',
-        punkty: [
-          'Monitoring: o awarii wiemy my, a nie Twój klient.',
-          'Poprawki promptów, gdy odpowiedzi schodzą z tonu.',
-          'Łatanie integracji, gdy dostawca coś zmieni.',
-          'Rozwój o nowe rzeczy, których potrzebujesz.',
-          'Audyt kolejnych miejsc, które da się zautomatyzować.',
-          'Optymalizacja tego, co już działa.',
+        typ: 'siatka',
+        kolumny: 3,
+        karty: [
+          {
+            naglowek: 'Pilnujemy',
+            akapity: [
+              'Monitoring działa po naszej stronie, więc awaria nie czeka na zgłoszenie od klienta.',
+            ],
+            punkty: [
+              'Monitoring: o awarii wiemy my, a nie Twój klient.',
+              'Łatanie integracji, gdy dostawca coś zmieni.',
+            ],
+          },
+          {
+            naglowek: 'Poprawiamy',
+            akapity: [
+              'Jakość odpowiedzi trzeba dostrajać, bo modele i Twoja oferta się zmieniają.',
+            ],
+            punkty: [
+              'Poprawki promptów, gdy odpowiedzi schodzą z tonu.',
+              'Optymalizacja tego, co już działa.',
+            ],
+          },
+          {
+            naglowek: 'Rozwijamy',
+            akapity: [
+              'Automatyzacja, której nikt nie rozwija, po roku obsługuje firmę sprzed roku, a nie tę, którą prowadzisz dzisiaj.',
+            ],
+            punkty: [
+              'Rozwój o nowe rzeczy, których potrzebujesz.',
+              'Audyt kolejnych miejsc, które da się zautomatyzować.',
+            ],
+          },
         ],
       },
       {
-        typ: 'sekcja',
-        naglowek: 'Za co dokładnie płacę co miesiąc?',
-        wariant: 'top',
+        typ: 'naglowek',
+        tekst: 'Za co dokładnie płacę co miesiąc?',
+        ikona: 'kalendarz-check',
         chip: 'Opieka AI',
-        akapity: [
-          'Za ryczałt godzin, dzięki któremu wiesz z góry, ile płacisz. Wybierasz pakiet 10, 20 albo 40 godzin miesięcznie i to jest Twoja stała opłata.',
-          'Cały ryczałt pracuje co miesiąc nad Twoim AI. Część godzin idzie na utrzymanie i pilnowanie, część na rozwój, nowe automatyzacje i optymalizacje tego, co już działa.',
-          'Pod koniec miesiąca dostajesz raport: co działało, co poprawiliśmy, co rozwinęliśmy i co proponujemy dalej.',
+        overline: '10, 20 ALBO 40 GODZIN · CAŁY RYCZAŁT PRACUJE CO MIESIĄC',
+      },
+      {
+        typ: 'przelacznik',
+        grupa: 'opieka-ai-godziny',
+        opcje: [
+          {
+            numer: 'GODZINY 1',
+            tytul: 'Wybór ryczałtu',
+            podtytul: 'Stała opłata',
+            naglowek: 'Wybierasz ryczałt 10, 20 albo 40 godzin miesięcznie i to jest Twoja stała opłata.',
+            akapity: [
+              'Kwota jest ta sama co miesiąc, niezależnie od tego, czy miesiąc był spokojny, czy coś się posypało. Nie dostajesz osobnej faktury za każdą naprawę.',
+            ],
+            punkty: [
+              'Wiesz z góry, ile zapłacisz w danym miesiącu.',
+              'Pakiet zmieniasz, gdy zmienią się potrzeby.',
+            ],
+          },
+          {
+            numer: 'GODZINY 2',
+            tytul: 'Plan miesiąca',
+            podtytul: 'Podział godzin',
+            naglowek: 'Każdy miesiąc planujemy z góry, więc wiesz, na co pójdą godziny z ryczałtu.',
+            akapity: [
+              'Cały ryczałt pracuje co miesiąc nad Twoim AI, więc godziny nie czekają bezczynnie na awarię. Sama gotowość, że ktoś pilnuje i jest gotów reagować, też ma wartość.',
+            ],
+            punkty: [
+              'Część godzin planujemy na utrzymanie i pilnowanie.',
+              'Część na rozwój, audyt i optymalizacje.',
+            ],
+          },
+          {
+            numer: 'GODZINY 3',
+            tytul: 'Raport',
+            podtytul: 'Koniec miesiąca',
+            naglowek: 'Pod koniec miesiąca dostajesz raport ze zmianami.',
+            akapity: [
+              'Raport pokazuje czarno na białym, na co poszły godziny z ryczałtu, i co proponujemy zrobić w kolejnym miesiącu.',
+            ],
+            punkty: [
+              'Co działało i co poprawiliśmy.',
+              'Co rozwinęliśmy i co proponujemy dalej.',
+            ],
+          },
         ],
       },
       {
@@ -143,11 +278,93 @@ export const opiekaAi: Usluga = {
 
   ramaCeny: {
     h2: 'Ile kosztuje Opieka AI?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Opieka AI kosztuje od 3000 zł netto miesięcznie za ryczałt 10 godzin, a im większy pakiet, tym niższa stawka za godzinę. Wszystkie kwoty są netto i rozliczamy je miesięcznie.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
+      {
+        typ: 'pasMetryk',
+        metryki: [
+          {
+            wartosc: 'od 3000 zł netto',
+            opis: 'wejście w opiekę: ryczałt 10 godzin miesięcznie',
+            zrodlo: 'pakiet 1 z tabeli niżej',
+            ton: 'cyan',
+          },
+          {
+            wartosc: '350 zł netto',
+            opis: 'godzina pracy poza ryczałtem, rozliczana osobno',
+            zrodlo: 'wiersz poza ryczałtem w tabeli niżej',
+            ton: 'amber',
+          },
+          {
+            wartosc: '99-599 zł netto',
+            opis: 'opieka po wdrożeniu chatbota, gdy projekt zostaje u nas',
+            zrodlo: 'punkty w sekcji o abonamencie niżej',
+            ton: 'violet',
+          },
+          {
+            wartosc: '0 zł',
+            opis: 'abonament po przekazaniu Ci infrastruktury',
+            zrodlo: 'punkty w sekcji o abonamencie niżej',
+            ton: 'green',
+          },
+        ],
+      },
+      {
+        typ: 'naglowek',
+        tekst: 'Który ryczałt godzin pasuje do Twojej firmy?',
+        ikona: 'wykres-strzalka',
+        chip: 'CENNIK',
+        overline: 'TRZY PAKIETY GODZIN · IM WIĘKSZY PAKIET, TYM NIŻSZA STAWKA',
+      },
+      {
+        typ: 'przelacznik',
+        grupa: 'opieka-ai-pakiety',
+        opcje: [
+          {
+            numer: 'PAKIET 1',
+            tytul: '10 godzin',
+            podtytul: '3000 zł netto',
+            naglowek: 'Ryczałt 10 godzin miesięcznie kosztuje 3000 zł netto, czyli 300 zł netto za godzinę.',
+            akapity: [
+              'To najniższy ryczałt w naszym cenniku opieki. Ile godzin miesięcznie realnie potrzebujesz, ustalamy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
+            ],
+            punkty: [
+              '300 zł netto za godzinę.',
+              'Taniej niż stawka bazowa 350 zł netto za godzinę.',
+            ],
+          },
+          {
+            numer: 'PAKIET 2',
+            tytul: '20 godzin',
+            podtytul: '5500 zł netto',
+            naglowek: 'Ryczałt 20 godzin miesięcznie kosztuje 5500 zł netto, czyli 275 zł netto za godzinę.',
+            akapity: [
+              'Więcej godzin to więcej miejsca na rozwój obok samego utrzymania, więc obok pilnowania dokładamy nowe rzeczy.',
+            ],
+            punkty: [
+              '275 zł netto za godzinę.',
+              'Część godzin zostaje na nowe automatyzacje.',
+            ],
+          },
+          {
+            numer: 'PAKIET 3',
+            tytul: '40 godzin',
+            podtytul: '10000 zł netto',
+            naglowek: 'Ryczałt 40 godzin miesięcznie kosztuje 10000 zł netto, czyli 250 zł netto za godzinę.',
+            akapity: [
+              'To najniższa stawka za godzinę w naszym cenniku opieki. Godziny poza ryczałtem rozliczamy osobno, po stawce bazowej.',
+            ],
+            punkty: [
+              '250 zł netto za godzinę.',
+              'Poza ryczałtem: 350 zł netto za godzinę.',
+            ],
+          },
+        ],
+      },
       {
         typ: 'tabela',
         naglowki: [
@@ -181,17 +398,15 @@ export const opiekaAi: Usluga = {
         podpis: 'Ryczałt godzin Opieki AI, kwoty netto, rozliczenie miesięczne',
       },
       {
-        typ: 'akapit',
-        tekst: 'Stawka bazowa poza ryczałtem to 350 zł netto za godzinę, więc każdy pakiet wychodzi taniej. Cały ryczałt pracuje co miesiąc: utrzymanie, rozwój, nowe automatyzacje i optymalizacje, a pod koniec miesiąca dostajesz raport ze zmianami.',
-      },
-      {
         typ: 'sekcja',
         naglowek: 'Czy muszę płacić abonament co miesiąc?',
         wariant: 'edge',
         chip: 'CENNIK',
         akapity: [
-          'To zależy od usługi. Abonament AI dla firmy ma u nas dwie formy. Opieka AI to osobna usługa: ryczałt 10, 20 albo 40 godzin rozliczany miesięcznie. Przy opiece po wdrożeniu chatbota czy voicebota masz wybór, o którym mówimy wprost, zanim cokolwiek zamówisz: abonament u nas albo 0 zł miesięcznie po przekazaniu infrastruktury.',
+          'To zależy od usługi. Abonament AI dla firmy ma u nas dwie formy. Opieka AI to osobna usługa: ryczałt 10, 20 albo 40 godzin rozliczany miesięcznie.',
+          'Przy opiece po wdrożeniu chatbota czy voicebota masz wybór, o którym mówimy wprost, zanim cokolwiek zamówisz: abonament u nas albo 0 zł miesięcznie po przekazaniu infrastruktury.',
           'Ile kosztuje utrzymanie chatbota? To zależy od tego, gdzie stoi infrastruktura. Gdy zostaje u nas, płacisz abonament. Gdy przekażemy ją Tobie, nie płacisz nic miesięcznie.',
+          'Ile godzin opieki realnie potrzebujesz, ustalamy na bezpłatnej diagnozie: 0 zł, około 30 minut. Bez ukrytych kosztów i bez zobowiązań.',
         ],
         punkty: [
           'Opieka chatbota po wdrożeniu: 99-599 zł netto miesięcznie albo 0 zł przy przekazaniu infrastruktury.',
@@ -203,15 +418,8 @@ export const opiekaAi: Usluga = {
           'Ukryte koszty chatbota to zwykle zużycie: w cudzym abonamencie też je płacisz, tylko go nie widać w cenniku.',
         ],
       },
-      {
-        typ: 'akapit',
-        tekst: 'Ile godzin opieki realnie potrzebujesz, ustalamy na bezpłatnej diagnozie: 0 zł, około 30 minut. Bez ukrytych kosztów i bez zobowiązań.',
-      },
     ],
     minPrice: 3000,
-    /* v22 (linki §3, P2 #15): poradnik o koszcie automatyzacji jako jedyny
-       rozpisuje opiekę w abonamencie 99-599 zł obok kosztu wdrożenia, więc to
-       naturalne przedłużenie tej sekcji. Render: RamaCeny.tsx, ten sam akapit. */
     linkPoradnik: {
       przed: 'Jak opieka wpisuje się w całkowity koszt wdrożenia, pokazujemy w poradniku: ',
       etykieta: 'ile kosztuje automatyzacja AI w firmie',

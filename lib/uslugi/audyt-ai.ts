@@ -23,7 +23,7 @@ import type { Usluga } from './types';
  */
 export const audytAi: Usluga = {
   slug: 'audyt-ai',
-  dataAktualizacji: '2026-08-19',
+  dataAktualizacji: '2026-08-21',
   h1: 'Audyt AI firmy: mapa oszczędności czasu',
 
   /* BLOK KRÓTKIEJ ODPOWIEDZI (audyt §9 etap 1 pkt 2): kapsuła miała 1 z 4
@@ -39,56 +39,136 @@ export const audytAi: Usluga = {
 
   problem: {
     h2: 'Skąd wiesz, gdzie wdrożyć AI, żeby nie przepalić kasy?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Bez mapy procesów nie wiesz, gdzie wdrożyć AI w firmie, więc strzelasz na ślepo. Każda zła decyzja to wydane pieniądze, stracony czas i zniechęcenie, że AI to ściema.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
         typ: 'naglowek',
         tekst: 'Gdzie firmy przepalają budżet na AI?',
+        ikona: 'gwiazda-kompas',
+        chip: 'WDRAŻANIE NA CZUJA',
+        overline: 'BEZ MAPY PROCESÓW · DECYZJE NA ŚLEPO',
       },
       {
-        typ: 'lista',
-        punkty: [
-          'Kupujesz narzędzie, bo było modne i wszyscy o nim mówili. Po miesiącu nikt w firmie go nie używa, a Ty dalej płacisz za coś, co niczego nie zmienia w codziennej pracy.',
-          'Automatyzujesz proces, który zdarza się raz na kwartał, bo akurat rzucił Ci się w oczy. Ten codzienny, który naprawdę zjada Twój czas, dalej robisz ręcznie.',
-          'Wszyscy mówią, że trzeba wdrażać AI, ale nikt nie mówi gdzie. Więc decyzje zapadają na ślepo: pod wpływem reklamy, mody albo presji, a nie Twoich realnych procesów.',
+        typ: 'siatka',
+        kolumny: 3,
+        karty: [
+          {
+            naglowek: 'Narzędzie kupione, bo modne',
+            akapity: [
+              'Kupujesz narzędzie, bo było modne i wszyscy o nim mówili. Po miesiącu nikt w firmie go nie używa, a Ty dalej płacisz za coś, co niczego nie zmienia w codziennej pracy.',
+            ],
+          },
+          {
+            naglowek: 'Automatyzacja nie tego procesu',
+            akapity: [
+              'Automatyzujesz proces, który zdarza się raz na kwartał, bo akurat rzucił Ci się w oczy. Ten codzienny, który naprawdę zjada Twój czas, dalej robisz ręcznie.',
+            ],
+          },
+          {
+            naglowek: 'Nikt nie mówi, gdzie zacząć',
+            akapity: [
+              'Wszyscy mówią, że trzeba wdrażać AI, ale nikt nie mówi gdzie. Więc decyzje zapadają na ślepo: pod wpływem reklamy, mody albo presji, a nie Twoich realnych procesów.',
+            ],
+          },
         ],
       },
       {
         typ: 'akapit',
         tekst: 'Problem nie w tym, że AI nie działa. Problem w tym, że nikt Ci nie pokazał, gdzie zacząć. Do tego służy mapa oszczędności czasu: zanim cokolwiek zamówisz, widzisz czarno na białym, gdzie AI da zysk, a gdzie nie.',
       },
+      {
+        typ: 'sekcja',
+        naglowek: 'Czy audyt ma sens przy małej firmie?',
+        wariant: 'quiet',
+        chip: 'SPRINT DIAGNOSTYCZNY',
+        akapity: [
+          'Ma sens tym większy, im mniejsza firma. Przy małym zespole każda nietrafiona decyzja boli mocniej, a każda godzina na robocie, którą AI może zdjąć, jest godziną wyjętą z Twojego dnia.',
+          'Dlatego zamiast rozdrabniać się na wszystko naraz, sprawdzamy, gdzie wdrożyć AI w firmie przy Twoim budżecie. Chodzi o to, żeby jeden dobrze dobrany proces dał zwrot już na starcie.',
+          'A jeśli z mapy wyjdzie, że na tym etapie nic się nie opłaca, usłyszysz to wprost. To też jest odpowiedź, którą lepiej mieć przed wydatkiem niż po nim.',
+        ],
+      },
     ],
   },
 
   rozwiazanie: {
     h2: 'Co dokładnie dostajesz w Sprincie Diagnostycznym?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Dostajesz Action Plan, czyli raport PDF z mapą procesów ułożoną od największego zwrotu z automatyzacji. Plan jest Twój, nawet jeśli wdrażasz go potem sam albo z kimś innym.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
+      {
+        typ: 'naglowek',
+        tekst: 'Od czego zaczynamy audyt AI firmy?',
+        ikona: 'lupa-wykres',
+        chip: 'SPRINT DIAGNOSTYCZNY',
+        overline: 'AUDYT AI · 5 DNI ROBOCZYCH · RAPORT PDF',
+      },
       {
         typ: 'akapit',
         tekst: 'Siadamy do Twoich procesów i patrzymy, na czym naprawdę schodzi czas: maile, oferty, faktury, umawianie, raporty, obsługa pytań. Nie zaczynamy od narzędzi, zaczynamy od Twojej codziennej roboty.',
       },
       {
-        typ: 'naglowek',
-        tekst: 'Po czym układamy kolejność wdrożeń?',
-      },
-      {
-        typ: 'akapit',
-        tekst: 'Po dwóch ocenach: zysku z automatyzacji i trudności wdrożenia. Wygrywa to, co da najwięcej najmniejszym kosztem. W Action Planie znajdziesz:',
-      },
-      {
-        typ: 'lista',
-        punkty: [
-          'Każdy proces oceniony pod kątem zysku z automatyzacji i trudności wdrożenia: ile zżera czasu i ile realnie odda jego automatyzacja.',
-          'Kolejność wdrożeń: to, co da dużo małym kosztem, ląduje na górze listy. Wiesz, od czego zacząć, żeby pierwszy krok dał szybki zwrot.',
-          'Lista rzeczy, których nie ruszać. Jeśli coś jest przepalaniem kasy, mówimy to wprost, zamiast dopisywać do oferty.',
-          'Konkretne kroki: co i w jakiej kolejności wdrożyć, żeby dało się zrealizować plan bez zgadywania.',
+        typ: 'przelacznik',
+        grupa: 'audyt-ai-action-plan',
+        opcje: [
+          {
+            numer: 'CZĘŚĆ 1',
+            tytul: 'Ocena procesu',
+            podtytul: 'Zysk i trudność wdrożenia',
+            naglowek: 'Każdy proces oceniamy po dwóch rzeczach: zysku z automatyzacji i trudności wdrożenia.',
+            akapity: [
+              'Wygrywa to, co da najwięcej najmniejszym kosztem. Dzięki temu widzisz nie tylko, co da się zautomatyzować, ale też co warto.',
+            ],
+            punkty: [
+              'ile zżera czasu',
+              'ile realnie odda jego automatyzacja',
+            ],
+          },
+          {
+            numer: 'CZĘŚĆ 2',
+            tytul: 'Kolejność wdrożeń',
+            podtytul: 'Od największego zwrotu',
+            naglowek: 'To, co da dużo małym kosztem, ląduje na górze listy.',
+            akapity: [
+              'Wiesz, od czego zacząć, żeby pierwszy krok dał szybki zwrot. Pierwszy krok jest u nas zawsze mały i odwracalny, więc nic nie zamrażasz na miesiące.',
+            ],
+            punkty: [
+              'procesy ułożone od najlepszego zwrotu do najgorszego',
+              'pierwszy krok mały i odwracalny',
+            ],
+          },
+          {
+            numer: 'CZĘŚĆ 3',
+            tytul: 'Czego nie ruszać',
+            podtytul: 'Lista rzeczy do odpuszczenia',
+            naglowek: 'Lista rzeczy, których nie ruszać, jest w Action Planie tak samo ważna jak lista rzeczy do wdrożenia.',
+            akapity: [
+              'Jeśli coś jest przepalaniem kasy, mówimy to wprost, zamiast dopisywać do oferty. Krótsza lista wdrożeń bywa tańsza od długiej i działa szybciej.',
+            ],
+            punkty: [
+              'procesy zbyt rzadkie, żeby się opłacały',
+              'miejsca, w których taniej wychodzi Ci to zrobić samemu',
+            ],
+          },
+          {
+            numer: 'CZĘŚĆ 4',
+            tytul: 'Konkretne kroki',
+            podtytul: 'Co wdrożyć i w jakiej kolejności',
+            naglowek: 'Konkretne kroki: co i w jakiej kolejności wdrożyć, żeby dało się zrealizować plan bez zgadywania.',
+            akapity: [
+              'Każdy krok ma opisany cel i swoje miejsce w kolejce. Możesz go oddać nam, komuś innemu albo swojemu zespołowi i wszyscy czytają to samo.',
+            ],
+            punkty: [
+              'co robimy najpierw',
+              'co dopiero po pierwszym zwrocie',
+            ],
+          },
         ],
       },
       {
@@ -150,27 +230,51 @@ export const audytAi: Usluga = {
 
   ramaCeny: {
     h2: 'Ile kosztuje audyt AI firmy?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Audyt AI firmy, czyli Sprint Diagnostyczny, kosztuje 1490 zł netto, trwa 5 dni roboczych i kończy się raportem PDF z mapą procesów. Całą kwotę odliczamy od kosztu wdrożenia, gdy zdecydujesz się z nami współpracować.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
-        typ: 'kafle',
-        kafle: [
+        typ: 'pasMetryk',
+        metryki: [
           {
             wartosc: '1490 zł netto',
             opis: 'cena audytu, płatność jednorazowa',
+            zrodlo: 'wiersz Koszt audytu w tabeli porównawczej',
+            ton: 'cyan',
           },
           {
             wartosc: '5 dni roboczych',
-            opis: 'od przekazania kompletu materiałów (opisy procesów i dostępy), nie od podpisania umowy',
+            opis: 'od przekazania kompletu materiałów, nie od podpisania umowy',
+            zrodlo: 'wiersz Termin w tabeli porównawczej',
+            ton: 'violet',
           },
           {
             wartosc: '1 raport PDF',
             opis: 'Action Plan: mapa procesów od największego zwrotu',
+            zrodlo: 'Action Plan opisany w sekcji wyżej',
+            ton: 'green',
+          },
+          {
+            wartosc: '0 zł abonamentu',
+            opis: 'gdy po wdrożeniu przekazujemy infrastrukturę Tobie',
+            zrodlo: 'pierwszy wiersz tabeli dwóch modeli rozliczenia niżej',
+            ton: 'amber',
           },
         ],
+      },
+      {
+        typ: 'naglowek',
+        tekst: 'Ile trwa audyt AI i od kiedy liczymy czas?',
+        ikona: 'kalendarz-check',
+        chip: 'CENNIK',
+        overline: 'PŁATNOŚĆ JEDNORAZOWA · ODLICZANE OD WDROŻENIA',
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Pięć dni roboczych, liczone od przekazania kompletu materiałów, czyli opisów procesów i dostępów. Nie od podpisania umowy, bo to my czekamy na Ciebie, a nie odwrotnie. Nie musisz nic przygotowywać, prowadzimy Cię pytaniami.',
       },
       {
         typ: 'sekcja',
@@ -179,7 +283,7 @@ export const audytAi: Usluga = {
         chip: 'CENNIK',
         akapity: [
           'To celowo niski próg wejścia. Sprawdzasz, czy AI w Twojej firmie ma sens, bez wchodzenia od razu w duże wdrożenie i bez zamrażania dużego budżetu.',
-          'Jeśli wdrażasz z nami, 1490 zł netto odliczamy w całości od kosztu wdrożenia. W praktyce audyt nic Cię wtedy nie kosztuje.',
+          'Jeśli wdrażasz z nami, 1490 zł netto odliczamy w całości od kosztu wdrożenia. W praktyce audyt nic Cię wtedy nie kosztuje, bo całe 1490 zł netto schodzi z rachunku za wdrożenie.',
           'Jeśli nie wdrażasz, i tak wychodzisz z gotowym Action Planem, który możesz zrealizować sam albo z kimkolwiek zechcesz.',
         ],
       },

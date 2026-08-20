@@ -35,7 +35,7 @@ import type { Usluga } from './types';
  */
 export const leadyB2b: Usluga = {
   slug: 'leady-b2b',
-  dataAktualizacji: '2026-08-19',
+  dataAktualizacji: '2026-08-21',
   h1: 'Leady branżowe B2B: gotowa baza firm',
 
   /* BLOK KRÓTKIEJ ODPOWIEDZI (audyt §9 etap 1 pkt 2): cztery wielkości naraz,
@@ -49,31 +49,38 @@ export const leadyB2b: Usluga = {
 
   problem: {
     h2: 'Ile kosztuje Cię zbieranie kontaktów ręcznie?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Pozyskiwanie leadów B2B dla firm zaczyna się zwykle od ręcznego zbierania kontaktów: około 3 minuty na jeden rekord, czyli około 50 godzin przy tysiącu firm. Ten czas handlowiec spędza na przepisywaniu, nie na rozmowach z klientami.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
-        typ: 'akapit',
-        tekst: 'Tak wygląda ta praca w praktyce: handlowiec siada do Google Maps i przepisuje. Nazwa, telefon, adres, strona, sprawdzenie, czy firma jeszcze działa, wklejenie do arkusza albo do CRM. Około 3 minuty na jeden rekord, jeśli idzie sprawnie.',
-      },
-      {
-        typ: 'kafle',
-        kafle: [
+        typ: 'pasMetryk',
+        metryki: [
           {
             wartosc: 'ok. 3 min',
             opis: 'ręczne zebranie jednego rekordu',
+            zrodlo: 'z tabeli porównawczej niżej',
+            ton: 'amber',
           },
           {
             wartosc: 'ok. 50 godzin',
             opis: '1000 rekordów ręcznie, więcej niż tydzień pracy jednej osoby',
+            zrodlo: 'z tabeli porównawczej niżej',
+            ton: 'violet',
           },
           {
             wartosc: 'ok. 250 godzin',
             opis: '5000 rekordów zebranych ręcznie',
+            zrodlo: 'z tabeli porównawczej niżej',
+            ton: 'cyan',
           },
         ],
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Tak wygląda ta praca w praktyce: handlowiec siada do Google Maps i przepisuje. Nazwa, telefon, adres, strona, sprawdzenie, czy firma jeszcze działa, wklejenie do arkusza albo do CRM. Około 3 minuty na jeden rekord, jeśli idzie sprawnie.',
       },
       {
         typ: 'sekcja',
@@ -81,6 +88,8 @@ export const leadyB2b: Usluga = {
         wariant: 'quiet',
         akapity: [
           'Ten czas nie idzie na rozmowy z klientami, tylko na przepisywanie danych, które i tak są publicznie dostępne. Do tego dochodzi zmęczenie i błędy, które wychodzą dopiero wtedy, gdy ktoś zaczyna dzwonić.',
+          'Przy tysiącu firm to około 50 godzin, przy pięciu tysiącach około 250 godzin. Im dłuższa lista, tym więcej drobnych pomyłek zostaje w bazie, bo nikt nie przepisuje setek pozycji tak samo dokładnie na początku i na końcu.',
+          'Wygląda to zwykle tak:',
         ],
         punkty: [
           'Literówka w numerze telefonu.',
@@ -94,47 +103,71 @@ export const leadyB2b: Usluga = {
 
   rozwiazanie: {
     h2: 'Co dokładnie dostajesz w paczce rekordów?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Leady branżowe B2B to gotowa paczka rekordów firm z wybranej branży i obszaru, zebrana z publicznie dostępnych wizytówek Google Maps. Mówisz, do kogo chcesz dotrzeć, a my zbieramy i przekazujemy Ci gotową bazę firm B2B.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
-        typ: 'sekcja',
-        naglowek: 'Skąd bierzecie te rekordy?',
-        wariant: 'top',
-        akapity: [
-          'Z publicznie dostępnych wizytówek firm w Google Maps. To te same dane, które Twój handlowiec i tak by przeklikał ręcznie, tylko zebrane maszynowo. Takie zbieranie często nazywa się scrapowaniem Google Maps: maszynowym odczytem publicznych wizytówek.',
-          'Dzięki temu dostajesz gotową bazę leadów zamiast godzin spędzonych na przepisywaniu. Rekordy z wybranej branży i obszaru trafiają do Ciebie w jednej paczce.',
-        ],
+        typ: 'naglowek',
+        tekst: 'Skąd bierzecie te rekordy?',
+        ikona: 'glob-siatka',
+        chip: 'GOOGLE MAPS',
+        overline: 'PUBLICZNE WIZYTÓWKI · JEDNA PACZKA',
       },
       {
-        typ: 'sekcja',
-        naglowek: 'Jak długo czekam na paczkę?',
-        wariant: 'edge',
-        akapity: [
-          'Tysiąc rekordów zajmuje nam 20 do 30 minut zamiast Twoich 50 godzin. Pięć tysięcy to kilka godzin.',
-          'Format przekazania ustalamy na diagnozie, żeby rekordy wpadły prosto tam, gdzie pracujesz, a nie do kolejnego pliku, który trzeba potem przerabiać.',
-        ],
+        typ: 'akapit',
+        tekst: 'Z publicznie dostępnych wizytówek firm w Google Maps. To te same dane, które Twój handlowiec i tak by przeklikał ręcznie, tylko zebrane maszynowo. Takie zbieranie często nazywa się scrapowaniem Google Maps: maszynowym odczytem publicznych wizytówek.',
       },
       {
-        typ: 'sekcja',
-        naglowek: 'Czy do tych rekordów potrzebujesz osobnego narzędzia?',
-        wariant: 'quiet',
-        akapity: [
-          'Nie. Równie ważne jak to, co dostajesz, jest to, czego tu nie kupujesz:',
-        ],
-        punkty: [
-          'Nie sprzedajemy Ci narzędzia do obsługiwania paczki. Pracujesz tam, gdzie pracujesz dziś: w swoim arkuszu albo CRM.',
-          'Nie ma abonamentu za dostęp do danych.',
-          'Kupujesz paczkę, dostajesz paczkę. Dane po przekazaniu są Twoje.',
-          'Wpięcie rekordów prosto do Twojego systemu albo automatyczny pierwszy kontakt to osobne wdrożenie automatyzacji, wyceniane oddzielnie.',
+        typ: 'akapit',
+        tekst: 'Dzięki temu dostajesz gotową bazę leadów zamiast godzin spędzonych na przepisywaniu. Rekordy z wybranej branży i obszaru trafiają do Ciebie w jednej paczce.',
+      },
+      {
+        typ: 'siatka',
+        kolumny: 3,
+        karty: [
+          {
+            naglowek: 'Co jest w paczce?',
+            akapity: [
+              'Rekordy firm z wybranej branży i obszaru, zebrane w jedną paczkę i przekazane Ci w całości.',
+            ],
+            punkty: [
+              'Firmy z wybranej branży i obszaru.',
+              'Wszystko w jednej paczce, bez dzielenia na raty.',
+              'Kupujesz paczkę, dostajesz paczkę. Dane po przekazaniu są Twoje.',
+            ],
+          },
+          {
+            naglowek: 'Jak długo czekam na paczkę?',
+            akapity: [
+              'Tysiąc rekordów zajmuje nam 20 do 30 minut zamiast Twoich 50 godzin. Pięć tysięcy to kilka godzin.',
+              'Format przekazania ustalamy na diagnozie, żeby rekordy wpadły prosto tam, gdzie pracujesz, a nie do kolejnego pliku, który trzeba potem przerabiać.',
+            ],
+            punkty: [
+              '1000 rekordów: 20 do 30 minut.',
+              '5000 rekordów: kilka godzin.',
+              'Format paczki ustalamy przed startem.',
+            ],
+          },
+          {
+            naglowek: 'Czy potrzebujesz osobnego narzędzia?',
+            akapity: [
+              'Nie. Równie ważne jak to, co dostajesz, jest to, czego tu nie kupujesz. Pracujesz tam, gdzie pracujesz dziś: w swoim arkuszu albo CRM.',
+            ],
+            punkty: [
+              'Nie sprzedajemy Ci narzędzia do obsługiwania paczki.',
+              'Nie ma abonamentu za dostęp do danych.',
+              'Wpięcie rekordów prosto do Twojego systemu albo automatyczny pierwszy kontakt to osobne wdrożenie automatyzacji, wyceniane oddzielnie.',
+            ],
+          },
         ],
       },
       {
         typ: 'sekcja',
         naglowek: 'Czy zrobicie to dla firmy sprzedającej klientom indywidualnym?',
-        wariant: 'quiet',
+        wariant: 'edge',
         chip: 'ZASADA',
         akapity: [
           'Nie, jedno ograniczenie mówimy wprost: tę usługę robimy wyłącznie dla firm, które sprzedają innym firmom, czyli działają w B2B.',
@@ -182,11 +215,91 @@ export const leadyB2b: Usluga = {
 
   ramaCeny: {
     h2: 'Ile kosztują leady branżowe B2B?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Paczka 1000 rekordów kosztuje 169 zł netto, czyli 0,169 zł netto za rekord. Płacisz raz za paczkę, nie za dostęp do narzędzia, i nie ma abonamentu.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
+      {
+        typ: 'pasMetryk',
+        metryki: [
+          {
+            wartosc: '169 zł netto',
+            opis: 'paczka 1000 rekordów, opłata jednorazowa',
+            zrodlo: 'próg 1 z tabeli niżej',
+            ton: 'green',
+          },
+          {
+            wartosc: '0,169 zł netto',
+            opis: 'koszt jednego rekordu w najmniejszej paczce',
+            zrodlo: 'próg 1 z tabeli niżej',
+            ton: 'cyan',
+          },
+          {
+            wartosc: '20 do 30 minut',
+            opis: 'tyle zajmuje nam zebranie 1000 rekordów',
+            zrodlo: 'próg 1 z tabeli niżej',
+            ton: 'amber',
+          },
+        ],
+      },
+      {
+        typ: 'naglowek',
+        tekst: 'Ile kosztuje 1000 leadów B2B?',
+        ikona: 'wykres-strzalka',
+        chip: 'CENNIK',
+        overline: 'TRZY PACZKI · OPŁATA JEDNORAZOWA',
+      },
+      {
+        typ: 'przelacznik',
+        grupa: 'leady-b2b-paczki',
+        opcje: [
+          {
+            numer: 'PRÓG 1',
+            tytul: '1000 rekordów',
+            podtytul: '169 zł netto',
+            naglowek: 'Paczka 1000 rekordów kosztuje 169 zł netto, czyli 0,169 zł netto za rekord.',
+            akapity: [
+              'To najmniejsza paczka i zwykle od niej zaczynamy, żeby sprawdzić jakość rekordów na Twojej branży. Zbieramy ją w 20 do 30 minut, a ręcznie to samo zajęłoby około 50 godzin pracy człowieka.',
+            ],
+            punkty: [
+              'Cena: 169 zł netto, jednorazowo.',
+              'Koszt jednego rekordu: 0,169 zł netto.',
+              'Czas po naszej stronie: 20 do 30 minut.',
+            ],
+          },
+          {
+            numer: 'PRÓG 2',
+            tytul: '5000 rekordów',
+            podtytul: '699 zł netto',
+            naglowek: 'Paczka 5000 rekordów kosztuje 699 zł netto, czyli 0,140 zł netto za rekord.',
+            akapity: [
+              'Pięć razy więcej firm na liście, a jeden rekord wychodzi taniej niż w pierwszym progu. Po naszej stronie to kilka godzin, ręcznie byłoby to około 250 godzin.',
+            ],
+            punkty: [
+              'Cena: 699 zł netto, jednorazowo.',
+              'Koszt jednego rekordu: 0,140 zł netto.',
+              'Czas po naszej stronie: kilka godzin.',
+            ],
+          },
+          {
+            numer: 'PRÓG 3',
+            tytul: '10000 rekordów',
+            podtytul: '1390 zł netto',
+            naglowek: 'Paczka 10000 rekordów kosztuje 1390 zł netto, czyli 0,139 zł netto za rekord.',
+            akapity: [
+              'To najniższy koszt jednego rekordu na tej stronie. Czas zbierania takiej paczki ustalamy na diagnozie, bo zależy od branży i obszaru, który wybierzesz.',
+              'Im większa paczka, tym taniej wychodzi pojedynczy rekord, bo praca po naszej stronie rośnie wolniej niż liczba firm na liście.',
+            ],
+            punkty: [
+              'Cena: 1390 zł netto, jednorazowo.',
+              'Koszt jednego rekordu: 0,139 zł netto.',
+              'Czas po naszej stronie: ustalamy na diagnozie.',
+            ],
+          },
+        ],
+      },
       {
         typ: 'tabela',
         naglowki: [
@@ -219,19 +332,12 @@ export const leadyB2b: Usluga = {
         podpis: 'Im większa paczka, tym taniej wychodzi jeden rekord. Opłata jednorazowa, bez abonamentu.',
       },
       {
-        typ: 'akapit',
-        tekst: 'Im większa paczka, tym taniej wychodzi pojedynczy rekord, bo praca po naszej stronie rośnie wolniej niż liczba firm na liście.',
-      },
-      {
-        typ: 'akapit',
-        tekst: 'Za leady branżowe B2B płacisz raz. Nie ma abonamentu, nie ma opłaty za utrzymanie i nie ma limitu na to, ile razy z tych danych skorzystasz.',
-      },
-      {
         typ: 'sekcja',
         naglowek: 'Którą paczkę wybrać na start?',
         wariant: 'top',
         akapity: [
           'Tę, którą realnie przerobisz w miesiącu. Skoro wiesz już, ile kosztuje 1000 leadów B2B, policz drugą stronę: przy stawce, jaką i tak płacisz handlowcowi, samo ręczne zebranie tysiąca rekordów zajmuje około 50 godzin.',
+          'Za leady branżowe B2B płacisz raz. Nie ma abonamentu, nie ma opłaty za utrzymanie i nie ma limitu na to, ile razy z tych danych skorzystasz.',
           'Zanim zamówisz, na bezpłatnej diagnozie mówimy wprost, czy Twoja branża ma sens w tym kanale i ile rekordów realnie przerobisz w miesiącu. Chodzi o to, żeby paczka pracowała, a nie przeleżała bez użycia.',
         ],
       },

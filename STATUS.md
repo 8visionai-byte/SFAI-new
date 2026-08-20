@@ -1,3 +1,75 @@
+# STATUS — INFINITY v23: JĘZYK PODSTRON — DO WDROŻENIA
+
+ZLECENIE PAWŁA: „nasze podstrony mega od tego odbiegają", podstrony mają
+wyglądać jak infinitytechstack.uk (praxis, axiom, vitalis, void, 7 akademii),
+„nie ściana tekstu, tylko liczby na górze, potem opis", „kliknięcie z jednej
+strony przechodzi do drugiej i rozwija całą sekcję", każdą podstronę traktować
+jak stronę główną, główna strona NIETYKALNA.
+
+ROZPOZNANIE (nie wrażenia, pomiar): sonda computed-style + zrzuty desktop
+i mobile z 11 podstron wzorca -> ref/*.json, ref/w-*.png.
+ODKRYCIE: mieliśmy PODOBNĄ liczbę nagłówków i rozwijanych paneli co wzorzec
+(h3: my 14-22, oni 13-38). Różnica siedziała w JĘZYKU WIZUALNYM:
+- wzorzec: głowa sekcji (glif + tytuł W KOLORZE + pigułka), pas 3-4 liczb
+  w RÓŻNYCH barwach palety, klikalne karty z panelem wybranej, siatki 3-4
+  kolumn na ~1200 px,
+- my: białe nagłówki w kolumnie 760 px, ~660 px pustych marginesów na 1440 px,
+  zero liczb w sekcjach, zero interakcji.
+
+SILNIK (commit 666148c, punkt cofnięcia):
+- blok "naglowek" dostał ikona/chip/overline = GŁOWA SEKCJI,
+- NOWY "pasMetryk": 2-4 metryki, każda z własnym tonem palety,
+- NOWY "przelacznik": radio + :checked, ZERO JavaScriptu. Treść wszystkich
+  paneli jest w HTML przy pierwszym żądaniu, więc bot czyta komplet,
+  a klawiatura dostaje natywną grupę radio,
+- NOWY "siatka": 2-4 kolumny kart,
+- "Bloki" dostały prop szerokosc: sekcje usług na 980 px, lead zostaje na
+  760 px (tekst ciągły powyżej ~75 znaków w wierszu czyta się gorzej).
+Wszystkie pola opcjonalne: poradniki, blog i materiały renderują się 1:1.
+
+PROCES: 108 agentów w dwóch przebiegach, ZERO padniętych.
+Runda 1 (88 agentów): 15 zespołów, każdy z INNĄ przypisaną stroną wzorca
+(chatboty<-praxis, voiceboty<-void, automatyzacje<-vitalis, rekrutacja<-axiom,
+podstrony voicebotów<-akademie), skład: analityk wzorca -> architekt układu ->
+copywriter -> walidator adwersaryjny -> poprawki.
+Runda 2 (20 agentów): naprawa 22 pozostałych znalezisk + rekontrola.
+Ostatnie znalezisko (format overline na podstronie odbierania) poprawione ręcznie.
+
+CO ZŁAPAŁA KONTROLA (przykłady, wszystkie naprawione przed wszyciem):
+1. Na stronie chatbotów w pasie liczb stały „580 maili" i „80% draftów" —
+   to wynik automatu mailowego Instytutu Kryptografii, NIE chatbota. Model
+   cytujący pas wyprodukowałby „chatbot ma 80% odpowiedzi gotowych bez
+   poprawek", czyli dowód przypisany do złego produktu.
+2. Na automatyzacjach „8 h tygodniowo" u KNF Team stało jako twarda liczba,
+   a nasze własne strony realizacji mówią „kilka godz./tydz. (szac.)".
+3. W cenniku chatbotów 1790 zł wypadło bez „netto" akurat w nagłówku karty,
+   czyli w miejscu o największej cytowalności.
+4. Nowa liczba spoza konspektu („pięć minut przed rozmową") na rekrutacji.
+
+WYNIK ZMIERZONY (15 tras, GPTBot bez JS, lokalnie vs produkcja):
+- MEDIANA AKAPITU TREŚCI: 134-171 znaków (cel raportu P8: ~150; konkurencja
+  cytowana 128-156; my przed rundą struktury: 257). Akapity powyżej 400 znaków
+  to już tylko kapsuły hero i odpowiedzi FAQ, czyli miejsca celowo długie.
+- SŁOWA W GÓRĘ NA KAŻDEJ TRASIE: chatboty 1763->2534, voiceboty 1892->2356,
+  opieka 1447->2014, faktury 1442->2023, strony-www 1287->1835.
+- NOWE ELEMENTY: 92 metryki, 41 głów sekcji, 23 przełączniki, 19 siatek.
+- H3 wszędzie w górę (np. odbieranie telefonów 17->28).
+- INTERAKCJA: kliknięcie w kartę przełącznika otwiera właściwy panel na
+  wszystkich sprawdzonych trasach, na 1440 i 390 px.
+- Zero em-dash, zero poziomego przewijania, zero błędów konsoli.
+- build / typecheck / lint: exit 0.
+
+DECYZJA DESIGNOWA DO WIADOMOŚCI: hook zgłasza "side-tab" (lewa kreska w kolorze
+na panelu przełącznika). ZOSTAJE: to chwyt zmierzony u wzorca (panel
+„Voice-to-Context" na /praxis) i wariant ".inf-card-edge" obecny w naszym
+systemie od v13 na wyraźne życzenie Pawła („inne mają tylko świecący lewy bok").
+
+CZEKA NA PAWŁA: ocena wizualna 15 podstron; badge „MVP" vs „Działa u nas"
+przy narzędziach portfolio; tabela 4-kolumnowa w poradniku (suwak czy zwężenie);
+case'y dla Y-Ads, Onyx, ZB Bielizsy, Desant.pl, Przystań Jurgen, Waste Return.
+
+---
+
 # STATUS — ODPOWIEDZI PAWŁA 2026-08-20 (wywiad o usługach) — DO WDROŻENIA
 
 Paweł odpowiedział na pytania otwarte z poprzednich rund. Wdrożone 1:1:

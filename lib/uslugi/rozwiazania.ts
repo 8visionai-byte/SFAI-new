@@ -18,7 +18,7 @@ import type { Usluga } from './types';
  */
 export const rozwiazania: Usluga = {
   slug: 'rozwiazania',
-  dataAktualizacji: '2026-08-19',
+  dataAktualizacji: '2026-08-21',
   h1: 'Indywidualne rozwiązania AI: aplikacje i wtyczki na zamówienie',
   kapsula:
     'Czasem gotowy chatbot czy automatyzacja nie wystarczą, bo Twój problem jest tylko Twój. Wtedy budujemy rozwiązanie na miarę: aplikację webową, wtyczkę do narzędzia, którego używasz, albo Agenta spiętego z kilkoma systemami naraz. Nie sprzedajemy pudełka z funkcjami. Projektujemy dokładnie to, czego potrzebuje Twój proces, i wdrażamy szybko. Zaczynamy od bezpłatnej diagnozy, na której mówimy wprost, czy warto budować od zera, czy taniej złożyć z gotowych klocków.',
@@ -29,68 +29,189 @@ export const rozwiazania: Usluga = {
 
   problem: {
     h2: 'Gotowe narzędzia nie pasują do Twojego procesu?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
-      'Twoja firma robi coś po swojemu, a gotowe narzędzia wymuszają, żebyś to po swojemu zmienił. Standardowe rozwiązanie nie istnieje, bo Twój przypadek jest niestandardowy.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+      'Twoja firma robi coś po swojemu, a narzędzie z półki wymusza, żebyś to po swojemu zmienił. Standardowe rozwiązanie nie istnieje, bo Twój przypadek jest niestandardowy.',
     bloki: [
       {
-        typ: 'lista',
-        punkty: [
-          'Płacisz abonamenty za funkcje, których nie używasz, bo pakiet z półki zawsze zawiera więcej, niż potrzebujesz.',
-          'Ręcznie sklejasz to, co powinno działać samo, bo narzędzia z półki nie gadają z Twoimi systemami.',
-          'Masz pomysł na apkę albo wtyczkę, która zdjęłaby konkretną robotę, ale nie wiesz, czy to się opłaca i od czego zacząć.',
+        typ: 'pasMetryk',
+        metryki: [
+          {
+            wartosc: '2-4 godziny',
+            opis: 'tyle zajmowało ręczne przygotowanie jednej oferty, zanim powstało narzędzie',
+            zrodlo: 'Trockenhaus (DE), opis narzędzia niżej',
+            ton: 'amber',
+          },
+          {
+            wartosc: 'około 1 godziny',
+            opis: 'tyle zajmowało ręczne wystawienie jednego rachunku',
+            zrodlo: 'Trockenhaus (DE), opis narzędzia niżej',
+            ton: 'violet',
+          },
+          {
+            wartosc: '1-5 rachunków',
+            opis: 'taka jest miesięczna skala firmy, w której zmierzyliśmy te czasy, mówimy to wprost',
+            zrodlo: 'Trockenhaus (DE), opis narzędzia niżej',
+            ton: 'cyan',
+          },
         ],
       },
       {
+        typ: 'siatka',
+        kolumny: 3,
+        karty: [
+          {
+            naglowek: 'Płacisz za funkcje, których nie używasz',
+            akapity: [
+              'Pakiet z półki zawsze zawiera więcej, niż potrzebujesz. Abonament płacisz za cały pakiet, a nie za tę jedną część, która realnie pracuje u Ciebie każdego dnia.',
+            ],
+            punkty: [
+              'Abonamenty kosztują Cię więcej, niż są warte funkcje, których naprawdę używasz',
+              'Funkcje, których nie włączasz, i tak są w cenie',
+            ],
+          },
+          {
+            naglowek: 'Ręcznie sklejasz to, co powinno działać samo',
+            akapity: [
+              'Narzędzia z półki nie gadają z Twoimi systemami. Dane przeklejasz między nimi człowiekiem, bo nikt nie przewidział akurat Twojego układu narzędzi.',
+            ],
+            punkty: [
+              'Te same dane wpisujesz drugi raz w innym systemie',
+              'To, co przepiszesz ręcznie, trzeba potem sprawdzić drugi raz',
+            ],
+          },
+          {
+            naglowek: 'Masz pomysł, ale nie wiesz, od czego zacząć',
+            akapity: [
+              'Masz pomysł na apkę albo wtyczkę, która zdjęłaby konkretną robotę. Brakuje Ci pewności, czy to się opłaca, więc pomysł leży i czeka na lepszy moment.',
+            ],
+            punkty: [
+              'Nie wiesz, czy taniej zbudować, czy złożyć z gotowych klocków',
+              'Nie chcesz płacić za miesiące budowy w ciemno',
+            ],
+          },
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Po czym poznać, że gotowe narzędzie już Ci nie wystarcza?',
+        akapity: [
+          'Sygnał jest jeden i prosty: to narzędzie ma dopasować się do procesu, a nie proces do narzędzia. Gotowe z półki tego nie zrobi, bo powstało dla wszystkich, nie dla Ciebie.',
+          'Jeśli żaden z tych sygnałów u Ciebie nie występuje, powiemy to wprost, także wtedy, gdy oznacza to brak zlecenia dla nas. Budowanie na zamówienie ma sens tylko tam, gdzie realnie coś zmienia.',
+        ],
+        punkty: [
+          'Czekasz, aż dostawca doda funkcję, której potrzebujesz dzisiaj',
+          'Spinasz, co się da, a resztę i tak przenosisz ręcznie',
+          'Zależysz od dostawcy w sprawach, które są dla Ciebie krytyczne',
+        ],
+        wariant: 'top',
+        chip: 'SYGNAŁY',
+      },
+      {
         typ: 'akapit',
-        tekst: 'Rozwiązania na zamówienie mają sens dokładnie wtedy, gdy narzędzie ma dopasować się do procesu, a nie proces do narzędzia. Gotowe z półki tego nie zrobi, bo powstało dla wszystkich, nie dla Ciebie.',
+        tekst: 'Jeśli rozpoznajesz siebie w którejś z tych trzech kart, problemem nie jest brak narzędzi na rynku. Problemem jest to, że żadne z nich nie powstało pod Twój proces.',
       },
     ],
   },
 
   rozwiazanie: {
     h2: 'Co budujemy na zamówienie?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
-      'Budujemy to, czego nie ma na półce: rozwiązania na zamówienie pod Twój konkretny proces. Na bezpłatnej diagnozie mówimy wprost, czy warto budować od zera, czy taniej złożyć z gotowych klocków.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+      'Budujemy to, czego nie ma na półce: narzędzie zbudowane pod jeden proces Twojej firmy. Nie kupujesz pudełka z funkcjami, tylko jedną rzecz, która robi Twoją robotę, a w praktyce przyjmuje ona jedną z trzech form. Na bezpłatnej diagnozie mówimy wprost, czy warto budować od zera, czy taniej złożyć z gotowych klocków.',
     bloki: [
       {
-        typ: 'sekcja',
-        naglowek: 'Czym jest indywidualne rozwiązanie AI?',
-        akapity: [
-          'Indywidualne rozwiązanie AI to narzędzie zbudowane pod jeden proces Twojej firmy. Wybierasz je, gdy policzysz, że abonamenty za gotowe narzędzia kosztują Cię więcej, niż są warte funkcje, których naprawdę używasz, albo gdy ręcznie sklejasz to, co powinno działać samo. W praktyce przyjmuje jedną z trzech form:',
-        ],
-        punkty: [
-          'Aplikacja webowa na zamówienie: pod jeden konkretny proces Twojej firmy, bez zbędnych funkcji.',
-          'Wtyczki AI do narzędzi, których już używasz, na przykład wtyczka AI do CRM, żeby nie zmieniać całego systemu.',
-          'Agent AI spinający kilka systemów naraz w jeden ciąg pracy, pod nadzorem człowieka.',
-        ],
-        wariant: 'top',
-      },
-      {
         typ: 'naglowek',
-        tekst: 'Oferta z 2-4 godzin do 20 minut: przykład narzędzia na zamówienie',
+        tekst: 'Czym jest indywidualne rozwiązanie AI?',
+        ikona: 'folder-kod',
+        chip: 'TRZY FORMY',
+        overline: 'APLIKACJA · WTYCZKA · AGENT AI',
       },
       {
-        typ: 'kafle',
-        kafle: [
+        typ: 'przelacznik',
+        grupa: 'rozwiazania-formy',
+        opcje: [
+          {
+            numer: 'FORMA 1',
+            tytul: 'Aplikacja webowa',
+            podtytul: 'pod jeden proces',
+            naglowek: 'Aplikacja webowa na zamówienie: pod jeden konkretny proces Twojej firmy, bez zbędnych funkcji.',
+            akapity: [
+              'Wybierasz ją, gdy Twój proces ma własne reguły i żadne gotowe narzędzie ich nie obsługuje. Zamiast płacić za pakiet funkcji, dostajesz jeden ekran, który robi dokładnie to, co trzeba.',
+              'Tak powstało narzędzie do kosztorysowania dla Trockenhaus: cenniki wgrane do środka, aktualne ceny sprawdzane w hurtowniach, oferta w 20 minut, rachunek w około 5 minut.',
+            ],
+            punkty: [
+              'Zaczynamy od najmniejszej wersji, która realnie rozwiązuje problem',
+              'Bez płacenia za funkcje na zapas, dokładamy je w kolejności od najważniejszych',
+            ],
+          },
+          {
+            numer: 'FORMA 2',
+            tytul: 'Wtyczka AI',
+            podtytul: 'do narzędzia, którego już używasz',
+            naglowek: 'Wtyczki AI do narzędzi, których już używasz, na przykład wtyczka AI do CRM, żeby nie zmieniać całego systemu.',
+            akapity: [
+              'Wybierasz ją, gdy Twój system jest w porządku, brakuje mu tylko jednego kawałka. Wtedy taniej dołożyć brakujący element niż przenosić całą firmę na nowe narzędzie.',
+              'Ludzie pracują dalej tam, gdzie pracowali. Nie ma migracji danych ani tygodni uczenia zespołu od nowa.',
+              'Nie płacisz drugiego abonamentu za kolejne narzędzie z półki. Po wdrożeniu wybierasz jeden z dwóch modeli: przekazanie infrastruktury i 0 zł miesięcznie albo opłatę utrzymaniową, gdy projekt zostaje u nas.',
+            ],
+            punkty: [
+              'Zostajesz przy narzędziu, które Twój zespół już zna',
+              'Zmiana dotyczy jednego miejsca, nie całego systemu',
+            ],
+          },
+          {
+            numer: 'FORMA 3',
+            tytul: 'Agent AI',
+            podtytul: 'spina kilka systemów naraz',
+            naglowek: 'Agent AI spinający kilka systemów naraz w jeden ciąg pracy, pod nadzorem człowieka.',
+            akapity: [
+              'Wybierasz go, gdy robota nie mieści się w jednym narzędziu i dziś człowiek przenosi dane między nimi ręcznie. Agent prowadzi całą ścieżkę od początku do końca.',
+              'Decyzje zostają po stronie człowieka. Agent wykonuje pracę, pokazuje wynik i czeka na akceptację tam, gdzie stawka jest wysoka.',
+            ],
+            punkty: [
+              'Jeden ciąg pracy zamiast przeklejania między systemami',
+              'Człowiek widzi, co agent zrobił, i może to poprawić',
+            ],
+          },
+        ],
+      },
+      {
+        typ: 'pasMetryk',
+        metryki: [
           {
             wartosc: '20 minut',
-            opis: 'przygotowanie oferty, wcześniej 2-4 godziny',
-            zrodlo: 'Trockenhaus (DE), narzędzie do kosztorysowania',
+            opis: 'tyle trwa przygotowanie oferty po zbudowaniu narzędzia na zamówienie',
+            zrodlo: 'Trockenhaus (DE), narzędzie do kosztorysowania, opis niżej',
+            ton: 'cyan',
           },
           {
             wartosc: '5 minut',
-            opis: 'wystawienie rachunku, wcześniej około 1 godziny',
-            zrodlo: 'Trockenhaus (DE)',
+            opis: 'tyle trwa wystawienie rachunku po zbudowaniu narzędzia na zamówienie',
+            zrodlo: 'Trockenhaus (DE), narzędzie do kosztorysowania, opis niżej',
+            ton: 'green',
+          },
+          {
+            wartosc: '1-8 ofert miesięcznie',
+            opis: 'skala firmy, w której te czasy zmierzyliśmy, mówimy to wprost',
+            zrodlo: 'Trockenhaus (DE), mała firma, opis niżej',
+            ton: 'violet',
           },
         ],
       },
       {
-        typ: 'akapit',
-        tekst: 'Narzędzie do kosztorysowania zbudowaliśmy dla Trockenhaus, małej firmy z Niemiec. Cenniki są wgrane do narzędzia, które samo sprawdza aktualne ceny w hurtowniach. Oferta powstaje w 20 minut zamiast 2-4 godzin, rachunek w około 5 minut zamiast godziny. Skala to 1-8 ofert i 1-5 rachunków miesięcznie, mówimy to wprost.',
+        typ: 'sekcja',
+        naglowek: 'Jak wygląda narzędzie zbudowane na zamówienie?',
+        akapity: [
+          'Narzędzie do kosztorysowania zbudowaliśmy dla Trockenhaus, małej firmy z Niemiec. Cenniki są wgrane do narzędzia, które samo sprawdza aktualne ceny w hurtowniach.',
+          'Oferta powstaje w 20 minut zamiast 2-4 godzin, rachunek w około 5 minut zamiast godziny. Skala to 1-8 ofert i 1-5 rachunków miesięcznie, mówimy to wprost.',
+        ],
+        wariant: 'edge',
+        chip: 'TROCKENHAUS (DE)',
       },
       {
         typ: 'sekcja',
@@ -142,27 +263,41 @@ export const rozwiazania: Usluga = {
 
   ramaCeny: {
     h2: 'Ile kosztuje indywidualne rozwiązanie AI?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Rozwiązanie na miarę wyceniamy indywidualnie, bo każde jest inne, ale nie zostawiamy Cię z „to zależy”. Widełki dla pierwszej, najmniejszej działającej wersji dostajesz na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
-        typ: 'kafle',
-        kafle: [
+        typ: 'pasMetryk',
+        metryki: [
           {
             wartosc: '0 zł',
             opis: 'bezpłatna diagnoza przed jakąkolwiek wyceną',
+            zrodlo: 'zasada: najpierw diagnoza, potem wycena',
+            ton: 'cyan',
           },
           {
             wartosc: 'około 30 minut',
             opis: 'tyle trwa rozmowa diagnostyczna',
+            zrodlo: 'bezpłatna diagnoza, opis niżej',
+            ton: 'violet',
           },
           {
             wartosc: '2 rundy poprawek',
             opis: 'w cenie każdego wdrożenia',
+            zrodlo: 'zasady wdrożenia, opis niżej',
+            ton: 'green',
           },
         ],
+      },
+      {
+        typ: 'naglowek',
+        tekst: 'Za co dokładnie płacisz przy rozwiązaniu na zamówienie?',
+        ikona: 'wykres-strzalka',
+        chip: 'CENNIK',
+        overline: 'DIAGNOZA · WDROŻENIE · OPIEKA',
       },
       {
         typ: 'sekcja',
@@ -205,11 +340,6 @@ export const rozwiazania: Usluga = {
         tekst: 'Diagnoza kosztuje 0 zł i trwa około 30 minut. Rozkładamy na niej projekt na etapy, żeby koszt i ryzyko były policzalne, a nie z sufitu. Bez ukrytych kosztów i bez płacenia za funkcje na zapas.',
       },
     ],
-    // minPrice: undefined — brak realnych widełek od Pawła. Po ustaleniu wpisać
-    // number → kwota „od X zł" pojawi się w UI i w offers Service JSON-LD spójnie.
-    /* v22 (linki §3, P1 #8): 32 wyświetlenia, pozycja 8,9, czyli TOP10 z zerowym
-       CTR. Etapowanie projektu i liczenie zwrotu opisuje poradnik o koszcie
-       agenta AI. Render: RamaCeny.tsx, ten sam akapit co `tresc`. */
     linkPoradnik: {
       przed: 'Po czym poznać, że wdrożenie się zwróci, rozpisaliśmy w poradniku: ',
       etykieta: 'ile kosztuje wdrożenie AI agenta dla firmy',

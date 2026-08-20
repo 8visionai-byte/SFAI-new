@@ -33,7 +33,7 @@ import type { Usluga } from './types';
  */
 export const voiceboty: Usluga = {
   slug: 'voiceboty',
-  dataAktualizacji: '2026-08-20',
+  dataAktualizacji: '2026-08-21',
   h1: 'Voicebot dla firmy, który odbiera telefon za Ciebie',
   /* BLOK KRÓTKIEJ ODPOWIEDZI (audyt §9 etap 1 pkt 2 i §2): pierwszy akapit po
      H1 rozbija koszt na TRZY JAWNE POZYCJE, bo to jedyna rzecz, której nie ma
@@ -53,17 +53,65 @@ export const voiceboty: Usluga = {
 
   problem: {
     h2: 'Ile telefonów dziennie nie odbierasz?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Telefon dzwoni, kiedy jesteś u klienta albo masz ręce zajęte, i połowy połączeń nie odbierasz. To pieniądze, które uciekają do konkurencji, która odebrała.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
-        typ: 'lista',
-        punkty: [
-          'Jesteś u klienta albo masz ręce zajęte. Telefon dzwoni właśnie wtedy i nikt go nie odbiera, bo w małej firmie nie ma kto.',
-          'Wieczory i weekendy. Telefon odbierany ręcznie działa tylko wtedy, gdy ktoś przy nim siedzi, a klienci dzwonią też po godzinach.',
-          'Klient, który nie dodzwonił się raz, często nie dzwoni drugi. Wybiera firmę, która odebrała od razu.',
+        typ: 'naglowek',
+        tekst: 'Kiedy dokładnie telefon dzwoni, a Ty nie możesz odebrać?',
+        ikona: 'lupa-wykres',
+        chip: 'TRZY SYTUACJE',
+        overline: 'MAŁA FIRMA · TELEFON DZWONI W NAJGORSZYM MOMENCIE',
+      },
+      {
+        typ: 'przelacznik',
+        grupa: 'voiceboty-kiedy-dzwoni',
+        opcje: [
+          {
+            numer: 'SYTUACJA 1',
+            tytul: 'U klienta',
+            podtytul: 'Ręce zajęte',
+            naglowek: 'Telefon dzwoni wtedy, gdy jesteś u klienta i nie masz jak odebrać.',
+            akapity: [
+              'Jesteś u klienta albo masz ręce zajęte. Telefon dzwoni właśnie wtedy i nikt go nie odbiera, bo w małej firmie nie ma kto.',
+            ],
+            punkty: [
+              'Nie przerwiesz spotkania, żeby odebrać.',
+              'Oddzwaniasz później, często po godzinach.',
+              'Klient w tym czasie dzwoni gdzie indziej.',
+            ],
+          },
+          {
+            numer: 'SYTUACJA 2',
+            tytul: 'Wieczór i weekend',
+            podtytul: 'Poza godzinami',
+            naglowek: 'Telefon odbierany ręcznie działa tylko wtedy, gdy ktoś przy nim siedzi.',
+            akapity: [
+              'Wieczory i weekendy. Telefon odbierany ręcznie działa tylko wtedy, gdy ktoś przy nim siedzi, a klienci dzwonią też po godzinach.',
+            ],
+            punkty: [
+              'Klienci dzwonią też po godzinach i w weekend.',
+              'Nikt nie odbiera, więc sprawa czeka do poniedziałku.',
+              'Nagrywarka odsyła klienta z niczym.',
+            ],
+          },
+          {
+            numer: 'SYTUACJA 3',
+            tytul: 'Drugi raz nie zadzwoni',
+            podtytul: 'Klient odchodzi',
+            naglowek: 'Klient, który nie dodzwonił się raz, często nie dzwoni drugi.',
+            akapity: [
+              'Klient, który nie dodzwonił się raz, często nie dzwoni drugi. Wybiera firmę, która odebrała od razu.',
+            ],
+            punkty: [
+              'Nie wie, że oddzwonisz, więc nie czeka.',
+              'Wybiera firmę, która odebrała od razu.',
+              'Drugiej szansy zwykle nie ma.',
+            ],
+          },
         ],
       },
       {
@@ -84,19 +132,56 @@ export const voiceboty: Usluga = {
 
   rozwiazanie: {
     h2: 'Co robi bot telefoniczny, gdy nie możesz odebrać?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Voicebot odbiera każde połączenie, rozmawia naturalnie po polsku i sam załatwia sprawę do końca. Działa 24/7, także wieczorem i w weekend.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
-        typ: 'lista',
-        punkty: [
-          'Umawia termin i od razu zapisuje go w Twoim kalendarzu, a klientowi wysyła potwierdzenie.',
-          'Przyjmuje zgłoszenie z konkretami: kto dzwonił, w jakiej sprawie i czego potrzebuje.',
-          'Odpowiada na częste pytania, więc bot do odbierania telefonów zdejmuje z Ciebie powtarzalne rozmowy.',
-          'Po rozmowie wysyła Ci krótkie podsumowanie, więc wiesz, co się działo, nawet gdy nie było Cię przy telefonie.',
-          'Nie ma godzin pracy. Obsługa klienta 24/7 przez voicebota znaczy, że klient załatwia sprawę wtedy, kiedy dzwoni, także po godzinach.',
+        typ: 'naglowek',
+        tekst: 'Co dokładnie voicebot załatwia sam, bez Ciebie?',
+        ikona: 'sluchawka-fala',
+        chip: '24/7',
+        overline: 'AI ODBIERA TELEFON · WYŁĄCZNIE POŁĄCZENIA PRZYCHODZĄCE',
+      },
+      {
+        typ: 'siatka',
+        kolumny: 3,
+        karty: [
+          {
+            naglowek: 'Czy voicebot umówi wizytę w moim kalendarzu?',
+            akapity: [
+              'Tak. Bot widzi wolne terminy w Twoim kalendarzu, proponuje je dzwoniącemu i zapisuje wizytę jeszcze w trakcie rozmowy.',
+            ],
+            punkty: [
+              'Umawia termin i od razu zapisuje go w Twoim kalendarzu.',
+              'Klientowi wysyła potwierdzenie, bez Twojego udziału.',
+              'Kalendarz zostaje aktualny, bez ręcznego przepisywania.',
+            ],
+          },
+          {
+            naglowek: 'Co zostaje po rozmowie, której nie słyszałeś?',
+            akapity: [
+              'Krótka notatka u Ciebie. Bot do odbierania telefonów przyjmuje zgłoszenie z konkretami, więc oddzwaniasz przygotowany, a nie na ślepo.',
+            ],
+            punkty: [
+              'Zapisuje, kto dzwonił, w jakiej sprawie i czego potrzebuje.',
+              'Po rozmowie wysyła Ci krótkie podsumowanie.',
+              'Wiesz, co się działo, nawet gdy nie było Cię przy telefonie.',
+            ],
+          },
+          {
+            naglowek: 'Kto odbiera telefon wieczorem i w weekend?',
+            akapity: [
+              'Voicebot, bo nie ma godzin pracy. Obsługa klienta 24/7 przez voicebota znaczy, że klient załatwia sprawę wtedy, kiedy dzwoni, także po godzinach.',
+            ],
+            punkty: [
+              'Odpowiada na częste pytania i zdejmuje z Ciebie powtarzalne rozmowy.',
+              'Rozmawia po polsku, to nie jest nagranie ani menu „wciśnij jeden”.',
+              'Ta sama obsługa w środku dnia i o dwudziestej drugiej.',
+            ],
+          },
         ],
       },
       {
@@ -170,14 +255,99 @@ export const voiceboty: Usluga = {
 
   ramaCeny: {
     h2: 'Ile kosztuje voicebot dla firmy?',
-    /* TRZY OSOBNE POZYCJE (audyt §2). Fraza „pakiet startowy" zostaje w treści
-       celowo: `ServiceHero.KAFEL_CENY` opisuje kafel ceny voicebotów słowami
-       1:1 z tego akapitu („od 2500 zł / pakiet startowy"). */
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Voicebot ma trzy osobne pozycje kosztu, a nie jeden abonament, w którym wszystko jest schowane: stworzenie od 2500 zł netto za pakiet startowy, płatne raz, utrzymanie 299 do 1500 zł netto miesięcznie albo 0 zł, oraz zużycie tokenów i minut rozliczane według realnego użycia. Bot prosty powstaje w 3 do 5 dni roboczych, z integracjami w 5 do 25 dni roboczych.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
+      {
+        typ: 'pasMetryk',
+        metryki: [
+          {
+            wartosc: '2500 zł netto',
+            opis: 'stworzenie bota prostego, pakiet startowy, płatne raz',
+            zrodlo: 'pierwszy wiersz tabeli kosztów niżej',
+            ton: 'cyan',
+          },
+          {
+            wartosc: '5000 do 9000 zł netto',
+            opis: 'stworzenie bota z integracjami, płatne raz',
+            zrodlo: 'drugi wiersz tabeli kosztów niżej',
+            ton: 'violet',
+          },
+          {
+            wartosc: '299 do 1500 zł netto',
+            opis: 'utrzymanie miesięczne albo 0 zł po przekazaniu infrastruktury',
+            zrodlo: 'trzeci i czwarty wiersz tabeli kosztów niżej',
+            ton: 'green',
+          },
+          {
+            wartosc: '3 do 25 dni roboczych',
+            opis: 'czas wdrożenia, licząc od przekazania kompletu materiałów',
+            zrodlo: 'kapsuła i tabela porównawcza tej strony',
+            ton: 'amber',
+          },
+        ],
+      },
+      {
+        typ: 'naglowek',
+        tekst: 'Za co dokładnie płacę przy voicebocie?',
+        ikona: 'wykres-strzalka',
+        chip: 'TRZY POZYCJE',
+        overline: 'CENNIK · TRZY OSOBNE KOSZTY, NIE JEDEN RYCZAŁT',
+      },
+      {
+        typ: 'przelacznik',
+        grupa: 'voiceboty-progi',
+        opcje: [
+          {
+            numer: 'POZYCJA 1',
+            tytul: 'Stworzenie',
+            podtytul: '2500 zł netto albo 5000 do 9000 zł netto',
+            naglowek: 'Ile kosztuje zbudowanie voicebota i co dostajesz w każdym progu?',
+            akapity: [
+              'Pakiet startowy za 2500 zł netto to prosta baza wiedzy, kierowanie rozmów i odpowiedzi na powtarzalny zestaw pytań.',
+              'Bot z integracjami, na przykład z kalendarzem, i z rozbudowanymi scenariuszami to 5000 do 9000 zł netto, płatne raz przy wdrożeniu.',
+            ],
+            punkty: [
+              'Bot prosty: 2500 zł netto, powstaje w 3 do 5 dni roboczych.',
+              'Bot z integracjami: 5000 do 9000 zł netto, 5 do 25 dni roboczych.',
+              'Płacisz raz, przy wdrożeniu, a nie co miesiąc.',
+            ],
+          },
+          {
+            numer: 'POZYCJA 2',
+            tytul: 'Utrzymanie',
+            podtytul: '299 do 1500 zł netto albo 0 zł',
+            naglowek: 'Czy muszę płacić abonament co miesiąc?',
+            akapity: [
+              'Nie musisz, wybierasz jedną z dwóch dróg. Pierwsza: infrastruktura zostaje u nas, my ją trzymamy i pilnujemy, a Ty płacisz 299 do 1500 zł netto miesięcznie.',
+              'Druga: przekazujemy Ci całą infrastrukturę i płacisz nam 0 zł miesięcznie. Poprawki zamawiasz wtedy godzinowo, po 350 zł netto za godzinę, tylko gdy ich potrzebujesz.',
+            ],
+            punkty: [
+              'Infrastruktura u nas: 299 do 1500 zł netto miesięcznie.',
+              'Infrastruktura przekazana Tobie: 0 zł miesięcznie.',
+              'U większości firm z abonamentu nie da się wyjść, u nas da się.',
+            ],
+          },
+          {
+            numer: 'POZYCJA 3',
+            tytul: 'Zużycie',
+            podtytul: 'według realnego użycia',
+            naglowek: 'Co jeszcze płacę poza stworzeniem i utrzymaniem?',
+            akapity: [
+              'Trzecia pozycja, zużycie, w obu drogach zostaje po Twojej stronie: tokeny i minuty rozmów rozliczane według realnego użycia.',
+              'Przy ofercie z jednym abonamentem zużycie też płacisz, tylko tego nie widać. Dlatego rozpisujemy je osobno, zanim cokolwiek zamówisz.',
+            ],
+            punkty: [
+              'Płacisz za tyle minut rozmów, ile bot faktycznie odbierze.',
+              'Rozliczenie idzie po Twojej stronie, co miesiąc.',
+              'Żaden koszt nie chowa się w jednej kwocie ryczałtu.',
+            ],
+          },
+        ],
+      },
       {
         typ: 'tabela',
         naglowki: [
@@ -216,28 +386,11 @@ export const voiceboty: Usluga = {
         podpis: 'Trzy osobne pozycje kosztu voicebota. Każda kwota netto.',
       },
       {
-        typ: 'akapit',
-        tekst: 'Pakiet startowy za 2500 zł netto to prosta baza wiedzy, kierowanie rozmów i odpowiedzi na powtarzalny zestaw pytań. Bot z integracjami, na przykład z kalendarzem, i z rozbudowanymi scenariuszami to 5000 do 9000 zł netto, płatne raz przy wdrożeniu.',
-      },
-      {
-        typ: 'sekcja',
-        naglowek: 'Czy muszę płacić abonament co miesiąc?',
-        akapity: [
-          'Nie musisz, wybierasz jedną z dwóch dróg. Pierwsza: infrastruktura zostaje u nas, my ją trzymamy i pilnujemy, a Ty płacisz 299 do 1500 zł netto miesięcznie.',
-          'Druga: przekazujemy Ci całą infrastrukturę i płacisz nam 0 zł miesięcznie. Poprawki zamawiasz wtedy godzinowo, po 350 zł netto za godzinę, tylko gdy ich potrzebujesz.',
-          'Trzecia pozycja, zużycie, w obu drogach zostaje po Twojej stronie: tokeny i minuty rozmów według realnego użycia. Przy ofercie z jednym abonamentem zużycie też płacisz, tylko tego nie widać.',
-        ],
-        wariant: 'top',
-        chip: 'CENNIK',
-        stopka: [
-          'U większości firm z abonamentu nie da się wyjść, u nas da się.',
-        ],
-      },
-      {
         typ: 'sekcja',
         naglowek: 'Czas liczymy od przekazania kompletu materiałów, a dwie rundy poprawek są w cenie',
         akapity: [
-          'Czas wdrożenia liczymy od momentu, w którym przekazujesz nam komplet materiałów: scenariusze, treści i dostępy. Nie od podpisania umowy. Bot prosty to 3 do 5 dni roboczych, bot z integracjami 5 do 25 dni roboczych, a dokładny termin dla Twojego scenariusza potwierdzamy na bezpłatnej diagnozie.',
+          'Czas wdrożenia liczymy od momentu, w którym przekazujesz nam komplet materiałów: scenariusze, treści i dostępy. Nie od podpisania umowy. Bot prosty to 3 do 5 dni roboczych, bot z integracjami 5 do 25 dni roboczych.',
+          'Dokładny termin dla Twojego scenariusza potwierdzamy na bezpłatnej diagnozie. Mówimy wprost, ile to potrwa u Ciebie, zanim cokolwiek zamówisz.',
           'W cenie wdrożenia są dwie rundy poprawek: tydzień testów i poprawki, drugi tydzień i kolejne poprawki, potem odbiór. To, co nie zadziałało po naszej stronie, poprawiamy zawsze, także po odbiorze.',
         ],
         wariant: 'edge',

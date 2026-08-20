@@ -43,7 +43,7 @@ import type { PodstronaUslugi } from './types';
 export const windykacja: PodstronaUslugi = {
   rodzic: 'voiceboty',
   slug: 'windykacja',
-  dataAktualizacji: '2026-08-20',
+  dataAktualizacji: '2026-08-21',
 
   // v20: 65 -> 50 znaków (pomiar raporty/pomiary-v20.md §4b: 4 linie -> 3 na
   // 1440, 6 -> 4 na 320). Fraza główna „voicebot do windykacji" zostaje NA
@@ -59,51 +59,96 @@ export const windykacja: PodstronaUslugi = {
 
   problem: {
     h2: 'Ile telefonów w sprawie płatności zostaje bez odbioru?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Telefony w sprawie zaległych płatności przychodzą wtedy, gdy nie możesz ich odebrać: wieczorem, w weekend, w środku spotkania. Nieodebrana rozmowa to sprawa, która stoi kolejny tydzień, a pieniądze dalej są u kogoś innego.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
         typ: 'akapit',
         tekst: 'Klient oddzwania po przypomnieniu o zapłacie poza Twoimi godzinami pracy. Nikt nie odbiera, więc ustalenia nie zapadają, a windykacja przesuwa się o kolejne dni.',
       },
       {
-        typ: 'sekcja',
-        naglowek: 'O co pytają dzwoniący w sprawie płatności?',
-        akapity: [
-          'Dzwoniący pytają w kółko o to samo. Duża część tych rozmów nie potrzebuje człowieka, tylko konkretnej odpowiedzi na jedno z trzech pytań.',
+        typ: 'naglowek',
+        tekst: 'O co pytają dzwoniący w sprawie płatności?',
+        ikona: 'sluchawka-fala',
+        chip: 'TELEFONY',
+        overline: 'TRZY PYTANIA, KTÓRE WRACAJĄ',
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Dzwoniący pytają w kółko o to samo. Duża część tych rozmów nie potrzebuje człowieka, tylko konkretnej odpowiedzi na jedno z trzech pytań:',
+      },
+      {
+        typ: 'siatka',
+        kolumny: 3,
+        karty: [
+          {
+            naglowek: 'Za co jest ta faktura?',
+            akapity: [
+              'Dziś na to pytanie za każdym razem odpowiada człowiek, choć odpowiedź jest zawsze taka sama.',
+            ],
+          },
+          {
+            naglowek: 'Na jaki numer konta zapłacić?',
+            akapity: [
+              'Po godzinach dzwoniący słyszy tylko sygnał albo pocztę głosową, więc nie płaci tego dnia.',
+            ],
+          },
+          {
+            naglowek: 'Czy da się rozłożyć płatność na raty?',
+            akapity: [
+              'Ustalenia zostają w głowie albo na kartce, a sprawa czeka na oddzwonienie.',
+            ],
+          },
         ],
-        punkty: [
-          'Za co jest ta faktura',
-          'Na jaki numer konta zapłacić',
-          'Czy da się rozłożyć płatność na raty',
-        ],
-        wariant: 'quiet',
       },
     ],
   },
 
   rozwiazanie: {
     h2: 'Co robi voicebot, gdy klient oddzwania w sprawie faktury?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Voicebot do windykacji odbiera każde połączenie przychodzące, także po godzinach, i na starcie mówi, że jest asystentem AI. Odpowiada z Twojego scenariusza, a sprawy sporne przekazuje osobie prowadzącej z notatką.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
-        typ: 'sekcja',
-        naglowek: 'Co voicebot spisuje z rozmowy o płatności?',
-        akapity: [
-          'Voicebot spisuje to, co klient deklaruje w rozmowie. Gdy odbiera telefon w sprawie płatności, pyta, czego dotyczy sprawa, i notuje odpowiedzi. Po rozmowie masz gotowe podsumowanie, najczęściej z jedną z trzech informacji:',
-        ],
-        punkty: [
-          'deklarowany termin zapłaty',
-          'prośbę o rozłożenie płatności na raty',
-          'potwierdzenie wykonanego przelewu',
-        ],
-        wariant: 'top',
+        typ: 'naglowek',
+        tekst: 'Co voicebot spisuje z rozmowy o płatności?',
+        ikona: 'mikrofon-fale',
         chip: 'VOICEBOT',
+        overline: 'TRZY INFORMACJE Z ROZMOWY',
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Voicebot spisuje to, co klient deklaruje w rozmowie. Gdy odbiera telefon w sprawie płatności, pyta, czego dotyczy sprawa, i notuje odpowiedzi. Po rozmowie masz gotowe podsumowanie, najczęściej z jedną z trzech informacji:',
+      },
+      {
+        typ: 'siatka',
+        kolumny: 3,
+        karty: [
+          {
+            naglowek: 'Deklarowany termin zapłaty',
+            akapity: [
+              'Bot zapisuje datę, którą klient sam podaje w rozmowie, i wpisuje ją do notatki ze sprawy.',
+            ],
+          },
+          {
+            naglowek: 'Prośba o rozłożenie na raty',
+            akapity: [
+              'Bot tego nie ustala. Spisuje prośbę i przekazuje sprawę osobie, która ją prowadzi.',
+            ],
+          },
+          {
+            naglowek: 'Potwierdzenie wykonanego przelewu',
+            akapity: [
+              'Klient mówi, że zapłacił, a Ty masz to zdanie w podsumowaniu zaraz po rozmowie.',
+            ],
+          },
+        ],
       },
       {
         typ: 'akapit',
@@ -114,7 +159,7 @@ export const windykacja: PodstronaUslugi = {
         naglowek: 'Voicebot nie dzwoni sam do dłużników',
         akapity: [
           'Bot obsługuje wyłącznie połączenia przychodzące. Działa jak infolinia windykacyjna 24/7: czeka na telefon i odbiera go o każdej porze, ale nie robimy botów, które same wydzwaniają do ludzi.',
-          'Przypomnienia o płatności wychodzą tak jak dziś, tekstem. Gdy klient oddzwania, telefon odbiera bot i spisuje sprawę.',
+          'Przypomnienia o płatności wychodzą tak jak dziś, tekstem, a gdy klient oddzwania, telefon odbiera bot i spisuje sprawę. Kontakt zaczyna człowiek, bot tylko odbiera i zapisuje.',
         ],
         wariant: 'edge',
         chip: 'ZASADA',
@@ -188,20 +233,96 @@ export const windykacja: PodstronaUslugi = {
 
   ramaCeny: {
     h2: 'Ile kosztuje voicebot do windykacji?',
-    /* v20: kwota NA POCZĄTEK (H2 pyta „ile kosztuje", więc odpowiedź nie może
-       stać w drugim zdaniu). Wycięte: „Cena jest ta sama co przy każdym naszym
-       voicebocie" (nie odpowiada na pytanie) oraz „Dokładną wycenę podajemy po
-       bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów." —
-       to zdanie komponent RamaCeny.tsx drukuje pod kartą na sztywno, więc
-       stało na stronie dwa razy.
-       2026-08-19 (audyt §2): rozliczenie rozbite na TRZY JAWNE POZYCJE,
-       utrzymanie przestawione z 99-599 na model voicebotowy, każda kwota
-       oznaczona jako netto. */
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Voicebot do windykacji kosztuje od 2500 zł netto jednorazowo za pakiet startowy, a pełny koszt dzieli się na trzy osobne pozycje: stworzenie, utrzymanie i zużycie.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
+      {
+        typ: 'pasMetryk',
+        metryki: [
+          {
+            wartosc: '2500 zł netto',
+            opis: 'pakiet startowy, płatny raz',
+            zrodlo: 'pozycja Stworzenie bota z tabeli niżej',
+            ton: 'cyan',
+          },
+          {
+            wartosc: '24/7',
+            opis: 'godziny, w których bot odbiera telefon',
+            zrodlo: 'wiersz Godziny z tabeli porównawczej',
+            ton: 'green',
+          },
+          {
+            wartosc: '3-5 dni roboczych',
+            opis: 'wdrożenie bota prostego',
+            zrodlo: 'akapit o czasie wdrożenia niżej',
+            ton: 'amber',
+          },
+          {
+            wartosc: '2 rundy poprawek',
+            opis: 'w cenie wdrożenia, przed odbiorem',
+            zrodlo: 'zasada rozliczenia niżej',
+            ton: 'violet',
+          },
+        ],
+      },
+      {
+        typ: 'naglowek',
+        tekst: 'Za co dokładnie płacisz przy voicebocie?',
+        ikona: 'wykres-strzalka',
+        chip: 'CENNIK',
+        overline: 'TRZY OSOBNE POZYCJE KOSZTU',
+      },
+      {
+        typ: 'przelacznik',
+        grupa: 'windykacja-cena',
+        opcje: [
+          {
+            numer: 'POZYCJA 1',
+            tytul: 'Stworzenie bota',
+            podtytul: '2500 zł netto jednorazowo',
+            naglowek: 'Stworzenie bota to 2500 zł netto jednorazowo za pakiet startowy.',
+            akapity: [
+              'W pakiecie startowym dostajesz prostego bota, który odbiera telefony 24/7 po polsku. Wdrożenie i konfiguracja scenariuszy są w tej cenie.',
+            ],
+            punkty: [
+              '2500 zł netto: wersja prosta, pakiet startowy',
+              '5000-9000 zł netto: wersja z integracjami i rozbudowanymi scenariuszami',
+              'płacisz raz, przy wdrożeniu',
+            ],
+          },
+          {
+            numer: 'POZYCJA 2',
+            tytul: 'Utrzymanie',
+            podtytul: '299-1500 zł netto/mies. albo 0 zł',
+            naglowek: 'Utrzymanie to 299-1500 zł netto miesięcznie albo 0 zł po przekazaniu.',
+            akapity: [
+              'Masz dwa modele do wyboru. Gdy infrastruktura zostaje u nas, płacisz opłatę miesięczną. Gdy przekazujemy ją Tobie, nie płacisz abonamentu.',
+            ],
+            punkty: [
+              '299-1500 zł netto/mies. przy infrastrukturze u nas',
+              '0 zł/mies. po przekazaniu infrastruktury Tobie',
+              'poprawki po przekazaniu: 350 zł netto za godzinę',
+            ],
+          },
+          {
+            numer: 'POZYCJA 3',
+            tytul: 'Zużycie',
+            podtytul: 'według realnego użycia',
+            naglowek: 'Zużycie rozliczasz według realnego użycia, po swojej stronie.',
+            akapity: [
+              'Tokeny i minuty rozmów liczą się według tego, ile bot faktycznie przegadał. Ta pozycja zostaje po Twojej stronie.',
+            ],
+            punkty: [
+              'tokeny modelu i minuty rozmów',
+              'według realnego użycia, bez ryczałtu',
+              'po Twojej stronie',
+            ],
+          },
+        ],
+      },
       {
         typ: 'tabela',
         naglowki: [
@@ -230,15 +351,17 @@ export const windykacja: PodstronaUslugi = {
         podpis: 'Trzy pozycje kosztu voicebota do windykacji. Wszystkie kwoty netto.',
       },
       {
-        typ: 'akapit',
-        tekst: 'Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy. Bot prosty to 3 do 5 dni roboczych, z integracjami 5 do 25 dni roboczych. W cenie są dwie rundy poprawek: tydzień testów, poprawki, drugi tydzień testów, poprawki i odbiór.',
+        typ: 'sekcja',
+        naglowek: 'Ile trwa wdrożenie voicebota do windykacji?',
+        akapity: [
+          'Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy. Bot prosty to 3 do 5 dni roboczych, a wersja z integracjami 5 do 25 dni roboczych.',
+          'W cenie są dwie rundy poprawek: tydzień testów, poprawki, drugi tydzień testów, poprawki i odbiór. Poprawki tego, co nie zadziałało po naszej stronie, robimy zawsze, także po odbiorze.',
+        ],
+        wariant: 'edge',
+        chip: 'CENNIK',
       },
     ],
     minPrice: 2500,
-    /* Link powrotny do usługi macierzystej (wymóg podstrony: każda wraca do
-       rodzica realnym odnośnikiem). Pole `linkPoradnik` to jedyny slot na
-       link w kontrakcie `Usluga` i renderuje się w RamaCeny.tsx w tym samym
-       akapicie co cena, więc powrót idzie tędy zamiast do poradnika. */
     linkPoradnik: {
       przed: 'Pełny zakres i pozostałe zastosowania opisaliśmy na stronie ',
       etykieta: 'voiceboty dla firm',

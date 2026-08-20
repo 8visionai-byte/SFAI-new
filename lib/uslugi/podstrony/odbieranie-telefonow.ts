@@ -62,7 +62,7 @@ import type { PodstronaUslugi } from './types';
 export const odbieranieTelefonow: PodstronaUslugi = {
   rodzic: 'voiceboty',
   slug: 'odbieranie-telefonow',
-  dataAktualizacji: '2026-08-20',
+  dataAktualizacji: '2026-08-21',
 
   // v20: 58 -> 44 znaków (pomiar §4b: 4 linie -> 3 na 1440, 5 -> 4 na 375/320).
   // Fraza obowiązkowa „bot telefoniczny" zostaje NA POCZĄTKU (poz. 16,9 w GSC),
@@ -78,22 +78,63 @@ export const odbieranieTelefonow: PodstronaUslugi = {
 
   problem: {
     h2: 'Ile zapytań tracisz, bo nikt nie odebrał telefonu?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
-      'Nieodebrany telefon rzadko wraca: dzwoniący nie zostawia wiadomości, tylko wybiera następny numer z listy. Nie widzisz nawet skali strat, bo nieodebrane połączenie nie zostawia śladu w CRM ani w skrzynce.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
+      'Nie policzysz tego dziś, bo nieodebrane połączenie nie zostawia śladu ani w CRM, ani w skrzynce. Dzwoniący rzadko wraca: zwykle wybiera następny numer z listy.',
     bloki: [
+      {
+        typ: 'naglowek',
+        tekst: 'Czego nie widzisz, gdy telefon dzwoni bez odbioru?',
+        ikona: 'lupa-wykres',
+        chip: 'SKALA PROBLEMU',
+        overline: 'NIEODEBRANE POŁĄCZENIE · ZERO ŚLADU W CRM',
+      },
       {
         typ: 'akapit',
         tekst: 'Nie odbierasz, bo jesteś u klienta, za kierownicą albo w gabinecie z pacjentem. Po godzinach pracy telefonu nie odbiera nikt, a dzwoniący nie czeka do rana. Wieczory i weekendy to zapytania, których nawet nie zobaczysz.',
       },
       {
-        typ: 'lista',
-        punkty: [
-          'Dzwoniący wybiera kolejny numer z listy, zamiast czekać, aż oddzwonisz.',
-          'W CRM i w skrzynce nie zostaje żaden ślad, więc nie policzysz, ile spraw przepadło.',
-          'Jeśli oddzwaniasz, zaczynasz rozmowę od zera, bez wiedzy, o co chodziło.',
-          'Telefon w trakcie spotkania przerywa rozmowę z klientem, który siedzi przed Tobą.',
+        typ: 'siatka',
+        kolumny: 2,
+        karty: [
+          {
+            naglowek: 'Poczta głosowa nie ratuje sprawy',
+            akapity: [
+              'Dzwoniący słyszy sygnał albo pocztę głosową i rozłącza się bez wiadomości. Nagrywanie się na automat to dla niego strata czasu, skoro obok jest firma, która po prostu odbiera.',
+            ],
+            punkty: [
+              'Nawet zostawiona wiadomość czeka, aż ktoś ją odsłucha, więc odpowiedź i tak przychodzi z opóźnieniem.',
+            ],
+          },
+          {
+            naglowek: 'Zostaje samo nieodebrane',
+            akapity: [
+              'Na liście połączeń masz numer i godzinę, nic więcej. Bez tematu i bez kontekstu nie wiesz, czy dzwonił nowy klient z pytaniem o wycenę, czy ktoś pomylił numer.',
+            ],
+            punkty: [
+              'Sprawa znika razem z połączeniem, bo nie ma wpisu, do którego mógłbyś wrócić.',
+            ],
+          },
+          {
+            naglowek: 'Oddzwaniasz od zera',
+            akapity: [
+              'Zaczynasz rozmowę bez wiedzy, o co chodziło, i pytasz o wszystko drugi raz. Dzwoniący opowiada sprawę od początku.',
+            ],
+            punkty: [
+              'Nie wiesz nawet, czy to pilna sprawa, czy pytanie o godziny otwarcia.',
+            ],
+          },
+          {
+            naglowek: 'Telefon przerywa spotkanie',
+            akapity: [
+              'Dzwonek w trakcie rozmowy zabiera uwagę klientowi, który siedzi przed Tobą.',
+            ],
+            punkty: [
+              'Odbierzesz i tracisz wątek, nie odbierzesz i tracisz zapytanie.',
+            ],
+          },
         ],
       },
       {
@@ -110,30 +151,58 @@ export const odbieranieTelefonow: PodstronaUslugi = {
 
   rozwiazanie: {
     h2: 'Co się dzieje, gdy telefon odbiera bot?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Bot telefoniczny odbiera każde połączenie przychodzące 24/7, na starcie mówi, że jest asystentem AI, i odpowiada na powtarzalne pytania z Twojego scenariusza. To obsługa klienta 24/7 przez voicebota: bot odbiera, a Ty po każdej rozmowie dostajesz podsumowanie.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
-        typ: 'kroki',
-        wariant: 'os',
-        kroki: [
+        typ: 'naglowek',
+        tekst: 'Jak wygląda rozmowa od odebrania do podsumowania?',
+        ikona: 'sluchawka-fala',
+        chip: 'PRZEBIEG ROZMOWY',
+        overline: 'ODBIERA · ODPOWIADA · SPISUJE · PRZEKAZUJE',
+      },
+      {
+        typ: 'siatka',
+        kolumny: 4,
+        karty: [
           {
-            tytul: 'Bot odbiera o każdej porze',
-            opis: 'Na starcie rozmowy mówi, że jest asystentem AI. Tego wymaga AI Act i tak ma być.',
+            naglowek: 'Bot odbiera o każdej porze',
+            akapity: [
+              'Na starcie rozmowy mówi, że jest asystentem AI. Tego wymaga AI Act i tak ma być.',
+            ],
+            punkty: [
+              'Odbiera także wieczorem i w weekend, gdy u Ciebie nie ma nikogo.',
+            ],
           },
           {
-            tytul: 'Odpowiada ze scenariusza',
-            opis: 'Mówi to, co do niego wpiszesz: godziny otwarcia, dojazd, zakres usług, orientacyjne ceny.',
+            naglowek: 'Odpowiada ze scenariusza',
+            akapity: [
+              'Mówi to, co do niego wpiszesz: godziny otwarcia, dojazd, zakres usług, orientacyjne ceny.',
+            ],
+            punkty: [
+              'Rozmawia po polsku i tylko w granicach, które zatwierdzisz.',
+            ],
           },
           {
-            tytul: 'Sprawę nietypową spisuje',
-            opis: 'Pytanie spoza scenariusza przekazuje dalej razem z notatką z rozmowy.',
+            naglowek: 'Sprawę nietypową spisuje',
+            akapity: [
+              'Pytanie spoza scenariusza przekazuje dalej razem z notatką z rozmowy.',
+            ],
+            punkty: [
+              'Nie zmyśla odpowiedzi, gdy sprawa wykracza poza scenariusz.',
+            ],
           },
           {
-            tytul: 'Ty dostajesz podsumowanie',
-            opis: 'Po każdej rozmowie widzisz, kto dzwonił, o co pytał i co bot ustalił.',
+            naglowek: 'Ty dostajesz podsumowanie',
+            akapity: [
+              'Po każdej rozmowie widzisz, kto dzwonił, o co pytał i co bot ustalił.',
+            ],
+            punkty: [
+              'Oddzwaniasz przygotowany, bo notatka z rozmowy czeka na Ciebie.',
+            ],
           },
         ],
       },
@@ -227,32 +296,79 @@ export const odbieranieTelefonow: PodstronaUslugi = {
 
   ramaCeny: {
     h2: 'Ile kosztuje bot do odbierania telefonów?',
-    /* v20: kwota NA POCZĄTEK (H2 pyta „ile kosztuje"). Wycięte: „Cena jest ta
-       sama co przy każdym naszym voicebocie" oraz „Dokładną wycenę podajemy po
-       bezpłatnej diagnozie. Bez ukrytych kosztów." — to zdanie RamaCeny.tsx
-       drukuje pod kartą na sztywno.
-       2026-08-19 (audyt §2): rozliczenie rozbite na TRZY JAWNE POZYCJE,
-       utrzymanie przestawione z 99-599 na model voicebotowy, każda kwota
-       oznaczona jako netto. */
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Stworzenie bota to jednorazowo 2500 zł netto za wersję prostą, czyli pakiet startowy: bot odbiera telefon 24/7 po polsku, ma skonfigurowane scenariusze i podłączony numer. Wersja z integracjami i rozbudowanymi scenariuszami to 5000 do 9000 zł netto. Płacisz trzy osobne pozycje: stworzenie, utrzymanie i zużycie, nie jeden abonament.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
-        typ: 'kafle',
-        kafle: [
+        typ: 'pasMetryk',
+        metryki: [
           {
             wartosc: '2500 zł netto',
-            opis: 'stworzenie bota, pakiet startowy',
+            opis: 'stworzenie bota w wersji prostej, pakiet startowy',
+            zrodlo: 'próg 1 przełącznika niżej',
+            ton: 'cyan',
+          },
+          {
+            wartosc: '3-5 dni roboczych',
+            opis: 'tyle powstaje bot w wersji prostej',
+            zrodlo: 'próg 1 przełącznika niżej',
+            ton: 'violet',
           },
           {
             wartosc: '0 zł/mies.',
             opis: 'utrzymanie po przekazaniu infrastruktury Tobie',
+            zrodlo: 'wiersz Utrzymanie w tabeli niżej',
+            ton: 'green',
           },
           {
             wartosc: '350 zł netto/h',
             opis: 'poprawki po przekazaniu infrastruktury',
+            zrodlo: 'wiersz Utrzymanie w tabeli niżej',
+            ton: 'amber',
+          },
+        ],
+      },
+      {
+        typ: 'naglowek',
+        tekst: 'Za co dokładnie płacisz przy bocie telefonicznym?',
+        ikona: 'kalendarz-check',
+        chip: 'CENNIK',
+        overline: 'CENNIK · STWORZENIE · UTRZYMANIE · ZUŻYCIE',
+      },
+      {
+        typ: 'przelacznik',
+        grupa: 'odbieranie-telefonow-progi',
+        opcje: [
+          {
+            numer: 'PRÓG 1',
+            tytul: 'Wersja prosta',
+            podtytul: '2500 zł netto',
+            naglowek: 'Wersja prosta to 2500 zł netto jednorazowo i 3 do 5 dni roboczych.',
+            akapity: [
+              'To pakiet startowy: bot odbiera telefon 24/7 po polsku, ma skonfigurowane scenariusze i podłączony numer. Tyle wystarcza, gdy chcesz przestać tracić połączenia po godzinach.',
+            ],
+            punkty: [
+              'Na starcie rozmowy bot mówi, że jest asystentem AI, i odpowiada na powtarzalne pytania.',
+              'Po każdej rozmowie dostajesz podsumowanie: kto dzwonił i o co pytał.',
+              'Czas 3 do 5 dni roboczych liczymy od przekazania kompletu materiałów.',
+            ],
+          },
+          {
+            numer: 'PRÓG 2',
+            tytul: 'Z integracjami',
+            podtytul: '5000-9000 zł netto',
+            naglowek: 'Wersja z integracjami to 5000 do 9000 zł netto i 5 do 25 dni roboczych.',
+            akapity: [
+              'Ten próg wybierasz, gdy bot ma pracować z Twoimi systemami i prowadzić rozbudowane scenariusze rozmowy. Zakres ustalamy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
+            ],
+            punkty: [
+              'Rozbudowane scenariusze: więcej pytań i więcej ścieżek rozmowy.',
+              'Termin 5 do 25 dni roboczych zależy od tego, ile systemów podłączamy.',
+              'Granice zostają te same: bot obsługuje wyłącznie połączenia przychodzące.',
+            ],
           },
         ],
       },
@@ -293,17 +409,14 @@ export const odbieranieTelefonow: PodstronaUslugi = {
           'W cenie wdrożenia są dwie rundy poprawek: tydzień testów, poprawki, drugi tydzień testów, poprawki i odbiór.',
           'Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy.',
           'Poprawki tego, co nie zadziałało po naszej stronie, robimy zawsze, także po odbiorze.',
-          'Bot prosty powstaje w 3 do 5 dni roboczych, z integracjami w 5 do 25 dni roboczych. Termin dla Twojego scenariusza potwierdzamy na bezpłatnej diagnozie: 0 zł, około 30 minut.',
+          'Po wdrożeniu wybierasz jeden z dwóch modeli rozliczenia: infrastruktura zostaje u nas za opłatą miesięczną albo przekazujemy ją Tobie i nie płacisz abonamentu.',
+          'Termin dla Twojego scenariusza potwierdzamy na bezpłatnej diagnozie: 0 zł, około 30 minut.',
         ],
         wariant: 'edge',
         chip: 'ZASADA',
       },
     ],
     minPrice: 2500,
-    /* Link powrotny do usługi macierzystej (wymóg podstrony: każda wraca do
-       rodzica realnym odnośnikiem). Pole `linkPoradnik` to jedyny slot na link
-       w kontrakcie `Usluga` i renderuje się w RamaCeny.tsx w tym samym akapicie
-       co cena, więc powrót idzie tędy. */
     linkPoradnik: {
       przed: 'Pozostałe zastosowania i pełny zakres opisaliśmy na stronie ',
       etykieta: 'voiceboty dla firm',

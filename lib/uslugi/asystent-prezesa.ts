@@ -35,7 +35,7 @@ import type { Usluga } from './types';
  */
 export const asystentPrezesa: Usluga = {
   slug: 'asystent-prezesa',
-  dataAktualizacji: '2026-08-20',
+  dataAktualizacji: '2026-08-21',
   h1: 'Prywatny asystent AI dla prezesa',
 
   /* BLOK KRÓTKIEJ ODPOWIEDZI (audyt §9 etap 1 pkt 2): cena, czas budowy,
@@ -49,11 +49,29 @@ export const asystentPrezesa: Usluga = {
 
   problem: {
     h2: 'Na czym schodzi dzień osoby, która prowadzi firmę?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Nie na decyzjach, tylko na dojściu do nich. Drobne zadania, które wymagają znajomości kontekstu firmy, zjadają razem pół dnia.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
+      {
+        typ: 'pasMetryk',
+        metryki: [
+          {
+            wartosc: 'pół dnia',
+            opis: 'Tyle zjadają razem drobne zadania wokół decyzji, każde wymagające znajomości kontekstu firmy.',
+            zrodlo: 'akapit pod listą zadań na tej stronie',
+            ton: 'amber',
+          },
+          {
+            wartosc: 'kwadrans',
+            opis: 'Tyle trwa jedno takie zadanie i żadne z nich nie posuwa firmy do przodu.',
+            zrodlo: 'akapit pod listą zadań na tej stronie',
+            ton: 'cyan',
+          },
+        ],
+      },
       {
         typ: 'lista',
         punkty: [
@@ -66,7 +84,7 @@ export const asystentPrezesa: Usluga = {
       },
       {
         typ: 'akapit',
-        tekst: 'Każda z tych rzeczy trwa kwadrans i żadna nie posuwa firmy do przodu. Osobno wyglądają niewinnie, ale razem zjadają pół dnia.',
+        tekst: 'Każda z tych rzeczy trwa kwadrans i żadna nie posuwa firmy do przodu. Osobno wyglądają niewinnie, ale razem zjadają pół dnia. Wspólny mianownik jest jeden: każde z tych zadań wymaga znajomości kontekstu firmy. Nie da się ich zlecić dalej, bo osoba, która je przejmie, i tak musi najpierw ten kontekst poznać.',
       },
       {
         typ: 'sekcja',
@@ -75,6 +93,7 @@ export const asystentPrezesa: Usluga = {
         akapity: [
           'Asystent-człowiek to rozwiązuje, ale najpierw trzeba go znaleźć, wdrożyć i wprowadzić w kontekst firmy. A wrażliwe rzeczy i tak zostają po Twojej stronie.',
           'Zwykły czat AI też tego nie rozwiązuje, bo nie zna Twojej firmy. Za każdym razem zaczynasz od tłumaczenia, czym się zajmujesz, a to tłumaczenie samo w sobie jest kolejnym drobnym zadaniem.',
+          'Dlatego te zadania wracają do Ciebie. Nie dlatego, że są trudne, tylko dlatego, że nikt poza Tobą nie ma dość kontekstu, żeby zrobić je dobrze za pierwszym razem.',
         ],
       },
     ],
@@ -82,33 +101,110 @@ export const asystentPrezesa: Usluga = {
 
   rozwiazanie: {
     h2: 'Co dokładnie robi prywatny asystent AI?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Budujemy agenta z własnym interfejsem, przypisanego do jednej konkretnej osoby. To osobisty agent AI dla firmy: pisze maile w Twoim tonie, robi research i pracuje na plikach, które mu udostępnisz.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
       {
-        typ: 'lista',
-        punkty: [
-          'Pisze maile w Twoim tonie.',
-          'Robi research i prowadzi badania na materiale, który mu dasz.',
-          'Przygotowuje Cię do rozmów i spotkań.',
-          'Składa prezentacje z materiałów, które już masz.',
-          'Ma funkcje wykonawcze: wchodzi w udostępnione pliki i działa na nich, zamiast tylko podpowiadać, co zrobić.',
+        typ: 'naglowek',
+        tekst: 'Co asystent robi za Ciebie',
+        ikona: 'osoba-check',
+        chip: 'ZAKRES',
+        overline: 'ZAKRES DOPASOWYWANY INDYWIDUALNIE',
+      },
+      {
+        typ: 'siatka',
+        kolumny: 3,
+        karty: [
+          {
+            naglowek: 'Pisanie',
+            akapity: [
+              'Bierze na siebie teksty, które i tak powstają z materiału, który już masz.',
+            ],
+            punkty: [
+              'Pisze maile w Twoim tonie.',
+              'Składa prezentacje z materiałów, które już masz.',
+            ],
+          },
+          {
+            naglowek: 'Przygotowanie',
+            akapity: [
+              'Wchodzisz na spotkanie z gotowym kontekstem, zamiast zbierać go w biegu.',
+            ],
+            punkty: [
+              'Robi research i prowadzi badania na materiale, który mu dasz.',
+              'Przygotowuje Cię do rozmów i spotkań.',
+            ],
+          },
+          {
+            naglowek: 'Wykonanie',
+            akapity: [
+              'Nie kończy na podpowiedzi. Pracuje na tym, co mu udostępnisz, i tylko na tym.',
+            ],
+            punkty: [
+              'Ma funkcje wykonawcze: wchodzi w udostępnione pliki i działa na nich, zamiast tylko podpowiadać, co zrobić.',
+              'Czego mu nie udostępnisz, tego nie dotknie.',
+            ],
+          },
         ],
       },
       {
         typ: 'akapit',
-        tekst: 'Zakres dopasowujemy indywidualnie. Na starcie ustalamy, co asystent ma umieć, do czego ma mieć dostęp i czego nie ma dotykać. Czego mu nie udostępnisz, tego nie dotknie.',
+        tekst: 'Zakres dopasowujemy indywidualnie. Na starcie ustalamy, co asystent ma umieć, do czego ma mieć dostęp i czego nie ma dotykać. To jest decyzja z rozmowy o zakresie, nie ustawienie, które trzeba potem odkrywać.',
       },
       {
-        typ: 'sekcja',
-        naglowek: 'Czy asystent działa od razu w pełni?',
-        wariant: 'top',
+        typ: 'naglowek',
+        tekst: 'Czy asystent działa od razu w pełni?',
+        ikona: 'kalendarz-check',
         chip: 'ZASADA',
-        akapity: [
-          'Nie, i mówimy to wprost. Asystent działa jak nowo przyjęta asystentka albo student. Na początku opowiadasz mu, czym się zajmujesz, i musisz go poprawiać, tak jak poprawia się nową osobę w zespole.',
-          'To nie jest narzędzie, które działa w pełni od pierwszego dnia. To narzędzie, które z każdym tygodniem robi więcej, bo jego wiedza rośnie z każdym użyciem, aż zna firmę na tyle, że można mu powierzać coraz więcej.',
+        overline: 'DOJRZEWA JAK NOWA OSOBA W ZESPOLE',
+      },
+      {
+        typ: 'przelacznik',
+        grupa: 'asystent-prezesa-dojrzewanie',
+        opcje: [
+          {
+            numer: 'ETAP 1',
+            tytul: 'Pierwsze dni',
+            podtytul: 'Opowiadasz mu o firmie',
+            naglowek: 'Nie, i mówimy to wprost: asystent nie działa w pełni od pierwszego dnia.',
+            akapity: [
+              'Asystent działa jak nowo przyjęta asystentka albo student. Na początku opowiadasz mu, czym się zajmujesz, i musisz go poprawiać, tak jak poprawia się nową osobę w zespole.',
+            ],
+            punkty: [
+              'Opowiadasz mu, czym się zajmujesz.',
+              'Poprawiasz to, co wyszło nie tak.',
+              'Kto oczekuje gotowego pracownika pierwszego dnia, będzie rozczarowany.',
+            ],
+          },
+          {
+            numer: 'ETAP 2',
+            tytul: 'Pierwsze tygodnie',
+            podtytul: 'Z każdym tygodniem robi więcej',
+            naglowek: 'To narzędzie, które z każdym tygodniem robi więcej.',
+            akapity: [
+              'Jego wiedza rośnie z każdym użyciem, więc to, co raz poprawisz, zostaje w nim na stałe. Poprawiasz coraz rzadziej, bo asystent coraz mniej zgaduje.',
+            ],
+            punkty: [
+              'Wiedza o firmie rośnie z każdym użyciem.',
+              'W zwykłym czacie takie poprawki znikają, tutaj zostają w asystencie.',
+            ],
+          },
+          {
+            numer: 'ETAP 3',
+            tytul: 'Później',
+            podtytul: 'Powierzasz coraz więcej',
+            naglowek: 'Zna firmę na tyle, że można mu powierzać coraz więcej.',
+            akapity: [
+              'Wtedy przestajesz tłumaczyć kontekst i zaczynasz po prostu zlecać. To ten sam moment, w którym nowa osoba w zespole przestaje pytać o każdy szczegół.',
+            ],
+            punkty: [
+              'Przestajesz tłumaczyć kontekst i zaczynasz zlecać.',
+              'Zlecasz zadania z tej samej listy, która na starcie zjadała pół dnia.',
+            ],
+          },
         ],
       },
     ],
@@ -153,11 +249,97 @@ export const asystentPrezesa: Usluga = {
 
   ramaCeny: {
     h2: 'Ile kosztuje prywatny asystent AI dla prezesa?',
+    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
+       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
+       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
       'Stworzenie asystenta kosztuje 4999 zł netto i płacisz to raz, a budowa trwa 5 do 10 dni roboczych. Do tego dochodzi utrzymanie serwerów za 199 zł netto miesięcznie oraz zużycie modeli, rozliczane według realnego użycia po Twojej stronie.',
-    /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
-       zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
+      {
+        typ: 'pasMetryk',
+        metryki: [
+          {
+            wartosc: '4999 zł netto',
+            opis: 'Stworzenie asystenta, płatne raz.',
+            zrodlo: 'pozycja Stworzenie asystenta niżej',
+            ton: 'cyan',
+          },
+          {
+            wartosc: '5 do 10 dni',
+            opis: 'Dni robocze budowy, liczone od przekazania kompletu materiałów.',
+            zrodlo: 'pozycja Stworzenie asystenta niżej',
+            ton: 'violet',
+          },
+          {
+            wartosc: '199 zł netto',
+            opis: 'Miesięcznie za serwery, na których działa Twój asystent.',
+            zrodlo: 'pozycja Utrzymanie serwerów niżej',
+            ton: 'amber',
+          },
+          {
+            wartosc: '2 rundy',
+            opis: 'Tyle rund poprawek jest w cenie budowy.',
+            zrodlo: 'pozycja Stworzenie asystenta niżej',
+            ton: 'green',
+          },
+        ],
+      },
+      {
+        typ: 'naglowek',
+        tekst: 'Z czego składa się koszt asystenta?',
+        ikona: 'wykres-strzalka',
+        chip: 'CENNIK',
+        overline: 'TEN SAM MODEL ROZLICZENIA CO PRZY VOICEBOTACH',
+      },
+      {
+        typ: 'przelacznik',
+        grupa: 'asystent-prezesa-koszty',
+        opcje: [
+          {
+            numer: 'POZYCJA 1',
+            tytul: 'Stworzenie asystenta',
+            podtytul: '4999 zł netto, płatne raz',
+            naglowek: 'Stworzenie asystenta kosztuje 4999 zł netto i płacisz to raz.',
+            akapity: [
+              'Budowa trwa 5 do 10 dni roboczych, liczonych od przekazania kompletu materiałów i dostępów, a nie od podpisania umowy. Kompletem nazywamy to, co asystent ma znać i gdzie ma móc wejść.',
+              'W tej kwocie jest agent z własnym interfejsem, przypisany do jednej konkretnej osoby, i pierwsza wiedza o Twojej firmie.',
+            ],
+            punkty: [
+              'Budowa w 5 do 10 dni roboczych.',
+              'Dwie rundy poprawek w cenie budowy.',
+              'Nowe funkcje dokładane później to rozbudowa, wyceniana osobno.',
+            ],
+          },
+          {
+            numer: 'POZYCJA 2',
+            tytul: 'Utrzymanie serwerów',
+            podtytul: '199 zł netto miesięcznie',
+            naglowek: 'Utrzymanie serwerów to 199 zł netto miesięcznie.',
+            akapity: [
+              'To infrastruktura, na której działa Twój asystent. Nic więcej nie jest w tej pozycji schowane.',
+              'Dane klientów zostają w Unii Europejskiej, a przetwarzanie prowadzimy zgodnie z RODO i AI Act.',
+            ],
+            punkty: [
+              'Jedna stała pozycja miesięczna, bez ukrytych dodatków.',
+              'Bez abonamentu za dostęp do cudzego konta.',
+            ],
+          },
+          {
+            numer: 'POZYCJA 3',
+            tytul: 'Zużycie',
+            podtytul: 'Według cennika API modeli',
+            naglowek: 'Zużycie rozliczasz według realnego użycia, po swojej stronie.',
+            akapity: [
+              'Płacisz za tyle, ile asystent faktycznie przepracuje. Jeden spokojny tydzień kosztuje mniej niż tydzień, w którym asystent pisze i szuka bez przerwy.',
+              'Dlaczego trzy pozycje zamiast jednego abonamentu? Bo w abonamencie zużycie jest schowane i nie widać, za co się płaci. Tutaj każdą pozycję widzisz z osobna.',
+            ],
+            punkty: [
+              'Rozliczenie według cennika API modeli, po Twojej stronie.',
+              'Płacisz za realne użycie, nie za ryczałt ustalony z góry.',
+            ],
+          },
+        ],
+      },
       {
         typ: 'tabela',
         naglowki: [
@@ -186,25 +368,21 @@ export const asystentPrezesa: Usluga = {
         podpis: 'Trzy osobne pozycje kosztu asystenta, ten sam model rozliczenia co przy voicebotach',
       },
       {
-        typ: 'akapit',
-        tekst: 'Dlaczego trzy pozycje zamiast jednego abonamentu? Bo w abonamencie zużycie jest schowane i nie widać, za co się płaci. Tutaj każdą pozycję widzisz z osobna.',
-      },
-      {
         typ: 'sekcja',
         naglowek: 'Kto jest właścicielem asystenta po wdrożeniu?',
         wariant: 'edge',
-        chip: 'CENNIK',
+        chip: 'WŁASNOŚĆ',
         akapity: [
           'Ty. Bota przekazujemy Tobie, więc nie kupujesz dostępu do cudzego konta, tylko narzędzie, które zostaje po Twojej stronie. Jeśli kiedyś zdecydujesz inaczej, możesz po prostu przestać płacić za utrzymanie.',
         ],
         punkty: [
-          'W cenie budowy są dwie rundy poprawek.',
-          'Nowe funkcje dokładane później to rozbudowa, wyceniana osobno.',
+          'Poprawki tego, co nie zadziałało po naszej stronie, robimy zawsze, także po odbiorze.',
+          'Zakres i dostępy ustalasz na starcie, w rozmowie o Twoim dniu, nie o technologii.',
         ],
-      },
-      {
-        typ: 'akapit',
-        tekst: 'Zanim cokolwiek zamówisz, na bezpłatnej diagnozie przechodzimy Twój tydzień i mówimy wprost, czy w Twoim przypadku asystent zwróci się szybciej niż tańsze wdrożenie z innego obszaru. Diagnoza trwa około 30 minut, kosztuje 0 zł i kończy się konkretną listą rzeczy do automatyzacji.',
+        stopka: [
+          'Zanim cokolwiek zamówisz, na bezpłatnej diagnozie przechodzimy Twój tydzień i mówimy wprost, czy w Twoim przypadku asystent zwróci się szybciej niż tańsze wdrożenie z innego obszaru.',
+          'Diagnoza trwa około 30 minut, kosztuje 0 zł i kończy się konkretną listą rzeczy do automatyzacji. Pierwszy krok jest mały i odwracalny.',
+        ],
       },
     ],
     minPrice: 4999,
