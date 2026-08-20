@@ -4,7 +4,7 @@ import type { Realizacja } from './types';
  * CASE 3 — BŁYSKAWICZNY LEAD GENERATOR (klient anonimowy).
  * Kategoria: automatyzacje → link wewnętrzny do /uslugi/automatyzacje.
  *
- * Realne dane (zero zmyślania): klient NIENAZWANY (anonimowo — nie wymyślamy nazwy),
+ * Realne dane (zero zmyślania): wdrożenie własne SimpleFast.ai (potwierdzone 2026-08-20) (anonimowo — nie wymyślamy nazwy),
  * efekt = 1000 rekordów potencjalnych klientów pozyskane w 40 minut zamiast 2 tygodni
  * ręcznej pracy. Głos Pawła, answer-first, zero em-dash.
  */
@@ -12,7 +12,8 @@ export const leadGenerator: Realizacja = {
   slug: 'lead-generator',
   h1: 'Błyskawiczny generator leadów',
   kategoria: 'automatyzacje',
-  klient: 'Klient (anonimowo)',
+  /* Nazwa potwierdzona przez Pawła 2026-08-20 (audyt §7: zgody są). */
+  klient: 'SimpleFast.ai (wdrożenie własne)',
   branza: 'Sprzedaż B2B',
 
   kapsula:

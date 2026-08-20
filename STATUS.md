@@ -1,3 +1,55 @@
+# STATUS — ODPOWIEDZI PAWŁA 2026-08-20 (wywiad o usługach) — DO WDROŻENIA
+
+Paweł odpowiedział na pytania otwarte z poprzednich rund. Wdrożone 1:1:
+
+1. CZASY VOICEBOTA (zamyka najstarszy BRAK DANEJ): prosty 3-5 dni roboczych,
+   z integracjami 5-25 dni roboczych. Weszło na: /uslugi/voiceboty (kapsuła,
+   rama ceny, blok zasad, NOWY wiersz tabeli porównawczej), 3 podstrony
+   voicebotów, FAQ 7 hubów, bazę wiedzy bota (2 pliki), wiedza-agenta.txt,
+   llms.txt (2 miejsca).
+2. ASYSTENT PREZESA: cena OBNIŻONA 7999 -> 4999 zł netto (18 wystąpień
+   w 7 plikach, po buildzie zero 7999 w całym serwisie). ODCZYT ZWROTNY:
+   w wypowiedzi Pawła padło też 6999, ostatnia deklaracja to 4999
+   ("niech jest taka kwota") i taka weszła; jedno słowo zmienia.
+3. WSZYSTKIE KWOTY NETTO: potwierdzone wprost, komentarze "DO POTWIERDZENIA"
+   przy leadach B2B i asystencie już bez znaczenia (zostają jako historia).
+4. REALIZACJE: 6 anonimowych case przypisane przez Pawła: auto-podsumowania
+   spotkań, automatyczne raporty i przechwytywanie rozmów = KNF TEAM;
+   firmowi agenci 24/7, automat treści social i generator leadów =
+   WDROŻENIA WŁASNE (etykieta "SimpleFast.ai (wdrożenie własne)").
+   Zero "Klient (anonimowo)" w serwisie; FAQ na /realizacje przepisane
+   ("Skąd wiem, że te wdrożenia są prawdziwe?"), bo stara odpowiedź mówiła
+   o anonimowych case'ach, których już nie ma.
+   WAŻNE: Y-Ads, Onyx, ZB Bielizsy, Desant.pl, Przystań Jurgen, Waste Return
+   NIE mają jeszcze case'ów na stronie - to nowe case'y do napisania (etap
+   przyszły), nie podmiana nazw.
+5. SF AI TEAM: właściwa nazwa dawnego "Drugiego mózgu" (usługa wg Pawła:
+   agenci głosowi z wiedzą o firmie, komunikują się ze sobą niezależnie,
+   tworzysz ich dowolnie). Na razie karta portfolio /produkty (nazwa robocza,
+   opis, nawigacja, baza wiedzy bota); slug bez zmian. Gdy będzie cennik,
+   kandydat na stronę usługi.
+6. NARZĘDZIA PORTFOLIO: "Cena na zapytanie" dopisana do 4 nowych kart.
+   To ZREALIZOWANE projekty (słowa Pawła), badge "MVP" zostaje do osobnej
+   decyzji, których przełączyć na "Działa u nas".
+7. OPIEKA AI: nowy framing Pawła na stronie: "outsourcing działu AI, jak
+   księgowość w biurze rachunkowym".
+8. ROZDZIELENIE USŁUG POTWIERDZONE: automatyzacje = jedna usługa (AI Start
+   1990 jako wejście -> proces 3000-10000 -> opieka), co innego niż chatbot.
+
+DOWÓD: 21/21 kontroli mechanicznych na lokalnym buildzie (zero 7999, czasy
+na 5 trasach, KNF Team x6, wdrożenia własne x6, SF AI Team x7, cena na
+zapytanie x8, outsourcing działu AI, hub FAQ z czasami). tsc/build exit 0.
+Daty: dataAktualizacji 2026-08-20 na 7 zmienionych rejestrach, nowa stała
+ODPOWIEDZI_2026_08_20 dla 8 hubów w mapie witryny.
+
+CZEKA NA PAWŁA (zostało tylko to):
+- które narzędzia portfolio przełączyć z "MVP" na "Działa u nas",
+- decyzja o tabeli 4-kolumnowej w poradniku (suwak czy zwężenie),
+- w przyszłości: case'y dla Y-Ads, Onyx, ZB Bielizsy, Desant.pl, Przystań
+  Jurgen, Waste Return (liczby są w audycie §7) i cennik SF AI Team.
+
+---
+
 # STATUS — RUNDA STRUKTURY TREŚCI (zespoły 4-osobowe) — DO WDROŻENIA
 
 ZLECENIE PAWŁA: ściany tekstu na strukturę, praca zespołowa (copywriter,

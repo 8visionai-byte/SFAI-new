@@ -4,7 +4,7 @@ import type { Realizacja } from './types';
  * CASE 4 — PRZECHWYTYWANIE I ANALIZA ROZMÓW (klient anonimowy).
  * Kategoria: rozwiazania → link wewnętrzny do /uslugi/rozwiazania (aplikacje i wtyczki).
  *
- * Realne dane (zero zmyślania): klient NIENAZWANY (anonimowo), efekt = aplikacja do
+ * Realne dane (zero zmyślania): klient KNF Team (nazwa potwierdzona 2026-08-20), efekt = aplikacja do
  * automatycznej transkrypcji i kategoryzacji rozmów; wyłapuje kluczowe ustalenia
  * biznesowe w lot. UWAGA: brak realnej liczby w danych — NIE wymyślamy metryki
  * liczbowej. Metryki ujmują realny, jakościowy efekt. Głos Pawła, answer-first, zero em-dash.
@@ -13,7 +13,8 @@ export const transkrypcjaRozmow: Realizacja = {
   slug: 'transkrypcja-rozmow',
   h1: 'Przechwytywanie i analiza rozmów',
   kategoria: 'rozwiazania',
-  klient: 'Klient (anonimowo)',
+  /* Nazwa potwierdzona przez Pawła 2026-08-20 (audyt §7: zgody są). */
+  klient: 'KNF Team',
   branza: 'Usługi B2B',
 
   kapsula:

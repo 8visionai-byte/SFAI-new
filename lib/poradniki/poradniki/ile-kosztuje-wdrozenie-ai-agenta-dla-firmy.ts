@@ -59,7 +59,7 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
   /* SEO 2026-08-17: realna aktualizacja treści (widełki + sekcja ceny), więc
      bump TYLKO dataAktualizacji (= Article.dateModified i sitemap lastmod);
      `data` = prawdziwa data publikacji, nie ruszamy (zakaz fałszywej świeżości). */
-  dataAktualizacji: '2026-08-19',
+  dataAktualizacji: '2026-08-20',
   kategoria: 'Koszty i wycena',
   tagi: [
     'ile kosztuje AI agent',
@@ -241,7 +241,7 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
       chip: 'Asystent prezesa',
       wariant: 'edge',
       akapity: [
-        'Osobisty asystent AI dla jednej osoby, na przykład prezesa, to odmiana agenta. Stworzenie kosztuje 7999 zł netto, a budowa zajmuje 5-10 dni roboczych.',
+        'Osobisty asystent AI dla jednej osoby, na przykład prezesa, to odmiana agenta. Stworzenie kosztuje 4999 zł netto, a budowa zajmuje 5-10 dni roboczych.',
         'Po wdrożeniu bota przekazujemy klientowi. Zostają serwery za 199 zł netto miesięcznie i zużycie rozliczane według cennika API modeli, po stronie klienta. Asystent uczy się jednej osoby.',
         'Robimy to my, SimpleFast.ai: wdrożenia AI dla polskich małych i średnich firm. Działamy na rynku polskim i niemieckim.',
       ],
@@ -250,7 +250,7 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
       typ: 'kafle',
       kafle: [
         {
-          wartosc: '7999 zł netto',
+          wartosc: '4999 zł netto',
           opis: 'stworzenie asystenta prezesa',
           zrodlo: 'cennik usługi Asystent prezesa',
         },

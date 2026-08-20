@@ -43,7 +43,7 @@ import type { PodstronaUslugi } from './types';
 export const windykacja: PodstronaUslugi = {
   rodzic: 'voiceboty',
   slug: 'windykacja',
-  dataAktualizacji: '2026-08-19',
+  dataAktualizacji: '2026-08-20',
 
   // v20: 65 -> 50 znaków (pomiar raporty/pomiary-v20.md §4b: 4 linie -> 3 na
   // 1440, 6 -> 4 na 320). Fraza główna „voicebot do windykacji" zostaje NA
@@ -231,7 +231,7 @@ export const windykacja: PodstronaUslugi = {
       },
       {
         typ: 'akapit',
-        tekst: 'Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy. W cenie są dwie rundy poprawek: tydzień testów, poprawki, drugi tydzień testów, poprawki i odbiór.',
+        tekst: 'Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy. Bot prosty to 3 do 5 dni roboczych, z integracjami 5 do 25 dni roboczych. W cenie są dwie rundy poprawek: tydzień testów, poprawki, drugi tydzień testów, poprawki i odbiór.',
       },
     ],
     minPrice: 2500,

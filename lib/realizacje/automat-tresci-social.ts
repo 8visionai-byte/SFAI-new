@@ -4,7 +4,7 @@ import type { Realizacja } from './types';
  * CASE 7 — AUTOMAT TREŚCI NA SOCIAL MEDIA (klient anonimowy).
  * Kategoria: automatyzacje → link wewnętrzny do /uslugi/automatyzacje.
  *
- * Realne dane: klient NIENAZWANY (anonimowo). Automat agreguje newsy z branży,
+ * Realne dane: wdrożenie własne SimpleFast.ai (potwierdzone 2026-08-20). Automat agreguje newsy z branży,
  * przygotowuje grafikę i gotowy post do publikacji jednym kliknięciem.
  * UWAGA: oszczędność czasu oznaczona "(szac.)" — szacunek, nie zmierzona twarda
  * liczba. Człowiek zatwierdza publikację, automat nie publikuje sam bez akceptacji.
@@ -14,7 +14,8 @@ export const automatTresciSocial: Realizacja = {
   slug: 'automat-tresci-social',
   h1: 'Automat treści na social media',
   kategoria: 'automatyzacje',
-  klient: 'Klient (anonimowo)',
+  /* Nazwa potwierdzona przez Pawła 2026-08-20 (audyt §7: zgody są). */
+  klient: 'SimpleFast.ai (wdrożenie własne)',
   branza: 'Marketing i komunikacja',
 
   kapsula:

@@ -33,7 +33,7 @@ export const kalendarzFizjoterapeuty: Produkt = {
     'Koniec dwóch kalendarzy i podwójnych rezerwacji na ten sam termin. Rodzina planuje wokół realnej dostępności, a dane pacjentów zostają po stronie gabinetu. Oszczędność: kilkanaście minut dziennie na samym pilnowaniu terminów (szac.).',
 
   customNote:
-    'To punkt wyjścia do customu. Reguły widoczności, zakres danych i to, kto co widzi, ustawiamy pod Twój gabinet. Zakres i wycenę ustalamy na bezpłatnej diagnozie.',
+    'To punkt wyjścia do customu. Reguły widoczności, zakres danych i to, kto co widzi, ustawiamy pod Twój gabinet. Cena na zapytanie: zakres i wycenę ustalamy na bezpłatnej diagnozie.',
 
   demoHint:
     'Zrzut albo krótkie demo: ten sam tydzień w dwóch widokach, gabinetowym i rodzinnym, z widoczną różnicą w szczegółach.',

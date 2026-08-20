@@ -46,7 +46,7 @@ import type { PodstronaUslugi } from './types';
 export const potwierdzanieWizyt: PodstronaUslugi = {
   rodzic: 'voiceboty',
   slug: 'potwierdzanie-wizyt',
-  dataAktualizacji: '2026-08-19',
+  dataAktualizacji: '2026-08-20',
 
   // v20: 64 -> 36 znaków. Jedyny kandydat z pomiaru (§4b), który łamie się na
   // 3 linie na WSZYSTKICH trzech szerokościach (1440/375/320) i nie zostawia
@@ -268,7 +268,7 @@ export const potwierdzanieWizyt: PodstronaUslugi = {
         wariant: 'top',
         chip: 'CENNIK',
         akapity: [
-          'Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy. Konkretny termin dla Twojego kalendarza i scenariuszy podajemy po bezpłatnej diagnozie.',
+          'Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy. Bot prosty to 3 do 5 dni roboczych, z integracją z kalendarzem zwykle 5 do 25 dni roboczych. Dokładny termin dla Twojego kalendarza i scenariuszy potwierdzamy po bezpłatnej diagnozie.',
           'W cenie wdrożenia są dwie rundy poprawek: tydzień testów, poprawki, drugi tydzień testów, poprawki i odbiór. To, co nie zadziałało po naszej stronie, poprawiamy zawsze, także po odbiorze.',
         ],
       },

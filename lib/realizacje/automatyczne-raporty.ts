@@ -4,7 +4,7 @@ import type { Realizacja } from './types';
  * CASE 8 — AUTOMATYCZNE RAPORTY Z DANYCH (klient anonimowy).
  * Kategoria: automatyzacje → link wewnętrzny do /uslugi/automatyzacje.
  *
- * Realne dane: klient NIENAZWANY (anonimowo). Automat spina dane z kilku źródeł,
+ * Realne dane: klient KNF Team (nazwa potwierdzona 2026-08-20). Automat spina dane z kilku źródeł,
  * sam je zestawia i co rano dostarcza gotowy raport zamiast ręcznego sklejania
  * arkuszy. UWAGA: oszczędność czasu oznaczona "(szac.)" — szacunek, nie zmierzona
  * twarda liczba. Nie duplikuje "centrum dowodzenia" (to produkt): tu chodzi o
@@ -14,7 +14,8 @@ export const automatyczneRaporty: Realizacja = {
   slug: 'automatyczne-raporty',
   h1: 'Automatyczne raporty zamiast ręcznych arkuszy',
   kategoria: 'automatyzacje',
-  klient: 'Klient (anonimowo)',
+  /* Nazwa potwierdzona przez Pawła 2026-08-20 (audyt §7: zgody są). */
+  klient: 'KNF Team',
   branza: 'Handel i usługi',
 
   kapsula:

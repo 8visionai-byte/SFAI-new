@@ -113,7 +113,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Uslugi',
     title: 'Voicebot dla firmy, ktory odbiera telefon za Ciebie',
     summary:
-      'Voicebot, nazywany tez botem telefonicznym albo agentem glosowym, to bot glosowy, ktory odbiera telefon, rozmawia po polsku i zalatwia sprawe: umawia wizyte, przyjmuje zgloszenie, odpowiada na pytanie. Gdy sprawa wymaga czlowieka, zapisuje ja i wysyla powiadomienie, zebys oddzwonil przygotowany. Voicebot obsluguje polaczenia przychodzace i nie dzwoni sam do klientow. Dziala 24/7, tez gdy jestes u klienta, i to nie nagranie ani menu wcisnij jeden. Klient zawsze slyszy, ze rozmawia z asystentem AI, a po rozmowie dostajesz krotkie podsumowanie. Voicebot ma trzy osobne pozycje kosztowe, nie jeden abonament, i wszystkie kwoty sa netto. Pierwsza: stworzenie bota, 2500 zl w wersji prostej (prosta baza wiedzy, kierowanie klientow, odpowiedzi na powtarzalny zestaw pytan) albo 5000-9000 zl z integracjami (kalendarz, bardziej rozbudowane scenariusze). Druga: utrzymanie, do wyboru 299-1500 zl miesiecznie, gdy infrastruktura zostaje u nas i my pilnujemy calosci, albo 0 zl miesiecznie, gdy przekazujemy infrastrukture Tobie i utrzymujesz ja sam, a poprawki zamawiasz godzinowo po 350 zl za godzine. Trzecia: zuzycie, czyli tokeny i minuty rozmow, rozliczane wedlug realnego uzycia i zawsze po Twojej stronie. Czas liczymy od przekazania kompletu materialow, nie od podpisania umowy, a w cenie wdrozenia sa dwie rundy poprawek.',
+      'Voicebot, nazywany tez botem telefonicznym albo agentem glosowym, to bot glosowy, ktory odbiera telefon, rozmawia po polsku i zalatwia sprawe: umawia wizyte, przyjmuje zgloszenie, odpowiada na pytanie. Gdy sprawa wymaga czlowieka, zapisuje ja i wysyla powiadomienie, zebys oddzwonil przygotowany. Voicebot obsluguje polaczenia przychodzace i nie dzwoni sam do klientow. Dziala 24/7, tez gdy jestes u klienta, i to nie nagranie ani menu wcisnij jeden. Klient zawsze slyszy, ze rozmawia z asystentem AI, a po rozmowie dostajesz krotkie podsumowanie. Voicebot ma trzy osobne pozycje kosztowe, nie jeden abonament, i wszystkie kwoty sa netto. Pierwsza: stworzenie bota, 2500 zl w wersji prostej (prosta baza wiedzy, kierowanie klientow, odpowiedzi na powtarzalny zestaw pytan) albo 5000-9000 zl z integracjami (kalendarz, bardziej rozbudowane scenariusze). Druga: utrzymanie, do wyboru 299-1500 zl miesiecznie, gdy infrastruktura zostaje u nas i my pilnujemy calosci, albo 0 zl miesiecznie, gdy przekazujemy infrastrukture Tobie i utrzymujesz ja sam, a poprawki zamawiasz godzinowo po 350 zl za godzine. Trzecia: zuzycie, czyli tokeny i minuty rozmow, rozliczane wedlug realnego uzycia i zawsze po Twojej stronie. Czas wdrozenia: bot prosty 3-5 dni roboczych, z integracjami 5-25 dni roboczych, liczone od przekazania kompletu materialow, nie od podpisania umowy. W cenie wdrozenia sa dwie rundy poprawek.',
     url: '/uslugi/voiceboty',
     intents: [
       'voicebot dla firmy',
@@ -242,7 +242,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Uslugi',
     title: 'Prywatny asystent AI dla prezesa',
     summary:
-      'Agent z wlasnym interfejsem, przypisany do jednej osoby: pisze maile, robi research, przygotowuje do rozmow, tworzy prezentacje i prowadzi badania, a do tego wchodzi w udostepnione pliki i dziala na nich. Uczy sie jak nowo przyjeta asystentka: na poczatku opowiadasz mu, czym sie zajmujesz, a jego wiedza rosnie z kazdym uzyciem. Rozliczenie jak przy voicebotach, trzy osobne pozycje: stworzenie 7999 zl netto, utrzymanie serwerow 199 zl netto miesiecznie, zuzycie wedlug cennika API modeli po stronie klienta. Budowa trwa 5 do 10 dni roboczych, a bota przekazujemy klientowi. To nie jest voicebot ani chatbot.',
+      'Agent z wlasnym interfejsem, przypisany do jednej osoby: pisze maile, robi research, przygotowuje do rozmow, tworzy prezentacje i prowadzi badania, a do tego wchodzi w udostepnione pliki i dziala na nich. Uczy sie jak nowo przyjeta asystentka: na poczatku opowiadasz mu, czym sie zajmujesz, a jego wiedza rosnie z kazdym uzyciem. Rozliczenie jak przy voicebotach, trzy osobne pozycje: stworzenie 4999 zl netto, utrzymanie serwerow 199 zl netto miesiecznie, zuzycie wedlug cennika API modeli po stronie klienta. Budowa trwa 5 do 10 dni roboczych, a bota przekazujemy klientowi. To nie jest voicebot ani chatbot.',
     url: '/uslugi/asystent-prezesa',
     intents: [
       'asystent AI dla prezesa',
@@ -311,7 +311,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Uslugi',
     title: 'Ile trwa wdrozenie i jak liczymy czas',
     summary:
-      'Czas liczymy od przekazania kompletu materialow przez Ciebie (baza wiedzy, tresci, dostepy), nie od podpisania umowy, wiec termin zalezy tez od Ciebie. Konkretne widelki: prosty chatbot 1-2 dni robocze, sredni 3-4 dni robocze, duzy z integracjami 5-10 dni roboczych, audyt AI (Sprint Diagnostyczny) 5 dni roboczych. Strony www: prosty landing 1 dzien, strona biznesowa 2-4 dni, zaawansowana ze sklepem albo wpietymi narzedziami 5-10 dni roboczych. Termin voicebota i wdrozen szytych na miare podajemy po bezplatnej diagnozie, gdy znamy zakres.',
+      'Czas liczymy od przekazania kompletu materialow przez Ciebie (baza wiedzy, tresci, dostepy), nie od podpisania umowy, wiec termin zalezy tez od Ciebie. Konkretne widelki: prosty chatbot 1-2 dni robocze, sredni 3-4 dni robocze, duzy z integracjami 5-10 dni roboczych, audyt AI (Sprint Diagnostyczny) 5 dni roboczych. Strony www: prosty landing 1 dzien, strona biznesowa 2-4 dni, zaawansowana ze sklepem albo wpietymi narzedziami 5-10 dni roboczych. Voicebot: prosty 3-5 dni roboczych, z integracjami 5-25 dni roboczych. Termin wdrozen szytych na miare podajemy po bezplatnej diagnozie, gdy znamy zakres.',
     url: '/uslugi',
     intents: [
       'ile trwa wdrozenie',
@@ -459,12 +459,13 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
   {
     id: 'produkt-drugi-mozg',
     section: 'Produkty i narzedzia',
-    title: 'Glosowy agent z wiedza o calej firmie',
+    title: 'SF AI Team: glosowi agenci z wiedza o calej firmie',
     summary:
-      'Narzedzie z portfolio: spersonalizowany agent glosowy, z ktorym rozmawiasz zamiast pisac do przypadkowego czatu. Kazda rozmowa jest analizowana i powieksza baze wiedzy, wiec nastepnym razem agent wie wiecej. Mozna w nim zlozyc wirtualny zespol, na przyklad od marketingu, researchu i copywritingu. To nie jest voicebot odbierajacy telefon od klientow ani prywatny asystent prezesa z wlasnym interfejsem. Zakres i wycene ustalamy na bezplatnej diagnozie.',
+      'Narzedzie z portfolio: spersonalizowany agent glosowy, z ktorym rozmawiasz zamiast pisac do przypadkowego czatu. Kazda rozmowa jest analizowana i powieksza baze wiedzy, wiec nastepnym razem agent wie wiecej. Mozna w nim zlozyc wirtualny zespol, na przyklad od marketingu, researchu i copywritingu: agenci komunikuja sie ze soba niezaleznie i doradzaja, a nowych tworzysz dowolnie. Ta usluga nazywa sie u nas SF AI Team. To nie jest voicebot odbierajacy telefon od klientow ani prywatny asystent prezesa z wlasnym interfejsem. Zakres i wycene ustalamy na bezplatnej diagnozie.',
     url: '/produkty#drugi-mozg-glosowy',
     intents: [
       'drugi mozg',
+      'SF AI Team',
       'agent glosowy dla siebie',
       'baza wiedzy firmy',
       'rozmowa glosem z AI',

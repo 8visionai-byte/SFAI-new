@@ -244,6 +244,13 @@ export const V22_LAST_MODIFIED = '2026-08-18';
 export const SEO_ETAPY_1_3 = '2026-08-19';
 
 /**
+ * Odpowiedzi Pawla 2026-08-20: czasy voicebotow (3-5 / 5-25 dni roboczych),
+ * asystent prezesa 4999 zl, nazwy klientow przy realizacjach, SF AI Team,
+ * ceny narzedzi na zapytanie. Dotyczy hubow, ktore niosa te tresci w FAQ/kartach.
+ */
+export const ODPOWIEDZI_2026_08_20 = '2026-08-20';
+
+/**
  * Data ostatniej realnej rewizji huba /ai-radar (Centrum Wiedzy -> AI Radar).
  * Hub startuje z 2 wpisami-szablonami formatu (data 2026-06-16). Trzymamy literal
  * (lib/site.ts bez zaleznosci od warstwy tresci); pojedyncze wpisy /ai-radar/[slug]
@@ -267,7 +274,7 @@ export const ROUTES: RouteEntry[] = [
   // wyeksportowana, bo opisuje datę POSTAWIENIA 6 stron usług i nie jest już
   // datą tego huba. GDYBY przebudowa /uslugi nie weszła do commita, ta jedna
   // linia wraca na USLUGI_LAST_MODIFIED.
-  { path: '/uslugi', priority: 0.9, changeFrequency: 'monthly', live: true, lastModified: SEO_ETAPY_1_3 },
+  { path: '/uslugi', priority: 0.9, changeFrequency: 'monthly', live: true, lastModified: ODPOWIEDZI_2026_08_20 },
 
   // Strona-parasol "Architekci Wartosci AI" (app/uslugi/architekci-wartosci-ai/page.tsx, SSG).
   // CELOWO poza rejestrem lib/uslugi (to centrum oferty, nie szablonowa usluga), wiec
@@ -295,7 +302,7 @@ export const ROUTES: RouteEntry[] = [
   // v22 dogrywka (MAJOR-4): hub /produkty PRZEBUDOWANY w commicie 2b2c1b4
   // (app/produkty/page.tsx +185 linii: pas metryk, tabela rejestru, FAQ, ItemList),
   // a raportował czerwiec. Data rundy, nie `new Date()`.
-  { path: '/produkty', priority: 0.8, changeFrequency: 'monthly', live: true, lastModified: SEO_ETAPY_1_3 },
+  { path: '/produkty', priority: 0.8, changeFrequency: 'monthly', live: true, lastModified: ODPOWIEDZI_2026_08_20 },
 
   // Centrum Wiedzy AI — hub /wiedza organizuje 4 dzialy (Poradniki, AI Radar,
   // Przemyslenia=/blog, Case studies=/realizacje). Hub i Poradniki zbudowane (SSG):
@@ -306,8 +313,8 @@ export const ROUTES: RouteEntry[] = [
   // v22 dogrywka (MAJOR-4): oba huby PRZEBUDOWANE w commicie 2b2c1b4
   // (app/wiedza/page.tsx +201, app/poradniki/page.tsx +161). /poradniki stało
   // na 2026-08-17, czyli na dacie POPRZEDNIEJ rundy, mimo pełnej przebudowy.
-  { path: '/wiedza', priority: 0.8, changeFrequency: 'monthly', live: true, lastModified: SEO_ETAPY_1_3 },
-  { path: '/poradniki', priority: 0.7, changeFrequency: 'monthly', live: true, lastModified: SEO_ETAPY_1_3 },
+  { path: '/wiedza', priority: 0.8, changeFrequency: 'monthly', live: true, lastModified: ODPOWIEDZI_2026_08_20 },
+  { path: '/poradniki', priority: 0.7, changeFrequency: 'monthly', live: true, lastModified: ODPOWIEDZI_2026_08_20 },
 
   // AI Radar (silnik newsow „AI o 19:00") — hub /ai-radar zbudowany (SSG, 200 OK):
   // app/ai-radar/page.tsx + app/ai-radar/[slug]. Startuje z 2 wpisami-SZABLONAMI
@@ -321,20 +328,20 @@ export const ROUTES: RouteEntry[] = [
   // v22 dogrywka (MAJOR-4): hub PRZEBUDOWANY w commicie 2b2c1b4
   // (app/materialy/page.tsx +199 linii). Literał '2026-06-16' był datą
   // postawienia huba i po przebudowie mówił botom „bez zmian".
-  { path: '/materialy', priority: 0.6, changeFrequency: 'monthly', live: true, lastModified: SEO_ETAPY_1_3 },
+  { path: '/materialy', priority: 0.6, changeFrequency: 'monthly', live: true, lastModified: ODPOWIEDZI_2026_08_20 },
 
   // Dowod i konwersja.
   // v22 dogrywka (MAJOR-4): oba huby PRZEBUDOWANE w commicie 2b2c1b4
   // (app/realizacje/page.tsx +211, app/blog/page.tsx +165).
-  { path: '/realizacje', priority: 0.8, changeFrequency: 'weekly', live: true, lastModified: SEO_ETAPY_1_3 },
-  { path: '/blog', priority: 0.6, changeFrequency: 'weekly', live: true, lastModified: SEO_ETAPY_1_3 },
+  { path: '/realizacje', priority: 0.8, changeFrequency: 'weekly', live: true, lastModified: ODPOWIEDZI_2026_08_20 },
+  { path: '/blog', priority: 0.6, changeFrequency: 'weekly', live: true, lastModified: ODPOWIEDZI_2026_08_20 },
   // /o-nas i /dowod: v22 ich NIE tknęła, więc daty zostają (patrz polityka wyżej).
   { path: '/o-nas', priority: 0.6, changeFrequency: 'monthly', live: true, lastModified: '2026-06-16' },
   { path: '/dowod', priority: 0.5, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },
   // v22 dogrywka: /kontakt przebudowany w tej rundzie (sekcja „Zanim wypełnisz
   // formularz", kroki po wysłaniu, FAQ w <details> + FAQPage). Literał
   // '2026-06-19' był datą postawienia strony.
-  { path: '/kontakt', priority: 0.6, changeFrequency: 'monthly', live: true, lastModified: SEO_ETAPY_1_3 },
+  { path: '/kontakt', priority: 0.6, changeFrequency: 'monthly', live: true, lastModified: ODPOWIEDZI_2026_08_20 },
 
   // Strony prawne (RODO art. 13). Wymagane PRZED zbieraniem danych w formularzu.
   // INPUT/BUILD: postawić treść stron, potem ustawić live: true (wejdą do sitemapy).

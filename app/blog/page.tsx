@@ -102,7 +102,7 @@ const FAQ_HUBU = [
     /* (b) ceny locked, zdania 1:1 ze stron usług i poradnika o automatyzacji. */
     pytanie: 'Ile kosztuje wdrożenie AI w małej firmie?',
     odpowiedz:
-      'Chatbot na stronę startuje od 1790 zł netto i powstaje w 1 do 2 dni roboczych, wdrożenie średnie to 3000 do 6000 zł netto, a duże z integracjami 8000 do 15000 zł netto. Voicebot to 2500 zł netto w wersji prostej i 5000 do 9000 zł netto z integracjami. Automatyzacja procesu kosztuje zwykle od 3000 do 10000 zł, audyt AI to 1490 zł netto i odliczamy go od wdrożenia, a pakiet AI Start z pierwszą automatyzacją na próbę to 1990 zł. Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy. Dokładna wycena po bezpłatnej diagnozie.',
+      'Chatbot na stronę startuje od 1790 zł netto i powstaje w 1 do 2 dni roboczych, wdrożenie średnie to 3000 do 6000 zł netto, a duże z integracjami 8000 do 15000 zł netto. Voicebot to 2500 zł netto w wersji prostej, gotowy w 3 do 5 dni roboczych, albo 5000 do 9000 zł netto z integracjami, wtedy 5 do 25 dni roboczych. Automatyzacja procesu kosztuje zwykle od 3000 do 10000 zł, audyt AI to 1490 zł netto i odliczamy go od wdrożenia, a pakiet AI Start z pierwszą automatyzacją na próbę to 1990 zł. Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy. Dokładna wycena po bezpłatnej diagnozie.',
   },
   {
     /* (c) dwa modele rozliczenia, zdanie 1:1 z /uslugi/chatboty. */

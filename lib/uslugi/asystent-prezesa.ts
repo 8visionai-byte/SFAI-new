@@ -6,8 +6,9 @@ import type { Usluga } from './types';
  * Do 2026-08-19 tego produktu NIE BYŁO na stronie.
  *
  * CENNIK (audyt §5, kwoty i terminy podane przez Pawła, potwierdzone
- * 2026-08-19 „start budowy pięć-dziesięć dni, a cena 7999"):
- *  - stworzenie: 7999 zł,
+ * 2026-08-19 „start budowy pięć-dziesięć dni, a cena 4999"):
+ *  - stworzenie: 4999 zł (2026-08-20 Paweł obniżył z 7999: „niech to nie
+ *    będzie taka duża kwota"; ostatnia zadeklarowana kwota to 4999),
  *  - czas budowy: 5-10 dni roboczych,
  *  - utrzymanie serwerów: 199 zł miesięcznie,
  *  - zużycie: według cennika API modeli, po stronie klienta.
@@ -25,7 +26,7 @@ import type { Usluga } from './types';
  * CZEGO TU NIE MA I NIE WOLNO DOPISAĆ:
  *  - to NIE jest „Drugi mózg" z portfolio narzędzi (§8) ani voicebot; nie
  *    mieszać opisów ani cen,
- *  - audyt przy §5 nie zapisuje wprost, czy 7999 zł i 199 zł miesięcznie są
+ *  - audyt przy §5 nie zapisuje wprost, czy 4999 zł i 199 zł miesięcznie są
  *    netto, ale od 2026-08-18 netto jest standardem CAŁEGO cennika (audyt §9
  *    etap 1 pkt 4), a RamaCeny.tsx dokleja to słowo do kwoty z minPrice, więc
  *    strona jest spójna: netto wszędzie. DO POTWIERDZENIA przez Pawła,
@@ -34,17 +35,17 @@ import type { Usluga } from './types';
  */
 export const asystentPrezesa: Usluga = {
   slug: 'asystent-prezesa',
-  dataAktualizacji: '2026-08-19',
+  dataAktualizacji: '2026-08-20',
   h1: 'Prywatny asystent AI dla prezesa',
 
   /* BLOK KRÓTKIEJ ODPOWIEDZI (audyt §9 etap 1 pkt 2): cena, czas budowy,
      koszt miesięczny i zasada rozliczenia zużycia w jednym akapicie. */
   kapsula:
-    'Prywatny asystent AI dla prezesa to agent z własnym interfejsem, który uczy się zachowań jednej konkretnej osoby. Pisze maile, robi research, przygotowuje do rozmów i tworzy prezentacje, a do tego wchodzi w udostępnione pliki i działa na nich. Stworzenie kosztuje 7999 zł netto, budowa trwa 5 do 10 dni roboczych, utrzymanie serwerów to 199 zł netto miesięcznie, a zużycie modeli rozliczasz według realnego użycia. Bota przekazujemy Tobie.',
+    'Prywatny asystent AI dla prezesa to agent z własnym interfejsem, który uczy się zachowań jednej konkretnej osoby. Pisze maile, robi research, przygotowuje do rozmów i tworzy prezentacje, a do tego wchodzi w udostępnione pliki i działa na nich. Stworzenie kosztuje 4999 zł netto, budowa trwa 5 do 10 dni roboczych, utrzymanie serwerów to 199 zł netto miesięcznie, a zużycie modeli rozliczasz według realnego użycia. Bota przekazujemy Tobie.',
 
-  metaTitle: 'Prywatny asystent AI dla prezesa: 7999 zł',
+  metaTitle: 'Prywatny asystent AI dla prezesa: 4999 zł',
   metaDescription:
-    'Asystent AI uczący się jednej osoby: maile, research, przygotowanie do rozmów, praca na plikach. Stworzenie 7999 zł netto, budowa 5 do 10 dni roboczych.',
+    'Asystent AI uczący się jednej osoby: maile, research, przygotowanie do rozmów, praca na plikach. Stworzenie 4999 zł netto, budowa 5 do 10 dni roboczych.',
 
   problem: {
     h2: 'Na czym schodzi dzień osoby, która prowadzi firmę?',
@@ -122,7 +123,7 @@ export const asystentPrezesa: Usluga = {
       { cecha: 'Praca na plikach', bez: 'Wklejasz treść ręcznie', zNami: 'Wchodzi w udostępnione pliki i działa na nich' },
       { cecha: 'Zakres', bez: 'Taki sam dla wszystkich', zNami: 'Dopasowany do jednej osoby' },
       { cecha: 'Interfejs', bez: 'Wspólne okno czatu', zNami: 'Własny interfejs asystenta' },
-      { cecha: 'Koszt startu', bez: 'Niski, ale bez efektu na starcie', zNami: '7999 zł netto jednorazowo' },
+      { cecha: 'Koszt startu', bez: 'Niski, ale bez efektu na starcie', zNami: '4999 zł netto jednorazowo' },
       { cecha: 'Czas budowy', bez: 'Brak budowy, brak dopasowania', zNami: '5 do 10 dni roboczych' },
       { cecha: 'Koszt miesięczny', bez: 'Abonament za dostęp', zNami: '199 zł netto za serwery plus realne zużycie' },
       { cecha: 'Własność', bez: 'Konto u dostawcy', zNami: 'Bota przekazujemy Tobie' },
@@ -153,7 +154,7 @@ export const asystentPrezesa: Usluga = {
   ramaCeny: {
     h2: 'Ile kosztuje prywatny asystent AI dla prezesa?',
     tresc:
-      'Stworzenie asystenta kosztuje 7999 zł netto i płacisz to raz, a budowa trwa 5 do 10 dni roboczych. Do tego dochodzi utrzymanie serwerów za 199 zł netto miesięcznie oraz zużycie modeli, rozliczane według realnego użycia po Twojej stronie.',
+      'Stworzenie asystenta kosztuje 4999 zł netto i płacisz to raz, a budowa trwa 5 do 10 dni roboczych. Do tego dochodzi utrzymanie serwerów za 199 zł netto miesięcznie oraz zużycie modeli, rozliczane według realnego użycia po Twojej stronie.',
     /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
        zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
@@ -167,7 +168,7 @@ export const asystentPrezesa: Usluga = {
         wiersze: [
           [
             'Stworzenie asystenta',
-            '7999 zł netto, płatne raz',
+            '4999 zł netto, płatne raz',
             'Budowa w 5 do 10 dni roboczych, liczonych od przekazania kompletu materiałów i dostępów',
           ],
           [
@@ -206,7 +207,7 @@ export const asystentPrezesa: Usluga = {
         tekst: 'Zanim cokolwiek zamówisz, na bezpłatnej diagnozie przechodzimy Twój tydzień i mówimy wprost, czy w Twoim przypadku asystent zwróci się szybciej niż tańsze wdrożenie z innego obszaru. Diagnoza trwa około 30 minut, kosztuje 0 zł i kończy się konkretną listą rzeczy do automatyzacji.',
       },
     ],
-    minPrice: 7999,
+    minPrice: 4999,
     linkPoradnik: {
       przed: 'Jak liczyć zwrot z wdrożenia agenta AI, rozpisaliśmy w ',
       etykieta: 'poradniku o kosztach agenta AI',
@@ -219,7 +220,7 @@ export const asystentPrezesa: Usluga = {
     {
       pytanie: 'Ile kosztuje prywatny asystent AI dla prezesa?',
       odpowiedz:
-        'Stworzenie asystenta kosztuje 7999 zł netto i jest to opłata jednorazowa. Do tego dochodzi utrzymanie serwerów za 199 zł netto miesięcznie oraz zużycie rozliczane według cennika API modeli, po Twojej stronie. Trzy pozycje zamiast jednego abonamentu, żeby było widać, za co dokładnie płacisz.',
+        'Stworzenie asystenta kosztuje 4999 zł netto i jest to opłata jednorazowa. Do tego dochodzi utrzymanie serwerów za 199 zł netto miesięcznie oraz zużycie rozliczane według cennika API modeli, po Twojej stronie. Trzy pozycje zamiast jednego abonamentu, żeby było widać, za co dokładnie płacisz.',
     },
     {
       pytanie: 'Ile trwa budowa asystenta?',

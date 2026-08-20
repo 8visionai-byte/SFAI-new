@@ -32,7 +32,7 @@ export const kampanieSocialILeady: Produkt = {
     'Jedna publikacja zamiast kilku, materiały z polecenia zamiast składania od zera i kampania wysłana tam, gdzie leady już są. Oszczędność: kilka godzin tygodniowo na samej obsłudze kanałów (szac.).',
 
   customNote:
-    'To punkt wyjścia do customu, nie pudełkowy produkt. Podpinamy Twoje kanały, Twój ton i Twoje reguły publikacji. Zakres i wycenę ustalamy na bezpłatnej diagnozie, bo różnica między dwoma a ośmioma kanałami to różnica w robocie.',
+    'To punkt wyjścia do customu, nie pudełkowy produkt. Podpinamy Twoje kanały, Twój ton i Twoje reguły publikacji. Cena na zapytanie: zakres i wycenę ustalamy na bezpłatnej diagnozie, bo różnica między dwoma a ośmioma kanałami to różnica w robocie.',
 
   demoHint:
     'Zrzut albo krótkie demo: jedno wrzucenie filmu i lista kanałów, na których pojawił się automatycznie.',

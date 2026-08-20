@@ -173,7 +173,7 @@ const NAV_PRODUKTY_KROTKIE: Record<string, DdKrotki> = {
     opis: 'Jedno wrzucenie publikuje na wszystkich kanałach',
   },
   'drugi-mozg-glosowy': {
-    tytul: 'Drugi mózg',
+    tytul: 'SF AI Team',
     opis: 'Głosowy agent z wiedzą o całej firmie',
   },
   'kalendarz-fizjoterapeuty': {

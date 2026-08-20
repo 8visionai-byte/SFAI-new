@@ -37,7 +37,7 @@ export const ksefIBankRozliczenia: Produkt = {
     'Wiadomo od ręki, kto zapłacił, a kto nie, bez ręcznego przeklikiwania wyciągu. Mniej pomyłek przy wpłatach o podobnych kwotach. Oszczędność: kilka godzin miesięcznie na samym uzgadnianiu płatności (szac.).',
 
   customNote:
-    'To punkt wyjścia do customu. Podpięcie konkretnego banku, reguły dopasowania wpłat i zakres raportu ustawiamy pod Twoją firmę. Zakres i wycenę ustalamy na bezpłatnej diagnozie.',
+    'To punkt wyjścia do customu. Podpięcie konkretnego banku, reguły dopasowania wpłat i zakres raportu ustawiamy pod Twoją firmę. Cena na zapytanie: zakres i wycenę ustalamy na bezpłatnej diagnozie.',
 
   demoHint:
     'Zrzut albo krótkie demo: lista faktur z KSeF ze statusem opłacenia dociągniętym z wyciągu bankowego.',

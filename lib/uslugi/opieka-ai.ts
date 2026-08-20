@@ -21,7 +21,7 @@ import type { Usluga } from './types';
  */
 export const opiekaAi: Usluga = {
   slug: 'opieka-ai',
-  dataAktualizacji: '2026-08-19',
+  dataAktualizacji: '2026-08-20',
   h1: 'Opieka AI: utrzymanie i rozwój automatyzacji',
 
   kapsula:
@@ -69,7 +69,7 @@ export const opiekaAi: Usluga = {
   rozwiazanie: {
     h2: 'Co dokładnie robimy w ramach opieki?',
     tresc:
-      'Bierzemy na siebie utrzymanie agentów AI i automatyzacji w Twojej firmie w ramach jednego ryczałtu godzin: monitorujemy, poprawiamy i rozwijamy. To serwis AI dla firmy, czyli serwis IT, tylko od AI.',
+      'Bierzemy na siebie utrzymanie agentów AI i automatyzacji w Twojej firmie w ramach jednego ryczałtu godzin: monitorujemy, poprawiamy i rozwijamy. Działa to jak outsourcing działu AI: tak jak księgowość oddajesz biuru rachunkowemu, tak utrzymanie i rozwój AI oddajesz nam. To serwis AI dla firmy.',
     /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
        zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [

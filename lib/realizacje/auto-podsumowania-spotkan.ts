@@ -4,7 +4,7 @@ import type { Realizacja } from './types';
  * CASE 6 — AUTO-PODSUMOWANIA SPOTKAŃ (klient anonimowy).
  * Kategoria: rozwiazania → link wewnętrzny do /uslugi/rozwiazania (aplikacje i wtyczki).
  *
- * Realne dane: klient NIENAZWANY (anonimowo). Agent dołącza do spotkania na
+ * Realne dane: klient KNF Team (nazwa potwierdzona 2026-08-20). Agent dołącza do spotkania na
  * Meet, Zoom albo Teams, spisuje je i robi raport plus listę zadań per uczestnik.
  * UWAGA: oszczędność czasu na notatkach oznaczona "(szac.)" — to szacunek, nie
  * twarda zmierzona liczba. Różni się od case'a transkrypcja-rozmow: tam była
@@ -15,7 +15,8 @@ export const autoPodsumowaniaSpotkan: Realizacja = {
   slug: 'auto-podsumowania-spotkan',
   h1: 'Auto-podsumowania spotkań na Meet, Zoom i Teams',
   kategoria: 'rozwiazania',
-  klient: 'Klient (anonimowo)',
+  /* Nazwa potwierdzona przez Pawła 2026-08-20 (audyt §7: zgody są). */
+  klient: 'KNF Team',
   branza: 'Usługi B2B',
 
   kapsula:

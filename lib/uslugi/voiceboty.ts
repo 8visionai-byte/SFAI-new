@@ -22,28 +22,25 @@ import type { Usluga } from './types';
  * liczymy OD PRZEKAZANIA KOMPLETU MATERIAŁÓW przez klienta, nie od podpisania
  * umowy; dwie rundy poprawek są w cenie wdrożenia.
  *
- * BRAK DANEJ (zgłoszone, NIE zmyślać): audyt podaje czasy wdrożenia w dniach
- * roboczych dla chatbotów (§1) i audytu AI (§3), ale NIE dla voicebotów. Dopóki
- * Paweł nie poda liczby, strona mówi wyłącznie zasadę liczenia czasu i kieruje
- * po termin na bezpłatną diagnozę. Żadnej liczby dni nie wolno tu dopisać
- * z głowy ani przenieść z chatbotów (inna usługa).
+ * CZAS WDROŻENIA (podał Paweł 2026-08-20, zamyka wcześniejszy BRAK DANEJ):
+ * prosty 3-5 dni roboczych, z integracjami 5-25 dni roboczych, zależnie od
+ * zakresu. Liczone od przekazania kompletu materiałów.
  *
  * INPUT PAWŁA (nie renderowane, do uzupełnienia przed shipem):
- *  - CZAS WDROŻENIA VOICEBOTA w dniach roboczych, per próg (patrz wyżej).
  *  - cta.dowod: gdy będzie realna liczba operacyjna (np. połączeń odebranych przez
  *    voicebota klienta w miesiącu) albo case z imieniem i firmą za zgodą, podmienić
  *    uczciwe zdanie o diagnozie na ten dowód. Do tego czasu bez atrapy liczby.
  */
 export const voiceboty: Usluga = {
   slug: 'voiceboty',
-  dataAktualizacji: '2026-08-19',
+  dataAktualizacji: '2026-08-20',
   h1: 'Voicebot dla firmy, który odbiera telefon za Ciebie',
   /* BLOK KRÓTKIEJ ODPOWIEDZI (audyt §9 etap 1 pkt 2 i §2): pierwszy akapit po
      H1 rozbija koszt na TRZY JAWNE POZYCJE, bo to jedyna rzecz, której nie ma
      żaden konkurent z top10 (wszyscy podają jeden abonament). Przed tą zmianą
      kapsuła miała 0 z 4 wielkości i była definicją, nie ofertą. */
   kapsula:
-    'Voicebot dla firmy ma trzy osobne koszty, a nie jeden abonament. Stworzenie: 2500 zł netto za bota prostego albo 5000 do 9000 zł netto za bota z integracjami, płatne raz. Utrzymanie: 299 do 1500 zł netto miesięcznie, gdy infrastruktura zostaje u nas, albo 0 zł, gdy przekazujemy ją Tobie. Zużycie: tokeny i minuty rozmów według realnego użycia, po Twojej stronie. Czas wdrożenia liczymy od przekazania kompletu materiałów i podajemy go na bezpłatnej diagnozie. Bot odbiera telefon 24/7, rozmawia po polsku i sam załatwia sprawę.',
+    'Voicebot dla firmy ma trzy osobne koszty, a nie jeden abonament. Stworzenie: 2500 zł netto za bota prostego albo 5000 do 9000 zł netto za bota z integracjami, płatne raz. Utrzymanie: 299 do 1500 zł netto miesięcznie, gdy infrastruktura zostaje u nas, albo 0 zł, gdy przekazujemy ją Tobie. Zużycie: tokeny i minuty rozmów według realnego użycia, po Twojej stronie. Bot prosty powstaje w 3 do 5 dni roboczych, bot z integracjami w 5 do 25 dni roboczych, licząc od przekazania kompletu materiałów. Bot odbiera telefon 24/7, rozmawia po polsku i sam załatwia sprawę.',
 
   /* metaTitle 2026-08-19: dopisane „netto" do kwoty (audyt §9 etap 1 pkt 4).
      „24/7" wypadło z tytułu, bo z sufiksem marki („ · SimpleFast.ai", 16 zn.)
@@ -143,6 +140,8 @@ export const voiceboty: Usluga = {
          PIERWSZY pasujący wiersz („Godziny"), więc dokładanie na końcu jej
          nie rusza. */
       { cecha: 'Stworzenie bota', bez: 'Rekrutacja i wdrożenie osoby', zNami: 'Od 2500 zł netto, płatne raz' },
+      /* Czas podany przez Pawła 2026-08-20 (wcześniej BRAK DANEJ). */
+      { cecha: 'Czas wdrożenia', bez: 'Tygodnie na wdrożenie osoby', zNami: 'Od 3 do 25 dni roboczych' },
       { cecha: 'Koszt miesięczny', bez: 'Pensja co miesiąc', zNami: '299 do 1500 zł netto albo 0 zł' },
       { cecha: 'Rozliczenie', bez: 'Jedna wypłata za wszystko', zNami: 'Trzy jawne pozycje, nie ryczałt' },
     ],
@@ -175,7 +174,7 @@ export const voiceboty: Usluga = {
        celowo: `ServiceHero.KAFEL_CENY` opisuje kafel ceny voicebotów słowami
        1:1 z tego akapitu („od 2500 zł / pakiet startowy"). */
     tresc:
-      'Voicebot ma trzy osobne pozycje kosztu, a nie jeden abonament, w którym wszystko jest schowane: stworzenie od 2500 zł netto za pakiet startowy, płatne raz, utrzymanie 299 do 1500 zł netto miesięcznie albo 0 zł, oraz zużycie tokenów i minut rozliczane według realnego użycia.',
+      'Voicebot ma trzy osobne pozycje kosztu, a nie jeden abonament, w którym wszystko jest schowane: stworzenie od 2500 zł netto za pakiet startowy, płatne raz, utrzymanie 299 do 1500 zł netto miesięcznie albo 0 zł, oraz zużycie tokenów i minut rozliczane według realnego użycia. Bot prosty powstaje w 3 do 5 dni roboczych, z integracjami w 5 do 25 dni roboczych.',
     /* Runda struktury 2026-08-19 (raport P8): szczegóły z dawnego akapitu-ściany
        zeszły do bloków silnika treści; fakty 1:1, forma na strukturę. */
     bloki: [
@@ -238,7 +237,7 @@ export const voiceboty: Usluga = {
         typ: 'sekcja',
         naglowek: 'Czas liczymy od przekazania kompletu materiałów, a dwie rundy poprawek są w cenie',
         akapity: [
-          'Czas wdrożenia liczymy od momentu, w którym przekazujesz nam komplet materiałów: scenariusze, treści i dostępy. Nie od podpisania umowy. Konkretny termin dla Twojego bota podajemy na bezpłatnej diagnozie.',
+          'Czas wdrożenia liczymy od momentu, w którym przekazujesz nam komplet materiałów: scenariusze, treści i dostępy. Nie od podpisania umowy. Bot prosty to 3 do 5 dni roboczych, bot z integracjami 5 do 25 dni roboczych, a dokładny termin dla Twojego scenariusza potwierdzamy na bezpłatnej diagnozie.',
           'W cenie wdrożenia są dwie rundy poprawek: tydzień testów i poprawki, drugi tydzień i kolejne poprawki, potem odbiór. To, co nie zadziałało po naszej stronie, poprawiamy zawsze, także po odbiorze.',
         ],
         wariant: 'edge',

@@ -62,7 +62,7 @@ import type { PodstronaUslugi } from './types';
 export const odbieranieTelefonow: PodstronaUslugi = {
   rodzic: 'voiceboty',
   slug: 'odbieranie-telefonow',
-  dataAktualizacji: '2026-08-19',
+  dataAktualizacji: '2026-08-20',
 
   // v20: 58 -> 44 znaków (pomiar §4b: 4 linie -> 3 na 1440, 5 -> 4 na 375/320).
   // Fraza obowiązkowa „bot telefoniczny" zostaje NA POCZĄTKU (poz. 16,9 w GSC),
@@ -293,7 +293,7 @@ export const odbieranieTelefonow: PodstronaUslugi = {
           'W cenie wdrożenia są dwie rundy poprawek: tydzień testów, poprawki, drugi tydzień testów, poprawki i odbiór.',
           'Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy.',
           'Poprawki tego, co nie zadziałało po naszej stronie, robimy zawsze, także po odbiorze.',
-          'Termin dla Twojego scenariusza ustalamy na bezpłatnej diagnozie: 0 zł, około 30 minut.',
+          'Bot prosty powstaje w 3 do 5 dni roboczych, z integracjami w 5 do 25 dni roboczych. Termin dla Twojego scenariusza potwierdzamy na bezpłatnej diagnozie: 0 zł, około 30 minut.',
         ],
         wariant: 'edge',
         chip: 'ZASADA',

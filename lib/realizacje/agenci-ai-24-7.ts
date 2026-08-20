@@ -4,7 +4,7 @@ import type { Realizacja } from './types';
  * CASE 5 — FIRMOWI AGENCI AI 24/7 (klient anonimowy).
  * Kategoria: chatboty → link wewnętrzny do /uslugi/chatboty.
  *
- * Realne dane (zero zmyślania): klient NIENAZWANY (anonimowo), efekt = chatboty
+ * Realne dane (zero zmyślania): wdrożenie własne SimpleFast.ai (potwierdzone 2026-08-20), efekt = chatboty
  * osadzone na witrynie, znają strukturę firmy i odpowiadają nowym leadom całą dobę
  * bez nadzoru. UWAGA: brak realnej liczby w danych — NIE wymyślamy metryki liczbowej.
  * Metryki ujmują realny, jakościowy efekt (24/7, bez nadzoru). Głos Pawła, zero em-dash.
@@ -13,7 +13,8 @@ export const agenciAi247: Realizacja = {
   slug: 'agenci-ai-24-7',
   h1: 'Firmowi Agenci AI 24/7',
   kategoria: 'chatboty',
-  klient: 'Klient (anonimowo)',
+  /* Nazwa potwierdzona przez Pawła 2026-08-20 (audyt §7: zgody są). */
+  klient: 'SimpleFast.ai (wdrożenie własne)',
   branza: 'Firma usługowa',
 
   kapsula:
