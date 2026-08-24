@@ -31,25 +31,19 @@ import { KartaEtykieta, KartaTagi } from '@/components/sections/KartaCzesci';
  * a poświata nie tworzy afordancji: ma pointer-events:none i tylko podąża
  * kolorem karty za kursorem.
  */
-/**
- * v24 PRÓBKA NEON (Paweł 2026-08-21): JEDNA karta dostaje mocniejszy kolor
- * w spoczynku i szybki błysk w obie strony (`.inf-card-neon` w globals.css),
- * żeby ocenić kierunek przed przeniesieniem go na resztę serwisu.
- * Świadomie lista slugów, a nie flaga w rejestrze treści: rejestr opisuje
- * PRODUKT, nie jego oprawę, a próbka ma zniknąć jedną linią, gdy zapadnie
- * decyzja (albo rozejść się na wszystkie karty, gdy Paweł ją zaakceptuje).
- */
-const PROBKA_NEON = new Set(['kampanie-social-i-leady']);
-
 export function ProduktCard({ produkt }: { produkt: Produkt }) {
   const dekor = INF_PRODUKT[produkt.slug] ?? INF_KATEGORIA_DEFAULT;
   const odcien = dekor.odcien ?? dekor.c;
-  const neon = PROBKA_NEON.has(produkt.slug);
   return (
+    /* v24 (Paweł 2026-08-21): `.inf-card-neon` na KAŻDEJ karcie produktu,
+       nie tylko na próbce. Kolor z palety widoczny w spoczynku, hover go
+       podbija, a błysk przelatuje tak samo szybko przy najechaniu i przy
+       zjeżdżaniu (0,34 s w obie strony). Zamówienie: „standardowy kolor
+       jakiś rażący, najeżdżamy na niego i on się jeszcze mocniej rozświetla". */
     <Card
       as="article"
       variant="quiet"
-      className={`inf-card inf-card-top relative flex h-full flex-col p-6${neon ? ' inf-card-neon' : ''}`}
+      className="inf-card inf-card-top inf-card-neon relative flex h-full flex-col p-6"
       id={produkt.slug}
       style={{ '--card-c': dekor.c, '--card-c-l': odcien } as CSSProperties}
     >
@@ -78,19 +72,26 @@ export function ProduktCard({ produkt }: { produkt: Produkt }) {
 
       <p className="mt-3 text-body-sm text-fg-muted">{produkt.opisFunkcji}</p>
 
-      {/* Dla kogo / Co daje — etykiety pytań, treść answer-first (cytowalne). */}
-      <dl className="mt-5 space-y-3">
-        <div>
-          <dt className="text-caption font-semibold uppercase tracking-wide text-fg-subtle">
+      {/* Dla kogo / Co daje — etykiety pytań, treść answer-first (cytowalne).
+          v24 (Paweł 2026-08-21: „środek plastra jest po prostu za dużo tekstu,
+          a trzeba go dla kogo opisać, co daje. Jeżeli porobiłeś takie sekcje,
+          no to przecież można to na kolejne kafelki podzielić"): dwie pozycje
+          definicji dostają WŁASNE PUDEŁKA w siatce, zamiast lecieć dalej tym
+          samym strumieniem akapitów. Etykieta idzie w kolor karty, więc widać
+          gdzie kończy się opis, a zaczyna konkret. Semantyka bez zmian: to
+          nadal <dl>/<dt>/<dd>, czyli bot czyta parę „pytanie -> odpowiedź". */}
+      <dl className="mt-5 grid gap-3 sm:grid-cols-2">
+        <div className="rounded-lg border border-[color:color-mix(in_srgb,var(--card-c)_26%,transparent)] bg-[color:color-mix(in_srgb,var(--card-c)_7%,transparent)] p-4">
+          <dt className="text-caption font-semibold uppercase tracking-wide text-[color:var(--card-c-l,var(--card-c))]">
             Dla kogo
           </dt>
-          <dd className="mt-1 text-body-sm text-fg-muted">{produkt.dlaKogo}</dd>
+          <dd className="mt-1.5 text-body-sm text-fg-muted">{produkt.dlaKogo}</dd>
         </div>
-        <div>
-          <dt className="text-caption font-semibold uppercase tracking-wide text-fg-subtle">
+        <div className="rounded-lg border border-[color:color-mix(in_srgb,var(--card-c)_26%,transparent)] bg-[color:color-mix(in_srgb,var(--card-c)_7%,transparent)] p-4">
+          <dt className="text-caption font-semibold uppercase tracking-wide text-[color:var(--card-c-l,var(--card-c))]">
             Co daje
           </dt>
-          <dd className="mt-1 text-body-sm text-fg-muted">{produkt.coDaje}</dd>
+          <dd className="mt-1.5 text-body-sm text-fg-muted">{produkt.coDaje}</dd>
         </div>
       </dl>
 
@@ -98,13 +99,8 @@ export function ProduktCard({ produkt }: { produkt: Produkt }) {
           v24 PRÓBKA: `border-border-accent` to GLOBALNY cyjan, więc kreska
           świeciła cyjanem także na karcie pomarańczowej czy zielonej (widoczne
           na zrzucie `neon-1-hover.png`: różowa karta z turkusową kreską).
-          W próbce kreska bierze kolor karty; reszta kart zostaje na dotychczasowym
-          tokenie, żeby zmiana nie wyszła poza zakres oceny. */}
-      <p
-        className={`mt-5 border-l-2 pl-4 text-body-sm text-fg-muted ${
-          neon ? 'border-[color:var(--card-c)]' : 'border-border-accent'
-        }`}
-      >
+          Teraz kreska bierze kolor karty na każdej z nich. */}
+      <p className="mt-5 border-l-2 border-[color:var(--card-c)] pl-4 text-body-sm text-fg-muted">
         {produkt.customNote}
       </p>
 

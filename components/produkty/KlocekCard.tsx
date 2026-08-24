@@ -1,61 +1,72 @@
 import type { CSSProperties } from 'react';
-import { Card } from '@/components/ui';
+import Link from 'next/link';
 import type { Klocek } from '@/lib/produkty';
-import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { KLOCEK_TON, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
+import { InfIcon } from '@/components/ui/InfIcons';
 
 /**
- * INFINITY v7 (audyt: 10 z 14 kart /produkty szło bez --card-c, więc cała
- * siatka klocków świeciła w hoverze jednym fallbackowym cyjanem).
+ * KlocekCard — kafel JEDNEGO klocka-możliwości.
  *
- * Klocki NIE mają kategorii w rejestrze lib/produkty (to lista możliwości, nie
- * usługi), więc tonację bierzemy z palety kategorii i cyklujemy nią po siatce —
- * dokładnie ten sam chwyt co numerowane kroki w components/o-nas. Sześć tonów
- * na siatce 3-kolumnowej daje sąsiadom różne kolory w każdym rzędzie.
- * Kolor to WYŁĄCZNIE dekoracja (custom property), nie treść.
- */
-const KLOCEK_TON = [
-  'chatboty', // cyjan
-  'voiceboty', // fiolet
-  'automatyzacje', // zieleń
-  'dokumenty-faktury', // bursztyn
-  'agent-rekrutacyjny', // jasny fiolet + magenta
-  'strony-www', // cyjan + błękit
-].map((slug) => INF_KATEGORIA[slug] ?? INF_KATEGORIA_DEFAULT);
-
-/**
- * KlocekCard — mały kafel JEDNEGO klocka-możliwości (katalog pod produktami).
+ * v24 (Paweł 2026-08-21) — TRZY ZMIANY, wszystkie z jego uwag do zrzutów:
  *
- * Treść w HTML od razu (SSG): nazwa klocka (co potrafi) + jedno zdanie opisu.
+ * 1. „startowe kolory tutaj w ogóle nie istnieją" oraz „nic się na nich nie
+ *    dzieje". PRZYCZYNA ZNALEZIONA W NASZYM CSS: wariant `.inf-card-quiet` ma
+ *    w komentarzu wprost „to jedyny wariant, gdzie kolor wchodzi dopiero
+ *    hoverem", a ramka stoi na bieli 4%. Karta wyglądała więc na martwą, póki
+ *    kursor na nią nie wjechał. Teraz `.inf-card-neon`: kolor z palety widoczny
+ *    W SPOCZYNKU, a hover go PODBIJA i przepuszcza szybki błysk w obie strony.
+ *
+ * 2. „to powinny być linki, że klikam agent obsługi i bach, wchodzę do tego
+ *    agenta obsługi i on jest tam opisany" — karta jest teraz <a> prowadzącym
+ *    do miejsca, gdzie ten klocek jest realnie opisany (pole `href` rejestru).
+ *    Klocek bez `href` renderuje się jak dotąd, jako zwykły <article>.
+ *
+ * 3. Ikona z palety klocka (dotąd kafel szedł bez żadnego glifu).
+ *
+ * Kolor to WYŁĄCZNIE dekoracja (custom property), nie treść. Hexy siedzą
+ * w rejestrze `lib/inf-kategorie` (KLOCEK_TON) — reguła z PALETA-NEON.md.
+ *
  * Server Component, bez własnego <li> — element listy dostarcza strona
- * (`Reveal as="li"`). Karta nieklikalna: to lista możliwości, a jedyne CTA
- * strony prowadzi do #diagnoza (nie do osobnych podstron klocków).
- *
- * INFINITY v2 (sama prezentacja, treść 1:1): Card variant="quiet" + .inf-card
- * (ciemna karta wzorca). BEZ kafelka emoji (spec nie mapuje klocków), BEZ
- * błysku/strzałki (karta nieinteraktywna).
- * INFINITY v7 (audyt „naczynia połączone"): reflektor .inf-spotlight jako
- * PIERWSZE dziecko — kafel klocka reaguje na kursor tak samo jak każda inna
- * karta wzorca (poświata w tonie karty, bez wpływu na klikalność).
- *
- * `indeks` = pozycja w katalogu (podaje strona) — steruje wyłącznie tonacją.
+ * (`Reveal as="li"`). `indeks` = pozycja w katalogu, steruje wyłącznie tonacją.
  */
 export function KlocekCard({ klocek, indeks = 0 }: { klocek: Klocek; indeks?: number }) {
   const dekor = KLOCEK_TON[indeks % KLOCEK_TON.length] ?? INF_KATEGORIA_DEFAULT;
-  return (
-    <Card
-      as="article"
-      variant="quiet"
-      className="inf-card inf-card-quiet relative h-full p-6"
-      style={{ '--card-c': dekor.c, '--card-c-l': dekor.odcien ?? dekor.c } as CSSProperties}
-    >
-      <div aria-hidden="true" className="inf-spotlight" />
+  const styl = { '--card-c': dekor.c, '--card-c-l': dekor.odcien ?? dekor.c } as CSSProperties;
+  /* Karta klikalna dostaje `.inf-card-full-hover` (ring + strzałka w prawo),
+     bo dopiero wtedy wygląd niesie afordancję „to jest link". */
+  const klasy = `inf-card inf-card-neon relative h-full p-6${klocek.href ? ' inf-card-full-hover' : ''}`;
 
+  const srodek = (
+    <>
+      <div aria-hidden="true" className="inf-spotlight" />
+      <span className="flex items-center gap-3">
+        <span aria-hidden="true" className="inf-tile" style={{ '--tile-c': dekor.c } as CSSProperties}>
+          <InfIcon name={dekor.ikona ?? INF_KATEGORIA_DEFAULT.ikona} />
+        </span>
+        {klocek.href && (
+          <span aria-hidden="true" className="inf-arrow ml-auto text-[color:var(--card-c-l,var(--card-c))]">
+            →
+          </span>
+        )}
+      </span>
       {/* F2: `font-bold`, nie `font-semibold`. Reguła wagi tytułu karty
           w globals zeszła z :is() (0,1,1) na :where() (0,1,0), żeby markup
-          realnie decydował — od tej chwili KAŻDE utility wagi wygrywa, więc
-          semibold renderowałby 600 zamiast dotychczasowych 700. */}
-      <h3 className="text-body font-bold text-fg">{klocek.nazwa}</h3>
+          realnie decydował — od tej chwili KAŻDE utility wagi wygrywa. */}
+      <h3 className="text-body mt-3 font-bold text-fg">{klocek.nazwa}</h3>
       <p className="mt-2 text-body-sm text-fg-muted">{klocek.opis}</p>
-    </Card>
+    </>
+  );
+
+  if (klocek.href) {
+    return (
+      <Link href={klocek.href} className={`${klasy} flex flex-col`} style={styl}>
+        {srodek}
+      </Link>
+    );
+  }
+  return (
+    <article className={klasy} style={styl}>
+      {srodek}
+    </article>
   );
 }

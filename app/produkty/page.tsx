@@ -61,19 +61,25 @@ const LICZBA_KLOCKOW = KLOCKI.length;
 const LICZBA_DZIALA_U_NAS = PRODUKTY.filter((p) => p.dojrzalosc === 'dziala-u-nas').length;
 const LICZBA_MVP = PRODUKTY.filter((p) => p.dojrzalosc === 'mvp').length;
 
+/* v24 (Paweł 2026-08-21: „startowe kolory tutaj w ogóle nie istnieją"): każda
+   liczba dostaje WŁASNY kolor z palety neonowej (PALETA-NEON.md), zamiast
+   całego pasa w jednym tonie albo w szarym akcencie. Kolory dobrane tak, żeby
+   żadne dwie sąsiednie nie były z tej samej rodziny. */
 const METRYKI_HUBU = [
-  { wartosc: String(LICZBA_PRODUKTOW), opis: 'własne produkty' },
+  { wartosc: String(LICZBA_PRODUKTOW), opis: 'własne produkty', ton: '#00f0ff' },
   {
     wartosc: String(LICZBA_DZIALA_U_NAS),
     opis: 'z nich używamy u siebie na co dzień',
     zrodlo: 'etykieta „Działa u nas" na karcie',
+    ton: '#39ff14',
   },
   {
     wartosc: String(LICZBA_MVP),
     opis: 'w wersji MVP, czyli działa rdzeń',
     zrodlo: 'etykieta „MVP (działa rdzeń)" na karcie',
+    ton: '#ffd600',
   },
-  { wartosc: String(LICZBA_KLOCKOW), opis: 'klocki do złożenia pod Twój proces' },
+  { wartosc: String(LICZBA_KLOCKOW), opis: 'klocki do złożenia pod Twój proces', ton: '#ff0080' },
 ];
 
 /**
@@ -187,6 +193,68 @@ export default function ProduktyPage() {
       <Section tone="subtle">
         <div className="mx-auto max-w-narrow">
           <Reveal>
+            <h2 className="text-h2">Co już zbudowaliśmy?</h2>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <p className="text-lead mt-4 text-fg-muted">
+              Dziesięć gotowych klocków z naszych wdrożeń. Każdy robi jedną rzecz
+              i każdy prowadzi do miejsca, gdzie jest opisany dokładniej. Niżej cztery
+              własne produkty, w których te klocki już razem pracują.
+            </p>
+          </Reveal>
+        </div>
+
+        <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {KLOCKI.map((klocek, i) => (
+            <Reveal
+              as="li"
+              key={klocek.nazwa}
+              delay={Math.min(i * 0.04, 0.2)}
+              className="h-full"
+            >
+              {/* v24: indeks steruje tonacją z KLOCEK_TON (10 różnych neonów,
+                  więc kolizja sąsiedztwa jest niemożliwa na każdej szerokości). */}
+              <KlocekCard klocek={klocek} indeks={i} />
+            </Reveal>
+          ))}
+        </ul>
+
+        {/* DISCLAIMER — MUSI być widoczny pod katalogiem klocków (uczciwy sygnał). */}
+        <div className="mx-auto mt-10 max-w-narrow">
+          <Reveal>
+            {/* INFINITY v5: wyróżnienie disclaimera zostaje na .sf-rim-gradient
+                (mechanizm home) — badge w języku inf (mono .inf-tag na akcencie,
+                jak "Najczęściej wybierane" na home). Treść 1:1. */}
+            <Card variant="highlight" className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <span className="inf-tag rounded-full border-transparent bg-accent px-3 py-1 text-accent-contrast">
+                  Ważne
+                </span>
+                <p className="text-body mt-3 text-fg">{KLOCKI_DISCLAIMER}</p>
+                <p className="mt-3 text-body-sm text-fg-muted">
+                  Chcesz zobaczyć, jak budujemy rozwiązanie z tych klocków na zamówienie?
+                  Sprawdź usługę{' '}
+                  <Link
+                    href="/uslugi/rozwiazania"
+                    className="font-semibold text-accent-hover underline-offset-2 hover:underline"
+                  >
+                    indywidualne rozwiązania AI
+                  </Link>
+                  .
+                </p>
+              </div>
+              <div className="shrink-0">
+                <MagneticButton variant="primary" size="md" href={HOME_CTA.href}>
+                  Złóż swoje rozwiązanie
+                </MagneticButton>
+              </div>
+            </Card>
+          </Reveal>
+        </div>
+      </Section>
+      <Section tone="base">
+        <div className="mx-auto max-w-narrow">
+          <Reveal>
             <h2 className="text-h2">Co konkretnie zbudowaliśmy?</h2>
           </Reveal>
           <Reveal delay={0.05}>
@@ -241,68 +309,6 @@ export default function ProduktyPage() {
 
       {/* ───────────────────────────────────────────────────────────────
           (3) KATALOG KLOCKÓW — "Z czego składamy indywidualne rozwiązania". */}
-      <Section tone="base">
-        <div className="mx-auto max-w-narrow">
-          <Reveal>
-            <h2 className="text-h2">Z czego składamy indywidualne rozwiązania?</h2>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <p className="text-lead mt-4 text-fg-muted">
-              To lista klocków, czyli pojedynczych możliwości z naszych analogii i
-              wdrożeń. Każdy z nich robi jedną rzecz. Łączymy je i składamy pod konkretny
-              proces, tak jak składaliśmy produkty wyżej.
-            </p>
-          </Reveal>
-        </div>
-
-        <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {KLOCKI.map((klocek, i) => (
-            <Reveal
-              as="li"
-              key={klocek.nazwa}
-              delay={Math.min(i * 0.04, 0.2)}
-              className="h-full"
-            >
-              {/* INFINITY v7 (audyt --card-c): indeks steruje tonacją karty
-                  (paleta kategorii cyklowana po siatce) — sama dekoracja. */}
-              <KlocekCard klocek={klocek} indeks={i} />
-            </Reveal>
-          ))}
-        </ul>
-
-        {/* DISCLAIMER — MUSI być widoczny pod katalogiem klocków (uczciwy sygnał). */}
-        <div className="mx-auto mt-10 max-w-narrow">
-          <Reveal>
-            {/* INFINITY v5: wyróżnienie disclaimera zostaje na .sf-rim-gradient
-                (mechanizm home) — badge w języku inf (mono .inf-tag na akcencie,
-                jak "Najczęściej wybierane" na home). Treść 1:1. */}
-            <Card variant="highlight" className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <span className="inf-tag rounded-full border-transparent bg-accent px-3 py-1 text-accent-contrast">
-                  Ważne
-                </span>
-                <p className="text-body mt-3 text-fg">{KLOCKI_DISCLAIMER}</p>
-                <p className="mt-3 text-body-sm text-fg-muted">
-                  Chcesz zobaczyć, jak budujemy rozwiązanie z tych klocków na zamówienie?
-                  Sprawdź usługę{' '}
-                  <Link
-                    href="/uslugi/rozwiazania"
-                    className="font-semibold text-accent-hover underline-offset-2 hover:underline"
-                  >
-                    indywidualne rozwiązania AI
-                  </Link>
-                  .
-                </p>
-              </div>
-              <div className="shrink-0">
-                <MagneticButton variant="primary" size="md" href={HOME_CTA.href}>
-                  Złóż swoje rozwiązanie
-                </MagneticButton>
-              </div>
-            </Card>
-          </Reveal>
-        </div>
-      </Section>
 
       {/* ───────────────────────────────────────────────────────────────
           (3b) v22 (§2.6 pkt 5): FAQ HUBU w natywnych <details>. Przed rundą

@@ -218,13 +218,13 @@ export const INF_TYP: Record<'poradnik' | 'wpis' | 'material', InfDekor> = {
 export const INF_PRODUKT: Record<string, InfIkonaDekor> = {
   // v5 (spec §2): emoji dropdownu Produkty 1:1 ze spec: 🧾 🗓️ ✅ 🎛️
   // (kolejność listy spec = kolejność rejestru PRODUKTY).
-  'skaner-faktur-ksef': { c: '#ffa101', odcien: '#ffc120', ikona: 'dokument-skan', emoji: '🧾' },
-  'app-coachingowa-z-agentami': { c: '#dc7aff', odcien: '#ff00e5', ikona: 'gwiazda-kompas', emoji: '🗓️' },
-  'apka-obecnosci-skladek': { c: '#39ff14', odcien: '#29ff77', ikona: 'kalendarz-check', emoji: '✅' },
-  'centrum-dowodzenia': { c: '#00f0ff', odcien: '#61edff', ikona: 'radar', emoji: '🎛️' },
+  'skaner-faktur-ksef': { c: '#ffd600', odcien: '#ffff00', ikona: 'dokument-skan', emoji: '🧾' },
+  'app-coachingowa-z-agentami': { c: '#b300ff', odcien: '#cc66ff', ikona: 'gwiazda-kompas', emoji: '🗓️' },
+  'apka-obecnosci-skladek': { c: '#ff6a00', odcien: '#ffa64d', ikona: 'kalendarz-check', emoji: '✅' },
+  'centrum-dowodzenia': { c: '#ff2b58', odcien: '#ff5e4d', ikona: 'radar', emoji: '🎛️' },
   /* Etap 3 audytu 2026-08-18 §8. Kolory z palety kategorii, glify unikalne
      w obrębie tej mapy, jak reszta wpisów. */
-  'ksef-i-bank-rozliczenia': { c: '#ffa101', odcien: '#ffc120', ikona: 'folder-kod', emoji: '🏦' },
+  'ksef-i-bank-rozliczenia': { c: '#0066ff', odcien: '#0099ff', ikona: 'folder-kod', emoji: '🏦' },
   /* v24 PRÓBKA NEON (Paweł 2026-08-21, grafika „NEON WEB PALETTE"): karta
      kampanii przechodzi z bladego fioletu #dc7aff na Hot Pink #FF0080
      z odcieniem Fuchsia Flash #FF2DFF. Powód: „tam, gdzie te kolory są słabe,
@@ -235,8 +235,8 @@ export const INF_PRODUKT: Record<string, InfIkonaDekor> = {
      pod spodem apka obecności (green #39ff14) — żaden sąsiad nie powtarza
      tej barwy ani w rzędzie, ani w pionie. */
   'kampanie-social-i-leady': { c: '#ff0080', odcien: '#ff2dff', ikona: 'wykres-strzalka', emoji: '📣' },
-  'drugi-mozg-glosowy': { c: '#39ff14', odcien: '#29ff77', ikona: 'mikrofon-fale', emoji: '🧠' },
-  'kalendarz-fizjoterapeuty': { c: '#00f0ff', odcien: '#61edff', ikona: 'kalendarz-check', emoji: '🩺' },
+  'drugi-mozg-glosowy': { c: '#39ff14', odcien: '#66ff33', ikona: 'mikrofon-fale', emoji: '🧠' },
+  'kalendarz-fizjoterapeuty': { c: '#00ffaa', odcien: '#66f5ff', ikona: 'kalendarz-check', emoji: '🩺' },
 };
 
 /**
@@ -294,6 +294,28 @@ export const INF_REALIZACJA_EMOJI: Record<string, string> = {
  * AUDYT/APKI/WWW/SEO). To dekoracyjne pigułki, NIE nowa treść — usługi nie
  * mają w rejestrze krótkiej etykiety, więc spec dopuszcza pochodną sluga.
  */
+/**
+ * v24 (Paweł 2026-08-21, PALETA-NEON.md) — TONY KATALOGU KLOCKÓW.
+ * Katalog miał SZEŚĆ tonów rotowanych modulo długość tablicy, więc przy dziesięciu
+ * klockach ten sam kolor wracał co szósty kafel i lądował obok siebie albo nad
+ * sobą, zależnie od liczby kolumn. Teraz DZIESIĘĆ RÓŻNYCH kolorów z palety
+ * neonowej: skoro żaden się nie powtarza, kolizja sąsiedztwa jest niemożliwa
+ * przy KAŻDEJ szerokości ekranu, a nie tylko przy tej, którą akurat sprawdzono.
+ * Kolejność 1:1 z tablicą KLOCKI w lib/produkty/index.ts.
+ */
+export const KLOCEK_TON: InfIkonaDekor[] = [
+  { c: '#00f0ff', odcien: '#61edff', ikona: 'chat-dymek' }, // Agent obsługi 24/7
+  { c: '#b300ff', odcien: '#cc66ff', ikona: 'osoba-check' }, // Agent rekrutacyjny
+  { c: '#ffd600', odcien: '#ffff00', ikona: 'dokument-skan' }, // OCR i faktury
+  { c: '#39ff14', odcien: '#66ff33', ikona: 'wykres-strzalka' }, // Monitoring procesów
+  { c: '#ff6a00', odcien: '#ffa64d', ikona: 'kalendarz-check' }, // Wirtualny pracownik
+  { c: '#0099ff', odcien: '#66f5ff', ikona: 'folder-kod' }, // Porządkowanie danych i maili
+  { c: '#ff0080', odcien: '#ff3399', ikona: 'lupa-wykres' }, // RAG-chatbot bazy wiedzy
+  { c: '#99ff00', odcien: '#f4ff4d', ikona: 'notes-pioro' }, // Automat treści i social
+  { c: '#ff2dff', odcien: '#ff66b2', ikona: 'gwiazda-kompas' }, // Podsumowania spotkań
+  { c: '#00ffaa', odcien: '#66f5ff', ikona: 'mikrofon-fale' }, // Transkrypcja rozmów
+];
+
 export const INF_USLUGA_BADGE: Record<string, string> = {
   chatboty: 'CHATBOT',
   voiceboty: 'VOICE',

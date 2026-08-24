@@ -66,6 +66,13 @@ export type Klocek = {
   nazwa: string;
   /** Jedno zdanie: co robi i komu zdejmuje robotę. */
   opis: string;
+  /**
+   * v24 (Paweł 2026-08-21): „to powinny być linki, że klikam agent obsługi
+   * i bach, wchodzę do tego agenta obsługi i on jest tam opisany".
+   * Trasa MUSI istnieć (200 OK) i realnie opisywać TEN klocek. Klocek bez
+   * href renderuje się jako zwykła karta, bez afordancji linku.
+   */
+  href?: string;
 };
 
 /**
@@ -76,42 +83,52 @@ export const KLOCKI: readonly Klocek[] = [
   {
     nazwa: 'Agent obsługi 24/7',
     opis: 'Pierwsza linia, która odpowiada na powtarzalne pytania o każdej porze, też wieczorem i w weekend.',
+    href: '/uslugi/chatboty',
   },
   {
     nazwa: 'Agent rekrutacyjny',
     opis: 'Odsiewa i porządkuje napływające CV, żeby człowiek czytał tylko sensowne zgłoszenia.',
+    href: '/uslugi/agent-rekrutacyjny',
   },
   {
     nazwa: 'OCR i faktury',
     opis: 'Wyciąga dane ze skanu albo zdjęcia dokumentu i wkłada je tam, gdzie mają trafić.',
+    href: '/uslugi/dokumenty-faktury',
   },
   {
     nazwa: 'Monitoring procesów',
     opis: 'Pilnuje, czy coś nie utknęło, i daje znać, zanim termin albo zlecenie przepadnie.',
+    href: '/uslugi/opieka-ai',
   },
   {
     nazwa: 'Wirtualny pracownik (mail i kalendarz)',
     opis: 'Ogarnia skrzynkę i kalendarz: sortuje, proponuje odpowiedzi, umawia spotkania.',
+    href: '/uslugi/automatyzacje',
   },
   {
     nazwa: 'Porządkowanie danych i maili',
     opis: 'Składa bałagan w jedno miejsce: taguje, grupuje i opisuje, żeby dało się to znaleźć.',
+    href: '/uslugi/automatyzacje',
   },
   {
     nazwa: 'RAG-chatbot bazy wiedzy',
     opis: 'Odpowiada na pytania na podstawie Twoich dokumentów, a nie zmyśla z internetu.',
+    href: '/uslugi/chatboty',
   },
   {
     nazwa: 'Automat treści i social',
     opis: 'Przygotowuje wersje robocze postów i tekstów, które człowiek tylko sprawdza i wysyła.',
+    href: '/produkty#kampanie-social-i-leady',
   },
   {
     nazwa: 'Podsumowania spotkań',
     opis: 'Z nagrania robi krótkie streszczenie z ustaleniami i listą zadań do zrobienia.',
+    href: '/realizacje/auto-podsumowania-spotkan',
   },
   {
     nazwa: 'Transkrypcja rozmów',
     opis: 'Zamienia rozmowy i nagrania na tekst, który da się przeszukać i wykorzystać dalej.',
+    href: '/realizacje/transkrypcja-rozmow',
   },
 ] as const;
 

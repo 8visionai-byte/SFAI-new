@@ -29,8 +29,15 @@ export function PasekMetryk({
   ton,
   className,
 }: {
-  /** Kafle w kolejności wyświetlania. `zrodlo` to mikro-przypis „skąd ta liczba". */
-  kafle: { wartosc: string; opis: string; zrodlo?: string }[];
+  /**
+   * Kafle w kolejności wyświetlania. `zrodlo` to mikro-przypis „skąd ta liczba".
+   * v24 (Paweł 2026-08-21: „startowe kolory tutaj w ogóle nie istnieją"):
+   * opcjonalny `ton` PER KAFEL, hex z palety neonowej (PALETA-NEON.md).
+   * Wzorzec /void stawia w jednym pasie cztery liczby w czterech barwach;
+   * dotąd cały pas mógł mieć tylko jeden kolor albo spadał na akcent marki
+   * i wychodził szary. Bez tego pola render jest 1:1 jak dotąd.
+   */
+  kafle: { wartosc: string; opis: string; zrodlo?: string; ton?: string }[];
   /**
    * Ton strony (kolor z INF_TYP / INF_KATEGORIA). Maluje obwódkę pudełka
    * (`--hero-c`) i samą liczbę (`--counter-c` wywodzi się z `--card-c`),
@@ -54,7 +61,17 @@ export function PasekMetryk({
       style={styl}
     >
       {kafle.map((kafel, i) => (
-        <li key={i} className="inf-hero-stat text-center">
+        <li
+          key={i}
+          className="inf-hero-stat text-center"
+          /* Ton kafla nadpisuje --card-c LOKALNIE, więc obwódka pudełka
+             (--hero-c) i liczba (--counter-c) idą za nim razem. */
+          style={
+            kafel.ton
+              ? ({ '--card-c': kafel.ton, '--card-c-l': kafel.ton } as CSSProperties)
+              : undefined
+          }
+        >
           <span className="inf-counter-value block text-[24px] font-black leading-none">
             {kafel.wartosc}
           </span>

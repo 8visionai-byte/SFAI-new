@@ -1,3 +1,55 @@
+# STATUS — v24: SEKCJA /PRODUKTY NA PALECIE NEONOWEJ — DO WDROŻENIA
+
+ZARZUTY PAWŁA (2026-08-21) I CO Z NIMI ZROBIONE:
+
+1. „Wcześniej były jako animowane karty podświetlane, a teraz nic się na nich
+   nie dzieje." PRZYCZYNA ZNALEZIONA W NASZYM WŁASNYM CSS: karty klocków miały
+   wariant .inf-card-quiet, który ma w komentarzu wprost „to jedyny wariant,
+   gdzie kolor wchodzi dopiero hoverem", a ramka stała na bieli 4 procent.
+   NAPRAWA: wszystkie karty sekcji (8 produktów + 10 klocków) na .inf-card-neon,
+   czyli kolor widoczny W SPOCZYNKU, a hover go PODBIJA.
+
+2. „Kolory miały nie być takie same obok siebie." Były trzy kolizje: skaner
+   obok KSeF (oba złote), SF AI Team nad apką obecności (oba zielone), kalendarz
+   obok centrum (oba cyjanowe). NAPRAWA: 8 produktów = 8 RÓŻNYCH neonów,
+   10 klocków = 10 RÓŻNYCH neonów. Skoro żaden się nie powtarza, kolizja jest
+   niemożliwa na KAŻDEJ szerokości, nie tylko na tej sprawdzonej.
+   Zmierzone na 1440 i 1024 px: KOLIZJE: brak.
+
+3. „Startowe kolory tutaj w ogóle nie istnieją" (pas metryk 8/2/6/10 był szary).
+   NAPRAWA: PasekMetryk przyjmuje ton PER KAFEL; cztery liczby w czterech
+   barwach, jak pas metryk wzorca /void.
+
+4. „Duży plaster, można by to rozbić na mniejsze kafelki i podsekcje."
+   NAPRAWA: „Dla kogo" i „Co daje" dostały własne pudełka w siatce dwóch
+   kolumn, z etykietą w kolorze karty. Semantyka bez zmian: nadal dl/dt/dd,
+   więc bot czyta parę pytanie-odpowiedź tak jak dotąd.
+
+5. „To powinno być na samej górze, co już zbudowaliśmy (...) i to powinny być
+   linki." NAPRAWA: katalog klocków przeniesiony PRZED karty produktów,
+   nagłówek „Co już zbudowaliśmy?", a każdy z 10 klocków jest teraz linkiem do
+   miejsca, gdzie jest opisany. Wszystkie 8 tras docelowych zwraca 200.
+
+6. „Używamy tylko palety neonowych kolorów." NAPRAWA: paleta zapisana jako
+   REGUŁA PROJEKTU w PALETA-NEON.md (28 kolorów, RGB i HEX, zasady użycia)
+   plus wpis w pamięci sesji, żeby nie wróciła bladość. Hex wolno wpisać
+   wyłącznie w rejestrze lib/inf-kategorie; komponenty biorą kolor przez
+   --card-c i nie znają żadnego hexa.
+
+DOWÓD (lokalny build, ALARMÓW 0): kolejność sekcji z klockami na pierwszym
+miejscu; 10 klocków, każdy z innym kolorem, każdy z glifem, każdy z żywym
+linkiem; błysk zmierzony przez CDP na dwóch kartach — wejście -542px do 759px
+i powrót 759px do -542px, oba po około 340 ms; zero martwych linków; zero
+przewijania w poziomie; zero błędów konsoli. tsc / build / lint exit 0.
+
+ZAKRES: wyłącznie sekcja /produkty, zgodnie z poleceniem. Reszta serwisu
+nietknięta.
+
+CZEKA NA PAWŁA: ocena tej sekcji przed przeniesieniem palety na karty usług,
+podstrony i stronę główną.
+
+---
+
 # STATUS — INFINITY v23: JĘZYK PODSTRON — DO WDROŻENIA
 
 ZLECENIE PAWŁA: „nasze podstrony mega od tego odbiegają", podstrony mają
