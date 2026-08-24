@@ -31,14 +31,25 @@ import { KartaEtykieta, KartaTagi } from '@/components/sections/KartaCzesci';
  * a poświata nie tworzy afordancji: ma pointer-events:none i tylko podąża
  * kolorem karty za kursorem.
  */
+/**
+ * v24 PRÓBKA NEON (Paweł 2026-08-21): JEDNA karta dostaje mocniejszy kolor
+ * w spoczynku i szybki błysk w obie strony (`.inf-card-neon` w globals.css),
+ * żeby ocenić kierunek przed przeniesieniem go na resztę serwisu.
+ * Świadomie lista slugów, a nie flaga w rejestrze treści: rejestr opisuje
+ * PRODUKT, nie jego oprawę, a próbka ma zniknąć jedną linią, gdy zapadnie
+ * decyzja (albo rozejść się na wszystkie karty, gdy Paweł ją zaakceptuje).
+ */
+const PROBKA_NEON = new Set(['kampanie-social-i-leady']);
+
 export function ProduktCard({ produkt }: { produkt: Produkt }) {
   const dekor = INF_PRODUKT[produkt.slug] ?? INF_KATEGORIA_DEFAULT;
   const odcien = dekor.odcien ?? dekor.c;
+  const neon = PROBKA_NEON.has(produkt.slug);
   return (
     <Card
       as="article"
       variant="quiet"
-      className="inf-card inf-card-top relative flex h-full flex-col p-6"
+      className={`inf-card inf-card-top relative flex h-full flex-col p-6${neon ? ' inf-card-neon' : ''}`}
       id={produkt.slug}
       style={{ '--card-c': dekor.c, '--card-c-l': odcien } as CSSProperties}
     >
@@ -83,8 +94,17 @@ export function ProduktCard({ produkt }: { produkt: Produkt }) {
         </div>
       </dl>
 
-      {/* Nuta "punkt wyjścia do customu" — uczciwy sygnał, nie pudełkowy produkt. */}
-      <p className="mt-5 border-l-2 border-border-accent pl-4 text-body-sm text-fg-muted">
+      {/* Nuta "punkt wyjścia do customu" — uczciwy sygnał, nie pudełkowy produkt.
+          v24 PRÓBKA: `border-border-accent` to GLOBALNY cyjan, więc kreska
+          świeciła cyjanem także na karcie pomarańczowej czy zielonej (widoczne
+          na zrzucie `neon-1-hover.png`: różowa karta z turkusową kreską).
+          W próbce kreska bierze kolor karty; reszta kart zostaje na dotychczasowym
+          tokenie, żeby zmiana nie wyszła poza zakres oceny. */}
+      <p
+        className={`mt-5 border-l-2 pl-4 text-body-sm text-fg-muted ${
+          neon ? 'border-[color:var(--card-c)]' : 'border-border-accent'
+        }`}
+      >
         {produkt.customNote}
       </p>
 

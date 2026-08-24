@@ -6425,3 +6425,96 @@ a.inf-card:focus-visible {
   outline: 2px solid var(--card-c, var(--accent));
   outline-offset: 2px;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INFINITY v24 — PRÓBKA NEON (jedna karta: /produkty#kampanie-social-i-leady).
+   Zamówienie Pawła 2026-08-21, trzy rzeczy naraz:
+
+   1. „dopiero gdy myszka zjeżdża, to jest ten rozbłysk, a powinien być najazd.
+      Pym, pym, pym. Taki szybki dosyć rozbłysk."
+      DIAGNOZA: rozbłysk BYŁ w obie strony, ale nie dało się go zauważyć przy
+      wejściu. Powody zmierzone w bazie: (a) pas miał 3-6% BIELI, czyli prawie
+      nic na ciemnym tle, (b) wejście trwało 0,85 s, a powrót 1,05 s, więc oba
+      przeloty były powolnymi falami, nie błyskiem, (c) przy zjeżdżaniu kursora
+      pas wraca przez KAŻDĄ kartę pod kursorem, więc ten kierunek rzucał się
+      w oczy bardziej. Tu: 0,34 s W OBIE STRONY, pas węższy (42% zamiast 60%)
+      i w KOLORZE karty zamiast bieli. Wychodzi z tego błysk, nie fala.
+
+   2. „standardowy kolor był jakiś rażący, najeżdżamy na niego i on się jeszcze
+      mocniej rozświetla" — spoczynek dostaje własną poświatę i mocniejszą
+      ramkę, a hover ją podbija, zamiast dopiero ją włączać.
+
+   3. Paleta neonowa Pawła (grafika „NEON WEB PALETTE"): karta kampanii
+      przechodzi na Hot Pink #FF0080 z odcieniem Fuchsia Flash #FF2DFF.
+      KONTRAST policzony na korpusie karty rgb(12,13,28): #FF0080 = 5,12:1,
+      #FF2DFF = 6,47:1, czyli AA także dla tekstu normalnej wielkości.
+
+   ZAKRES: klasa działa TYLKO tam, gdzie ją świadomie dołożymy (dziś: jedna
+   karta produktu). Reszta serwisu renderuje się bez zmian. To jest próbka
+   do oceny, nie zmiana systemowa.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* SPOCZYNEK: kolor ma być widoczny od razu, nie dopiero po najechaniu. */
+.inf-card-neon {
+  border-color: color-mix(in srgb, var(--card-c) 52%, transparent);
+  box-shadow:
+    0 0 24px -10px color-mix(in srgb, var(--card-c) 70%, transparent),
+    inset 0 0 34px -26px var(--card-c-l, var(--card-c));
+  transition:
+    border-color 0.34s var(--ease-out),
+    box-shadow 0.34s var(--ease-out),
+    transform 0.34s var(--ease-out);
+}
+
+/* BŁYSK: ten sam czas i ta sama krzywa w obie strony, więc wejście i wyjście
+   wyglądają identycznie. `left` startuje i wraca do -100% z bazy `.inf-card`. */
+.inf-card-neon::after {
+  width: 42%;
+  background: linear-gradient(
+    105deg,
+    transparent 28%,
+    color-mix(in srgb, var(--card-c) 20%, transparent) 44%,
+    color-mix(in srgb, var(--card-c-l, var(--card-c)) 46%, transparent) 50%,
+    color-mix(in srgb, var(--card-c) 20%, transparent) 56%,
+    transparent 72%
+  );
+  transition: left 0.34s cubic-bezier(0.33, 0, 0.67, 1);
+}
+.inf-card-neon:hover::after {
+  left: 140%;
+  transition: left 0.34s cubic-bezier(0.33, 0, 0.67, 1);
+}
+
+/* HOVER: to samo światło, tylko mocniej. Ramka wchodzi na jasny odcień. */
+@media (hover: hover) and (pointer: fine) {
+  .inf-card-neon:hover {
+    border-color: var(--card-c-l, var(--card-c));
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--card-c) 45%, transparent),
+      0 0 46px -8px color-mix(in srgb, var(--card-c) 85%, transparent),
+      inset 0 0 40px -20px var(--card-c-l, var(--card-c));
+  }
+}
+
+/* Górna linia wariantu `-top` też ma być rażąca, nie ledwo widoczna. */
+.inf-card-neon.inf-card-top::before {
+  opacity: 0.85;
+}
+.inf-card-neon.inf-card-top:hover::before {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inf-card-neon,
+  .inf-card-neon::after {
+    transition: none;
+  }
+}
+@media (forced-colors: active) {
+  .inf-card-neon {
+    box-shadow: none;
+  }
+  .inf-card-neon::after {
+    display: none;
+  }
+}

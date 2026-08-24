@@ -225,7 +225,16 @@ export const INF_PRODUKT: Record<string, InfIkonaDekor> = {
   /* Etap 3 audytu 2026-08-18 §8. Kolory z palety kategorii, glify unikalne
      w obrębie tej mapy, jak reszta wpisów. */
   'ksef-i-bank-rozliczenia': { c: '#ffa101', odcien: '#ffc120', ikona: 'folder-kod', emoji: '🏦' },
-  'kampanie-social-i-leady': { c: '#dc7aff', odcien: '#ff00e5', ikona: 'wykres-strzalka', emoji: '📣' },
+  /* v24 PRÓBKA NEON (Paweł 2026-08-21, grafika „NEON WEB PALETTE"): karta
+     kampanii przechodzi z bladego fioletu #dc7aff na Hot Pink #FF0080
+     z odcieniem Fuchsia Flash #FF2DFF. Powód: „tam, gdzie te kolory są słabe,
+     to po prostu podmień je na te rażące".
+     KONTRAST na korpusie karty rgb(12,13,28): #FF0080 = 5,12:1,
+     #FF2DFF = 6,47:1 — AA także dla tekstu normalnej wielkości.
+     SĄSIEDZTWO na siatce /produkty (3 kolumny): po lewej KSeF (amber #ffa101),
+     pod spodem apka obecności (green #39ff14) — żaden sąsiad nie powtarza
+     tej barwy ani w rzędzie, ani w pionie. */
+  'kampanie-social-i-leady': { c: '#ff0080', odcien: '#ff2dff', ikona: 'wykres-strzalka', emoji: '📣' },
   'drugi-mozg-glosowy': { c: '#39ff14', odcien: '#29ff77', ikona: 'mikrofon-fale', emoji: '🧠' },
   'kalendarz-fizjoterapeuty': { c: '#00f0ff', odcien: '#61edff', ikona: 'kalendarz-check', emoji: '🩺' },
 };
