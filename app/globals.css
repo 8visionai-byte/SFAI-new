@@ -6518,3 +6518,182 @@ a.inf-card:focus-visible {
     display: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INFINITY v24b — BŁYSK KIERUNKOWY + PAS METRYK (sekcja /produkty).
+   Trzy uwagi Pawła z 2026-08-21, wieczór:
+
+   1. „rozbłysk nie powinien być kolorowy, tylko tak jak jest na innych
+      stronach (...) bardzo dobrze to wygląda na kafelku najczęstsze pytania".
+      Kafel FAQ jedzie bazowym `.inf-card::after`, czyli BIAŁYM pasem. Cofam
+      więc kolorowy pas z v24 i wracam do bieli, zostawiając samą szybkość.
+
+   2. „jeżeli wchodzimy myszką z prawej strony, no to rozbłysk idzie z prawej
+      do lewej i wraca. Jeżeli wchodzimy z dołu, to z dołu do góry."
+      Pas wjeżdża TĄ KRAWĘDZIĄ, którą wszedł kursor, i przy wyjściu wychodzi
+      tą, którą kursor wyjeżdża. Kierunku nie da się policzyć w samym CSS
+      (trzeba znać pozycję kursora), więc krawędź podaje `data-blysk`, a fazę
+      `data-faza` — jedno i drugie ustawia komponent BlyskKierunkowy.
+      CSS zna cztery animacje i nie wie nic o zdarzeniach.
+
+   3. Pas metryk (8 / 2 / 6 / 10) był szary. DWIE PRZYCZYNY ZMIERZONE:
+      (a) `--counter-c` jest deklarowane w `.inf-counter`, a PasekMetryk nie
+          używa tego kontenera, więc `color: var(--counter-c)` nie dostawało
+          wartości i liczba zostawała biała,
+      (b) obwódka `.inf-hero-stat` stoi na 15% koloru, czyli poniżej progu
+          zauważalności na ciemnym tle.
+      Klasa `.inf-hero-stat-neon` naprawia oba, nie ruszając pasów metryk
+      na innych stronach.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── (1) BŁYSK KIERUNKOWY ────────────────────────────────────────────────
+   Pas jest BIAŁY, jak w bazie `.inf-card::after` (kafel FAQ, który Paweł
+   wskazał jako wzorzec). Nadpisujemy tu tylko geometrię i sposób odpalania:
+   zamiast `transition: left` na :hover idzie `animation`, bo tylko animacja
+   umie wystartować z dowolnej krawędzi. */
+.inf-blysk::after {
+  content: '';
+  position: absolute;
+  inset: auto;
+  top: 0;
+  left: -60%;
+  width: 55%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.05) 45%,
+    rgba(255, 255, 255, 0.13) 50%,
+    rgba(255, 255, 255, 0.05) 55%,
+    transparent 70%
+  );
+  /* Sekcja /produkty używa `.inf-card-neon`, którego pas jechał kolorem
+     i transition. Wyłączamy go tutaj: błyskiem steruje wyłącznie animacja. */
+  transition: none;
+}
+/* Warianty PIONOWE (wejście górą albo dołem): pas kładzie się poziomo,
+   więc zamieniamy osie i obracamy gradient. */
+.inf-blysk[data-blysk='G']::after,
+.inf-blysk[data-blysk='D']::after {
+  left: 0;
+  top: -60%;
+  width: 100%;
+  height: 55%;
+  background: linear-gradient(
+    195deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.05) 45%,
+    rgba(255, 255, 255, 0.13) 50%,
+    rgba(255, 255, 255, 0.05) 55%,
+    transparent 70%
+  );
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .inf-blysk[data-faza][data-blysk='L']::after {
+    animation: infBlyskL 0.34s cubic-bezier(0.33, 0, 0.67, 1) both;
+  }
+  .inf-blysk[data-faza][data-blysk='P']::after {
+    animation: infBlyskP 0.34s cubic-bezier(0.33, 0, 0.67, 1) both;
+  }
+  .inf-blysk[data-faza][data-blysk='G']::after {
+    animation: infBlyskG 0.34s cubic-bezier(0.33, 0, 0.67, 1) both;
+  }
+  .inf-blysk[data-faza][data-blysk='D']::after {
+    animation: infBlyskD 0.34s cubic-bezier(0.33, 0, 0.67, 1) both;
+  }
+}
+
+/* Wjazd lewą krawędzią -> pas przelatuje w prawo. */
+@keyframes infBlyskL {
+  from {
+    left: -60%;
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  to {
+    left: 105%;
+    opacity: 0;
+  }
+}
+/* Wjazd prawą krawędzią -> pas przelatuje w lewo. */
+@keyframes infBlyskP {
+  from {
+    left: 105%;
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  to {
+    left: -60%;
+    opacity: 0;
+  }
+}
+/* Wjazd górną krawędzią -> pas przelatuje w dół. */
+@keyframes infBlyskG {
+  from {
+    top: -60%;
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  to {
+    top: 105%;
+    opacity: 0;
+  }
+}
+/* Wjazd dolną krawędzią -> pas przelatuje w górę. */
+@keyframes infBlyskD {
+  from {
+    top: 105%;
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  to {
+    top: -60%;
+    opacity: 0;
+  }
+}
+
+@media (forced-colors: active) {
+  .inf-blysk::after {
+    display: none;
+  }
+}
+
+/* ── (2) PAS METRYK W KOLORACH ──────────────────────────────────────────── */
+.inf-hero-stat-neon {
+  /* `--counter-c` MUSI stać tutaj: PasekMetryk nie owija liczby w `.inf-counter`,
+     więc bez tej deklaracji `color: var(--counter-c)` zostawało bez wartości
+     i liczba renderowała się na biało (zmierzone na produkcji). */
+  --counter-c: var(--card-c, var(--accent));
+  --hero-c: var(--card-c, var(--accent));
+  border-color: color-mix(in srgb, var(--card-c, var(--accent)) 45%, transparent);
+  box-shadow: 0 0 22px -10px color-mix(in srgb, var(--card-c, var(--accent)) 70%, transparent);
+  transition:
+    border-color 0.34s var(--ease-out),
+    box-shadow 0.34s var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .inf-hero-stat-neon:hover {
+    border-color: var(--card-c, var(--accent));
+    box-shadow: 0 0 34px -8px color-mix(in srgb, var(--card-c, var(--accent)) 85%, transparent);
+  }
+}
+@media (forced-colors: active) {
+  .inf-hero-stat-neon {
+    box-shadow: none;
+  }
+}

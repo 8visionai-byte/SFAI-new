@@ -4,3 +4,4 @@
  */
 export { ProduktCard } from './ProduktCard';
 export { KlocekCard } from './KlocekCard';
+export { BlyskKierunkowy } from './BlyskKierunkowy';

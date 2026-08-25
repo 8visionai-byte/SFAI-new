@@ -43,7 +43,7 @@ export function ProduktCard({ produkt }: { produkt: Produkt }) {
     <Card
       as="article"
       variant="quiet"
-      className="inf-card inf-card-top inf-card-neon relative flex h-full flex-col p-6"
+      className="inf-card inf-card-top inf-card-neon inf-blysk relative flex h-full flex-col p-6"
       id={produkt.slug}
       style={{ '--card-c': dekor.c, '--card-c-l': odcien } as CSSProperties}
     >

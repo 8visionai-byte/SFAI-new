@@ -28,6 +28,7 @@ export function PasekMetryk({
   kafle,
   ton,
   className,
+  klasaKafla,
 }: {
   /**
    * Kafle w kolejności wyświetlania. `zrodlo` to mikro-przypis „skąd ta liczba".
@@ -47,6 +48,13 @@ export function PasekMetryk({
   ton?: InfDekor;
   /** Klasy pozycjonowania od konsumenta (odstęp od hero, szerokość kolumny). */
   className?: string;
+  /**
+   * v24b: dodatkowe klasy KAŻDEGO kafla. Sekcja /produkty podaje tu
+   * `inf-hero-stat-neon inf-blysk`, żeby pas metryk dostał kolor w spoczynku
+   * i ten sam błysk co karty. Pasy na pozostałych hubach renderują się bez
+   * zmian, bo bez tego pola nic się nie dokłada.
+   */
+  klasaKafla?: string;
 }) {
   if (kafle.length === 0) return null;
 
@@ -63,7 +71,7 @@ export function PasekMetryk({
       {kafle.map((kafel, i) => (
         <li
           key={i}
-          className="inf-hero-stat text-center"
+          className={`inf-hero-stat text-center${klasaKafla ? ` ${klasaKafla}` : ''}`}
           /* Ton kafla nadpisuje --card-c LOKALNIE, więc obwódka pudełka
              (--hero-c) i liczba (--counter-c) idą za nim razem. */
           style={

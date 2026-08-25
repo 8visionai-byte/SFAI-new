@@ -34,7 +34,7 @@ export function KlocekCard({ klocek, indeks = 0 }: { klocek: Klocek; indeks?: nu
   const styl = { '--card-c': dekor.c, '--card-c-l': dekor.odcien ?? dekor.c } as CSSProperties;
   /* Karta klikalna dostaje `.inf-card-full-hover` (ring + strzałka w prawo),
      bo dopiero wtedy wygląd niesie afordancję „to jest link". */
-  const klasy = `inf-card inf-card-neon relative h-full p-6${klocek.href ? ' inf-card-full-hover' : ''}`;
+  const klasy = `inf-card inf-card-neon inf-blysk relative h-full p-6${klocek.href ? ' inf-card-full-hover' : ''}`;
 
   const srodek = (
     <>

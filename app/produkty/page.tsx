@@ -10,7 +10,7 @@ import { INF_KATEGORIA } from '@/lib/inf-kategorie';
 
 import { Section, Card, MagneticButton } from '@/components/ui';
 import { Reveal } from '@/components/motion/Reveal';
-import { ProduktCard, KlocekCard } from '@/components/produkty';
+import { ProduktCard, KlocekCard, BlyskKierunkowy } from '@/components/produkty';
 import { PasekMetryk } from '@/components/sections/PasekMetryk';
 import { TabelaRejestru } from '@/components/sections/TabelaRejestru';
 import { HubFAQ } from '@/components/sections/HubFAQ';
@@ -183,7 +183,9 @@ export default function ProduktyPage() {
               liczby policzone z rejestru, więc nie da się ich rozjechać z listą
               produktów i katalogiem klocków niżej. */}
           <Reveal delay={0.15}>
-            <PasekMetryk kafle={METRYKI_HUBU} ton={TON} className="mt-9" />
+            <BlyskKierunkowy>
+              <PasekMetryk kafle={METRYKI_HUBU} ton={TON} className="mt-9" klasaKafla="inf-hero-stat-neon inf-blysk" />
+            </BlyskKierunkowy>
           </Reveal>
         </div>
       </Section>
@@ -204,20 +206,22 @@ export default function ProduktyPage() {
           </Reveal>
         </div>
 
-        <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {KLOCKI.map((klocek, i) => (
-            <Reveal
-              as="li"
-              key={klocek.nazwa}
-              delay={Math.min(i * 0.04, 0.2)}
-              className="h-full"
-            >
-              {/* v24: indeks steruje tonacją z KLOCEK_TON (10 różnych neonów,
-                  więc kolizja sąsiedztwa jest niemożliwa na każdej szerokości). */}
-              <KlocekCard klocek={klocek} indeks={i} />
-            </Reveal>
-          ))}
-        </ul>
+        <BlyskKierunkowy>
+          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {KLOCKI.map((klocek, i) => (
+              <Reveal
+                as="li"
+                key={klocek.nazwa}
+                delay={Math.min(i * 0.04, 0.2)}
+                className="h-full"
+              >
+                {/* v24: indeks steruje tonacją z KLOCEK_TON (10 różnych neonów,
+                    więc kolizja sąsiedztwa jest niemożliwa na każdej szerokości). */}
+                <KlocekCard klocek={klocek} indeks={i} />
+              </Reveal>
+            ))}
+          </ul>
+        </BlyskKierunkowy>
 
         {/* DISCLAIMER — MUSI być widoczny pod katalogiem klocków (uczciwy sygnał). */}
         <div className="mx-auto mt-10 max-w-narrow">
@@ -265,18 +269,20 @@ export default function ProduktyPage() {
           </Reveal>
         </div>
 
-        <ul className="mt-10 grid gap-6 lg:grid-cols-2">
-          {PRODUKTY.map((produkt, i) => (
-            <Reveal
-              as="li"
-              key={produkt.slug}
-              delay={Math.min(i * 0.05, 0.2)}
-              className="h-full"
-            >
-              <ProduktCard produkt={produkt} />
-            </Reveal>
-          ))}
-        </ul>
+        <BlyskKierunkowy>
+          <ul className="mt-10 grid gap-6 lg:grid-cols-2">
+            {PRODUKTY.map((produkt, i) => (
+              <Reveal
+                as="li"
+                key={produkt.slug}
+                delay={Math.min(i * 0.05, 0.2)}
+                className="h-full"
+              >
+                <ProduktCard produkt={produkt} />
+              </Reveal>
+            ))}
+          </ul>
+        </BlyskKierunkowy>
       </Section>
 
       {/* ───────────────────────────────────────────────────────────────
