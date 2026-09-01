@@ -86,7 +86,7 @@ export const chatbotCzyAiAgent: Post = {
       akapity: [
         'Weźmy gabinet albo serwis. Klient pisze wieczorem: „Chcę się umówić na piątek". Chatbot odpowiada: „W piątek wolne jest 10:00, 13:30 i 16:00. Żeby zarezerwować, proszę zadzwonić rano". I tyle. Klient musi zapamiętać, oddzwonić, ktoś musi odebrać. Połowa takich osób odpada po drodze.',
         'Agent w tej samej sytuacji robi pełną pętlę. Sprawdza kalendarz na żywo, proponuje 13:30, klient potwierdza, Agent zapisuje wizytę, blokuje termin i wysyła potwierdzenie na mail oraz przypomnienie dzień wcześniej. Rano nikt nie oddzwania, bo nie ma do czego. Termin już stoi w kalendarzu. To jest właśnie ta różnica: chatbot kończy na informacji, Agent kończy na załatwionej sprawie.',
-        'Taką samą logikę widać poza rezerwacjami. W jednym z naszych wdrożeń dla Instytutu Kryptografii Agent zajął się obsługą maili: czyta wiadomość, rozumie kontekst i przygotowuje gotową odpowiedź. 75% tych maili wymaga już tylko drobnej korekty przed wysłaniem. Człowiek nie pisze od zera, tylko zatwierdza. W innym projekcie, Lead Generatorze, Agent zebrał i uporządkował 1000 rekordów w 40 minut zamiast około dwóch tygodni pracy ręcznej. Chatbot by o tych danych co najwyżej opowiedział. Agent je zdobył i ułożył.',
+        'Taką samą logikę widać poza rezerwacjami. W jednym z naszych wdrożeń dla Instytutu Kryptografii Agent zajął się obsługą maili: czyta wiadomość, rozumie kontekst i przygotowuje gotową odpowiedź. Około 85% tych draftów pisze AI, a mail idzie do klienta od razu albo po drobnej poprawce. Człowiek nie pisze od zera, tylko zatwierdza. W innym projekcie, Lead Generatorze, Agent zebrał i uporządkował 1000 rekordów w 40 minut zamiast około dwóch tygodni pracy ręcznej. Chatbot by o tych danych co najwyżej opowiedział. Agent je zdobył i ułożył.',
       ],
     },
     {
@@ -221,7 +221,7 @@ export const chatbotCzyAiAgent: Post = {
     {
       etykieta: 'Auto-email dla biura obsługi klienta',
       href: '/realizacje/auto-email-bok',
-      opis: 'System AI dla biura obsługi klienta Instytutu Kryptografii: 75% maili wymaga tylko drobnej korekty, drafty gotowe do jednego kliknięcia. Case study.',
+      opis: 'System AI dla biura obsługi klienta Instytutu Kryptografii: około 85% draftów idzie od razu albo po drobnej poprawce, gotowe do jednego kliknięcia. Case study.',
     },
     {
       etykieta: 'Błyskawiczny generator leadów',

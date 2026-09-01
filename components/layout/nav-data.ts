@@ -212,10 +212,10 @@ const NAV_PRODUKTY_KROTKIE: Record<string, DdKrotki> = {
  * = fakt z kapsuły case'a (lib/realizacje/<slug>.ts), bez nowych liczb.
  */
 const NAV_REALIZACJE_KROTKIE: Record<string, DdKrotki> = {
-  // h1 1:1; podpis: kapsula "75% maili wymaga już tylko drobnej korekty".
+  // h1 1:1; podpis: kapsula "około 85% draftów pisze AI".
   'auto-email-bok': {
     tytul: 'Auto-email dla biura obsługi klienta',
-    opis: '75% maili wymaga tylko drobnej korekty',
+    opis: 'około 85% draftów pisze AI',
   },
   // h1 1:1; podpis: kapsula "1000 rekordów w 40 minut, robotę, która
   // ręcznie zajmowała dwa tygodnie".

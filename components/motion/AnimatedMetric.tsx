@@ -30,12 +30,24 @@ type AnimatedMetricProps = {
   durationMs?: number;
 };
 
+/**
+ * Separatory tysięcy, jakie może wstawić `toLocaleString('pl-PL')` albo ręczny zapis:
+ * zwykła spacja, twarda spacja (NBSP) i wąska twarda spacja (NNBSP).
+ */
+const SEPARATORY_TYSIECY = /[   ]/g;
+
 function parseMetric(value: string) {
-  // Wyłuskaj pierwszą liczbę (z opcjonalnym minusem/kropką/przecinkiem)
-  const match = value.match(/-?\d+(?:[.,]\d+)?/);
+  /* Wyłuskaj pierwszą liczbę (z opcjonalnym minusem/kropką/przecinkiem).
+     GRUPY TYSIĘCY MUSZĄ WEJŚĆ DO DOPASOWANIA: bez `(?:sep\d{3})*` wzorzec łapał
+     z „19 953 zł" samo „19", a resztę brał za sufiks, więc licznik animował
+     0 do 19 i wyświetlał po drodze KWOTY, KTÓRYCH NIKT NIE POLICZYŁ
+     („1 953 zł", „6 953 zł"). Przy zasadzie zera zmyślonych liczb to był realny
+     błąd, nie kosmetyka. Grupa wymaga DOKŁADNIE trzech cyfr po separatorze, więc
+     „140 h" i „7 dni" nadal dopasowują samą liczbę, a jednostka zostaje sufiksem. */
+  const match = value.match(/-?\d+(?:[   ]\d{3})*(?:[.,]\d+)?/);
   if (!match) return null;
   const raw = match[0];
-  const numeric = parseFloat(raw.replace(',', '.'));
+  const numeric = parseFloat(raw.replace(SEPARATORY_TYSIECY, '').replace(',', '.'));
   if (Number.isNaN(numeric)) return null;
   const decimals = raw.includes('.') || raw.includes(',') ? 1 : 0;
   const start = match.index ?? 0;
@@ -56,9 +68,7 @@ export function AnimatedMetric({ value, className, durationMs = 1200 }: Animated
   const parsed = useMemo(() => parseMetric(value), [value]);
   // Czy initial count-up już się odegrał. Po nim aktualizacje są natychmiastowe.
   const revealedRef = useRef(false);
-  const [display, setDisplay] = useState<string | null>(() =>
-    reduce || !parsed ? value : null
-  );
+  const [display, setDisplay] = useState<string | null>(() => (reduce || !parsed ? value : null));
 
   useEffect(() => {
     // Brak animacji (reduced-motion / niparsowalne) -> od razu finalna wartość.

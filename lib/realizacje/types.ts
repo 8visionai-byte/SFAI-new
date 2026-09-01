@@ -62,11 +62,11 @@ export type FaqItem = {
 
 /**
  * METRYKA efektu — twardy dowód z liczbą (bramka GEO: liczby są nadreprezentowane
- * w cytatach AI). `wartosc` to surowy, cytowalny fakt ("75%", "1000 rekordów",
+ * w cytatach AI). `wartosc` to surowy, cytowalny fakt ("85%", "1000 rekordów",
  * "40 minut"). `etykieta` opisuje, czego liczba dotyczy. Obie z realnego case'a.
  */
 export type Metryka = {
-  /** Liczba-dowód, np. "75%", "1000", "40 min". Renderowana dużą czcionką display. */
+  /** Liczba-dowód, np. "85%", "1000", "40 min". Renderowana dużą czcionką display. */
   wartosc: string;
   /** Co opisuje liczba, np. "maili gotowych do wysłania po drobnej korekcie". */
   etykieta: string;

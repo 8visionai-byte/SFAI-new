@@ -23,7 +23,12 @@ import type { Usluga } from './types';
  */
 export const audytAi: Usluga = {
   slug: 'audyt-ai',
-  dataAktualizacji: '2026-08-21',
+  /* 2026-08-31: data bumpnięta z '2026-08-21'. Większość zmian w tym pliku to
+     samo przełamanie linii, ALE doszła flaga `cenaStala: true`, która zmienia
+     treść widoczną dla klienta: kafel ceny w hero traci prefiks „od", a pod
+     kartą ceny stoi inna mikrokopia. Pole jest źródłem `lastmod`
+     w sitemap.xml (app/sitemap.ts). */
+  dataAktualizacji: '2026-08-31',
   h1: 'Audyt AI firmy: mapa oszczędności czasu',
 
   /* BLOK KRÓTKIEJ ODPOWIEDZI (audyt §9 etap 1 pkt 2): kapsuła miała 1 z 4
@@ -78,7 +83,8 @@ export const audytAi: Usluga = {
       },
       {
         typ: 'akapit',
-        tekst: 'Problem nie w tym, że AI nie działa. Problem w tym, że nikt Ci nie pokazał, gdzie zacząć. Do tego służy mapa oszczędności czasu: zanim cokolwiek zamówisz, widzisz czarno na białym, gdzie AI da zysk, a gdzie nie.',
+        tekst:
+          'Problem nie w tym, że AI nie działa. Problem w tym, że nikt Ci nie pokazał, gdzie zacząć. Do tego służy mapa oszczędności czasu: zanim cokolwiek zamówisz, widzisz czarno na białym, gdzie AI da zysk, a gdzie nie.',
       },
       {
         typ: 'sekcja',
@@ -111,7 +117,8 @@ export const audytAi: Usluga = {
       },
       {
         typ: 'akapit',
-        tekst: 'Siadamy do Twoich procesów i patrzymy, na czym naprawdę schodzi czas: maile, oferty, faktury, umawianie, raporty, obsługa pytań. Nie zaczynamy od narzędzi, zaczynamy od Twojej codziennej roboty.',
+        tekst:
+          'Siadamy do Twoich procesów i patrzymy, na czym naprawdę schodzi czas: maile, oferty, faktury, umawianie, raporty, obsługa pytań. Nie zaczynamy od narzędzi, zaczynamy od Twojej codziennej roboty.',
       },
       {
         typ: 'przelacznik',
@@ -121,14 +128,12 @@ export const audytAi: Usluga = {
             numer: 'CZĘŚĆ 1',
             tytul: 'Ocena procesu',
             podtytul: 'Zysk i trudność wdrożenia',
-            naglowek: 'Każdy proces oceniamy po dwóch rzeczach: zysku z automatyzacji i trudności wdrożenia.',
+            naglowek:
+              'Każdy proces oceniamy po dwóch rzeczach: zysku z automatyzacji i trudności wdrożenia.',
             akapity: [
               'Wygrywa to, co da najwięcej najmniejszym kosztem. Dzięki temu widzisz nie tylko, co da się zautomatyzować, ale też co warto.',
             ],
-            punkty: [
-              'ile zżera czasu',
-              'ile realnie odda jego automatyzacja',
-            ],
+            punkty: ['ile zżera czasu', 'ile realnie odda jego automatyzacja'],
           },
           {
             numer: 'CZĘŚĆ 2',
@@ -147,7 +152,8 @@ export const audytAi: Usluga = {
             numer: 'CZĘŚĆ 3',
             tytul: 'Czego nie ruszać',
             podtytul: 'Lista rzeczy do odpuszczenia',
-            naglowek: 'Lista rzeczy, których nie ruszać, jest w Action Planie tak samo ważna jak lista rzeczy do wdrożenia.',
+            naglowek:
+              'Lista rzeczy, których nie ruszać, jest w Action Planie tak samo ważna jak lista rzeczy do wdrożenia.',
             akapity: [
               'Jeśli coś jest przepalaniem kasy, mówimy to wprost, zamiast dopisywać do oferty. Krótsza lista wdrożeń bywa tańsza od długiej i działa szybciej.',
             ],
@@ -160,14 +166,12 @@ export const audytAi: Usluga = {
             numer: 'CZĘŚĆ 4',
             tytul: 'Konkretne kroki',
             podtytul: 'Co wdrożyć i w jakiej kolejności',
-            naglowek: 'Konkretne kroki: co i w jakiej kolejności wdrożyć, żeby dało się zrealizować plan bez zgadywania.',
+            naglowek:
+              'Konkretne kroki: co i w jakiej kolejności wdrożyć, żeby dało się zrealizować plan bez zgadywania.',
             akapity: [
               'Każdy krok ma opisany cel i swoje miejsce w kolejce. Możesz go oddać nam, komuś innemu albo swojemu zespołowi i wszyscy czytają to samo.',
             ],
-            punkty: [
-              'co robimy najpierw',
-              'co dopiero po pierwszym zwrocie',
-            ],
+            punkty: ['co robimy najpierw', 'co dopiero po pierwszym zwrocie'],
           },
         ],
       },
@@ -180,9 +184,7 @@ export const audytAi: Usluga = {
           'Nie. Plan jest Twój i realizujesz go sam, z nami albo z kimkolwiek zechcesz. Nie sprzedajemy wdrożenia na siłę ani na ślepo.',
           'Jeśli z planu wyjdzie, że coś jest przepalaniem kasy albo najtaniej zrobisz to samemu, powiemy to wprost. Taka jest umowa: najpierw mapa, potem Twoja decyzja.',
         ],
-        stopka: [
-          'Gdy wdrażasz z nami, 1490 zł netto za audyt odliczamy od kosztu wdrożenia.',
-        ],
+        stopka: ['Gdy wdrażasz z nami, 1490 zł netto za audyt odliczamy od kosztu wdrożenia.'],
       },
     ],
   },
@@ -193,12 +195,28 @@ export const audytAi: Usluga = {
     naglowekZNami: 'Sprint Diagnostyczny od SimpleFast.ai',
     wiersze: [
       { cecha: 'Punkt startu', bez: 'Modne narzędzie z reklamy', zNami: 'Twoje realne procesy' },
-      { cecha: 'Wybór procesu', bez: 'Zgadywanie, co automatyzować', zNami: 'Mapa od największego zwrotu' },
-      { cecha: 'Ryzyko', bez: 'Płacisz, zanim wiesz, czy działa', zNami: 'Najpierw wiedza, potem wydatek' },
-      { cecha: 'Efekt', bez: 'Narzędzie, którego nikt nie używa', zNami: 'Action Plan z priorytetami' },
+      {
+        cecha: 'Wybór procesu',
+        bez: 'Zgadywanie, co automatyzować',
+        zNami: 'Mapa od największego zwrotu',
+      },
+      {
+        cecha: 'Ryzyko',
+        bez: 'Płacisz, zanim wiesz, czy działa',
+        zNami: 'Najpierw wiedza, potem wydatek',
+      },
+      {
+        cecha: 'Efekt',
+        bez: 'Narzędzie, którego nikt nie używa',
+        zNami: 'Action Plan z priorytetami',
+      },
       /* 2026-08-19: kwota oznaczona jako netto (audyt §9 etap 1 pkt 4). Treść
          wiersza poza tym bez zmian. */
-      { cecha: 'Koszt audytu', bez: 'Stracony czas na próby', zNami: '1490 zł netto, odliczane od wdrożenia' },
+      {
+        cecha: 'Koszt audytu',
+        bez: 'Stracony czas na próby',
+        zNami: '1490 zł netto, odliczane od wdrożenia',
+      },
       { cecha: 'Decyzja', bez: 'Pod presją sprzedawcy', zNami: 'Po Twojej stronie, na spokojnie' },
       /* 2026-08-19 (audyt §3): DOŁOŻONY wiersz z terminem w dniach roboczych.
          Konkurenci z top10 piszą „wycena indywidualna po bezpłatnej
@@ -212,18 +230,15 @@ export const audytAi: Usluga = {
     items: [
       {
         tytul: 'Rozmowa i zebranie procesów',
-        opis:
-          'Pytamy, jak działa firma i na czym schodzi czas. Spisujemy procesy, które się powtarzają. Nie musisz nic przygotowywać, prowadzimy Cię pytaniami.',
+        opis: 'Pytamy, jak działa firma i na czym schodzi czas. Spisujemy procesy, które się powtarzają. Nie musisz nic przygotowywać, prowadzimy Cię pytaniami.',
       },
       {
         tytul: 'Analiza i priorytety',
-        opis:
-          'Każdy proces oceniamy: ile zżera czasu, jaki da zysk z automatyzacji i jak trudno to wdrożyć. Układamy od najlepszego zwrotu do najgorszego.',
+        opis: 'Każdy proces oceniamy: ile zżera czasu, jaki da zysk z automatyzacji i jak trudno to wdrożyć. Układamy od najlepszego zwrotu do najgorszego.',
       },
       {
         tytul: 'Action Plan',
-        opis:
-          'Po 5 dniach roboczych dostajesz raport PDF z mapą procesów: co wdrożyć, w jakiej kolejności i co odpuścić. Plan jest Twój. Gdy ruszamy z wdrożeniem, 1490 zł netto odliczamy od jego kosztu.',
+        opis: 'Po 5 dniach roboczych dostajesz raport PDF z mapą procesów: co wdrożyć, w jakiej kolejności i co odpuścić. Plan jest Twój. Gdy ruszamy z wdrożeniem, 1490 zł netto odliczamy od jego kosztu.',
       },
     ],
   },
@@ -274,7 +289,8 @@ export const audytAi: Usluga = {
       },
       {
         typ: 'akapit',
-        tekst: 'Pięć dni roboczych, liczone od przekazania kompletu materiałów, czyli opisów procesów i dostępów. Nie od podpisania umowy, bo to my czekamy na Ciebie, a nie odwrotnie. Nie musisz nic przygotowywać, prowadzimy Cię pytaniami.',
+        tekst:
+          'Pięć dni roboczych, liczone od przekazania kompletu materiałów, czyli opisów procesów i dostępów. Nie od podpisania umowy, bo to my czekamy na Ciebie, a nie odwrotnie. Nie musisz nic przygotowywać, prowadzimy Cię pytaniami.',
       },
       {
         typ: 'sekcja',
@@ -289,29 +305,22 @@ export const audytAi: Usluga = {
       },
       {
         typ: 'tabela',
-        naglowki: [
-          'Model po wdrożeniu',
-          'Opłata miesięczna',
-        ],
+        naglowki: ['Model po wdrożeniu', 'Opłata miesięczna'],
         wiersze: [
-          [
-            'Przekazanie infrastruktury Tobie',
-            '0 zł abonamentu',
-          ],
-          [
-            'Projekt zostaje u nas pod opieką: chatboty',
-            'od 99 zł netto/mies.',
-          ],
-          [
-            'Projekt zostaje u nas pod opieką: voiceboty',
-            'od 299 zł netto/mies.',
-          ],
+          ['Przekazanie infrastruktury Tobie', '0 zł abonamentu'],
+          ['Projekt zostaje u nas pod opieką: chatboty', 'od 99 zł netto/mies.'],
+          ['Projekt zostaje u nas pod opieką: voiceboty', 'od 299 zł netto/mies.'],
         ],
         wKarcie: true,
-        podpis: 'Dwa modele rozliczenia po wdrożeniu. Sam audyt to płatność jednorazowa 1490 zł netto.',
+        podpis:
+          'Dwa modele rozliczenia po wdrożeniu. Sam audyt to płatność jednorazowa 1490 zł netto.',
       },
     ],
     minPrice: 1490,
+    /* 2026-08-31 (ustalenie właściciela): 1490 zł netto to cena STAŁA, każdy
+       klient płaci tyle samo. Flaga wyłącza prefiks „od " na kaflu ceny w hero
+       i podmienia mikrokopię pod kartą ceny na zdanie o cenie stałej. */
+    cenaStala: true,
     /* SEO 2026-08-17: linkowanie wewnętrzne do poradnika cenowego (zdanie 1:1
        z brief-seo-2026-08-17; render w RamaCeny.tsx w tym samym akapicie). */
     linkPoradnik: {
@@ -380,14 +389,12 @@ export const audytAi: Usluga = {
       {
         etykieta: 'Test gotowości firmy na AI',
         href: '/narzedzia#test-gotowosci-ai',
-        opis:
-          'Osiem pytań o procesy, dane i ludzi. Na koniec poziom gotowości i trzy rekomendacje, od czego zacząć.',
+        opis: 'Osiem pytań o procesy, dane i ludzi. Na koniec poziom gotowości i trzy rekomendacje, od czego zacząć.',
       },
       {
         etykieta: 'Kalkulator oszczędności z automatyzacji',
         href: '/narzedzia#kalkulator-oszczednosci',
-        opis:
-          'Wpisujesz godziny tracone na powtarzalnej robocie, a kalkulator pokazuje kwotę roczną do odzyskania.',
+        opis: 'Wpisujesz godziny tracone na powtarzalnej robocie, a kalkulator pokazuje kwotę roczną do odzyskania.',
       },
     ],
   },

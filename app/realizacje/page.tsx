@@ -42,7 +42,7 @@ const PATH = '/realizacje';
 export const metadata: Metadata = buildMetadata({
   title: 'Realizacje: wdrożenia AI dla firm',
   description:
-    'Realne wdrożenia AI SimpleFast.ai: auto-email obsługi klienta (75% gotowych maili), generator leadów (1000 rekordów w 40 minut), chatboty i Agenci AI 24/7.',
+    'Realne wdrożenia AI SimpleFast.ai: auto-email obsługi klienta (około 85% draftów pisze AI), generator leadów (1000 rekordów w 40 min), chatboty i Agenci AI 24/7.',
   path: PATH,
 });
 

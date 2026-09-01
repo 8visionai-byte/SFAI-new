@@ -15,7 +15,11 @@ import type { Usluga } from './types';
  */
 export const automatyzacje: Usluga = {
   slug: 'automatyzacje',
-  dataAktualizacji: '2026-08-21',
+  /* 2026-08-31: data bumpnięta z '2026-08-21', bo zmieniła się treść widoczna
+     dla klienta (nagłówek i akapit case'u Instytutu Kryptografii oraz opis
+     realizacji: 80% / 75% draftów -> około 85% pisze AI). Pole jest źródłem
+     `lastmod` w sitemap.xml (app/sitemap.ts). */
+  dataAktualizacji: '2026-08-31',
   h1: 'Automatyzacja procesów w firmie z AI',
 
   kapsula:
@@ -159,12 +163,12 @@ export const automatyzacje: Usluga = {
       },
       {
         typ: 'sekcja',
-        naglowek: '80% draftów gotowych do wysyłki przy 580 mailach tygodniowo',
+        naglowek: 'Około 85% draftów pisze AI przy 580 mailach tygodniowo',
         wariant: 'edge',
         meta: 'Instytut Kryptografii',
         akapity: [
           'Dla Instytutu Kryptografii zbudowaliśmy auto-email dla biura obsługi klienta oraz 3 boty oparte na transkrypcjach kursów.',
-          'Efekt przy 580 mailach tygodniowo w szczycie: 80% draftów odpowiedzi jest gotowych do wysyłki. Człowiek nie pisze maili od zera, tylko sprawdza gotowy tekst.',
+          'Efekt przy 580 mailach tygodniowo w szczycie: około 85% draftów odpowiedzi pisze AI, a mail idzie do klienta od razu albo po drobnej poprawce. Człowiek nie pisze maili od zera, tylko sprawdza gotowy tekst.',
           'Tak działa automatyzacja obsługi maili w praktyce: system czyta zgłoszenie, przygotowuje odpowiedź, a człowiek tylko ją zatwierdza i wysyła.',
         ],
       },
@@ -420,7 +424,7 @@ export const automatyzacje: Usluga = {
         etykieta: 'Auto-email dla biura obsługi klienta',
         href: '/realizacje/auto-email-bok',
         opis:
-          '75% maili wymaga już tylko drobnej korekty przed wysłaniem, bo draft czeka gotowy do jednego kliknięcia.',
+          'Około 85% draftów odpowiedzi pisze AI, a mail idzie do klienta od razu albo po drobnej poprawce.',
       },
       {
         etykieta: 'Automatyczne raporty zamiast ręcznych arkuszy',

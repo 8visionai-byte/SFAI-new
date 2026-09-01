@@ -76,7 +76,12 @@ export function RamaCeny({
                  odcień palety na korpusie karty daje 4,55:1 — AA z zapasem.
                  Poświata gaśnie w Windows High Contrast, jak reszta glow-ów. */
                 <p className="font-display text-h2 font-semibold tabular-nums text-[color:var(--card-c-l,var(--card-c,var(--accent)))] [text-shadow:0_0_12px_currentColor] forced-colors:[text-shadow:none]">
-                  od {ramaCeny.minPrice!.toLocaleString('pl-PL')} zł netto
+                  {/* 2026-08-31: „od" NIE jest już wpisane na sztywno. Przy
+                    ramaCeny.cenaStala kwota jest ceną ostateczną, więc słowo
+                    „od" byłoby nieprawdą. Ta sama flaga steruje mikrokopią
+                    niżej i kaflem ceny w hero. Klasy, układ i kolory bez zmian. */}
+                  {ramaCeny.cenaStala ? '' : 'od '}
+                  {ramaCeny.minPrice!.toLocaleString('pl-PL')} zł netto
                 </p>
               )}
 
@@ -98,9 +103,15 @@ export function RamaCeny({
                 )}
               </p>
 
+              {/* 2026-08-31: mikrokopia pod kartą ceny szła BEZWARUNKOWO jako zdanie
+                o widełkach. Na usłudze ze stałą kwotą (ramaCeny.cenaStala) to
+                nieprawda w dwóch miejscach naraz: kwota nie jest widełkami, a
+                klient zna ją z góry, bez diagnozy. Bezpłatna rozmowa zostaje
+                pierwszym krokiem w obu wariantach, więc oba zdania o niej mówią. */}
               <p className="mt-6 border-t border-border pt-5 text-caption text-fg-subtle">
-                To widełki startowe, nie ostateczna faktura. Dokładną cenę poznasz na bezpłatnej
-                diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów.
+                {ramaCeny.cenaStala
+                  ? 'To cena stała, taka sama dla każdego klienta. Zaczynamy od bezpłatnej rozmowy, na której ustalamy zakres, zanim cokolwiek zamówisz. Bez ukrytych kosztów.'
+                  : 'To widełki startowe, nie ostateczna faktura. Dokładną cenę poznasz na bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów.'}
               </p>
             </div>
           </Reveal>

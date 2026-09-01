@@ -274,7 +274,7 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
         'Zwrot z agenta liczy się tak samo jak z każdej automatyzacji, tylko skala bywa większa, bo agent wykonuje cały ciąg pracy, nie pojedynczą odpowiedź.',
         'Bierzesz godziny, które dziś znikają na powtarzalnym procesie, mnożysz przez koszt godziny i dodajesz leady, które dziś przepadają, bo nikt nie zareagował na czas. To porównujesz z kosztem setupu i opieki.',
         'Nasze realne przykłady pokazują skalę: zebranie 1000 rekordów firm z publicznych wizytówek Google Maps zajmuje u nas 20-30 minut, ręcznie to około 3 minuty na rekord, czyli około 50 godzin.',
-        'Drugi przykład: w Instytucie Kryptografii 80% draftów e-maili jest gotowych do wysyłki przy 580 mailach tygodniowo w szczycie.',
+        'Drugi przykład: w Instytucie Kryptografii około 85% draftów e-maili pisze AI, przy 580 mailach tygodniowo w szczycie, a odpowiedź idzie do klienta od razu albo po drobnej poprawce.',
       ],
     },
     {
@@ -428,7 +428,7 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
     {
       etykieta: 'Auto-email dla biura obsługi klienta',
       href: '/realizacje/auto-email-bok',
-      opis: 'System AI dla biura obsługi klienta Instytutu Kryptografii: 75% maili wymaga tylko drobnej korekty, drafty gotowe do jednego kliknięcia. Case study.',
+      opis: 'System AI dla biura obsługi klienta Instytutu Kryptografii: około 85% draftów idzie od razu albo po drobnej poprawce, gotowe do jednego kliknięcia. Case study.',
     },
   ],
 };

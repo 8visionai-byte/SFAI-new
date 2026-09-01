@@ -76,7 +76,7 @@ export const POSTS_WKROTCE: readonly PostWkrotce[] = [
     kategoria: 'Ludzie i praca',
   },
   {
-    tytul: 'Ile realnie oszczędza automatyzacja maili (case: 75% draftów do 1 kliknięcia)',
+    tytul: 'Ile realnie oszczędza automatyzacja maili (case: około 85% draftów pisze AI)',
     kategoria: 'Automatyzacja',
   },
   {

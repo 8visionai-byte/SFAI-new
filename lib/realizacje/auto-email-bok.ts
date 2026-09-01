@@ -5,8 +5,9 @@ import type { Realizacja } from './types';
  * Kategoria: automatyzacje → link wewnętrzny do /uslugi/automatyzacje.
  *
  * Realne dane (zero zmyślania): klient nazwany za zgodą (Instytut Kryptografii),
- * efekt = 75% maili wymaga już tylko drobnej korekty przed wysłaniem; system
- * analizuje historię i serwuje gotowe drafty wsparcia do jednego kliknięcia.
+ * efekt = około 85% draftów pisze AI, odpowiedź idzie do klienta od razu albo po
+ * drobnej poprawce; system analizuje historię i serwuje gotowe drafty wsparcia do
+ * jednego kliknięcia.
  * Głos Pawła, answer-first, zero em-dash.
  */
 export const autoEmailBok: Realizacja = {
@@ -17,11 +18,11 @@ export const autoEmailBok: Realizacja = {
   branza: 'Edukacja i szkolenia',
 
   kapsula:
-    'Zbudowaliśmy dla Instytutu Kryptografii system, który sam pisze odpowiedzi biura obsługi klienta. Analizuje historię korespondencji i serwuje gotowy draft wsparcia do jednego kliknięcia. Efekt: 75% maili wymaga już tylko drobnej korekty przed wysłaniem. Zespół nie pisze od zera, tylko sprawdza i wysyła. Ostatnie słowo zawsze ma człowiek.',
+    'Zbudowaliśmy dla Instytutu Kryptografii system, który sam pisze odpowiedzi biura obsługi klienta. Analizuje historię korespondencji i serwuje gotowy draft wsparcia do jednego kliknięcia. Efekt: około 85% draftów pisze AI, a odpowiedź idzie do klienta od razu albo po drobnej poprawce. Zespół nie pisze od zera, tylko sprawdza i wysyła. Ostatnie słowo zawsze ma człowiek.',
 
   metaTitle: 'Auto-email dla biura obsługi klienta',
   metaDescription:
-    'System AI dla biura obsługi klienta Instytutu Kryptografii: 75% maili wymaga tylko drobnej korekty, drafty gotowe do jednego kliknięcia. Case study.',
+    'System AI dla biura obsługi klienta Instytutu Kryptografii: około 85% draftów idzie od razu albo po drobnej poprawce, gotowe do jednego kliknięcia. Case study.',
 
   kontekst: {
     h2: 'Z czym przyszedł klient?',
@@ -39,8 +40,8 @@ export const autoEmailBok: Realizacja = {
     h2: 'Co to dało?',
     metryki: [
       {
-        wartosc: '75%',
-        etykieta: 'maili wymaga już tylko drobnej korekty przed wysłaniem',
+        wartosc: '85%',
+        etykieta: 'około tylu draftów pisze AI, gotowych od razu albo po drobnej poprawce',
       },
       {
         wartosc: '1 klik',
@@ -48,7 +49,7 @@ export const autoEmailBok: Realizacja = {
       },
     ],
     opis:
-      'Trzy na cztery maile są gotowe niemal od razu. Zespół nie pisze odpowiedzi od zera, tylko sprawdza propozycję i wysyła. Klient dostaje odpowiedź szybciej, a pracownicy odzyskali czas, który wcześniej szedł na przepisywanie tego samego w kółko.',
+      'Zdecydowana większość maili jest gotowa niemal od razu. Zespół nie pisze odpowiedzi od zera, tylko sprawdza propozycję i wysyła. Klient dostaje odpowiedź szybciej, a pracownicy odzyskali czas, który wcześniej szedł na przepisywanie tego samego w kółko.',
   },
 
   faq: [

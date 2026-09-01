@@ -150,7 +150,7 @@ export const automatyzacjaProcesowAi: Post = {
     {
       typ: 'cytat',
       tekst:
-        'W 75% przypadków przygotowany przez Agenta mail wymaga już tylko drobnej korekty przed wysłaniem.',
+        'W około 85% przypadków draft odpowiedzi pisze Agent, a mail idzie do klienta od razu albo po drobnej poprawce.',
       zrodlo: 'Wdrożenie SimpleFast.ai, Instytut Kryptografii',
     },
     {
@@ -190,7 +190,7 @@ export const automatyzacjaProcesowAi: Post = {
     {
       pytanie: 'Czy AI wyśle coś do klienta bez mojej kontroli?',
       odpowiedz:
-        'Nie, jeśli wdrożysz proces z człowiekiem w pętli. AI przygotowuje projekt odpowiedzi, a Ty go przeglądasz i wysyłasz. W naszym wdrożeniu w Instytucie Kryptografii 75% przygotowanych maili wymaga już tylko drobnej korekty, ale decyzja o wysłaniu zawsze zostaje przy człowieku. Kontrolę zdejmujesz dopiero wtedy, gdy sam uznasz, że jakość jest pewna.',
+        'Nie, jeśli wdrożysz proces z człowiekiem w pętli. AI przygotowuje projekt odpowiedzi, a Ty go przeglądasz i wysyłasz. W naszym wdrożeniu w Instytucie Kryptografii około 85% draftów pisze AI, a mail idzie do klienta od razu albo po drobnej poprawce, ale decyzja o wysłaniu zawsze zostaje przy człowieku. Kontrolę zdejmujesz dopiero wtedy, gdy sam uznasz, że jakość jest pewna.',
     },
   ],
 
@@ -243,7 +243,7 @@ export const automatyzacjaProcesowAi: Post = {
     {
       etykieta: 'Auto-email dla biura obsługi klienta',
       href: '/realizacje/auto-email-bok',
-      opis: 'System AI dla biura obsługi klienta Instytutu Kryptografii: 75% maili wymaga tylko drobnej korekty, drafty gotowe do jednego kliknięcia. Case study.',
+      opis: 'System AI dla biura obsługi klienta Instytutu Kryptografii: około 85% draftów idzie od razu albo po drobnej poprawce, gotowe do jednego kliknięcia. Case study.',
     },
     {
       etykieta: 'Błyskawiczny generator leadów',

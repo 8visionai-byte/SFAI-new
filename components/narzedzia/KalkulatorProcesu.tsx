@@ -32,6 +32,13 @@ const TON = {
  *
  * ZERO zmyślonych cen po naszej stronie: koszt wdrożenia i opieka pochodzą WYŁĄCZNIE
  * od użytkownika. Puste -> pokazujemy tylko oszczędność/rok i godziny, bez paybacku.
+ *
+ * ZERO ZMYŚLONYCH LICZB (decyzja właściciela 2026-08-31): kalkulator NIE MA wartości
+ * domyślnych. Wszystkie pięć wejść (częstotliwość, minuty, osoby, stawka, powtarzalność)
+ * startuje PUSTE (`null`), a dopóki brakuje choćby jednej danej, kolumna wyniku nie
+ * pokazuje ŻADNEJ kwoty, liczby ani werdyktu, tylko zdanie mówiące, co uzupełnić.
+ * Kwota widoczna na ekranie zawsze pochodzi w 100% z liczb użytkownika. Ta sama zasada,
+ * którą koszt wdrożenia i opieka miesięczna mają w tym pliku od początku.
  */
 const POWTARZALNOSC = [
   { id: 'wysoka', label: 'Zawsze tak samo, jasne reguły', proc: 0.8 },
@@ -39,30 +46,56 @@ const POWTARZALNOSC = [
   { id: 'niska', label: 'Często wymaga decyzji człowieka', proc: 0.4 },
 ] as const;
 
+/* Ton werdyktu jako jawny typ: werdykt bywa `null` (brak kompletu danych), więc
+   nie da się go już wyprowadzić przez `typeof werdykt.ton`. */
+type TonWerdyktu = 'sukces' | 'uwaga' | 'neutralny';
+
 export function KalkulatorProcesu() {
   const [nazwa, setNazwa] = useState('');
-  const [razyTydzien, setRazyTydzien] = useState(20);
-  const [minut, setMinut] = useState(10);
-  const [osoby, setOsoby] = useState(1);
-  const [stawka, setStawka] = useState(60);
-  const [proc, setProc] = useState(0.6);
+  // null = pole puste. Zero wartości startowych (patrz nagłówek pliku).
+  const [razyTydzien, setRazyTydzien] = useState<number | null>(null);
+  const [minut, setMinut] = useState<number | null>(null);
+  const [osoby, setOsoby] = useState<number | null>(null);
+  const [stawka, setStawka] = useState<number | null>(null);
+  const [proc, setProc] = useState<number | null>(null);
   // Opcjonalne — puste string = brak danej (nie 0).
   const [kosztWdrozenia, setKosztWdrozenia] = useState('');
   const [opiekaMc, setOpiekaMc] = useState('');
 
+  /**
+   * `null` = brak kompletu danych. Liczymy TYLKO z pięciu wypełnionych pól i tylko
+   * wtedy, gdy każda wyliczona liczba jest skończona (bramka na NaN i Infinity, żeby
+   * do interfejsu nie trafiła żadna wartość-śmieć). Payback jak dotąd: dopiero gdy
+   * użytkownik poda koszt wdrożenia.
+   */
   const w = useMemo(() => {
-    const godzinyRok = (razyTydzien * minut) / 60 * TYG_NA_MC * MIESIACE * osoby;
+    if (
+      razyTydzien === null ||
+      minut === null ||
+      osoby === null ||
+      stawka === null ||
+      proc === null
+    ) {
+      return null;
+    }
+    const godzinyRok = ((razyTydzien * minut) / 60) * TYG_NA_MC * MIESIACE * osoby;
     const kosztRok = godzinyRok * stawka;
     const oszczednoscRok = kosztRok * proc;
     const oszczednoscMc = oszczednoscRok / 12;
+    if (![godzinyRok, kosztRok, oszczednoscRok, oszczednoscMc].every((n) => Number.isFinite(n))) {
+      return null;
+    }
 
     const wdr = parseFloat(kosztWdrozenia);
     const op = parseFloat(opiekaMc);
-    const maKoszt = !Number.isNaN(wdr) && wdr > 0;
-    const opieka = !Number.isNaN(op) && op > 0 ? op : 0;
+    // Number.isFinite zamiast !isNaN: odcina też 1e999 (Infinity) wklejone w pole.
+    const maKoszt = Number.isFinite(wdr) && wdr > 0;
+    const opieka = Number.isFinite(op) && op > 0 ? op : 0;
     const zyskNettoMc = oszczednoscMc - opieka;
-    const paybackMc = maKoszt && zyskNettoMc > 0 ? wdr / zyskNettoMc : null;
-    const zysk24 = maKoszt ? zyskNettoMc * 24 - wdr : null;
+    const payback = maKoszt && zyskNettoMc > 0 ? wdr / zyskNettoMc : null;
+    const paybackMc = payback !== null && Number.isFinite(payback) ? payback : null;
+    const zyskDwaLata = maKoszt ? zyskNettoMc * 24 - wdr : null;
+    const zysk24 = zyskDwaLata !== null && Number.isFinite(zyskDwaLata) ? zyskDwaLata : null;
 
     return {
       godzinyRok,
@@ -77,25 +110,27 @@ export function KalkulatorProcesu() {
   }, [razyTydzien, minut, osoby, stawka, proc, kosztWdrozenia, opiekaMc]);
 
   // Werdykt (spec 07 §2.3) — z paybacku gdy jest, inaczej z oszczędności.
+  // Bez kompletu danych NIE MA werdyktu: ocena „warto / nie warto" też jest wynikiem.
   const werdykt = useMemo(() => {
+    if (w === null) return null;
     if (w.paybackMc !== null) {
       if (w.paybackMc < 6)
         return {
           etykieta: 'Warto',
-          ton: 'sukces' as const,
+          ton: 'sukces' as TonWerdyktu,
           zdanie: 'Zwrot poniżej 6 miesięcy to bardzo dobra inwestycja.',
           cta: 'Ten proces się spina. Pokażę Ci, jak go zdjąć.',
         };
       if (w.paybackMc <= 18)
         return {
           etykieta: 'Na granicy',
-          ton: 'uwaga' as const,
+          ton: 'uwaga' as TonWerdyktu,
           zdanie: 'Zwraca się, ale policz, czy to teraz priorytet.',
           cta: 'Sprawdźmy, czy to najlepszy proces na start. Bezpłatna diagnoza.',
         };
       return {
         etykieta: 'Jeszcze nie',
-        ton: 'neutralny' as const,
+        ton: 'neutralny' as TonWerdyktu,
         zdanie: 'Ten proces zwraca się wolno. Może jest ważniejszy do zdjęcia.',
         cta: 'Sprawdźmy, który proces zdejmie najwięcej. Bezpłatna diagnoza.',
       };
@@ -104,19 +139,19 @@ export function KalkulatorProcesu() {
     if (w.oszczednoscRok >= 5000)
       return {
         etykieta: 'Warto policzyć zwrot',
-        ton: 'sukces' as const,
+        ton: 'sukces' as TonWerdyktu,
         zdanie: 'Ten proces zjada realne pieniądze. Dorzuć koszt wdrożenia, policzę zwrot.',
         cta: 'Policzmy razem zwrot dla Twojej wyceny. Bezpłatna diagnoza.',
       };
     return {
       etykieta: 'Mały proces',
-      ton: 'neutralny' as const,
+      ton: 'neutralny' as TonWerdyktu,
       zdanie: 'Ten konkretny proces kosztuje niewiele. Może jest ważniejszy do zdjęcia.',
       cta: 'Sprawdźmy, który proces zdejmie najwięcej. Bezpłatna diagnoza.',
     };
-  }, [w.paybackMc, w.oszczednoscRok]);
+  }, [w]);
 
-  const tonClass: Record<typeof werdykt.ton, string> = {
+  const tonClass: Record<TonWerdyktu, string> = {
     sukces: 'border-success bg-success-bg text-success',
     uwaga: 'border-warning bg-warning-bg text-warning',
     neutralny: 'border-border-strong bg-bg-subtle text-fg',
@@ -138,7 +173,7 @@ export function KalkulatorProcesu() {
 
         <h3 className="text-h3">Opisz ten proces</h3>
         <p className="mt-1 text-caption text-fg-subtle">
-          Koszt wdrożenia i opiekę podajesz Ty. My nie zgadujemy cen.
+          Pola są puste, bo nie zgadujemy ani Twoich liczb, ani cen. Wpisz pięć wartości.
         </p>
 
         <div className="mt-6 space-y-6">
@@ -163,6 +198,8 @@ export function KalkulatorProcesu() {
             opis="Łącznie w całej firmie."
             value={razyTydzien}
             onChange={setRazyTydzien}
+            onClear={() => setRazyTydzien(null)}
+            wymagane
             min={1}
             max={500}
             akcent="#2b7cff"
@@ -172,6 +209,8 @@ export function KalkulatorProcesu() {
             opis="Średni czas jednego wykonania."
             value={minut}
             onChange={setMinut}
+            onClear={() => setMinut(null)}
+            wymagane
             min={1}
             max={240}
             suffix="min"
@@ -182,6 +221,8 @@ export function KalkulatorProcesu() {
             opis="Ile osób dzieli tę robotę."
             value={osoby}
             onChange={setOsoby}
+            onClear={() => setOsoby(null)}
+            wymagane
             min={1}
             max={50}
             akcent="#22e06b"
@@ -191,6 +232,8 @@ export function KalkulatorProcesu() {
             opis="Koszt pracodawcy, nie pensja netto."
             value={stawka}
             onChange={setStawka}
+            onClear={() => setStawka(null)}
+            wymagane
             min={30}
             max={300}
             suffix="zł"
@@ -199,10 +242,13 @@ export function KalkulatorProcesu() {
 
           {/* Powtarzalność -> proc_auto */}
           <fieldset>
-            <legend className="mb-2 text-body-sm font-medium text-fg">Jak bardzo schematyczne?</legend>
+            <legend className="mb-2 text-body-sm font-medium text-fg">
+              Jak bardzo schematyczne?
+            </legend>
             <div className="space-y-2">
               {POWTARZALNOSC.map((p) => {
-                const active = Math.abs(proc - p.proc) < 0.001;
+                // Bez wyboru użytkownika żaden przycisk nie jest wciśnięty.
+                const active = proc !== null && Math.abs(proc - p.proc) < 0.001;
                 return (
                   <button
                     key={p.id}
@@ -273,12 +319,15 @@ export function KalkulatorProcesu() {
           className="inf-card inf-card-edge p-6 shadow-xs sm:p-7"
           style={
             {
+              // Bez werdyktu (brak kompletu danych) karta stoi na tonie neutralnym.
               '--card-c':
-                werdykt.ton === 'sukces'
-                  ? '#22e06b'
-                  : werdykt.ton === 'uwaga'
-                    ? '#f59e0b'
-                    : '#22d3ee',
+                werdykt === null
+                  ? '#22d3ee'
+                  : werdykt.ton === 'sukces'
+                    ? '#22e06b'
+                    : werdykt.ton === 'uwaga'
+                      ? '#f59e0b'
+                      : '#22d3ee',
             } as CSSProperties
           }
         >
@@ -286,87 +335,119 @@ export function KalkulatorProcesu() {
               (green / amber / cyan) i zmienia się razem z nim. */}
           <div aria-hidden="true" className="inf-spotlight" />
 
-          {/* Werdykt */}
-          <div className={`rounded-lg border-[1.5px] px-4 py-3 ${tonClass[werdykt.ton]}`}>
-            <p className="text-caption font-semibold uppercase tracking-[0.08em] opacity-80">Werdykt</p>
-            <p className="text-h3 font-display font-semibold">{werdykt.etykieta}</p>
-          </div>
-          <p className="mt-3 text-body-sm text-fg-muted">{werdykt.zdanie}</p>
+          {/* A11y: stały region live (niewidoczny) mówi czytnikowi, czy wynik już
+              jest. Treść zmienia się TYLKO przy przejściu brak wyniku <-> wynik,
+              więc suwaki go nie zagadują. */}
+          <p aria-live="polite" className="sr-only">
+            {w === null
+              ? 'Brak wyniku. Uzupełnij pięć liczb po stronie wejścia.'
+              : 'Wynik jest gotowy.'}
+          </p>
 
-          {/* Liczby */}
-          <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-4 border-t border-border pt-5">
-            {/* INFINITY: wartości pieniężne mono w kolorach kategorii —
+          {w === null || werdykt === null ? (
+            /* BRAK KOMPLETU DANYCH: zero kwot, zero werdyktu, zero zera. Tylko
+               informacja, co uzupełnić, żeby zobaczyć rachunek. */
+            <p className="text-body-sm text-fg-muted">
+              Uzupełnij pięć rzeczy: ile razy w tygodniu ten proces się powtarza, ile minut zajmuje
+              jedno wykonanie, ile osób go robi, stawkę godzinową i jak bardzo jest schematyczny. Do
+              tego czasu nie pokazujemy żadnej kwoty, bo liczylibyśmy ją z danych, których nie
+              podałeś.
+            </p>
+          ) : (
+            <>
+              {/* Werdykt */}
+              <div className={`rounded-lg border-[1.5px] px-4 py-3 ${tonClass[werdykt.ton]}`}>
+                <p className="text-caption font-semibold uppercase tracking-[0.08em] opacity-80">
+                  Werdykt
+                </p>
+                <p className="text-h3 font-display font-semibold">{werdykt.etykieta}</p>
+              </div>
+              <p className="mt-3 text-body-sm text-fg-muted">{werdykt.zdanie}</p>
+
+              {/* Liczby */}
+              <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-4 border-t border-border pt-5">
+                {/* INFINITY: wartości pieniężne mono w kolorach kategorii —
                 oszczędność = green trasy, koszt = amber (dekoracyjny język
                 CostForge; liczby i etykiety 1:1). */}
-            <div className="col-span-2">
-              <dt className="text-caption text-fg-subtle">Ten proces oddaje rocznie</dt>
-              <dd
-                className="font-mono text-metric font-bold tabular-nums"
-                style={{ color: '#22e06b' }}
-              >
-                <AnimatedMetric value={zl(w.oszczednoscRok)} />
-              </dd>
-            </div>
-            <div>
-              <dt className="text-caption text-fg-subtle">Kosztuje dziś</dt>
-              <dd
-                className="font-mono font-bold tabular-nums"
-                style={{ color: '#f59e0b' }}
-              >
-                {zl(w.kosztRok)}/rok
-              </dd>
-            </div>
-            <div>
-              <dt className="text-caption text-fg-subtle">Czas zajęty</dt>
-              <dd className="font-mono font-bold tabular-nums text-fg">
-                {godziny(w.godzinyRok)}/rok
-              </dd>
-            </div>
-            <div>
-              <dt className="text-caption text-fg-subtle">Oszczędność</dt>
-              <dd
-                className="font-mono font-bold tabular-nums"
-                style={{ color: '#22e06b' }}
-              >
-                {zl(w.oszczednoscMc)}/mc
-              </dd>
-            </div>
-            {w.paybackMc !== null ? (
-              <div>
-                <dt className="text-caption text-fg-subtle">Zwrot po</dt>
-                <dd className="font-mono font-bold tabular-nums text-fg">
-                  {liczba(w.paybackMc, 1)} mc
-                </dd>
-              </div>
-            ) : null}
-          </dl>
+                <div className="col-span-2">
+                  <dt className="text-caption text-fg-subtle">Ten proces oddaje rocznie</dt>
+                  <dd
+                    className="font-mono text-metric font-bold tabular-nums"
+                    style={{ color: '#22e06b' }}
+                  >
+                    <AnimatedMetric value={zl(w.oszczednoscRok)} />
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-caption text-fg-subtle">Kosztuje dziś</dt>
+                  <dd className="font-mono font-bold tabular-nums" style={{ color: '#f59e0b' }}>
+                    {zl(w.kosztRok)}/rok
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-caption text-fg-subtle">Czas zajęty</dt>
+                  <dd className="font-mono font-bold tabular-nums text-fg">
+                    {godziny(w.godzinyRok)}/rok
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-caption text-fg-subtle">Oszczędność</dt>
+                  <dd className="font-mono font-bold tabular-nums" style={{ color: '#22e06b' }}>
+                    {zl(w.oszczednoscMc)}/mc
+                  </dd>
+                </div>
+                {w.paybackMc !== null ? (
+                  <div>
+                    <dt className="text-caption text-fg-subtle">Zwrot po</dt>
+                    <dd className="font-mono font-bold tabular-nums text-fg">
+                      {liczba(w.paybackMc, 1)} mc
+                    </dd>
+                  </div>
+                ) : null}
+              </dl>
 
-          {/* Oś czasu paybacku — tylko gdy podano koszt i zwrot dodatni */}
-          {w.paybackMc !== null && w.zysk24 !== null ? (
-            <OsCzasu
-              paybackMc={w.paybackMc}
-              paybackLabel={`${liczba(w.paybackMc, 1)} mc`}
-              zysk24Label={zl(Math.max(0, w.zysk24))}
-            />
-          ) : (
-            <p className="mt-5 rounded-md border border-border bg-surface p-4 text-caption text-fg-muted">
-              Dorzuć koszt wdrożenia powyżej, a policzę, po ilu miesiącach się zwróci i ile zostanie
-              na plusie po 2 latach.
-            </p>
+              {/* Oś czasu paybacku — tylko gdy podano koszt i zwrot dodatni */}
+              {w.paybackMc !== null && w.zysk24 !== null ? (
+                <OsCzasu
+                  paybackMc={w.paybackMc}
+                  paybackLabel={`${liczba(w.paybackMc, 1)} mc`}
+                  zysk24Label={zl(Math.max(0, w.zysk24))}
+                />
+              ) : (
+                <p className="mt-5 rounded-md border border-border bg-surface p-4 text-caption text-fg-muted">
+                  Dorzuć koszt wdrożenia powyżej, a policzę, po ilu miesiącach się zwróci i ile
+                  zostanie na plusie po 2 latach.
+                </p>
+              )}
+            </>
           )}
 
           {/* Disclaimer */}
           <p className="mt-4 text-caption text-fg-subtle">{DISCLAIMER}</p>
         </div>
 
-        <div className="mt-4">
-          <CaptureMaila
-            zacheta="Wyślij sobie ten rachunek na maila"
-            podpis="Dostaniesz wynik dla tego procesu w PDF. Bez spamu."
-          />
-        </div>
+        {/* Lead magnet (opcjonalny) — dopiero przy gotowym wyniku, bo bez liczb nie
+            ma czego wysyłać. */}
+        {w !== null ? (
+          <div className="mt-4">
+            <CaptureMaila
+              zacheta="Wyślij sobie ten rachunek na maila"
+              podpis="Dostaniesz wynik dla tego procesu w PDF. Bez spamu."
+            />
+          </div>
+        ) : null}
 
-        <WynikCTA mikrokopia={werdykt.cta} kolor={DEKOR.c} odcien={DEKOR.odcien} />
+        {/* Mikrokopia CTA idzie z werdyktu, a bez wyniku spada na wariant ogólny:
+            nie może zapowiadać oceny, której nikt nie policzył. */}
+        <WynikCTA
+          mikrokopia={
+            werdykt
+              ? werdykt.cta
+              : 'Policzmy ten proces na Twoich liczbach. Bezpłatna diagnoza, bez zobowiązań.'
+          }
+          kolor={DEKOR.c}
+          odcien={DEKOR.odcien}
+        />
       </div>
     </div>
   );

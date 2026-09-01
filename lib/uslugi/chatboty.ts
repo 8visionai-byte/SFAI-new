@@ -31,7 +31,11 @@ import type { Usluga } from './types';
  */
 export const chatboty: Usluga = {
   slug: 'chatboty',
-  dataAktualizacji: '2026-08-21',
+  /* 2026-08-31: data bumpnięta z '2026-08-21', bo zmieniła się treść widoczna
+     dla klienta (metryka draftów automatu mailowego 80% -> około 85% i opis
+     tej metryki w sekcji o Instytucie Kryptografii). Pole jest źródłem
+     `lastmod` w sitemap.xml (app/sitemap.ts). */
+  dataAktualizacji: '2026-08-31',
   h1: 'Chatbot AI dla firmy',
 
   /* BLOK KRÓTKIEJ ODPOWIEDZI (audyt §9 etap 1 pkt 2): pierwszy akapit po H1
@@ -160,8 +164,8 @@ export const chatboty: Usluga = {
             ton: 'green',
           },
           {
-            wartosc: '80%',
-            opis: 'draftów tego automatu mailowego gotowych bez poprawek',
+            wartosc: '85%',
+            opis: 'około tylu draftów tego automatu mailowego pisze AI',
             zrodlo: 'Instytut Kryptografii, to nie chatbot, opis niżej',
             ton: 'amber',
           },
@@ -245,7 +249,7 @@ export const chatboty: Usluga = {
         chip: 'REALIZACJA',
         akapity: [
           'Tak działa to u Instytutu Kryptografii, dla którego zbudowaliśmy trzy boty na transkrypcjach kursów. Kursant pyta chatbota i od razu trafia do właściwej lekcji, zamiast przeszukiwać setki materiałów VOD.',
-          'U tego samego klienta pracuje też osobna automatyzacja poczty, która nie jest chatbotem: przygotowuje odpowiedzi dla biura obsługi. Przy 580 mailach tygodniowo w szczycie 80% draftów jest gotowych do wysyłki bez poprawek.',
+          'U tego samego klienta pracuje też osobna automatyzacja poczty, która nie jest chatbotem: przygotowuje odpowiedzi dla biura obsługi. Przy 580 mailach tygodniowo w szczycie około 85% draftów pisze AI, a odpowiedź idzie do klienta od razu albo po drobnej poprawce.',
           'Dwa różne narzędzia, jedna zasada: obie rzeczy stoją na wiedzy klienta, a człowiek zostaje przy sprawach, które wymagają decyzji.',
         ],
       },

@@ -312,7 +312,7 @@ export const aiActATwojaFirma: Post = {
     {
       etykieta: 'Auto-email dla biura obsługi klienta',
       href: '/realizacje/auto-email-bok',
-      opis: 'System AI dla biura obsługi klienta Instytutu Kryptografii: 75% maili wymaga tylko drobnej korekty, drafty gotowe do jednego kliknięcia. Case study.',
+      opis: 'System AI dla biura obsługi klienta Instytutu Kryptografii: około 85% draftów idzie od razu albo po drobnej poprawce, gotowe do jednego kliknięcia. Case study.',
     },
   ],
 };

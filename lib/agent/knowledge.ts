@@ -778,7 +778,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Firma',
     title: 'Auto-email dla biura obslugi klienta',
     summary:
-      'Dla Instytutu Kryptografii postawilismy system, ktory sam pisze odpowiedzi biura obslugi klienta na podstawie historii korespondencji. Efekt: 75% maili wymaga juz tylko drobnej korekty przed wyslaniem, draft jest gotowy do jednego klikniecia. Ostatnie slowo zawsze ma czlowiek.',
+      'Dla Instytutu Kryptografii postawilismy system, ktory sam pisze odpowiedzi biura obslugi klienta na podstawie historii korespondencji. Efekt: okolo 85% draftow pisze AI, a odpowiedz idzie do klienta od razu albo po drobnej poprawce, draft jest gotowy do jednego klikniecia. Ostatnie slowo zawsze ma czlowiek.',
     url: '/realizacje/auto-email-bok',
     intents: [
       'automatyzacja obslugi klienta',

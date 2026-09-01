@@ -21,8 +21,20 @@ type PolePrzewodnikProps = {
   label: string;
   /** Tekst-przewodnik pod polem ("typowe założenie, zmień na swoje"). */
   opis: string;
-  value: number;
+  /**
+   * Wartość pola. `null` = pole PUSTE (użytkownik jeszcze nic nie wpisał).
+   * Puste pole renderuje pusty input (nigdy NaN/undefined), a suwak stoi na `min`
+   * z aria-valuetext mówiącym czytnikowi, że wartości nie ma.
+   */
+  value: number | null;
   onChange: (v: number) => void;
+  /**
+   * Wywoływane, gdy użytkownik wyczyści pole (kasowanie treści, wpisanie znaku
+   * nieliczbowego). Brak propa = zachowanie jak dotąd: czyszczenie cofa do `min`.
+   */
+  onClear?: () => void;
+  /** Pole musi być wypełnione, żeby dało się policzyć wynik (a11y: aria-required). */
+  wymagane?: boolean;
   min: number;
   max: number;
   step?: number;
@@ -41,6 +53,8 @@ export function PolePrzewodnik({
   opis,
   value,
   onChange,
+  onClear,
+  wymagane,
   min,
   max,
   step = 1,
@@ -51,14 +65,27 @@ export function PolePrzewodnik({
   const numberId = useId();
   const opisId = useId();
 
-  const akcentStyle = akcent
-    ? ({ '--range-c': akcent } as CSSProperties)
-    : undefined;
+  const akcentStyle = akcent ? ({ '--range-c': akcent } as CSSProperties) : undefined;
 
   // Twarde domknięcie do zakresu (pole numeryczne pozwala wpisać spoza zakresu).
   function clamp(n: number): number {
-    if (Number.isNaN(n)) return min;
     return Math.min(max, Math.max(min, n));
+  }
+
+  /**
+   * Jedno wejście dla obu kontrolek. Pusty tekst albo wpis nieliczbowy (minus,
+   * litery, wykładnik) NIE staje się liczbą: albo czyści pole (gdy rodzic to
+   * obsługuje), albo cofa do `min` jak przed zmianą. Dzięki temu NaN nigdy nie
+   * wychodzi z tego komponentu.
+   */
+  function zmien(raw: string) {
+    const n = parseFloat(raw);
+    if (raw.trim() === '' || !Number.isFinite(n)) {
+      if (onClear) onClear();
+      else onChange(min);
+      return;
+    }
+    onChange(clamp(n));
   }
 
   return (
@@ -67,15 +94,20 @@ export function PolePrzewodnik({
         {label}
       </label>
 
+      {/* Puste pole: suwak stoi na `min` (HTML nie zna pustego range), ale czytnik
+          dostaje aria-valuetext „Nie wpisano", więc nie ogłasza wartości, której
+          użytkownik nie podał. aria-required NIE idzie na suwak: rola slider go nie
+          obsługuje (ARIA 1.2) — stan „wymagane" niesie pole numeryczne niżej. */}
       <input
         id={sliderId}
         type="range"
-        value={value}
+        value={value ?? min}
         min={min}
         max={max}
         step={step}
         aria-describedby={opisId}
-        onChange={(e) => onChange(clamp(parseFloat(e.target.value)))}
+        aria-valuetext={value === null ? 'Nie wpisano' : undefined}
+        onChange={(e) => zmien(e.target.value)}
         style={akcentStyle}
         className="sf-range inf-range h-[44px] w-full cursor-pointer appearance-none bg-transparent focus-visible:outline-none"
       />
@@ -87,18 +119,17 @@ export function PolePrzewodnik({
             id={numberId}
             type="number"
             inputMode="decimal"
-            value={value}
+            value={value ?? ''}
             min={min}
             max={max}
             step={step}
             aria-label={`${label} (wartość liczbowa)`}
             aria-describedby={opisId}
-            onChange={(e) => onChange(clamp(parseFloat(e.target.value)))}
+            aria-required={wymagane ? true : undefined}
+            onChange={(e) => zmien(e.target.value)}
             className="w-16 border-0 bg-transparent p-0 text-right font-mono text-body-sm font-bold tabular-nums text-fg focus:outline-none"
           />
-          {suffix ? (
-            <span className="font-mono text-caption text-fg-muted">{suffix}</span>
-          ) : null}
+          {suffix ? <span className="font-mono text-caption text-fg-muted">{suffix}</span> : null}
         </span>
 
         <p id={opisId} className="text-caption text-fg-subtle">

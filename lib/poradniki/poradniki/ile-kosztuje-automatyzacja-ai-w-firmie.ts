@@ -14,7 +14,7 @@ import type { Poradnik } from '../types';
  * UWAGA: abonament 99-599 zł to INNA usługa niż ryczałt godzinowy Opieki AI
  * (3000/5500/10000 zł za 10/20/40h na /uslugi/opieka-ai) — tu opisujemy go
  * wyłącznie jako opiekę dołączoną do pakietów wdrożeniowych.
- * Przykłady wdrożeń: TYLKO realne liczby z lib/realizacje (75% maili, 1000
+ * Przykłady wdrożeń: TYLKO realne liczby z lib/realizacje (około 85% draftów, 1000
  * rekordów w 40 min, oszczędności „kilka godzin tygodniowo" z dopiskiem szac.).
  * Zero em-dash, zero zmyślonych liczb, głos Pawła, answer-first.
  */
@@ -172,7 +172,7 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
         [
           'Auto-email dla biura obsługi klienta',
           'Czyta przychodzącego maila, sięga do historii korespondencji i przygotowuje gotowy draft odpowiedzi do akceptacji pracownika',
-          '75% maili wymaga już tylko drobnej korekty przed wysłaniem',
+          'około 85% draftów pisze AI, mail idzie od razu albo po drobnej poprawce',
         ],
         [
           'Generator leadów',
@@ -298,7 +298,7 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
         'Jeśli rozważasz coś więcej niż automatyzację, czyli agenta AI, który sam prowadzi cały proces i podejmuje akcje w wielu systemach, zajrzyj też do naszego poradnika o koszcie wdrożenia AI agenta dla firmy.',
       ],
       punkty: [
-        'Auto-email w Instytucie Kryptografii: 80% draftów odpowiedzi jest gotowych do wysyłki przy 580 mailach tygodniowo, a 75% maili wymaga już tylko drobnej korekty przed wysłaniem.',
+        'Auto-email w Instytucie Kryptografii: przy 580 mailach tygodniowo w szczycie około 85% draftów odpowiedzi pisze AI, a mail idzie do klienta od razu albo po drobnej poprawce.',
         'Generator leadów: 1000 rekordów w 40 minut zamiast 2 tygodni ręcznej pracy.',
       ],
     },
@@ -404,7 +404,7 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
     {
       etykieta: 'Auto-email dla biura obsługi klienta',
       href: '/realizacje/auto-email-bok',
-      opis: 'System AI dla biura obsługi klienta Instytutu Kryptografii: 75% maili wymaga tylko drobnej korekty, drafty gotowe do jednego kliknięcia. Case study.',
+      opis: 'System AI dla biura obsługi klienta Instytutu Kryptografii: około 85% draftów idzie od razu albo po drobnej poprawce, gotowe do jednego kliknięcia. Case study.',
     },
     {
       etykieta: 'Błyskawiczny generator leadów',

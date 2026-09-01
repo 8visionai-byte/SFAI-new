@@ -40,7 +40,7 @@ export { KATEGORIA_LABEL } from './types';
 
 /**
  * Wszystkie realizacje, w kolejności prezentacji na liście /realizacje.
- * Kolejność: najmocniejsze dowody z liczbą najpierw (75%, 1000/40 min), potem reszta.
+ * Kolejność: najmocniejsze dowody z liczbą najpierw (85%, 1000/40 min), potem reszta.
  *
  * PARTIA GEO (audyt 2026-08-18 §6.1: „to jest najcenniejszy materiał w całym
  * audycie"): trzy dowody cytowalności wchodzą NA POCZĄTEK listy, w kolejności

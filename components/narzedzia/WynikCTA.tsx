@@ -11,15 +11,15 @@ import { HOME_CTA } from '@/lib/site';
  * wynikiem (przekazywana z wyspy przez `mikrokopia`). Href = HOME_CTA.href (#diagnoza).
  *
  * DOWÓD (§6, ZERO zmyślania): jedyna realna liczba w projekcie to case Instytutu
- * Kryptografii (~75% maili wymaga tylko drobnej korekty). Do potwierdzenia zgody na
- * nazwę pokazujemy wersję BEZ nazwy ("u jednego z klientów 3 na 4 maile..."). Liczba
+ * Kryptografii (około 85% draftów odpowiedzi pisze AI). Do potwierdzenia zgody na
+ * nazwę pokazujemy wersję BEZ nazwy ("u jednego z klientów około 85% draftów..."). Liczba
  * realna, nazwa ukryta. Bez widocznego [PLACEHOLDER]. Brak innych metryk dowodu =
  * INPUT PAWŁA (nie wymyślamy opinii/logo/liczby wdrożeń).
  */
 
 /** Dowód przy CTA — realna liczba IK bez nazwy (do zgody Pawła). Jedno źródło. */
 export const DOWOD_PRZY_CTA =
-  'U jednego z naszych klientów 3 na 4 maile obsługi wymagają już tylko drobnej korekty.';
+  'U jednego z naszych klientów około 85% draftów odpowiedzi pisze AI, a człowiek tylko je zatwierdza.';
 
 type WynikCTAProps = {
   /** Mikrokopia personalizowana wynikiem (zdanie nad/pod przyciskiem). */

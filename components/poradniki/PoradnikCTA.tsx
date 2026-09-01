@@ -30,8 +30,8 @@ export function PoradnikCTA() {
               {HOME_CTA.label}
             </MagneticButton>
             <span className="text-caption max-w-[60ch] text-fg-subtle">
-              Realne wdrożenia: auto-email obsługi klienta gotowy w 75% i generator
-              leadów, który zrobił 1000 rekordów w 40 minut.
+              Realne wdrożenia: auto-email obsługi klienta, gdzie około 85% draftów
+              pisze AI, i generator leadów, który zrobił 1000 rekordów w 40 minut.
             </span>
           </div>
         </Reveal>

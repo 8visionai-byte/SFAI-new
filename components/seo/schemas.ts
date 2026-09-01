@@ -19,8 +19,7 @@ type Json = Record<string, unknown>;
  * podwojny slash w @id (np. `https://simplefast.ai//#faq`) — schema z takim
  * @id jest niespojna i moze rozjechac powiazania Organization <-> WebSite <-> Service.
  */
-const abs = (path: string): string =>
-  `${SITE.url}${path === '/' ? '' : path}`;
+const abs = (path: string): string => `${SITE.url}${path === '/' ? '' : path}`;
 
 export const organizationSchema = (): Json => {
   const org: Json = {
@@ -94,7 +93,19 @@ export const websiteSchema = (): Json => ({
 
 /**
  * Service — na każdej podstronie usługi.
- * `offers` dodaj TYLKO gdy podajemy realną cenę "od X" (spójną z ceną na stronie).
+ * `offers` dodaj TYLKO gdy podajemy realną cenę (spójną z ceną na stronie).
+ *
+ * DWA KSZTAŁTY OFERTY (2026-08-31), bo dwa różne fakty o cenie:
+ *  - widełki (domyślnie): Offer + PriceSpecification z `minPrice`. To poprawny
+ *    zapis dla „od X": schema.org nie zna „ceny od" w polu `price`, a `minPrice`
+ *    mówi wprost, że kwota jest dolną granicą.
+ *  - cena stała (`cenaStala`): Offer z `price`. To kanoniczne pole schema.org
+ *    dla jednej, ostatecznej kwoty i jedyny kształt, który Google czyta jako
+ *    konkretną cenę. `minPrice` z opisem tekstowym byłby tu podwójną nieprawdą:
+ *    kwota nie jest widełkami, a przy audycie nie ma „zakresu integracji".
+ * W obu wariantach liczba pochodzi z TEGO SAMEGO `ramaCeny.minPrice`, co kwota
+ * renderowana w components/uslugi/RamaCeny.tsx (kontrakt repo: kwota w UI i
+ * w schema to jedna liczba).
  */
 export const serviceSchema = (p: {
   serviceType: string;
@@ -102,6 +113,8 @@ export const serviceSchema = (p: {
   description: string;
   path: string;
   minPrice?: number;
+  /** `ramaCeny.cenaStala` — true przełącza ofertę z „ceny od" na cenę stałą. */
+  cenaStala?: boolean;
 }): Json => {
   const base: Json = {
     '@context': 'https://schema.org',
@@ -114,16 +127,22 @@ export const serviceSchema = (p: {
     description: p.description,
   };
   if (typeof p.minPrice === 'number') {
-    base.offers = {
-      '@type': 'Offer',
-      priceCurrency: 'PLN',
-      priceSpecification: {
-        '@type': 'PriceSpecification',
-        priceCurrency: 'PLN',
-        minPrice: String(p.minPrice),
-        description: 'Cena od (zależna od zakresu integracji)',
-      },
-    };
+    base.offers = p.cenaStala
+      ? {
+          '@type': 'Offer',
+          priceCurrency: 'PLN',
+          price: String(p.minPrice),
+        }
+      : {
+          '@type': 'Offer',
+          priceCurrency: 'PLN',
+          priceSpecification: {
+            '@type': 'PriceSpecification',
+            priceCurrency: 'PLN',
+            minPrice: String(p.minPrice),
+            description: 'Cena od (zależna od zakresu integracji)',
+          },
+        };
   }
   return base;
 };
@@ -132,10 +151,7 @@ export const serviceSchema = (p: {
  * FAQPage — pod sekcją FAQ. Tekst odpowiedzi MUSI być identyczny z treścią na
  * stronie (Google karze rozjazd schema <-> treść).
  */
-export const faqSchema = (
-  items: { q: string; a: string }[],
-  path: string
-): Json => ({
+export const faqSchema = (items: { q: string; a: string }[], path: string): Json => ({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   '@id': `${abs(path)}/#faq`,
@@ -154,10 +170,11 @@ export const faqSchema = (
  * schema <-> treść (karany przez Google) jest niemożliwy. Wzorzec 1:1
  * z `postSchemas` / `realizacjaSchemas`, które robią to mapowanie u siebie.
  */
-export const faqSchemaPl = (
-  items: { pytanie: string; odpowiedz: string }[],
-  path: string
-): Json => faqSchema(items.map((item) => ({ q: item.pytanie, a: item.odpowiedz })), path);
+export const faqSchemaPl = (items: { pytanie: string; odpowiedz: string }[], path: string): Json =>
+  faqSchema(
+    items.map((item) => ({ q: item.pytanie, a: item.odpowiedz })),
+    path,
+  );
 
 /**
  * ItemList — LISTA POZYCJI HUBA (v22, PLAN-v22 §2.6 i §5.4).
@@ -197,9 +214,7 @@ export const itemListSchema = (p: {
 /**
  * BreadcrumbList — każda strona poza '/'.
  */
-export const breadcrumbSchema = (
-  items: { name: string; path: string }[]
-): Json => ({
+export const breadcrumbSchema = (items: { name: string; path: string }[]): Json => ({
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: items.map((item, index) => ({
@@ -227,7 +242,7 @@ export const breadcrumbSchema = (
  */
 export const uslugaSchemas = (
   usluga: Usluga,
-  basePath = '/uslugi'
+  basePath = '/uslugi',
 ): { service: Json; faq: Json; breadcrumb: Json } => {
   const path = `${basePath}/${usluga.slug}`;
 
@@ -237,11 +252,14 @@ export const uslugaSchemas = (
     description: usluga.kapsula,
     path,
     minPrice: usluga.ramaCeny.minPrice,
+    /* 2026-08-31: kształt oferty (cena stała kontra „od") czytamy z rejestru,
+       nie z drugiego miejsca. Ta sama flaga steruje kwotą i mikrokopią w UI. */
+    cenaStala: usluga.ramaCeny.cenaStala,
   });
 
   const faq = faqSchema(
     usluga.faq.map((item) => ({ q: item.pytanie, a: item.odpowiedz })),
-    path
+    path,
   );
 
   const breadcrumb = breadcrumbSchema([
@@ -314,7 +332,7 @@ export const articleSchema = (p: {
  */
 export const postSchemas = (
   post: Post,
-  basePath = '/blog'
+  basePath = '/blog',
 ): { article: Json; breadcrumb: Json; faq?: Json } => {
   const path = `${basePath}/${post.slug}`;
 
@@ -339,7 +357,7 @@ export const postSchemas = (
     post.faq && post.faq.length > 0
       ? faqSchema(
           post.faq.map((item) => ({ q: item.pytanie, a: item.odpowiedz })),
-          path
+          path,
         )
       : undefined;
 
@@ -362,7 +380,7 @@ export const postSchemas = (
  */
 export const poradnikSchemas = (
   poradnik: Poradnik,
-  basePath = '/poradniki'
+  basePath = '/poradniki',
 ): { article: Json; breadcrumb: Json; faq?: Json } => {
   const path = `${basePath}/${poradnik.slug}`;
 
@@ -388,7 +406,7 @@ export const poradnikSchemas = (
     poradnik.faq && poradnik.faq.length > 0
       ? faqSchema(
           poradnik.faq.map((item) => ({ q: item.pytanie, a: item.odpowiedz })),
-          path
+          path,
         )
       : undefined;
 
@@ -443,7 +461,7 @@ export const creativeWorkSchema = (p: {
  */
 export const realizacjaSchemas = (
   realizacja: Realizacja,
-  basePath = '/realizacje'
+  basePath = '/realizacje',
 ): { work: Json; breadcrumb: Json; faq?: Json } => {
   const path = `${basePath}/${realizacja.slug}`;
 
@@ -466,7 +484,7 @@ export const realizacjaSchemas = (
     realizacja.faq && realizacja.faq.length > 0
       ? faqSchema(
           realizacja.faq.map((item) => ({ q: item.pytanie, a: item.odpowiedz })),
-          path
+          path,
         )
       : undefined;
 

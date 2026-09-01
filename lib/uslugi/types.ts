@@ -174,6 +174,17 @@ export type Usluga = {
     /** Realna cena "od X" w PLN. Tylko gdy prawdziwa i spójna z UI. Inaczej undefined. */
     minPrice?: number;
     /**
+     * 2026-08-31 (ustalenie właściciela): czy kwota z `minPrice` to cena STAŁA.
+     * Brak pola albo `false` = kwota jest widełkami "od X" (dotychczasowe
+     * zachowanie, domyślne dla WSZYSTKICH usług). `true` = każdy klient płaci
+     * dokładnie tyle samo, więc render nie obiecuje widełek ani wyceny na
+     * diagnozie: kafel ceny w hero idzie bez prefiksu "od ", a mikrokopia pod
+     * kartą ceny (components/uslugi/RamaCeny.tsx) mówi o cenie stałej.
+     * Uwaga: bezpłatna rozmowa jest pierwszym krokiem TAK CZY TAK, tylko nie
+     * służy do ustalenia kwoty. Jedno źródło prawdy dla obu miejsc renderu.
+     */
+    cenaStala?: boolean;
+    /**
      * SEO 2026-08-17 (linkowanie wewnętrzne usługa -> poradnik cenowy): JEDNO
      * zdanie z linkiem, renderowane w components/uslugi/RamaCeny.tsx jako
      * dokończenie tego samego akapitu co `tresc` (wygląd sekcji bez zmian).
