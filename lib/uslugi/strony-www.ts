@@ -11,20 +11,49 @@ import type { Usluga } from './types';
  *
  * INPUT PAWŁA (przed shipem):
  *  - realne widełki "od X zł" za stronę → ustawić ramaCeny.minPrice (włączy offers w Service JSON-LD),
+ *    ZAŁATWIONE 2026-08-31: minPrice = 1590 (patrz niżej),
  *  - model opieki/abonamentu (jednorazowo + miesięcznie),
  *  - frazy do scorecardu /dowod (realne pytania, w których cytuje nas AI) → dowód przy CTA.
  *    Do tego czasu dowód = link do żywego scorecardu /dowod (nasza własna strona w 4 silnikach).
+ *
+ * ── CENY STRON DOPISANE 2026-08-31 (decyzja właściciela z tego samego dnia).
+ *    POWÓD: kwoty za te same trzy pozycje stały już w `lib/uslugi/optymalizacja.ts`
+ *    (sekcja N8, tabela cennika) i w podstronach GEO, a strona usługi o stronach
+ *    WWW podawała WYŁĄCZNIE czasy realizacji. Klient czytający stronę usługi nie
+ *    poznawał kwoty, którą sąsiednia strona podaje wprost.
+ *    KWOTY (żadnej nie wymyślono, wszystkie 1:1 z optymalizacja.ts §N8):
+ *      landing 1590 zł netto / 1 dzień roboczy,
+ *      strona biznesowa 2900 zł netto / 2-4 dni robocze,
+ *      strona zaawansowana od 5900 zł netto / 5-10 dni roboczych.
+ *    GDZIE STANĘŁY: wyłącznie tam, gdzie już stały czasy realizacji, żeby cena
+ *    i czas szły w parze: pas metryk sekcji ceny, trzy opcje przełącznika
+ *    "strony-www-zakres" (podtytuł i nagłówek) oraz nowa kolumna „Cena"
+ *    w tabeli czasów. Struktura sekcji bez zmian, nic nie przepisano.
+ *    `minPrice` = 1590, `cenaStala` CELOWO NIEUSTAWIONE: to trzy różne pozycje,
+ *    a najwyższa jest „od", więc prefiks „od " w renderze jest poprawny.
+ *    DOPRECYZOWANE, NIE USUNIĘTE: `ramaCeny.tresc` i FAQ „Czy zbudujecie stronę
+ *    szybko?" mówiły, że kwotę i termin poznasz dopiero na diagnozie. Teraz
+ *    mówią, że trzy pozycje o ustalonym zakresie mają ceny wprost, a diagnoza
+ *    służy do dobrania zakresu i wyceny tego, co poza nie wychodzi.
+ *    metaDescription: dopisana kwota wejściowa (mieści się w limicie 160 znaków).
  */
 export const stronyWww: Usluga = {
   slug: 'strony-www',
-  dataAktualizacji: '2026-08-21',
+  /* 2026-08-31: data bumpnięta z '2026-08-21', bo zmieniła się treść widoczna
+     dla klienta (ceny trzech pozycji, tekst sekcji ceny, FAQ, opis meta).
+     Pole jest źródłem `lastmod` w sitemap.xml (app/sitemap.ts). */
+  dataAktualizacji: '2026-08-31',
   h1: 'Tworzenie stron WWW widocznych w Google i w AI',
   kapsula:
     'Budujemy strony widoczne nie tylko w Google, ale i w ChatGPT, Claude, Gemini oraz Perplexity. Większość stron jest dla AI niewidoczna, bo treść doczytuje się skryptem, a boty tego nie czytają. My oddajemy całą treść od razu w czystym kodzie, układamy ją pod cytowanie i robimy to szybko.',
 
   metaTitle: 'Tworzenie stron WWW pod Google i AI',
+  /* 2026-08-31: dopisana kwota wejściowa (landing 1590 zł netto), bo opis
+     bez liczby nie dawał powodu do kliknięcia, a kwota stoi teraz wprost
+     w sekcji ceny. Skrócone „szybkie i ułożone" do „ułożona", żeby zmieścić
+     się w limicie: 146 znaków przed, 153 po (limit kontraktu: 160). */
   metaDescription:
-    'Strony www pod AI: treść w kodzie od razu, szybkie i ułożone pod cytowanie w ChatGPT, Claude, Gemini i Perplexity. Widoczność w Google i AI naraz.',
+    'Strony www pod AI od 1590 zł netto: treść w kodzie od razu, ułożona pod cytowanie w ChatGPT, Claude, Gemini i Perplexity. Widoczność w Google i AI naraz.',
 
   problem: {
     h2: 'Dlaczego Twojej strony nie widać w AI?',
@@ -231,8 +260,14 @@ export const stronyWww: Usluga = {
     /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
        (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
        Fakty 1:1 z konspektu; forma na strukture. */
+    /* 2026-08-31: zdanie mówiło, że widełki poznasz dopiero na diagnozie,
+       a trzy pozycje o ustalonym zakresie mają dziś twarde kwoty w tej samej
+       sekcji. DOPRECYZOWANE, NIE USUNIĘTE: diagnoza dalej jest pierwszym
+       krokiem, tylko służy do dobrania zakresu, a nie do poznania ceny
+       landingu czy strony biznesowej. */
     tresc:
-      'Cenę liczymy od zakresu i od tego, ile pytań ma obsługiwać strona: inaczej wycenia się prostą wizytówkę, inaczej serwis z wieloma podstronami pod różne frazy. Dokładne widełki podajemy na bezpłatnej diagnozie (0 zł, około 30 minut), zanim cokolwiek zamówisz.',
+      'Trzy zakresy o ustalonej zawartości mają ceny wprost: landing 1590 zł netto, strona biznesowa 2900 zł netto, strona zaawansowana od 5900 zł netto. Powyżej tych zakresów cena zależy od tego, ile pytań klientów ma obsłużyć strona i co dochodzi poza nią. Zakres dobieramy na bezpłatnej diagnozie (0 zł, około 30 minut), zanim cokolwiek zamówisz.',
+    minPrice: 1590,
     bloki: [
       {
         typ: 'pasMetryk',
@@ -243,16 +278,21 @@ export const stronyWww: Usluga = {
             zrodlo: 'pierwszy krok przed wyceną',
             ton: 'cyan',
           },
+          /* 2026-08-31: do kafla czasu landingu dopisana jego cena, bo to
+             jedyny kafel z konkretnym zakresem, a czas bez kwoty nie mówił
+             klientowi, ile to kosztuje. Kafel „1-4 dni robocze" zostaje bez
+             kwoty: mówi o dwóch różnych zakresach naraz, więc jedna kwota
+             byłaby tam nieprawdą. */
           {
             wartosc: '1 dzień',
-            opis: 'tyle trwa budowa prostego landingu z ofertą i formularzem',
-            zrodlo: 'pierwszy wiersz tabeli czasów niżej',
+            opis: 'tyle trwa budowa prostego landingu z ofertą i formularzem, za 1590 zł netto',
+            zrodlo: 'pierwszy wiersz tabeli cen i czasów niżej',
             ton: 'green',
           },
           {
             wartosc: '1-4 dni robocze',
             opis: 'tyle realnie trwały nasze dotychczasowe wdrożenia stron, przy zakresie do strony biznesowej',
-            zrodlo: 'nasze dotychczasowe realizacje, tabela czasów niżej',
+            zrodlo: 'nasze dotychczasowe realizacje, tabela cen i czasów niżej',
             ton: 'amber',
           },
           {
@@ -268,8 +308,11 @@ export const stronyWww: Usluga = {
         tekst: 'Czy zbudujecie stronę szybko?',
         ikona: 'kalendarz-check',
         chip: 'CZASY BUDOWY',
-        overline: 'TRZY ZAKRESY · CZAS W DNIACH ROBOCZYCH',
+        overline: 'TRZY ZAKRESY · CENA I CZAS W DNIACH ROBOCZYCH',
       },
+      /* 2026-08-31: do każdej z trzech opcji dopisana jej cena, dokładnie tam,
+         gdzie stał już czas budowy (podtytuł i zdanie nagłówka). Kwoty 1:1
+         z tabelą cennika w lib/uslugi/optymalizacja.ts §N8. */
       {
         typ: 'przelacznik',
         grupa: 'strony-www-zakres',
@@ -277,8 +320,8 @@ export const stronyWww: Usluga = {
           {
             numer: 'ZAKRES 1',
             tytul: 'Prosty landing',
-            podtytul: '1 dzień',
-            naglowek: 'Prosty landing z ofertą i formularzem budujemy w 1 dzień.',
+            podtytul: '1590 zł netto, 1 dzień',
+            naglowek: 'Prosty landing z ofertą i formularzem budujemy w 1 dzień, za 1590 zł netto.',
             akapity: [
               'Jedna strona, jedna odpowiedź na jedno pytanie klienta i formularz. Treść stoi w kodzie od razu, więc bot ma co przeczytać już pierwszego dnia.',
             ],
@@ -290,8 +333,8 @@ export const stronyWww: Usluga = {
           {
             numer: 'ZAKRES 2',
             tytul: 'Strona biznesowa',
-            podtytul: '2-4 dni',
-            naglowek: 'Stronę biznesową z kilkoma podstronami budujemy w 2-4 dni.',
+            podtytul: '2900 zł netto, 2-4 dni',
+            naglowek: 'Stronę biznesową z kilkoma podstronami budujemy w 2-4 dni, za 2900 zł netto.',
             akapity: [
               'Każda podstrona odpowiada na inne pytanie klienta i zaczyna się od krótkiej, bezpośredniej odpowiedzi. Tak układa się treść, którą AI cytuje najchętniej.',
             ],
@@ -303,44 +346,53 @@ export const stronyWww: Usluga = {
           {
             numer: 'ZAKRES 3',
             tytul: 'Strona zaawansowana',
-            podtytul: '5-10 dni',
-            naglowek: 'Stronę zaawansowaną ze sklepem i wpiętymi narzędziami budujemy w 5-10 dni.',
+            podtytul: 'od 5900 zł netto, 5-10 dni',
+            naglowek: 'Stronę zaawansowaną ze sklepem i wpiętymi narzędziami budujemy w 5-10 dni, od 5900 zł netto.',
             akapity: [
-              'Tu dochodzi sklep albo narzędzia wpięte w stronę, więc pracy jest więcej niż przy wizytówce. Zakres ustalamy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
+              'Tu dochodzi sklep albo narzędzia wpięte w stronę, więc pracy jest więcej niż przy wizytówce. Dlatego ta pozycja startuje od 5900 zł netto, a dokładną kwotę i termin podajemy, gdy znamy zakres. Zakres ustalamy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
             ],
             punkty: [
               'Sklep, wpięte narzędzia.',
-              'Dokładny termin podajemy, gdy znamy zakres.',
+              'Dokładną kwotę i termin podajemy, gdy znamy zakres.',
             ],
           },
         ],
       },
+      /* 2026-08-31: tabela miała trzy kolumny i podawała wyłącznie czas budowy.
+         Dołożona kolumna „Cena", tuż przed czasem, żeby jedno i drugie stało
+         w tym samym wierszu. Kwoty 1:1 z tabelą cennika
+         w lib/uslugi/optymalizacja.ts §N8, wiersze i podpis bez zmian poza
+         dopiskiem o cenach netto. */
       {
         typ: 'tabela',
         naglowki: [
           'Zakres strony',
           'Dla kogo to jest',
+          'Cena',
           'Czas budowy',
         ],
         wiersze: [
           [
             'Prosty landing',
             'jedna oferta, jeden formularz',
+            '1590 zł netto',
             '1 dzień',
           ],
           [
             'Strona biznesowa',
             'kilka pytań klientów, kilka podstron',
+            '2900 zł netto',
             '2-4 dni',
           ],
           [
             'Strona zaawansowana',
             'sprzedaż online albo narzędzie wpięte w stronę',
+            'od 5900 zł netto',
             '5-10 dni',
           ],
         ],
         wKarcie: true,
-        podpis: 'Czas budowy liczymy od przekazania kompletu materiałów, nie od podpisania umowy. Dotychczasowe realizacje mieściły się w 1-4 dniach roboczych; 5-10 dni dotyczy zakresu ze sklepem i wpiętymi narzędziami.',
+        podpis: 'Wszystkie ceny są netto. Czas budowy liczymy od przekazania kompletu materiałów, nie od podpisania umowy. Dotychczasowe realizacje mieściły się w 1-4 dniach roboczych; 5-10 dni dotyczy zakresu ze sklepem i wpiętymi narzędziami.',
       },
       {
         typ: 'sekcja',
@@ -373,8 +425,12 @@ export const stronyWww: Usluga = {
     },
     {
       pytanie: 'Czy zbudujecie stronę szybko?',
+      /* 2026-08-31: odpowiedź mówiła „dokładny termin podajemy na diagnozie",
+         a strona podaje dziś czasy i kwoty trzech zakresów wprost.
+         DOPRECYZOWANE, NIE USUNIĘTE: konkrety stoją w odpowiedzi, diagnoza
+         zostaje dla zakresu, który poza te trzy pozycje wychodzi. */
       odpowiedz:
-        'Tak, bo budujemy szybko i nie dłubiemy miesiącami. Prosta strona powstaje znacznie szybciej niż rozbudowany serwis. Dokładny termin podajemy na diagnozie, gdy znamy zakres. Szybkość dotyczy też samej strony: robimy ją lekką, żeby ładowała się szybko i nie traciła ludzi ani miejsca w wynikach.',
+        'Tak, bo budujemy szybko i nie dłubiemy miesiącami. Prosty landing to 1 dzień roboczy i 1590 zł netto, strona biznesowa 2-4 dni i 2900 zł netto, strona zaawansowana ze sklepem lub wpiętymi narzędziami 5-10 dni i od 5900 zł netto. Przy zakresie spoza tych trzech pozycji dokładny termin podajemy na diagnozie. Szybkość dotyczy też samej strony: robimy ją lekką, żeby ładowała się szybko i nie traciła ludzi ani miejsca w wynikach.',
     },
     {
       pytanie: 'Czy strona będzie widoczna też w zwykłym Google?',

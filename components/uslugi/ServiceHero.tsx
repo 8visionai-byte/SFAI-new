@@ -89,6 +89,18 @@ const H1_KOLOR: Record<string, string> = {
   'odbieranie-telefonow': 'odbiera telefon 24/7',
   windykacja: 'odbiera telefon 24/7',
   'potwierdzanie-wizyt': 'wizyt 24/7',
+  /* 2026-08-31: podstrony gałęzi /uslugi/optymalizacja/. Ten sam powód co przy
+     voicebotach wyżej: bez wpisu H1 świeci w całości szarym i podstrona czyta
+     się jak inna rodzina stron. Każdy fragment sprawdzony jako końcówka h1
+     z pliku podstrony (h1.endsWith(fragment) i fragment !== h1). */
+  'audyt-widocznosci-w-ai': 'czy ChatGPT poleca Twoją firmę',
+  chatgpt: 'ChatGPT polecał Twoją firmę',
+  'dostep-botow-ai': 'czy Twoja strona ich wpuszcza?',
+  'google-ai-overviews': '(AI Overviews)',
+  perplexity: 'jak być źródłem, a nie tłem',
+  'monitoring-cytowan-w-ai': 'czy modele Cię polecają',
+  'dla-firm-uslugowych': 'warsztat, klinika, gabinet, kancelaria',
+  'llms-txt': 'co to jest i czy naprawdę coś daje',
 };
 
 /** Dzieli h1 na część neutralną i kolorową końcówkę; przy braku dopasowania
@@ -107,13 +119,30 @@ function dzielH1(slug: string, h1: string): { przed: string; kolor: string | nul
  *  - audyt-ai: „Sprint Diagnostyczny kosztuje 1490 zł" (cena STAŁA, bez „od"),
  *  - opieka-ai: „10 godzin to 3000 zł miesięcznie" (najniższy ryczałt).
  * Fallback dla przyszłych slugów: etykieta pochodna z ramaCeny.h2
- * („Ile kosztuje X?" -> „X"), prefiks „od " jak w kontrakcie minPrice.
+ * („Ile kosztuje X?" -> „X"). Mapa trzyma WYŁĄCZNIE opis: prefiks kwoty
+ * („od " albo nic) wynika z ramaCeny.cenaStala, patrz kafleStatystyk.
  */
-const KAFEL_CENY: Record<string, { prefiks: '' | 'od '; opis: string }> = {
-  chatboty: { prefiks: 'od ', opis: 'pakiet startowy' },
-  voiceboty: { prefiks: 'od ', opis: 'pakiet startowy' },
-  'audyt-ai': { prefiks: '', opis: 'Sprint Diagnostyczny' },
-  'opieka-ai': { prefiks: 'od ', opis: 'ryczałt miesięczny' },
+const KAFEL_CENY: Record<string, { opis: string }> = {
+  chatboty: { opis: 'pakiet startowy' },
+  voiceboty: { opis: 'pakiet startowy' },
+  'audyt-ai': { opis: 'Sprint Diagnostyczny' },
+  'opieka-ai': { opis: 'ryczałt miesięczny' },
+  /* 2026-08-31: audyt widoczności w AI ma tę samą stałą cenę co rodzic
+     `audyt-ai`, a etykieta nazywa produkt tak samo. Prefiks nie stoi już tutaj:
+     bierze się z ramaCeny.cenaStala (patrz kafleStatystyk niżej). */
+  'audyt-widocznosci-w-ai': { opis: 'Sprint Diagnostyczny' },
+  /* 2026-08-31: pozostałe podstrony gałęzi `optymalizacja`, które MAJĄ jawne
+     ramaCeny.minPrice (1490 = najtańsze wejście, czyli Sprint Diagnostyczny).
+     Bez wpisu etykieta liczyłaby się z fallbacku i pod kwotą stanęłoby całe
+     pytanie z ramaCeny.h2 („Ile trwa i ile kosztuje pozycjonowanie
+     w ChatGPT?"). Tu 1490 zł to próg, nie cena całości, więc `cenaStala`
+     zostaje wyłączone i kafel pokazuje „od 1490 zł". Podstrony bez minPrice
+     (dostep-botow-ai, monitoring-cytowan-w-ai, llms-txt) nie mają wpisu,
+     bo kafel ceny w ogóle im się nie renderuje. */
+  chatgpt: { opis: 'Sprint Diagnostyczny' },
+  'google-ai-overviews': { opis: 'Sprint Diagnostyczny' },
+  perplexity: { opis: 'Sprint Diagnostyczny' },
+  'dla-firm-uslugowych': { opis: 'Sprint Diagnostyczny' },
 };
 
 type Kafel = { id: string; wartosc: string; opis: string };
@@ -138,10 +167,14 @@ function kafleStatystyk(usluga: Usluga): Kafel[] {
   const cena = usluga.ramaCeny.minPrice;
   if (typeof cena === 'number') {
     const wpis = KAFEL_CENY[usluga.slug] ?? {
-      prefiks: 'od ' as const,
       opis: usluga.ramaCeny.h2.replace(/^Ile kosztuje\s*/i, '').replace(/\?$/, ''),
     };
-    kafle.push({ id: 'cena', wartosc: `${wpis.prefiks}${cena} zł`, opis: wpis.opis });
+    /* 2026-08-31: „od " NIE stoi już w mapie wyżej. Widełki kontra cena stała to
+       ustalenie o produkcie, więc jedno źródło prawdy: ramaCeny.cenaStala
+       (lib/uslugi/types.ts). Ta sama flaga steruje mikrokopią pod kartą ceny,
+       więc kafel i sekcja cennika nie mogą się rozjechać przy nowych usługach. */
+    const prefiks = usluga.ramaCeny.cenaStala ? '' : 'od ';
+    kafle.push({ id: 'cena', wartosc: `${prefiks}${cena} zł`, opis: wpis.opis });
   }
 
   const wiersz247 = usluga.tabelaPorownawcza.wiersze.find((w) => w.zNami.includes('24/7'));
@@ -193,10 +226,7 @@ export function ServiceHero({
     <Section tone="transparent" containerWidth="default" space="lg">
       {/* --hero-c na wrapperze = kontrakt partii A: badge/word/tag/stat
           dziedziczą kolor przewodni usługi z jednego miejsca. */}
-      <div
-        className="mx-auto max-w-narrow text-center"
-        style={{ '--hero-c': c } as CSSProperties}
-      >
+      <div className="mx-auto max-w-narrow text-center" style={{ '--hero-c': c } as CSSProperties}>
         {/* Breadcrumbs zostają w DOM 1:1 (spójne z BreadcrumbList JSON-LD);
             centrowanie robi wrapper — komponent bez zmian. */}
         <div className="flex justify-center">
@@ -234,7 +264,9 @@ export function ServiceHero({
 
         {/* Kapsuła answer-first — surowy HTML, cytat dla LLM (40–60 słów). */}
         <Reveal eager delay={0.1}>
-          <p className="text-lead mx-auto mt-6 max-w-measure-lead text-fg-muted">{usluga.kapsula}</p>
+          <p className="text-lead mx-auto mt-6 max-w-measure-lead text-fg-muted">
+            {usluga.kapsula}
+          </p>
         </Reveal>
 
         {/* Tagi-pigułki — frazy 1:1 z hero home (zero nowych treści marki);

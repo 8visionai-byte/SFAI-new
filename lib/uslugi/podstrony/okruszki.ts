@@ -33,6 +33,10 @@ export type Okruszek = { name: string; path: string };
  */
 const ETYKIETA_RODZICA: Record<string, string> = {
   voiceboty: 'Voiceboty',
+  /* 2026-08-31, gałąź /uslugi/optymalizacja/: etykieta 1:1 z `KATEGORIA_LABEL`
+     w `lib/realizacje/types.ts` ('Optymalizacja'), zgodna z segmentem URL.
+     Zero nowego stringu marki, tak jak przy voicebotach. */
+  optymalizacja: 'Optymalizacja',
 };
 
 /**

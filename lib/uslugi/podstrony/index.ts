@@ -22,14 +22,34 @@ import type { PodstronaUslugi } from './types';
 import { windykacja } from './windykacja';
 import { potwierdzanieWizyt } from './potwierdzanie-wizyt';
 import { odbieranieTelefonow } from './odbieranie-telefonow';
+import { audytWidocznosciWAi } from './audyt-widocznosci-w-ai';
+import { chatgpt } from './chatgpt';
+import { dostepBotowAi } from './dostep-botow-ai';
+import { googleAiOverviews } from './google-ai-overviews';
+import { perplexity } from './perplexity';
+import { monitoringCytowanWAi } from './monitoring-cytowan-w-ai';
+import { dlaFirmUslugowych } from './dla-firm-uslugowych';
+import { llmsTxt } from './llms-txt';
 
 export type { PodstronaUslugi } from './types';
 
-/** Wszystkie podstrony usług (dziś: trzy podstrony voicebotów). */
+/** Wszystkie podstrony usług (dziś: trzy voicebotów + osiem optymalizacji). */
 export const PODSTRONY: readonly PodstronaUslugi[] = [
   windykacja,
   potwierdzanieWizyt,
   odbieranieTelefonow,
+  /* Gałąź `optymalizacja` w kolejności publikacji z pakietu GEO (2026-08-31):
+     audyt jest wejściem w usługę, potem cztery silniki i pomiar, na końcu
+     strona branżowa i temat techniczny. Kolejność tej tablicy wychodzi
+     1:1 do mapy witryny, więc nie jest przypadkowa. */
+  audytWidocznosciWAi,
+  chatgpt,
+  dostepBotowAi,
+  googleAiOverviews,
+  perplexity,
+  monitoringCytowanWAi,
+  dlaFirmUslugowych,
+  llmsTxt,
 ] as const;
 
 /** Indeks `rodzic/slug` -> podstrona (O(1) lookup, budowany raz na moduł). */

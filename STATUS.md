@@ -1,3 +1,267 @@
+# STATUS — ROZBUDOWA Z PAKIETÓW WDROŻENIOWYCH (2026-08-31) — W TOKU
+
+ZLECENIE PAWŁA: kompletna rozbudowa serwisu z `.seo-przeglad/pakiety/` (8 pakietów,
+443 kB gotowej treści). Istniejące sekcje ruszamy WYŁĄCZNIE merytorycznie, układ,
+komponenty i design zostają nietknięte. Nowe podstrony przez skill /design, praca
+rozdzielana przez Workflows.
+
+Legenda: NIERUSZONE / W TOKU / CLAIMED-UNVERIFIED / DONE (tylko z dowodem).
+
+## ETAP 0 — cztery błędy w istniejącym serwisie (przed pakietami)
+
+0.1 Sprzeczność liczby draftów. STAN: CLAIMED-UNVERIFIED (build i przeglądarka
+    jeszcze nie potwierdzone). Serwis mówił JEDNOCZEŚNIE „75% maili wymaga drobnej
+    korekty" i „80% draftów gotowych do wysyłki" o TEJ SAMEJ realizacji. Paweł
+    ustalił 2026-08-31: około 85% draftów pisze AI, idą do klienta od razu albo po
+    drobnej poprawce, przy 580 mailach tygodniowo w szczycie.
+    ZMIERZONE: 30 miejsc w 21 plikach (mój pierwotny grep dał 18 w 12, był za wąski;
+    agent dołożył 8 plików, m.in. bazę wiedzy chatbota, opisy huba realizacji
+    i podpis pod CTA poradników). Po zmianie grep na „75%|80% draft|3 na 4" zwraca
+    już tylko 2 trafienia i oba są z innej bajki: `top 75%` w GSAP i komentarz
+    o wysokości slotu w Hero. Em-dash w dodanych liniach tych 21 plików: ZERO.
+0.2 KalkulatorOszczednosci startował z osoby 5 / godziny 6 / stawka 60 zł, czyli
+    łamał zasadę zera zmyślonych liczb. STAN: CLAIMED-UNVERIFIED (agent skończył,
+    ja jeszcze nie oglądałem tego w przeglądarce sam).
+    ZMIERZONE PRZEZ AGENTA: tsc 0, build 64/64, 21 prób brzegowych na 3 polach bez
+    ani jednego NaN / Infinity / „0 zł"; prerender SSG nie zawiera już żadnej
+    domyślnej kwoty. Procent automatyzacji też uznany za daną klienta (żaden preset
+    nie jest wciśnięty na starcie, przy etykiecie stoi „wybierz"). PolePrzewodnik
+    dostał `value: number | null` plus propy `onClear` i `wymagane`, wstecznie
+    zgodnie. MÓJ FAŁSZYWY ALARM: zgłosiłem 4 em-dash w tym pliku, po sprawdzeniu
+    wszystkie siedzą w komentarzach JSX, nie w tekście dla klienta. Nic do poprawy.
+0.2b DRUGI kalkulator (KalkulatorProcesu) miał tę samą wadę: razyTydzien 20,
+    minut 10, osoby 1, stawka 60 zł, proc 60%. STAN: CLAIMED-UNVERIFIED (agent
+    skończył, ja jeszcze nie oglądałem sam). ZMIERZONE PRZEZ AGENTA: tsc 0,
+    build 0, lint 0; komplet 20 razy / 10 min / 1 os. / 60 zł / 80% daje 8314 zł,
+    173 h rocznie, 693 zł miesięcznie, zwrot po 41,0 mc, i wszystko zgadza się
+    z ręcznym rachunkiem co do złotówki. Regresja KalkulatorOszczednosci na tej
+    samej stronie przeszła. PolePrzewodnik NIE był ruszany, nowe propy wystarczyły.
+    DECYZJA PAWŁA 2026-08-31: procent automatyzacji zostaje PUSTY w obu
+    kalkulatorach, nie wraca do 60%.
+0.2c BŁĄD LICZNIKA, znaleziony przy okazji i NAPRAWIONY (components/motion/
+    AnimatedMetric.tsx). Wzorzec `-?\d+(?:[.,]\d+)?` łapał z „19 953 zł" samo „19",
+    a resztę brał za sufiks, więc przez około 1,2 s po wyliczeniu w miejscu wyniku
+    migały KWOTY, KTÓRYCH NIKT NIE POLICZYŁ („1 953 zł", „6 953 zł", w jednym
+    przebiegu nawet ujemna). To łamało zasadę zera zmyślonych liczb mocniej niż
+    domyślne wartości pól. NAPRAWA: wzorzec obejmuje grupy tysięcy rozdzielone
+    spacją, NBSP i NNBSP, a separatory lecą przed parseFloat. Grupa wymaga
+    DOKŁADNIE trzech cyfr, więc „140 h" i „7 dni" nadal dopasowują samą liczbę.
+    ZMIERZONE: 11 na 11 przypadków, klatki dla 19 953 zł idą teraz
+    0 zł, 9977 zł, 14 965 zł, ..., 19 953 zł, bez fałszywej kwoty.
+    PRZY OKAZJI naprawione: metryka „1 000 rekordów" (leady B2B) miała ten sam błąd.
+    Test: scratchpad/test-parser.mjs, ALARMÓW 0.
+0.3 Nazwa klienta „ZB Bielizsy" wygląda na zapis ze słuchu. STAN: PYTANIE DO PAWŁA.
+    Nie blokuje, w pakietach klient jest opisany bezosobowo.
+0.4 Ceny stron WWW (1590 / 2900 / od 5900 zł) nie są w lib/uslugi/strony-www.ts.
+    STAN: NIERUSZONE, wchodzi z pakietem 6.
+
+## MÓJ BŁĄD W TYM PRZEBIEGU (do wiadomości przy wznowieniu)
+
+Nadpisałem ten plik nową treścią, nie sprawdziwszy najpierw, że istnieje i ma
+1041 linii historii. Odzyskane z HEAD, `git diff` na STATUS.md czysty, nic nie
+przepadło. Wniosek na przyszłość: STATUS.md jest dziennikiem narastającym,
+nowy etap dopisuje się NA GÓRZE nad separatorem, nigdy nie zastępuje całości.
+
+## ROZBIEŻNOŚCI PAKIETÓW WOBEC REALNEGO KODU (zmierzone, nie założone)
+
+Pakiety deklarują 53 podstrony. Po sprawdzeniu wobec kodu: 50 unikalnych.
+
+- KOLIZJA 1 (2 sztuki): `/uslugi/automatyzacje/obsluga-maili` i
+  `/uslugi/automatyzacje/raporty-sprzedazowe` stoją JEDNOCZEŚNIE w automatyzacje.md
+  i w wdrozenia.md. Dwa pliki nie zajmą jednego adresu.
+  DECYZJA: wersja z pakietu tematycznego wygrywa, treść z wdrozenia.md wchodzi jako
+  materiał do wzbogacenia tej pierwszej. Bez duplikatu.
+- KOLIZJA 2 (1 sztuka): wdrozenia.md chce `/uslugi/automatyzacje/ofertowanie`,
+  automatyzacje.md chce `/uslugi/automatyzacje/ofertowanie-i-kosztorysy`. Ta sama
+  intencja pod dwoma adresami = kanibalizacja.
+  DECYZJA: jeden adres, `ofertowanie-i-kosztorysy`, treść scalona.
+- KOLIZJA 3 (3 sztuki, PYTANIE DO PAWŁA): wdrozenia.md chce `/uslugi/cennik`,
+  `/uslugi/wdrozenie-ai-male-firmy`, `/uslugi/wdrozenie-krok-po-kroku`. To płaskie
+  slugi, które w tym repo obsługuje trasa `/uslugi/[usluga]` karmiona rejestrem
+  USLUGI, a ten napędza też nawigację i hub. Wpisanie ich tam wrzuci trzy pozycje
+  do menu jako nowe usługi. Nie blokuje pakietów 1 do 7.
+- DO ROZSTRZYGNIĘCIA przy pakietach 4 i 5: `/uslugi/automatyzacje/audyt-ai` obok
+  istniejącej usługi `/uslugi/audyt-ai`, oraz `/uslugi/automatyzacje/leady-b2b`
+  obok istniejącej `/uslugi/leady-b2b`.
+
+## PAKIET 1 (GEO) — PODSTRONY ZROBIONE I ZMIERZONE, sekcje w toku
+
+OSIEM podstron gałęzi /uslugi/optymalizacja/ stoi: audyt-widocznosci-w-ai (próbka),
+chatgpt, dostep-botow-ai, google-ai-overviews, perplexity, monitoring-cytowan-w-ai,
+dla-firm-uslugowych, llms-txt.
+
+JAK POWSTAŁY: 7 agentów pisało równolegle, każdy dostał WYŁĄCZNIE swój wycinek
+geo.md (żeby nikt nie czytał 60 kB naraz), za każdym szedł kontroler adwersaryjny
+z zadaniem ZNALEŹĆ błąd, nie potwierdzić. Rejestr, trasy i build zostały wyjęte
+z ich zakresu i zrobione osobno przez integratora, żeby się nie pobili o pliki.
+
+CO ZŁAPAŁA KONTROLA (rzeczy, których sam bym nie zobaczył):
+ - ZMYŚLONE ODNIESIENIA CZASOWE: „raport wygląda tak samo jak pół roku temu"
+   i „dają mniej wejść niż rok temu". Pakiet nie podaje ŻADNEGO odniesienia
+   czasowego do spadku ruchu. Usunięte.
+ - KANIBALIZACJA MIERZONA, nie na oko: dwie pary zdań o podobieństwie 0,89 i 0,83
+   wobec strony rodzica. Przepisane, fakty bez zmian.
+ - KWOTY POZA SEKCJĄ CENY: „1490 zł netto" w karcie „Powiązane", wbrew uwadze
+   wdrożeniowej pakietu §6. Wycięte dwa razy, przez dwóch różnych agentów.
+ - KWOTY BEZ NETTO: w jednym zdaniu „landing 1590 zł, strona biznesowa 2900 zł,
+   zaawansowana od 5900 zł netto" dwie pierwsze kwoty nie miały dopisku.
+ - BRAK ZDANIA KONTRAKTOWEGO: na dla-firm-uslugowych 1490 zł padało sześć razy
+   i ani razu bez „kwotę odliczamy w całości od ceny wdrożenia", choć w całym
+   repo Sprint Diagnostyczny zawsze je niesie.
+
+FAŁSZYWY ALARM KONTROLI (zostawiony świadomie): kontrolerzy uznali zdanie
+„Dokładną cenę poznasz na bezpłatnej diagnozie" za nieprawdę na stronach
+z płatnym audytem. Nie wiedzieli o odpowiedzi Pawła z 2026-08-31: bezpłatna
+rozmowa ZAWSZE jest pierwsza, także przed płatnym audytem. Zdanie jest prawdziwe.
+
+ZMIERZONE PO INTEGRACJI (build lokalny, przeglądarka Chrome):
+ - strony 59 -> 66, przyrost DOKŁADNIE 7,
+ - wszystkie 8 podstron 200, po jednym h1, zero błędów konsoli, brak poziomego
+   przewijania,
+ - kolorowy człon H1 na wszystkich ośmiu, sprawdzony PROGRAMOWO (h1.endsWith),
+   nie na oko,
+ - 18 unikalnych celów linków wewnętrznych, WSZYSTKIE 200, zero martwych,
+ - linki redakcyjne między siostrami: 8 -> 19,
+ - zero em-dash i zero frazy „wirtualna recepcjonistka" na wszystkich ośmiu,
+ - zero kwot w kartach „Powiązane" (grep po wyrenderowanym HTML),
+ - sitemap: 9 adresów gałęzi (rodzic + 8),
+ - REGRESJA: /uslugi, /uslugi/optymalizacja, /uslugi/audyt-ai, /uslugi/chatboty,
+   /uslugi/voiceboty/windykacja nadal 200 z tym samym H1,
+ - tsc 0, build 0, lint 0.
+
+W TOKU: 13 sekcji N1 do N13 do lib/uslugi/optymalizacja.ts, trzy przebiegi po
+kolei plus kontrola adwersaryjna całego pliku.
+
+## USTALENIE: REPO NIE JEST PRETTIER-CLEAN
+
+Sprawdzone: zacommitowane `lib/uslugi/podstrony/windykacja.ts` i
+`lib/uslugi/voiceboty.ts` NIE przechodzą `prettier --single-quote --print-width 100
+--check`. Wniosek: NIE puszczać prettiera hurtem na nowe pliki, bo odróżni je
+od pliku, który był dla nich wzorcem, i zrobi szeroki diff formatowania zamiast
+zmiany merytorycznej. Formatować tylko pliki, które i tak się edytuje.
+
+## PAKIET 2 (CHATBOTY) — ZMAPOWANY, NIERUSZONY
+
+Plik `.seo-przeglad/pakiety/chatboty.md` (846 linii).
+Sekcje 1 do 11: linie 34 do 465. Podstrony: linie 466 do 821. Uwagi: 822 do końca.
+ P1 cennik 472 | P2 obsluga-klienta 531 | P3 baza-wiedzy 589 | P4 sklep-internetowy 648
+ P5 generowanie-leadow 676 | P6 whatsapp-messenger 704 | P7 asystent-wewnetrzny 763
+ P8 hotele-pensjonaty 793
+
+DO ZROBIENIA PRZED PAKIETEM 2 (inaczej podstrony nie powstaną):
+ 1. założyć katalog trasy `app/uslugi/chatboty/[podstrona]/page.tsx` na wzór
+    optymalizacji (voicebotowy wzorzec ma 4 ostrzeżenia lintu o nieużywanych
+    importach, więc kopiować z optymalizacji, nie z voicebotów),
+ 2. dopisać `chatboty: 'Chatboty'` do ETYKIETA_RODZICA w
+    `lib/uslugi/podstrony/okruszki.ts` (etykieta 1:1 z KATEGORIA_LABEL, zero
+    nowego stringu marki),
+ 3. wpisy w H1_KOLOR i KAFEL_CENY dla ośmiu nowych slugów.
+
+## ETAPY 1 do 8 — pakiety (kolejność z 00-INDEKS.md)
+
+1. GEO / optymalizacja      13 sekcji,  8 podstron  — W TOKU (próbka P1)
+2. Chatboty                 11 sekcji,  8 podstron  — NIERUSZONE
+3. Voiceboty                11 sekcji,  6 podstron  — NIERUSZONE
+4. Automatyzacje            11 sekcji,  8 podstron  — NIERUSZONE
+5. Audyt AI                 11 sekcji,  6 podstron  — NIERUSZONE
+6. Strony WWW               12 sekcji,  5 podstron  — NIERUSZONE
+7. Faktury i KSeF           11 sekcji,  5 podstron  — NIERUSZONE
+8. Wdrożenia AI              9 sekcji,  4 unikalne  — NIERUSZONE
+
+POTWIERDZONE W KODZIE: wszystkich 7 rodziców istnieje w rejestrze lib/uslugi/.
+Mechanizm podstron (lib/uslugi/podstrony/) działa, dziś niesie 3 podstrony
+voicebotów. Katalog `app/uslugi/voiceboty/` NIE ma własnego page.tsx, a
+`/uslugi/voiceboty` i tak zwraca 200 na produkcji, bo Next spada do trasy
+`[usluga]`. Ten sam wzorzec działa dla pozostałych rodziców.
+
+BRAMKA AKCEPTACJI: przy 50 podstronach zła forma = 50 złych plików, więc najpierw
+powstaje JEDNA kompletna podstrona (/uslugi/optymalizacja/audyt-widocznosci-w-ai)
+ze zrzutem ekranu. Reszta rusza dopiero po akceptacji Pawła.
+
+DECYZJA O /design: pipeline domyślnie każe odpalić panel trzech kierunków
+wizualnych. POMINIĘTY ŚWIADOMIE, bo przy poleceniu „design zostaje nietknięty"
+panel wypracowałby trzy NOWE kierunki, czyli dokładnie to, co rozwaliłoby
+spójność. Reguła 7 samego pipeline'u: wzorzec bije kierunek, a wzorcem jest tu
+istniejący serwis. `impeccable` zostaje na końcu jako audytor zgodności.
+
+## DECYZJE PAWŁA Z 2026-08-31 (obowiązujące, nie renegocjować)
+
+1. metaTitle podstron: konwencja repo 50 do 60 znaków WYGRYWA z krótkim metaTitle
+   z pakietu. Fraza główna zostaje na początku, wyróżnik wyłącznie z faktów,
+   które są na tej stronie. Dotyczy wszystkich 50 podstron.
+2. Kalkulatory: procent automatyzacji zostaje PUSTY, nie wraca do 60%.
+3. Zakres: robimy PAKIETY 1 i 2 (GEO plus Chatboty), potem pomiar, potem decyzja
+   o reszcie. Zgodnie z radą z 00-INDEKS.md.
+4. Audyt AI za 1490 zł: cena STAŁA, każdy płaci tyle samo, bez słowa „od".
+5. Bezpłatna rozmowa jest ZAWSZE pierwsza, także przed płatnym audytem. Więc
+   nagłówek „Zacznij od bezpłatnej diagnozy" w ServiceCTA jest PRAWDZIWY
+   i ZOSTAJE. Moja pierwsza analiza była tu błędna.
+6. Przy chatbotach, voicebotach i automatyzacjach ceny SĄ widełkami, więc zdanie
+   o widełkach startowych jest tam prawdziwe i NIE RUSZAMY go. Poprawiamy je
+   wyłącznie tam, gdzie cena jest stała (mechanizm: nowa flaga ramaCeny.cenaStala).
+
+## PRÓBKA (bramka akceptacji) — ZROBIONA
+
+/uslugi/optymalizacja/audyt-widocznosci-w-ai. ZMIERZONE: tsc czysto; build 58 do
+59 plików html i 61 do 62 tras, czyli dokładnie plus jedna; adres 200; rodzic
+/uslugi/optymalizacja nadal 200; /uslugi/voiceboty/windykacja nadal 200; dokładnie
+jeden h1; zero błędów konsoli; brak poziomego przewijania na 1440 i 375 px; adres
+w sitemap z lastmod 2026-08-31; 6 linków wewnętrznych, wszystkie 200; JSON-LD
+FAQPage 8 pytań, Service z offers, BreadcrumbList; zero em-dash w widocznym
+tekście; zero frazy „wirtualna recepcjonistka".
+
+POPRAWIONE PO ZRZUCIE (dociągnięcie do istniejących wzorców, nie zmiana designu):
+- H1_KOLOR dostał wpis dla tego sluga, bo bez niego H1 świecił w całości szarym
+  i podstrona czytała się jak inna rodzina stron (ten sam problem naprawiono
+  wcześniej dla podstron voicebotów, komentarz v20 w ServiceHero).
+- KAFEL_CENY dostał wpis z pustym prefiksem, bo fallback doklejał „od " i strona
+  obiecywała widełki przy cenie stałej.
+- okruszki.ts dostały etykietę „Optymalizacja" (1:1 z KATEGORIA_LABEL), więc
+  łańcuch ma 4 poziomy zamiast 3.
+
+## FLAGA `ramaCeny.cenaStala` — ZROBIONA (CLAIMED-UNVERIFIED, ja jeszcze nie oglądałem)
+
+Stała cena udawała widełki w TRZECH miejscach naraz, nie w jednym:
+ 1. mikrokopia pod kartą ceny (RamaCeny.tsx),
+ 2. DUŻA kwota na karcie: „od 1490 zł netto" (RamaCeny.tsx, piętro wyżej),
+ 3. Service JSON-LD dla robotów: PriceSpecification z minPrice i opisem
+    „Cena od (zależna od zakresu integracji)", przy audycie bez żadnych integracji.
+Trzecie miejsce trzeba było naprawić DWA razy, bo trasa
+`app/uslugi/optymalizacja/[podstrona]/page.tsx` składa Service JSON-LD SAMA,
+nie przez `uslugaSchemas`.
+
+MECHANIZM: jedno opcjonalne pole `ramaCeny.cenaStala?: boolean`. Brak pola albo
+false = widełki, czyli dotychczasowe zachowanie wszystkich. Ustawione TYLKO na
+`audyt-ai` i `audyt-widocznosci-w-ai`. Prefiks kafla w ServiceHero wyprowadzony
+z tej samej flagi, więc zniknęło drugie źródło prawdy (mapa KAFEL_CENY trzyma
+już tylko `opis`).
+
+ZMIERZONE, skan WSZYSTKICH 17 prerenderowanych stron usług:
+ - zmienione dokładnie 2 strony (oba audyty): „1490 zł netto" i Offer.price 1490,
+ - bez zmian 14 stron z ramą ceny: asystent od 4999, chatboty od 1790, leady
+   od 169, opieka od 3000, voiceboty i 3 podstrony od 2500, plus 7 stron bez
+   ceny jawnej,
+ - zdanie o widełkach stoi nienaruszone tam, gdzie jest prawdziwe.
+tsc 0, build 0, lint 0. Odczyty z żywego DOM i z script[type=application/ld+json].
+
+SCHEMA: przy cenie stałej Offer.price (kanoniczne pole schema.org dla jednej
+ostatecznej kwoty), przy widełkach bez zmian PriceSpecification z minPrice.
+Kwota w JSON-LD i w interfejsie nadal z tego samego `minPrice`.
+
+DŁUG DO SPŁATY (jedna linia, świadomie odłożona przy zajętym repo):
+`app/uslugi/voiceboty/[podstrona]/page.tsx` też składa Service JSON-LD ręcznie
+i nie przekazuje `cenaStala`. Dziś bez skutku, bo żadna podstrona voicebotów nie
+ma tej flagi. ALE pakiet 3 planuje `/uslugi/voiceboty/cennik`, więc DOPISAĆ TĘ
+LINIĘ PRZED PAKIETEM 3.
+
+CZEKA NA PAWŁA: pisownia „ZB Bielizsy"; los trzech płaskich adresów z pakietu 8;
+czas w dniach roboczych dla AI Start (1990 zł) i pełnego wdrożenia automatyzacji;
+koszt etatu do 5 tabel porównawczych.
+
+PUNKT COFNIĘCIA: tag `seo-2026-08-31` na ca6f74b.
+
+---
+
 # STATUS — v24: SEKCJA /PRODUKTY NA PALECIE NEONOWEJ — DO WDROŻENIA
 
 ZARZUTY PAWŁA (2026-08-21) I CO Z NIMI ZROBIONE:
