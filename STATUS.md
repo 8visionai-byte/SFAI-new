@@ -140,7 +140,65 @@ Sprawdzone: zacommitowane `lib/uslugi/podstrony/windykacja.ts` i
 od pliku, który był dla nich wzorcem, i zrobi szeroki diff formatowania zamiast
 zmiany merytorycznej. Formatować tylko pliki, które i tak się edytuje.
 
-## PAKIET 2 (CHATBOTY) — ZMAPOWANY, NIERUSZONY
+## PAKIET 1 — ZACOMMITOWANY LOKALNIE, NIE WYPCHNIETY
+
+790f60a fix(seo-etap0): 29 plikow, +579/-330
+58082f2 feat(pakiet-1-geo): 15 plikow, +6217/-54
+Rozdzielone celowo, zeby dalo sie cofnac rozbudowe bez cofania poprawek.
+NIE wypchniete na produkcje. Czeka na slowo Pawla.
+
+## PAKIET 2 (CHATBOTY) — ZROBIONY I ZMIERZONY, zacommitowany lokalnie
+
+2050897 feat(pakiet-2-chatboty): 39 plików, +6578/-122. NIE wypchnięty.
+
+OSIEM podstron /uslugi/chatboty/: cennik, obsluga-klienta, baza-wiedzy,
+sklep-internetowy, generowanie-leadow, whatsapp-messenger, asystent-wewnetrzny,
+hotele-pensjonaty. Plus 11 sekcji do lib/uslugi/chatboty.ts.
+
+ZMIERZONE: 9 adresów gałęzi 200, po jednym h1, kolorowy człon H1 na każdym;
+121 sprawdzeń linków wewnętrznych, WSZYSTKIE 200, zero martwych; zero poziomego
+przewijania na 1440 i 390 px; zero błędów konsoli; zero em-dash w CAŁYM źródle
+(DOM, atrybuty, aria-label, JSON-LD); zero „Slack", „Microsoft Teams"
+i „wirtualna recepcjonistka"; wszystkie w sitemap; REGRESJA 10 tras spoza
+pakietu nadal 200; strony 72 do 80, przyrost dokładnie 8; tsc 0, build 0.
+
+### CO DAŁA NOWA WARSTWA: KRYTYK KOMPLETNOŚCI
+
+Kontrolerzy sprawdzają SWOJĄ stronę i nie widzą całości. Dodany krytyk zobaczył:
+ - KANIBALIZACJĘ RODZICA Z WŁASNĄ PODSTRONĄ, podobieństwo 1,0: FAQ nr 1 rodzica
+   brzmiało dosłownie jak fraza główna podstrony cennika i niosło tę samą
+   drabinę progów (9 z 12 komórek identycznych). Dwa adresy walczyły o to samo
+   zapytanie i wysyłały ten sam FAQPage.
+ - HOTELE Z ZEREM LINKÓW PRZYCHODZĄCYCH przy cenniku z siedmioma.
+ - GÓRNY PRÓG 15000 ZŁ W SZEŚCIU ZAPISACH, w tym w siedmiu hubach FAQ,
+   w poradniku i w BAZIE WIEDZY CHATBOTA (bot mówiłby inaczej niż strona).
+
+### ZŁAPANE ZANIM ZABOLAŁO
+
+Plik nazywał się `cennik.ts`, a pakiety voicebotów, automatyzacji i stron WWW
+KAŻDY planuje własny /cennik: cztery pliki o tej samej nazwie. Zmieniony na
+`chatboty-cennik.ts`, `slug` został `cennik`, adres bez zmian.
+TO SAMO ZROBIĆ przy każdym kolejnym cenniku z następnych pakietów.
+
+### EM-DASH POZA TREŚCIĄ WIDOCZNĄ (dotyczyło całego serwisu)
+
+Wszystkie wcześniejsze kontrole sprawdzały widoczny tekst. Znaleziono go w:
+`aria-label` logo, opisie Organization w JSON-LD (czytają Google i modele AI),
+wypełniaczu tabeli magnesu oraz w PRAWDZIWYM cytacie klienta na stronie głównej
+(ONYX). W cytacie zmieniona WYŁĄCZNIE interpunkcja, słowa te same.
+
+### SŁOWNICTWO
+
+„utrzymanie" wygrało z „opieka" dla 99-599 zł, bo „Opieka AI" to OSOBNA usługa
+z własnym cennikiem (3000/5500/10000 zł). Najniższy próg miał PIĘĆ nazw,
+został „próg prosty".
+
+### ŚWIADOMY WYJĄTEK
+
+whatsapp-messenger ma minPrice 3000 („od 3000 zł, próg średni"), bo ta strona
+wycenia DOŁOŻENIE KANAŁU do gotowego bota, nie wdrożenie od zera.
+
+## PAKIET 2 — DANE ARCHIWALNE (mapa pliku)
 
 Plik `.seo-przeglad/pakiety/chatboty.md` (846 linii).
 Sekcje 1 do 11: linie 34 do 465. Podstrony: linie 466 do 821. Uwagi: 822 do końca.
