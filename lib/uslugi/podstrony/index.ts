@@ -30,10 +30,21 @@ import { perplexity } from './perplexity';
 import { monitoringCytowanWAi } from './monitoring-cytowan-w-ai';
 import { dlaFirmUslugowych } from './dla-firm-uslugowych';
 import { llmsTxt } from './llms-txt';
+import { chatbotyCennik } from './chatboty-cennik';
+import { obslugaKlienta } from './obsluga-klienta';
+import { bazaWiedzy } from './baza-wiedzy';
+import { sklepInternetowy } from './sklep-internetowy';
+import { generowanieLeadow } from './generowanie-leadow';
+import { whatsappMessenger } from './whatsapp-messenger';
+import { asystentWewnetrzny } from './asystent-wewnetrzny';
+import { hotelePensjonaty } from './hotele-pensjonaty';
 
 export type { PodstronaUslugi } from './types';
 
-/** Wszystkie podstrony usług (dziś: trzy voicebotów + osiem optymalizacji). */
+/**
+ * Wszystkie podstrony usług (dziś: trzy voicebotów, osiem optymalizacji,
+ * osiem chatbotów).
+ */
 export const PODSTRONY: readonly PodstronaUslugi[] = [
   windykacja,
   potwierdzanieWizyt,
@@ -50,6 +61,20 @@ export const PODSTRONY: readonly PodstronaUslugi[] = [
   monitoringCytowanWAi,
   dlaFirmUslugowych,
   llmsTxt,
+  /* Gałąź `chatboty` w kolejności publikacji z pakietu
+     `.seo-przeglad/pakiety/chatboty.md` (sekcja „## Nowe podstrony", P1 do P8):
+     najpierw fraza transakcyjna (cennik), potem cztery zastosowania od
+     najbardziej komercyjnego, dalej jedyna podstrona o kanale, na końcu
+     zastosowanie wewnętrzne i strona branżowa. Ta tablica wychodzi 1:1 do mapy
+     witryny, więc kolejność nie jest przypadkowa. */
+  chatbotyCennik,
+  obslugaKlienta,
+  bazaWiedzy,
+  sklepInternetowy,
+  generowanieLeadow,
+  whatsappMessenger,
+  asystentWewnetrzny,
+  hotelePensjonaty,
 ] as const;
 
 /** Indeks `rodzic/slug` -> podstrona (O(1) lookup, budowany raz na moduł). */

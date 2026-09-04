@@ -37,6 +37,10 @@ const ETYKIETA_RODZICA: Record<string, string> = {
      w `lib/realizacje/types.ts` ('Optymalizacja'), zgodna z segmentem URL.
      Zero nowego stringu marki, tak jak przy voicebotach. */
   optymalizacja: 'Optymalizacja',
+  /* 2026-09-04, gałąź /uslugi/chatboty/: etykieta 1:1 z `KATEGORIA_LABEL`
+     w `lib/realizacje/types.ts` ('Chatboty'), zgodna z segmentem URL.
+     Zero nowego stringu marki, tak jak przy voicebotach i optymalizacji. */
+  chatboty: 'Chatboty',
 };
 
 /**

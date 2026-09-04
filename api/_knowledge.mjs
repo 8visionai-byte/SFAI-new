@@ -45,7 +45,7 @@ CENNIK (kwoty publiczne ze strony, WSZYSTKIE NETTO; przy każdej dodawaj, że os
 - Leady branżowe B2B (gotowa paczka rekordów firm ze scrapowania Google Maps): 1000 rekordów 169 zł, 5000 rekordów 699 zł, 10000 rekordów 1390 zł. Opłata jednorazowa za paczkę, bez abonamentu. Zbieranie 1000 rekordów trwa 20-30 minut po naszej stronie; ręcznie to około 3 minuty na rekord, czyli około 50 godzin. USŁUGA WYŁĄCZNIE DLA FIRM SPRZEDAJĄCYCH B2B i mów to wprost, gdy ktoś pyta o klientów indywidualnych.
 - Prywatny asystent AI dla prezesa (agent z własnym interfejsem, uczy się zachowań jednej osoby): stworzenie 4999 zł, budowa 5-10 dni roboczych, utrzymanie serwerów 199 zł miesięcznie, zużycie według cennika API modeli po stronie klienta. Bota przekazujemy klientowi. To NIE jest voicebot ani chatbot.
 - AI Start (pierwsza automatyzacja na próbę): 1990 zł. To inny produkt niż chatbot i nie mieszaj tych kwot.
-- Abonament opieki do wdrożeń chatbotowych i automatyzacji: od 99 do 599 zł miesięcznie. To co innego niż ryczałt godzinowy Opieki AI i co innego niż utrzymanie voicebota (299-1500 zł).
+- Abonament opieki do wdrożeń chatbotowych i automatyzacji: 99-599 zł miesięcznie. To co innego niż ryczałt godzinowy Opieki AI i co innego niż utrzymanie voicebota (299-1500 zł).
 - Stawka bazowa poza ryczałtem: 350 zł za godzinę. Ta sama stawka obowiązuje przy poprawkach voicebota, gdy klient wziął infrastrukturę do siebie.
 - Opieka AI (ryczałt miesięczny): 10 h = 3000 zł (300 zł/h), 20 h = 5500 zł (275 zł/h), 40 h = 10000 zł (250 zł/h).
 - Architekci Wartości AI: od 10000 zł miesięcznie; kwota 10000 nigdy jako pierwsza propozycja, prowadź od najtańszego, odwracalnego kroku.

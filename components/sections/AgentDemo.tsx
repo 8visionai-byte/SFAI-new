@@ -89,7 +89,7 @@ export function AgentDemo() {
           <Bubble side="user">Chcę umówić wizytę na czwartek.</Bubble>
           <Bubble side="bot">Godziny otwarcia: pon–pt 9:00–17:00. Zapraszamy!</Bubble>
           <p className="pt-2 text-caption text-fg-subtle">
-            …i na tym koniec. Klient i tak musi zadzwonić, a Ty — oddzwonić.
+            …i na tym koniec. Klient i tak musi zadzwonić, a Ty oddzwonić.
           </p>
         </div>
       </div>
@@ -155,7 +155,7 @@ export function AgentDemo() {
             )}
           >
             <CheckIcon />
-            Umówione — bez Twojego udziału.
+            Umówione bez Twojego udziału.
           </div>
         </div>
       </div>

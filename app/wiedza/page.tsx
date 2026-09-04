@@ -83,7 +83,7 @@ const KATEGORIE: Kategoria[] = [
   },
   {
     id: 'ai-radar',
-    tytul: 'AI Radar — newsy AI dla firm',
+    tytul: 'AI Radar: newsy AI dla firm',
     opis:
       'Newsy ze świata AI przefiltrowane przez jedno pytanie: co to znaczy dla Twojej firmy. Co się stało, czemu ważne, nasz filtr i co zrobić. Bez hype’u.',
     href: '/ai-radar',
@@ -101,7 +101,7 @@ const KATEGORIE: Kategoria[] = [
   },
   {
     id: 'case-studies',
-    tytul: 'Case studies — wdrożenia AI z liczbami',
+    tytul: 'Case studies: wdrożenia AI z liczbami',
     opis:
       'Realne wdrożenia AI w firmach, opisane z liczbami: co zautomatyzowaliśmy, ile czasu i leadów to odzyskało. Dowód, nie obietnice.',
     href: '/realizacje',
@@ -317,7 +317,7 @@ const FAQ_HUBU = [
     /* (b) ceny locked, zdania 1:1 ze stron usług i poradnika o automatyzacji. */
     pytanie: 'Ile kosztuje wdrożenie tego, o czym tu piszecie?',
     odpowiedz:
-      'Chatbot na stronę startuje od 1790 zł netto i powstaje w 1 do 2 dni roboczych, wdrożenie średnie to 3000 do 6000 zł netto, a duże z integracjami 8000 do 15000 zł netto. Voicebot to 2500 zł netto w wersji prostej, gotowy w 3 do 5 dni roboczych, albo 5000 do 9000 zł netto z integracjami, wtedy 5 do 25 dni roboczych. Automatyzacja procesu kosztuje zwykle od 3000 do 10000 zł, audyt AI to 1490 zł netto i odliczamy go od wdrożenia, a pakiet AI Start z pierwszą automatyzacją na próbę to 1990 zł. Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy. Dokładną wycenę podajemy po bezpłatnej diagnozie.',
+      'Chatbot na stronę startuje od 1790 zł netto i powstaje w 1 do 2 dni roboczych, wdrożenie średnie to 3000 do 6000 zł netto, a duże z integracjami 8000-15000 zł netto. Voicebot to 2500 zł netto w wersji prostej, gotowy w 3 do 5 dni roboczych, albo 5000 do 9000 zł netto z integracjami, wtedy 5 do 25 dni roboczych. Automatyzacja procesu kosztuje zwykle od 3000 do 10000 zł, audyt AI to 1490 zł netto i odliczamy go od wdrożenia, a pakiet AI Start z pierwszą automatyzacją na próbę to 1990 zł. Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy. Dokładną wycenę podajemy po bezpłatnej diagnozie.',
   },
 ];
 

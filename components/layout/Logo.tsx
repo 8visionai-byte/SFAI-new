@@ -92,7 +92,7 @@ export function Logo({
     return (
       <Link
         href="/"
-        aria-label={`${LABEL} — strona główna`}
+        aria-label={`${LABEL}, strona główna`}
         className={cn('inline-flex items-center', className)}
       >
         <LogoImage
@@ -107,7 +107,7 @@ export function Logo({
   return (
     <Link
       href="/"
-      aria-label={`${LABEL} — strona główna`}
+      aria-label={`${LABEL}, strona główna`}
       className={cn('inline-flex items-center gap-2', className)}
     >
       {/* Znak cyrkla 40px (spec v3), WYRAZISTY na ciemnym pasku: dwie warstwy

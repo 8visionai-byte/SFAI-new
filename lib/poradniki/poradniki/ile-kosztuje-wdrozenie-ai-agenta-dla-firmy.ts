@@ -23,7 +23,7 @@ import type { Poradnik } from '../types';
  *   - agent z integracją: 2 500 zł BEZ ZMIAN (lib/uslugi/voiceboty.ts minPrice,
  *     audyt §2 potwierdza próg 2 500 zł za bota prostego).
  *   - audyt 1 490 zł BEZ ZMIAN (audyt §3; dochodzi 5 dni roboczych i raport PDF).
- *   - opieka 99 do 599 zł/mies BEZ ZMIAN (decyzja Pawła 2026-08-19: zostaje
+ *   - opieka 99-599 zł/mies BEZ ZMIAN (decyzja Pawła 2026-08-19: zostaje
  *     dla chatbotów i automatyzacji; nowy model 299-1500 zł albo 0 zł dotyczy
  *     WYŁĄCZNIE voicebotów i jest opisany na stronach voicebotowych).
  */
@@ -160,7 +160,7 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
         ],
         [
           'Opieka miesięczna',
-          '99 do 599 zł',
+          '99-599 zł',
           'od startu, albo 0 zł po przekazaniu infrastruktury',
         ],
       ],

@@ -60,7 +60,7 @@ const OPINIE: readonly Opinia[] = [
   },
   {
     cytat:
-      'Mieliśmy faktury z 6 różnych źródeł, każda inaczej wyglądała. Dwie osoby przez łącznie kilka godzin tygodniowo przepisywały dane ręcznie. I tak raz na jakiś czas coś wpadało nie tam gdzie trzeba. Byłam sceptyczna bo wcześniej próbowaliśmy innych rozwiązań i zawsze coś nie działało z naszym systemem. Tu działało od pierwszego tygodnia. Teraz te same dwie osoby robią coś innego — coś co faktycznie wymaga myślenia. To chyba najlepszy sposób żeby to opisać.',
+      'Mieliśmy faktury z 6 różnych źródeł, każda inaczej wyglądała. Dwie osoby przez łącznie kilka godzin tygodniowo przepisywały dane ręcznie. I tak raz na jakiś czas coś wpadało nie tam gdzie trzeba. Byłam sceptyczna bo wcześniej próbowaliśmy innych rozwiązań i zawsze coś nie działało z naszym systemem. Tu działało od pierwszego tygodnia. Teraz te same dwie osoby robią coś innego, coś co faktycznie wymaga myślenia. To chyba najlepszy sposób żeby to opisać.',
     branza: 'Hotel i Restauracja',
     podpis: 'Edyta i Rafał, Właścicielka (ONYX)',
   },

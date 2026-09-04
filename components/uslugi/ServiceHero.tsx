@@ -101,6 +101,20 @@ const H1_KOLOR: Record<string, string> = {
   'monitoring-cytowan-w-ai': 'czy modele Cię polecają',
   'dla-firm-uslugowych': 'warsztat, klinika, gabinet, kancelaria',
   'llms-txt': 'co to jest i czy naprawdę coś daje',
+  /* 2026-09-04: podstrony gałęzi /uslugi/chatboty/. Ten sam powód co wyżej:
+     bez wpisu H1 świeci w całości szarym i podstrona czyta się jak inna
+     rodzina stron. Podział po naturalnym szwie (znak zapytania, dwukropek,
+     przecinek, granica frazy). Każdy fragment sprawdzony PROGRAMOWO jako
+     końcówka h1 z pliku podstrony (h1.endsWith(fragment) i fragment !== h1),
+     nie na oko. */
+  cennik: 'Cennik 2026',
+  'obsluga-klienta': 'który odpowiada o 22:00',
+  'baza-wiedzy': 'firmowa baza wiedzy (RAG)',
+  'sklep-internetowy': 'dla sklepu internetowego',
+  'generowanie-leadow': 'który zbiera i kwalifikuje leady',
+  'whatsapp-messenger': 'na WhatsApp i Messengerze',
+  'asystent-wewnetrzny': 'procedury bez pytania kolegi',
+  'hotele-pensjonaty': 'dla hotelu i pensjonatu',
 };
 
 /** Dzieli h1 na część neutralną i kolorową końcówkę; przy braku dopasowania
@@ -115,7 +129,9 @@ function dzielH1(slug: string, h1: string): { przed: string; kolor: string | nul
 
 /**
  * Etykieta kafla ceny per slug — słowa 1:1 z ramaCeny.tresc danej usługi:
- *  - chatboty/voiceboty: „Pakiet startowy zaczyna się od 990/2500 zł",
+ *  - chatboty: „od 1790 zł netto za próg prosty" (nazwa progu — patrz blok
+ *    o ośmiu podstronach niżej: w całej gałęzi brzmi ona tak samo),
+ *  - voiceboty: „stworzenie od 2500 zł netto za pakiet startowy",
  *  - audyt-ai: „Sprint Diagnostyczny kosztuje 1490 zł" (cena STAŁA, bez „od"),
  *  - opieka-ai: „10 godzin to 3000 zł miesięcznie" (najniższy ryczałt).
  * Fallback dla przyszłych slugów: etykieta pochodna z ramaCeny.h2
@@ -123,7 +139,13 @@ function dzielH1(slug: string, h1: string): { przed: string; kolor: string | nul
  * („od " albo nic) wynika z ramaCeny.cenaStala, patrz kafleStatystyk.
  */
 const KAFEL_CENY: Record<string, { opis: string }> = {
-  chatboty: { opis: 'pakiet startowy' },
+  /* Ta sama nazwa progu co na ośmiu podstronach gałęzi (blok niżej): 1790 zł
+     netto to „próg prosty", słowo w słowo jak w ramaCeny.tresc i FAQ tej
+     usługi (`lib/uslugi/chatboty.ts`). */
+  chatboty: { opis: 'próg prosty' },
+  /* Voiceboty to INNA gałąź i inna kwota (2500 zł): jej treść nazywa to
+     „pakiet startowy" (`lib/uslugi/voiceboty.ts`, podstrony windykacja,
+     odbieranie-telefonow, potwierdzanie-wizyt). Nie zrównywać z chatbotami. */
   voiceboty: { opis: 'pakiet startowy' },
   'audyt-ai': { opis: 'Sprint Diagnostyczny' },
   'opieka-ai': { opis: 'ryczałt miesięczny' },
@@ -143,6 +165,52 @@ const KAFEL_CENY: Record<string, { opis: string }> = {
   'google-ai-overviews': { opis: 'Sprint Diagnostyczny' },
   perplexity: { opis: 'Sprint Diagnostyczny' },
   'dla-firm-uslugowych': { opis: 'Sprint Diagnostyczny' },
+  /* 2026-09-04: WSZYSTKIE OSIEM podstron gałęzi `chatboty` ma jawne
+     `ramaCeny.minPrice` (sprawdzone w plikach, nie założone), więc każda
+     dostaje etykietę. Bez wpisu pod kwotą stanęłoby całe pytanie z
+     ramaCeny.h2 („Ile kosztuje dołożenie WhatsAppa albo Messengera?").
+
+     JEDNA NAZWA JEDNEGO PROGU (poprawka 2026-09-04). Do tej poprawki ta sama
+     kwota 1790 zł miała w kaflach osiem różnych nazw („pakiet startowy",
+     „chatbot prosty", „wdrożenie bota na stronę", „najniższy próg wdrożenia",
+     „bot bez integracji", „próg podstawowy", „próg prosty", „bot na stronie
+     obiektu"), więc czytelnik wędrujący po gałęzi widział osiem produktów
+     zamiast jednego progu. Obowiązuje nazwa „próg prosty" — ta sama, którą
+     niesie treść gałęzi (`lib/uslugi/chatboty.ts` ramaCeny.tresc i FAQ oraz
+     podstrony asystent-wewnetrzny, generowanie-leadow, sklep-internetowy,
+     cennik). Etykieta MOŻE dopowiedzieć po przecinku, czego ten próg dotyczy
+     na TEJ stronie (słowa z pasa metryk albo `ramaCeny.tresc` tej samej
+     strony), ale pierwszy człon zostaje niezmienny — kafel jest wąski, więc
+     dopowiedzenie ma być trzywyrazowe, nie zdaniem. Nowa podstrona gałęzi
+     dostaje ten sam pierwszy człon.
+     Żadna z tych podstron nie ustawia `cenaStala` (ceny chatbotów to
+     widełki), więc prefiks „od " dokłada kafleStatystyk. */
+  cennik: { opis: 'próg prosty' },
+  'obsluga-klienta': { opis: 'próg prosty, bot na stronę' },
+  /* Dopowiedzenie skrócone z pasa metryk tej strony („najniższy próg
+     wdrożenia, baza wiedzy już w środku"). */
+  'baza-wiedzy': { opis: 'próg prosty, baza w środku' },
+  /* 1790 zł opisuje tu bota BEZ integracji (ramaCeny.tresc: „Bot bez
+     integracji zaczyna się od 1790 zł netto"); próg 8000-15000 zł z pasa
+     metryk dotyczy wpięcia w bazę produktów i nie jest `minPrice`.
+     Zapis kwoty bez spacji — reguła zapisu z `lib/uslugi/chatboty.ts`
+     („8000-15000 zł", nie „8000-15 000 zł"). */
+  'sklep-internetowy': { opis: 'próg prosty, bez integracji' },
+  /* Dopowiedzenie skrócone z pasa metryk tej strony („próg prosty, w nim
+     zbieranie leadów"). */
+  'generowanie-leadow': { opis: 'próg prosty, w nim leady' },
+  /* Jedyna z ósemki z inną kwotą (3000) i JEDYNA, która celowo nazywa próg
+     inaczej: ta strona wycenia DOŁOŻENIE kanału do gotowego bota, nie
+     wdrożenie od zera. Pakiet `.seo-przeglad/pakiety/chatboty.md` §P6 mówi
+     wprost: „Dołożenie kanału do gotowego bota mieści się w progu średnim,
+     czyli 3000-6000 zł netto i 3-4 dni robocze". Pełne uzasadnienie z trzema
+     cytatami stoi przy `minPrice` w lib/uslugi/podstrony/whatsapp-messenger.ts.
+     Nie sprowadzać tego kafla do progu prostego. */
+  'whatsapp-messenger': { opis: 'próg średni' },
+  'asystent-wewnetrzny': { opis: 'próg prosty' },
+  /* Dopowiedzenie skrócone z pasa metryk tej strony („bot na stronie
+     obiektu, płatność jednorazowa"). */
+  'hotele-pensjonaty': { opis: 'próg prosty, bot dla obiektu' },
 };
 
 type Kafel = { id: string; wartosc: string; opis: string };

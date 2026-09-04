@@ -1158,7 +1158,7 @@ export const optymalizacja: Usluga = {
         chip: 'RYNEK',
         akapity: [
           'Publiczny cennik rynkowy z projektowaniestroncennik.pl, sprawdzony 31.08.2026: landing 1900 zł, strona firmowa 2500 zł, strona rozbudowana 4000 zł netto.',
-          'Nasz landing jest o 310 zł tańszy. Strona biznesowa kosztuje u nas 400 zł więcej, bo w tej cenie dowozimy SEO i przygotowanie treści pod cytowanie w AI. Zaawansowana startuje wyżej, bo to od 5 do 10 dni pracy.',
+          'Nasz landing jest o 310 zł tańszy. Strona biznesowa kosztuje u nas 400 zł więcej, bo w tej cenie dowozimy SEO i przygotowanie treści pod cytowanie w AI. Zaawansowana startuje wyżej, bo to 5-10 dni pracy.',
         ],
       },
       {

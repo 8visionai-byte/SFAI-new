@@ -230,9 +230,9 @@ export const arkuszKosztRecznychZadan: Material = {
         [
           'RAZEM (przykład)',
           '15',
-          '—',
+          '-',
           '45 000',
-          '—',
+          '-',
           '33 000',
         ],
       ],

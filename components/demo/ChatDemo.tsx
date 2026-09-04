@@ -23,7 +23,7 @@ const WELCOME: Msg = {
 // Atrapa odpowiedzi — czytelnie oznaczona jako demo (zero fałszywych claimów).
 const STUB_REPLY: Msg = {
   from: 'agent',
-  text: 'To wersja demo, więc na żywo jeszcze nie liczę. Najszybciej odpowiem przez formularz — zostaw kontakt, odzywam się w kilka minut.',
+  text: 'To wersja demo, więc na żywo jeszcze nie liczę. Najszybciej odpowiem przez formularz. Zostaw kontakt, odzywam się w kilka minut.',
 };
 
 export function ChatDemo() {

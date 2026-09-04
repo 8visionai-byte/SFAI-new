@@ -41,11 +41,11 @@ export const asystentPrezesa: Usluga = {
   /* BLOK KRÓTKIEJ ODPOWIEDZI (audyt §9 etap 1 pkt 2): cena, czas budowy,
      koszt miesięczny i zasada rozliczenia zużycia w jednym akapicie. */
   kapsula:
-    'Prywatny asystent AI dla prezesa to agent z własnym interfejsem, który uczy się zachowań jednej konkretnej osoby. Pisze maile, robi research, przygotowuje do rozmów i tworzy prezentacje, a do tego wchodzi w udostępnione pliki i działa na nich. Stworzenie kosztuje 4999 zł netto, budowa trwa 5 do 10 dni roboczych, utrzymanie serwerów to 199 zł netto miesięcznie, a zużycie modeli rozliczasz według realnego użycia. Bota przekazujemy Tobie.',
+    'Prywatny asystent AI dla prezesa to agent z własnym interfejsem, który uczy się zachowań jednej konkretnej osoby. Pisze maile, robi research, przygotowuje do rozmów i tworzy prezentacje, a do tego wchodzi w udostępnione pliki i działa na nich. Stworzenie kosztuje 4999 zł netto, budowa trwa 5-10 dni roboczych, utrzymanie serwerów to 199 zł netto miesięcznie, a zużycie modeli rozliczasz według realnego użycia. Bota przekazujemy Tobie.',
 
   metaTitle: 'Prywatny asystent AI dla prezesa: 4999 zł',
   metaDescription:
-    'Asystent AI uczący się jednej osoby: maile, research, przygotowanie do rozmów, praca na plikach. Stworzenie 4999 zł netto, budowa 5 do 10 dni roboczych.',
+    'Asystent AI uczący się jednej osoby: maile, research, przygotowanie do rozmów, praca na plikach. Stworzenie 4999 zł netto, budowa 5-10 dni roboczych.',
 
   problem: {
     h2: 'Na czym schodzi dzień osoby, która prowadzi firmę?',
@@ -220,7 +220,7 @@ export const asystentPrezesa: Usluga = {
       { cecha: 'Zakres', bez: 'Taki sam dla wszystkich', zNami: 'Dopasowany do jednej osoby' },
       { cecha: 'Interfejs', bez: 'Wspólne okno czatu', zNami: 'Własny interfejs asystenta' },
       { cecha: 'Koszt startu', bez: 'Niski, ale bez efektu na starcie', zNami: '4999 zł netto jednorazowo' },
-      { cecha: 'Czas budowy', bez: 'Brak budowy, brak dopasowania', zNami: '5 do 10 dni roboczych' },
+      { cecha: 'Czas budowy', bez: 'Brak budowy, brak dopasowania', zNami: '5-10 dni roboczych' },
       { cecha: 'Koszt miesięczny', bez: 'Abonament za dostęp', zNami: '199 zł netto za serwery plus realne zużycie' },
       { cecha: 'Własność', bez: 'Konto u dostawcy', zNami: 'Bota przekazujemy Tobie' },
     ],
@@ -237,7 +237,7 @@ export const asystentPrezesa: Usluga = {
       {
         tytul: 'Budowa i pierwsze uczenie',
         opis:
-          'W 5 do 10 dni roboczych stawiamy agenta z własnym interfejsem i wgrywamy pierwszą wiedzę o firmie. Czas liczymy od przekazania kompletu materiałów i dostępów, a nie od podpisania umowy.',
+          'W 5-10 dni roboczych stawiamy agenta z własnym interfejsem i wgrywamy pierwszą wiedzę o firmie. Czas liczymy od przekazania kompletu materiałów i dostępów, a nie od podpisania umowy.',
       },
       {
         tytul: 'Przekazanie i docieranie',
@@ -253,7 +253,7 @@ export const asystentPrezesa: Usluga = {
        (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
        Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
-      'Stworzenie asystenta kosztuje 4999 zł netto i płacisz to raz, a budowa trwa 5 do 10 dni roboczych. Do tego dochodzi utrzymanie serwerów za 199 zł netto miesięcznie oraz zużycie modeli, rozliczane według realnego użycia po Twojej stronie.',
+      'Stworzenie asystenta kosztuje 4999 zł netto i płacisz to raz, a budowa trwa 5-10 dni roboczych. Do tego dochodzi utrzymanie serwerów za 199 zł netto miesięcznie oraz zużycie modeli, rozliczane według realnego użycia po Twojej stronie.',
     bloki: [
       {
         typ: 'pasMetryk',
@@ -265,7 +265,7 @@ export const asystentPrezesa: Usluga = {
             ton: 'cyan',
           },
           {
-            wartosc: '5 do 10 dni',
+            wartosc: '5-10 dni',
             opis: 'Dni robocze budowy, liczone od przekazania kompletu materiałów.',
             zrodlo: 'pozycja Stworzenie asystenta niżej',
             ton: 'violet',
@@ -301,11 +301,11 @@ export const asystentPrezesa: Usluga = {
             podtytul: '4999 zł netto, płatne raz',
             naglowek: 'Stworzenie asystenta kosztuje 4999 zł netto i płacisz to raz.',
             akapity: [
-              'Budowa trwa 5 do 10 dni roboczych, liczonych od przekazania kompletu materiałów i dostępów, a nie od podpisania umowy. Kompletem nazywamy to, co asystent ma znać i gdzie ma móc wejść.',
+              'Budowa trwa 5-10 dni roboczych, liczonych od przekazania kompletu materiałów i dostępów, a nie od podpisania umowy. Kompletem nazywamy to, co asystent ma znać i gdzie ma móc wejść.',
               'W tej kwocie jest agent z własnym interfejsem, przypisany do jednej konkretnej osoby, i pierwsza wiedza o Twojej firmie.',
             ],
             punkty: [
-              'Budowa w 5 do 10 dni roboczych.',
+              'Budowa w 5-10 dni roboczych.',
               'Dwie rundy poprawek w cenie budowy.',
               'Nowe funkcje dokładane później to rozbudowa, wyceniana osobno.',
             ],
@@ -351,7 +351,7 @@ export const asystentPrezesa: Usluga = {
           [
             'Stworzenie asystenta',
             '4999 zł netto, płatne raz',
-            'Budowa w 5 do 10 dni roboczych, liczonych od przekazania kompletu materiałów i dostępów',
+            'Budowa w 5-10 dni roboczych, liczonych od przekazania kompletu materiałów i dostępów',
           ],
           [
             'Utrzymanie serwerów',
@@ -403,7 +403,7 @@ export const asystentPrezesa: Usluga = {
     {
       pytanie: 'Ile trwa budowa asystenta?',
       odpowiedz:
-        'Od 5 do 10 dni roboczych. Czas liczymy od przekazania kompletu materiałów i dostępów, czyli tego, co asystent ma znać i gdzie ma móc wejść, a nie od podpisania umowy. Dwie rundy poprawek są w cenie budowy.',
+        '5-10 dni roboczych. Czas liczymy od przekazania kompletu materiałów i dostępów, czyli tego, co asystent ma znać i gdzie ma móc wejść, a nie od podpisania umowy. Dwie rundy poprawek są w cenie budowy.',
     },
     {
       pytanie: 'Czym to się różni od zwykłego czatu AI?',
