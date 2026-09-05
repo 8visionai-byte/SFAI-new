@@ -572,7 +572,7 @@ export const whatsappMessenger: PodstronaUslugi = {
   powiazane: {
     uslugi: [
       {
-        etykieta: 'Chatbot AI dla firmy',
+        etykieta: 'Chatbot AI dla firm',
         href: '/uslugi/chatboty',
         opis: 'Strona macierzysta: co robi nasz chatbot, jak go wdrażamy i jak wyceniamy progi wdrożenia.',
       },

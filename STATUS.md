@@ -1,4 +1,51 @@
-# STATUS — ROZBUDOWA Z PAKIETÓW WDROŻENIOWYCH (2026-08-31) — W TOKU
+# STATUS — RAPORT SEO 2026-09-05: NAPRAWA /uslugi/chatboty PRZED PUSHEM — W TOKU
+
+ŹRÓDŁO: `.seo-przeglad/raporty/2026-09-05.md` (osobna sesja przeglądu SEO).
+PUNKT COFNIĘCIA: tag `seo-2026-09-05` = 72c955a (HEAD przed tą rundą).
+PRODUKCJA STOI NA: ca6f74b (v24b, 2026-08-25). Cztery commity pakietów NIEWYPCHNIĘTE.
+
+## DIAGNOZA RAPORTU, ZWERYFIKOWANA PRZEZE MNIE W KODZIE
+
+Fraza „chatbot ai dla firm" zniknęła z wyświetleń (70 -> 3), ale Google NIE CZYTAŁ
+/uslugi/chatboty od 29 LIPCA (URL Inspection API). Więc żadna sierpniowa zmiana nie
+mogła zaszkodzić, bo Google jej nie widział. Przyczyna zewnętrzna: gogler.pl (15.08,
+„2026" w tytule), AI Overview cytujący konkurentów, nasza lipcowa liczba pojedyncza
+„dla firmy" przy zapytaniu w mnogiej „dla firm". Brak mapy witryny w Search Console
+(zgłoszona przez tamtą sesję 5.09, HTTP 204, status „oczekuje").
+
+TWIERDZENIA RAPORTU SPRAWDZONE W KODZIE, WSZYSTKIE PRAWDZIWE:
+ - h1 „Chatbot AI dla firmy" kontra metaTitle „Chatbot AI dla firm" (rozjazd),
+ - 20 kotwic „Chatbot AI dla firmy" w 12 plikach,
+ - Footer.tsx:23 LAST_UPDATED = '2026-06-15' z komentarzem [PLACEHOLDER],
+ - trzy <h2> w stopce (Usługi, Strony, Kontakt) + <h2> w AgentConsole.tsx:61,
+ - nasz bot działa na claude-haiku-4-5 (app/api/chat/route.ts:82).
+
+MÓJ POMIAR LOKALNY, GORSZY NIŻ W RAPORCIE: raport mierzył produkcję (2522 słów).
+HEAD z pakietem 2 ma 5667 SŁÓW w <main> (cel 1300-1600, top5 konkurencji 876-1647),
+fraza docelowa pada 0 razy, „dla firmy" 7 razy, cena 1790 pada 28 RAZY, 4 pytania
+FAQ zdublowane, sekcja „Co robi nasz chatbot" 1939 słów, „Ile kosztuje" 2086 słów.
+Push pakietu 2 w tej formie utrwaliłby w Google rozmytą wersję. Raport §9 miał rację.
+
+## KOLEJNOŚĆ Z RAPORTU §8 (obowiązująca)
+
+ 1. Mapa witryny w Search Console: ZROBIONE przez tamtą sesję, NIE RUSZAĆ.
+ 2. /uslugi/chatboty lokalnie: jedna odmiana frazy w title/h1/kapsule/H2/2×FAQ,
+    20 kotwic na „dla firm", wątki poboczne na podstrony (zostaje 2-3 zdania + link),
+    1300-1600 słów, cennik raz, FAQ bez duplikatów, NOWA sekcja „Na jakim silniku
+    działa Twój bot i gdzie są dane?" + FAQ o danych. STAN: W TOKU (rój).
+ 3. Globalne: data w stopce z realnego dataAktualizacji (NIE new Date()), H2 w stopce
+    i widżecie na elementy bez rangi nagłówka. STAN: W TOKU (rój, równolegle).
+ 4. Push + Paweł klika „Poproś o zindeksowanie" dla 7 adresów + node tools/indexnow-ping.js.
+ 5. ZAMROZIĆ /uslugi/chatboty na 3-4 tygodnie. Czytać GSC w oknie 28 dni.
+ 6. Następny pakiet: nowa strona usługi /uslugi/agent-ai („agent ai dla firm" rośnie 5×).
+
+CZEGO NIE ROBIĆ (raport §9): nie zmieniać adresu /uslugi/chatboty; nie kasować sekcji
+(przenosić); nie pisać „chatbot GPT dla firm" (fraza nie istnieje, nasz bot nie działa
+na GPT); nie czytać pozycji z zalogowanej przeglądarki; nie mierzyć dzień po dniu.
+
+---
+
+# STATUS — ROZBUDOWA Z PAKIETÓW WDROŻENIOWYCH (2026-08-31) — PAKIETY 1 I 2 GOTOWE, WSTRZYMANE PRZED PUSHEM
 
 ZLECENIE PAWŁA: kompletna rozbudowa serwisu z `.seo-przeglad/pakiety/` (8 pakietów,
 443 kB gotowej treści). Istniejące sekcje ruszamy WYŁĄCZNIE merytorycznie, układ,

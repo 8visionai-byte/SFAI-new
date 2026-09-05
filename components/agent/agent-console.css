@@ -230,7 +230,20 @@
   text-transform: uppercase;
 }
 
-.agent-console__identity h2 { font-size: clamp(1rem, 1.6vw, 1.28rem); font-weight: 540; letter-spacing: -.025em; }
+/* Tytuł konsoli to <p class="agent-console__title"> zamiast <h2> (raport SEO
+   2026-09-05 §8 krok 3: h2 widżetu rozmywał szkielet nagłówków każdej strony).
+   Selektor `.agent-console__identity h2` przepięty na klasę; pierwsze cztery
+   deklaracje odtwarzają to, co <h2> dostawał z reguł bazowych app/globals.css
+   (h1-h4 + h2), reszta = dawna reguła 1:1. Zmierzone computed-style: identyczne. */
+.agent-console__title {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  color: var(--fg);
+  text-wrap: balance;
+  font-optical-sizing: auto;
+  font-size: clamp(1rem, 1.6vw, 1.28rem);
+  font-weight: 540;
+  letter-spacing: -.025em;
+}
 
 .agent-console__status {
   display: flex;

@@ -114,6 +114,9 @@ export default async function PodstronaUslugiPage({
     description: podstrona.kapsula,
     path,
     minPrice: podstrona.ramaCeny.minPrice,
+    /* 2026-09-06 (raport SEO 2026-09-05 §8 krok 3): data z tego samego pola,
+       które renderuje „Ostatnia aktualizacja" w hero i zasila sitemap lastmod. */
+    dateModified: podstrona.dataAktualizacji,
   });
 
   const faq = faqSchema(

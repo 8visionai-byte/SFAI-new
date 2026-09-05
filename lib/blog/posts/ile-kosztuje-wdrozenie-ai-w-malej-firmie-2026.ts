@@ -189,7 +189,7 @@ export const ileKosztujeWdrozenieAi: Post = {
       opis: 'Audyt AI za 1490 zł: rozkładamy procesy i mówimy, gdzie AI się opłaci, a gdzie nie. Dostajesz plan działania, a cena odlicza się od wdrożenia.',
     },
     {
-      etykieta: 'Chatbot AI dla firmy',
+      etykieta: 'Chatbot AI dla firm',
       href: '/uslugi/chatboty',
       opis: 'Chatbot AI dla firm, który odpowiada klientom 24/7 i zbiera leady. Ile kosztuje, ile trwa wdrożenie i czym różni się od Agenta. Sprawdź przykłady.',
     },

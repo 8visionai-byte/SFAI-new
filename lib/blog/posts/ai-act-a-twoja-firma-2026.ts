@@ -286,7 +286,7 @@ export const aiActATwojaFirma: Post = {
     {
       /* Wpis mówi o wdrożeniu CHATBOTA zgodnym z obowiązkiem jawności, więc
          karta usługi chatbotów zamyka ścieżkę. */
-      etykieta: 'Chatbot AI dla firmy',
+      etykieta: 'Chatbot AI dla firm',
       href: '/uslugi/chatboty',
       opis: 'Chatbot AI dla firm, który odpowiada klientom 24/7 i zbiera leady. Ile kosztuje, ile trwa wdrożenie i czym różni się od Agenta. Sprawdź przykłady.',
     },

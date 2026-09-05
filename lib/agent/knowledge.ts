@@ -91,7 +91,8 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
   {
     id: 'uslugi-chatboty',
     section: 'Uslugi',
-    title: 'Chatbot AI dla firmy',
+    // Tytul = poczatek h1 strony (liczba mnoga od 2026-09-06, raport SEO 2026-09-05 sekcja 8).
+    title: 'Chatbot AI dla firm',
     summary:
       'Chatbot AI dla firmy to asystent, ktory odpowiada klientom na stronie i w komunikatorach przez cala dobe: tlumaczy oferte, podaje ceny i godziny, zbiera leady, nawet o 22:00. U nas chatbot to pierwszy krok do Agenta, ktory nie tylko odpowiada, ale i dziala: umawia, zapisuje, przekazuje sprawe dalej. Uczymy go na Twojej wiedzy, a dane zostaja w Unii Europejskiej. Cennik ma trzy progi, wszystkie kwoty netto: prosty 1790 zl w 1-2 dni robocze (bot na strone www, baza wiedzy podpieta przez nas, zbieranie leadow, odsylanie do wlasciwych miejsc na stronie), sredni 3000-6000 zl w 3-4 dni robocze (to co wyzej plus rozbudowana baza wiedzy i dodatkowe funkcje), duzy 8000-15000 zl w 5-10 dni roboczych (pelny zakres z integracjami, zaleznie od liczby elementow do zbudowania). Czas liczymy od przekazania kompletu materialow, nie od podpisania umowy, a w cenie wdrozenia sa dwie rundy poprawek. Rozliczenie masz do wyboru: przekazujemy Ci cala infrastrukture i wtedy nie placisz abonamentu, albo projekt zostaje u nas pod opieka i wtedy jest oplata utrzymaniowa 99-599 zl netto miesiecznie. Opieka chatbota jest tansza niz utrzymanie voicebota, bo chatbot jest prostszy: nie ma telefonii, minut rozmow ani syntezy glosu do pilnowania.',
     url: '/uslugi/chatboty',

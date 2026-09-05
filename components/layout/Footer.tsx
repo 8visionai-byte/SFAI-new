@@ -1,7 +1,15 @@
 import Link from 'next/link';
 import { SITE, NAV_LINKS, LEGAL_ROUTES, SOCIALS } from '@/lib/site';
 import { USLUGI } from '@/lib/uslugi';
+import { PODSTRONY_SITEMAP } from '@/lib/uslugi/podstrony';
+import { POSTS } from '@/lib/blog';
+import { PORADNIKI } from '@/lib/poradniki';
+import { MATERIALY } from '@/lib/materialy';
+import { RADAR_NEWS } from '@/lib/ai-radar';
 import { TrackedLink } from '@/components/analytics/TrackedLink';
+/* Import z pliku, nie z barrela `@/components/blog`: barrel ciągnie
+   BlogBreadcrumbs -> components/uslugi, a stopka nie potrzebuje tego cyklu. */
+import { formatujDatePl } from '@/components/blog/PostMeta';
 import { Logo } from './Logo';
 import { SocialIcon, BRAND_COLORS } from './SocialIcon';
 
@@ -20,7 +28,34 @@ const FOOTER_NAV_REST = NAV_LINKS.filter((l) => l.href !== '/uslugi');
  * NAP bierzemy z SITE (single source of truth). Telefon/adres pokazujemy TYLKO
  * gdy realne (pole SITE.contact.phone puste -> nie renderujemy fałszywej danej).
  */
-const LAST_UPDATED = '2026-06-15'; // [PLACEHOLDER] wpiąć w realny rytm aktualizacji (60–90 dni)
+/**
+ * DATA W STOPCE = REALNA (raport SEO 2026-09-05 §4 i §8 krok 3).
+ *
+ * Do tej poprawki stała tu zahardkodowana '2026-06-15', renderowana na KAŻDEJ
+ * stronie: Google czytał serwis jako stojący od trzech miesięcy. Teraz data
+ * to MAKSIMUM pól `dataAktualizacji` ze wszystkich rejestrów treści, które
+ * to pole niosą (usługi, podstrony usług, blog, poradniki, materiały,
+ * AI Radar). Zmiana treści w rejestrze = bump tego pola = nowa data w stopce,
+ * bez ręcznej edycji tego pliku.
+ *
+ * NIGDY `new Date()` przy buildzie: data builda to fałszywa świeżość, którą
+ * boty czytają jako sygnał śmieciowy (ta sama zasada co sitemap lastmod).
+ * Liczone RAZ w module (SSG), nie w renderze. ISO YYYY-MM-DD porównuje się
+ * leksykograficznie = chronologicznie (wzorzec: app/blog/page.tsx).
+ *
+ * Realizacje (lib/realizacje) NIE mają pola `dataAktualizacji` (dług
+ * zgłoszony w app/sitemap.ts), więc nie wchodzą do maksimum.
+ */
+const DATY_TRESCI: readonly string[] = [
+  ...USLUGI.map((u) => u.dataAktualizacji),
+  ...PODSTRONY_SITEMAP.map((p) => p.dataAktualizacji),
+  ...POSTS.map((p) => p.dataAktualizacji),
+  ...PORADNIKI.map((p) => p.dataAktualizacji),
+  ...MATERIALY.map((m) => m.dataAktualizacji),
+  ...RADAR_NEWS.map((n) => n.dataAktualizacji),
+];
+const LAST_UPDATED = DATY_TRESCI.reduce((max, d) => (d > max ? d : max), '');
+const LAST_UPDATED_LABEL = formatujDatePl(LAST_UPDATED);
 
 export function Footer() {
   return (
@@ -58,9 +93,20 @@ export function Footer() {
             </ul>
           </div>
 
+          {/*
+            ETYKIETY KOLUMN BEZ RANGI NAGŁÓWKA (raport SEO 2026-09-05 §8 krok 3):
+            „Usługi", „Strony", „Kontakt" były <h2> i wchodziły do szkieletu
+            nagłówków KAŻDEJ strony, rozmywając jej temat. Teraz <p>. Struktura
+            dla czytnika ekranu zostaje: <footer> (landmark contentinfo) i dwa
+            <nav aria-label>. Wygląd 1:1: te same klasy plus font-display,
+            font-extrabold i text-balance, bo dokładnie te trzy cechy (Plus
+            Jakarta Sans, waga 800, text-wrap: balance) <h2> dostawał z reguł
+            bazowych app/globals.css (h1-h4 i h2), a <p> ich nie ma. Zmierzone
+            computed-style przed i po: identyczne.
+          */}
           {/* Usługi — 6 realnych stron, anchor = H1 = money query (linkowanie pod GEO) */}
           <nav aria-label="Stopka: usługi">
-            <h2 className="mb-3 text-overline uppercase text-fg-subtle">Usługi</h2>
+            <p className="mb-3 font-display text-overline font-extrabold uppercase text-balance text-fg-subtle">Usługi</p>
             <ul className="space-y-2">
               {USLUGI.map((u) => (
                 <li key={u.slug}>
@@ -77,7 +123,7 @@ export function Footer() {
 
           {/* Nawigacja */}
           <nav aria-label="Stopka: strony">
-            <h2 className="mb-3 text-overline uppercase text-fg-subtle">Strony</h2>
+            <p className="mb-3 font-display text-overline font-extrabold uppercase text-balance text-fg-subtle">Strony</p>
             <ul className="space-y-2">
               {FOOTER_NAV_REST.map((link) => (
                 <li key={link.href}>
@@ -101,7 +147,7 @@ export function Footer() {
 
           {/* Kontakt / NAP */}
           <div>
-            <h2 className="mb-3 text-overline uppercase text-fg-subtle">Kontakt</h2>
+            <p className="mb-3 font-display text-overline font-extrabold uppercase text-balance text-fg-subtle">Kontakt</p>
             <ul className="space-y-2 text-body-sm text-fg-muted">
               <li>{SITE.name}</li>
               {/* E-mail TYLKO gdy zweryfikowany (nie sam niepusty string) — patrz SITE.contact */}
@@ -143,7 +189,7 @@ export function Footer() {
           </p>
           <p>
             Ostatnia aktualizacja:{' '}
-            <time dateTime={LAST_UPDATED}>15 czerwca 2026</time>
+            <time dateTime={LAST_UPDATED}>{LAST_UPDATED_LABEL}</time>
           </p>
         </div>
       </div>

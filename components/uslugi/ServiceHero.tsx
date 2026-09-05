@@ -4,6 +4,9 @@ import { Reveal } from '@/components/motion/Reveal';
 import { POSITIONING } from '@/lib/site';
 import { dekorUslugi } from '@/lib/inf-kategorie';
 import { Breadcrumbs } from './Breadcrumbs';
+/* Import z pliku, nie z barrela `@/components/blog`: barrel ciągnie
+   BlogBreadcrumbs -> components/uslugi, czyli cykl z tym katalogiem. */
+import { formatujDatePl } from '@/components/blog/PostMeta';
 import type { Usluga } from '@/lib/uslugi/types';
 
 /**
@@ -72,7 +75,10 @@ import type { Usluga } from '@/lib/uslugi/types';
  * przecinek, granica frazy).
  */
 const H1_KOLOR: Record<string, string> = {
-  chatboty: 'dla firmy',
+  /* 2026-09-06: h1 rodzica zmieniony na „Chatbot AI dla firm, który odpowiada
+     klientom 24/7" (raport SEO 2026-09-05, jedna odmiana frazy). Fragment
+     = dokładna końcówka nowego h1 (dzielH1 to sprawdza). */
+  chatboty: 'który odpowiada klientom 24/7',
   voiceboty: 'który odbiera telefon za Ciebie',
   'agent-rekrutacyjny': 'do rekrutacji i pierwszego kontaktu',
   automatyzacje: 'w firmie z AI',
@@ -308,6 +314,20 @@ export function ServiceHero({
             }
           />
         </div>
+
+        {/* „Ostatnia aktualizacja" (raport SEO 2026-09-05 §8 krok 3): data
+            z pola `dataAktualizacji` TEJ usługi, czyli tego samego, które
+            zasila sitemap lastmod i WebPage.dateModified w JSON-LD strony.
+            Jedna cicha linia w stylu okruszków wyżej (te same klasy: mono,
+            caption, subtle; wartość w fg-muted jak w PostMeta bloga), zero
+            nowych stylów. Format PL deterministyczny (formatujDatePl), ISO
+            w dateTime dla botów. */}
+        <p className="mt-2 font-mono text-caption text-fg-subtle">
+          Ostatnia aktualizacja:{' '}
+          <time dateTime={usluga.dataAktualizacji} className="text-fg-muted">
+            {formatujDatePl(usluga.dataAktualizacji)}
+          </time>
+        </p>
 
         {/* Badge mono w kolorze przewodnim (dawny overline; treść 1:1).
             Wartości .spatial-badge wzorca — patrz komentarz nagłówkowy. */}

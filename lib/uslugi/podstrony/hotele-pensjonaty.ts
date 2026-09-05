@@ -654,7 +654,7 @@ export const hotelePensjonaty: PodstronaUslugi = {
   powiazane: {
     uslugi: [
       {
-        etykieta: 'Chatbot AI dla firmy',
+        etykieta: 'Chatbot AI dla firm',
         href: '/uslugi/chatboty',
         opis: 'Cała usługa poza jedną branżą: trzy progi wdrożenia, dwie rundy poprawek w cenie i rozbudowa bota do AI Agenta, który wykonuje zadania, a nie tylko odpowiada.',
       },

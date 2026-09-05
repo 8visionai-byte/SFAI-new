@@ -83,10 +83,12 @@ type DdKrotki = { tytul: string; opis: string };
  * Fakty 1:1 z rejestru, tylko skrócone; zero nowych obietnic.
  */
 const NAV_USLUGI_KROTKIE: Record<string, DdKrotki> = {
-  // h1 1:1 (już krótkie); podpis: kapsula "odpowiada klientom na stronie
-  // i w komunikatorach przez całą dobę".
+  // Tytuł: początek h1 "Chatbot AI dla firm, który odpowiada klientom 24/7"
+  // (liczba mnoga od 2026-09-06, raport SEO 2026-09-05 §8 krok 2 pkt 2: kotwica
+  // = h1 strony docelowej); podpis: kapsula "odpowiada klientom przez całą
+  // dobę na stronie WWW" i w komunikatorach.
   chatboty: {
-    tytul: 'Chatbot AI dla firmy',
+    tytul: 'Chatbot AI dla firm',
     opis: 'Odpowiada klientom na stronie przez całą dobę',
   },
   // Para wprost ze spec v11 §H; źródła: h1 "Voicebot dla firmy, który odbiera

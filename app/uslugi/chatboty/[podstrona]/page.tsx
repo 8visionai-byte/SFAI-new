@@ -114,6 +114,9 @@ export default async function PodstronaChatbotowPage({ params }: { params: Promi
        przekazujemy flagę, żeby podstrona z ceną stałą nie rozjechała się
        z tym, co widzi człowiek. */
     cenaStala: podstrona.ramaCeny.cenaStala,
+    /* 2026-09-06 (raport SEO 2026-09-05 §8 krok 3): data z tego samego pola,
+       które renderuje „Ostatnia aktualizacja" w hero i zasila sitemap lastmod. */
+    dateModified: podstrona.dataAktualizacji,
   });
 
   const faq = faqSchema(

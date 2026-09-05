@@ -115,6 +115,16 @@ export const serviceSchema = (p: {
   minPrice?: number;
   /** `ramaCeny.cenaStala` — true przełącza ofertę z „ceny od" na cenę stałą. */
   cenaStala?: boolean;
+  /**
+   * `dataAktualizacji` z rejestru (ISO YYYY-MM-DD), raport SEO 2026-09-05 §8
+   * krok 3. Schema.org NIE zna `dateModified` na typie Service (to własność
+   * CreativeWork), więc data idzie do `mainEntityOfPage` jako WebPage (ten sam
+   * kształt, którym articleSchema opisuje stronę wpisu): Service.mainEntityOfPage
+   * -> WebPage { dateModified }. Walidator schema.org tego nie flaguje, a Google
+   * dostaje datę na encji strony, spójną z widoczną linią „Ostatnia
+   * aktualizacja" w hero i z sitemap lastmod (jedno pole rejestru).
+   */
+  dateModified?: string;
 }): Json => {
   const base: Json = {
     '@context': 'https://schema.org',
@@ -126,6 +136,13 @@ export const serviceSchema = (p: {
     areaServed: { '@type': 'Country', name: 'Polska' },
     description: p.description,
   };
+  if (p.dateModified) {
+    base.mainEntityOfPage = {
+      '@type': 'WebPage',
+      '@id': abs(p.path),
+      dateModified: p.dateModified,
+    };
+  }
   if (typeof p.minPrice === 'number') {
     base.offers = p.cenaStala
       ? {
@@ -255,6 +272,9 @@ export const uslugaSchemas = (
     /* 2026-08-31: kształt oferty (cena stała kontra „od") czytamy z rejestru,
        nie z drugiego miejsca. Ta sama flaga steruje kwotą i mikrokopią w UI. */
     cenaStala: usluga.ramaCeny.cenaStala,
+    /* 2026-09-06: to samo pole, które renderuje „Ostatnia aktualizacja" w
+       ServiceHero i zasila sitemap lastmod. Jedna data w trzech miejscach. */
+    dateModified: usluga.dataAktualizacji,
   });
 
   const faq = faqSchema(

@@ -43,8 +43,19 @@ import type { PodstronaUslugi } from './types';
  *  - model utrzymania (99-599 zł netto miesięcznie u nas, 0 zł po przekazaniu
  *    infrastruktury, poprawki 350 zł netto za godzinę): pakiet §P2 sekcja 7
  *    plus uwaga wdrożeniowa §7, która każe temu brzmieć IDENTYCZNIE wszędzie,
- *  - zasada liczenia czasu od przekazania materiałów, dane w Unii Europejskiej,
- *    model Claude od Anthropic: `lib/uslugi/chatboty.ts` i uwaga wdrożeniowa §9.
+ *  - zasada liczenia czasu od przekazania materiałów, dane w Unii Europejskiej:
+ *    `lib/uslugi/chatboty.ts`,
+ *  - dostawca modelu: trzy silniki do wyboru przez klienta (OpenAI, Anthropic,
+ *    Google), konto u dostawcy klienta. Fakt od właściciela z 2026-09-05
+ *    (raport 7.4), ten sam zapis co sekcja „Na jakim silniku działa Twój bot"
+ *    rodzica; bije starszą uwagę wdrożeniową §9 pakietu („tylko Claude"),
+ *  - sekcja „Chcesz zobaczyć, jak działa taki bot, zanim zapłacisz?" (trzy
+ *    pytania testowe do bota „Zapytaj AI"): pakiet §2 rodzica, przeniesiona
+ *    tu 2026-09-06 po przycięciu `/uslugi/chatboty` (kontrola utraty treści).
+ *    Widżet „Zapytaj AI" to components/agent/AgentConsole montowany globalnie
+ *    w app/layout.tsx, więc stoi także na tej podstronie. Zdanie pakietu „ten
+ *    sam typ bota" przepisane na SPOSÓB PRACY (baza wiedzy, granica,
+ *    przekazanie człowiekowi), bo o silniku naszego bota strona milczy.
  *
  * LICZBY DOZWOLONE NA TEJ STRONIE (innych dopisywać NIE WOLNO):
  *  1790 zł netto, 1-2 dni robocze, 99-599 zł netto miesięcznie, 0 zł,
@@ -62,7 +73,8 @@ import type { PodstronaUslugi } from './types';
  *
  * ZAKAZANE NA TEJ STRONIE: dwa komunikatory firmowe wykluczone przez uwagę
  * wdrożeniową §8 (lista kanałów bota jest zamknięta i stoi na podstronie
- * o kanałach), sugerowanie innego dostawcy modelu niż Anthropic (§9), ceny
+ * o kanałach), zdanie o tym, na czym działa bot na simplefast.ai (decyzja
+ * właściciela z 2026-09-06: strona o tym milczy), ceny
  * konkurencji (§12: w tym pakiecie ich nie ma), obietnica pomiaru, testu,
  * audytu ani raportu na bezpłatnej rozmowie (ustalenie właściciela
  * z 2026-08-31), nazwa handlowa zakazana w całym repo dla bota udającego
@@ -77,7 +89,10 @@ import type { PodstronaUslugi } from './types';
 export const obslugaKlienta: PodstronaUslugi = {
   rodzic: 'chatboty',
   slug: 'obsluga-klienta',
-  dataAktualizacji: '2026-09-01',
+  /* 2026-09-06: trzy silniki do wyboru zamiast „tylko Claude" (fakt od
+     właściciela z 2026-09-05) plus sekcja z trzema pytaniami testowymi do bota
+     (pakiet §2 rodzica). */
+  dataAktualizacji: '2026-09-06',
 
   h1: 'Chatbot do obsługi klienta, który odpowiada o 22:00',
 
@@ -249,12 +264,37 @@ export const obslugaKlienta: PodstronaUslugi = {
           },
           {
             tytul: 'Model',
-            opis: 'Warstwa, która rozumie pytanie zadane ludzkim językiem i składa z bazy wiedzy odpowiedź po polsku. Pracujemy na modelu Claude od Anthropic.',
+            opis: 'Warstwa, która rozumie pytanie zadane ludzkim językiem i składa z bazy wiedzy odpowiedź po polsku. Silnik wybierasz Ty: OpenAI (GPT), Anthropic (Claude) albo Google (Gemini), a konto u dostawcy jest Twoje.',
           },
           {
             tytul: 'Przekazanie rozmowy',
             opis: 'Reguła, która pilnuje granicy: kiedy bot odpowiada sam, kiedy oddaje sprawę człowiekowi i pod jaki adres trafia zgłoszenie. Bez tej warstwy zostaje sama gadka.',
           },
+        ],
+      },
+      {
+        /* Pakiet §2 rodzica („Chcę zobaczyć, jak działa chatbot AI, zanim
+           zapłacę"), przeniesiony tu 2026-09-06: intro, trzy pytania testowe
+           i akapit domykający 1:1 z pakietu. Jedyna zmiana: „ten sam typ bota,
+           którego stawiamy klientom" opisuje SPOSÓB PRACY (baza wiedzy,
+           granica, przekazanie człowiekowi), nie silnik. Zero liczb. Chip to
+           etykieta istniejącego przycisku widżetu. */
+        typ: 'sekcja',
+        naglowek: 'Chcesz zobaczyć, jak działa taki bot, zanim zapłacisz?',
+        akapity: [
+          'Możesz przeczytać dziesięć stron o chatbotach i dalej nie wiedzieć, jak to brzmi w rozmowie. Dlatego nasz bot stoi na tej stronie. Kliknij „Zapytaj AI" i sprawdź go sam, zanim porozmawiasz z kimkolwiek od nas.',
+          'To nie jest demo z gotowymi odpowiedziami. Bot pracuje tak samo jak boty, które stawiamy klientom: odpowiada z bazy wiedzy, tyle że o naszej firmie, ma jawną granicę tego, czego nie wie, i trudną sprawę oddaje człowiekowi. Zadaj mu pytanie, na które u większości firm dostaniesz tylko formularz kontaktowy, i zobacz, czy odpowie konkretem.',
+        ],
+        punkty: [
+          'Zapytaj o cenę wprost, na przykład: „Ile kosztuje chatbot, który ma czytać moje PDF-y i cennik?". Sprawdzasz, czy bot potrafi podać kwotę, czy ucieka w „skontaktuj się z nami".',
+          'Zapytaj o termin, na przykład: „Zaczynamy w poniedziałek. Kiedy bot będzie działał u mnie na stronie?". Sprawdzasz, czy zna nasze realne czasy wdrożenia, czy zgaduje.',
+          'Zapytaj o coś, czego nie robimy, na przykład: „Zbudujecie mi aplikację mobilną na iOS?". Sprawdzasz najważniejszą rzecz w całym botowaniu: co się dzieje, kiedy bot nie wie.',
+        ],
+        wariant: 'top',
+        chip: 'ZAPYTAJ AI',
+        stopka: [
+          'Jeśli po tych trzech pytaniach uznasz, że taki bot przydałby się u Ciebie, to właśnie zobaczyłeś demo swojego przyszłego wdrożenia.',
+          'Jeśli uznasz, że nie, też dobrze. Zaoszczędziłeś rozmowę.',
         ],
       },
       {
@@ -595,7 +635,7 @@ export const obslugaKlienta: PodstronaUslugi = {
   powiazane: {
     uslugi: [
       {
-        etykieta: 'Chatbot AI dla firmy',
+        etykieta: 'Chatbot AI dla firm',
         href: '/uslugi/chatboty',
         opis: 'Cała usługa: po co firmie chatbot, czym różni się od AI Agenta i jak rośnie razem z Twoim procesem.',
       },

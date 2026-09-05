@@ -88,7 +88,10 @@ import type { PodstronaUslugi } from './types';
 export const chatbotyCennik: PodstronaUslugi = {
   rodzic: 'chatboty',
   slug: 'cennik',
-  dataAktualizacji: '2026-09-01',
+  /* 2026-09-06: dołożone trzy sytuacje „kiedy się nie opłaci" z rodzica oraz
+     zamknięcie „abonament czy własność" (pakiet §9) w stopce sekcji
+     o porównywaniu ofert. */
+  dataAktualizacji: '2026-09-06',
 
   h1: 'Ile kosztuje chatbot AI dla firmy? Cennik 2026',
 
@@ -176,9 +179,14 @@ export const chatbotyCennik: PodstronaUslugi = {
         ],
         wariant: 'edge',
         chip: 'PORÓWNANIE',
+        /* Dwa ostatnie punkty stopki: pakiet §9 rodzica (zamknięcie listy
+           kontrolnej „abonament czy własność"), przeniesione 1:1 w 2026-09-06
+           po przycięciu `/uslugi/chatboty` (kontrola utraty treści). Zero liczb. */
         stopka: [
           'Nasze odpowiedzi na te cztery pytania stoją niżej na tej stronie, razem z kwotami.',
           'Zadaj je też nam. Odpowiedź ma być w cenniku, nie w rozmowie handlowej.',
+          'Abonament ma sens, jeśli chcesz prostego bota na tydzień, sam go skonfigurujesz i nie zależy Ci na tym, czyja jest baza wiedzy.',
+          'Własny bot ma sens, jeśli baza wiedzy jest Twoim aktywem, a bot ma pracować na Twoich zasadach dłużej niż rok.',
         ],
       },
     ],
@@ -553,6 +561,11 @@ export const chatbotyCennik: PodstronaUslugi = {
         akapity: [
           'Przy kilku zapytaniach tygodniowo bot nie odda 1790 zł netto, bo nie ma czego przejmować. Odpowiadanie osobiście jest wtedy Twoją przewagą, a nie kosztem.',
           'Druga sytuacja to wiedza, która siedzi w głowach zamiast w dokumentach. Bot nie wymyśli procedury, której nikt nie spisał, więc zaczynamy od jej spisania, a nie od budowy bota.',
+          /* 2026-09-06: trzy sytuacje przeniesione z rodzica /uslugi/chatboty
+             (przycięcie strony, raport SEO 2026-09-05 sekcja 9: wątki
+             poboczne idą na podstrony, nie do kosza). Treść napisana od nowa,
+             bez kwot stron WWW, które stoją na /uslugi/strony-www. */
+          'Trzy kolejne: gdy każda sprawa wymaga decyzji człowieka, bot ma tylko zebrać kontekst i oddać rozmowę z kompletem informacji, a nie udawać, że ją domknie. Gdy chcesz bota, bo ma go konkurencja, najpierw wskaż pytanie, które wraca najczęściej; bez niego bot stoi na stronie i nikt do niego nie pisze. Gdy strona nie ma ruchu, najpierw robi się widoczność, potem bota.',
         ],
         punkty: [
           'Pierwsza rozmowa jest bezpłatna i służy zbadaniu potrzeb: pytamy, o co pytają Twoi klienci i co ma robić bot.',
@@ -577,7 +590,7 @@ export const chatbotyCennik: PodstronaUslugi = {
        o progu, a co bot potrafi, opisuje strona macierzysta. */
     linkPoradnik: {
       przed: 'Co dokładnie robi bot, którego tu wyceniamy, opisaliśmy na stronie ',
-      etykieta: 'chatbot AI dla firmy',
+      etykieta: 'chatbot AI dla firm',
       po: '.',
       href: '/uslugi/chatboty',
     },
@@ -673,7 +686,7 @@ export const chatbotyCennik: PodstronaUslugi = {
   powiazane: {
     uslugi: [
       {
-        etykieta: 'Chatbot AI dla firmy',
+        etykieta: 'Chatbot AI dla firm',
         href: '/uslugi/chatboty',
         opis: 'Strona macierzysta: co bot robi, skąd bierze wiedzę i jak wygląda wdrożenie krok po kroku.',
       },

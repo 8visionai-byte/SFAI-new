@@ -638,7 +638,7 @@ export const sklepInternetowy: PodstronaUslugi = {
   powiazane: {
     uslugi: [
       {
-        etykieta: 'Chatbot AI dla firmy',
+        etykieta: 'Chatbot AI dla firm',
         href: '/uslugi/chatboty',
         opis: 'Cała usługa: progi wdrożenia, kanały, model utrzymania i żywy bot, którego możesz kliknąć i sprawdzić sam.',
       },

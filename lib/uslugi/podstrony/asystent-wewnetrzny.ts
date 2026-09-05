@@ -43,10 +43,12 @@ import type { PodstronaUslugi } from './types';
  *    ich po imieniu, tak samo jak §9 nie pozwala nazwać innego dostawcy
  *    modelu nawet w zaprzeczeniu. Wzorzec 1:1 z wdrożonej siostry
  *    `whatsapp-messenger.ts` („pełna lista ... kanału spoza niej nie robimy"),
- *  - dostawca modelu (Claude od Anthropic): pakiet §P7 sekcja 9 plus uwaga
- *    wdrożeniowa §9. UWAGA: uwaga §9 zabrania zdań sugerujących innego dostawcę,
- *    więc na stronie nie pada nazwa żadnego konkurencyjnego dostawcy modelu,
- *    także w zaprzeczeniu,
+ *  - dostawca modelu: trzy silniki do wyboru przez klienta (OpenAI, Anthropic,
+ *    Google), konto u dostawcy klienta, płatność za zużycie wprost bez naszej
+ *    marży. Fakt od właściciela z 2026-09-05 (raport 7.4), ten sam zapis co
+ *    sekcja „Na jakim silniku działa Twój bot" rodzica `lib/uslugi/chatboty.ts`;
+ *    bije starszą uwagę wdrożeniową §9 pakietu („tylko Claude", stan
+ *    z 2026-08-31). Dane w UE: pakiet §P7 sekcja 9,
  *  - „kiedy to nie zadziała" (rozproszona i nieaktualna dokumentacja) plus
  *    wyjście przez Sprint Diagnostyczny: pakiet §P7 sekcja 10,
  *  - rozdzielenie od automatyzacji procesu (AI Start): pakiet §P7 sekcja 11,
@@ -108,7 +110,9 @@ import type { PodstronaUslugi } from './types';
 export const asystentWewnetrzny: PodstronaUslugi = {
   rodzic: 'chatboty',
   slug: 'asystent-wewnetrzny',
-  dataAktualizacji: '2026-09-01',
+  /* 2026-09-06: trzy silniki do wyboru zamiast „tylko Claude" (fakt od
+     właściciela z 2026-09-05). */
+  dataAktualizacji: '2026-09-06',
 
   h1: 'Asystent AI dla pracowników: procedury bez pytania kolegi',
 
@@ -460,11 +464,11 @@ export const asystentWewnetrzny: PodstronaUslugi = {
         typ: 'sekcja',
         naglowek: 'Czyje są dokumenty i na czym stoi asystent?',
         akapity: [
-          'Odpowiedzi generuje model Claude od Anthropic. Mówimy to wprost, bo przy dokumentach wewnętrznych jest to zwykle pierwsze pytanie, jakie pada.',
+          'Silnik wybierasz Ty: OpenAI (GPT), Anthropic (Claude) albo Google (Gemini). Mówimy to wprost, bo przy dokumentach wewnętrznych pytanie o dostawcę modelu pada zwykle jako pierwsze. Konto u dostawcy należy do Ciebie, a za zużycie płacisz mu wprost, bez naszej marży.',
           'Procedury i regulaminy trafiają do bazy wiedzy zbudowanej dla Twojej firmy, a nie do publicznego czatu. Dane zostają w Unii Europejskiej.',
         ],
         punkty: [
-          'Model: Claude od Anthropic.',
+          'Silnik do wyboru: OpenAI, Anthropic albo Google. Konto u dostawcy jest Twoje.',
           'Baza wiedzy osobna dla Twojego wdrożenia.',
           'Dane zostają w Unii Europejskiej.',
         ],
@@ -558,7 +562,7 @@ export const asystentWewnetrzny: PodstronaUslugi = {
     {
       pytanie: 'Na czym stoi asystent i gdzie zostają nasze dokumenty?',
       odpowiedz:
-        'Odpowiedzi generuje model Claude od Anthropic. Dokumenty trafiają do bazy wiedzy zbudowanej dla Twojej firmy, a nie do publicznego czatu, i dane zostają w Unii Europejskiej.',
+        'Silnik wybierasz Ty: OpenAI, Anthropic albo Google, a konto u dostawcy jest Twoje. Dokumenty trafiają do bazy wiedzy zbudowanej dla Twojej firmy, a nie do publicznego czatu, i dane zostają w Unii Europejskiej.',
     },
   ],
 
@@ -598,7 +602,7 @@ export const asystentWewnetrzny: PodstronaUslugi = {
   powiazane: {
     uslugi: [
       {
-        etykieta: 'Chatbot AI dla firmy',
+        etykieta: 'Chatbot AI dla firm',
         href: '/uslugi/chatboty',
         opis:
           'Strona główna usługi: co bot robi po stronie klienta, jak go wdrażamy i jak rośnie do Agenta.',

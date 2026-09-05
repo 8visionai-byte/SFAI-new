@@ -58,7 +58,15 @@ export function AgentConsole() {
               <span className="agent-console__mark" aria-hidden="true"><i></i></span>
               <div>
                 <p className="agent-console__kicker">SimpleFast / living interface</p>
-                <h2 id="agent-console-title">Agent wiedzy firmy</h2>
+                {/* Tytuł BEZ rangi nagłówka (raport SEO 2026-09-05 §8 krok 3):
+                    jako <h2> wchodził do szkieletu nagłówków każdej strony
+                    („Agent wiedzy firmy" obok H2 treści). Jedyne odstępstwo
+                    od markupu 1:1 z 10K. `id` zostaje: to cel aria-labelledby
+                    sekcji role="dialog" wyżej. Wygląd 1:1 przez klasę
+                    .agent-console__title (agent-console.css), która niesie
+                    dawne reguły `.agent-console__identity h2` plus to, co h2
+                    dostawał z globals (Jakarta, --fg, balance). */}
+                <p id="agent-console-title" className="agent-console__title">Agent wiedzy firmy</p>
               </div>
             </div>
             {/* Pigułka statusu połączenia (tekst podmienia init) */}

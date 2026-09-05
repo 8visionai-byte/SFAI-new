@@ -33,8 +33,13 @@ import type { PodstronaUslugi } from './types';
  *  - Instytut Kryptografii (trzy boty na transkrypcjach kursów, wskazywanie
  *    dokładnego miejsca w nagraniu): pakiet §P3 sekcja 4 i FAQ, zgodne
  *    z `lib/realizacje/chatbot-edukacyjny-kursy.ts`,
- *  - dostawca modelu (Claude od Anthropic, nie OpenAI) i umowa powierzenia
- *    przed startem: pakiet §P3 FAQ oraz uwaga wdrożeniowa §9,
+ *  - dostawca modelu: trzy silniki do wyboru przez klienta (OpenAI, Anthropic,
+ *    Google), konto u dostawcy klienta, płatność za zużycie wprost bez naszej
+ *    marży, dane w UE. Fakt od właściciela z 2026-09-05 (raport 7.4), ten sam
+ *    zapis co sekcja „Na jakim silniku działa Twój bot" rodzica
+ *    `lib/uslugi/chatboty.ts`; bije starszą uwagę wdrożeniową §9 pakietu
+ *    („tylko Claude", stan z 2026-08-31). Umowa powierzenia przed startem:
+ *    pakiet §P3 FAQ,
  *  - dwa modele utrzymania (99-599 zł netto miesięcznie u nas albo 0 zł po
  *    przekazaniu infrastruktury): pakiet §P3 sekcja 7, zgodne co do złotówki
  *    z `lib/uslugi/chatboty.ts`,
@@ -73,9 +78,10 @@ import type { PodstronaUslugi } from './types';
  * „cennik w jednym miejscu"; to konwencja przeniesiona z pakietu GEO
  * (`.seo-przeglad/pakiety/geo.md`, uwaga wdrożeniowa §6) i trzymamy ją
  * na tej stronie świadomie. Dalej zakazane: procenty skuteczności bez
- * metody, nazwa techniczna modelu
- * (claude-haiku-4-5), sugerowanie OpenAI, Slack i Microsoft Teams jako
- * kanałów bota (uwaga wdrożeniowa §8), obietnica, że bot nigdy się nie pomyli.
+ * metody, nazwa techniczna modelu (np. claude-haiku-4-5), zdanie o tym, na
+ * czym działa bot na simplefast.ai (decyzja właściciela z 2026-09-06: strona
+ * o tym milczy), Slack i Microsoft Teams jako kanały bota (uwaga wdrożeniowa
+ * §8), obietnica, że bot nigdy się nie pomyli.
  *
  * KOLOR I FORMA: podstrona dziedziczy kolor kategorii „chatboty" po rodzicu
  * (uwaga wdrożeniowa §5: bez własnych akcentów), a renderuje się TYMI SAMYMI
@@ -93,7 +99,9 @@ import type { PodstronaUslugi } from './types';
 export const bazaWiedzy: PodstronaUslugi = {
   rodzic: 'chatboty',
   slug: 'baza-wiedzy',
-  dataAktualizacji: '2026-09-01',
+  /* 2026-09-06: trzy silniki do wyboru zamiast „tylko Claude" (fakt od
+     właściciela z 2026-09-05). */
+  dataAktualizacji: '2026-09-06',
 
   h1: 'Chatbot na Twoich dokumentach: firmowa baza wiedzy (RAG)',
 
@@ -291,11 +299,11 @@ export const bazaWiedzy: PodstronaUslugi = {
         typ: 'sekcja',
         naglowek: 'Co dzieje się z Twoimi dokumentami po stronie modelu?',
         akapity: [
-          'Do modelu trafia treść rozmowy, żeby powstała odpowiedź: pytanie klienta i te fragmenty dokumentów, które bot do niego znalazł. Korzystamy z modelu Claude firmy Anthropic i nie korzystamy z modeli OpenAI.',
-          'Umowę powierzenia przetwarzania danych podpisujemy przed startem.',
+          'Do modelu trafia treść rozmowy, żeby powstała odpowiedź: pytanie klienta i te fragmenty dokumentów, które bot do niego znalazł. Silnik wybierasz Ty: OpenAI (GPT), Anthropic (Claude) albo Google (Gemini). Konto u dostawcy należy do Ciebie, a za zużycie płacisz mu wprost, bez naszej marży.',
+          'Dane zostają w Unii Europejskiej, a umowę powierzenia przetwarzania danych podpisujemy przed startem.',
         ],
         punkty: [
-          'Model: Claude od Anthropic.',
+          'Silnik do wyboru: OpenAI, Anthropic albo Google. Konto u dostawcy jest Twoje.',
           'Umowa powierzenia przetwarzania danych podpisana przed startem.',
           'Zakres bazy ustalasz Ty: bot szuka odpowiedzi w tym, co wgramy, a nie w internecie.',
         ],
@@ -513,7 +521,7 @@ export const bazaWiedzy: PodstronaUslugi = {
     {
       pytanie: 'Czy moje dokumenty uczą model językowy?',
       odpowiedz:
-        'Do modelu trafia treść rozmowy, żeby powstała odpowiedź. Korzystamy z modelu Claude firmy Anthropic i nie korzystamy z modeli OpenAI. Umowę powierzenia przetwarzania danych podpisujemy przed startem.',
+        'Do modelu trafia treść rozmowy, żeby powstała odpowiedź. Silnik wybierasz Ty: OpenAI, Anthropic albo Google, a konto u dostawcy jest Twoje. Dane zostają w Unii Europejskiej, a umowę powierzenia przetwarzania danych podpisujemy przed startem.',
     },
     {
       pytanie: 'Co, jeśli nie mamy spisanej wiedzy?',
@@ -561,7 +569,7 @@ export const bazaWiedzy: PodstronaUslugi = {
   powiazane: {
     uslugi: [
       {
-        etykieta: 'Chatbot AI dla firmy',
+        etykieta: 'Chatbot AI dla firm',
         href: '/uslugi/chatboty',
         opis: 'Strona macierzysta: co chatbot robi w firmie, gdzie stoi i jak prowadzimy całe wdrożenie.',
       },

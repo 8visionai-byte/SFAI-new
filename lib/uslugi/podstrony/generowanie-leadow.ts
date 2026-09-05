@@ -39,8 +39,11 @@ import type { PodstronaUslugi } from './types';
  *  - tokeny modelu płacone dostawcy wprost, bez naszej marży (BEZ KWOTY,
  *    bo żadnej nie ma ani u rodzica, ani w pakiecie): pakiet §P1, FAQ
  *    „Kto płaci za tokeny modelu językowego",
- *  - dostawca modelu (Claude od Anthropic, bez nazwy technicznej): uwaga
- *    wdrożeniowa pakietu §9,
+ *  - dostawca modelu: trzy silniki do wyboru przez klienta (OpenAI, Anthropic,
+ *    Google), konto u dostawcy klienta. Fakt od właściciela z 2026-09-05
+ *    (raport 7.4), ten sam zapis co sekcja „Na jakim silniku działa Twój bot"
+ *    rodzica; bije starszą uwagę wdrożeniową §9 pakietu („tylko Claude").
+ *    Bez nazwy technicznej modelu,
  *  - powrót do rodzica i do `/uslugi/chatboty/cennik`: uwaga wdrożeniowa §4.
  *
  * LICZBY DOZWOLONE NA TEJ STRONIE (innych dopisywać NIE WOLNO):
@@ -102,7 +105,9 @@ export const generowanieLeadow: PodstronaUslugi = {
   /* Bump na dzień realnej zmiany treści (kontrakt pola: nigdy data builda).
      2026-09-04: zdjęta liczba pytań kwalifikujących, dołożona trzecia kolumna
      porównania i dwie pozostałe pozycje rachunku. */
-  dataAktualizacji: '2026-09-04',
+  /* 2026-09-06: trzy silniki do wyboru zamiast „tylko Claude" (fakt od
+     właściciela z 2026-09-05). */
+  dataAktualizacji: '2026-09-06',
 
   h1: 'Chatbot, który zbiera i kwalifikuje leady',
 
@@ -507,7 +512,7 @@ export const generowanieLeadow: PodstronaUslugi = {
         punkty: [
           'Treść klauzuli i podstawę kontaktu ustala Twój prawnik. My ustawiamy bota dokładnie tak, jak nam ją podasz.',
           'Bot przedstawia się jako bot, zanim zada pierwsze pytanie.',
-          'Rozmowę prowadzi model Claude od Anthropic.',
+          'Silnik wybierasz Ty: OpenAI, Anthropic albo Google. Konto u dostawcy jest Twoje.',
           'Twoje dane nie wyjeżdżają poza Unię Europejską.',
         ],
         wariant: 'top',
@@ -632,7 +637,7 @@ export const generowanieLeadow: PodstronaUslugi = {
   powiazane: {
     uslugi: [
       {
-        etykieta: 'Chatbot AI dla firmy',
+        etykieta: 'Chatbot AI dla firm',
         href: '/uslugi/chatboty',
         opis: 'Cała usługa: co bot potrafi, skąd bierze wiedzę o Twojej firmie, jak wygląda wdrożenie i utrzymanie po nim.',
       },

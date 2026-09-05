@@ -105,6 +105,9 @@ export default async function PodstronaOptymalizacjiPage({ params }: { params: P
     /* 2026-08-31: bez tego audyt widoczności w AI (cena STAŁA 1490 zł netto)
        szedłby do schema jako „cena od", czyli inaczej niż mówi karta ceny. */
     cenaStala: podstrona.ramaCeny.cenaStala,
+    /* 2026-09-06 (raport SEO 2026-09-05 §8 krok 3): data z tego samego pola,
+       które renderuje „Ostatnia aktualizacja" w hero i zasila sitemap lastmod. */
+    dateModified: podstrona.dataAktualizacji,
   });
 
   const faq = faqSchema(
