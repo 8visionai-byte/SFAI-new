@@ -1,4 +1,67 @@
-# STATUS — RAPORT SEO 2026-09-05: NAPRAWA /uslugi/chatboty PRZED PUSHEM — W TOKU
+# STATUS — RAPORT SEO 2026-09-05: KROKI 2, 3, 4 DONE NA PRODUKCJI — ZAMROŻENIE OD 2026-09-06
+
+WYPCHNIĘTE 2026-09-06: ca6f74b..b0dd7fc (790f60a etap 0, 58082f2 pakiet 1,
+2050897 pakiet 2, 72c955a dziennik, b0dd7fc naprawa SEO). Vercel deploy żywy po ~15 s.
+
+ZMIERZONE NA PRODUKCJI (www.simplefast.ai, mój skrypt prod-seo-0906.mjs, nie raport
+agenta): /uslugi/chatboty title „Chatbot AI dla firm: wdrożenie i cena 2026", h1
+„Chatbot AI dla firm, który odpowiada klientom 24/7" z kolorowym członem; 1618 słów
+w main (było 5667 lokalnie, 2522 na produkcji); fraza mnoga 7 (było 0), pojedyncza 3,
+synonim 2; cena 1790 razy 12 (5 z treści + 7 z kart podstron); duplikaty FAQ 0
+(było 4); sekcja „Na jakim silniku działa Twój bot i gdzie są dane?" obecna; ZERO
+fałszywego „działa na Claude"; h2 w stopce 0 (było 3); data w stopce „6 września
+2026" (było „15 czerwca 2026"); dateModified 2026-09-06 w JSON-LD; em-dash w CAŁYM
+źródle 0; 16 z 16 nowych podstron 200 z jednym h1 (na produkcji było 404); regresja
+9 tras 200; sitemap 70 adresów (było 55), 16 nowych, lastmod 2026-09-06; zero
+błędów konsoli. IndexNow (Bing): HTTP 200, zgłoszono 71 adresów.
+
+KROK 4b, PO STRONIE PAWŁA: Search Console -> Sprawdź URL -> „Poproś o zindeksowanie"
+dla 7 adresów: /uslugi/chatboty, /uslugi/optymalizacja, /uslugi/automatyzacje,
+/uslugi/dokumenty-faktury, /uslugi/rozwiazania, /uslugi/strony-www, /uslugi.
+Limit ~10 dziennie, komplet w jeden dzień.
+
+KROK 5, OBOWIĄZUJE OD DZIŚ: ZAMROŻENIE /uslugi/chatboty na 3-4 tygodnie (do ok.
+2026-09-27 / 10-04). Żadnych przebudów tej strony. GSC czytać w oknie 28 dni.
+
+## RAPORT POMYLIŁ BOTA (decyzja Pawła, NIE blokowało pusha)
+
+Raport 7.4 pkt 4 kazał napisać „bot na tej stronie działa na Claude", powołując się
+na app/api/chat/route.ts (claude-haiku-4-5). ALE widżet „Zapytaj AI", który widzi
+odwiedzający, jest montowany globalnie w app/layout.tsx i woła api/agent-chat.mjs,
+czyli OpenAI (api.openai.com/v1/responses). Zdanie byłoby fałszywe, kontrola je
+wycięła. Strona NIE twierdzi nic o silniku naszego bota. Trzy drogi:
+ (A) przepiąć widżet na Claude (api/agent-chat.mjs) i wtedy zdanie wraca,
+ (B) zostawić OpenAI i napisać prawdę, ale raport §9 zakazał pisania o GPT
+     (zakaz wyszedł z fałszywej przesłanki, że bot działa na Claude),
+ (C) nadal milczeć (stan obecny, bezpieczny).
+UWAGA: ze względu na zamrożenie, ewentualne zdanie dopisać na PODSTRONIE, nie na
+/uslugi/chatboty.
+
+## NIEZWERYFIKOWANE (fakty od Pawła, na których stoi nowa sekcja)
+
+ - „Dane zostają w Unii Europejskiej": app/api/chat/route.ts woła api.anthropic.com
+   bez regionu UE, api/agent-chat.mjs woła api.openai.com bez rezydencji danych.
+   Dla botów KLIENTÓW Paweł powinien potwierdzić, że każdy z trzech silników
+   stawiany jest w wariancie z danymi w UE.
+ - „Doradzamy, który pasuje do Twoich pytań i budżetu na tokeny": dopisek autora
+   spoza listy faktów 7.4, bez liczb i bez obietnic wobec dostawców. Do potwierdzenia
+   albo wycięcia.
+ - Karty ośmiu podstron w siatce „Konkretne zastosowania" niosą 7 wystąpień kwot
+   z własnych kapsuł. Komponent ma tryb „kompakt" (sam tytuł + strzałka), ale jest
+   on zaprojektowany dla podstron, nie dla strony usługi. Przełączenie zmieni wygląd
+   sekcji, więc to decyzja Pawła. Bez tego 1618 słów zamiast 1600 (rynek 876-1647).
+
+## CO SIĘ NAUCZYLIŚMY (do STATUS, żeby następna sesja nie powtórzyła)
+
+ - Kontrola prawdziwości MUSI sprawdzać, KTÓRY kod faktycznie obsługuje to, co widzi
+   klient (layout -> komponent -> endpoint), a nie pierwszy plik o pasującej nazwie.
+ - Raport zewnętrzny weryfikować w kodzie twierdzenie po twierdzeniu; pięć z pięciu
+   było prawdziwych, ale szóste (silnik bota) nie, i to ono poszłoby na stronę.
+ - Mierzyć lokalny HEAD, nie tylko produkcję: raport widział 2522 słowa, HEAD miał 5667.
+
+---
+
+# STATUS — RAPORT SEO 2026-09-05: NAPRAWA /uslugi/chatboty PRZED PUSHEM — ARCHIWUM PLANU
 
 ŹRÓDŁO: `.seo-przeglad/raporty/2026-09-05.md` (osobna sesja przeglądu SEO).
 PUNKT COFNIĘCIA: tag `seo-2026-09-05` = 72c955a (HEAD przed tą rundą).
