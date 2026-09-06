@@ -15,7 +15,81 @@ fałszywego „działa na Claude"; h2 w stopce 0 (było 3); data w stopce „6 w
 9 tras 200; sitemap 70 adresów (było 55), 16 nowych, lastmod 2026-09-06; zero
 błędów konsoli. IndexNow (Bing): HTTP 200, zgłoszono 71 adresów.
 
-KROK 4b, PO STRONIE PAWŁA: Search Console -> Sprawdź URL -> „Poproś o zindeksowanie"
+STAN POBRANIA PRZEZ GOOGLE (URL Inspection API, 2026-09-06 po południu,
+`node tools/gsc-indeksacja.js <klucz> sc-domain:simplefast.ai`; domyślna właściwość
+w narzędziu dawała 403, bo konto usługi ma dostęp do właściwości domenowej):
+ - /uslugi/optymalizacja: POBRANE NA NOWO 2026-09-06 07:17 UTC (09:17 PL), czyli
+   dokładnie w chwili, gdy Paweł kliknął prośbę. Zadziałało.
+ - /uslugi/chatboty, /automatyzacje, /dokumenty-faktury, /rozwiazania, /strony-www,
+   /uslugi: NADAL lipiec (28-30.07). Prośba nie wysłana albo Google jeszcze nie przyszedł.
+ - 16 nowych podstron: „Strona wykryta, obecnie niezindeksowana" (Google zna je
+   z mapy, nie pobrał). Normalne w dniu pierwszym, przyjdą z mapy same.
+ - Pomyłki Pawła naprawione: 7 adresów stron wklejonych jako MAPY WITRYN (skasowane
+   przez API, została 1 prawdziwa, ponownie zgłoszona, HTTP 204); 7 adresów wklejonych
+   NARAZ w jedno pole inspekcji (Google czytał to jako jeden nieistniejący URL,
+   stąd „żądanie odrzucone"; żadna strona nie ma błędu).
+
+DRUGI ODCZYT API (2026-09-06 po południu, po prośbie Pawła „zrób porządek w GSC"):
+ - mapa: 1 (prawdziwa), 0 błędów, 71 stron, Google odczytał ją DZIŚ po moim ponownym
+   zgłoszeniu (rano widział 55 z wczoraj). Zrzut Pawła to potwierdza.
+ - 7 stron usług: nadal TYLKO /uslugi/optymalizacja pobrana na nowo (07:17 UTC).
+   Pozostałych 6 wciąż z lipca -> przycisk „Poproś o zindeksowanie" NIE został przy
+   nich kliknięty (przy optymalizacji Google przyszedł w minutę po kliknięciu).
+ - 16 nowych podstron: 1 JUŻ ZAINDEKSOWANA (/uslugi/optymalizacja/google-ai-overviews,
+   pobrana 14:42 UTC), 8 „wykryta, niezindeksowana", 7 „nieznana". Normalne w dniu 1.
+ - „zablokowane robots/noindex: 15" = FAŁSZYWY ALARM mojego skryptu: strony
+   niepobrane mają ROBOTS_TXT_STATE_UNSPECIFIED, nie „zablokowane". Jedyna pobrana
+   ma ALLOWED / INDEXING_ALLOWED.
+ - „rozjazd canonical: 26" = HISTORYCZNY: to 26 stron pobranych ostatnio w LIPCU,
+   Google pamięta stary canonical bez www. Kod ma to naprawione (lib/site.ts:21
+   `https://www.simplefast.ai`, komentarz w :18-20 opisuje tamten błąd), produkcja
+   dziś deklaruje www na każdej sprawdzonej stronie, non-www daje 308 na www.
+   Zniknie samo przy ponownym pobraniu. KOLEJNY POWÓD, żeby kliknąć 6 próśb.
+ - 4 starsze strony poza indeksem, do obejrzenia PO zamrożeniu: /polityka-prywatnosci
+   (nieznana, nieistotna), /uslugi/voiceboty/potwierdzanie-wizyt („zeskanowana, ale
+   jeszcze nie zindeksowana" = sygnał cienkiej lub podobnej treści), /uslugi/voiceboty/
+   odbieranie-telefonow (wykryta, niezindeksowana), /blog/automatyzacja-procesow-ai-
+   od-czego-zaczac (nieznana).
+ - OGRANICZENIE GOOGLE, nie uprawnień: „Poproś o zindeksowanie" nie istnieje w API
+   dla zwykłych stron (Indexing API tylko JobPosting/BroadcastEvent). Konto usługi ma
+   uprawnienia PEŁNE (potwierdzone na zrzucie Pawła) i zrobiło wszystko, co API umie.
+
+TRZECI ODCZYT (2026-09-06 15:03 UTC, `tools/gsc-sprawdz-adresy.js`, nowe narzędzie
+do wskazanych adresów; UWAGA: w Git Bash ścieżki od „/" są mielone na
+C:/Program Files/Git/..., podawać PEŁNE https://):
+ - NOWA WERSJA U GOOGLE: /uslugi/chatboty (15:01 UTC), /uslugi/optymalizacja (07:17),
+   /uslugi/rozwiazania (15:01). Kliknięcia Pawła działają, Google przychodzi w minuty.
+ - Minutę później (15:04 UTC) dołączyły /uslugi/automatyzacje i /uslugi/dokumenty-faktury
+   (obie 15:01 UTC; pierwsze odpytanie zwróciło jeszcze stary stan, API dogania z opóźnieniem).
+   RAZEM 5 z 7 ma nową wersję u Google.
+ - WCIĄŻ LIPIEC (stan 15:04 UTC): /uslugi/strony-www, /uslugi. Albo niekliknięte,
+   albo w kolejce. Sprawdzić ponownie tym samym narzędziem.
+ - VOICEBOTY: /uslugi/voiceboty (1.09, zaindeksowana), /windykacja (18.08, zaindeksowana),
+   /potwierdzanie-wizyt (pobrana 17.08, „zeskanowana, ale NIE zindeksowana" = Google
+   widział i odmówił: sygnał cienkiej/podobnej treści), /odbieranie-telefonow („nieznana",
+   nigdy nie pobrana mimo mapy od sierpnia). Obie zwracają 200, poprawny canonical www,
+   obie w mapie. Technicznie czyste; to kwestia priorytetu i treści, nie błędu.
+   KROK: 2 prośby o zindeksowanie teraz; jeśli po ~2 tygodniach potwierdzanie-wizyt
+   nadal „nie zindeksowana", wzmocnić treść w pakiecie 3 (voiceboty), nie wcześniej.
+
+CZWARTY ODCZYT, KOŃCOWY (2026-09-06 19:46 UTC = 21:46 PL): KROK 4b DONE Z DOWODEM.
+ - WSZYSTKIE 7 stron usług mają u Google nową wersję: optymalizacja 07:17, chatboty /
+   automatyzacje / dokumenty-faktury / rozwiazania 15:01, strony-www / uslugi 19:31 UTC.
+   Każda: „Strona przesłana i zindeksowana".
+ - OBIE podstrony voicebotów ZAINDEKSOWANE po prośbie Pawła (pobrane 19:31 UTC):
+   /uslugi/voiceboty/odbieranie-telefonow (wcześniej „nieznana Google") oraz
+   /uslugi/voiceboty/potwierdzanie-wizyt (wcześniej „zeskanowana, ale nie
+   zindeksowana", czyli Google widział i odmawiał od 17.08). Prośba wystarczyła,
+   wzmacnianie treści w pakiecie 3 NIE jest już z tego powodu potrzebne.
+ - Google przychodzi ~15 min po kliknięciu „Poproś o zindeksowanie" (19:31 przy
+   prośbie ok. 19:15). Wzorzec powtarzalny: 4 z 4 dziś wieczorem, 5 z 5 po południu.
+ - 16 nowych podstron: przyjdą z mapy (odczytana dziś, 71 adresów). Nie zużywać na nie
+   limitu próśb, chyba że po tygodniu nadal „wykryta, niezindeksowana".
+
+OD TERAZ: ZAMROŻENIE /uslugi/chatboty (krok 5). Pomiar w GSC w oknie 28 dni, pierwszy
+sensowny odczyt około 2026-09-20, decyzja o pakietach 3-8 około 2026-09-27 / 10-04.
+
+KROK 4b, PO STRONIE PAWŁA (ARCHIWUM, WYKONANE): Search Console -> Sprawdź URL -> „Poproś o zindeksowanie"
 dla 7 adresów: /uslugi/chatboty, /uslugi/optymalizacja, /uslugi/automatyzacje,
 /uslugi/dokumenty-faktury, /uslugi/rozwiazania, /uslugi/strony-www, /uslugi.
 Limit ~10 dziennie, komplet w jeden dzień.
