@@ -1,3 +1,61 @@
+# STATUS — PAKIET 3 NA PRODUKCJI (2026-09-22), po jednej nieudanej próbie deployu
+
+WYPCHNIĘTE: 4ba6857..e908b80 (faf8c0f pakiet 3 + naprawy, e908b80 pusty commit
+wyzwalający ponowny build).
+
+## AWARIA DEPLOYU, KTÓRA NIE BYŁA NASZYM BŁĘDEM
+
+Pierwszy build faf8c0f padł na Vercelu:
+  app/layout.tsx -> „An error occurred in `next/font`"
+  TypeError: Cannot read properties of null (reading '1')
+  w node_modules/next/dist/compiled/@next/font/dist/google/loader.js:122:78
+
+DIAGNOZA (zanim cokolwiek zmieniłem):
+ - `app/layout.tsx` ostatnio zmieniany w commicie 4ba2971, czyli PRZED wszystkimi
+   commitami tej sesji. Nie był dotykany w pakiecie 1, 2, 3 ani w naprawie SEO.
+ - Ślad błędu w całości wewnątrz node_modules, zero ramek z naszego kodu.
+ - Build LOKALNY na tym samym commicie przechodził: tsc 0, 86 stron, lint 0.
+ - Sprawdzone fetchem, co fonts.googleapis.com oddaje DZIŚ dla naszych trzech
+   rodzin (Inter, Plus Jakarta Sans, JetBrains Mono, latin + latin-ext):
+   HTTP 200, komplet bloków @font-face (28 / 20 / 12), komplet src url
+   i unicode-range, latin-ext obecny. Kontrakt Google bez zmian.
+ - „Cannot read properties of null (reading '1')" w loader.js to objaw
+   `.match(...)` zwracającego null, czyli odpowiedzi innej niż CSS. Przy poprawnym
+   CSS z naszego łącza znaczy to, że maszyna budująca w iad1 nie dostała
+   odpowiedzi (sieć albo limit), a nie że zmieniła się treść.
+WNIOSEK: awaria przejściowa. Ponowny build tego samego drzewa przeszedł.
+
+DO DECYZJI PAWŁA, JEŚLI SIĘ POWTÓRZY: zdjąć zależność build-time od Google
+Fonts, czyli zapisać pliki fontów w repo i ładować je przez `next/font/local`.
+Render wyglądałby identycznie, ale build przestałby zależeć od sieci. Zmiana
+dotyka fundamentu typografii, więc NIE robiona bez zgody.
+
+## ZMIERZONE NA PRODUKCJI PO UDANYM DEPLOYU (ALARMÓW 0)
+
+ - sześć nowych podstron voicebotów: wszystkie 200, po jednym h1, kolorowy człon
+   H1 na każdej (wcześniej 404),
+ - trzy strony usług na celu: chatboty 1608, voiceboty 1589, optymalizacja 1577,
+   po zero duplikatów h3 na każdej,
+ - KLUCZ rodzic/slug DZIAŁA NA ŻYWEJ STRONIE: /uslugi/chatboty/cennik pokazuje
+   „od 1790 zł PRÓG PROSTY", /uslugi/voiceboty/cennik „od 2500 zł PAKIET
+   STARTOWY, PŁATNY RAZ". Bez tej poprawki obie mówiłyby to samo,
+ - dziewięć naprawionych stron: 0 duplikatów h3 (było 18),
+ - regresja 11 tras, zero błędów konsoli,
+ - sitemap 76 adresów (było 71), 9 podstron voicebotów,
+ - IndexNow (Bing): HTTP 200, zgłoszono 77 adresów,
+ - mapa witryny zgłoszona ponownie w Search Console: HTTP 204.
+
+## CO PAWEŁ MA ZROBIĆ
+
+ 1. Osiem próśb o zindeksowanie dla podstron chatbotów (nadal aktualne, Google
+    nie pobrał ich od 6.09).
+ 2. Sześć próśb dla nowych podstron voicebotów, gdy będzie miał limit:
+    /uslugi/voiceboty/cennik, /dla-przychodni, /dla-stomatologa,
+    /dla-salonu-samochodowego, /dla-kancelarii, /rodo-ai-act.
+    Limit ~10 dziennie, więc rozłożyć na dwa dni.
+
+---
+
 # STATUS — PAKIET 3 (VOICEBOTY) GOTOWY + NAPRAWA REGRESJI Z PAKIETU 1 (2026-09-22)
 
 ## CO POWSTAŁO
