@@ -135,7 +135,11 @@ export const dlaFirmUslugowych: PodstronaUslugi = {
             ],
           },
           {
-            naglowek: 'Opinie',
+            /* 2026-09-22 (deduplikacja nagłówków): etykieta „Opinie" stała jako h3 tutaj
+               (źródło, z którego model czerpie) i drugi raz w siatce „co zmieniamy"
+               niżej (praca po naszej stronie). Dwa różne bloki, ta sama etykieta, więc
+               szkielet nagłówków się powtarzał. Tu nazywamy źródło. */
+            naglowek: 'Opinie klientów',
             akapity: [
               'Opinie mówią nie tylko, jak Cię oceniają, ale też za co konkretnie. Model buduje z tego obraz specjalizacji.',
             ],
@@ -229,7 +233,10 @@ export const dlaFirmUslugowych: PodstronaUslugi = {
             ],
           },
           {
-            naglowek: 'Opinie',
+            /* 2026-09-22 (deduplikacja nagłówków): druga kopia etykiety „Opinie" (patrz
+               komentarz w siatce sześciu źródeł wyżej). Tam opinie są źródłem, tutaj są
+               robotą, którą bierzemy na siebie, więc nagłówek nazywa właśnie to. */
+            naglowek: 'Opinie jako część pracy',
             akapity: [
               'Opinie są jednym ze źródeł, z których model buduje polecenie. Dlatego traktujemy je jako część pracy, a nie jako dodatek po wdrożeniu.',
             ],
@@ -252,11 +259,17 @@ export const dlaFirmUslugowych: PodstronaUslugi = {
         wariant: 'edge',
         chip: 'DOWÓD',
       },
+      /* 2026-09-22 (deduplikacja nagłówków, build produkcyjny): pytanie „W jakich
+         branżach działa to najszybciej?" stało tu jako h3 i drugi raz jako pytanie
+         w FAQ, więc jeden URL zgłaszał tę samą parę do FAQPage dwa razy. Pytanie
+         zostaje w FAQ (ono zasila JSON-LD), tu wchodzi zdanie twierdzące o tej samej
+         treści. Akapit zaczynał się dokładnie od słów nagłówka, więc przeredagowany
+         na to samo bez powtórzenia. Branże i fakty z pakietu §P8 bez zmian. */
       {
         typ: 'sekcja',
-        naglowek: 'W jakich branżach działa to najszybciej?',
+        naglowek: 'Najszybciej tam, gdzie jeden klient jest dużo wart',
         akapity: [
-          'Najszybciej tam, gdzie jeden klient jest dużo wart, a wybór zapada po rekomendacji, nie po cenie. W takich branżach jedno pytanie zadane modelowi potrafi zdecydować o całym zleceniu.',
+          'Liczy się wysoka wartość jednego klienta i wybór po rekomendacji, a nie po cenie. W takich branżach jedno pytanie zadane modelowi potrafi zdecydować o całym zleceniu.',
         ],
         punkty: [
           'Warsztat, zwłaszcza z jasną specjalizacją, bo klient pyta o konkretną robotę, a nie o warsztat w ogóle.',
@@ -446,6 +459,83 @@ export const dlaFirmUslugowych: PodstronaUslugi = {
         stopka: [
           'Rozpoznajesz siebie w którymś z tych punktów? Napisz i tak.',
           'Powiemy, co zrobić zamiast, nawet jeśli to nie będzie usługa u nas.',
+        ],
+      },
+
+      /* ── DOŁOŻONE 2026-09-22 (przycięcie `/uslugi/optymalizacja`, pakiet GEO §N10
+         plus blok „Dla porównania z rynkiem" z §N8). Obie rzeczy stały wyłącznie
+         na rodzicu, który schodzi z 6177 słów do zakresu 1300-1600 (raport
+         `.seo-przeglad/raporty/2026-09-05.md` §9: nie kasujemy treści, przenosimy
+         ją na podstrony). Trafiają tutaj, bo rachunek kosztu czekania liczy się
+         na zapytaniach i wartości jednego zlecenia, czyli na liczbach warsztatu,
+         gabinetu i kancelarii, a to jest strona dla nich.
+         DOŁOŻONE NA KOŃCU ISTNIEJĄCEJ SEKCJI CENY: podstrona jest zaindeksowana
+         (pobranie 2026-09-06), więc nic wyżej nie zostało ruszone.
+         TABELA, A NIE KALKULATOR, tak jak na rodzicu: kontrakt bloków
+         (lib/blog/types.ts) nie ma typu z polami formularza, a strona jest
+         w całości serwerowa. Stoi więc sam wzór do podstawienia, ZERO wartości
+         domyślnych i zero przykładowych kwot.
+         CENY RYNKOWE BEZ DOPISKU „netto" poza trzecią kwotą, bo dokładnie tak
+         stoją w źródle (projektowaniestroncennik.pl, sprawdzone 31.08.2026).
+         Nasze kwoty zostają z „netto". Żadnej liczby nie dopisano. */
+      {
+        typ: 'naglowek',
+        tekst: 'Ile kosztuje Cię każdy miesiąc, w którym AI poleca kogoś innego?',
+        ikona: 'kalkulator',
+        chip: 'RACHUNEK',
+        overline: 'CZTERY POLA · TWOJE WŁASNE LICZBY',
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Nie podamy Ci tu procentów wzrostu rynku, bo ich nie zmierzyliśmy. Policz to na własnych liczbach. Cztery pola i wzór, który podstawiasz swoimi danymi.',
+      },
+      {
+        typ: 'tabela',
+        naglowki: ['Pole', 'Co wpisujesz', 'Skąd wziąć liczbę'],
+        wiersze: [
+          [
+            'Zapytania miesięcznie',
+            'Ile zapytań o Twoją usługę dostajesz w miesiącu',
+            'Zacznij od liczby zapytań ze wszystkich kanałów. To ostrożne przybliżenie',
+          ],
+          [
+            'Udział przegranych',
+            'Ile z nich mogłoby trafić do Ciebie z polecenia AI, a trafia do kogoś innego',
+            'Jeśli nie ma Cię w odpowiedziach na pytania kontrolne, wpisz swoją ostrożną ocenę',
+          ],
+          [
+            'Wartość klienta',
+            'Ile jest wart u Ciebie jeden pozyskany klient',
+            'Średnia wartość pierwszego zlecenia, nie kontrakt życia',
+          ],
+          [
+            'Wynik',
+            'Wzór: zapytania razy udział przegranych razy wartość klienta razy 12 miesięcy',
+            'To Twój koszt czekania w skali roku',
+          ],
+        ],
+        wKarcie: true,
+        podpis: 'Rachunek kosztu czekania: cztery pola, które podstawiasz własnymi liczbami',
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Drugi bok tego rachunku',
+        wariant: 'quiet',
+        chip: 'CZAS',
+        akapity: [
+          'Drugi bok tego rachunku to czas potrzebny na odwrócenie sytuacji. Mamy tu jedną zmierzoną liczbę: około trzy tygodnie od publikacji strony Lenart Motors do momentu, w którym ChatGPT zaczął wskazywać firmę.',
+          'To był prosty przypadek: jasna specjalizacja, mała konkurencja o to jedno pytanie. W trudniejszej branży licz raczej w miesiącach niż w tygodniach.',
+          'Czekanie ma jeszcze jeden skutek. Modele budują obraz Twojej branży z tego, co już przeczytały. Im dłużej nie ma tam Twoich treści, tym mocniej utrwala się wersja, w której Twoja firma nie istnieje.',
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Dla porównania z rynkiem',
+        wariant: 'quiet',
+        chip: 'RYNEK',
+        akapity: [
+          'Publiczny cennik rynkowy z projektowaniestroncennik.pl, sprawdzony 31.08.2026: landing 1900 zł, strona firmowa 2500 zł, strona rozbudowana 4000 zł netto.',
+          'Nasz landing jest o 310 zł tańszy. Strona biznesowa kosztuje u nas 400 zł więcej, bo w tej cenie dowozimy SEO i przygotowanie treści pod cytowanie w AI. Zaawansowana startuje wyżej, bo to 5-10 dni pracy.',
         ],
       },
     ],

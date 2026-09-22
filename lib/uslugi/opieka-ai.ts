@@ -141,7 +141,11 @@ export const opiekaAi: Usluga = {
     bloki: [
       {
         typ: 'naglowek',
-        tekst: 'Co obejmuje utrzymanie automatyzacji?',
+        /* 2026-09-22 (dubel pytania): naglowek byl 1:1 z pytaniem FAQ „Co obejmuje utrzymanie
+           automatyzacji?", wiec jeden URL podawal to samo pytanie dwa razy (szkielet naglowkow
+           + FAQPage JSON-LD). Pytanie zostaje w FAQ, tu zdanie twierdzace, ktore od razu nazywa
+           trzy karty pod spodem: Pilnujemy, Poprawiamy, Rozwijamy. */
+        tekst: 'Utrzymanie automatyzacji to trzy prace: pilnujemy, poprawiamy, rozwijamy',
         ikona: 'tarcza-serce',
         chip: 'OPIEKA AI',
         overline: 'OUTSOURCING DZIAŁU AI · JAK KSIĘGOWOŚĆ W BIURZE RACHUNKOWYM',
@@ -184,7 +188,10 @@ export const opiekaAi: Usluga = {
       },
       {
         typ: 'naglowek',
-        tekst: 'Za co dokładnie płacę co miesiąc?',
+        /* 2026-09-22 (dubel pytania): naglowek byl 1:1 z pytaniem FAQ „Za co dokladnie place co
+           miesiac?". Pytanie zostaje w FAQ, tu zdanie twierdzace z pierwszego zdania tamtej
+           odpowiedzi (gotowosc + ciagla praca), a przelacznik pod spodem je rozwija. */
+        tekst: 'Co miesiąc płacisz za gotowość i za ciągłą pracę nad Twoim AI',
         ikona: 'kalendarz-check',
         chip: 'Opieka AI',
         overline: '10, 20 ALBO 40 GODZIN · CAŁY RYCZAŁT PRACUJE CO MIESIĄC',

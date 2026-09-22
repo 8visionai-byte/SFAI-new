@@ -1,6 +1,8 @@
-import type { CSSProperties } from 'react';
+/* 2026-09-22: zdjęte cztery martwe importy (CSSProperties, Link, Section, Reveal).
+   Zostały po wcześniejszej wersji tej trasy, każdy miał w pliku dokładnie jedno
+   wystąpienie, czyli sam import. Lint zgłaszał je jako ostrzeżenia przy każdym
+   przebiegu pakietu 3. `dekorUslugi` ZOSTAJE: ma trzy wystąpienia, jest używany. */
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { buildMetadata } from '@/lib/metadata';
@@ -9,8 +11,6 @@ import { serviceSchema, faqSchema, breadcrumbSchema } from '@/components/seo/sch
 import { getPodstrona, getPodstronyRodzica } from '@/lib/uslugi/podstrony';
 import { okruszkiPodstrony } from '@/lib/uslugi/podstrony/okruszki';
 import { dekorUslugi } from '@/lib/inf-kategorie';
-import { Section } from '@/components/ui';
-import { Reveal } from '@/components/motion/Reveal';
 
 import {
   ServiceHero,
@@ -114,6 +114,12 @@ export default async function PodstronaUslugiPage({
     description: podstrona.kapsula,
     path,
     minPrice: podstrona.ramaCeny.minPrice,
+    /* 2026-09-22: flaga „widełki czy cena ostateczna" z TEGO SAMEGO pola,
+       z którego liczy ją karta ceny (components/uslugi/RamaCeny.tsx) i kafel
+       w hero. Bez niej podstrona z ceną stałą (pakiet 3: /uslugi/voiceboty/cennik)
+       ogłaszałaby robotom „cena od", czyli co innego niż widzi człowiek.
+       Tak samo jak w trasach chatbotów i optymalizacji. */
+    cenaStala: podstrona.ramaCeny.cenaStala,
     /* 2026-09-06 (raport SEO 2026-09-05 §8 krok 3): data z tego samego pola,
        które renderuje „Ostatnia aktualizacja" w hero i zasila sitemap lastmod. */
     dateModified: podstrona.dataAktualizacji,
@@ -140,8 +146,11 @@ export default async function PodstronaUslugiPage({
 
   return (
     <main id="main">
-      {/* (1) Hero answer-first: breadcrumbs + badge + H1 + kapsuła + CTA */}
-      <ServiceHero usluga={podstrona} okruszki={okruszkiWidok} />
+      {/* (1) Hero answer-first: breadcrumbs + badge + H1 + kapsuła + CTA.
+          `rodzic` = gałąź tej podstrony: hero czyta nim mapy dekoracji (kolor
+          członu H1, etykieta kafla ceny) kluczem `rodzic/slug`. Bez tego slug
+          powtórzony w dwóch gałęziach (np. `cennik`) brał cudzy wpis. */}
+      <ServiceHero usluga={podstrona} okruszki={okruszkiWidok} rodzic={podstrona.rodzic} />
 
       {/* (2) Problem (H2 jak pytanie). Runda struktury 2026-08-19: opcjonalne
           bloki sekcji renderują się silnikiem poradników w tonie rodziny. */}

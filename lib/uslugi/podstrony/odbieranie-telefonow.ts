@@ -62,7 +62,7 @@ import type { PodstronaUslugi } from './types';
 export const odbieranieTelefonow: PodstronaUslugi = {
   rodzic: 'voiceboty',
   slug: 'odbieranie-telefonow',
-  dataAktualizacji: '2026-08-21',
+  dataAktualizacji: '2026-09-22',
 
   // v20: 58 -> 44 znaków (pomiar §4b: 4 linie -> 3 na 1440, 5 -> 4 na 375/320).
   // Fraza obowiązkowa „bot telefoniczny" zostaje NA POCZĄTKU (poz. 16,9 w GSC),
@@ -146,6 +146,90 @@ export const odbieranieTelefonow: PodstronaUslugi = {
         ],
         wariant: 'quiet',
       },
+
+      /* PRZENIESIONE Z RODZICA 2026-09-22 (`lib/uslugi/voiceboty.ts`, koniec
+         `problem.bloki`, sekcja 1 pakietu „Ile miesięcznie kosztuje Cię
+         nieodebrany telefon?"). Powód: przycięcie rodzica z 4180 do przedziału
+         1300-1600 słów, tego samego, który raport SEO `.seo-przeglad/raporty/
+         2026-09-05.md` wymusił na /uslugi/chatboty (commit b0dd7fc). Rachunek
+         straty z nieodebranych telefonów jest DOKŁADNIE tematem tej podstrony
+         („Ile zapytań tracisz, bo nikt nie odebrał telefonu?"), więc tu ma swoje
+         miejsce, a na rodzicu zostały dwa zdania z odesłaniem.
+         TREŚĆ 1:1 Z RODZICA, bez dopisywania faktów: trzy liczby, trzy kroki
+         rachunku i uwaga o 21 dniach roboczych. Nadal ZERO wartości domyślnych
+         (decyzja właściciela z 2026-08-31): nie podstawiamy ani jednej liczby
+         za czytelnika. ZERO KWOT, bo kwoty tej strony trzyma sekcja ceny. */
+      {
+        typ: 'naglowek',
+        tekst: 'Ile miesięcznie kosztuje Cię nieodebrany telefon?',
+        ikona: 'notes-pioro',
+        chip: 'POLICZ SAM',
+        overline: 'STRATA · NIE WIDAĆ JEJ W ŻADNYM RAPORCIE',
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Ślad po nieodebranym telefonie zostaje gdzie indziej: u konkurencji, do której ten sam człowiek zadzwonił zaraz potem. Tę stratę musisz policzyć sam, bo nikt Ci jej nie pokaże.',
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Nie podstawiamy za Ciebie żadnych liczb. Nie wiemy, ile telefonów dostajesz i ile jest wart Twój klient, a zgadywanie tego za Ciebie byłoby ściemą. Potrzebujesz trzech liczb, które znasz z głowy, i kartki.',
+      },
+      {
+        typ: 'tabela',
+        naglowki: ['Liczba', 'Co podstawiasz', 'Skąd ją wziąć'],
+        wiersze: [
+          [
+            'A',
+            'Ile telefonów dostajesz dziennie',
+            'Policz zwykły dzień roboczy, nie szczyt sezonu',
+          ],
+          [
+            'B',
+            'Ile procent z nich zostaje bez odbioru',
+            'Jeśli nie wiesz, sprawdź bilingi z zeszłego miesiąca',
+          ],
+          [
+            'C',
+            'Ile jest dla Ciebie wart jeden nowy klient',
+            'Wystarczy średnia wartość pierwszego zlecenia',
+          ],
+        ],
+        wKarcie: true,
+        podpis: 'Trzy liczby, na których liczysz stratę z nieodebranych telefonów.',
+      },
+      {
+        typ: 'kroki',
+        wariant: 'os',
+        kroki: [
+          {
+            tytul: 'Nieodebrane w miesiącu',
+            opis: 'A razy B procent razy 21 dni roboczych. Tyle rozmów w miesiącu nie dochodzi do skutku.',
+          },
+          {
+            tytul: 'Górna granica straty',
+            opis: 'Nieodebrane w miesiącu razy C. To sytuacja skrajna: nikt nie oddzwania i żaden z tych ludzi nie wraca.',
+          },
+          {
+            tytul: 'Wariant ostrożny',
+            opis: 'Górna granica podzielona przez trzy. Zakładamy tu z góry, że dwóch na trzech dzwoniących wraca. To przyjęte założenie, nie pomiar.',
+          },
+        ],
+      },
+      {
+        typ: 'sekcja',
+        naglowek: 'Z czym zestawić tę kwotę, zanim podejmiesz decyzję?',
+        akapity: [
+          '21 dni roboczych to zwykła arytmetyka kalendarza, a nie nasz szacunek. Całe działanie masz wyżej, więc możesz podstawić własną liczbę dni i policzyć po swojemu.',
+          'Patrz na wariant ostrożny, bo jest bliżej prawdy. Zestaw go z pełnym kosztem bota, a nie z samą ceną budowy: pełny koszt to trzy osobne pozycje i wszystkie trzy rozpisujemy niżej, w sekcji o cenie.',
+        ],
+        punkty: [
+          'Policz na swoich liczbach, nie na cudzych: tylko Ty znasz wartość swojego klienta.',
+          'Do rachunku po stronie bota dochodzą minuty rozmów i tokeny, płacone wprost dostawcom.',
+          'Jeśli wynik wychodzi niski, powiemy to wprost i odradzimy wdrożenie.',
+        ],
+        wariant: 'top',
+        chip: 'DECYZJA',
+      },
     ],
   },
 
@@ -212,6 +296,16 @@ export const odbieranieTelefonow: PodstronaUslugi = {
         akapity: [
           'Bot nie zmyśla odpowiedzi. Gdy pytanie wykracza poza scenariusz, spisuje sprawę i przekazuje ją człowiekowi. Takie AI do odbierania telefonów mówi tylko to, co zatwierdzisz, i nic ponad to.',
           'Dzięki notatce oddzwaniasz przygotowany, zamiast zaczynać od pytania, w czym mogę pomóc. Bot zdejmuje z Ciebie pytania powtarzalne, a trudne sprawy zostawia Tobie.',
+          /* PRZENIESIONE Z RODZICA 2026-09-22 (`lib/uslugi/voiceboty.ts`, FAQ
+             „Co, jeśli bot poda złą informację?" i „Co się dzieje, gdy padnie
+             internet albo dostawca?"). Rodzic schodzi z 16 pytań FAQ do sześciu
+             z kontraktu (lib/uslugi/types.ts: 5-6), a te dwa fakty nie stały
+             nigdzie indziej: baza wiedzy zatwierdzana przez klienta, transkrypcja
+             każdej rozmowy i monitoring przy infrastrukturze u nas. FAQ tej
+             podstrony też ma komplet sześciu pozycji, więc fakty wchodzą w treść,
+             nie w FAQ. */
+          'Bot odpowiada z bazy wiedzy, którą sam zatwierdzasz, a nie z ogólnej wiedzy modelu o świecie. Każdą rozmowę masz w transkrypcji, więc błędną odpowiedź znajdujesz tego samego dnia i poprawiamy ją w scenariuszu.',
+          'Gdy padnie internet albo dostawca, ruch wraca na Twój dotychczasowy numer, czyli do stanu sprzed wdrożenia. Przy wariancie z infrastrukturą u nas awarię widzimy w monitoringu, zwykle zanim zdążysz ją zgłosić.',
         ],
         wariant: 'top',
       },
@@ -426,10 +520,16 @@ export const odbieranieTelefonow: PodstronaUslugi = {
   },
 
   faq: [
+    /* PYTANIE KONTRAKTOWE (bot NIGDY nie dzwoni sam) stoi w tej gałęzi na
+       trzech stronach i tak ma zostać. 2026-09-22 rozjechane zostały same
+       ODPOWIEDZI, bo do 2026-09-22 wszystkie trzy niosły to samo zdanie
+       („Nie robimy botów, które same wydzwaniają do ludzi, bo to psuje
+       zaufanie do firmy"), a każda idzie 1:1 do FAQPage JSON-LD. Ta wersja
+       trzyma się tematu strony: nieodebrana sprawa i notatka z rozmowy. */
     {
       pytanie: 'Czy bot telefoniczny dzwoni sam do klientów?',
       odpowiedz:
-        'Nie. Nasz bot obsługuje wyłącznie połączenia przychodzące. Nie robimy botów, które same wydzwaniają do ludzi, bo to psuje zaufanie do firmy. Jeśli szukasz rozwiązania do obdzwaniania bazy, to nie jest usługa dla Ciebie.',
+        'Nie. Bot pracuje wyłącznie na połączeniach przychodzących i nie wybierze za Ciebie żadnego numeru. Sprawę, która wymaga kontaktu zwrotnego, spisuje razem z notatką z rozmowy i zostawia Ci ją do oddzwonienia, więc wiesz, o co chodziło, zanim wybierzesz numer. Jeśli szukasz rozwiązania do obdzwaniania bazy, to nie jest usługa dla Ciebie.',
     },
     {
       pytanie: 'Czy dzwoniący pozna, że rozmawia z botem?',
@@ -467,6 +567,16 @@ export const odbieranieTelefonow: PodstronaUslugi = {
       'Każde wdrożenie zaczynamy od bezpłatnej diagnozy. Najpierw liczby, potem decyzja.',
   },
 
+  /* WŁAŚCICIEL FRAZY „usługa odbierania telefonów dla gabinetu" (2026-09-22):
+     ta strona i tylko ta. Fraza stała przez chwilę także w `queries` podstrony
+     `dla-przychodni.ts` (15 wyświetleń, pozycja 7,7), czyli dwa nasze adresy
+     celowały w jedno zapytanie. Rozstrzygnięte na korzyść tej strony: cały
+     człon główny („usługa odbierania telefonów") niesie tutaj H1, H2 problemu
+     i H2 ceny, a gabinet, czyli jeden podmiot z jednym numerem, jest tu
+     opisany wprost (sekcja „Połowa tych rozmów to w kółko te same pytania").
+     `dla-przychodni.ts` sam się od pojedynczego gabinetu odcina osobną sekcją
+     i dostał w zamian frazę „odbieranie telefonów w rejestracji przychodni".
+     NIE DOPISYWAĆ tu niczego z członem „przychodnia": to już nie nasza fraza. */
   queries: [
     'bot telefoniczny',
     'bot do odbierania telefonów',

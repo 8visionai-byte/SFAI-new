@@ -67,12 +67,37 @@ import type { Usluga } from '@/lib/uslugi/types';
  */
 
 /**
+ * KLUCZ OBU MAP DEKORACJI (H1_KOLOR i KAFEL_CENY), poprawka 2026-09-22.
+ *
+ * Do tej poprawki obie mapy były kluczowane SAMYM slugiem, bez gałęzi. Slug
+ * `cennik` mają już dwie różne podstrony: `/uslugi/chatboty/cennik` (1790 zł,
+ * „próg prosty") i `/uslugi/voiceboty/cennik` (2500 zł, „pakiet startowy"),
+ * a pakiety automatyzacji i stron WWW planują kolejne. Skutek widoczny dla
+ * klienta: cennik voicebotów wziąłby etykietę kafla ceny z gałęzi CHATBOTÓW
+ * („od 2500 zł / próg prosty" — cudza nazwa progu), a fragment H1 z tamtej
+ * gałęzi nie pasowałby do tutejszego nagłówka, więc H1 tej jednej podstrony
+ * wyszłoby w całości szare.
+ *
+ * LOOKUP JEST DWUSTOPNIOWY (patrz zMapyDekoracji niżej): najpierw klucz PEŁNY
+ * `rodzic/slug`, a gdy go nie ma — sam `slug`. Dzięki temu wszystkie
+ * dotychczasowe wpisy (10 stron usług + 19 podstron) działają bez zmian,
+ * a kolizję rozwiązuje się precyzyjnym kluczem TYLKO tam, gdzie realnie
+ * występuje. Strony usług (`/uslugi/[usluga]`) rodzica nie mają, więc zawsze
+ * lecą samym slugiem.
+ *
+ * ZASADA DLA NOWYCH WPISÓW: gdy slug podstrony może powtórzyć się w innej
+ * gałęzi (cennik, integracje, faq i podobne generyczne nazwy) — od razu klucz
+ * pełny `rodzic/slug`.
+ */
+
+/**
  * KOLOROWY DRUGI CZŁON H1 per slug (spec-v12: „H1 BEZ ZMIAN TREŚCI — ale drugi
  * człon istniejącego H1 w kolorze przewodnim"). Fragment MUSI być dokładną
  * końcówką h1 z rejestru (dzielH1 to sprawdza i przy rozjeździe renderuje
  * pełny H1 bez spanu) — czyli tekst nagłówka nie może się zmienić nawet przy
  * literówce w tej mapie. Podział po naturalnym szwie zdania (dwukropek,
  * przecinek, granica frazy).
+ * Klucz: `slug` albo `rodzic/slug` (patrz blok wyżej).
  */
 const H1_KOLOR: Record<string, string> = {
   /* 2026-09-06: h1 rodzica zmieniony na „Chatbot AI dla firm, który odpowiada
@@ -113,7 +138,11 @@ const H1_KOLOR: Record<string, string> = {
      przecinek, granica frazy). Każdy fragment sprawdzony PROGRAMOWO jako
      końcówka h1 z pliku podstrony (h1.endsWith(fragment) i fragment !== h1),
      nie na oko. */
-  cennik: 'Cennik 2026',
+  /* KLUCZ PEŁNY (2026-09-22): `cennik` to jedyny slug, który powtarza się
+     w dwóch gałęziach. „Cennik 2026" jest końcówką h1 CHATBOTÓW („Ile kosztuje
+     chatbot AI dla firmy? Cennik 2026"), więc stoi pod kluczem z gałęzią.
+     Wartość bez zmian, zmienia się wyłącznie klucz. */
+  'chatboty/cennik': 'Cennik 2026',
   'obsluga-klienta': 'który odpowiada o 22:00',
   'baza-wiedzy': 'firmowa baza wiedzy (RAG)',
   'sklep-internetowy': 'dla sklepu internetowego',
@@ -121,12 +150,42 @@ const H1_KOLOR: Record<string, string> = {
   'whatsapp-messenger': 'na WhatsApp i Messengerze',
   'asystent-wewnetrzny': 'procedury bez pytania kolegi',
   'hotele-pensjonaty': 'dla hotelu i pensjonatu',
+  /* 2026-09-22: SZEŚĆ nowych podstron gałęzi /uslugi/voiceboty/ (pakiet 3).
+     Ten sam powód co przy trzech siostrach wyżej: bez wpisu H1 świeci
+     w całości szarym i podstrona czyta się jak inna rodzina stron. Każdy
+     fragment sprawdzony PROGRAMOWO jako końcówka h1 z pliku podstrony
+     (h1.endsWith(fragment) i fragment !== h1), nie na oko. Cennik pod kluczem
+     pełnym, bo slug `cennik` ma też gałąź chatbotów. */
+  'voiceboty/cennik': 'w Polsce w 2026 roku',
+  'dla-przychodni': 'który zawsze odbiera telefon',
+  'dla-stomatologa': 'gabinetu stomatologicznego',
+  'dla-salonu-samochodowego': 'salonu i serwisu samochodowego',
+  'dla-kancelarii': 'kancelarii prawnej',
+  'rodo-ai-act': 'co musi być spełnione',
 };
+
+/**
+ * Dwustopniowy odczyt z mapy dekoracji: najpierw klucz pełny `rodzic/slug`
+ * (rozstrzyga kolizję slugów między gałęziami), potem sam `slug` (wszystkie
+ * dotychczasowe wpisy i strony usług, które rodzica nie mają). Pełne
+ * uzasadnienie stoi w bloku „KLUCZ OBU MAP DEKORACJI" nad H1_KOLOR.
+ */
+function zMapyDekoracji<T>(
+  mapa: Record<string, T>,
+  slug: string,
+  rodzic?: string
+): T | undefined {
+  return (rodzic ? mapa[`${rodzic}/${slug}`] : undefined) ?? mapa[slug];
+}
 
 /** Dzieli h1 na część neutralną i kolorową końcówkę; przy braku dopasowania
  * zwraca pełny h1 (treść SEO nigdy nie zależy od mapy dekoracji). */
-function dzielH1(slug: string, h1: string): { przed: string; kolor: string | null } {
-  const fragment = H1_KOLOR[slug];
+function dzielH1(
+  slug: string,
+  h1: string,
+  rodzic?: string
+): { przed: string; kolor: string | null } {
+  const fragment = zMapyDekoracji(H1_KOLOR, slug, rodzic);
   if (!fragment || fragment === h1 || !h1.endsWith(fragment)) {
     return { przed: h1, kolor: null };
   }
@@ -143,6 +202,7 @@ function dzielH1(slug: string, h1: string): { przed: string; kolor: string | nul
  * Fallback dla przyszłych slugów: etykieta pochodna z ramaCeny.h2
  * („Ile kosztuje X?" -> „X"). Mapa trzyma WYŁĄCZNIE opis: prefiks kwoty
  * („od " albo nic) wynika z ramaCeny.cenaStala, patrz kafleStatystyk.
+ * Klucz: `slug` albo `rodzic/slug` (blok „KLUCZ OBU MAP DEKORACJI" wyżej).
  */
 const KAFEL_CENY: Record<string, { opis: string }> = {
   /* Ta sama nazwa progu co na ośmiu podstronach gałęzi (blok niżej): 1790 zł
@@ -191,7 +251,11 @@ const KAFEL_CENY: Record<string, { opis: string }> = {
      dostaje ten sam pierwszy człon.
      Żadna z tych podstron nie ustawia `cenaStala` (ceny chatbotów to
      widełki), więc prefiks „od " dokłada kafleStatystyk. */
-  cennik: { opis: 'próg prosty' },
+  /* KLUCZ PEŁNY (2026-09-22): „próg prosty" to nazwa progu 1790 zł z gałęzi
+     CHATBOTÓW. Slug `cennik` ma też `/uslugi/voiceboty/cennik` (2500 zł,
+     „pakiet startowy"), więc wpis chatbotów stoi pod kluczem z gałęzią.
+     Wartość bez zmian, zmienia się wyłącznie klucz. */
+  'chatboty/cennik': { opis: 'próg prosty' },
   'obsluga-klienta': { opis: 'próg prosty, bot na stronę' },
   /* Dopowiedzenie skrócone z pasa metryk tej strony („najniższy próg
      wdrożenia, baza wiedzy już w środku"). */
@@ -217,6 +281,29 @@ const KAFEL_CENY: Record<string, { opis: string }> = {
   /* Dopowiedzenie skrócone z pasa metryk tej strony („bot na stronie
      obiektu, płatność jednorazowa"). */
   'hotele-pensjonaty': { opis: 'próg prosty, bot dla obiektu' },
+  /* 2026-09-22: nowe podstrony gałęzi `voiceboty` (pakiet 3). JEDNA NAZWA
+     JEDNEGO PROGU tej gałęzi: 2500 zł netto to „pakiet startowy", słowo
+     w słowo jak w `lib/uslugi/voiceboty.ts` (ramaCeny.tresc, pas metryk,
+     tabela) i u trzech sióstr. NIE „próg prosty" — tak nazywa się próg
+     1790 zł u chatbotów i to właśnie ta nazwa wchodziła tu przez kolizję
+     slugów, którą naprawia klucz pełny.
+     Dopowiedzenie po przecinku (maks. trzy słowa) pochodzi z pasa metryk
+     TEJ SAMEJ strony. Wpis dostają tylko podstrony z jawnym
+     `ramaCeny.minPrice` — sprawdzone w plikach: cennik, dla-przychodni,
+     dla-stomatologa, dla-salonu-samochodowego, dla-kancelarii mają 2500;
+     `rodo-ai-act` NIE MA minPrice (strona prawna, niczego nie wycenia),
+     więc kafel ceny w ogóle jej się nie renderuje i wpisu nie dostaje.
+     Żadna z nich nie ustawia `cenaStala` (ceny voicebotów to widełki),
+     więc prefiks „od " dokłada kafleStatystyk. */
+  'voiceboty/cennik': { opis: 'pakiet startowy, płatny raz' },
+  /* Pas metryk tej strony: „wersja prosta: bot odbiera i spisuje zgłoszenie,
+     grafiku nie dotyka" (dostęp do grafiku dzieli oba progi). */
+  'dla-przychodni': { opis: 'pakiet startowy, bez grafiku' },
+  /* Pas metryk i sekcja „Kiedy gabinet potrzebuje wersji z integracją do
+     kalendarza?": w wersji prostej bot w grafiku gabinetu nic nie zapisuje. */
+  'dla-stomatologa': { opis: 'pakiet startowy, bez kalendarza' },
+  'dla-salonu-samochodowego': { opis: 'pakiet startowy, płatny raz' },
+  'dla-kancelarii': { opis: 'pakiet startowy, płatny raz' },
 };
 
 type Kafel = { id: string; wartosc: string; opis: string };
@@ -235,12 +322,12 @@ type Kafel = { id: string; wartosc: string; opis: string };
  *  4. liczba kroków wdrożenia (typ wymusza 3) + liczba pytań FAQ.
  * Maksymalnie 4 kafle (jak wzorzec akademii).
  */
-function kafleStatystyk(usluga: Usluga): Kafel[] {
+function kafleStatystyk(usluga: Usluga, rodzic?: string): Kafel[] {
   const kafle: Kafel[] = [];
 
   const cena = usluga.ramaCeny.minPrice;
   if (typeof cena === 'number') {
-    const wpis = KAFEL_CENY[usluga.slug] ?? {
+    const wpis = zMapyDekoracji(KAFEL_CENY, usluga.slug, rodzic) ?? {
       opis: usluga.ramaCeny.h2.replace(/^Ile kosztuje\s*/i, '').replace(/\?$/, ''),
     };
     /* 2026-08-31: „od " NIE stoi już w mapie wyżej. Widełki kontra cena stała to
@@ -272,8 +359,22 @@ function kafleStatystyk(usluga: Usluga): Kafel[] {
 export function ServiceHero({
   usluga,
   okruszki,
+  rodzic,
 }: {
   usluga: Usluga;
+  /**
+   * Slug gałęzi macierzystej podstrony (`PodstronaUslugi.rodzic`, np.
+   * 'voiceboty'). Podają go WYŁĄCZNIE trasy podstron
+   * `/uslugi/{voiceboty,chatboty,optymalizacja}/[podstrona]`; trasa
+   * `/uslugi/[usluga]` go nie podaje, bo strony usług rodzica nie mają.
+   * Po co: mapy dekoracji H1_KOLOR i KAFEL_CENY czyta się kluczem pełnym
+   * `rodzic/slug` z fallbackiem na sam `slug` (blok „KLUCZ OBU MAP
+   * DEKORACJI" wyżej) — bez tego podstrony o tym samym slugu w różnych
+   * gałęziach (np. `cennik`) brały cudzą etykietę ceny i cudzy fragment H1.
+   * Prop jest opcjonalny, bo `Usluga` pola `rodzic` nie zna, a typ
+   * `PodstronaUslugi` dokłada je dopiero w rejestrze podstron.
+   */
+  rodzic?: string;
   /**
    * Łańcuch okruszków podany z zewnątrz (podstrony usług: 4 poziomy
    * z ogniwem rodzica). Gdy pominięty, hero składa domyślne 3 poziomy
@@ -287,9 +388,13 @@ export function ServiceHero({
   // usługi na home). To DEKORACJA: kolor nie niesie treści, kontrast tekstu
   // stoi na tokenach/wartościach policzonych w komentarzu nagłówkowym.
   // Podstrona (ma pole `rodzic`) dziedziczy kolor rodziny — patrz dekorUslugi.
-  const c = dekorUslugi(usluga.slug, (usluga as { rodzic?: string }).rodzic).c;
-  const h1 = dzielH1(usluga.slug, usluga.h1);
-  const kafle = kafleStatystyk(usluga);
+  // Gałąź: jawny prop, a gdy trasa go nie poda — pole `rodzic` obiektu (tak
+  // dekorUslugi czytało je dotąd). Dzięki temu strony, które propu jeszcze nie
+  // przekazują, zachowują dotychczasowy kolor 1:1.
+  const rodzicGalezi = rodzic ?? (usluga as { rodzic?: string }).rodzic;
+  const c = dekorUslugi(usluga.slug, rodzicGalezi).c;
+  const h1 = dzielH1(usluga.slug, usluga.h1, rodzicGalezi);
+  const kafle = kafleStatystyk(usluga, rodzicGalezi);
 
   // Tag-pigułka: pudełko i pełny kolor niesie .inf-chip.inf-hero-tag
   // (globals, kontrakt partii A); --chip-c zostaje dla poświaty liter

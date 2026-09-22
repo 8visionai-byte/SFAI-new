@@ -375,6 +375,61 @@ export const audytWidocznosciWAi: PodstronaUslugi = {
           'Powiemy, co zrobić zamiast, nawet jeśli to nie będzie usługa u nas.',
         ],
       },
+
+      /* ── DOŁOŻONE 2026-09-22 (przycięcie `/uslugi/optymalizacja`, pakiet GEO §N9).
+         Tabela trzech dróg stała wyłącznie na rodzicu, który schodzi z 6177 słów
+         do zakresu 1300-1600 (raport `.seo-przeglad/raporty/2026-09-05.md` §9:
+         nie kasujemy treści, przenosimy ją na podstrony). Trafia tutaj, bo ta
+         podstrona jest pierwszym krokiem handlowym całej gałęzi i już wyżej
+         rozstrzyga, co się dzieje z kwotą 1490 zł netto po audycie
+         (przełącznik „Naprawiamy razem" kontra „Wdrażasz bez nas").
+         DOŁOŻONE NA KOŃCU ISTNIEJĄCEJ SEKCJI CENY: podstrona jest zaindeksowana
+         (pobranie 2026-09-06), więc nic wyżej nie zostało ruszone.
+         KOLUMNA ABONAMENTU AGENCJI DALEJ BEZ KWOTY, tak jak na rodzicu: cen
+         konkurencji GEO nikt nie zweryfikował u źródła, więc wiersz każe liczyć
+         na ofercie, którą klient dostał. Żadnej liczby nie dopisano: 1490, 1590,
+         2900 i od 5900 zł netto stoją w cenniku na `/uslugi/optymalizacja`. */
+      {
+        typ: 'naglowek',
+        tekst: 'Nic nie robić, abonament agencji, czy jednorazowa naprawa?',
+        ikona: 'osoba-check',
+        chip: 'WYBÓR',
+        overline: 'TRZY DROGI · KAŻDA MA CENĘ',
+      },
+      {
+        typ: 'cytat',
+        tekst: 'Masz trzy wyjścia i każde ma cenę. Nawet to pierwsze, choć nie widać go na fakturze.',
+      },
+      {
+        typ: 'tabela',
+        naglowki: ['Droga', 'Co płacisz', 'Co dostajesz', 'Kiedy to ma sens'],
+        wiersze: [
+          [
+            'Nic nie robić',
+            '0 zł na fakturze. Koszt widać dopiero w zapytaniach, które trafiają do kogoś innego',
+            'Nic się nie zmienia. Konkurent, który zrobił to wcześniej, zbiera Twoje zapytania',
+            'Gdy nie chcesz nowych klientów z sieci albo cała sprzedaż idzie z poleceń',
+          ],
+          [
+            'Abonament agencji GEO',
+            'Weź stawkę miesięczną z oferty, którą dostałeś, i pomnóż ją przez 12. Widełki na rynku są szerokie, więc licz na własnej ofercie, nie na naszych szacunkach',
+            'Stała obsługa, raporty, ciągła praca zewnętrznego zespołu',
+            'Gdy masz dużą konkurencję, duży rynek i chcesz walczyć o widoczność bez przerwy',
+          ],
+          [
+            'Jednorazowa naprawa u nas',
+            'Sprint Diagnostyczny 1490 zł netto, odliczany od wdrożenia, plus strona według cennika. Bez abonamentu, bo strona i wszystkie pliki przechodzą na Ciebie. Opłata miesięczna jest tylko w stałej opiece GEO, jeśli sam ją wybierzesz',
+            'Naprawiona strona, dane strukturalne, encja firmy, pomiar przed i po. Wszystko zostaje u Ciebie',
+            'Gdy chcesz mieć problem rozwiązany, a nie wynajmować go w abonamencie',
+          ],
+        ],
+        wKarcie: true,
+        podpis: 'Trzy drogi przy pozycjonowaniu pod AI: co płacisz, co dostajesz i kiedy to ma sens',
+      },
+      {
+        typ: 'cytat',
+        tekst: 'Różnica między drugą a trzecią drogą nie polega na jakości, tylko na tym, kto trzyma efekt. W abonamencie płacisz za to, żeby ktoś dalej pracował. U nas płacisz za to, żeby praca była zrobiona i została u Ciebie.',
+      },
     ],
     minPrice: 1490,
     /* 2026-08-31 (ustalenie właściciela): ta sama stała cena co u rodzica

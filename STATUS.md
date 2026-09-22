@@ -1,3 +1,164 @@
+# STATUS — PAKIET 3 (VOICEBOTY) GOTOWY + NAPRAWA REGRESJI Z PAKIETU 1 (2026-09-22)
+
+## CO POWSTAŁO
+
+SZEŚĆ podstron /uslugi/voiceboty/: cennik (plik `voiceboty-cennik.ts`),
+dla-przychodni, dla-stomatologa, dla-salonu-samochodowego, dla-kancelarii,
+rodo-ai-act. Plus 11 sekcji z pakietu do `lib/uslugi/voiceboty.ts`.
+Gałąź voicebotów ma teraz 9 podstron.
+
+## BŁĄD ARCHITEKTONICZNY, KTÓRY PRZEGAPIŁEM W PAKIECIE 2
+
+`components/uslugi/ServiceHero.tsx` trzymał mapy `H1_KOLOR` i `KAFEL_CENY`
+kluczowane SAMYM slugiem. Przy pakiecie 2 zmieniłem tylko NAZWĘ PLIKU
+(`cennik.ts` -> `chatboty-cennik.ts`) i uznałem temat za zamknięty. Kolizja była
+głębiej: `/uslugi/voiceboty/cennik` (slug `cennik`) wziąłby wpisy gałęzi
+CHATBOTÓW i ogłosiłby „od 2500 zł / próg prosty" (nazwa progu z cennika
+chatbotów, gdzie próg prosty to 1790 zł), a H1 wyszedłby w całości szary.
+NAPRAWA: lookup DWUSTOPNIOWY `rodzic/slug`, a gdy brak, sam `slug`. Trzy trasy
+podstron przekazują `rodzic`. Wszystkie dotychczasowe wpisy działają bez zmian.
+ZASADA NA PRZYSZŁOŚĆ: generyczny slug (cennik, integracje, faq) = od razu klucz
+pełny. Pakiety automatyzacji i stron WWW planują kolejne /cennik.
+ZMIERZONE: /uslugi/chatboty/cennik nadal „od 1790 zł / próg prosty",
+/uslugi/voiceboty/cennik „od 2500 zł / pakiet startowy". Rozdzielone.
+
+## REGRESJA Z PAKIETU 1, KTÓREJ NIKT NIE ZMIERZYŁ
+
+`/uslugi/optymalizacja` miał **6177 SŁÓW** w <main>, czyli WIĘCEJ niż chatboty
+przed operacją (5667). Dołożyłem tam 13 sekcji 2026-08-31, wypchnąłem 06-09
+i nigdy nie zmierzyłem, bo raport SEO kazał mierzyć chatboty i tylko je
+sprawdzałem. Strona żyła tak na produkcji 16 dni. Miała też jedyny zdublowany
+nagłówek h3 na całym serwisie („Uczciwe zastrzeżenie" x2).
+NAPRAWIONE tą samą metodą co dwa razy wcześniej: 6177 -> 1577 w pięciu rundach.
+
+## TRZY STRONY USŁUG NA CELU (pomiar na buildzie produkcyjnym)
+
+ /uslugi/chatboty     5667 -> 1608
+ /uslugi/voiceboty    4180 -> 1589
+ /uslugi/optymalizacja 6177 -> 1577
+Metoda identyczna we wszystkich trzech: detal na istniejące podstrony,
+na stronie usługi 2-3 zdania z linkiem. NIC nie skasowano, wszystko przeniesione.
+
+## BLOKER, KTÓRY SAM NAPRAWIŁEM
+
+Przycinanie `dla-przychodni.ts` usunęło CAŁE wymagane pole `akapity` z bloku
+`typ: 'sekcja'`. Skutek twardy: tsc TS2322, `npm run build` exit 1,
+`PostBody.tsx` robi `blok.akapity.map(...)`, więc strona zwracała **HTTP 500**
+i nie renderowała się w ogóle. Przywrócone jednym zdaniem, które nie powtarza
+nagłówka. LEKCJA: przy cięciu sprawdzać kontrakt typu, nie tylko liczbę słów.
+
+## OSIEMNAŚCIE ZDUBLOWANYCH NAGŁÓWKÓW NA DZIEWIĘCIU STRONACH (zaszłość, naprawione)
+
+Wzorzec systematyczny: to samo pytanie raz jako nagłówek sekcji w treści, drugi
+raz jako h3 w akordeonie FAQ. Jeden URL zgłaszał Google tę samą parę
+pytanie-odpowiedź dwa razy. Najgorzej leady-b2b (5 par), strony-www (3).
+Dotknięte: leady-b2b, strony-www, automatyzacje, audyt-ai, dokumenty-faktury,
+opieka-ai, rozwiazania, asystent-prezesa, optymalizacja/dla-firm-uslugowych.
+PO NAPRAWIE: 1120 nagłówków h3 na 37 stronach, ZERO duplikatów.
+
+## POMIAR KOŃCOWY (build produkcyjny, nie dev)
+
+37 stron usług i podstron: wszystkie 200 z jednym h1; duplikaty h3 ZERO;
+em-dash ZERO w całym źródle (detektor skontrolowany pozytywnie na sztucznym
+stringu: łapie znak literalny, encję i zapis unicode); frazy zakazane ZERO;
+440 sprawdzeń HTTP na 54 unikalnych linkach, wszystkie 200; test kontrolny 404
+przeszedł na trzech nieistniejących adresach, więc te 200 to nie soft-404;
+regresja 11 tras; zero błędów konsoli; tsc 0, build 0 (86 stron statycznych,
+było 80), lint ZERO ostrzeżeń (zdjęte 4 martwe importy z trasy voicebotów).
+
+## DWIE RZECZY DO WIADOMOŚCI, NIE BŁĘDY
+
+1. Próg 1300-1600 słów spełnia 15 z 37 stron. Ale ten próg zapisano w STATUS.md
+   jako cel dla JEDNEJ strony /uslugi/chatboty, nie jako kontrakt dla podstron.
+   Repo NIE MA udokumentowanego progu dla podstron. Trzy strony usług, dla
+   których próg był ustalony, są na celu. Jeśli ma obowiązywać podstrony,
+   trzeba go najpierw zapisać jako decyzję.
+2. Kapsuła: komentarz w ServiceHero deklaruje 40-60 słów, 19 z 37 jest poza.
+   Najdłuższe: optymalizacja/dla-firm-uslugowych 77, chatboty 71. Do decyzji.
+
+## FAŁSZYWE ALARMY, NAZWANE (żeby nikt ich nie „naprawiał")
+
+ - „art. 3" na /uslugi/optymalizacja/audyt-widocznosci-w-ai: regex bez granicy
+   słowa łapie końcówkę wyrazu „niewart." plus numer kroku „3" z sąsiedniego
+   bloku DOM, który innerText skleja w jeden strumień. Z `\bart\.` zero dopasowań.
+   Ciąg „art. 3" nie istnieje w żadnym pliku źródłowym.
+ - „wirtualna recepcjonistka": zero w treści, występuje WYŁĄCZNIE w komentarzach
+   dokumentujących zakaz (voiceboty.ts:328 i pięć podstron).
+
+---
+
+# STATUS — POMIAR PO 16 DNIACH ZAMROŻENIA (2026-09-22) — DECYZJA O PAKIECIE 3
+
+ŹRÓDŁA: GSC Search Analytics (16 dni 4-19.09 kontra 16 dni 19.08-3.09), GSC URL
+Inspection (podstrony po kolei), Ahrefs DR, pomiar słów na żywej produkcji.
+
+## 1. TREND: WIDOCZNOŚĆ ROŚNIE, KLIKNIĘCIA STOJĄ
+
+wyświetlenia 1014 -> 1822 (+80%), kliknięcia 27 -> 26 (-4%), CTR 2,66% -> 1,43%,
+średnia pozycja 15,4 -> 14,3 (lepiej). Ahrefs DR 18 (univio 59, gogler 56,
+wasko 50, mits 50, inteliwise 42). Ruch: 1632 wyświetlenia z Polski.
+
+## 2. DOWÓD, KTÓRY ROZSTRZYGA O NASTĘPNYM PAKIECIE
+
+Dwie podstrony voicebotów, o których zindeksowanie Paweł poprosił 6.09, dały
+14 z 26 KLIKNIĘĆ CAŁEGO SERWISU (54%) w 16 dni:
+ - /uslugi/voiceboty/odbieranie-telefonow: 258 wyświetleń, 11 kliknięć, poz. 6,4.
+   6.09 była „Adres URL jest Google nieznany".
+ - /uslugi/voiceboty/potwierdzanie-wizyt: 66 wyświetleń, 3 kliknięcia, poz. 6,4.
+   6.09 była „zeskanowana, ale nie zindeksowana" (Google odmawiał od 17.08).
+Wzorzec: WĄSKA INTENCJA NA PODSTRONIE WYGRYWA. Rodzic /uslugi/voiceboty stoi
+na poz. 30,6 przy 267 wyświetleniach i 2 kliknięciach.
+
+## 3. BLOKER: 8 PODSTRON CHATBOTÓW GOOGLE NIGDY NIE POBRAŁ (16 dni)
+
+ - GEO: 6 z 8 ZAINDEKSOWANYCH (pobrane 6-7.09, w 24 h od deployu).
+ - CHATBOTY: 0 z 8. Trzy „nieznany Google" (cennik, baza-wiedzy,
+   hotele-pensjonaty), pięć „wykryta, niezindeksowana".
+SPRAWDZONE NA PRODUKCJI, TECHNICZNIE CZYSTE: wszystkie w mapie z priority 0.7,
+`<meta name="robots" content="index, follow">`, poprawny canonical z www,
+robots.txt nie blokuje /uslugi, linkowanie IDENTYCZNE w obu gałęziach
+(po 1 linku przychodzącym z 9 głównych stron, suma 8 kontra 8).
+WNIOSEK: to nie błąd, tylko budżet indeksowania przy DR 18 (3,98 tys. żądań
+na 90 dni = ok. 44 dziennie). Google wybrał GEO i do chatbotów nie doszedł.
+LEKARSTWO POTWIERDZONE DANYMI: prośba o zindeksowanie. Ten sam ruch na dwóch
+stronach voicebotów dał 54% kliknięć serwisu.
+
+## 4. DECYZJA: NAJPIERW 8 PRÓŚB, POTEM PAKIET 3 (VOICEBOTY)
+
+KROK A (Paweł, zero kodu, jeden dzień): prośba o zindeksowanie dla ośmiu
+podstron /uslugi/chatboty/ (limit ok. 10 dziennie, komplet wchodzi w jeden dzień).
+
+KROK B (sesja WWW): PAKIET 3 VOICEBOTY. Uzasadnienie z danych, nie z kolejności
+w indeksie pakietów:
+ - podstrony voicebotów to dziś 54% kliknięć serwisu,
+ - rodzic ma 267 wyświetleń na poz. 30,6, czyli największy zapas w serwisie,
+ - frazy z realnymi wyświetleniami czekają nisko: „voicebot" 50 wyśw. poz. 49,3;
+   „voicebot cena" 17 poz. 26,7; „ile kosztuje voicebot" 12 poz. 14,7;
+   „voicebot co to" 12 poz. 39,5; „co to jest voicebot i jak działa" 11 poz. 40,5;
+   „voicebot ai" 11 poz. 48,3; „voicebot windykacja" 15 poz. 37,9;
+   „redukcja kosztów dzięki voicebot" 10 poz. 38,5,
+ - „usługa odbierania telefonów dla gabinetu" 15 wyśw. poz. 7,7 to DOKŁADNIE
+   intencja podstron dla-przychodni i dla-stomatologa z pakietu 3.
+PAKIET 3 = 11 sekcji (linie 53-477 voiceboty.md) + 6 podstron (484-681):
+ cennik 484, dla-przychodni 544, dla-stomatologa 582, dla-salonu-samochodowego 606,
+ dla-kancelarii 631, rodo-ai-act 654. Uwagi wdrożeniowe: 682-706.
+
+DOBRA WIADOMOŚĆ, ZMIERZONA: rodzic /uslugi/voiceboty ma 1656 słów, czyli NIE
+wymaga operacji, jaką przeszły chatboty (5667 słów). Pozostali kandydaci też są
+w normie: automatyzacje 1584, audyt-ai 1285, strony-www 1459, faktury 1483.
+Do zrobienia przy okazji: zdublowane pytania FAQ (voiceboty 4 pary, strony-www 3,
+audyt-ai 2, faktury 2, automatyzacje 1).
+
+ZAMROŻENIE dotyczy WYŁĄCZNIE /uslugi/chatboty i trwa do ok. 27.09 / 4.10.
+Praca na voicebotach go NIE łamie, to inna strona.
+
+DŁUG DO SPŁATY PRZED PAKIETEM 3 (zapisany 6.09, nadal otwarty): trasa
+`app/uslugi/voiceboty/[podstrona]/page.tsx` składa Service JSON-LD sama i NIE
+przekazuje `cenaStala` (przekazuje tylko dateModified, linia 119). Pakiet 3
+planuje /uslugi/voiceboty/cennik, więc dopisać PRZED budową tej podstrony.
+
+---
+
 # STATUS — RAPORT SEO 2026-09-05: KROKI 2, 3, 4 DONE NA PRODUKCJI — ZAMROŻENIE OD 2026-09-06
 
 WYPCHNIĘTE 2026-09-06: ca6f74b..b0dd7fc (790f60a etap 0, 58082f2 pakiet 1,

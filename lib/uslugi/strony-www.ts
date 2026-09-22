@@ -86,16 +86,21 @@ export const stronyWww: Usluga = {
           },
         ],
       },
+      /* 2026-09-22: naglowek byl slowo w slowo pytaniem z FAQ nizej, wiec ten jeden URL
+         zglaszal do FAQPage te sama pare pytanie-odpowiedz dwa razy. Pytanie zostaje
+         TYLKO w FAQ, tu zdanie twierdzace. Akapit stracil otwierajace "Powody sa zwykle
+         trzy i wszystkie sa techniczne", bo to byla odpowiedz na skasowane pytanie;
+         ten fakt przeszedl do naglowka. */
       {
         typ: 'naglowek',
-        tekst: 'Dlaczego mojej obecnej strony nie widać w AI?',
+        tekst: 'Trzy techniczne powody, przez które strony nie widać w AI',
         ikona: 'lupa-wykres',
         chip: 'DIAGNOZA',
         overline: 'TRZY POWODY · WSZYSTKIE TECHNICZNE',
       },
       {
         typ: 'akapit',
-        tekst: 'Powody są zwykle trzy i wszystkie są techniczne. Strona internetowa AI, czyli strona pozycjonowana pod AI, różni się od typowej strony z kreatora dokładnie w tych trzech miejscach.',
+        tekst: 'Strona internetowa AI, czyli strona pozycjonowana pod AI, różni się od typowej strony z kreatora dokładnie w tych trzech miejscach.',
       },
       {
         typ: 'lista',
@@ -169,12 +174,15 @@ export const stronyWww: Usluga = {
           },
         ],
       },
+      /* 2026-09-22: naglowek sekcji byl slowo w slowo pytaniem z FAQ nizej (podwojne
+         zgloszenie tej samej pary do FAQPage). Pytanie i odpowiedz "Tak" zostaja w FAQ,
+         tu ta sama tresc jako zdanie twierdzace. */
       {
         typ: 'sekcja',
-        naglowek: 'Czy strona będzie widoczna też w zwykłym Google?',
+        naglowek: 'Ta sama strona pracuje w Google i w odpowiedziach AI',
         wariant: 'quiet',
         akapity: [
-          'Tak. Robimy jedno i drugie naraz: klasyczne pozycjonowanie w Google i widoczność w odpowiedziach AI. Strona pod SEO/GEO to jeden projekt, nie dwa osobne.',
+          'Robimy jedno i drugie naraz: klasyczne pozycjonowanie w Google i widoczność w odpowiedziach AI. Strona pod SEO/GEO to jeden projekt, nie dwa osobne.',
           'Ta sama, dobrze ułożona treść pracuje na oba kanały. Nie wybierasz między Google a ChatGPT, masz oba.',
         ],
       },
@@ -303,9 +311,13 @@ export const stronyWww: Usluga = {
           },
         ],
       },
+      /* 2026-09-22: naglowek byl slowo w slowo pytaniem z FAQ nizej (podwojne zgloszenie
+         tej samej pary do FAQPage). Pytanie zostaje w FAQ, tu odpowiedz jako zdanie
+         twierdzace. Kwoty i terminy bez zmian: 1 dzien / 2-4 dni / 5-10 dni stoja
+         w przelaczniku i w tabeli tuz nizej. */
       {
         typ: 'naglowek',
-        tekst: 'Czy zbudujecie stronę szybko?',
+        tekst: 'Stronę budujemy w dniach roboczych, od 1 dnia za prosty landing',
         ikona: 'kalendarz-check',
         chip: 'CZASY BUDOWY',
         overline: 'TRZY ZAKRESY · CENA I CZAS W DNIACH ROBOCZYCH',

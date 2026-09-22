@@ -154,9 +154,14 @@ export const asystentPrezesa: Usluga = {
         typ: 'akapit',
         tekst: 'Zakres dopasowujemy indywidualnie. Na starcie ustalamy, co asystent ma umieć, do czego ma mieć dostęp i czego nie ma dotykać. To jest decyzja z rozmowy o zakresie, nie ustawienie, które trzeba potem odkrywać.',
       },
+      /* 2026-09-22 (deduplikacja nagłówków, build produkcyjny): pytanie „Czy asystent
+         działa od razu w pełni?" stało tu jako h3 i drugi raz jako pytanie w FAQ, więc
+         jeden URL zgłaszał tę samą parę do FAQPage dwa razy. Pytanie zostaje WYŁĄCZNIE
+         w FAQ (ono zasila JSON-LD), a nagłówek sekcji pyta o to, co przełącznik niżej
+         realnie rozwija: trzy etapy docierania. Zero zmian w faktach. */
       {
         typ: 'naglowek',
-        tekst: 'Czy asystent działa od razu w pełni?',
+        tekst: 'Co asystent umie w pierwszych dniach, a co po kilku tygodniach?',
         ikona: 'kalendarz-check',
         chip: 'ZASADA',
         overline: 'DOJRZEWA JAK NOWA OSOBA W ZESPOLE',
@@ -169,7 +174,10 @@ export const asystentPrezesa: Usluga = {
             numer: 'ETAP 1',
             tytul: 'Pierwsze dni',
             podtytul: 'Opowiadasz mu o firmie',
-            naglowek: 'Nie, i mówimy to wprost: asystent nie działa w pełni od pierwszego dnia.',
+            /* 2026-09-22: było „Nie, i mówimy to wprost: ...". To „Nie" odpowiadało na
+               pytanie, które stało w nagłówku sekcji wyżej; po jego przeformułowaniu
+               zdanie wisiało w próżni. Ten sam fakt, teraz twierdząco. */
+            naglowek: 'Pierwszego dnia asystent nie działa w pełni i mówimy to wprost.',
             akapity: [
               'Asystent działa jak nowo przyjęta asystentka albo student. Na początku opowiadasz mu, czym się zajmujesz, i musisz go poprawiać, tak jak poprawia się nową osobę w zespole.',
             ],
@@ -367,13 +375,18 @@ export const asystentPrezesa: Usluga = {
         wKarcie: true,
         podpis: 'Trzy osobne pozycje kosztu asystenta, ten sam model rozliczenia co przy voicebotach',
       },
+      /* 2026-09-22 (deduplikacja nagłówków, build produkcyjny): pytanie „Kto jest
+         właścicielem asystenta po wdrożeniu?" stało tu jako h3 i drugi raz jako pytanie
+         w FAQ. Pytanie zostaje w FAQ, tu wchodzi zdanie twierdzące o tej samej treści.
+         Pierwsze słowo akapitu („Ty.") było odpowiedzią na ten nagłówek, więc przeszło
+         do zdania twierdzącego. Fakty i kwoty bez zmian. */
       {
         typ: 'sekcja',
-        naglowek: 'Kto jest właścicielem asystenta po wdrożeniu?',
+        naglowek: 'Asystenta przekazujemy Tobie, nie sprzedajemy dostępu do konta',
         wariant: 'edge',
         chip: 'WŁASNOŚĆ',
         akapity: [
-          'Ty. Bota przekazujemy Tobie, więc nie kupujesz dostępu do cudzego konta, tylko narzędzie, które zostaje po Twojej stronie. Jeśli kiedyś zdecydujesz inaczej, możesz po prostu przestać płacić za utrzymanie.',
+          'Właścicielem jesteś Ty. Bota przekazujemy Tobie, więc nie kupujesz dostępu do cudzego konta, tylko narzędzie, które zostaje po Twojej stronie. Jeśli kiedyś zdecydujesz inaczej, możesz po prostu przestać płacić za utrzymanie.',
         ],
         punkty: [
           'Poprawki tego, co nie zadziałało po naszej stronie, robimy zawsze, także po odbiorze.',

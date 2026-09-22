@@ -38,12 +38,22 @@ import { generowanieLeadow } from './generowanie-leadow';
 import { whatsappMessenger } from './whatsapp-messenger';
 import { asystentWewnetrzny } from './asystent-wewnetrzny';
 import { hotelePensjonaty } from './hotele-pensjonaty';
+/* Gałąź `voiceboty`, pakiet 3 (2026-09-22). Nazwa stałej `voicebotyCennik`
+   niesie gałąź dokładnie tak jak `chatbotyCennik` wyżej, bo katalog jest
+   płaski, a slug `cennik` powtarza się w obu gałęziach (pole `slug` zostaje
+   samym `cennik`, adres się nie zmienia). */
+import { voicebotyCennik } from './voiceboty-cennik';
+import { dlaPrzychodni } from './dla-przychodni';
+import { dlaStomatologa } from './dla-stomatologa';
+import { dlaSalonuSamochodowego } from './dla-salonu-samochodowego';
+import { dlaKancelarii } from './dla-kancelarii';
+import { rodoAiAct } from './rodo-ai-act';
 
 export type { PodstronaUslugi } from './types';
 
 /**
- * Wszystkie podstrony usług (dziś: trzy voicebotów, osiem optymalizacji,
- * osiem chatbotów).
+ * Wszystkie podstrony usług (dziś: dziewięć voicebotów, osiem optymalizacji,
+ * osiem chatbotów — razem 25).
  */
 export const PODSTRONY: readonly PodstronaUslugi[] = [
   windykacja,
@@ -75,6 +85,21 @@ export const PODSTRONY: readonly PodstronaUslugi[] = [
   whatsappMessenger,
   asystentWewnetrzny,
   hotelePensjonaty,
+  /* Gałąź `voiceboty`, DRUGA PARTIA z pakietu
+     `.seo-przeglad/pakiety/voiceboty.md` (PODSTRONA 1 do PODSTRONA 6),
+     w kolejności publikacji z pakietu: najpierw fraza transakcyjna (cennik,
+     priorytet najwyższy), potem cztery strony branżowe od najliczniejszej
+     grupy telefonów, na końcu temat prawny. Trzy starsze podstrony tej gałęzi
+     (windykacja, potwierdzanie wizyt, odbieranie telefonów) stoją na górze
+     tablicy, bo weszły wcześniej — tablica trzyma kolejność WDROŻENIA, a nie
+     alfabet gałęzi, i wychodzi 1:1 do mapy witryny, więc dopisujemy na końcu,
+     żeby nie przestawiać adresów już zaindeksowanych. */
+  voicebotyCennik,
+  dlaPrzychodni,
+  dlaStomatologa,
+  dlaSalonuSamochodowego,
+  dlaKancelarii,
+  rodoAiAct,
 ] as const;
 
 /** Indeks `rodzic/slug` -> podstrona (O(1) lookup, budowany raz na moduł). */

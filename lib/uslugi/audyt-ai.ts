@@ -88,11 +88,15 @@ export const audytAi: Usluga = {
       },
       {
         typ: 'sekcja',
-        naglowek: 'Czy audyt ma sens przy małej firmie?',
+        /* 2026-09-22 (dubel pytania): naglowek byl 1:1 z pytaniem FAQ „Czy audyt ma sens przy
+           malej firmie?", wiec ta sama para pytanie-odpowiedz szla na jeden URL dwa razy (raz
+           w szkielecie naglowkow, raz w FAQPage JSON-LD). Pytanie zostaje w FAQ, tu stoi zdanie
+           twierdzace o tym samym; teza „ma sens tym wiekszy" przeniesiona z akapitu do naglowka. */
+        naglowek: 'Przy małej firmie audyt ma sens tym większy',
         wariant: 'quiet',
         chip: 'SPRINT DIAGNOSTYCZNY',
         akapity: [
-          'Ma sens tym większy, im mniejsza firma. Przy małym zespole każda nietrafiona decyzja boli mocniej, a każda godzina na robocie, którą AI może zdjąć, jest godziną wyjętą z Twojego dnia.',
+          'Przy małym zespole każda nietrafiona decyzja boli mocniej, a każda godzina na robocie, którą AI może zdjąć, jest godziną wyjętą z Twojego dnia.',
           'Dlatego zamiast rozdrabniać się na wszystko naraz, sprawdzamy, gdzie wdrożyć AI w firmie przy Twoim budżecie. Chodzi o to, żeby jeden dobrze dobrany proces dał zwrot już na starcie.',
           'A jeśli z mapy wyjdzie, że na tym etapie nic się nie opłaca, usłyszysz to wprost. To też jest odpowiedź, którą lepiej mieć przed wydatkiem niż po nim.',
         ],
@@ -177,11 +181,14 @@ export const audytAi: Usluga = {
       },
       {
         typ: 'sekcja',
-        naglowek: 'Czy po audycie muszę u Was wdrażać?',
+        /* 2026-09-22 (dubel pytania): naglowek byl 1:1 z pytaniem FAQ „Czy po audycie musze
+           u Was wdrazac?". Pytanie zostaje w FAQ (to ono zasila FAQPage JSON-LD), tu zdanie
+           twierdzace; z akapitu znika samo „Nie.", bo nie ma juz pytania, na ktore odpowiada. */
+        naglowek: 'Po audycie nie musisz wdrażać u nas',
         wariant: 'quiet',
         chip: 'ZASADA',
         akapity: [
-          'Nie. Plan jest Twój i realizujesz go sam, z nami albo z kimkolwiek zechcesz. Nie sprzedajemy wdrożenia na siłę ani na ślepo.',
+          'Plan jest Twój i realizujesz go sam, z nami albo z kimkolwiek zechcesz. Nie sprzedajemy wdrożenia na siłę ani na ślepo.',
           'Jeśli z planu wyjdzie, że coś jest przepalaniem kasy albo najtaniej zrobisz to samemu, powiemy to wprost. Taka jest umowa: najpierw mapa, potem Twoja decyzja.',
         ],
         stopka: ['Gdy wdrażasz z nami, 1490 zł netto za audyt odliczamy od kosztu wdrożenia.'],

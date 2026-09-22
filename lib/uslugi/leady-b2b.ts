@@ -109,16 +109,21 @@ export const leadyB2b: Usluga = {
     tresc:
       'Leady branżowe B2B to gotowa paczka rekordów firm z wybranej branży i obszaru, zebrana z publicznie dostępnych wizytówek Google Maps. Mówisz, do kogo chcesz dotrzeć, a my zbieramy i przekazujemy Ci gotową bazę firm B2B.',
     bloki: [
+      /* 2026-09-22: naglowek byl slowo w slowo pytaniem z FAQ nizej, wiec ten jeden URL
+         zglaszal do FAQPage te sama pare pytanie-odpowiedz dwa razy. Pytanie zostaje
+         TYLKO w FAQ, tu stoi zdanie twierdzace o tej samej tresci. Z akapitu znikl
+         otwierajacy zwrot "Z publicznie dostepnych wizytowek firm w Google Maps",
+         bo byl odpowiedzia na skasowane pytanie; ten fakt przeszedl do naglowka. */
       {
         typ: 'naglowek',
-        tekst: 'Skąd bierzecie te rekordy?',
+        tekst: 'Rekordy pochodzą z publicznych wizytówek firm w Google Maps',
         ikona: 'glob-siatka',
         chip: 'GOOGLE MAPS',
         overline: 'PUBLICZNE WIZYTÓWKI · JEDNA PACZKA',
       },
       {
         typ: 'akapit',
-        tekst: 'Z publicznie dostępnych wizytówek firm w Google Maps. To te same dane, które Twój handlowiec i tak by przeklikał ręcznie, tylko zebrane maszynowo. Takie zbieranie często nazywa się scrapowaniem Google Maps: maszynowym odczytem publicznych wizytówek.',
+        tekst: 'To te same dane, które Twój handlowiec i tak by przeklikał ręcznie, tylko zebrane maszynowo. Takie zbieranie często nazywa się scrapowaniem Google Maps: maszynowym odczytem publicznych wizytówek.',
       },
       {
         typ: 'akapit',
@@ -140,9 +145,13 @@ export const leadyB2b: Usluga = {
             ],
           },
           {
-            naglowek: 'Jak długo czekam na paczkę?',
+            /* 2026-09-22: tytul karty byl slowo w slowo pytaniem z FAQ nizej (podwojne
+               zgloszenie tej samej pary do FAQPage). Pytanie zostaje w FAQ, tytul karty
+               to teraz zdanie twierdzace. Liczba 20 do 30 minut weszla do tytulu, wiec
+               pierwszy akapit jej nie powtarza; 50 godzin i kilka godzin zostaja. */
+            naglowek: 'Tysiąc rekordów zbieramy w 20 do 30 minut',
             akapity: [
-              'Tysiąc rekordów zajmuje nam 20 do 30 minut zamiast Twoich 50 godzin. Pięć tysięcy to kilka godzin.',
+              'To samo ręcznie zajęłoby Twojemu handlowcowi około 50 godzin. Pięć tysięcy rekordów zbieramy w kilka godzin.',
               'Format przekazania ustalamy na diagnozie, żeby rekordy wpadły prosto tam, gdzie pracujesz, a nie do kolejnego pliku, który trzeba potem przerabiać.',
             ],
             punkty: [
@@ -164,13 +173,16 @@ export const leadyB2b: Usluga = {
           },
         ],
       },
+      /* 2026-09-22: naglowek sekcji byl slowo w slowo pytaniem z FAQ nizej (podwojne
+         zgloszenie tej samej pary do FAQPage). Pytanie i odpowiedz "Nie" zostaja w FAQ,
+         tu stoi ta sama zasada jako zdanie twierdzace. */
       {
         typ: 'sekcja',
-        naglowek: 'Czy zrobicie to dla firmy sprzedającej klientom indywidualnym?',
+        naglowek: 'Tę usługę robimy wyłącznie dla firm sprzedających innym firmom',
         wariant: 'edge',
         chip: 'ZASADA',
         akapity: [
-          'Nie, jedno ograniczenie mówimy wprost: tę usługę robimy wyłącznie dla firm, które sprzedają innym firmom, czyli działają w B2B.',
+          'Jedno ograniczenie mówimy wprost: klientem tej usługi jest firma, która sprzedaje innym firmom, czyli działa w B2B.',
           'Jeśli Twoim klientem jest osoba prywatna, powiemy Ci to od razu na diagnozie i nie weźmiemy zlecenia. Wolimy odmówić, niż sprzedać paczkę, z której nie skorzystasz.',
         ],
       },
@@ -244,9 +256,13 @@ export const leadyB2b: Usluga = {
           },
         ],
       },
+      /* 2026-09-22: naglowek byl slowo w slowo pytaniem z FAQ nizej (podwojne zgloszenie
+         tej samej pary do FAQPage). Pytanie zostaje w FAQ, tu odpowiedz jako zdanie
+         twierdzace. Fraza "ile kosztuje 1000 leadow B2B" NIE ZNIKA ze strony: stoi
+         w FAQ, w `queries` i w akapicie sekcji "Na start wybierz paczke..." nizej. */
       {
         typ: 'naglowek',
-        tekst: 'Ile kosztuje 1000 leadów B2B?',
+        tekst: 'Paczka 1000 leadów B2B kosztuje 169 zł netto',
         ikona: 'wykres-strzalka',
         chip: 'CENNIK',
         overline: 'TRZY PACZKI · OPŁATA JEDNORAZOWA',
@@ -331,12 +347,15 @@ export const leadyB2b: Usluga = {
         wKarcie: true,
         podpis: 'Im większa paczka, tym taniej wychodzi jeden rekord. Opłata jednorazowa, bez abonamentu.',
       },
+      /* 2026-09-22: naglowek sekcji byl slowo w slowo pytaniem z FAQ nizej (podwojne
+         zgloszenie tej samej pary do FAQPage). Pytanie zostaje w FAQ, tu odpowiedz jako
+         zdanie twierdzace, a akapit nie zaczyna sie juz od urwanego "Te, ktora...". */
       {
         typ: 'sekcja',
-        naglowek: 'Którą paczkę wybrać na start?',
+        naglowek: 'Na start wybierz paczkę, którą realnie przerobisz w miesiącu',
         wariant: 'top',
         akapity: [
-          'Tę, którą realnie przerobisz w miesiącu. Skoro wiesz już, ile kosztuje 1000 leadów B2B, policz drugą stronę: przy stawce, jaką i tak płacisz handlowcowi, samo ręczne zebranie tysiąca rekordów zajmuje około 50 godzin.',
+          'Skoro wiesz już, ile kosztuje 1000 leadów B2B, policz drugą stronę: przy stawce, jaką i tak płacisz handlowcowi, samo ręczne zebranie tysiąca rekordów zajmuje około 50 godzin.',
           'Za leady branżowe B2B płacisz raz. Nie ma abonamentu, nie ma opłaty za utrzymanie i nie ma limitu na to, ile razy z tych danych skorzystasz.',
           'Zanim zamówisz, na bezpłatnej diagnozie mówimy wprost, czy Twoja branża ma sens w tym kanale i ile rekordów realnie przerobisz w miesiącu. Chodzi o to, żeby paczka pracowała, a nie przeleżała bez użycia.',
         ],

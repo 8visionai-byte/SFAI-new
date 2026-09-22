@@ -105,16 +105,21 @@ export const automatyzacje: Usluga = {
     tresc:
       'Bierzemy jeden konkretny proces i układamy go tak, żeby szedł sam: dane przepływają między systemami bez przepisywania, potwierdzenia i przypomnienia wychodzą same. Ty dostajesz do rąk tylko to, co wymaga decyzji.',
     bloki: [
+      /* 2026-09-22: naglowek byl slowo w slowo pytaniem z FAQ nizej, wiec ten jeden URL
+         zglaszal do FAQPage te sama pare pytanie-odpowiedz dwa razy. Pytanie zostaje
+         TYLKO w FAQ, tu zdanie twierdzace. Akapit stracil otwierajace "Z tymi, ktorych
+         juz uzywasz", bo to byla odpowiedz na skasowane pytanie; ten fakt przeszedl
+         do naglowka. */
       {
         typ: 'naglowek',
-        tekst: 'Z jakimi narzędziami się to łączy?',
+        tekst: 'Automatyzacja łączy narzędzia, których już używasz',
         ikona: 'folder-kod',
         chip: 'MAKE.COM I N8N',
         overline: 'AUTOMATYZACJA · JEDEN PROCES END-TO-END',
       },
       {
         typ: 'akapit',
-        tekst: 'Z tymi, których już używasz. Nie zmuszamy Cię do zmiany oprogramowania, tylko łączymy Twoje narzędzia w jeden ciąg, który działa bez ręcznej roboty. Przepływy budujemy na platformach do automatyzacji Make.com i n8n, a spinamy nimi między innymi:',
+        tekst: 'Nie zmuszamy Cię do zmiany oprogramowania, tylko łączymy Twoje narzędzia w jeden ciąg, który działa bez ręcznej roboty. Przepływy budujemy na platformach do automatyzacji Make.com i n8n, a spinamy nimi między innymi:',
       },
       {
         typ: 'siatka',

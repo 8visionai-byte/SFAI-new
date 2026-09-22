@@ -242,6 +242,86 @@ export const llmsTxt: PodstronaUslugi = {
           'Plik możesz dodać kiedykolwiek, bo nie blokuje ani nie przyspiesza żadnego z tych czterech kroków.',
         ],
       },
+
+      /* ── DOŁOŻONE 2026-09-22 (przycięcie `/uslugi/optymalizacja`, pakiet GEO §N13).
+         Słownik ośmiu pojęć stał wyłącznie na rodzicu, który schodzi z 6177 słów
+         do zakresu 1300-1600 (raport `.seo-przeglad/raporty/2026-09-05.md` §9:
+         nie kasujemy treści, przenosimy ją na podstrony). Trafia tutaj, bo ta
+         podstrona jest w całej gałęzi jedyną, która od H1 robi robotę
+         definicyjną („co to jest i czy naprawdę coś daje"), a hasło llms.txt
+         z tego słownika jest jej własnym tematem.
+         DOŁOŻONE NA KOŃCU ISTNIEJĄCEJ SEKCJI, bez przestawiania czegokolwiek
+         wyżej. Ta podstrona jest jedną z dwóch w gałęzi, których Google jeszcze
+         nie pobrał (`dane/indeksacja-2026-09-22.json`: „Adres URL jest Google
+         nieznany"), więc dołożenie treści niczego zaindeksowanego nie rusza.
+         SEKCJA BEZ LICZB I BEZ KWOT, tak jak na rodzicu. Skróty zostają
+         skrótami (GEO, AEO, LLM, llms.txt). */
+      {
+        typ: 'naglowek',
+        tekst: 'GEO, LLM, AI Overviews, encja: co to znaczy po ludzku?',
+        ikona: 'ksiazka',
+        chip: 'SŁOWNIK',
+        overline: 'OSIEM POJĘĆ · JĘZYKIEM KLIENTA',
+      },
+      {
+        typ: 'akapit',
+        tekst:
+          'Ta branża lubi skróty. Osiem pojęć wytłumaczonych tak, żeby dało się je powtórzyć wspólnikowi.',
+      },
+      {
+        typ: 'siatka',
+        kolumny: 2,
+        karty: [
+          {
+            naglowek: 'GEO',
+            akapity: [
+              'Optymalizacja pod silniki generatywne, czyli praca nad tym, żeby model AI wymieniał Twoją firmę w odpowiedzi. W SEO walczysz o miejsce na liście linków. W GEO walczysz o zdanie w gotowej odpowiedzi.',
+            ],
+          },
+          {
+            naglowek: 'AEO',
+            akapity: [
+              'Optymalizacja pod odpowiedź. Chodzi o to, żeby na stronie stało gotowe, zamknięte zdanie odpowiadające na pytanie klienta. Model może je wyciąć i użyć bez przerabiania. W praktyce AEO i GEO robi się jednym ruchem.',
+            ],
+          },
+          {
+            naglowek: 'AI Overviews',
+            akapity: [
+              'Odpowiedź wygenerowana przez AI, którą Google pokazuje nad zwykłymi wynikami. Zabiera uwagę pierwszym linkom, więc bycie w niej zaczyna ważyć więcej niż sama pozycja w wynikach.',
+            ],
+          },
+          {
+            naglowek: 'LLM',
+            akapity: [
+              'Duży model językowy, czyli silnik napędzający ChatGPT, Claude czy Gemini. Nie ma bazy firm ani rankingu. Składa odpowiedź z tego, co przeczytał, więc jeśli nie przeczytał o Tobie, nie wymieni Cię.',
+            ],
+          },
+          {
+            naglowek: 'Encja marki',
+            akapity: [
+              'To, co model rozumie pod nazwą Twojej firmy: czym się zajmuje, gdzie działa, z czym się kojarzy. Kiedy nazwa, adres i opis rozjeżdżają się między stroną a wizytówką, encja się rozmywa.',
+            ],
+          },
+          {
+            naglowek: 'Cytowanie w odpowiedzi AI',
+            akapity: [
+              'Moment, w którym model podaje Twoją nazwę albo link jako źródło. To jest realna waluta w tej grze. Nie liczba wyświetleń, tylko to, czy padasz w odpowiedzi i na którym miejscu.',
+            ],
+          },
+          {
+            naglowek: 'Halucynacja o firmie',
+            akapity: [
+              'Sytuacja, w której model podaje o Tobie nieprawdę: zły adres, nieaktualną ofertę, usługę, której nie świadczysz. Zwykle nie ze złej woli, tylko z braku wyraźnego źródła. Model zgaduje, bo nie ma czego zacytować.',
+            ],
+          },
+          {
+            naglowek: 'llms.txt',
+            akapity: [
+              'Proponowany plik na stronie, który miałby mówić modelom, gdzie szukać najważniejszych treści. Mówimy uczciwie: to pomysł na standard, a nie potwierdzona metoda. Nie znamy dowodu, że sam z siebie zwiększa widoczność, więc nie sprzedajemy go jako skrótu.',
+            ],
+          },
+        ],
+      },
     ],
   },
 

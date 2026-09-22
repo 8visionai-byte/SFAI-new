@@ -124,9 +124,14 @@ export const rozwiazania: Usluga = {
     tresc:
       'Budujemy to, czego nie ma na półce: narzędzie zbudowane pod jeden proces Twojej firmy. Nie kupujesz pudełka z funkcjami, tylko jedną rzecz, która robi Twoją robotę, a w praktyce przyjmuje ona jedną z trzech form. Na bezpłatnej diagnozie mówimy wprost, czy warto budować od zera, czy taniej złożyć z gotowych klocków.',
     bloki: [
+      /* 2026-09-22 (deduplikacja nagłówków, build produkcyjny): pytanie „Czym jest
+         indywidualne rozwiązanie AI?" stało tu jako h3 i drugi raz jako pytanie w FAQ,
+         więc jeden URL zgłaszał tę samą parę do FAQPage dwa razy. Definicja zostaje
+         w FAQ, a nagłówek pyta o to, co przełącznik niżej realnie rozwija: każda z
+         trzech opcji zaczyna się od „Wybierasz ją, gdy...". Fakty bez zmian. */
       {
         typ: 'naglowek',
-        tekst: 'Czym jest indywidualne rozwiązanie AI?',
+        tekst: 'Kiedy wybrać aplikację, kiedy wtyczkę, a kiedy Agenta AI?',
         ikona: 'folder-kod',
         chip: 'TRZY FORMY',
         overline: 'APLIKACJA · WTYCZKA · AGENT AI',

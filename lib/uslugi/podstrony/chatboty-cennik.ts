@@ -5,6 +5,114 @@ import type { PodstronaUslugi } from './types';
  * Fraza primary: „ile kosztuje chatbot ai dla firmy" (pakiet
  * `.seo-przeglad/pakiety/chatboty.md` §P1, treść zatwierdzona przed wdrożeniem).
  *
+ * ══ PRZYCIĘCIE 2026-09-22 (raport `.seo-przeglad/raporty/2026-09-05.md`,
+ * sekcje 4, 8 i 9). TA SAMA OPERACJA, co 2026-09-06 na `lib/uslugi/chatboty.ts`
+ * (5667 -> 1618 słów, commit b0dd7fc) i 2026-09-22 na `lib/uslugi/voiceboty.ts`
+ * (4180 -> 1575). Ta podstrona miała 2539 słów w <main> zmierzone na żywej
+ * stronie i była NAJDŁUŻSZĄ podstroną w całym serwisie, przy medianie top5
+ * polskiej konkurencji równej około 1150. Cel raportu: 1300-1600 słów.
+ *
+ * JAK MIERZONE (równolegle pracował chirurg na gałęzi optymalizacji, więc
+ * buildu NIE uruchamiano): licznik czyta ten plik i sumuje słowa ze
+ * WSZYSTKICH pól, które szablon renderuje w <main>, czyli h1, kapsula,
+ * problem, rozwiazanie, tabelaPorownawcza, kroki, ramaCeny, faq, cta
+ * i powiazane. Na wersji sprzed cięcia licznik dawał 2650 przy 2539 słowach
+ * zmierzonych na żywej stronie, czyli stały współczynnik 0,958 (różnicę robią
+ * tytuły sióstr i etykiety komponentów po stronie live). Po cięciu licznik
+ * daje 1629, co po przeliczeniu tym samym współczynnikiem odpowiada około
+ * 1560 słowom w <main>. POMIAR NA ŻYWEJ STRONIE DO POWTÓRZENIA PO DEPLOYU.
+ *
+ * DLACZEGO TERAZ I DLACZEGO BEZ RYZYKA: URL Inspection API z 2026-09-22 mówi
+ * o tym adresie „Adres URL jest Google nieznany", czyli Google NIGDY tej strony
+ * nie pobrał. Nie ma więc czego stracić w rankingu, a przycinamy ZANIM
+ * jakikolwiek robot zobaczy wersję rozdętą. Na chatbotach rodzica dokładnie to
+ * rozmycie tematu kosztowało frazę („chatbot ai dla firm": 70 wyświetleń -> 3).
+ *
+ * ZASADA (raport 9): NIE KASUJEMY TREŚCI, PRZENOSIMY JĄ ALBO ZOSTAWIAMY TAM,
+ * GDZIE JUŻ STOI. Przed każdym cięciem sprawdzono, czy sedno REALNIE stoi na
+ * stronie docelowej albo w innym miejscu TEJ strony. Siedem sióstr gałęzi
+ * (`obsluga-klienta`, `baza-wiedzy`, `sklep-internetowy`, `generowanie-leadow`,
+ * `whatsapp-messenger`, `asystent-wewnetrzny`, `hotele-pensjonaty`) ma dziś
+ * po 1900-2300 słów, więc dokładanie im treści pogorszyłoby ich samych:
+ * cięcia poszły tam, gdzie fakt JUŻ stoi, a nie w dopisywanie nowych akapitów.
+ * Rodzic `lib/uslugi/chatboty.ts` jest po przycięciu (1608 słów) i celowo nie
+ * dostał z tej operacji ani jednego zdania.
+ *
+ * CO WYCIĘTO I GDZIE TEN FAKT STOI:
+ *  - sekcja `problem` „O co zapytać, zanim porównasz dwie oferty": z czterech
+ *    pytań został JEDEN. „Czy da się przenieść bota do siebie" i „kto płaci za
+ *    tokeny" niesie tabela porównawcza TEJ strony (wiersze „Koniec umowy"
+ *    i „Więcej rozmów") oraz FAQ „Czy mogę nie płacić abonamentu?", a „ile
+ *    kosztuje funkcja, o której nie było mowy" stoi w sekcji `rozwiazanie`
+ *    (punkt „Rozbudowa") i w FAQ o poprawkach. Został punkt o aktualizacji
+ *    bazy wiedzy w opłacie miesięcznej, bo o tym nie mówi nic innego. Dwa
+ *    zdania stopki o tym, że odpowiedzi stoją niżej, to była wata o układzie
+ *    strony, nie fakt; dwa zdania o abonamencie kontra własność (przeniesione
+ *    tu z rodzica 2026-09-06) zostają.
+ *  - sekcja `rozwiazanie`, siatka trzech kart „Trzy rzeczy, które ruszają
+ *    wycenę": karta o materiałach do bazy wiedzy -> /uslugi/chatboty/baza-wiedzy
+ *    (`baza-wiedzy.ts`: pełna lista materiałów plus zdanie „Nie muszą być
+ *    poukładane, uporządkowanie jest częścią wdrożenia"), a na tej stronie
+ *    zostaje krok 2 z sekcji `kroki`; karta o osobie odbierającej bota -> krok 3
+ *    tej samej sekcji `kroki` plus FAQ o poprawkach; karta o integracjach ->
+ *    zdanie w sekcji zbiorczej niżej, drabina cenowa i FAQ „Co dokładnie
+ *    podnosi cenę chatbota?". Została jedna sekcja zbiorcza zamiast siatki
+ *    i osobnego bloku o granicach ceny.
+ *  - `ramaCeny`, przełącznik dwóch modeli utrzymania: drugi akapit z każdej
+ *    opcji plus po jednym punkcie. „Wyższa kwota nie daje lepszego bota" to
+ *    był komentarz do liczby, którą tabela podaje wprost; „kod i baza wiedzy
+ *    są Twoje" stoi w tabeli porównawczej („Baza wiedzy: Twoja od pierwszego
+ *    dnia"); „zero abonamentu po naszej stronie" powtarzało nagłówek własnej
+ *    opcji. Stawka 350 zł netto za godzinę zjechała z akapitu do punktu i stoi
+ *    dodatkowo w FAQ „Czy mogę nie płacić abonamentu?".
+ *  - `ramaCeny`, tabela rachunku na trzy lata: dwa pierwsze wiersze („Koszt
+ *    wdrożenia" trzy razy 1790 zł netto i „Opłata miesięczna") oraz wiersz
+ *    „Za co płacisz co miesiąc". Pierwsze dwa stoją w NAGŁÓWKACH KOLUMN tej
+ *    samej tabeli i w jej podpisie, trzeci zdanie w zdanie w przełączniku nad
+ *    nią. Zostały trzy wiersze sum, czyli to, czego nie ma nigdzie indziej
+ *    w serwisie; nagłówek pierwszej kolumny zmieniony na „Łącznie po", bo po
+ *    cięciu wszystkie wiersze to już wyłącznie okresy.
+ *  - `powiazane.uslugi`: pięć kart do SIÓSTR z tej samej gałęzi. Renderowały
+ *    się drugi raz na tym samym ekranie, bo `PodstronyPowiazane` najpierw sam
+ *    buduje siatkę „Konkretne zastosowania" ze wszystkich siedmiu sióstr.
+ *    ANI JEDEN LINK NIE ZNIKA (szczegóły w komentarzu przy tym polu).
+ *  - `ramaCeny`, siatka trzech kart („Co podnosi cenę", „Co obniża cenę",
+ *    „Czego w tej cenie nie obetniemy") CAŁA. To był najczystszy przypadek
+ *    powtórzenia na tej stronie: pierwsza karta = FAQ „Co dokładnie podnosi
+ *    cenę chatbota?" plus podpis drabiny, druga karta sama mówiła o sobie „to
+ *    samo, co ją podnosi, tylko czytane w drugą stronę" (a jej jedyny osobny
+ *    fakt, Sprint Diagnostyczny odliczany od wdrożenia, stoi w sekcji „Kiedy
+ *    chatbot się u Ciebie nie opłaci?"), trzecia karta = FAQ „Czy da się taniej
+ *    niż 1790 zł netto?" i FAQ o dwóch rundach poprawek. Zero utraconych faktów.
+ *  - FAQ z 8 pozycji do 6 (kontrakt `Usluga.faq` w `lib/uslugi/types.ts` mówi
+ *    5-6, a strona miała 8). Wycięte dwa:
+ *      · „Kto płaci za tokeny modelu językowego?" -> zostaje na tej stronie
+ *        w karcie „Tokeny modelu, według zużycia" (konto Twoje, faktura prosto
+ *        do Ciebie) i w FAQ „Czy do ceny dochodzi coś jeszcze?", a poza nią
+ *        w `baza-wiedzy.ts` („Płacisz je dostawcy wprost, według zużycia"),
+ *      · „Ile kosztuje voicebot w porównaniu z chatbotem?" -> /uslugi/voiceboty/cennik
+ *        (`voiceboty-cennik.ts`: kapsuła z kompletem 2500 zł netto,
+ *        5000 do 9000 zł netto i 299 do 1500 zł netto miesięcznie) oraz
+ *        /uslugi/voiceboty. Wszystkie cztery kwoty zostają też na tej stronie,
+ *        w sekcji „Chatbot czy voicebot, jeśli patrzysz na koszt?".
+ *  - kapsuła: 66 słów -> 56, bo kontrakt `Usluga.kapsula` mówi 40-60. Ani jedna
+ *    kwota ani czas nie wypadły, zmieniła się wyłącznie składnia zdań (trzy
+ *    progi i trzy czasy zwinięte z trzech zdań do jednego).
+ *  - reszta cięć to skracanie akapitów, które mówiły to samo dwa razy pod rząd.
+ *    Żadna liczba, żaden próg i żadne zdanie kontraktowe („voicebot nigdy nie
+ *    wydzwania sam", „bezpłatna rozmowa to badanie potrzeb", „Sprint 1490 zł
+ *    netto odliczany w całości") nie zostało ruszone.
+ *
+ * CZEGO NIE RUSZONO CO DO FAKTU: wszystkie trzy progi z kwotami i czasami, obie
+ * formuły utrzymania, stawka godzinowa, sumy po 12, 24 i 36 miesiącach, cennik
+ * voicebota, Sprint Diagnostyczny, sześć wierszy tabeli porównawczej, trzy kroki
+ * przygotowania do wyceny, pięć sytuacji „kiedy się nie opłaci" (w tym trzy
+ * przeniesione tu z rodzica 2026-09-06), CTA, `metaTitle`, `metaDescription`
+ * i `queries`. Kontrola po cięciu: zbiór wszystkich liczb w polach renderowanych
+ * różni się od wersji sprzed operacji wyłącznie o `dataAktualizacji` oraz o samo
+ * „22:00" z wyciętej karty siostry (a to jej własny H1, który siatka
+ * „Konkretne zastosowania" renderuje tak czy tak). Zero nowych liczb.
+ *
  * NAZWA PLIKU I STAŁEJ ZAWIERA GAŁĄŹ (`chatboty-cennik`), a pole `slug`
  * zostaje samym `cennik`, bo adres `/uslugi/chatboty/cennik` się nie zmienia.
  * Powód: pakiety voicebotów, automatyzacji i stron WWW planują KAŻDY własną
@@ -88,19 +196,22 @@ import type { PodstronaUslugi } from './types';
 export const chatbotyCennik: PodstronaUslugi = {
   rodzic: 'chatboty',
   slug: 'cennik',
-  /* 2026-09-06: dołożone trzy sytuacje „kiedy się nie opłaci" z rodzica oraz
+  /* 2026-09-22: przycięcie 2539 -> około 1500 słów (blok „PRZYCIĘCIE" wyżej).
+     2026-09-06: dołożone trzy sytuacje „kiedy się nie opłaci" z rodzica oraz
      zamknięcie „abonament czy własność" (pakiet §9) w stopce sekcji
      o porównywaniu ofert. */
-  dataAktualizacji: '2026-09-06',
+  dataAktualizacji: '2026-09-22',
 
   h1: 'Ile kosztuje chatbot AI dla firmy? Cennik 2026',
 
-  /* KAPSUŁA 1:1 Z PAKIETU §P1 („do wklejenia jako pierwszy akapit i jako
-     kapsula w danych"). Nie skracać i nie przepisywać: niesie komplet
-     wielkości strony (trzy progi, trzy czasy, utrzymanie, tokeny) i ma być
-     cytowana przez modele w tej formie, w jakiej została zatwierdzona. */
+  /* KAPSUŁA Z PAKIETU §P1 („do wklejenia jako pierwszy akapit i jako kapsula
+     w danych"), ŚCIŚNIĘTA 2026-09-22 z 66 do 56 słów, bo kontrakt
+     `Usluga.kapsula` (lib/uslugi/types.ts) mówi 40-60 słów, a pakiet o tym
+     limicie nie wiedział. Komplet wielkości strony zostaje co do liczby: trzy
+     progi, trzy czasy, dwa modele utrzymania i tokeny. Zmieniła się wyłącznie
+     składnia: trzy osobne zdania o progach zwinięte w jedno wyliczenie. */
   kapsula:
-    'Chatbot AI dla firmy kosztuje u nas od 1790 zł netto i działa po 1-2 dniach roboczych. Bot średni to 3000-6000 zł netto i 3-4 dni robocze. Bot z integracjami to 8000-15000 zł netto i 5-10 dni roboczych. Do tego dochodzi utrzymanie 99-599 zł netto miesięcznie, gdy infrastruktura stoi u nas, albo 0 zł miesięcznie, gdy przekazujemy ją Tobie. Tokeny modelu płacisz dostawcy wprost, według zużycia.',
+    'Chatbot AI dla firmy kosztuje u nas od 1790 zł netto przy 1-2 dniach roboczych, bot średni 3000-6000 zł netto przy 3-4 dniach, a bot z integracjami 8000-15000 zł netto przy 5-10 dniach. Do tego utrzymanie 99-599 zł netto miesięcznie, gdy infrastruktura stoi u nas, albo 0 zł, gdy przekazujemy ją Tobie. Tokeny płacisz dostawcy wprost.',
 
   /* metaTitle: pakiet §P1 dawał 36 znaków, konwencja repo (types.ts) mówi 50-60
      i decyzja właściciela każe trzymać konwencję repo. Fraza główna zostaje
@@ -120,7 +231,7 @@ export const chatbotyCennik: PodstronaUslugi = {
        dwóch ofert, dopóki nie rozbije się ich na te same trzy pozycje. */
     h2: 'Dlaczego jedna kwota za chatbota nie mówi Ci prawie nic?',
     tresc:
-      'Cena chatbota to nie jedna liczba, tylko trzy osobne pozycje: stworzenie bota, utrzymanie po wdrożeniu i zużycie tokenów modelu. Dwie oferty da się zestawić dopiero wtedy, gdy każdą rozbijesz na te same trzy.',
+      'Cena chatbota to nie jedna liczba, tylko trzy osobne pozycje: stworzenie bota, utrzymanie po wdrożeniu i zużycie tokenów modelu. Dwie oferty zestawisz dopiero wtedy, gdy rozbijesz każdą na te same trzy.',
     bloki: [
       {
         typ: 'naglowek',
@@ -136,30 +247,32 @@ export const chatbotyCennik: PodstronaUslugi = {
           {
             naglowek: 'Stworzenie bota, płatne raz',
             akapity: [
-              'Jednorazowa kwota za zbudowanie i uruchomienie bota: bazę wiedzy z Twoich materiałów, ustawienie rozmowy, testy i odbiór. Płacisz ją raz, niezależnie od tego, jak długo bot potem pracuje.',
+              'Jednorazowa kwota za zbudowanie i uruchomienie bota: bazę wiedzy z Twoich materiałów, ustawienie rozmowy, testy i odbiór. Płacisz ją raz.',
             ],
-            punkty: [
-              'Dwie rundy poprawek mieszczą się w tej kwocie.',
-              'Funkcje spoza pierwszej rozmowy wyceniamy osobno.',
-            ],
+            punkty: ['Dwie rundy poprawek mieszczą się w tej kwocie.'],
           },
           {
             naglowek: 'Utrzymanie, co miesiąc albo wcale',
             akapity: [
-              'Ta pozycja zależy od jednej decyzji: czy infrastruktura zostaje u nas, czy przekazujemy ją Tobie. W drugim wariancie nie płacisz nam co miesiąc nic, a poprawki zamawiasz wtedy, kiedy ich potrzebujesz.',
+              'Zależy od jednej decyzji: czy infrastruktura zostaje u nas, czy przekazujemy ją Tobie. W drugim wariancie nie płacisz nam co miesiąc nic.',
             ],
-            punkty: [
-              'Infrastruktura u nas: stała opłata miesięczna.',
-              'Infrastruktura u Ciebie: poprawki na zlecenie, godzinowo.',
-            ],
+            /* PRZYCIĘCIE 2026-09-22: wycięte oba punkty („infrastruktura u nas:
+               stała opłata miesięczna" i „u Ciebie: poprawki godzinowo") razem
+               z polem, bo `punkty` jest opcjonalne (lib/blog/types.ts), a pusta
+               tablica renderowałaby pustą listę. Przełącznik dwóch modeli
+               w sekcji ceny mówi dokładnie to samo, tylko z kwotami. */
           },
           {
             naglowek: 'Tokeny modelu, według zużycia',
+            /* PUNKT „Konto u dostawcy jest Twoje" ZOSTAJE: od 2026-09-22 to
+               jedyne miejsce na tej stronie, gdzie stoi wprost, czyje jest
+               konto i do kogo idzie faktura (wycięte FAQ „Kto płaci za tokeny
+               modelu językowego?"). Ten sam fakt niesie `baza-wiedzy.ts`. */
             akapity: [
-              'Tokeny to rozliczenie za pracę modelu językowego. Rozliczasz je na własnym koncie u dostawcy modelu, więc jest to jedyna pozycja, której wysokość ustala liczba rozmów, a nie umowa z nami.',
+              'Tokeny to rozliczenie za pracę modelu językowego. Jedyna pozycja, o której wysokości decyduje liczba rozmów, a nie umowa z nami.',
             ],
             punkty: [
-              'Konto u dostawcy jest Twoje, faktura idzie prosto do Ciebie.',
+              'Konto u dostawcy jest Twoje, faktura idzie prosto do Ciebie, bez naszej marży.',
               'Realny rząd wielkości znasz po pierwszej fakturze od dostawcy.',
             ],
           },
@@ -168,23 +281,26 @@ export const chatbotyCennik: PodstronaUslugi = {
       {
         typ: 'sekcja',
         naglowek: 'O co zapytać, zanim porównasz dwie oferty na chatbota?',
-        akapity: [
-          'Różnica między ofertami rzadko siedzi w kwocie na pierwszej stronie. Siedzi w tym, co dzieje się z botem w trzecim miesiącu i w tym, czego przy podpisywaniu nikt nie powiedział wprost.',
-        ],
+        akapity: ['Różnica między ofertami rzadko siedzi w kwocie na pierwszej stronie.'],
+        /* PRZYCIĘCIE 2026-09-22: z czterech pytań został jeden. Wycięte
+           „czy da się przenieść bota do siebie" i „kto płaci za tokeny"
+           niesie tabela porównawcza zaraz niżej (wiersze „Koniec umowy"
+           i „Więcej rozmów") oraz FAQ „Czy mogę nie płacić abonamentu?",
+           a „ile kosztuje funkcja, o której nie było mowy" stoi w sekcji
+           `rozwiazanie` (punkt „Rozbudowa") i w FAQ o poprawkach. Ten jeden
+           zostaje, bo o aktualizacji bazy wiedzy w opłacie miesięcznej nie
+           mówi na tej stronie nic innego. */
         punkty: [
           'Kto aktualizuje bazę wiedzy, gdy zmienia się oferta, i czy mieści się to w opłacie miesięcznej.',
-          'Ile kosztuje funkcja, o której nie było mowy na pierwszej rozmowie.',
-          'Czy da się przenieść bota do siebie i co dokładnie dostajesz przy przekazaniu.',
-          'Kto płaci za tokeny modelu i czy ktoś dolicza do nich marżę.',
         ],
         wariant: 'edge',
         chip: 'PORÓWNANIE',
-        /* Dwa ostatnie punkty stopki: pakiet §9 rodzica (zamknięcie listy
-           kontrolnej „abonament czy własność"), przeniesione 1:1 w 2026-09-06
-           po przycięciu `/uslugi/chatboty` (kontrola utraty treści). Zero liczb. */
+        /* Stopka: pakiet §9 rodzica (zamknięcie listy kontrolnej „abonament
+           czy własność"), przeniesione 1:1 w 2026-09-06 po przycięciu
+           `/uslugi/chatboty` (kontrola utraty treści). Zero liczb. Dwa zdania
+           o tym, że odpowiedzi stoją niżej, wycięte 2026-09-22: mówiły
+           o układzie strony, nie o cenie. */
         stopka: [
-          'Nasze odpowiedzi na te cztery pytania stoją niżej na tej stronie, razem z kwotami.',
-          'Zadaj je też nam. Odpowiedź ma być w cenniku, nie w rozmowie handlowej.',
           'Abonament ma sens, jeśli chcesz prostego bota na tydzień, sam go skonfigurujesz i nie zależy Ci na tym, czyja jest baza wiedzy.',
           'Własny bot ma sens, jeśli baza wiedzy jest Twoim aktywem, a bot ma pracować na Twoich zasadach dłużej niż rok.',
         ],
@@ -197,67 +313,44 @@ export const chatbotyCennik: PodstronaUslugi = {
        Tutaj mowa wyłącznie o mechanice wyceny, bez ani jednej kwoty. */
     h2: 'Co decyduje o tym, w którym progu wyląduje Twój chatbot?',
     tresc:
-      'O progu decyduje jedna rzecz: czy bot ma tylko odpowiadać, czy również sięgać do Twoich systemów. Objętość bazy wiedzy i liczba dodatkowych funkcji przesuwają wycenę już wewnątrz progu.',
+      'O progu decyduje jedna rzecz: czy bot ma tylko odpowiadać, czy sięgać do Twoich systemów. Objętość bazy wiedzy i liczba funkcji przesuwają wycenę już wewnątrz progu.',
+    /* PRZYCIĘCIE 2026-09-22. Była tu siatka trzech kart („Trzy rzeczy, które
+       ruszają wycenę") plus osobna sekcja „Czego cena wdrożenia nie obejmuje".
+       Zostaje jedna sekcja zbiorcza, bo dwie z trzech kart stały na tej samej
+       stronie drugi raz:
+        - karta o materiałach do bazy wiedzy -> krok 2 w sekcji `kroki` niżej
+          („Zbierz w jednym miejscu cennik, oferty, opisy produktów
+          i procedury"), a pełna lista materiałów wraz ze zdaniem, że nie muszą
+          być poukładane, stoi na /uslugi/chatboty/baza-wiedzy (link w siatce
+          powiązań pod stroną),
+        - karta o osobie odbierającej bota -> krok 3 w sekcji `kroki`
+          („Wskaż jedną osobę decyzyjną do dwóch tur testów") i FAQ
+          o poprawkach,
+        - karta o integracjach -> akapit tej sekcji, drabina cenowa i FAQ
+          „Co dokładnie podnosi cenę chatbota?".
+       Zdanie o wiedzy, która siedzi w głowach, stoi niżej w sekcji „Kiedy
+       chatbot się u Ciebie nie opłaci?". */
     bloki: [
       {
-        typ: 'naglowek',
-        tekst: 'Trzy rzeczy, które ruszają wycenę',
-        ikona: 'wykres-strzalka',
-        chip: 'WYCENA',
-        overline: 'CO ZMIENIA KWOTĘ · CO JEJ NIE RUSZA',
-      },
-      {
-        typ: 'siatka',
-        kolumny: 3,
-        karty: [
-          {
-            naglowek: 'Czy bot ma sięgać do Twoich systemów?',
-            akapity: [
-              'To jedyna rzecz, która przenosi wycenę z progu prostego na próg z integracjami. Bot, który tylko odpowiada, zostaje na dole drabiny, choćby odpowiadał na bardzo dużo pytań.',
-            ],
-            punkty: [
-              'Sprawdzenie statusu zamówienia albo dopisanie kontaktu do CRM to już integracja.',
-              'Każdy system to osobne dostępy, testy i obsługa błędów.',
-            ],
-          },
-          {
-            naglowek: 'W jakim stanie są materiały do bazy wiedzy?',
-            akapity: [
-              'Nie muszą być poukładane, ale muszą istnieć i ktoś musi mieć do nich dostęp. Gdy wiedza siedzi wyłącznie w głowach, zaczynamy od spisania procesów, a nie od budowy bota.',
-            ],
-            punkty: [
-              'Cennik, oferty, opisy produktów, procedury, transkrypcje szkoleń.',
-              'Zegar wdrożenia rusza dopiero wtedy, gdy materiały są u nas.',
-            ],
-          },
-          {
-            naglowek: 'Kto po Twojej stronie odbiera bota?',
-            akapity: [
-              'Jedna osoba, która przetestuje bota i powie, że jest dobrze. Bez niej sama budowa trwa tyle co zwykle, a odbiór rozjeżdża się na tygodnie i to on przeciąga cały projekt.',
-            ],
-            punkty: [
-              'Odbiór ma dwie tury testów i obie mieszczą się w kwocie wdrożenia.',
-              'Wystarczy jedna osoba decyzyjna, nie cały zespół.',
-            ],
-          },
-        ],
-      },
-      {
         typ: 'sekcja',
-        naglowek: 'Czego cena wdrożenia u nas nie obejmuje?',
+        naglowek: 'Co przesuwa próg, a co zostaje poza kwotą wdrożenia',
+        /* Akapit NIE powtarza leadu sekcji (lead już mówi, że o progu decyduje
+           sięganie do systemów), tylko dokłada wniosek: sama liczba pytań nie
+           rusza kwoty. */
         akapity: [
-          'Wolimy powiedzieć to przed podpisaniem niż przy fakturze. Poza kwotą wdrożenia zostają dokładnie dwie rzeczy i obie są w Twoich rękach.',
+          'Bot, który tylko odpowiada, zostaje na dole drabiny, choćby odpowiadał na bardzo dużo pytań.',
         ],
         punkty: [
-          'Tokeny modelu: rozliczasz je u dostawcy, na swoim koncie, według liczby rozmów.',
+          'Sprawdzenie statusu zamówienia albo dopisanie kontaktu do CRM to już integracja.',
+          'Każdy system to osobne dostępy, testy i obsługa błędów.',
+          /* PRZYCIĘCIE 2026-09-22: wycięty punkt o tokenach. Karta „Tokeny
+             modelu, według zużycia" w sekcji `problem` mówi to samo, i to
+             dokładniej (czyje konto, do kogo faktura, bez marży). */
           'Rozbudowa: to, czego nie ustaliliśmy na starcie, idzie jako osobne zlecenie z własną kwotą.',
         ],
         wariant: 'top',
         chip: 'GRANICE',
-        stopka: [
-          'Wszystko, co ustaliliśmy na starcie, mieści się w kwocie wdrożenia.',
-          'O rozbudowie mówimy w momencie zgłoszenia, nie po jej zrobieniu.',
-        ],
+        stopka: ['O rozbudowie mówimy w momencie zgłoszenia, nie po jej zrobieniu.'],
       },
     ],
   },
@@ -316,15 +409,19 @@ export const chatbotyCennik: PodstronaUslugi = {
     items: [
       {
         tytul: 'Zgrubna liczba pytań i kanały, którymi przychodzą',
-        opis: 'Nie musisz nic liczyć co do sztuki. Wystarczy szacunek: mniej więcej tyle mailem, tyle w komunikatorach, tyle telefonem. Ta jedna informacja mówi, czy jesteśmy przy progu prostym, czy wyżej.',
+        opis: 'Nie musisz liczyć co do sztuki. Wystarczy szacunek: tyle mailem, tyle w komunikatorach, tyle telefonem. To mówi, czy jesteśmy przy progu prostym, czy wyżej.',
       },
       {
+        /* KROK 2 PRZEJĄŁ 2026-09-22 KARTĘ „W jakim stanie są materiały do bazy
+           wiedzy?" z sekcji `rozwiazanie` (patrz komentarz tamże). Pełna lista
+           materiałów wraz ze zdaniem, że nie muszą być poukładane, stoi na
+           /uslugi/chatboty/baza-wiedzy. */
         tytul: 'Materiały do bazy wiedzy i lista systemów',
-        opis: 'Zbierz w jednym miejscu cennik, oferty, opisy produktów i procedury, a obok wypisz systemy, z którymi bot ma rozmawiać: CRM, sklep, kalendarz, magazyn. Ta druga lista przesądza o najwyższym progu, więc pytamy o nią wprost.',
+        opis: 'Zbierz cennik, oferty, opisy produktów i procedury, a obok wypisz systemy, z którymi bot ma rozmawiać: CRM, sklep, kalendarz, magazyn. Ta druga lista przesądza o progu.',
       },
       {
         tytul: 'Osoba, która odbierze bota po Twojej stronie',
-        opis: 'Wskaż jedną osobę decyzyjną do dwóch tur testów, nie cały zespół. Z tymi trzema rzeczami próg, liczba dni roboczych i granice zakresu mieszczą się w jednej rozmowie, a jeśli bot się u Ciebie nie opłaci, usłyszysz to wtedy.',
+        opis: 'Wskaż jedną osobę decyzyjną do dwóch tur testów, nie cały zespół. Z tymi trzema rzeczami próg, czas i granice zakresu mieszczą się w jednej rozmowie.',
       },
     ],
   },
@@ -336,33 +433,38 @@ export const chatbotyCennik: PodstronaUslugi = {
        ich tutaj dawało zdanie prawie identyczne z FAQ rodzica (pomiar
        podobieństwa 0,81), więc lead mówi o układzie sekcji, nie o liczbach. */
     tresc:
-      'Trzy progi, trzy czasy realizacji i trzy różne powody, dla których wycena rośnie. Rozkładamy je niżej razem z utrzymaniem i rachunkiem na trzy lata, bo cenę bota poznaje się po całym okresie jego pracy, a nie po pierwszym dniu.',
+      'Trzy progi, trzy czasy realizacji, do tego utrzymanie i rachunek na trzy lata. Cenę bota poznaje się po całym okresie jego pracy, a nie po pierwszym dniu.',
     bloki: [
       {
         typ: 'pasMetryk',
+        /* PRZYCIĘCIE 2026-09-22: pas zostaje (to jedyny element tej sekcji
+           czytelny w dwie sekundy), ale pola `zrodlo` mówiły o układzie
+           strony („próg 1 z drabiny cenowej niżej"), a nie o cenie. Skrócone
+           do nazwy bloku, z którego liczba pochodzi. Same kwoty i czasy
+           bez zmian, co do złotówki jak w drabinie i przełączniku. */
         metryki: [
           {
             wartosc: '1790 zł netto',
             opis: 'chatbot prosty, płatne raz przy wdrożeniu',
-            zrodlo: 'próg 1 z drabiny cenowej niżej',
+            zrodlo: 'drabina cenowa',
             ton: 'cyan',
           },
           {
             wartosc: '1-2 dni robocze',
             opis: 'wdrożenie progu prostego, od kompletu materiałów',
-            zrodlo: 'kolumna czasu w drabinie cenowej',
+            zrodlo: 'drabina cenowa',
             ton: 'green',
           },
           {
             wartosc: '99-599 zł netto',
             opis: 'utrzymanie miesięcznie, gdy infrastruktura stoi u nas',
-            zrodlo: 'przełącznik dwóch modeli utrzymania',
+            zrodlo: 'dwa modele utrzymania',
             ton: 'amber',
           },
           {
             wartosc: '0 zł',
             opis: 'utrzymanie miesięcznie, gdy przekazujemy infrastrukturę Tobie',
-            zrodlo: 'przełącznik dwóch modeli utrzymania',
+            zrodlo: 'dwa modele utrzymania',
             ton: 'violet',
           },
         ],
@@ -392,24 +494,27 @@ export const chatbotyCennik: PodstronaUslugi = {
             'Prosty',
             '1790 zł',
             '1-2 dni robocze',
-            'bot na Twojej stronie WWW z bazą wiedzy z Twoich materiałów, zbieranie kontaktów z rozmowy, dwie rundy poprawek i odbiór',
+            'bot na Twojej stronie WWW, baza wiedzy z Twoich materiałów, zbieranie kontaktów, dwie rundy poprawek',
           ],
           [
             'Średni',
             '3000-6000 zł',
             '3-4 dni robocze',
-            'wszystko z progu prostego, do tego rozbudowana baza wiedzy, dodatkowe funkcje pod Twój proces i kolejne kanały: WhatsApp, Messenger, Instagram, Telegram',
+            'wszystko z progu prostego, większa baza wiedzy, funkcje pod Twój proces i kanały: WhatsApp, Messenger, Instagram, Telegram',
           ],
           [
             'Duży z integracjami',
             '8000-15000 zł',
             '5-10 dni roboczych',
-            'wszystko z progu średniego, a do tego bot sprawdza albo zapisuje coś w Twoich systemach, z osobnymi dostępami, testami i obsługą błędów',
+            'wszystko z progu średniego, a bot sprawdza albo zapisuje coś w Twoich systemach: osobne dostępy, testy, obsługa błędów',
           ],
         ],
         wKarcie: true,
-        podpis:
-          'Drabina cenowa chatbota AI: kwoty netto, płatne raz przy wdrożeniu. O progu decyduje to, czy bot ma tylko odpowiadać, czy również sięgać do Twoich systemów.',
+        /* PRZYCIĘCIE 2026-09-22: z podpisu wyleciało drugie zdanie („o progu
+           decyduje to, czy bot ma tylko odpowiadać, czy sięgać do systemów"),
+           bo tym samym zdaniem otwiera się sekcja `rozwiazanie` wyżej i FAQ
+           „Co dokładnie podnosi cenę chatbota?" niżej. */
+        podpis: 'Drabina cenowa chatbota AI: kwoty netto, płatne raz przy wdrożeniu.',
       },
       {
         typ: 'naglowek',
@@ -426,99 +531,69 @@ export const chatbotyCennik: PodstronaUslugi = {
             numer: 'MODEL 1',
             tytul: 'Infrastruktura u nas',
             podtytul: '99-599 zł netto miesięcznie',
-            naglowek: 'Serwery i pilnowanie zostają po naszej stronie, Ty płacisz stałą kwotę miesięcznie',
+            naglowek: 'Serwery zostają po naszej stronie, Ty płacisz stałą kwotę miesięcznie',
+            /* PRZYCIĘCIE 2026-09-22: wycięty drugi akapit („wyższa kwota nie
+               daje lepszego bota") i punkt „Kod i baza wiedzy i tak są Twoje".
+               Rozbicie 99 kontra 599 niesie wiersz „Za co płacisz co miesiąc"
+               w tabeli trzech lat niżej, a własność bazy wiedzy stoi w tabeli
+               porównawczej („Baza wiedzy: Twoja od pierwszego dnia"). */
             akapity: [
               'Za 99 zł netto miesięcznie bot ma po prostu działać: hosting i nasza reakcja, gdy coś przestanie działać. Za 599 zł netto miesięcznie dochodzi regularna aktualizacja bazy wiedzy przy większym ruchu.',
-              'Wyższa kwota nie daje lepszego bota. Daje bota pilnowanego częściej i bazę wiedzy nadążającą za zmianami w ofercie.',
             ],
-            punkty: [
-              'Serwery trzymamy my, Ty nie stawiasz i nie pilnujesz niczego.',
-              'Ten sam bot i ten sam czas wdrożenia co w drugim modelu.',
-              'Kod i baza wiedzy i tak są Twoje.',
-            ],
+            punkty: ['Serwery trzymamy my, Ty nie stawiasz i nie pilnujesz niczego.'],
           },
           {
             numer: 'MODEL 2',
             tytul: 'Infrastruktura u Ciebie',
             podtytul: '0 zł miesięcznie',
-            naglowek: 'Przekazujemy Ci całą infrastrukturę i po naszej stronie nie płacisz nic co miesiąc',
+            naglowek: 'Przekazujemy Ci całą infrastrukturę i nie płacisz nam nic co miesiąc',
+            /* PRZYCIĘCIE 2026-09-22: stawka 350 zł netto za godzinę zjechała
+               z akapitu do punktu (stoi też w FAQ „Czy mogę nie płacić
+               abonamentu?" i w tabeli trzech lat). Wycięty punkt „Zero
+               abonamentu po naszej stronie" powtarzał nagłówek opcji. */
             akapity: [
-              'Bot stoi wtedy u Ciebie, razem z kodem i bazą wiedzy. Utrzymanie po naszej stronie wynosi 0 zł miesięcznie, bo nie trzymamy już nic, za co można by pobierać opłatę.',
-              'Późniejsze zmiany rozliczamy po 350 zł netto za godzinę i tylko wtedy, gdy je zamówisz. Możesz też robić je samodzielnie albo z kimś innym.',
+              'Bot stoi wtedy u Ciebie, razem z kodem i bazą wiedzy. Utrzymanie po naszej stronie wynosi 0 zł miesięcznie, bo nie trzymamy już nic, za co można by płacić.',
             ],
             punkty: [
-              'Zero abonamentu po naszej stronie.',
+              'Późniejsze zmiany po 350 zł netto za godzinę, tylko gdy je zamówisz.',
               'Zmiany robisz sam, zlecasz nam albo komuś innemu.',
-              'Cała infrastruktura przechodzi do Ciebie.',
             ],
           },
         ],
       },
-      {
-        typ: 'siatka',
-        kolumny: 3,
-        karty: [
-          {
-            naglowek: 'Co podnosi cenę Twojego chatbota?',
-            akapity: [
-              'Nie liczba pytań i nie długość rozmów, tylko to, ilu miejsc bot ma dotknąć poza własną bazą wiedzy.',
-            ],
-            punkty: [
-              'Integracje z Twoimi systemami: to one przenoszą wycenę do przedziału 8000-15000 zł netto.',
-              'Rozbudowana baza wiedzy i dodatkowe funkcje pod proces: przedział 3000-6000 zł netto.',
-              'Funkcje wymyślone po pierwszej rozmowie: osobna wycena, podana od razu przy zgłoszeniu.',
-            ],
-          },
-          {
-            /* DRUGA POŁOWA SEKCJI 7 PAKIETU („co podnosi, a co OBNIŻA cenę").
-               Karta nie obiecuje rabatu, bo żaden rabat nie stoi w pakiecie
-               ani w decyzjach właściciela. Każdy punkt to mechanika już
-               opisana na tej stronie, tylko czytana w drugą stronę: brak
-               integracji trzyma wycenę na progu prostym (drabina cenowa),
-               objętość bazy i liczba funkcji ruszają kwotę wewnątrz progu
-               (lead sekcji `rozwiazanie`), przekazanie infrastruktury zbija
-               opłatę miesięczną do zera (przełącznik dwóch modeli), a Sprint
-               Diagnostyczny odliczamy od wdrożenia (§P1 sekcja 10). */
-            naglowek: 'Co obniża cenę Twojego chatbota?',
-            akapity: [
-              'To samo, co ją podnosi, tylko czytane w drugą stronę: mniej miejsc do dotknięcia i mniejszy zakres pracy. Kwota bierze się z roboty do wykonania, a nie z negocjacji.',
-            ],
-            punkty: [
-              'Rezygnacja z integracji: bez nich wycena nie wchodzi w przedział 8000-15000 zł netto.',
-              'Bot, który tylko odpowiada z bazy wiedzy i zbiera kontakt: próg prosty, czyli 1790 zł netto.',
-              'Mniejsza baza wiedzy i mniej dodatkowych funkcji: bliżej dolnej krawędzi widełek Twojego progu.',
-              'Przekazanie infrastruktury: utrzymanie 0 zł miesięcznie zamiast 99-599 zł netto miesięcznie.',
-              'Sprint Diagnostyczny, jeśli go robimy: jego 1490 zł netto zdejmujemy potem z kwoty wdrożenia.',
-            ],
-          },
-          {
-            naglowek: 'Czego w tej cenie nie obetniemy?',
-            /* CELOWO INNYMI SŁOWAMI NIŻ FAQ „Czy da się taniej niż 1790 zł netto?":
-               kontrola adwersaryjna zmierzyła podobieństwo 0,68 między pierwszą
-               wersją tej karty a odpowiedzią z FAQ. FAQ jest zamknięte 1:1
-               z pakietem, więc przepisana została karta, bez zmiany sensu. */
-            akapity: [
-              'Poniżej 1790 zł netto nie zejdziemy i nie tniemy zakresu po to, żeby zmieścić się w mniejszym budżecie. Wolimy powiedzieć wprost, że to nie jest moment na bota, niż oddać wersję okrojoną tak, że nie zdejmuje z Ciebie żadnej roboty.',
-            ],
-            punkty: [
-              'Kwota wdrożenia obejmuje obie tury poprawek, niezależnie od progu.',
-              'Cena nie rośnie dlatego, że zgłosiłeś uwagi w dwóch tygodniach testów.',
-            ],
-          },
-        ],
-      },
+      /* PRZYCIĘCIE 2026-09-22: TU STAŁA SIATKA TRZECH KART i cała poszła
+         do kosza jako najczystsze powtórzenie na tej stronie.
+          - „Co podnosi cenę Twojego chatbota?" = FAQ „Co dokładnie podnosi
+            cenę chatbota?" (te same integracje i ten sam przedział
+            8000-15000 zł netto) plus podpis drabiny cenowej wyżej,
+          - „Co obniża cenę Twojego chatbota?" sama o sobie pisała, że to
+            „to samo, co ją podnosi, tylko czytane w drugą stronę"; jej jedyny
+            osobny fakt, czyli Sprint Diagnostyczny odliczany od wdrożenia,
+            stoi w sekcji „Kiedy chatbot się u Ciebie nie opłaci?" niżej,
+          - „Czego w tej cenie nie obetniemy?" = FAQ „Czy da się taniej niż
+            1790 zł netto?" (komentarz przy tamtej karcie sam odnotowywał
+            zmierzone podobieństwo 0,68) plus FAQ o dwóch rundach poprawek.
+         Zero faktów straconych, około 230 słów mniej. */
       {
         typ: 'sekcja',
         naglowek: 'Chatbot czy voicebot, jeśli patrzysz na koszt?',
+        /* OD 2026-09-22 TO JEDYNE MIEJSCE NA STRONIE z kwotami voicebota:
+           FAQ „Ile kosztuje voicebot w porównaniu z chatbotem?" zostało
+           wycięte (kontrakt 5-6 pytań), a jego kwoty stoją w tych punktach
+           co do złotówki. Pełny cennik voicebota: /uslugi/voiceboty/cennik,
+           link w siatce powiązań pod stroną. Zdanie o tym, że voicebot nie
+           wydzwania sam, jest kontraktowe i nie wolno go skracać. */
         akapity: [
           'Chatbot obsługuje tych, którzy piszą. Voicebot odbiera połączenia od tych, którzy dzwonią, i nigdy nie wydzwania do Twoich klientów sam.',
-          'Voicebot startuje wyżej i drożej wychodzi co miesiąc, bo poza samym botem w rachunku siedzi jeszcze telefonia i czas połączeń. Przy tym samym zestawie pytań tańszym wejściem jest chatbot.',
+          'Voicebot startuje wyżej i drożej wychodzi co miesiąc, bo poza botem w rachunku siedzi telefonia i czas połączeń. Przy tym samym zestawie pytań tańszym wejściem jest chatbot.',
         ],
         punkty: [
           'Voicebot prosty: 2500 zł netto.',
           'Voicebot z integracjami, na przykład z kalendarzem: 5000-9000 zł netto.',
           'Utrzymanie voicebota: 299-1500 zł netto miesięcznie.',
-          'Chatbot prosty: 1790 zł netto, utrzymanie 99-599 zł netto miesięcznie albo 0 zł po przekazaniu infrastruktury.',
+          /* PRZYCIĘCIE 2026-09-22: wycięty czwarty punkt z kwotami CHATBOTA.
+             Ta sama drabina stoi dwa bloki wyżej, a przy tym samym zestawie
+             pytań tańszym wejściem jest chatbot, co mówi akapit nad listą. */
         ],
         wariant: 'top',
         chip: 'CHATBOT A VOICEBOT',
@@ -532,53 +607,59 @@ export const chatbotyCennik: PodstronaUslugi = {
       },
       {
         typ: 'tabela',
+        /* Nagłówek pierwszej kolumny zmieniony 2026-09-22 z „Co porównujemy"
+           na „Łącznie po", bo po wycięciu wierszy „Koszt wdrożenia"
+           i „Opłata miesięczna" wszystkie wiersze tabeli to już wyłącznie
+           okresy, a nie różne rzeczy do porównania. */
         naglowki: [
-          'Co porównujemy',
+          'Łącznie po',
           'Infrastruktura u nas: 99 zł netto',
           'Infrastruktura u nas: 599 zł netto',
           'Infrastruktura u Ciebie',
         ],
+        /* PRZYCIĘCIE 2026-09-22: wycięte dwa pierwsze wiersze („Koszt
+           wdrożenia" trzy razy 1790 zł netto oraz „Opłata miesięczna"), bo
+           obie liczby stoją już w NAGŁÓWKACH KOLUMN tej samej tabeli
+           i w podpisie pod nią. Zostają wyłącznie sumy, czyli to, czego nie
+           ma nigdzie indziej w serwisie. */
         wiersze: [
-          ['Koszt wdrożenia', '1790 zł netto', '1790 zł netto', '1790 zł netto'],
-          ['Opłata miesięczna', '99 zł netto', '599 zł netto', '0 zł'],
-          ['Po 12 miesiącach', '2978 zł netto', '8978 zł netto', '1790 zł netto'],
-          ['Po 24 miesiącach', '4166 zł netto', '16166 zł netto', '1790 zł netto'],
-          ['Po 36 miesiącach', '5354 zł netto', '23354 zł netto', '1790 zł netto'],
-          [
-            'Za co płacisz co miesiąc',
-            'hosting i reakcja, gdy coś przestanie działać',
-            'hosting plus regularna aktualizacja bazy wiedzy przy większym ruchu',
-            'nic, poprawki 350 zł netto za godzinę tylko na zamówienie',
-          ],
+          ['12 miesięcy', '2978 zł netto', '8978 zł netto', '1790 zł netto'],
+          ['24 miesiące', '4166 zł netto', '16166 zł netto', '1790 zł netto'],
+          ['36 miesięcy', '5354 zł netto', '23354 zł netto', '1790 zł netto'],
         ],
         wKarcie: true,
+        /* PRZYCIĘCIE 2026-09-22: wycięty wiersz „Za co płacisz co miesiąc".
+           Rozbicie 99 kontra 599 kontra 0 zł stoi zdanie w zdanie
+           w przełączniku dwóch modeli utrzymania nad tą tabelą, razem
+           ze stawką 350 zł netto za godzinę. */
         podpis:
-          'Rachunek na trzy lata dla progu prostego, wszystkie kwoty netto. Jak liczymy: 1790 zł netto wdrożenia plus opłata miesięczna razy liczba miesięcy, czyli przy 99 zł netto po dwunastu miesiącach wychodzi 2978 zł netto.',
+          'Rachunek na trzy lata dla progu prostego, kwoty netto. Jak liczymy: 1790 zł netto wdrożenia plus opłata miesięczna razy liczba miesięcy.',
       },
       {
         typ: 'sekcja',
         naglowek: 'Kiedy chatbot się u Ciebie nie opłaci?',
         akapity: [
-          'Przy kilku zapytaniach tygodniowo bot nie odda 1790 zł netto, bo nie ma czego przejmować. Odpowiadanie osobiście jest wtedy Twoją przewagą, a nie kosztem.',
-          'Druga sytuacja to wiedza, która siedzi w głowach zamiast w dokumentach. Bot nie wymyśli procedury, której nikt nie spisał, więc zaczynamy od jej spisania, a nie od budowy bota.',
+          'Przy kilku zapytaniach tygodniowo bot nie odda 1790 zł netto. Odpowiadanie osobiście jest wtedy Twoją przewagą, a nie kosztem.',
+          'Druga sytuacja to wiedza, która siedzi w głowach zamiast w dokumentach. Bot nie wymyśli procedury, której nikt nie spisał, więc zaczynamy od spisania.',
           /* 2026-09-06: trzy sytuacje przeniesione z rodzica /uslugi/chatboty
              (przycięcie strony, raport SEO 2026-09-05 sekcja 9: wątki
              poboczne idą na podstrony, nie do kosza). Treść napisana od nowa,
              bez kwot stron WWW, które stoją na /uslugi/strony-www. */
-          'Trzy kolejne: gdy każda sprawa wymaga decyzji człowieka, bot ma tylko zebrać kontekst i oddać rozmowę z kompletem informacji, a nie udawać, że ją domknie. Gdy chcesz bota, bo ma go konkurencja, najpierw wskaż pytanie, które wraca najczęściej; bez niego bot stoi na stronie i nikt do niego nie pisze. Gdy strona nie ma ruchu, najpierw robi się widoczność, potem bota.',
+          'Trzy kolejne: gdy każda sprawa wymaga decyzji człowieka, bot ma zebrać kontekst i oddać rozmowę, a nie udawać, że ją domknie. Gdy chcesz bota, bo ma go konkurencja, najpierw wskaż pytanie, które wraca najczęściej. Gdy strona nie ma ruchu, najpierw robi się widoczność.',
         ],
+        /* PRZYCIĘCIE 2026-09-22: wycięty czwarty punkt („wróć do tematu, gdy
+           zapytania zaczną się powtarzać") powtarzał pierwszy akapit tej samej
+           sekcji. Trzy pozostałe punkty niosą zdania kontraktowe (bezpłatna
+           rozmowa = badanie potrzeb, Sprint 1490 zł netto odliczany w całości)
+           i nie wolno ich ruszać. */
         punkty: [
-          'Pierwsza rozmowa jest bezpłatna i służy zbadaniu potrzeb: pytamy, o co pytają Twoi klienci i co ma robić bot.',
+          'Pierwsza rozmowa jest bezpłatna i służy zbadaniu potrzeb: pytamy, o co pytają Twoi klienci.',
           'Rozplanowanie procesów i konkretna oferta to już Sprint Diagnostyczny: 1490 zł netto, 5 dni roboczych, raport PDF z mapą procesów.',
-          'Kwotę 1490 zł netto odliczamy w całości od ceny wdrożenia, więc gdy wchodzisz w projekt, sprint nic Cię nie kosztuje.',
-          'Wróć do tematu, gdy zapytania zaczną się powtarzać: wtedy jest co przejmować.',
+          'Te 1490 zł netto odliczamy w całości od ceny wdrożenia, więc gdy wchodzisz w projekt, sprint nic Cię nie kosztuje.',
         ],
         wariant: 'edge',
         chip: 'ZASADA',
-        stopka: [
-          'Wolimy stracić zlecenie niż sprzedać bota, który nie ma czego przejąć.',
-          'Sprint Diagnostyczny opisaliśmy osobno, razem z tym, co dostajesz w raporcie.',
-        ],
+        stopka: ['Wolimy stracić zlecenie niż sprzedać bota, który nie ma czego przejąć.'],
       },
     ],
     minPrice: 1790,
@@ -596,9 +677,23 @@ export const chatbotyCennik: PodstronaUslugi = {
     },
   },
 
-  /* KOMPLET 8 PYTAŃ Z PAKIETU §P1 („FAQ gotowe, 8 pytań"). Kolejność i pytania
-     bez zmian: ten sam tekst idzie na stronę i do FAQPage JSON-LD (uwaga
-     wdrożeniowa §6), więc każda edycja tutaj rozjeżdża oba naraz.
+  /* SZEŚĆ PYTAŃ. Pakiet §P1 dawał osiem („FAQ gotowe, 8 pytań"), ale kontrakt
+     `Usluga.faq` (lib/uslugi/types.ts, sekcja 7 szablonu) mówi 5-6, więc
+     2026-09-22 zeszliśmy do sześciu. Zasada jak przy metaTitle wyżej:
+     konwencja repo jest twardsza niż długość z pakietu.
+     WYCIĘTE DWA I GDZIE STOJĄ:
+      · „Kto płaci za tokeny modelu językowego?" (odpowiedź: Ty, bezpośrednio
+        u dostawcy, konto Twoje, bez marży, rachunek rośnie z liczbą rozmów)
+        -> karta „Tokeny modelu, według zużycia" w sekcji `problem` tej strony,
+        gdzie po tym cięciu stoi wprost „konto u dostawcy jest Twoje, faktura
+        idzie prosto do Ciebie, bez naszej marży", plus pytanie „Czy do ceny
+        dochodzi coś jeszcze?" niżej i `baza-wiedzy.ts`,
+      · „Ile kosztuje voicebot w porównaniu z chatbotem?" -> sekcja „Chatbot
+        czy voicebot, jeśli patrzysz na koszt?" w `ramaCeny` (te same cztery
+        kwoty) oraz /uslugi/voiceboty/cennik.
+     Pozostałych sześć pytań i ich kolejność BEZ ZMIAN: ten sam tekst idzie na
+     stronę i do FAQPage JSON-LD (uwaga wdrożeniowa §6), więc każda edycja
+     tutaj rozjeżdża oba naraz.
      JEDYNE ODSTĘPSTWO OD DOSŁOWNOŚCI (kontrola adwersaryjna, 2026-09-01,
      uzupełniona 2026-09-04): pakiet pisał naszą kwotę bez słowa netto
      w dwóch miejscach, mimo że pytanie 1 tego samego bloku pisze „1790 zł
@@ -617,11 +712,6 @@ export const chatbotyCennik: PodstronaUslugi = {
       pytanie: 'Czy do ceny dochodzi coś jeszcze?',
       odpowiedz:
         'Tak, dwie pozycje. Utrzymanie 99-599 zł netto miesięcznie, gdy infrastruktura stoi u nas, albo 0 zł, gdy przekazujemy ją Tobie. Oraz zużycie tokenów modelu, za które płacisz dostawcy wprost.',
-    },
-    {
-      pytanie: 'Kto płaci za tokeny modelu językowego?',
-      odpowiedz:
-        'Ty, bezpośrednio u dostawcy modelu. Konto jest Twoje, więc nie doliczamy do tego marży. Rachunek rośnie i maleje razem z liczbą rozmów.',
     },
     {
       pytanie: 'Czy da się taniej niż 1790 zł netto?',
@@ -643,11 +733,6 @@ export const chatbotyCennik: PodstronaUslugi = {
       odpowiedz:
         'Tak. Przekazujemy Ci całą infrastrukturę, wtedy utrzymanie po naszej stronie wynosi 0 zł miesięcznie. Późniejsze poprawki rozliczamy po 350 zł netto za godzinę, tylko gdy je zamówisz.',
     },
-    {
-      pytanie: 'Ile kosztuje voicebot w porównaniu z chatbotem?',
-      odpowiedz:
-        'Voicebot prosty to 2500 zł netto, voicebot z integracjami, na przykład z kalendarzem, to 5000-9000 zł netto. Utrzymanie voicebota kosztuje 299-1500 zł netto miesięcznie, bo dochodzi telefonia i minuty rozmów.',
-    },
   ],
 
   /* Jedna decyzja domykająca stronę: ustalmy próg. Mikrokopia powtarza dolny
@@ -658,7 +743,7 @@ export const chatbotyCennik: PodstronaUslugi = {
     label: 'Sprawdźmy, który próg jest Twój',
     href: '#diagnoza',
     mikrokopia:
-      'Wejście to 1790 zł netto i 1-2 dni robocze. Pełne integracje to 8000-15000 zł netto i 5-10 dni roboczych. Na bezpłatnej rozmowie policzymy to na Twoich liczbach i powiemy, w którym progu jesteś.',
+      'Wejście to 1790 zł netto i 1-2 dni robocze, pełne integracje 8000-15000 zł netto. Na bezpłatnej rozmowie policzymy to na Twoich liczbach i powiemy, w którym progu jesteś.',
     dowod:
       'Jeśli przy Twojej liczbie pytań bot się nie opłaci, usłyszysz to na tej samej rozmowie, zanim wystawimy jakąkolwiek fakturę.',
   },
@@ -690,31 +775,19 @@ export const chatbotyCennik: PodstronaUslugi = {
         href: '/uslugi/chatboty',
         opis: 'Strona macierzysta: co bot robi, skąd bierze wiedzę i jak wygląda wdrożenie krok po kroku.',
       },
-      {
-        etykieta: 'Chatbot do obsługi klienta, który odpowiada o 22:00',
-        href: '/uslugi/chatboty/obsluga-klienta',
-        opis: 'Ten sam bot od strony biura obsługi: powtarzalne pytania, noce i weekendy, przekazanie trudnej sprawy człowiekowi.',
-      },
-      {
-        etykieta: 'Chatbot na Twoich dokumentach: firmowa baza wiedzy (RAG)',
-        href: '/uslugi/chatboty/baza-wiedzy',
-        opis: 'Skąd bot bierze odpowiedzi: szuka w Twoich dokumentach zamiast w internecie, więc nie zmyśla.',
-      },
-      {
-        etykieta: 'Chatbot AI dla sklepu internetowego',
-        href: '/uslugi/chatboty/sklep-internetowy',
-        opis: 'Wariant z integracjami rozpisany na sklep: dostępność produktu, status zamówienia, zwroty i reklamacje.',
-      },
-      {
-        etykieta: 'Asystent AI dla pracowników: procedury bez pytania kolegi',
-        href: '/uslugi/chatboty/asystent-wewnetrzny',
-        opis: 'Wariant dla zespołu, nie dla klienta: bot odpowiada z procedur, instrukcji i nagrań ze szkoleń, a bazę dzielimy na role.',
-      },
-      {
-        etykieta: 'Chatbot dla hotelu i pensjonatu',
-        href: '/uslugi/chatboty/hotele-pensjonaty',
-        opis: 'Wersja branżowa dla obiektu noclegowego: sześć tematów pytań gościa, od dostępności i doby hotelowej po zwierzęta i parking.',
-      },
+      /* PRZYCIĘCIE 2026-09-22: stało tu pięć kart do SIÓSTR z tej samej gałęzi
+         (obsluga-klienta, baza-wiedzy, sklep-internetowy, asystent-wewnetrzny,
+         hotele-pensjonaty) i wszystkie pięć renderowały się drugi raz na tym
+         samym ekranie. `components/uslugi/PodstronyPowiazane.tsx` najpierw
+         sam buduje siatkę „Konkretne zastosowania" ze WSZYSTKICH siedmiu
+         sióstr rodzica (`getPodstronyRodzica('chatboty')` minus ta strona,
+         wariant kompakt = sam tytuł), a dopiero pod nią renderuje to pole.
+         Te same tytuły leciały więc dwa razy pod rząd. Tak samo domknięto
+         sekcję 10 pakietu przy przycinaniu `lib/uslugi/voiceboty.ts`
+         („Powtarzanie tych samych czterech tytułów dwa razy pod rząd było
+         kanibalizacją własnego ekranu"). ANI JEDEN LINK NIE ZNIKA: siatka
+         wyżej prowadzi do całej siódemki. Zostają wyłącznie cele SPOZA
+         siatki sióstr: rodzic, voiceboty i audyt AI. */
       {
         etykieta: 'Voicebot dla firmy, który odbiera telefon za Ciebie',
         href: '/uslugi/voiceboty',

@@ -312,6 +312,73 @@ export const monitoringCytowanWAi: PodstronaUslugi = {
           'Raporty zostają u Ciebie także wtedy, gdy przestajemy współpracować.',
         ],
       },
+
+      /* ── DOŁOŻONE 2026-09-22 (przycięcie `/uslugi/optymalizacja`, pakiet GEO §N12).
+         Sześć obiekcji stało wyłącznie na rodzicu, który schodzi z 6177 słów do
+         zakresu 1300-1600 (raport `.seo-przeglad/raporty/2026-09-05.md` §9: nie
+         kasujemy treści, przenosimy ją na podstrony). Trafiają tutaj, bo obiekcja
+         numer trzy, „tego się nie da zmierzyć", jest wprost tematem tej podstrony,
+         a odpowiedź na nią to metoda opisana wyżej: zamrożony zestaw pytań,
+         czyste okno i trzy rzeczy zapisywane przy każdym pomiarze.
+         DOŁOŻONE NA KOŃCU ISTNIEJĄCEJ SEKCJI: podstrona jest zaindeksowana
+         (pobranie 2026-09-06), więc nic wyżej nie zostało ruszone.
+         SEKCJA BEZ KWOT, tak jak na rodzicu. Jedyna nazwa własna klienta to
+         Lenart Motors, która stoi już wyżej w tej gałęzi. */
+      {
+        typ: 'naglowek',
+        tekst: '„To chwilowa moda”, i pięć innych zdań, które słyszymy',
+        ikona: 'chat-dymek',
+        chip: 'OBIEKCJE',
+        overline: 'SZEŚĆ ZDAŃ Z ROZMÓW',
+      },
+      {
+        typ: 'cytat',
+        tekst:
+          'Sześć zdań, które padają na rozmowach najczęściej. Odpowiadamy tak samo jak przy stole, bez owijania.',
+      },
+      {
+        typ: 'siatka',
+        kolumny: 2,
+        karty: [
+          {
+            naglowek: '„To chwilowa moda, za rok nikt o tym nie będzie mówił.”',
+            akapity: [
+              'Moda jest na nazwę, nie na zjawisko. Klienci już dziś pytają model o polecenie zamiast przeglądać dziesięć linków. Strona, którą da się zacytować, przyda Ci się tak czy inaczej.',
+            ],
+          },
+          {
+            naglowek: '„Mam agencję SEO, to załatwia sprawę.”',
+            akapity: [
+              'Częściowo tak, bo dobra treść pracuje w obu kanałach. Ale SEO optymalizuje pod kliknięcie w link, a model nie daje kliknięcia, tylko odpowiedź. Zapytaj swoją agencję, jak mierzy, czy jesteś wymieniany w ChatGPT.',
+            ],
+          },
+          {
+            naglowek: '„Tego się nie da zmierzyć.”',
+            akapity: [
+              'Da się, tylko trzeba mierzyć pytania, nie frazy. Zadajemy stały zestaw pytań w oknie bez historii i notujemy trzy rzeczy: czy padasz, na którym miejscu i jakie źródło zostało zacytowane.',
+              "Dodamy uczciwie: część rynkowych „wskaźników GEO” i „score'ów widoczności” to ładnie opakowane zgadywanie. Ładna liczba bez podanej metody nie jest pomiarem.",
+            ],
+          },
+          {
+            naglowek: '„Moja branża jest za mała, nikt o nią nie pyta AI.”',
+            akapity: [
+              'Mała branża to najlepszy moment, a nie argument przeciw. Im mniej firm walczy o to jedno pytanie, tym łatwiej być tą jedną wymienioną. Lenart Motors to warsztat blacharsko lakierniczy, nie globalna marka.',
+            ],
+          },
+          {
+            naglowek: '„Boję się, że wpuszczenie botów AI zaszkodzi mi w Google.”',
+            akapity: [
+              'To dwie różne sprawy i ustawia się je osobno. Google-Extended decyduje o treściach dla modeli Gemini, a nie o Twoich pozycjach w wynikach wyszukiwania. Każdą taką decyzję pokazujemy Ci przed wdrożeniem.',
+            ],
+          },
+          {
+            naglowek: '„Poczekam, aż rynek się ustabilizuje.”',
+            akapity: [
+              'Modele budują obraz Twojej branży z tego, co już przeczytały. Każdy miesiąc bez Twoich treści to miesiąc utrwalania wersji, w której Twojej firmy nie ma.',
+            ],
+          },
+        ],
+      },
     ],
   },
 

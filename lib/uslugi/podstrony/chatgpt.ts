@@ -479,6 +479,67 @@ export const chatgpt: PodstronaUslugi = {
           'Powiemy, co zrobić zamiast, nawet jeśli to nie będzie usługa u nas.',
         ],
       },
+
+      /* ── DOŁOŻONE 2026-09-22 (przycięcie `/uslugi/optymalizacja`, pakiet GEO §N5).
+         Harmonogram tydzień po tygodniu stał wyłącznie na stronie rodzica i był
+         jedyną swoją kopią w serwisie. Rodzic schodzi z 6177 słów do zakresu
+         1300-1600 (raport `.seo-przeglad/raporty/2026-09-05.md` §9: nie kasujemy
+         treści, przenosimy ją na podstrony), więc tabela zjechała tutaj, na
+         stronę, która i tak odpowiada w H2 na pytanie „ile trwa".
+         DOŁOŻONE NA KOŃCU ISTNIEJĄCEJ SEKCJI CENY, bez przestawiania czegokolwiek
+         wyżej: ta podstrona jest zaindeksowana (pobranie 2026-09-07).
+         ŻADNEJ LICZBY NIE DOPISANO I ŻADNEJ NIE ZAOKRĄGLONO: 5 dni roboczych
+         Sprintu, 1 dzień landingu, 2-4 dni strony biznesowej, 5-10 dni strony
+         zaawansowanej i około trzy tygodnie u Lenart Motors stały już na
+         rodzicu i stoją też wyżej na tej stronie. */
+      {
+        typ: 'naglowek',
+        tekst: 'Ile to trwa, tydzień po tygodniu?',
+        ikona: 'mapa',
+        chip: 'HARMONOGRAM',
+        overline: 'TYDZIEŃ PO TYGODNIU · TERMINY PO NASZEJ STRONIE',
+      },
+      {
+        typ: 'akapit',
+        tekst: 'Najczęstsze pytanie brzmi: na jak długo się w to wpisuję. Więc rozpisujemy to na tygodnie.',
+      },
+      {
+        typ: 'tabela',
+        naglowki: ['Kiedy', 'Co się dzieje', 'Co masz na koniec'],
+        wiersze: [
+          [
+            'Tydzień 1',
+            'Sprint Diagnostyczny, 5 dni roboczych. Zadajemy modelom Twoje pytania klienckie, sprawdzamy kto jest polecany zamiast Ciebie, przeglądamy stronę, robots.txt, dane strukturalne i wizytówkę',
+            'Raport PDF z pomiarem zerowym i listą priorytetów. Wiesz, ile z zadanych pytań w ogóle wskazuje Twoją firmę',
+          ],
+          [
+            'Tydzień 2',
+            'Naprawa i przepisanie treści. Zakres zależy od tego, co masz: landing to 1 dzień pracy, strona biznesowa 2-4 dni, strona zaawansowana 5-10 dni',
+            'Sekcje odpowiadające wprost na pytania klienta, uporządkowany robots.txt, dane strukturalne, opis encji firmy',
+          ],
+          [
+            'Tydzień 3',
+            'Publikacja i pierwszy pomiar po zmianach. Powtarzamy dokładnie ten sam zestaw pytań, którym mierzyliśmy stan zerowy',
+            'Porównanie przed i po na tych samych pytaniach. Zwykle za wcześnie na zmianę w odpowiedziach modeli, ale widać, czy treść jest już czytelna dla botów',
+          ],
+          [
+            'Około tygodnia 6',
+            'Drugi pomiar, czyli około 3 tygodnie po publikacji. Tyle zajęło u Lenart Motors, zanim ChatGPT zaczął wskazywać firmę',
+            'Pierwsze realne wskazania w odpowiedziach modeli, jeśli branża jest prosta i konkurencja o to pytanie mała',
+          ],
+          [
+            'Potem, kiedy zechcesz',
+            'Powtarzasz ten sam zamrożony zestaw pytań. Zestaw zostaje u Ciebie razem z instrukcją',
+            'Seria pomiarów zamiast jednego zrzutu ekranu. Widać trend, a nie przypadek',
+          ],
+        ],
+        wKarcie: true,
+        podpis: 'Harmonogram pracy pod ChatGPT, tydzień po tygodniu',
+      },
+      {
+        typ: 'cytat',
+        tekst: 'Terminy pracy po naszej stronie są twarde, bo to nasza robota. Termin pojawienia się w odpowiedziach modeli twardy nie jest i nikt uczciwy Ci go nie zagwarantuje. Punkt odniesienia mamy jeden zmierzony: około trzy tygodnie od publikacji u Lenart Motors.',
+      },
     ],
     minPrice: 1490,
     /* Powrót do rodzica jednym zdaniem (uwaga wdrożeniowa §3: każda podstrona

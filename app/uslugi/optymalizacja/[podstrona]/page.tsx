@@ -127,8 +127,11 @@ export default async function PodstronaOptymalizacjiPage({ params }: { params: P
 
   return (
     <main id="main">
-      {/* (1) Hero answer-first: breadcrumbs + badge + H1 + kapsuła + CTA */}
-      <ServiceHero usluga={podstrona} okruszki={okruszkiWidok} />
+      {/* (1) Hero answer-first: breadcrumbs + badge + H1 + kapsuła + CTA.
+          `rodzic` = gałąź tej podstrony: hero czyta nim mapy dekoracji (kolor
+          członu H1, etykieta kafla ceny) kluczem `rodzic/slug`. Bez tego slug
+          powtórzony w dwóch gałęziach (np. `cennik`) brał cudzy wpis. */}
+      <ServiceHero usluga={podstrona} okruszki={okruszkiWidok} rodzic={podstrona.rodzic} />
 
       {/* (2) Problem (H2 jak pytanie) + bloki sekcji w tonie rodziny */}
       <ServiceNarrative

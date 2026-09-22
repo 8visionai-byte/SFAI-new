@@ -132,14 +132,22 @@ export const potwierdzanieWizyt: PodstronaUslugi = {
         chip: 'VOICEBOTY',
         overline: 'JAK TO DZIAŁA · ODBIERA, ZAPISUJE, POTWIERDZA',
       },
+      /* 2026-09-22, KONIEC DUBLA H3: nagłówki dwóch pierwszych kart brzmiały
+         słowo w słowo tak samo jak pytania FAQ tej samej strony (pozycje 3 i 4
+         oraz 23 i 24 w kolejności H3), czyli to samo pytanie stało na jednym
+         URL-u dwa razy. Pytanie ma jedno miejsce i jest nim FAQ; sekcja
+         narracyjna mówi to samo zdaniem twierdzącym. Treść kart bez zmian,
+         poza słowem „Tak." otwierającym pierwszy akapit: po nagłówku
+         twierdzącym nie ma czego potwierdzać. Odpowiedzi FAQ (linie niżej)
+         nietknięte, więc FAQPage JSON-LD ma komplet. */
       {
         typ: 'siatka',
         kolumny: 3,
         karty: [
           {
-            naglowek: 'Czy voicebot umówi wizytę w moim kalendarzu?',
+            naglowek: 'Umówiona wizyta od razu w Twoim kalendarzu',
             akapity: [
-              'Tak. Bot telefoniczny umawia wizyty prosto w Twoim kalendarzu. Łączymy voicebota z Twoim grafikiem, więc bot nie zgaduje terminów, tylko naprawdę je widzi. Wizyta trafia do grafiku bez ręcznego wpisywania.',
+              'Bot telefoniczny umawia wizyty prosto w Twoim kalendarzu. Łączymy voicebota z Twoim grafikiem, więc bot nie zgaduje terminów, tylko naprawdę je widzi. Wizyta trafia do grafiku bez ręcznego wpisywania.',
             ],
             punkty: [
               'Automatyczne umawianie wizyt przez telefon działa także po godzinach i w weekend, gdy gabinet jest już zamknięty.',
@@ -149,7 +157,7 @@ export const potwierdzanieWizyt: PodstronaUslugi = {
             ],
           },
           {
-            naglowek: 'Co się dzieje, gdy klient chce odwołać albo przełożyć wizytę?',
+            naglowek: 'Odwołanie i zmiana terminu załatwione w rozmowie',
             akapity: [
               'Gdy klient dzwoni odwołać wizytę, bot przyjmuje odwołanie w rozmowie i od razu zwalnia termin w kalendarzu. Przy przełożeniu proponuje wolne godziny i zapisuje nowy termin, a Ty widzisz zmianę w grafiku.',
             ],
@@ -289,7 +297,11 @@ export const potwierdzanieWizyt: PodstronaUslugi = {
           {
             wartosc: '350 zł netto/h',
             opis: 'poprawki, gdy infrastruktura jest po Twojej stronie',
-            zrodlo: 'sekcja Czy muszę płacić abonament co miesiąc niżej',
+            /* 2026-09-22: nazwa sekcji zmieniona razem z jej nagłówkiem niżej
+               (koniec dubla pytania o abonament). Kwota 350 zł netto za godzinę
+               nadal stoi w tamtej sekcji, więc źródło pokazuje na prawdziwe
+               miejsce. */
+            zrodlo: 'sekcja Utrzymanie: co miesiąc u nas albo 0 zł u Ciebie niżej',
             ton: 'amber',
           },
         ],
@@ -362,16 +374,24 @@ export const potwierdzanieWizyt: PodstronaUslugi = {
         wKarcie: true,
         podpis: 'Trzy osobne pozycje kosztu voicebota, każda kwota netto',
       },
+      /* 2026-09-22, KONIEC DUBLA: nagłówek tej sekcji brzmiał „Czy muszę płacić
+         abonament co miesiąc?", czyli słowo w słowo tak samo jak pytanie FAQ
+         rodzica (`lib/uslugi/voiceboty.ts`) i pytanie FAQ podstrony
+         `voiceboty-cennik.ts`. Pytanie o abonament ma jedno miejsce i jest nim
+         CENNIK. Tutaj zostaje sam fakt cenowy w jednym zdaniu plus odesłanie,
+         bo ta strona sprzedaje kalendarz, a nie rozliczenie.
+         CO STĄD ZNIKŁO (stoi w całości na cenniku i u rodzica): zdanie
+         o poprawianiu tego, co nie zadziałało po naszej stronie, i zdanie
+         o nowych funkcjach wycenianych osobno. Czas liczony od kompletu
+         materiałów i dwie rundy poprawek zostają na tej stronie w punktach
+         progu 1 i progu 2 wyżej, więc nie ubyły. */
       {
         typ: 'sekcja',
-        naglowek: 'Czy muszę płacić abonament co miesiąc?',
+        naglowek: 'Utrzymanie: co miesiąc u nas albo 0 zł u Ciebie',
         wariant: 'top',
         chip: 'CENNIK',
         akapity: [
-          'Nie musisz. Masz dwa modele rozliczenia i wybierasz przed startem. Gdy infrastruktura zostaje u nas, utrzymanie to 299 do 1500 zł netto miesięcznie. Gdy przekazujemy ją Tobie, płacisz 0 zł miesięcznie, a poprawki kosztują 350 zł netto za godzinę.',
-          'Trzecia pozycja to zużycie: tokeny i minuty rozmów według realnego użycia, po Twojej stronie. Rozbijamy koszt na trzy jawne pozycje, żeby jeden abonament nie zasłaniał tego, za co naprawdę płacisz.',
-          'Czas wdrożenia liczymy od przekazania kompletu materiałów, nie od podpisania umowy. W cenie wdrożenia są dwie rundy poprawek: tydzień testów, poprawki, drugi tydzień testów, poprawki i odbiór.',
-          'To, co nie zadziałało po naszej stronie, poprawiamy zawsze, także po odbiorze. Nowe funkcje to już rozbudowa wyceniana osobno, i mówimy o tym, zanim cokolwiek zamówisz.',
+          'Abonamentu płacić nie musisz: albo infrastruktura zostaje u nas za 299 do 1500 zł netto miesięcznie, albo przekazujemy ją Tobie, płacisz 0 zł miesięcznie, a poprawki zamawiasz po 350 zł netto za godzinę. Cały rachunek, razem z kosztem pierwszego roku, rozpisaliśmy na stronie z cennikiem voicebotów.',
         ],
       },
     ],
@@ -385,10 +405,16 @@ export const potwierdzanieWizyt: PodstronaUslugi = {
   },
 
   faq: [
+    /* PYTANIE KONTRAKTOWE (bot NIGDY nie dzwoni sam) zostaje, bo stoi na
+       każdej stronie gałęzi. 2026-09-22 rozjechana została sama ODPOWIEDŹ:
+       do tej daty rodzic, ta strona i `odbieranie-telefonow.ts` niosły to
+       samo zdanie o psuciu zaufania, a każda idzie 1:1 do FAQPage JSON-LD.
+       Ta wersja trzyma się tematu strony: przypomnienie o wizycie
+       i kalendarz. */
     {
       pytanie: 'Czy voicebot dzwoni z przypomnieniem o wizycie?',
       odpowiedz:
-        'Nie. Nasz voicebot obsługuje wyłącznie połączenia przychodzące. Przypomnienie o wizycie wychodzi tekstem, a gdy klient oddzwania, telefon odbiera bot i załatwia sprawę. Nie robimy botów, które same wydzwaniają do ludzi, bo to psuje zaufanie do firmy.',
+        'Nie. Voicebot obsługuje wyłącznie połączenia przychodzące, więc przypomnienie o jutrzejszej wizycie idzie do klienta tekstem, a nie telefonem. Gdy klient oddzwoni po takim przypomnieniu, odbiera bot i jeszcze w rozmowie potwierdza termin, przekłada go albo zwalnia godzinę w kalendarzu.',
     },
     {
       pytanie: 'Czy voicebot umówi wizytę w moim kalendarzu?',

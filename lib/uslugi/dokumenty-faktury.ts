@@ -167,7 +167,11 @@ export const dokumentyFaktury: Usluga = {
         kolumny: 3,
         karty: [
           {
-            naglowek: 'Czy automat sam przypisze koszt do właściwej kategorii?',
+            /* 2026-09-22 (dubel pytania): naglowek karty byl 1:1 z pytaniem FAQ „Czy automat sam
+               przypisze koszt do wlasciwej kategorii?", wiec jeden URL zglaszal te sama pare
+               pytanie-odpowiedz dwa razy. Pytanie zostaje w FAQ, tu zdanie twierdzace zlozone
+               z obu akapitow karty (typowe idą same, nietypowe do akceptacji). */
+            naglowek: 'Typowe koszty idą same, nietypowe zatwierdzasz Ty',
             akapity: [
               'Typowe faktury przypisuje sam, bo zna Twój plan kont i reguły, według których księgujesz koszty.',
               'Faktury z błędem albo nietypowe odkłada na bok i pokazuje człowiekowi do zatwierdzenia, zamiast wpisywać je w ciemno.',
@@ -178,9 +182,13 @@ export const dokumentyFaktury: Usluga = {
             ],
           },
           {
-            naglowek: 'Czy OCR poradzi sobie ze zdjęciem faktury z telefonu?',
+            /* 2026-09-22 (dubel pytania): naglowek karty byl 1:1 z pytaniem FAQ „Czy OCR poradzi
+               sobie ze zdjeciem faktury z telefonu?". Pytanie zostaje w FAQ, tu zdanie twierdzace
+               o tym samym; z pierwszego akapitu znika samo „Tak.", bo nie ma juz pytania nad nim.
+               Naglowek celowo inny niz ETAP 1 w przelaczniku wyzej, zeby nie robic drugiego dubla. */
+            naglowek: 'Zdjęcie z telefonu wystarczy, wątpliwy odczyt czeka na akceptację',
             akapity: [
-              'Tak. Automat czyta skan, PDF i zdjęcie zrobione telefonem, a z każdego z nich wyciąga te same pola.',
+              'Automat czyta skan, PDF i zdjęcie zrobione telefonem, a z każdego z nich wyciąga te same pola.',
               'Jeśli zdjęcie jest słabej jakości albo faktura jest nietypowa, automat nie wpisuje danych w ciemno.',
             ],
             punkty: [

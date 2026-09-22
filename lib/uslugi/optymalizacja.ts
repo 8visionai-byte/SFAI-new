@@ -6,6 +6,181 @@ import type { Usluga } from './types';
  * Każdy string prawdziwy i cytowalny przez LLM. Zero zmyślonych liczb/cen,
  * zero em-dash, zero gwarancji konkretnej pozycji w AI (uczciwość = warunek zaufania LLM).
  *
+ * ══ PRZYCIĘCIE 2026-09-22 (raport `.seo-przeglad/raporty/2026-09-05.md`,
+ * sekcje 4, 8 i 9). TA SAMA OPERACJA, co 2026-09-06 na `/uslugi/chatboty`
+ * (commit b0dd7fc, `lib/uslugi/chatboty.ts`, 5667 -> 1618 słów) i tego samego
+ * dnia na `/uslugi/voiceboty` (`lib/uslugi/voiceboty.ts`, 4180 -> 1594).
+ * TA STRONA BYŁA NAJGRUBSZA W CAŁYM SERWISIE: pomiar na produkcji dał 6135
+ * słów w <main>, a pomiar na wyrenderowanym buildzie 6177, czyli WIĘCEJ, niż
+ * miały kiedykolwiek chatboty przed przycięciem. Na chatbotach dokładnie to
+ * rozmycie tematu kosztowało frazę główną („chatbot ai dla firm": 70 wyświetleń
+ * -> 3), a tutaj regresja stała na produkcji od 2026-09-06 niezmierzona.
+ * Cel raportu: 1300-1600 słów, przy medianie top5 polskiej konkurencji równej
+ * około 1150 (rozrzut 876-1647).
+ *
+ * WYNIK ZMIERZONY NA WYRENDEROWANYM BUILDZIE (npm run build, npx next start,
+ * Chrome headless przez playwright-core, `main.innerText`, FAQ zwinięte, czyli
+ * TA SAMA METODA co przy chatbotach i voicebotach, żeby liczby dało się
+ * porównać): 6177 -> 1882 -> 1678 -> 1624 -> 1595 -> 1577 słów. Dla porównania
+ * `/uslugi/chatboty` po b0dd7fc: 1618, `/uslugi/voiceboty`: 1589.
+ * Z tego 628 słów to siatka „Konkretne zastosowania", którą
+ * `components/uslugi/PodstronyPowiazane.tsx` buduje z kapsuł OŚMIU podstron
+ * gałęzi; tego z tego pliku nie da się skrócić, więc własna treść strony musi
+ * się zmieścić w około 950 słowach i mieści się (949).
+ * NAGŁÓWKI H3 w <main>: 74 -> 27 (chatboty i voiceboty po przycięciu: 29).
+ *
+ * DRUGI NAPRAWIONY BŁĄD: nagłówek H3 „Uczciwe zastrzeżenie" stał na stronie
+ * DWA RAZY (74 nagłówki H3 w <main>, jedyny duplikat na 21 zmierzonych stronach
+ * serwisu). Pierwszy zamykał case Lenart Motors w `rozwiazanie.bloki`, drugi
+ * zamykał sekcję o pomiarze w `ramaCeny.bloki`. Oba bloki zjechały na podstrony
+ * (niżej), więc duplikat zniknął razem z nimi, a zdanie o serii pomiarów
+ * zamiast jednego zrzutu ekranu stoi dalej: w `problem.bloki` tej strony
+ * i w całości na `audyt-widocznosci-w-ai.ts` oraz `monitoring-cytowan-w-ai.ts`.
+ *
+ * ZASADA (raport 9): NIE KASUJEMY TREŚCI, PRZENOSIMY JĄ NA PODSTRONY. Gałąź ma
+ * osiem podstron (`lib/uslugi/podstrony/`: audyt-widocznosci-w-ai, chatgpt,
+ * dostep-botow-ai, google-ai-overviews, perplexity, monitoring-cytowan-w-ai,
+ * dla-firm-uslugowych, llms-txt) i każda z nich była przed cięciem przeczytana
+ * w całości. SZEŚĆ Z OŚMIU JEST ZAINDEKSOWANYCH (`dane/indeksacja-2026-09-22.json`,
+ * pobranie 2026-09-06 i 2026-09-07: audyt-widocznosci-w-ai, chatgpt,
+ * dostep-botow-ai, google-ai-overviews, monitoring-cytowan-w-ai,
+ * dla-firm-uslugowych). Google nie zna jeszcze `perplexity` i `llms-txt`.
+ * Dlatego każda przeniesiona sekcja została DOŁOŻONA NA KOŃCU ISTNIEJĄCEJ
+ * SEKCJI strony docelowej i ani jedna zaindeksowana podstrona nie została
+ * przebudowana ani przestawiona.
+ *
+ * CO ZOSTAŁO NA STRONIE USŁUGI (priorytet z zadania): co to jest pozycjonowanie
+ * pod AI i dla kogo, jak to robimy w krokach, czym różni się od klasycznego SEO
+ * (tabela), dowód od trzech klientów z nazwami, cennik RAZ (tabela czterech
+ * pozycji plus warunki wdrożenia) i FAQ na sześć pytań.
+ *
+ * CO WYCIĘTO I GDZIE STOI TERAZ (przed każdym cięciem sprawdzono, czy sedno
+ * REALNIE stoi na stronie docelowej; tam, gdzie nie stało, najpierw dopisano je
+ * tam, a dopiero potem wycięto stąd):
+ *  - N2, case Lenart Motors rozpisany na pięć sekcji (Punkt wyjścia,
+ *    Co zrobiliśmy, Czas, Czym to sprawdzamy, Uczciwe zastrzeżenie):
+ *    STAŁO JUŻ NA PODSTRONACH, nic nie trzeba było dopisywać.
+ *    `audyt-widocznosci-w-ai.ts` sekcja „Co pokazał pomiar u Lenart Motors?"
+ *    niesie punkt wyjścia, czas i uczciwe zastrzeżenie; `chatgpt.ts` sekcję
+ *    „Ile czekał Lenart Motors na wskazanie w ChatGPT?"; `dla-firm-uslugowych.ts`
+ *    sekcję „Warsztat premium, który ChatGPT zaczął wskazywać"; trzy punkty
+ *    „Co zrobiliśmy" (strona od nowa, encja firmy, dostęp botów) to karty
+ *    „Odpowiedzi wprost", „Spójna encja firmy" i „Dane strukturalne"
+ *    w `chatgpt.ts`. Cały case stoi też jako realizacja
+ *    /realizacje/strona-cytowana-przez-chatgpt, linkowana z `powiazane`.
+ *    Tu zostaje pas metryk z liczbą i jedno zdanie.
+ *  - N3, sześć źródeł AI (lista numerowana na sześć pozycji):
+ *    STAŁO JUŻ na `dla-firm-uslugowych.ts` (`problem.bloki`, siatka sześciu
+ *    kart: Wizytówka Google, Opinie, Katalogi branżowe, Rankingi i zestawienia,
+ *    Wątki na forach, Twoja strona, plus tabela „Z czego powstaje wynik").
+ *    Tu zostaje jedno zdanie w sekcji `problem`.
+ *  - N4, dostęp botów AI (pięć kroków po robots.txt, „Co zrobić z wynikiem",
+ *    „Uwaga na jedno nieporozumienie"): STAŁO JUŻ na `dostep-botow-ai.ts`
+ *    (`kroki` „Jak sam sprawdzisz swój plik robots.txt?", sekcje „Trzy wiersze,
+ *    które trzeba znać" i „Odblokowanie botów a zgoda na trenowanie modeli",
+ *    plus osiem pytań FAQ o tych samych botach). Tu zostaje jedno zdanie
+ *    w sekcji `problem`.
+ *  - N5, harmonogram tydzień po tygodniu (tabela pięciu wierszy plus cytat
+ *    o twardych terminach): NIE STAŁO NIGDZIE, więc DOPISANE 2026-09-22 na
+ *    końcu `ramaCeny.bloki` w `chatgpt.ts`, czyli na stronie, która i tak pyta
+ *    w H2 „Ile trwa i ile kosztuje pozycjonowanie w ChatGPT?". Tu zostaje
+ *    zdanie o rytmie pracy w kroku trzecim i w FAQ „Jak szybko zobaczę efekty".
+ *  - N6, siedem rzeczy w pakiecie: STAŁO JUŻ rozbite na podstrony.
+ *    `audyt-widocznosci-w-ai.ts` sekcja „Co dostajesz po audycie?" niesie pięć
+ *    pozycji (raport PDF z pomiarem zerowym, lista priorytetów, szybkie wygrane,
+ *    plan wdrożenia, lista pytań kontrolnych); przepisane sekcje, encja firmy
+ *    i dane strukturalne to trzy karty `chatgpt.ts`; uporządkowany robots.txt
+ *    z czterema botami to `dostep-botow-ai.ts`; powtarzalny pomiar po wdrożeniu
+ *    to `monitoring-cytowan-w-ai.ts`. Tu zostaje kolumna „Co dostajesz”
+ *    w tabeli cennika.
+ *  - N7, pięć kroków pomiaru plus DRUGIE „Uczciwe zastrzeżenie":
+ *    STAŁO JUŻ na `monitoring-cytowan-w-ai.ts` (sekcja „Dlaczego dwa pomiary
+ *    da się w ogóle porównać?" z krokami Pytania klienta zamiast fraz, Czyste
+ *    okno, Ten sam zamrożony zestaw; sekcja „Co zapisujemy przy każdym
+ *    pomiarze?"; tabela „Jeden zrzut ekranu a seria pomiarów") oraz na
+ *    `audyt-widocznosci-w-ai.ts` (`kroki` „Jak mierzymy widoczność w AI, krok
+ *    po kroku?"). To cięcie ZLIKWIDOWAŁO DUPLIKAT H3 opisany wyżej.
+ *  - N9, trzy drogi (nic nie robić, abonament agencji, jednorazowa naprawa):
+ *    NIE STAŁO NIGDZIE, więc DOPISANE 2026-09-22 na końcu `ramaCeny.bloki`
+ *    w `audyt-widocznosci-w-ai.ts`, czyli na pierwszym kroku handlowym gałęzi,
+ *    który już wcześniej rozstrzygał, co dzieje się z kwotą 1490 zł netto
+ *    po audycie. Kolumna abonamentu agencji dalej BEZ kwoty.
+ *  - N10, rachunek kosztu czekania (tabela czterech pól plus „Drugi bok tego
+ *    rachunku"), oraz blok „Dla porównania z rynkiem" z N8 (ceny
+ *    projektowaniestroncennik.pl): NIE STAŁY NIGDZIE, więc DOPISANE 2026-09-22
+ *    na końcu `ramaCeny.bloki` w `dla-firm-uslugowych.ts`, bo ten rachunek
+ *    liczy się na zapytaniach i wartości jednego zlecenia, czyli na liczbach
+ *    warsztatu, gabinetu i kancelarii. Tu zostaje link do kalkulatora
+ *    w `powiazane.narzedzia`.
+ *  - N11, pięć sytuacji „kiedy nie warto brać tego od nas": STAŁO JUŻ
+ *    co do pozycji na `audyt-widocznosci-w-ai.ts` (sekcja „Kiedy ten audyt nie
+ *    ma sensu?": brak strony, sprzedaż wyłącznie z poleceń, efekt w tydzień,
+ *    gwarancja pierwszego miejsca, lokalna usługa bez wizytówki i opinii), a
+ *    branżowe warianty na `chatgpt.ts` („Kiedy to nie zadziała?"),
+ *    `google-ai-overviews.ts`, `perplexity.ts`, `dla-firm-uslugowych.ts`
+ *    i `monitoring-cytowan-w-ai.ts`. Tu zostaje FAQ o gwarancji.
+ *  - N12, sześć obiekcji („To chwilowa moda" i pozostałe): NIE STAŁO NIGDZIE,
+ *    więc DOPISANE 2026-09-22 na końcu `rozwiazanie.bloki`
+ *    w `monitoring-cytowan-w-ai.ts`, bo obiekcja „tego się nie da zmierzyć"
+ *    jest wprost tematem tamtej podstrony. Ostatnie zdanie karty „Poczekam"
+ *    odsyłało do kalkulatora stojącego wyżej na TEJ stronie, więc przy
+ *    przenosinach zostało skrócone o to odesłanie (kalkulator jest dziś
+ *    na innej podstronie).
+ *  - N13, słownik ośmiu pojęć (GEO, AEO, AI Overviews, LLM, encja marki,
+ *    cytowanie w odpowiedzi AI, halucynacja o firmie, llms.txt): NIE STAŁO
+ *    NIGDZIE w całości, więc DOPISANE 2026-09-22 na końcu `rozwiazanie.bloki`
+ *    w `llms-txt.ts`, czyli na jedynej podstronie gałęzi, która od H1 robi
+ *    robotę definicyjną, i jednej z dwóch, których Google jeszcze nie pobrał.
+ *    Definicja samego GEO zostaje tutaj, w kapsule i w FAQ.
+ *  - przełącznik czterech etapów z `rozwiazanie` (widoczność dla botów, treść
+ *    pod cytat, świeżość, autorytet poza stroną): sedno zostaje w leadzie
+ *    sekcji i w trzech krokach wdrożenia. Pełne rozwinięcie stoi na
+ *    `chatgpt.ts` (`kroki`: Najpierw dostęp, Potem treść i encja, Na końcu
+ *    obecność poza stroną) i na `google-ai-overviews.ts` (krok „Dane
+ *    strukturalne, świeżość i daty"). Tak samo domknięto sekcję `problem`
+ *    na chatbotach (b0dd7fc) i na voicebotach.
+ *  - przełącznik dwóch modeli pracy (Audyt i naprawa kontra Stała opieka GEO)
+ *    plus tabela tych samych dwóch modeli, czyli ta sama treść dwa razy pod
+ *    rząd: STAŁO JUŻ na `monitoring-cytowan-w-ai.ts` (sekcja „Czym monitoring
+ *    różni się od jednorazowego audytu?") i na `audyt-widocznosci-w-ai.ts`
+ *    (przełącznik „Naprawiamy razem" kontra „Wdrażasz bez nas"). Tu zostaje
+ *    jedno zdanie w `ramaCeny.tresc` i jedno w kroku trzecim.
+ *  - sekcja „Co dostaję na bezpłatnej diagnozie?" plus pas metryk „0 zł /
+ *    ok. 30 minut / 4 silniki AI": granica bezpłatnej rozmowy NIE ZNIKNĘŁA,
+ *    stoi jako zdanie w kroku pierwszym, w `ramaCeny.tresc`, w wierszu Sprintu
+ *    w tabeli cennika i w `cta.mikrokopia`. Rozwinięcie stoi na
+ *    `audyt-widocznosci-w-ai.ts`, która sprzedaje sam Sprint Diagnostyczny.
+ *  - blok „Jedna rzecz, której konkurencja nie ma" (abonament utrzymaniowy
+ *    99-599 zł netto, 299-1500 zł netto, 0 zł przy przekazaniu infrastruktury,
+ *    350 zł netto za godzinę poprawek): to kwoty CHATBOTÓW, VOICEBOTÓW
+ *    I AUTOMATYZACJI, nie tej usługi. STOJĄ JUŻ w swoich miejscach:
+ *    `lib/uslugi/chatboty.ts`, `lib/uslugi/automatyzacje.ts`,
+ *    `lib/uslugi/opieka-ai.ts`, `lib/uslugi/podstrony/chatboty-cennik.ts`
+ *    i `lib/uslugi/podstrony/voiceboty-cennik.ts`. Tu nie zostaje nic, bo na
+ *    stronie o pozycjonowaniu pod AI robiły za tło, nie za cennik tej usługi.
+ *  - FAQ z 8 pozycji do 6 (kontrakt `Usluga.faq` w lib/uslugi/types.ts mówi
+ *    5-6, a strona miała 8). Gdzie stoją wycięte pytania:
+ *      · „Jak sprawdzicie, czy mnie cytuje ChatGPT?" -> `monitoring-cytowan-w-ai.ts`
+ *        (FAQ „Co dokładnie zapisujecie w jednym pomiarze?" i „Jak często
+ *        powtarzacie pomiar?") oraz `audyt-widocznosci-w-ai.ts` (FAQ „Jak
+ *        sprawdzacie, czy ChatGPT poleca moją firmę?"),
+ *      · „Robicie to tylko po polsku?" -> fakt o rynku polskim i niemieckim
+ *        NIE ZNIKNĄŁ: wszedł jako ostatnie zdanie odpowiedzi „Macie dowód, że
+ *        to działa?", przy tych samych dwóch niemieckich klientach.
+ *
+ * KAPSUŁA: kontrakt `Usluga.kapsula` mówi 40-60 słów, a kapsuła miała 112.
+ * Przepisana na 52 słowa; wycięte z niej zdanie o Lenart Motors stoi niżej
+ * w pasie metryk sekcji `rozwiazanie`, w FAQ „Macie dowód" i w `powiazane`.
+ *
+ * H1 NIETKNIĘTE: `components/uslugi/ServiceHero.tsx` (mapa H1_KOLOR, wpis
+ * `optymalizacja`) koloruje końcówkę „bądź cytowany w ChatGPT i Perplexity",
+ * a fragment MUSI być dokładną końcówką h1.
+ *
+ * ── NIŻEJ: ZAPIS HISTORYCZNY SPRZED 2026-09-22. Opisuje, jak pakiet GEO
+ *    N1-N13 wchodził na tę stronę w sierpniu 2026. Większości tych bloków już
+ *    tu nie ma (patrz lista wyżej), ale zapis zostaje, bo tłumaczy, skąd
+ *    wzięła się każda liczba, która na stronie została.
+ *
  * ── UWAGA SLUG (bloker przed live, spec 06 §"MAPA USŁUG" + 05 §2.1):
  *    "optymalizacja" NIE istnieje w ROUTES (lib/site.ts). SEO rekomenduje slug
  *    bliższy money query: "pozycjonowanie-ai" lub "seo-geo". Copy jest slug-agnostyczne.
@@ -252,39 +427,40 @@ import type { Usluga } from './types';
  */
 export const optymalizacja: Usluga = {
   slug: 'optymalizacja',
-  /* KONTROLA PAKIETU GEO 2026-08-31: data bumpnięta z '2026-08-21' na dzień
-     wejścia całego pakietu N1-N13. Pole jest źródłem `lastmod` w sitemap.xml
-     (app/sitemap.ts), a treść strony urosła o 13 sekcji, więc stara data
-     mówiłaby botom nieprawdę o świeżości. Zapowiedziane w nagłówku pliku
-     („datę trzeba bumpnąć jednym ruchem, gdy cały pakiet N1-N13 wejdzie"). */
-  dataAktualizacji: '2026-08-31',
+  /* PRZYCIĘCIE 2026-09-22: data bumpnięta z '2026-08-31' na dzień przycięcia.
+     Pole jest źródłem `lastmod` w sitemap.xml (app/sitemap.ts), a treść strony
+     zmieniła się co do sekcji (6177 -> 1577 słów), więc stara data mówiłaby
+     botom nieprawdę. */
+  dataAktualizacji: '2026-09-22',
+  /* H1 NIETKNIĘTE: `ServiceHero.H1_KOLOR.optymalizacja` koloruje końcówkę
+     „bądź cytowany w ChatGPT i Perplexity", więc musi być dokładną końcówką. */
   h1: 'Pozycjonowanie pod AI: bądź cytowany w ChatGPT i Perplexity',
 
+  /* KONTRAKT `Usluga.kapsula`: 40-60 słów. Tu 52. Przed przycięciem 2026-09-22
+     kapsuła miała 112 słów i kończyła się całym case'em Lenart Motors; ta
+     liczba stoi teraz w pasie metryk sekcji `rozwiazanie` i w FAQ. */
   kapsula:
-    'Pozycjonowanie pod AI (GEO) to ustawienie Twojej strony tak, żeby ChatGPT, Claude, Gemini i Perplexity polecały ją w odpowiedziach, a nie tylko Google w wynikach. Nie musisz budować strony od nowa. Bierzemy to, co masz, i naprawiamy trzy rzeczy: czy boty AI w ogóle widzą Twoją treść, czy jest ułożona tak, by dało się ją zacytować, i czy masz autorytet poza własną stroną. Potem mierzymy, czy realnie zaczynasz padać w odpowiedziach. Że to działa, wiemy z konkretu: strona, którą zbudowaliśmy dla Lenart Motors, była wskazywana przez ChatGPT na pytanie o najlepszego blacharza i lakiernika premium po około trzech tygodniach od wrzucenia jej do sieci.',
+    'Pozycjonowanie pod AI (GEO) to ustawienie Twojej strony tak, żeby ChatGPT, Claude, Gemini i Perplexity polecały ją w odpowiedziach, a nie tylko Google w wynikach. Nie musisz budować strony od nowa. Naprawiamy trzy rzeczy: czy boty AI widzą Twoją treść, czy da się ją zacytować i czy masz autorytet poza własną stroną.',
 
   metaTitle: 'Pozycjonowanie pod AI: cytowanie w ChatGPT',
   metaDescription:
-    'Pozycjonowanie pod AI (GEO): sprawiamy, że ChatGPT, Claude, Gemini i Perplexity polecają Twoją firmę. W stałej opiece mierzymy cytowalność co tydzień.',
+    'Pozycjonowanie pod AI (GEO): sprawiamy, że ChatGPT, Claude, Gemini i Perplexity polecają Twoją firmę. Sprint Diagnostyczny 1490 zł netto, 5 dni roboczych.',
 
   problem: {
     h2: 'Klienci pytają AI, a AI poleca kogoś innego?',
-    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
-       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
-       Fakty 1:1 z konspektu; forma na strukture. */
     tresc:
-      'Jeśli w odpowiedziach AI pada konkurencja, a nie Ty, tracisz klientów, których nawet nie widzisz, bo nigdy do Ciebie nie trafili. Ludzie coraz częściej pytają ChatGPT albo Perplexity o polecenie firmy, i właśnie w tej odpowiedzi zapada decyzja.',
+      'Jeśli w odpowiedziach AI pada konkurencja, a nie Ty, tracisz klientów, których nawet nie widzisz. Ludzie coraz częściej pytają ChatGPT albo Perplexity o polecenie firmy, i właśnie w tej odpowiedzi zapada decyzja.',
     bloki: [
+      /* PRZYCIĘCIE 2026-09-22: z tej sekcji zeszły pełny blok N1 (trzy karty
+         opisowe case'ów), cała lista sześciu źródeł AI (N3) i cała instrukcja
+         po robots.txt (N4). Zostaje głowa sekcji, trzy krótkie karty
+         i dwa zdania odsyłające. Adresy docelowe: nagłówek pliku. */
       {
         typ: 'naglowek',
-        tekst: 'Czym różni się GEO od SEO?',
+        tekst: 'Dlaczego model wymienia kogoś innego?',
         ikona: 'lupa-wykres',
         chip: 'GEO',
-        overline: 'DIAGNOZA · 4 SILNIKI AI',
-      },
-      {
-        typ: 'akapit',
-        tekst: 'Klasyczne pozycjonowanie w Google tego nie załatwia. Pozycjonowanie pod AI to inna gra: nie walczysz o miejsce w wynikach wyszukiwania, tylko o miejsce w odpowiedzi, którą buduje AI.',
+        overline: 'TRZY POWODY',
       },
       {
         typ: 'siatka',
@@ -293,83 +469,56 @@ export const optymalizacja: Usluga = {
           {
             naglowek: 'Boty AI nie widzą Twojej treści',
             akapity: [
-              'Jeśli model nie ma dostępu do Twojej treści, nie zacytuje Cię, nawet jeśli Twoja oferta jest najlepsza w okolicy. Dlatego to sprawdzamy jako pierwsze, zanim cokolwiek przepiszemy.',
-            ],
-            punkty: [
-              'strona nie wpuszcza botów AI',
-              'technologia, której AI w ogóle nie czyta',
+              'Jeśli model nie ma dostępu do strony, nie zacytuje Cię, choćby Twoja oferta była najlepsza w okolicy. Sprawdzamy to jako pierwsze.',
             ],
           },
           {
             naglowek: 'Treść nie jest napisana pod cytat',
             akapity: [
-              'Optymalizacja pod ChatGPT to pisanie pod cytat, nie pod kliknięcie: bezpośrednia odpowiedź na początku, potem konkret, który da się zacytować.',
-            ],
-            punkty: [
-              'słowa kluczowe upychane na siłę nie działają, a bywają minusem',
-              'AI składa odpowiedź z konkretnych liczb i dobrej struktury',
+              'Model ma wyjąć ze strony gotowy fragment. Upychane słowa kluczowe tego nie załatwiają, a bywają minusem.',
             ],
           },
           {
             naglowek: 'Poza Twoją stroną nikt o Tobie nie mówi',
             akapity: [
-              'W GEO liczy się autorytet z zewnątrz. Jeśli poza Twoją stroną nikt Cię nie wymienia, model nie ma się na co powołać, więc poleci kogoś, o kim mówią inni.',
-            ],
-            /* ROZDZIAŁ ROZMOWY OD SPRINTU 2026-08-31: „na diagnozie widać, kto
-               jest wymieniany zamiast Ciebie" obiecywało wynik pomiaru na
-               bezpłatnej rozmowie. Ten pomiar jest w Sprincie Diagnostycznym. */
-            punkty: [
-              'w Google autorytet dawały backlinki, w AI dają wzmianki',
-              'w Sprincie Diagnostycznym widać, kto jest wymieniany zamiast Ciebie',
+              'W Google autorytet dawały linki, w AI dają wzmianki. Twoja strona to jedno z sześciu źródeł.',
             ],
           },
         ],
       },
       {
-        typ: 'sekcja',
-        naglowek: 'Czy da się to naprawić bez nowej strony?',
-        wariant: 'edge',
-        chip: 'GEO',
-        /* ROZDZIAŁ ROZMOWY OD SPRINTU 2026-08-31: „punkt wyjścia czarno na
-           białym, zanim cokolwiek zamówisz" czytało się jako obietnica raportu
-           z pomiarem zerowym za 0 zł. Ten raport jest w Sprincie. Ocena samej
-           technologii strony zostaje na bezpłatnej rozmowie, bo to badanie
-           potrzeb, a nie pomiar. */
-        akapity: [
-          'Najczęściej tak. Nie musisz budować strony od nowa: bierzemy to, co masz, i naprawiamy to, co dziś blokuje cytowanie.',
-          'Twój punkt wyjścia pokażemy Ci czarno na białym w Sprincie Diagnostycznym, zanim ruszymy z naprawą. Jeśli strona stoi na technologii, której AI nie czyta, powiemy to wprost już na bezpłatnej rozmowie.',
-        ],
+        typ: 'akapit',
+        tekst: 'Pozostałe pięć źródeł rozpisujemy na podstronie dla firm usługowych, a sprawdzenie robots.txt na podstronie o dostępie botów AI.',
       },
+    ],
+  },
 
-      /* ── PAKIET GEO §N1 (2026-08-31): „Co dało pozycjonowanie pod AI trzem
-         naszym klientom?". Pole „Gdzie wstawić": PO istniejącej sekcji 1
-         (problem), PRZED sekcją 2 (rozwiązanie) -> koniec `problem.bloki`.
-         Trzy karty pakietu rozłożone na dwa bloki, bo kontrakt nie ma bloku
-         „karta z liczbą": `pasMetryk` niesie liczbę i podpis liczby (kolejność
-         metryk = kolejność kart), `siatka` niesie nadtytuł i treść karty.
-         ROZDZIAŁ KANAŁÓW jest wymogiem pakietu, nie ozdobą: pole `zrodlo`
-         każdej metryki mówi wprost, czy to wynik w AI, czy wynik w Google. */
+  rozwiazanie: {
+    h2: 'Jak sprawiamy, że AI zaczyna Cię cytować?',
+    tresc:
+      'Naprawiamy trzy rzeczy: czy boty AI widzą Twoją stronę, czy treść jest ułożona pod cytat i czy masz autorytet poza własną stroną. Potem mierzymy, czy realnie padasz w odpowiedziach: w stałej opiece co tydzień my, przy jednorazowej naprawie Ty sam, na zamrożonym zestawie pytań.',
+    bloki: [
+      /* PRZYCIĘCIE 2026-09-22: z tej sekcji zeszły przełącznik czterech etapów,
+         cały case Lenart Motors rozpisany na pięć sekcji (N2, w tym PIERWSZE
+         z dwóch „Uczciwe zastrzeżenie"), lista sześciu źródeł (N3) i instrukcja
+         robots.txt (N4). Zostaje DOWÓD, czyli to, czego nie ma nigdzie indziej
+         w tej formie: trzy nazwy klientów z rozdziałem kanałów. */
       {
         typ: 'naglowek',
         tekst: 'Co dało pozycjonowanie pod AI trzem naszym klientom?',
         ikona: 'gwiazda-kompas',
         chip: 'DOWÓD',
-        overline: 'TRZY WDROŻENIA · NAZWY FIRM',
+        overline: 'TRZY WDROŻENIA',
       },
-      {
-        typ: 'akapit',
-        tekst: 'Zapytaj ChatGPT o swoją branżę i posłuchaj, czyja nazwa pada. Jeśli nie Twoja, to nie pech.',
-      },
-      {
-        typ: 'akapit',
-        tekst: 'To znaczy, że model nie ma z Twojej strony czego zacytować. Poniżej trzy firmy, które to odwróciły. Z nazwami, terminami i efektem, który da się sprawdzić.',
-      },
+      /* ROZDZIAŁ KANAŁÓW jest wymogiem pakietu, nie ozdobą: pole `zrodlo`
+         każdej metryki mówi wprost, czy to wynik w AI, czy wynik w Google.
+         Zero procentów, bo ich nie zmierzyliśmy. */
       {
         typ: 'pasMetryk',
         metryki: [
           {
             wartosc: 'ok. 3 tygodnie',
-            opis: 'od publikacji strony do wskazania firmy przez ChatGPT',
+            opis: 'od publikacji do wskazania firmy przez ChatGPT',
             zrodlo: 'Lenart Motors, wynik w AI',
             ton: 'amber',
           },
@@ -381,354 +530,15 @@ export const optymalizacja: Usluga = {
           },
           {
             wartosc: 'TOP 3',
-            opis: 'wynik w Google na frazę Trockenhaus, ze stanu bez widoczności',
+            opis: 'na frazę Trockenhaus, ze stanu bez widoczności',
             zrodlo: 'Trockenhaus, wynik w Google',
             ton: 'violet',
           },
         ],
       },
       {
-        typ: 'siatka',
-        kolumny: 3,
-        karty: [
-          {
-            naglowek: 'Lenart Motors, blacharstwo i lakiernictwo premium',
-            akapity: [
-              'Zbudowaliśmy stronę pisaną pod cytowanie przez modele, nie pod slogany. Po około trzech tygodniach ChatGPT zaczął wskazywać firmę na pytanie o najlepszego blacharza i lakiernika premium. To nasz jedyny zmierzony efekt w samym AI i mówimy o tym wprost.',
-            ],
-          },
-          {
-            naglowek: 'Fichtelgebirgshaus.de, budowa domów, rynek niemiecki',
-            akapity: [
-              'Jedna strona, dwa kanały. Frazy zapisane w umowie weszły do pierwszej dziesiątki w Google. Dodatkowo treść jest na tyle konkretna, że sięga po nią też GPT. Ten sam materiał pracuje dwa razy.',
-            ],
-          },
-          {
-            naglowek: 'Trockenhaus, osuszanie piwnic i remonty, Niemcy',
-            akapity: [
-              'Firma startowała z pozycji, na której nikt jej nie znajdował. Dziś jest w pierwszej trójce wyników na swoją główną frazę. To wynik w Google, nie w AI, i tak go nazywamy.',
-            ],
-          },
-        ],
-      },
-      {
-        typ: 'cytat',
-        tekst: 'Nie podajemy wzrostów w procentach, bo ich nie zmierzyliśmy. Dowód czysto AI mamy dziś jeden: Lenart Motors. Dwa pozostałe to wyniki w Google i piszemy to wprost, zamiast wrzucać wszystko do jednego worka.',
-      },
-    ],
-  },
-
-  rozwiazanie: {
-    h2: 'Jak sprawiamy, że AI zaczyna Cię cytować?',
-    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
-       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
-       Fakty 1:1 z konspektu; forma na strukture. */
-    tresc:
-      'Naprawiamy trzy rzeczy: czy boty AI w ogóle widzą Twoją stronę, czy treść jest ułożona pod cytat i czy masz autorytet poza własną stroną. Potem mierzymy, czy realnie padasz w odpowiedziach: przy jednorazowej naprawie zamrożony zestaw pytań zostaje u Ciebie i powtarzasz pomiar sam, a w stałej opiece robimy go co tydzień my.',
-    bloki: [
-      {
-        typ: 'naglowek',
-        tekst: 'Jak być cytowanym w ChatGPT?',
-        ikona: 'wykres-strzalka',
-        chip: 'GEO',
-        overline: 'CZTERY ETAPY · CO TYDZIEŃ W STAŁEJ OPIECE',
-      },
-      {
-        typ: 'pasMetryk',
-        metryki: [
-          {
-            wartosc: 'ok. 3 tygodnie',
-            opis: 'od publikacji strony Lenart Motors do wskazania firmy przez ChatGPT',
-            zrodlo: 'Lenart Motors',
-            ton: 'cyan',
-          },
-          {
-            wartosc: 'top10 Google',
-            opis: 'frazy z umowy plus widoczność w GPT',
-            zrodlo: 'Fichtelgebirgshaus.de',
-            ton: 'violet',
-          },
-          {
-            wartosc: 'top3 Google',
-            opis: 'z niewidocznej strony na frazę Trockenhaus',
-            zrodlo: 'Trockenhaus',
-            ton: 'green',
-          },
-        ],
-      },
-      {
-        typ: 'przelacznik',
-        grupa: 'optymalizacja-etapy',
-        opcje: [
-          {
-            numer: 'ETAP 1',
-            tytul: 'Widoczność dla botów',
-            podtytul: 'start pracy',
-            naglowek: 'Najpierw sprawdzamy, czy boty AI w ogóle widzą Twoją treść.',
-            akapity: [
-              'Dopóki model nie ma dostępu do strony, reszta pracy nic nie zmienia, bo nie ma czego zacytować. Dlatego ten etap idzie na sam początek, a nie na koniec.',
-            ],
-            punkty: [
-              'odblokowujemy boty AI tam, gdzie strona je zatrzymuje',
-              'jeśli winna jest technologia, której AI nie czyta, mówimy to wprost na diagnozie',
-            ],
-          },
-          {
-            numer: 'ETAP 2',
-            tytul: 'Treść pod cytat',
-            podtytul: 'kluczowe strony',
-            naglowek: 'Przepisujemy kluczowe strony na format, który AI cytuje.',
-            akapity: [
-              'To jest optymalizacja strony pod ChatGPT w praktyce: piszemy pod cytat, nie pod kliknięcie. Model ma wyjąć z Twojej strony gotowy fragment, więc każdą kluczową stronę układamy tak, żeby dało się to zrobić bez czytania całości.',
-            ],
-            punkty: [
-              'odpowiedź postawiona wysoko, zaraz pod nagłówkiem',
-              'konkretne liczby, tabele i nagłówki formułowane jak pytania',
-              'nie upychamy słów kluczowych, bo bywają wręcz minusem',
-            ],
-          },
-          {
-            numer: 'ETAP 3',
-            tytul: 'Świeżość',
-            podtytul: 'treść aktualna',
-            naglowek: 'Dokładamy świeżość, bo AI woli treść aktualną.',
-            akapity: [
-              'Strona, na której od dawna nic się nie zmienia, ma mniejszą szansę trafić do odpowiedzi. Dlatego pilnowanie aktualności kluczowych stron jest u nas osobnym etapem, nie dodatkiem.',
-            ],
-          },
-          {
-            numer: 'ETAP 4',
-            tytul: 'Autorytet poza stroną',
-            podtytul: 'rankingi i zestawienia',
-            naglowek: 'Budujemy autorytet poza Twoją stroną, bo stamtąd AI bierze rekomendacje.',
-            akapity: [
-              'To najwolniejszy etap, bo autorytet buduje się z czasem. Dlatego cytowalność rośnie w rytmie, a nie jednym strzałem, i dlatego ta praca ma sens miesiąc po miesiącu.',
-            ],
-            punkty: [
-              'rankingi, Reddit, własne dane i wzmianki',
-              'w klasycznym SEO liczyły się backlinki, w GEO liczy się to, kto o Tobie wspomina',
-            ],
-          },
-        ],
-      },
-      {
         typ: 'akapit',
-        tekst: 'W modelu stałej opieki efekt mierzymy co tydzień, ręcznie. Wpisujemy Twoje kluczowe pytania w cztery silniki AI i zapisujemy, czy padasz w odpowiedziach i kto jest wymieniany zamiast Ciebie. Tak sprawdzamy cytowalność w ChatGPT: trend czarno na białym, a nie obietnice. Przy jednorazowej naprawie ten sam zamrożony zestaw pytań zostaje u Ciebie i powtarzasz pomiar sam, kiedy chcesz.',
-      },
-      {
-        typ: 'sekcja',
-        naglowek: 'Trzy wyniki klientów, każdy z nazwą firmy',
-        wariant: 'top',
-        chip: 'GEO',
-        akapity: [
-          'Liczby z pasa powyżej to realne wdrożenia, nie testy. Każde opisaliśmy osobno w realizacjach, więc możesz je sprawdzić, zanim cokolwiek zamówisz.',
-        ],
-        punkty: [
-          'Lenart Motors: model wskazywał firmę na konkretne pytanie klienta, o najlepszego blacharza i lakiernika premium, a nie na samą nazwę firmy.',
-          'Fichtelgebirgshaus.de: frazy nie były przypadkowe, tylko umówione z klientem w umowie. Bierzemy odpowiedzialność za konkretny zakres.',
-          'Trockenhaus: mała firma, co mówimy wprost. Widoczność zbudowała treść z konkretem, nie wielkość serwisu.',
-        ],
-        stopka: [
-          'Dwa z trzech wdrożeń to klienci z rynku niemieckiego. Pracujemy po polsku i po niemiecku.',
-        ],
-      },
-
-      /* ── PAKIET GEO §N2 (2026-08-31): „Jak ChatGPT zaczął wskazywać Lenart
-         Motors?". Pole „Gdzie wstawić": PO istniejącej sekcji 2 (rozwiązanie),
-         PRZED sekcją 3 (tabela porównawcza) -> koniec `rozwiazanie.bloki`.
-         Nadtytuły case'a (PUNKT WYJŚCIA, CO ZROBILIŚMY, CZAS, CZYM TO
-         SPRAWDZAMY, UCZCIWE ZASTRZEŻENIE) idą jako nagłówki bloków `sekcja`,
-         akapity 1:1 z pakietu. Liczba „około trzech tygodni" stoi już w pasie
-         metryk tej sekcji, więc NIE dublujemy jej drugim pasem. */
-      {
-        typ: 'naglowek',
-        tekst: 'Jak ChatGPT zaczął wskazywać Lenart Motors?',
-        ikona: 'radar',
-        chip: 'CASE STUDY',
-        overline: 'LENART MOTORS · JEDEN ZMIERZONY PRZYPADEK',
-      },
-      {
-        typ: 'akapit',
-        tekst: 'Warsztat blacharsko lakierniczy z segmentu premium. Dobra robota, zadowoleni klienci, a w ChatGPT cisza.',
-      },
-      {
-        typ: 'sekcja',
-        naglowek: 'Punkt wyjścia',
-        wariant: 'edge',
-        akapity: [
-          'Przed publikacją nowej strony ChatGPT nie wskazywał firmy na pytanie o najlepszego blacharza i lakiernika premium. Tyle wiemy i tyle mówimy.',
-          'Model nie karze Cię za nic. On po prostu nie ma zdania, bo nie ma źródła, z którego mógłby je zbudować.',
-        ],
-      },
-      {
-        typ: 'sekcja',
-        naglowek: 'Co zrobiliśmy',
-        wariant: 'top',
-        akapity: [
-          'Napisaliśmy stronę od nowa, pod jedno kryterium: żeby dało się z niej wyciąć gotową odpowiedź. Krótkie akapity, konkretne zakresy usług, jasne odpowiedzi na pytania klienta.',
-          'Ułożyliśmy encję firmy. Czyli spójny opis tego, kim ta firma jest, co robi i gdzie działa, powtórzony tak samo wszędzie, gdzie się pojawia.',
-          'Sprawdziliśmy dostęp dla botów AI. Mają wejść na stronę i przeczytać treść bez zgadywania, co jest ofertą, a co ozdobnikiem.',
-        ],
-      },
-      {
-        typ: 'sekcja',
-        naglowek: 'Czas',
-        wariant: 'edge',
-        chip: 'DOWÓD',
-        akapity: [
-          'Około trzech tygodni od publikacji. Tyle minęło, zanim ChatGPT zaczął wskazywać firmę na pytanie o najlepszego blacharza i lakiernika premium.',
-          'To nie jest gwarantowany termin, tylko jeden zmierzony przypadek. Jasna specjalizacja, mała konkurencja o to jedno pytanie. W trudniejszym rynku potrwa dłużej.',
-        ],
-      },
-      {
-        typ: 'sekcja',
-        naglowek: 'Czym to sprawdzamy',
-        wariant: 'top',
-        akapity: [
-          'Pytanie kontrolne brzmi tak, jak zapytałby klient, a nie jak fraza z narzędzia SEO. Całą metodę rozpisujemy niżej, w sekcji o pomiarze.',
-        ],
-      },
-      {
-        typ: 'sekcja',
-        naglowek: 'Uczciwe zastrzeżenie',
-        wariant: 'quiet',
-        chip: 'UCZCIWIE',
-        akapity: [
-          'To pomiar własny, wykonany przez nas. Odpowiedzi modeli zmieniają się w czasie, więc liczy się seria takich pomiarów, a nie jeden zrzut ekranu.',
-        ],
-      },
-
-      /* ── PAKIET GEO §N3 (2026-08-31): „Skąd ChatGPT w ogóle wie, że
-         istniejesz?". Pole „Gdzie wstawić": PO nowej sekcji N2, PRZED sekcją 3
-         (tabela porównawcza) -> zaraz za blokami N2. Pakiet zamawia LISTĘ
-         NUMEROWANĄ na 6 pozycji, więc idzie to blokiem `kroki` (render <ol>,
-         numer czytelny też dla bota). W każdej pozycji: opis źródła plus zdanie
-         „Co z tym robimy", tak jak w pakiecie. Punkty 3, 4 i 5 mówią wyłącznie
-         o diagnozie i przekazaniu listy, bo prace PR i wprowadzanie do katalogów
-         nie są pozycją w cenniku. */
-      {
-        typ: 'naglowek',
-        tekst: 'Skąd ChatGPT w ogóle wie, że istniejesz?',
-        ikona: 'glob-siatka',
-        chip: 'ŹRÓDŁA AI',
-        overline: 'SZEŚĆ ŹRÓDEŁ · NIE TYLKO TWOJA STRONA',
-      },
-      {
-        typ: 'akapit',
-        tekst: 'Model nie ma listy firm. Kiedy pytasz go o dobrego fachowca w mieście, składa odpowiedź z tego, co przeczytał w sieci.',
-      },
-      {
-        typ: 'akapit',
-        tekst: 'Źródeł jest sześć. To dlatego pozycjonowanie pod AI nie kończy się na Twojej stronie.',
-      },
-      {
-        typ: 'kroki',
-        wariant: 'kolo',
-        kroki: [
-          {
-            tytul: 'Twoja własna strona',
-            opis: 'Jedyne źródło, które kontrolujesz w stu procentach. Model szuka na niej gotowych zdań do zacytowania, a nie sloganów o pasji i najwyższej jakości. Co z tym robimy: przepisujemy sekcje tak, żeby odpowiadały wprost na pytania klienta, krótkimi akapitami, które da się wyciąć bez kontekstu.',
-          },
-          {
-            tytul: 'Wizytówka Google i opinie',
-            opis: 'Przy usługach lokalnych to często najmocniejsze źródło ze wszystkich. Nazwa, adres, kategoria i treść opinii mówią modelowi, kim jesteś. Co z tym robimy: sprawdzamy, czy dane w wizytówce zgadzają się ze stroną, i pokazujemy Ci rozjazdy. Rozjazd w nazwie albo adresie osłabia Cię w każdym kanale naraz.',
-          },
-          {
-            tytul: 'Katalogi i rankingi branżowe',
-            opis: 'Modele chętnie sięgają po zestawienia typu „najlepsi w mieście”, bo to gotowa lista. Jeśli nie ma Cię na takiej liście, nie ma Cię w odpowiedzi. Co z tym robimy: sprawdzamy, w których katalogach i rankingach Twojej branży Cię brakuje, i oddajemy Ci listę miejsc do uzupełnienia wraz z gotowym opisem firmy.',
-          },
-          {
-            tytul: 'Publikacje i wzmianki na cudzych domenach',
-            opis: 'To, co inni piszą o Tobie, waży więcej niż to, co piszesz o sobie. Artykuł branżowy, wywiad czy wpis partnera to dla modelu potwierdzenie z zewnątrz. Co z tym robimy: sprawdzamy, gdzie Twoja firma jest dziś wspominana i w jakim tonie, i pokazujemy, których miejsc brakuje. Samą publikację załatwiasz Ty albo Twój PR.',
-          },
-          {
-            tytul: 'Fora i społeczności',
-            opis: 'Wątki z pytaniem „kogo polecacie” to surowe rekomendacje. Modele czytają je, bo brzmią jak prawdziwa opinia, a nie reklama. Co z tym robimy: sprawdzamy, czy w takich wątkach ktoś już o Tobie pisze, i pokazujemy wynik. Nie piszemy tam za Ciebie i nie udajemy klienta.',
-          },
-          {
-            tytul: 'Dane strukturalne',
-            opis: 'Niewidoczny dla człowieka opis strony, który mówi maszynie wprost: to jest firma, to jest usługa, to jest opinia. Zmniejsza ryzyko, że model zgadnie źle. Co z tym robimy: wstawiamy dane strukturalne dla firmy, usług i pytań, i sprawdzamy je narzędziem, zamiast zakładać, że działają.',
-          },
-        ],
-      },
-      {
-        typ: 'cytat',
-        tekst: 'Sama strona to jedno z sześciu źródeł i zwykle nie najmocniejsze. Firmy, które w AI wygrywają, mają spójny obraz we wszystkich sześciu miejscach naraz.',
-      },
-
-      /* ── PAKIET GEO §N4 (2026-08-31): „Czy Twoja strona wpuszcza boty AI?".
-         Pole „Gdzie wstawić": PO nowej sekcji N3, PRZED sekcją 3 (tabela
-         porównawcza) -> zaraz za blokami N3. Pakiet zamawia LISTĘ KROKÓW,
-         więc blok `kroki` w wariancie osi. Tytuły kroków to etykiety wierszy
-         (kontrakt wymaga `tytul`), całe zdania kroków 1:1 z pakietu.
-         Cztery nazwy botów zostają W KROKU 4, tak jak w pakiecie, bez
-         wyprowadzania ich do osobnego bloku, żeby nie rozjechać numeracji.
-         GPTBot opisany poprawnie jako robot OpenAI (uwaga wdrożeniowa §7).
-         LINK: pakiet kończy sekcję zdaniem z linkiem do
-         /uslugi/optymalizacja/dostep-botow-ai. Bloki treści renderują CZYSTY
-         TEKST (components/blog/PostBody: <p>{tekst}</p>), więc klikalny link
-         nie ma tu jak powstać. Zdanie zostaje jako zapowiedź podstrony bez
-         adresu w treści; realny link należy dołożyć w `powiazane` rodzica
-         (uwaga wdrożeniowa §3) razem z publikacją tej podstrony. */
-      {
-        typ: 'naglowek',
-        tekst: 'Czy Twoja strona wpuszcza boty AI?',
-        ikona: 'folder-kod',
-        chip: 'ROBOTS.TXT',
-        overline: 'PIĘĆ KROKÓW · SPRAWDZASZ SAM',
-      },
-      {
-        typ: 'akapit',
-        tekst: 'Zanim wydasz złotówkę na treści, sprawdź jedną rzecz. Zdarza się, że firma płaci za widoczność w AI, mając na stronie wpis, który tę AI wyprasza za drzwi.',
-      },
-      {
-        typ: 'akapit',
-        tekst: 'Sprawdzenie zrobisz sam, bez żadnego narzędzia.',
-      },
-      {
-        typ: 'kroki',
-        wariant: 'os',
-        kroki: [
-          {
-            tytul: 'Otwórz plik robots.txt swojej strony',
-            opis: 'Wpisz w przeglądarce adres swojej strony i dopisz na końcu /robots.txt. Czyli na przykład twojafirma.pl/robots.txt. Otworzy się zwykły plik tekstowy.',
-          },
-          {
-            tytul: 'Sprawdź, czy plik cokolwiek blokuje',
-            opis: 'Jeśli plik się nie otwiera albo jest pusty, to zwykle dobra wiadomość. Nikt niczego nie blokuje. Problem zaczyna się tam, gdzie widzisz słowo Disallow.',
-          },
-          {
-            tytul: 'Blokada ogólna na samym początku',
-            opis: 'Najpierw poszukaj wpisu User-agent: *. Jeśli pod nim stoi Disallow: /, blokada dotyczy wszystkich botów, także tych czterech niżej, nawet gdy nie ma ich w pliku z nazwy.',
-          },
-          {
-            tytul: 'Poszukaj czterech nazw botów',
-            opis: 'Teraz poszukaj czterech nazw. To boty, które karmią wiedzą największe modele. GPTBot pobiera treści dla OpenAI, czyli dla ChatGPT. ClaudeBot pobiera treści dla Claude od Anthropic. PerplexityBot pobiera treści dla wyszukiwarki Perplexity. Google-Extended decyduje, czy Twoja treść zasila modele Gemini. Uwaga, to osobna sprawa niż podsumowania AI w samej wyszukiwarce. Tam decyduje zwykły Googlebot.',
-          },
-          {
-            tytul: 'Sprawdź, co stoi przy każdej nazwie',
-            opis: 'Przy każdej z tych nazw sprawdź, co jest niżej. Wpis Disallow: / oznacza pełną blokadę tego bota. Wpis Allow albo brak nazwy przy braku blokady ogólnej z kroku 3 oznacza, że bot ma wstęp.',
-          },
-        ],
-      },
-      {
-        typ: 'sekcja',
-        naglowek: 'Co zrobić z wynikiem',
-        wariant: 'top',
-        akapity: [],
-        punkty: [
-          'Znalazłeś blokadę: masz odpowiedź, dlaczego AI Cię nie zna, i pierwszą rzecz do naprawy. To zmiana na kilka minut, jeśli masz dostęp do plików strony.',
-          'Nie znalazłeś blokady: przeszkoda techniczna odpada. Wtedy problemem jest treść, której model nie ma jak zacytować.',
-        ],
-      },
-      {
-        typ: 'sekcja',
-        naglowek: 'Uwaga na jedno nieporozumienie',
-        wariant: 'quiet',
-        akapity: [
-          'Odblokowanie botów AI to nie to samo co zgoda na trenowanie modelu na Twoich tekstach. To dwie osobne decyzje i obie omawiamy z Tobą, zanim cokolwiek zmienimy.',
-          'Który bot za co odpowiada i jak ustawić to bez szkody dla pozycji w Google, rozpisujemy na osobnej podstronie o dostępie botów AI.',
-        ],
+        tekst: 'To realne wdrożenia, każde opisane osobno w realizacjach. Dowód czysto AI mamy dziś jeden, Lenart Motors, i mówimy to wprost. Dwa pozostałe to wyniki w Google, u klientów z rynku niemieckiego. To pomiary własne, więc liczy się seria pomiarów, nie jeden zrzut ekranu.',
       },
     ],
   },
@@ -741,9 +551,7 @@ export const optymalizacja: Usluga = {
       { cecha: 'Cel', bez: 'Pozycja w wynikach Google', zNami: 'Bycie polecanym w odpowiedzi AI' },
       { cecha: 'Co liczy się najmocniej', bez: 'Linki i słowa kluczowe', zNami: 'Konkretne liczby, struktura, autorytet z zewnątrz' },
       { cecha: 'Format treści', bez: 'Pod kliknięcie', zNami: 'Pod cytat: answer-first, tabele' },
-      { cecha: 'Gdzie zdobywa się autorytet', bez: 'Backlinki', zNami: 'Rankingi, Reddit, własne dane, wzmianki' },
       { cecha: 'Pomiar', bez: 'Pozycje w Google', zNami: 'Czy padasz w 4 silnikach (co tydzień w stałej opiece)' },
-      { cecha: 'Słowa kluczowe na siłę', bez: 'Czasem pomagają', zNami: 'Nie działają, bywa wręcz minus' },
     ],
   },
 
@@ -756,352 +564,42 @@ export const optymalizacja: Usluga = {
       {
         tytul: 'Diagnoza (bezpłatna)',
         opis:
-          'Rozmawiamy o Twojej sytuacji: o co pytają Cię klienci, co masz dziś na stronie i czego oczekujesz. Na koniec znasz zakres i widełki ceny. Pomiar w czterech silnikach AI robimy dopiero w Sprincie Diagnostycznym.',
+          'Pytamy o Twoją sytuację i ustalamy zakres. Pomiar w czterech silnikach AI robimy dopiero w płatnym Sprincie.',
       },
       {
         tytul: 'Naprawa i przepisanie',
         opis:
-          'Odblokowujemy boty, przepisujemy kluczowe strony pod cytowanie, dokładamy liczby i świeżość. Ruszamy autorytet poza stroną.',
+          'Odblokowujemy boty, przepisujemy kluczowe strony pod cytowanie, dokładamy liczby i świeżość, ruszamy autorytet poza stroną.',
       },
       {
         tytul: 'Pomiar i rozwój',
         opis:
-          'W stałej opiece co tydzień sprawdzamy, czy padasz częściej i wyżej, i poprawiamy to, co nie zadziałało. Przy jednorazowej naprawie ten krok robisz sam na zamrożonym zestawie pytań. Cytowalność rośnie z autorytetem, więc to praca w rytmie, nie jednorazowa.',
+          'W stałej opiece co tydzień sprawdzamy, czy padasz częściej i wyżej. Przy jednorazowej naprawie robisz to sam.',
       },
     ],
   },
 
   ramaCeny: {
     h2: 'Ile kosztuje pozycjonowanie pod AI?',
-    /* v23 (2026-08-20): sekcja przelozona na jezyk podstron wzorca
-       (glowa sekcji z glifem, pas metryk, przelacznik, siatka).
-       Fakty 1:1 z konspektu; forma na strukture. */
+    /* PRZYCIĘCIE 2026-09-22: ta sekcja miała 3094 słowa, czyli połowę strony
+       (N5 harmonogram, N6 pakiet, N7 pomiar, pas metryk diagnozy, przełącznik
+       i tabela dwóch modeli, sekcja o bezpłatnej diagnozie, N8 z porównaniem
+       rynkowym i abonamentem innych usług, N9 trzy drogi, N10 koszt czekania,
+       N11 kiedy nie warto, N12 obiekcje, N13 słownik). Zostaje CENNIK RAZ:
+       jedna tabela czterech pozycji i warunki wdrożenia. Adresy docelowe
+       wszystkich wyciętych bloków stoją w nagłówku pliku. */
     tresc:
-      'Pozycje o ustalonym zakresie mają twarde ceny i znajdziesz je w cenniku niżej: Sprint Diagnostyczny, landing, strona biznesowa i strona zaawansowana. Widełki dotyczą tylko ciągłej pracy nad autorytetem, bo tu cena zależy od zakresu: ile stron przepisujemy pod cytowanie, jak szeroko ruszamy autorytet poza stroną, czyli rankingi i zestawienia, i jak często mierzymy, czy padasz w odpowiedziach czterech silników AI. Dokładne widełki tej ciągłej pracy podajemy na bezpłatnej diagnozie, bo autorytet rośnie z czasem, nie jednym strzałem.',
+      'Pozycje o ustalonym zakresie mają twarde ceny i znajdziesz je w cenniku niżej. Widełki dotyczą tylko ciągłej pracy nad autorytetem, bo tam cena zależy od zakresu. Podajemy je na bezpłatnej rozmowie.',
     bloki: [
-      /* ── PAKIET GEO §N5 (2026-08-31): „Ile trwa pozycjonowanie pod AI,
-         tydzień po tygodniu?". Pole „Gdzie wstawić": PO istniejącej sekcji 4
-         (kroki wdrożenia), PRZED sekcją 5 (Ile kosztuje).
-         DLACZEGO TUTAJ, A NIE W `kroki`: kontrakt `Usluga.kroki` (lib/uslugi/types.ts)
-         to krotka trzech kroków BEZ pola `bloki`, więc pierwsze miejsce w pliku,
-         które fizycznie stoi po krokach, to POCZĄTEK `ramaCeny.bloki`. Stąd N5
-         idzie na sam przód tej tablicy, przed pasem metryk ceny.
-         W sekcji nie ma żadnej kwoty (uwaga wdrożeniowa §6: kwoty wyłącznie
-         w N8, N9 i N11), są wyłącznie czasy pracy. */
-      {
-        typ: 'naglowek',
-        tekst: 'Ile trwa pozycjonowanie pod AI, tydzień po tygodniu?',
-        ikona: 'mapa',
-        chip: 'HARMONOGRAM',
-        overline: 'TYDZIEŃ PO TYGODNIU · TERMINY PO NASZEJ STRONIE',
-      },
-      {
-        typ: 'akapit',
-        tekst: 'Najczęstsze pytanie brzmi: na jak długo się w to wpisuję. Więc rozpisujemy to na tygodnie.',
-      },
-      {
-        typ: 'tabela',
-        naglowki: ['Kiedy', 'Co się dzieje', 'Co masz na koniec'],
-        wiersze: [
-          [
-            'Tydzień 1',
-            'Sprint Diagnostyczny, 5 dni roboczych. Zadajemy modelom Twoje pytania klienckie, sprawdzamy kto jest polecany zamiast Ciebie, przeglądamy stronę, robots.txt, dane strukturalne i wizytówkę',
-            'Raport PDF z pomiarem zerowym i listą priorytetów. Wiesz, ile z zadanych pytań w ogóle wskazuje Twoją firmę',
-          ],
-          [
-            'Tydzień 2',
-            'Naprawa i przepisanie treści. Zakres zależy od tego, co masz: landing to 1 dzień pracy, strona biznesowa 2-4 dni, strona zaawansowana 5-10 dni',
-            'Sekcje odpowiadające wprost na pytania klienta, uporządkowany robots.txt, dane strukturalne, opis encji firmy',
-          ],
-          [
-            'Tydzień 3',
-            'Publikacja i pierwszy pomiar po zmianach. Powtarzamy dokładnie ten sam zestaw pytań, którym mierzyliśmy stan zerowy',
-            'Porównanie przed i po na tych samych pytaniach. Zwykle za wcześnie na zmianę w odpowiedziach modeli, ale widać, czy treść jest już czytelna dla botów',
-          ],
-          [
-            'Około tygodnia 6',
-            'Drugi pomiar, czyli około 3 tygodnie po publikacji. Tyle zajęło u Lenart Motors, zanim ChatGPT zaczął wskazywać firmę',
-            'Pierwsze realne wskazania w odpowiedziach modeli, jeśli branża jest prosta i konkurencja o to pytanie mała',
-          ],
-          [
-            'Potem, kiedy zechcesz',
-            'Powtarzasz ten sam zamrożony zestaw pytań. Zestaw zostaje u Ciebie razem z instrukcją',
-            'Seria pomiarów zamiast jednego zrzutu ekranu. Widać trend, a nie przypadek',
-          ],
-        ],
-        wKarcie: true,
-        podpis: 'Harmonogram pozycjonowania pod AI, tydzień po tygodniu',
-      },
-      {
-        typ: 'cytat',
-        tekst: 'Terminy pracy po naszej stronie są twarde, bo to nasza robota. Termin pojawienia się w odpowiedziach modeli twardy nie jest i nikt uczciwy Ci go nie zagwarantuje. Punkt odniesienia mamy jeden zmierzony: około trzy tygodnie od publikacji u Lenart Motors.',
-      },
-
-      /* ── PAKIET GEO §N6 (2026-08-31): „Co dostajesz w pakiecie pozycjonowania
-         pod AI?". Pole „Gdzie wstawić": PO nowej sekcji N5, PRZED istniejącą
-         sekcją 5 (Ile kosztuje) -> zaraz za blokami N5, czyli przed pasem
-         metryk i przełącznikiem modeli, które są dotychczasową treścią sekcji
-         ceny. Pakiet zamawia LISTĘ NUMEROWANĄ na 7 pozycji, więc blok `kroki`
-         (renderuje się jako <ol>, numer w płytce). Wersaliki nagłówków pozycji
-         zapisane zdaniowo, treść pozycji 1:1 z pakietu.
-         ZERO KWOT: uwaga wdrożeniowa pakietu §6 mówi wprost, że warunki
-         handlowe i ceny stoją wyłącznie w N8, N9 i N11, a z N6 zostały
-         świadomie usunięte. */
-      {
-        typ: 'naglowek',
-        tekst: 'Co dostajesz w pakiecie pozycjonowania pod AI?',
-        ikona: 'pudelko-3d',
-        chip: 'PAKIET',
-        overline: 'SIEDEM RZECZY · ZOSTAJĄ U CIEBIE',
-      },
-      {
-        typ: 'akapit',
-        tekst: 'Usługi opisane czasownikami trudno porównać. Optymalizujemy, analizujemy, wdrażamy: brzmi podobnie u wszystkich. Więc mówimy, co zostaje u Ciebie.',
-      },
-      {
-        typ: 'kroki',
-        wariant: 'plytka',
-        kroki: [
-          {
-            tytul: 'Raport PDF z pomiarem zerowym',
-            opis: 'Czarno na białym: ile z zadanych pytań wskazuje Twoją firmę, a przy ilu model poleca kogoś innego. Z nazwami konkurentów, którzy pojawiają się zamiast Ciebie.',
-          },
-          {
-            tytul: 'Lista pytań kontrolnych',
-            opis: 'Gotowy zestaw pytań klienckich, ten sam, którym mierzyliśmy stan zerowy. Zestaw zostaje u Ciebie razem z instrukcją i możesz go odpalać sam, kiedy chcesz. Jeśli wolisz mieć to zrobione i opisane, zamawiasz u nas powtórny pomiar.',
-          },
-          {
-            tytul: 'Przepisane sekcje odpowiadające wprost',
-            opis: 'Teksty na Twojej stronie napisane tak, żeby model mógł wyciąć z nich gotową odpowiedź. Zamknięte akapity, konkretne liczby, zero waty słownej.',
-          },
-          {
-            tytul: 'Dane strukturalne',
-            opis: 'Opis firmy, usług i pytań w formacie, który czyta maszyna. Wstawione na stronę i sprawdzone narzędziem, nie tylko wgrane.',
-          },
-          {
-            tytul: 'Uporządkowany plik robots.txt',
-            opis: 'Z wypisanymi z nazwy botami: GPTBot, ClaudeBot, PerplexityBot, Google-Extended. Wiesz, kto ma wstęp na Twoją stronę, i decyzja należy do Ciebie.',
-          },
-          {
-            tytul: 'Opis encji firmy',
-            opis: 'Jedna kartka: kim jest Twoja firma, co robi, gdzie działa i czym się różni. Używasz jej wszędzie: na stronie, w katalogach, w wizytówce, w materiałach dla partnerów.',
-          },
-          {
-            tytul: 'Powtarzalny pomiar po wdrożeniu',
-            opis: 'Ten sam zestaw pytań zadany po publikacji, zestawiony z pomiarem zerowym. Nie opinia, że jest lepiej, tylko dwie kolumny obok siebie.',
-          },
-        ],
-      },
-      {
-        typ: 'sekcja',
-        naglowek: 'Czego w tym nie ma',
-        wariant: 'quiet',
-        chip: 'ZASADA',
-        akapity: [
-          'Nie ma gwarancji pierwszego miejsca w ChatGPT, bo nikt nie może jej dać.',
-          'Nie ma też obowiązkowej opłaty miesięcznej. To jest model jednorazowej naprawy: po odbiorze strona i wszystkie pliki zostają u Ciebie, a zamrożony zestaw pytań powtarzasz sam. Opłata miesięczna pojawia się tylko wtedy, gdy sam wybierzesz stałą opiekę GEO z pomiarem co tydzień po naszej stronie.',
-        ],
-      },
-
-      /* ── PAKIET GEO §N7 (2026-08-31): „Jak sprawdzić, czy ChatGPT poleca
-         Twoją firmę?". Pole „Gdzie wstawić": PO nowej sekcji N6, PRZED
-         istniejącą sekcją 5 (Ile kosztuje) -> zaraz za blokami N6.
-         Pakiet zamawia LISTĘ KROKÓW, więc blok `kroki` w wariancie osi
-         (wariant płytki poszedł do N6, żeby dwie listy jedna pod drugą nie
-         wyglądały identycznie). Sekcja nie niesie żadnej liczby poza numeracją
-         kroków, zgodnie z przypisem „Źródło liczb" pakietu.
-         LINK: pakiet kończy sekcję adresem
-         /uslugi/optymalizacja/monitoring-cytowan-w-ai. Bloki treści renderują
-         CZYSTY TEKST (components/blog/PostBody: <p>{tekst}</p>), więc klikalny
-         link nie ma tu jak powstać. Zdanie stoi jako zapowiedź podstrony bez
-         adresu, a realny link trzeba dołożyć w `powiazane` razem z publikacją
-         tej podstrony (uwagi wdrożeniowe pakietu §2 i §3). */
-      {
-        typ: 'naglowek',
-        tekst: 'Jak sprawdzić, czy ChatGPT poleca Twoją firmę?',
-        ikona: 'dokument-skan',
-        chip: 'POMIAR',
-        overline: 'PIĘĆ KROKÓW · POWTÓRZYSZ SAM',
-      },
-      {
-        typ: 'akapit',
-        tekst: 'Większość ofert na rynku pokazuje efekt w procentach i nie mówi, skąd te procenty są. To wygodne, bo trudno sprawdzić. My pokazujemy metodę, żebyś mógł ją powtórzyć sam.',
-      },
-      {
-        typ: 'kroki',
-        wariant: 'os',
-        kroki: [
-          {
-            tytul: 'Pytania zamiast fraz',
-            opis: 'W Google mierzy się frazy. W modelu mierzy się pytania, bo klient nie wpisuje „blacharz premium Wrocław”, tylko pyta, komu oddać samochód po stłuczce. Budujemy listę takich pytań razem z Tobą. Mają brzmieć jak zdanie z rozmowy telefonicznej, nie jak hasło z narzędzia SEO.',
-          },
-          {
-            tytul: 'Czyste okno',
-            opis: 'Pytamy w nowym oknie, bez historii rozmów i bez zalogowanego konta. Jeśli mierzysz z własnego konta, model podpowiada to, co już o Tobie wie, i wynik jest nic niewart.',
-          },
-          {
-            tytul: 'Trzy rzeczy do zanotowania',
-            opis: 'Czy Twoja firma w ogóle pada w odpowiedzi. To pytanie zero jedynkowe i najważniejsze ze wszystkich. Na którym miejscu pada, jeśli model wymienia kilka firm. Pierwsza pozycja waży inaczej niż czwarta. Jakie źródło model zacytował. To mówi wprost, którą stronę trzeba poprawić.',
-          },
-          {
-            tytul: 'Ten sam zestaw za każdym razem',
-            opis: 'Powtarzamy dokładnie te same pytania, w tej samej kolejności, w czystym oknie. Zmiana jednego słowa psuje porównanie, więc zestaw jest zamrożony.',
-          },
-          {
-            tytul: 'Różnica, nie zrzut ekranu',
-            opis: 'Pokazujemy dwie kolumny: stan zerowy i stan po wdrożeniu, na tych samych pytaniach. To jest cały pomiar. Reszta to interpretacja.',
-          },
-        ],
-      },
-      {
-        typ: 'sekcja',
-        naglowek: 'Uczciwe zastrzeżenie',
-        wariant: 'edge',
-        chip: 'ZASADA',
-        akapity: [
-          'Modele zmieniają odpowiedzi. Ta sama firma może zostać wymieniona w poniedziałek i pominięta w środę, bez żadnej zmiany po Twojej stronie.',
-          'Dlatego liczy się seria pomiarów. Kto pokazuje Ci jeden zrzut jako dowód skuteczności, pokazuje Ci pogodę z jednego dnia.',
-          'Jak wygląda powtórny pomiar prowadzony przez nas, opisujemy na osobnej podstronie o monitoringu cytowań w AI.',
-        ],
-      },
-
-      {
-        typ: 'pasMetryk',
-        metryki: [
-          /* ROZDZIAŁ ROZMOWY OD SPRINTU 2026-08-31 (ustalenie właściciela):
-             oba kafle obiecywały za 0 zł dokładnie tę pracę, która jest
-             produktem płatnym (Sprint Diagnostyczny 1490 zł netto, tabela
-             cennika niżej): pomiar w czterech silnikach AI i „konkretną listę
-             rzeczy do zrobienia". Na bezpłatnej rozmowie badamy potrzeby
-             i ustalamy zakres, tylko to. Rozplanowanie procesów, pomiar
-             i konkretna oferta to drugi krok, czyli Sprint. */
-          {
-            wartosc: '0 zł',
-            opis: 'bezpłatna rozmowa: poznajemy Twoją sytuację i ustalamy zakres, zanim cokolwiek zamówisz',
-            zrodlo: 'diagnoza',
-            ton: 'green',
-          },
-          {
-            wartosc: 'ok. 30 minut',
-            opis: 'tyle trwa rozmowa; kończy się ustalonym zakresem i widełkami ceny, bez zobowiązania',
-            zrodlo: 'diagnoza',
-            ton: 'cyan',
-          },
-          {
-            wartosc: '4 silniki AI',
-            opis: 'tyle silników sprawdzamy w każdym pomiarze; w stałej opiece robimy go co tydzień',
-            zrodlo: 'wiersz Pomiar w tabeli porównawczej',
-            ton: 'violet',
-          },
-        ],
-      },
-      {
-        typ: 'naglowek',
-        tekst: 'Od czego zależy cena pozycjonowania pod AI?',
-        ikona: 'kalendarz-check',
-        chip: 'CENNIK',
-        overline: 'DWA MODELE PRACY · WIDEŁKI TYLKO NA PRACĘ CIĄGŁĄ',
-      },
-      {
-        typ: 'przelacznik',
-        grupa: 'optymalizacja-modele',
-        opcje: [
-          {
-            numer: 'MODEL 1',
-            tytul: 'Audyt widoczności AI i naprawa',
-            podtytul: 'gdy strona wymaga naprawy na start',
-            naglowek: 'Bierzemy to, co masz, i naprawiamy to, co dziś blokuje cytowanie.',
-            akapity: [
-              'Ten model pasuje wtedy, gdy strona wymaga naprawy na start. Nie ma sensu ruszać autorytetu poza stroną, dopóki na samej stronie nie ma czego zacytować.',
-              'Płacisz raz, bez opłaty miesięcznej. Zamrożony zestaw pytań zostaje u Ciebie i to Ty powtarzasz pomiar, kiedy chcesz. Pomiar co tydzień po naszej stronie jest w modelu drugim.',
-            ],
-            punkty: [
-              'odblokowanie botów AI',
-              'przepisanie kluczowych stron pod cytowanie',
-              'konkretne liczby i struktura',
-            ],
-          },
-          {
-            numer: 'MODEL 2',
-            tytul: 'Stała opieka GEO',
-            podtytul: 'gdy chcesz rosnąć w cytowaniach',
-            naglowek: 'Praca w rytmie miesięcznym, bo autorytet rośnie z czasem.',
-            akapity: [
-              'Ruszamy źródła spoza Twojej strony i sprawdzamy, czy to realnie przekłada się na odpowiedzi silników AI. Jeśli nie, zmieniamy podejście, zamiast czekać kolejny kwartał.',
-              'To jedyny model na tej stronie z opłatą miesięczną, bo praca trwa dalej. Pomiar co tydzień jest w niej zawarty i robimy go my. Z tego modelu można wyjść.',
-            ],
-            punkty: [
-              'pomiar co tydzień, ręcznie, w czterech silnikach AI',
-              'widzisz trend czarno na białym, a nie obietnice',
-              'poprawiamy to, co nie zadziałało',
-            ],
-          },
-        ],
-      },
-      {
-        typ: 'tabela',
-        naglowki: [
-          'Model pracy',
-          'Co obejmuje',
-          'Kiedy pasuje',
-        ],
-        wiersze: [
-          [
-            'Audyt widoczności AI i naprawa',
-            'Odblokowanie botów, przepisanie kluczowych stron pod cytowanie, konkretne liczby i struktura. Płatność jednorazowa, bez opłaty miesięcznej, pomiar powtarzasz sam',
-            'Gdy strona wymaga naprawy na start',
-          ],
-          [
-            'Stała opieka GEO',
-            'Praca w rytmie miesięcznym, autorytet poza stroną, pomiar co tydzień w czterech silnikach AI po naszej stronie, w opłacie miesięcznej',
-            'Gdy chcesz rosnąć w cytowaniach',
-          ],
-        ],
-        wKarcie: true,
-        podpis: 'Twarde ceny pozycji o ustalonym zakresie stoją w cenniku niżej; widełki na ciągłą pracę nad autorytetem poznasz na bezpłatnej diagnozie',
-      },
-      {
-        typ: 'sekcja',
-        naglowek: 'Co dostaję na bezpłatnej diagnozie?',
-        wariant: 'quiet',
-        chip: 'ZASADA',
-        /* ROZDZIAŁ ROZMOWY OD SPRINTU 2026-08-31: sekcja obiecywała za 0 zł
-           pomiar w czterech silnikach i „konkretną listę rzeczy do zrobienia",
-           czyli zawartość płatnego Sprintu Diagnostycznego. Teraz mówi o tym,
-           co realnie dzieje się na rozmowie, i wprost odsyła pomiar do Sprintu. */
-        akapity: [
-          'Pytamy o Twoją sytuację: czym się zajmujesz, o co pytają Cię klienci, co masz dziś na stronie i czego oczekujesz. Trwa to około 30 minut i kończy się ustalonym zakresem oraz widełkami ceny.',
-          'Pomiaru w czterech silnikach AI ani raportu na tej rozmowie nie robimy. To jest praca Sprintu Diagnostycznego z cennika niżej, w którym rozplanowujemy prace i przedstawiamy konkretną ofertę.',
-          'Bez ukrytych kosztów. I uczciwie, zanim cokolwiek zamówisz: cytowalność to praca na kwartały, nie na dni. Dlatego w stałej opiece mierzymy co tydzień, żebyś widział trend, a nie czekał na obietnice.',
-        ],
-      },
-
-      /* ── PAKIET GEO §N8 (2026-08-31): „Ile kosztuje pozycjonowanie pod AI?".
-         Pole „Gdzie wstawić": BEZPOŚREDNIO POD istniejącą sekcją 5 (Ile
-         kosztuje), PRZED sekcją 6 (powiązane) -> koniec `ramaCeny.bloki`,
-         bo cała ta tablica renderuje się pod kartą ceny, a `powiazane` to
-         osobny komponent na dole strony.
-         TO JEDYNE MIEJSCE NA TEJ STRONIE Z KWOTAMI (razem z N9 i N10 niżej),
-         zgodnie z uwagą wdrożeniową pakietu §6.
-         NAGŁÓWEK: pakiet nazywa sekcję tak samo jak istniejące `ramaCeny.h2`,
-         więc blok dostaje nagłówek nazywający jego zawartość (cennik, cztery
-         pozycje), żeby na jednej stronie nie stanęły dwa identyczne H2.
-         ZDANIA KONTRAKTOWE z uwagi §8 przeniesione bez „ulepszania":
-         „odliczane od wdrożenia", „dwie rundy poprawek" w cenie wdrożenia,
-         „od 5900 zł" przy stronie zaawansowanej. Do każdej NASZEJ kwoty
-         dopisane „netto" (wstęp pakietu: „Wszystkie ceny są netto"); ceny
-         konkurencji w bloku „Dla porównania z rynkiem" i kwota „0 zł" stoją
-         1:1 z pakietem, bez dopisywanego netto (kontrola 2026-08-31). */
+      /* TO JEDYNE MIEJSCE NA TEJ STRONIE Z KWOTAMI (uwaga wdrożeniowa pakietu
+         §6). Zdania kontraktowe bez „ulepszania": „odliczane od wdrożenia",
+         „dwie rundy poprawek", „od 5900 zł". Do każdej NASZEJ kwoty „netto". */
       {
         typ: 'naglowek',
         tekst: 'Cennik pozycjonowania pod AI: cztery pozycje z cenami',
         ikona: 'notes-pioro',
         chip: 'KWOTY',
         overline: 'WSZYSTKIE CENY NETTO',
-      },
-      {
-        typ: 'cytat',
-        tekst: 'Podajemy kwoty, bo bez nich nie da się nas z nikim porównać. Wszystkie ceny są netto.',
       },
       {
         typ: 'tabela',
@@ -1111,29 +609,29 @@ export const optymalizacja: Usluga = {
             'Sprint Diagnostyczny, czyli audyt AI',
             '1490 zł netto, odliczane od wdrożenia',
             '5 dni roboczych',
-            'Raport PDF z pomiarem zerowym, lista priorytetów, plan wdrożenia, lista pytań kontrolnych',
+            'Raport PDF z pomiarem zerowym, priorytety, plan wdrożenia',
           ],
           [
             'Landing pisany pod cytowanie',
             '1590 zł netto',
             '1 dzień roboczy',
-            'Jedna strona napisana pod cytowanie, dane strukturalne, uporządkowany robots.txt',
+            'Jedna strona pod cytowanie, dane strukturalne, robots.txt',
           ],
           [
             'Strona biznesowa pod cytowanie',
             '2900 zł netto',
             '2-4 dni robocze',
-            'Kilka podstron, encja firmy, sekcje odpowiadające wprost na pytania klienta, SEO i przygotowanie pod AI',
+            'Kilka podstron, encja firmy, SEO i przygotowanie pod AI',
           ],
           [
             'Strona zaawansowana',
             'od 5900 zł netto',
             '5-10 dni roboczych',
-            'Rozbudowana struktura podstron pod pytania klientów, sklep lub wpięte narzędzia, pełne wdrożenie techniczne',
+            'Rozbudowana struktura podstron, sklep lub wpięte narzędzia',
           ],
         ],
         wKarcie: true,
-        podpis: 'Cennik pozycjonowania pod AI: cena, czas realizacji i zakres każdej pozycji',
+        podpis: 'Cennik pozycjonowania pod AI: cena, czas i zakres pozycji',
       },
       {
         typ: 'sekcja',
@@ -1141,370 +639,16 @@ export const optymalizacja: Usluga = {
         wariant: 'top',
         chip: 'WARUNKI',
         akapity: [
-          /* 2026-08-31 (ustalenie właściciela): drugie zdanie dopisane, bo samo
-             „odliczamy od wdrożenia" nie mówiło jeszcze, co z tego wynika dla
-             klienta. Jedyne miejsce na stronie z tym zdaniem, żeby go nie
-             dublować przy pozostałych wystąpieniach kwoty 1490 zł netto
-             (tabela cennika N8 i tabela trzech dróg N9). */
-          'Kwotę za Sprint Diagnostyczny odliczamy w całości od ceny wdrożenia. Płacisz za nią raz, nie dwa razy. Jeśli wchodzisz w projekt, audyt jest dla Ciebie w praktyce darmowy; płaci za niego tylko firma, która chce sam audyt i nie idzie z nami dalej.',
-          'W cenie wdrożenia masz dwie rundy poprawek: tydzień Twoich testów, poprawki, drugi tydzień testów, poprawki, odbiór. Funkcje, o których nie było mowy na pierwszej rozmowie, wyceniamy osobno.',
-          'Po odbiorze nie ma abonamentu. Strona i wszystkie pliki zostają u Ciebie.',
-        ],
-      },
-      {
-        typ: 'sekcja',
-        naglowek: 'Dla porównania z rynkiem',
-        wariant: 'quiet',
-        chip: 'RYNEK',
-        akapity: [
-          'Publiczny cennik rynkowy z projektowaniestroncennik.pl, sprawdzony 31.08.2026: landing 1900 zł, strona firmowa 2500 zł, strona rozbudowana 4000 zł netto.',
-          'Nasz landing jest o 310 zł tańszy. Strona biznesowa kosztuje u nas 400 zł więcej, bo w tej cenie dowozimy SEO i przygotowanie treści pod cytowanie w AI. Zaawansowana startuje wyżej, bo to 5-10 dni pracy.',
-        ],
-      },
-      {
-        typ: 'sekcja',
-        naglowek: 'Jedna rzecz, której konkurencja nie ma',
-        wariant: 'edge',
-        chip: 'WYBÓR',
-        akapity: [
-          'Przy usługach, w których trzymamy infrastrukturę u siebie, czyli przy chatbotach, voicebotach i automatyzacjach, zawsze masz wybór.',
-          'Możesz zostać u nas na abonamencie utrzymaniowym: chatboty i automatyzacje 99-599 zł netto miesięcznie, voiceboty 299-1500 zł netto miesięcznie.',
-          'Albo przekazujemy infrastrukturę do Ciebie i płacisz 0 zł miesięcznie, a późniejsze poprawki rozliczamy po 350 zł netto za godzinę. Z naszego abonamentu można wyjść.',
-        ],
-      },
-
-      /* ── PAKIET GEO §N9 (2026-08-31): „Nic nie robić, abonament agencji, czy
-         jednorazowa naprawa?". Pole „Gdzie wstawić": PO nowej sekcji N8, PRZED
-         sekcją 6 (powiązane) -> zaraz za blokami N8.
-         KOLUMNA ABONAMENTU AGENCJI CELOWO BEZ KWOTY: pakiet („Źródło liczb")
-         mówi wprost, że nie mamy zweryfikowanych u źródła cen konkurencji GEO,
-         więc wiersz każe klientowi policzyć na OFERCIE, KTÓRĄ DOSTAŁ. Żadnych
-         widełek rynkowych nie dopisano. Wiersz o etacie specjalisty SEO/GEO
-         nie istnieje w pakiecie i nie został wymyślony. */
-      {
-        typ: 'naglowek',
-        tekst: 'Nic nie robić, abonament agencji, czy jednorazowa naprawa?',
-        ikona: 'osoba-check',
-        chip: 'WYBÓR',
-        overline: 'TRZY DROGI · KAŻDA MA CENĘ',
-      },
-      {
-        typ: 'cytat',
-        tekst: 'Masz trzy wyjścia i każde ma cenę. Nawet to pierwsze, choć nie widać go na fakturze.',
-      },
-      {
-        typ: 'tabela',
-        naglowki: ['Droga', 'Co płacisz', 'Co dostajesz', 'Kiedy to ma sens'],
-        wiersze: [
-          [
-            'Nic nie robić',
-            '0 zł na fakturze. Koszt widać dopiero w zapytaniach, które trafiają do kogoś innego',
-            'Nic się nie zmienia. Konkurent, który zrobił to wcześniej, zbiera Twoje zapytania',
-            'Gdy nie chcesz nowych klientów z sieci albo cała sprzedaż idzie z poleceń',
-          ],
-          [
-            'Abonament agencji GEO',
-            'Weź stawkę miesięczną z oferty, którą dostałeś, i pomnóż ją przez 12. Widełki na rynku są szerokie, więc licz na własnej ofercie, nie na naszych szacunkach',
-            'Stała obsługa, raporty, ciągła praca zewnętrznego zespołu',
-            'Gdy masz dużą konkurencję, duży rynek i chcesz walczyć o widoczność bez przerwy',
-          ],
-          [
-            'Jednorazowa naprawa u nas',
-            'Sprint Diagnostyczny 1490 zł netto, odliczany od wdrożenia, plus strona: landing 1590 zł netto, biznesowa 2900 zł netto albo zaawansowana od 5900 zł netto. Bez abonamentu, bo strona i wszystkie pliki przechodzą na Ciebie. Opłata miesięczna jest tylko w stałej opiece GEO, jeśli sam ją wybierzesz',
-            'Naprawiona strona, dane strukturalne, encja firmy, pomiar przed i po. Wszystko zostaje u Ciebie',
-            'Gdy chcesz mieć problem rozwiązany, a nie wynajmować go w abonamencie',
-          ],
-        ],
-        wKarcie: true,
-        podpis: 'Trzy drogi przy pozycjonowaniu pod AI: co płacisz, co dostajesz i kiedy to ma sens',
-      },
-      {
-        typ: 'cytat',
-        tekst: 'Różnica między drugą a trzecią drogą nie polega na jakości, tylko na tym, kto trzyma efekt. W abonamencie płacisz za to, żeby ktoś dalej pracował. U nas płacisz za to, żeby praca była zrobiona i została u Ciebie.',
-      },
-
-      /* ── PAKIET GEO §N10 (2026-08-31): „Ile kosztuje Cię każdy miesiąc,
-         w którym AI poleca kogoś innego?". Pole „Gdzie wstawić": PO nowej
-         sekcji N9, PRZED sekcją 6 (powiązane) -> koniec `ramaCeny.bloki`.
-
-         DLACZEGO TABELA, A NIE KALKULATOR: pakiet zamawia kalkulator z czterema
-         polami, a kontrakt bloków (lib/blog/types.ts) nie ma typu z polami
-         formularza i te strony renderują się w całości serwerowo. Sekcja stoi
-         więc jako TABELA POLA -> CO WPISUJESZ -> SKĄD WZIĄĆ LICZBĘ, czyli sam
-         wzór do podstawienia własnymi liczbami. Zgodne z decyzją właściciela
-         z 31.08.2026 i uwagą wdrożeniową §5: ZERO wartości domyślnych, zero
-         przykładowych stawek, zero przykładowych kwot oszczędności.
-         DWA ZDANIA ZMIENIONE ŚWIADOMIE (obietnica, której render nie dowozi):
-         pakietowe „wynik liczy się sam" w akapicie wstępnym i „Liczy się sam:"
-         w wierszu Wynik. Statyczna tabela niczego nie przelicza, więc oba
-         miejsca mówią o wzorze do podstawienia. Reszta treści 1:1.
-         JEDYNA LICZBA SEKCJI to zmierzone ok. trzy tygodnie u Lenart Motors,
-         ta sama, która stoi już w kapsule, w N1, N2 i w harmonogramie N5. */
-      {
-        typ: 'naglowek',
-        tekst: 'Ile kosztuje Cię każdy miesiąc, w którym AI poleca kogoś innego?',
-        ikona: 'kalkulator',
-        chip: 'RACHUNEK',
-        overline: 'CZTERY POLA · TWOJE WŁASNE LICZBY',
-      },
-      {
-        typ: 'cytat',
-        tekst: '„Poczekam, aż to się ustabilizuje” to zrozumiała reakcja. Tylko że czekanie też ma cenę, po prostu nie przychodzi na nią faktura.',
-      },
-      {
-        typ: 'akapit',
-        tekst: 'Nie podamy Ci tu procentów wzrostu rynku, bo ich nie zmierzyliśmy. Policz to na własnych liczbach. Cztery pola i wzór, który podstawiasz swoimi danymi.',
-      },
-      {
-        typ: 'tabela',
-        naglowki: ['Pole', 'Co wpisujesz', 'Skąd wziąć liczbę'],
-        wiersze: [
-          [
-            'Zapytania miesięcznie',
-            'Ile zapytań o Twoją usługę dostajesz w miesiącu',
-            'Zacznij od liczby zapytań ze wszystkich kanałów. To ostrożne przybliżenie',
-          ],
-          [
-            'Udział przegranych',
-            'Ile z nich mogłoby trafić do Ciebie z polecenia AI, a trafia do kogoś innego',
-            'Jeśli nie ma Cię w odpowiedziach na pytania kontrolne, wpisz swoją ostrożną ocenę',
-          ],
-          [
-            'Wartość klienta',
-            'Ile jest wart u Ciebie jeden pozyskany klient',
-            'Średnia wartość pierwszego zlecenia, nie kontrakt życia',
-          ],
-          [
-            'Wynik',
-            'Wzór: zapytania razy udział przegranych razy wartość klienta razy 12 miesięcy',
-            'To Twój koszt czekania w skali roku',
-          ],
-        ],
-        wKarcie: true,
-        podpis: 'Rachunek kosztu czekania: cztery pola, które podstawiasz własnymi liczbami',
-      },
-      {
-        typ: 'sekcja',
-        naglowek: 'Drugi bok tego rachunku',
-        wariant: 'quiet',
-        chip: 'CZAS',
-        akapity: [
-          'Drugi bok tego rachunku to czas potrzebny na odwrócenie sytuacji. Mamy tu jedną zmierzoną liczbę: około trzy tygodnie od publikacji strony Lenart Motors do momentu, w którym ChatGPT zaczął wskazywać firmę.',
-          'To był prosty przypadek: jasna specjalizacja, mała konkurencja o to jedno pytanie. W trudniejszej branży licz raczej w miesiącach niż w tygodniach.',
-          'Czekanie ma jeszcze jeden skutek. Modele budują obraz Twojej branży z tego, co już przeczytały. Im dłużej nie ma tam Twoich treści, tym mocniej utrwala się wersja, w której Twoja firma nie istnieje.',
-        ],
-      },
-
-      /* ── PAKIET GEO §N11 (2026-08-31): „Kiedy nie warto brać od nas
-         pozycjonowania pod AI?". Pole „Gdzie wstawić": PO nowej sekcji N10,
-         PRZED sekcją 6 (powiązane) -> koniec `ramaCeny.bloki`, zaraz za N10.
-         Sekcja 6 renderuje się jako `PodstronyPowiazane` zaraz po `RamaCeny`
-         (app/uslugi/[usluga]/page.tsx), więc koniec tej tablicy to dokładnie
-         miejsce z pakietu.
-         DLACZEGO `kroki`, A NIE KARTY: pakiet zamawia listę pięciu pozycji
-         i sam je numeruje 1-5, a `kroki` renderuje prawdziwe <ol><li>, więc
-         kolejność czyta też bot. Wersaliki nagłówków pozycji zapisane
-         zdaniowo, treść 1:1.
-         KWOTY: landing 1590 zł netto i 1 dzień roboczy, strona biznesowa
-         2900 zł netto i 2-4 dni to decyzja właściciela z 31.08.2026 (te same
-         liczby stoją już w tabeli cennika N8 wyżej). „5 dni roboczych"
-         Sprintu Diagnostycznego i „ok. trzy tygodnie" u Lenart Motors:
-         konspekt, obie liczby już na tej stronie. */
-      {
-        typ: 'naglowek',
-        tekst: 'Kiedy nie warto brać od nas pozycjonowania pod AI?',
-        ikona: 'tarcza-serce',
-        chip: 'UCZCIWIE',
-        overline: 'PIĘĆ SYTUACJI · MÓWIMY NIE TERAZ',
-      },
-      {
-        typ: 'akapit',
-        tekst:
-          'Wolimy stracić zlecenie niż wziąć pieniądze za coś, co u Ciebie nie zadziała. Jest pięć sytuacji, w których mówimy wprost: nie teraz.',
-      },
-      {
-        typ: 'kroki',
-        wariant: 'plytka',
-        kroki: [
-          {
-            tytul: 'Nie masz strony albo nie masz do niej dostępu',
-            opis: 'Jeśli strona powstała w kreatorze, w którym nie da się ruszyć kodu ani pliku robots.txt, nie mamy czym pracować. Co wtedy: najpierw strona, potem pozycjonowanie pod AI. U nas landing to 1590 zł netto i jeden dzień roboczy, strona biznesowa 2900 zł netto i 2-4 dni. Możesz też zrobić ją gdzie indziej i wrócić.',
-          },
-          {
-            tytul: 'Sprzedajesz wyłącznie z poleceń i tak chcesz zostać',
-            opis: 'Są firmy, które mają komplet zleceń od stałych klientów i nie chcą nowych z sieci. Widoczność w AI nie da im nic poza rachunkiem. Co wtedy: nic. Naprawdę. Wróć do tematu, gdy zaczniesz szukać nowych klientów.',
-          },
-          {
-            tytul: 'Potrzebujesz efektu w tydzień',
-            opis: 'Raport z pomiarem zerowym masz po pięciu dniach roboczych. Ale zmiana w odpowiedziach modeli to kwestia tygodni, nie dni. U Lenart Motors było to około trzech tygodni od publikacji i to był prosty przypadek. Co wtedy: jeśli musisz mieć zapytania na już, kampania płatna zrobi to szybciej. Pozycjonowanie pod AI buduje pozycję, nie gasi pożaru.',
-          },
-          {
-            tytul: 'Chcesz gwarancji pierwszego miejsca w ChatGPT',
-            opis: 'Nikt nie może Ci tego zagwarantować, my też nie. Modele zmieniają odpowiedzi, a firma wymieniona w poniedziałek bywa pominięta w środę. Co wtedy: jeśli ktoś obiecuje Ci taką gwarancję na piśmie, przeczytaj dokładnie, co gwarantuje. Zwykle okazuje się, że wykonanie prac, a nie wynik.',
-          },
-          {
-            tytul: 'Jesteś bardzo lokalną usługą bez wizytówki i opinii',
-            opis: 'Przy fachowcu pracującym w promieniu kilkunastu kilometrów najszybszą drogą jest wizytówka Google i opinie klientów. Modele i tak sięgają po nie w pierwszej kolejności. Co wtedy: najpierw wizytówka i opinie, to tańsze i szybsze. Pozycjonowanie pod AI ma sens, gdy ten fundament stoi.',
-          },
-        ],
-      },
-      {
-        typ: 'cytat',
-        tekst:
-          'Jeśli rozpoznajesz siebie w którymś z tych pięciu punktów, napisz i tak. Powiemy, co zrobić zamiast, nawet jeśli to nie będzie usługa u nas.',
-      },
-
-      /* ── PAKIET GEO §N12 (2026-08-31): „To chwilowa moda", i pięć innych
-         zdań, które słyszymy. Pole „Gdzie wstawić": PO istniejącej sekcji 7
-         (FAQ), PRZED sekcją 8 (CTA).
-         ODSTĘPSTWO OD POLA „GDZIE WSTAWIĆ", ŚWIADOME I JEDYNE MOŻLIWE:
-         między sekcją 7 a 8 kontrakt `Usluga` (lib/uslugi/types.ts) nie ma
-         ŻADNEJ tablicy `bloki`. Bloki mają wyłącznie `problem`, `rozwiazanie`
-         i `ramaCeny`, a `faq` to płaska lista par pytanie/odpowiedź, więc
-         wciśnięcie tu sześciu zdań twierdzących klienta zmieniłoby treść
-         FAQPage JSON-LD (pytania stałyby się zdaniami) i skleiło N12 z FAQ,
-         czego pakiet zabrania wprost („nie kanibalizuje FAQ").
-         Dlatego N12 i N13 idą na SAM KONIEC `ramaCeny.bloki`, czyli w ostatnie
-         miejsce na stronie, w którym kontrakt w ogóle przyjmuje bloki, i w
-         kolejności z pakietu: N11 -> N12 -> N13. Do przesunięcia ich za FAQ
-         trzeba by dołożyć pole do kontraktu i do szablonu, a to jest poza
-         zakresem tej partii.
-         LICZBY: sekcja bez kwot. Lenart Motors jako przykład małej branży
-         i rozdzielenie Google-Extended (modele Gemini) od pozycji w wynikach
-         wyszukiwania: pakiet §N12 „Źródło liczb". */
-      {
-        typ: 'naglowek',
-        tekst: '„To chwilowa moda”, i pięć innych zdań, które słyszymy',
-        ikona: 'chat-dymek',
-        chip: 'OBIEKCJE',
-        overline: 'SZEŚĆ ZDAŃ Z ROZMÓW',
-      },
-      {
-        typ: 'cytat',
-        tekst:
-          'Sześć zdań, które padają na rozmowach najczęściej. Odpowiadamy tak samo jak przy stole, bez owijania.',
-      },
-      {
-        typ: 'siatka',
-        kolumny: 2,
-        karty: [
-          {
-            naglowek: '„To chwilowa moda, za rok nikt o tym nie będzie mówił.”',
-            akapity: [
-              'Moda jest na nazwę, nie na zjawisko. Klienci już dziś pytają model o polecenie zamiast przeglądać dziesięć linków. Strona, którą da się zacytować, przyda Ci się tak czy inaczej.',
-            ],
-          },
-          {
-            naglowek: '„Mam agencję SEO, to załatwia sprawę.”',
-            akapity: [
-              'Częściowo tak, bo dobra treść pracuje w obu kanałach. Ale SEO optymalizuje pod kliknięcie w link, a model nie daje kliknięcia, tylko odpowiedź. Zapytaj swoją agencję, jak mierzy, czy jesteś wymieniany w ChatGPT.',
-            ],
-          },
-          {
-            naglowek: '„Tego się nie da zmierzyć.”',
-            akapity: [
-              'Da się, tylko trzeba mierzyć pytania, nie frazy. Zadajemy stały zestaw pytań w oknie bez historii i notujemy trzy rzeczy: czy padasz, na którym miejscu i jakie źródło zostało zacytowane.',
-              "Dodamy uczciwie: część rynkowych „wskaźników GEO” i „score'ów widoczności” to ładnie opakowane zgadywanie. Ładna liczba bez podanej metody nie jest pomiarem.",
-            ],
-          },
-          {
-            naglowek: '„Moja branża jest za mała, nikt o nią nie pyta AI.”',
-            akapity: [
-              'Mała branża to najlepszy moment, a nie argument przeciw. Im mniej firm walczy o to jedno pytanie, tym łatwiej być tą jedną wymienioną. Lenart Motors to warsztat blacharsko lakierniczy, nie globalna marka.',
-            ],
-          },
-          {
-            naglowek: '„Boję się, że wpuszczenie botów AI zaszkodzi mi w Google.”',
-            akapity: [
-              'To dwie różne sprawy i ustawia się je osobno. Google-Extended decyduje o treściach dla modeli Gemini, a nie o Twoich pozycjach w wynikach wyszukiwania. Każdą taką decyzję pokazujemy Ci przed wdrożeniem.',
-            ],
-          },
-          {
-            naglowek: '„Poczekam, aż rynek się ustabilizuje.”',
-            akapity: [
-              'Modele budują obraz Twojej branży z tego, co już przeczytały. Każdy miesiąc bez Twoich treści to miesiąc utrwalania wersji, w której Twojej firmy nie ma. Koszt czekania policzysz sobie wyżej, na własnych liczbach.',
-            ],
-          },
-        ],
-      },
-
-      /* ── PAKIET GEO §N13 (2026-08-31): „GEO, LLM, AI Overviews, encja: co to
-         znaczy po ludzku?". Pole „Gdzie wstawić": PO nowej sekcji N12, PRZED
-         sekcją 8 (CTA) -> zaraz za blokami N12, na końcu `ramaCeny.bloki`
-         (powód przesunięcia opisany przy N12).
-         Każde hasło stoi jako osobna karta, czyli zamknięty akapit, który
-         model może wyciąć w całości. To jest cel tej sekcji z pakietu.
-         WERSALIKI Z PAKIETU zapisane zdaniowo, skróty zostają skrótami
-         (GEO, AEO, LLM, llms.txt). Sekcja bez liczb. */
-      {
-        typ: 'naglowek',
-        tekst: 'GEO, LLM, AI Overviews, encja: co to znaczy po ludzku?',
-        ikona: 'ksiazka',
-        chip: 'SŁOWNIK',
-        overline: 'OSIEM POJĘĆ · JĘZYKIEM KLIENTA',
-      },
-      {
-        typ: 'akapit',
-        tekst:
-          'Ta branża lubi skróty. Osiem pojęć wytłumaczonych tak, żeby dało się je powtórzyć wspólnikowi.',
-      },
-      {
-        typ: 'siatka',
-        kolumny: 2,
-        karty: [
-          {
-            naglowek: 'GEO',
-            akapity: [
-              'Optymalizacja pod silniki generatywne, czyli praca nad tym, żeby model AI wymieniał Twoją firmę w odpowiedzi. W SEO walczysz o miejsce na liście linków. W GEO walczysz o zdanie w gotowej odpowiedzi.',
-            ],
-          },
-          {
-            naglowek: 'AEO',
-            akapity: [
-              'Optymalizacja pod odpowiedź. Chodzi o to, żeby na stronie stało gotowe, zamknięte zdanie odpowiadające na pytanie klienta. Model może je wyciąć i użyć bez przerabiania. W praktyce AEO i GEO robi się jednym ruchem.',
-            ],
-          },
-          {
-            naglowek: 'AI Overviews',
-            akapity: [
-              'Odpowiedź wygenerowana przez AI, którą Google pokazuje nad zwykłymi wynikami. Zabiera uwagę pierwszym linkom, więc bycie w niej zaczyna ważyć więcej niż sama pozycja w wynikach.',
-            ],
-          },
-          {
-            naglowek: 'LLM',
-            akapity: [
-              'Duży model językowy, czyli silnik napędzający ChatGPT, Claude czy Gemini. Nie ma bazy firm ani rankingu. Składa odpowiedź z tego, co przeczytał, więc jeśli nie przeczytał o Tobie, nie wymieni Cię.',
-            ],
-          },
-          {
-            naglowek: 'Encja marki',
-            akapity: [
-              'To, co model rozumie pod nazwą Twojej firmy: czym się zajmuje, gdzie działa, z czym się kojarzy. Kiedy nazwa, adres i opis rozjeżdżają się między stroną a wizytówką, encja się rozmywa.',
-            ],
-          },
-          {
-            naglowek: 'Cytowanie w odpowiedzi AI',
-            akapity: [
-              'Moment, w którym model podaje Twoją nazwę albo link jako źródło. To jest realna waluta w tej grze. Nie liczba wyświetleń, tylko to, czy padasz w odpowiedzi i na którym miejscu.',
-            ],
-          },
-          {
-            naglowek: 'Halucynacja o firmie',
-            akapity: [
-              'Sytuacja, w której model podaje o Tobie nieprawdę: zły adres, nieaktualną ofertę, usługę, której nie świadczysz. Zwykle nie ze złej woli, tylko z braku wyraźnego źródła. Model zgaduje, bo nie ma czego zacytować.',
-            ],
-          },
-          {
-            naglowek: 'llms.txt',
-            akapity: [
-              'Proponowany plik na stronie, który miałby mówić modelom, gdzie szukać najważniejszych treści. Mówimy uczciwie: to pomysł na standard, a nie potwierdzona metoda. Nie znamy dowodu, że sam z siebie zwiększa widoczność, więc nie sprzedajemy go jako skrótu.',
-            ],
-          },
+          'Kwotę za Sprint Diagnostyczny odliczamy w całości od ceny wdrożenia, więc dla wchodzącego w projekt audyt jest w praktyce darmowy. W cenie wdrożenia masz dwie rundy poprawek.',
+          'Po odbiorze nie ma abonamentu: strona i wszystkie pliki zostają u Ciebie. Opłata miesięczna jest tylko w stałej opiece GEO.',
         ],
       },
     ],
   },
 
+  /* KONTRAKT `Usluga.faq`: 5-6 pozycji. Tu 6. Przycięcie 2026-09-22 zdjęło
+     dwa pytania (adresy w nagłówku pliku); fakt o rynku polskim i niemieckim
+     z wyciętego pytania wszedł do odpowiedzi „Macie dowód, że to działa?". */
   faq: [
     {
       pytanie: 'Czym jest GEO i pozycjonowanie pod AI?',
@@ -1517,11 +661,6 @@ export const optymalizacja: Usluga = {
         'Zwykłe SEO walczy o miejsce w wynikach Google, głównie linkami i słowami kluczowymi. Pozycjonowanie pod AI walczy o miejsce w odpowiedzi, którą AI buduje z konkretnych liczb, dobrej struktury i autorytetu z zewnątrz. Słowa kluczowe na siłę tu nie działają, a na niektórych silnikach wręcz szkodzą. Robimy oba naraz, bo treść może pracować na jedno i drugie.',
     },
     {
-      pytanie: 'Jak sprawdzicie, czy mnie cytuje ChatGPT?',
-      odpowiedz:
-        'Ręcznie i regularnie. Co tydzień wpisujemy Twoje kluczowe pytania do czterech silników AI i zapisujemy, czy padasz, na której pozycji i z jakim cytatem, a kto jest wymieniony zamiast Ciebie. To daje Ci punkt wyjścia i trend, czarno na białym, a nie obietnice.',
-    },
-    {
       pytanie: 'Czy muszę budować stronę od nowa?',
       odpowiedz:
         'Nie zawsze. Często wystarczy naprawić to, co masz: odblokować boty, przepisać kluczowe strony pod cytowanie, dołożyć liczby i autorytet z zewnątrz. Jeśli strona stoi na technologii, której AI w ogóle nie czyta, powiemy to wprost na diagnozie i wtedy rozmawiamy o przebudowie.',
@@ -1531,23 +670,19 @@ export const optymalizacja: Usluga = {
       odpowiedz:
         'Zmiany techniczne, jak odblokowanie botów i nowa struktura, działają zwykle w kilka tygodni. Sama cytowalność w AI rośnie wolniej, bo zależy od autorytetu, który buduje się miesiącami. Uczciwie: to praca na kwartały, nie na dni. Dlatego w stałej opiece mierzymy co tydzień, żebyś widział trend. Przy jednorazowej naprawie powtarzasz ten pomiar sam, na zamrożonym zestawie pytań.',
     },
+    /* PARTIA GEO 2026-08-19: liczby WYŁĄCZNIE z audytu §6.1 i §7, każda
+       z kontekstem (zasada audytu §10 pkt 2: nigdy sam procent, nigdy sama
+       liczba). Ostatnie zdanie dopisane 2026-09-22 z wyciętego pytania
+       „Robicie to tylko po polsku?" (ten sam fakt, to samo miejsce w tekście). */
+    {
+      pytanie: 'Macie dowód, że to działa?',
+      odpowiedz:
+        'Mamy trzy, każdy z nazwą klienta. Lenart Motors: ChatGPT wskazywał tę firmę na pytanie o najlepszego blacharza i lakiernika premium, po około trzech tygodniach od zbudowania strony i wrzucenia jej do sieci. Fichtelgebirgshaus.de: pierwsza dziesiątka Google na frazy umówione z klientem w umowie, plus widoczność w GPT. Trockenhaus: z niewidocznej w Google do pierwszej trójki na frazę Trockenhaus. Każdy z tych przypadków opisaliśmy osobno w realizacjach. Dwa z trzech to klienci z Niemiec, bo pracujemy na rynku polskim i niemieckim.',
+    },
     {
       pytanie: 'Czy dacie gwarancję, że ChatGPT będzie mnie polecać?',
       odpowiedz:
         'Nikt uczciwy nie da gwarancji konkretnej pozycji w AI, bo nie kontrolujemy silników. Możemy zagwarantować robotę: czytelność dla botów, treść pod cytowanie, autorytet poza stroną i twardy pomiar, a w modelu stałej opieki pomiar co tydzień po naszej stronie. Pokazujemy trend i to, co realnie się zmienia, a nie puste obietnice „będziesz numerem jeden”.',
-    },
-    /* PARTIA GEO 2026-08-19: dwa nowe pytania. Nic nie zostało usunięte ani
-       przestawione. Liczby WYŁĄCZNIE z audytu §6.1 i §7, każda z kontekstem
-       (zasada audytu §10 pkt 2: nigdy sam procent, nigdy sama liczba). */
-    {
-      pytanie: 'Macie dowód, że to działa?',
-      odpowiedz:
-        'Mamy trzy, każdy z nazwą klienta. Lenart Motors: ChatGPT wskazywał tę firmę na pytanie o najlepszego blacharza i lakiernika premium, po około trzech tygodniach od zbudowania strony i wrzucenia jej do sieci. Fichtelgebirgshaus.de: pierwsza dziesiątka Google na frazy umówione z klientem w umowie, plus widoczność w GPT. Trockenhaus: z niewidocznej w Google do pierwszej trójki na frazę Trockenhaus. Każdy z tych przypadków opisaliśmy osobno w realizacjach.',
-    },
-    {
-      pytanie: 'Robicie to tylko po polsku?',
-      odpowiedz:
-        'Nie. Pracujemy na rynku polskim i niemieckim. Dwa z trzech naszych dowodów widoczności w AI to klienci z Niemiec: Fichtelgebirgshaus.de i Trockenhaus. Sposób pracy nad treścią jest ten sam w obu językach, bo silniki AI czytają jedno i drugie i w obu szukają tego samego: konkretu, jasnej struktury i odpowiedzi postawionej wysoko.',
     },
   ],
 
@@ -1579,9 +714,7 @@ export const optymalizacja: Usluga = {
      a doklejanie poradnika o cenie chatbota do strony GEO byłoby linkiem
      na siłę. Wchodzi, gdy powstanie poradnik o GEO. */
   powiazane: {
-    /* PAKIET GEO 2026-08-31, TRZECI PRZEBIEG, uwaga wdrożeniowa pakietu §3
-       („osiem nowych adresów dopisać do sekcji powiązane na stronie rodzica").
-       OŚMIU LINKÓW DO PODSTRON TU NIE MA I TO JEST DECYZJA, NIE PRZEOCZENIE.
+    /* OŚMIU LINKÓW DO PODSTRON TU NIE MA I TO JEST DECYZJA, NIE PRZEOCZENIE.
        Wszystkie osiem podstron gałęzi (audyt-widocznosci-w-ai, chatgpt,
        dostep-botow-ai, google-ai-overviews, perplexity, monitoring-cytowan-w-ai,
        dla-firm-uslugowych, llms-txt) JUŻ SIĘ RENDERUJE na tej stronie, tylko
@@ -1590,13 +723,12 @@ export const optymalizacja: Usluga = {
        automatycznie z rejestru (`getPodstronyRodzica('optymalizacja')`,
        lib/uslugi/podstrony/index.ts) i wystawia jako sekcję „Konkretne
        zastosowania": kafel na podstronę, etykieta = `h1` celu, opis = `kapsula`
-       celu, href = /uslugi/optymalizacja/<slug>. Dokładnie to, czego chce §3.
-       Wpisanie tych samych ośmiu linków jeszcze raz do `powiazane.uslugi`
-       wyrenderowałoby na jednej stronie DWIE identyczne siatki: te same
-       etykiety (h1) i te same adresy, raz w „Konkretnych zastosowaniach",
-       raz w „Powiązanych usługach". Zero zysku dla bota (liczy się pierwsza
-       kotwica), strata dla czytelnika. Gdyby link miał kiedyś zniknąć,
-       naprawia się to w rejestrze podstron, a nie duplikatem tutaj. */
+       celu, href = /uslugi/optymalizacja/<slug>. Wpisanie tych samych ośmiu
+       linków jeszcze raz do `powiazane.uslugi` wyrenderowałoby na jednej
+       stronie DWIE identyczne siatki. Gdyby link miał kiedyś zniknąć, naprawia
+       się to w rejestrze podstron, a nie duplikatem tutaj.
+       PRZYCIĘCIE 2026-09-22: ta siatka to 628 z 1577 słów strony i to ona
+       niesie dziś odesłania do rozwinięć wyciętych stąd sekcji. */
     /* PARTIA GEO 2026-08-19 (audyt §9 etap 2 pkt 7): trzy dowody cytowalności
        o jedno kliknięcie od oferty, w kolejności siły z audytu §6.1. Etykiety
        to h1 nowych case'ów (nigdy nowy slogan), opisy to fakty, które stoją
@@ -1606,36 +738,31 @@ export const optymalizacja: Usluga = {
       {
         etykieta: 'Strona cytowana przez ChatGPT po trzech tygodniach',
         href: '/realizacje/strona-cytowana-przez-chatgpt',
-        opis:
-          'Lenart Motors: około trzy tygodnie od wrzucenia strony do sieci do wskazania firmy przez ChatGPT.',
+        opis: 'Lenart Motors: około trzy tygodnie od publikacji do wskazania firmy przez ChatGPT.',
       },
       {
         etykieta: 'Strona w pierwszej dziesiątce Google i widoczna w GPT',
         href: '/realizacje/top10-google-i-widocznosc-w-gpt',
-        opis:
-          'Fichtelgebirgshaus.de: frazy umówione w umowie w pierwszej dziesiątce Google, plus widoczność w GPT.',
+        opis: 'Fichtelgebirgshaus.de: frazy z umowy w pierwszej dziesiątce Google.',
       },
       {
         etykieta: 'Z niewidocznej strony do pierwszej trójki w Google',
         href: '/realizacje/z-niewidocznej-strony-do-top3-google',
-        opis:
-          'Trockenhaus: z braku widoczności do pierwszej trójki na frazę Trockenhaus.',
+        opis: 'Trockenhaus: z braku widoczności do pierwszej trójki na frazę Trockenhaus.',
       },
     ],
     narzedzia: [
       {
         etykieta: 'Audyt strony pod AI (GEO)',
         href: '/narzedzia#audyt-strony-ai',
-        opis:
-          'Dziesięć pytań o Twojej stronie pokazuje, czy ChatGPT i Perplexity mogą ją cytować, i co naprawić najpierw.',
+        opis: 'Dziesięć pytań pokazuje, czy ChatGPT i Perplexity mogą cytować Twoją stronę.',
       },
     ],
     uslugi: [
       {
         etykieta: 'Tworzenie stron WWW widocznych w Google i w AI',
         href: '/uslugi/strony-www',
-        opis:
-          'Gdy strony nie da się już naprawić, budujemy nową: cała treść w kodzie od razu, ułożona pod cytowanie.',
+        opis: 'Gdy strony nie da się już naprawić, budujemy nową, ułożoną pod cytowanie.',
       },
     ],
   },
