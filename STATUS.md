@@ -1,3 +1,92 @@
+# STATUS — AUDYT SEO PO SPADKU (2026-10-12), W TOKU
+
+Zlecenie Pawła: audyt, przyczyna spadku kliknięć, konkurencja, cytowania w AI,
+wdrożenie poprawek. Procedura: skill seo-przeglad + workflow wieloagentowy.
+
+| Etap | Stan | Dowód |
+|---|---|---|
+| F0 punkt cofnięcia | DONE | tag `seo-2026-10-12` = e3848a2, wypchnięty (git ls-remote), wpis w .seo-przeglad/punkty-cofniecia.md |
+| F1 migawka | DONE | .seo-przeglad/migawki/2026-10-12.json (77 stron, 77×200, 0 noindex, 0 błędów JSON-LD) |
+| F2 pomiar | DONE | .seo-przeglad/dane/2026-10-12.json + spadek-2026-10-12.json |
+| F3 porównanie z 09-05 | DONE | 46 zmian, zero regresji technicznych; tytuły >60 zn.: 20 → 42 |
+| F4 diagnoza przyczyny | DONE | wf_50ff8997-5a6: diagnosta + 3 sceptyków (3/3 obalili tezę „okres próbny, nie pakiet 3"), krytyk |
+| F4B technika, konwersja, Bing i AI | DONE | ten sam workflow; seo-kombajn NIE ruszył (brak workflow o tej nazwie w rejestrze) |
+| F4B konkurencja Google PL | DONE | wf_07631574-89b: 41 zapytań w prawdziwym Google.pl, 0 CAPTCHA, 6 analiz + plan |
+| Fala 0 lokalnie (bez pushu) | DONE lokalnie | tsc 0, lint 0, build 86 stron; test w przeglądarce + udawany Make na 127.0.0.1 (szczegóły niżej) |
+| Data AI Act usunięta (FAQ home, automatyzacje, agent rekrutacyjny) | DONE lokalnie | 0 stron z „2 sierpnia 2026" w HTML; wpis blogowy o AI Act zostaje do decyzji Pawła |
+| F5-6 raport i plan | DONE | .seo-przeglad/raporty/2026-10-12.md (z blokiem do sesji po zamrożeniu), linia w historia.md |
+| Push fali 0 | CZEKA NA ZGODĘ PAWŁA | reguła 3 i 9 |
+
+FALA 0 (lokalnie, NIE wypchnięte), tylko rzeczy, które nie ruszają zamrożonych gałęzi:
+- formularz: pułapka firma_www -> hp_kontrola (Chrome mógł ją wypełnić nazwą firmy);
+  przy wypełnionej pułapce człowiek widzi ekran z mailem i telefonem zamiast martwego
+  przycisku; zgłoszenie niesie stronę wejścia, host źródła i utm (components/analytics/
+  ZrodloWejscia.tsx, sessionStorage, bez ciasteczek); serwer sprawdza obie nazwy pułapki
+  i loguje trafienia bez danych osobowych.
+  DOWÓD: udawany Make dostał 1 z 3 zgłoszeń (zwykłe, z wejscie=/uslugi/chatboty/cennik),
+  oba z pułapką zatrzymane, w logu 2× „[lead] Wypełniona pułapka".
+- Umami: formularz_krok {2,3}, formularz_blad {status}, formularz_pulapka,
+  wyslano_formularz {potrzeba, wejscie}, klik_kalendarz, klik_cta_hero, klik_cta_dol.
+  DOWÓD: zdarzenia złapane w przeglądarce, każde raz (bez dubli StrictMode).
+- public/llms.txt: 77/77 adresów z mapy (było 25), polskie znaki, bez martwego /dowod,
+  zero liczb spoza stron (sprawdzone skryptem względem opisów meta i starego pliku).
+- daty aktualizacji 5 podstron GEO 31.08 -> 22.09 (tam 22.09 doszedł widoczny tekst,
+  13-26 linii; 3 pozostałe bez zmian i bez nowej daty).
+- /mission -> / (308), podwójny canonical na architekci-wartosci-ai usunięty,
+  3 opisy meta hubów skrócone do 147-154 znaków, tools/bing-diagnoza.js naprawiony
+  (GetCrawlStats zamiast GetUrlCounts, który dawał 404).
+
+ZOSTAJE W MAKE (ręcznie, po pushu): Redetermine data structure w scenariuszu 9666591,
+żeby pola wejscie / skad / utm pokazały się w mailu.
+
+KOREKTA WCZEŚNIEJSZEGO WNIOSKU (niżej, blok 2026-09-22): prośba o zindeksowanie NIE
+jest „lekarstwem potwierdzonym danymi". Dane z 12.10 pokazują, że daje najwyżej około
+2 tygodni widoczności, potem strony gasną. Zostawiam stary zapis jako historię.
+
+USTALONE NA DANYCH (przed workflow):
+- Od 22.09 zero commitów. Spadek NIE jest skutkiem nowej zmiany w kodzie.
+- Data załamania: **2026-09-23**, dzień po wdrożeniu pakietu 3 (faf8c0f, 22.09 20:25).
+  /uslugi/voiceboty/odbieranie-telefonow: 11-30 wyśw./dzień, 7 kliknięć (15.09-01.10)
+  → od 23.09 0-4 wyśw./dzień, 0 kliknięć. potwierdzanie-wizyt (fraza „voicebot do
+  potwierdzania wizyt" poz. 1) → zero od 23.09, choć Google pobrał ją ostatnio 06.09.
+- Obie strony zaindeksowane, kanoniczny Google = nasz, pobranie OK. To utrata pozycji,
+  nie awaria indeksu. HIPOTEZA: Google obniżył klaster po 6 szablonowych podstronach.
+- Wyświetlenia dziennie w 7 dniach ≈ w 28 dniach (114 vs 120). Kliknięcia −32%
+  (1,3 vs 1,9 dziennie). 10-11.10 weekend, 12.10 dane niepełne.
+
+---
+
+# STATUS — INDEKSACJA SPRAWDZONA W CAŁOŚCI (2026-09-24)
+
+ODCZYT: API URL Inspection, wszystkie 77 adresów z /sitemap.xml, 2026-09-24 10:01 UTC.
+Dane surowe: .seo-przeglad/dane/indeksacja-2026-09-24.json
+
+WYNIK: 73 z 77 zaindeksowane. POZA INDEKSEM 4:
+  /uslugi/optymalizacja/perplexity              wykryta, niezindeksowana
+  /uslugi/optymalizacja/llms-txt                Google nieznany
+  /polityka-prywatnosci                         Google nieznany
+  /blog/automatyzacja-procesow-ai-od-czego-zaczac  Google nieznany
+
+WSZYSTKIE CZTERY SPRAWDZONE NA ŻYWO: HTTP 200, brak noindex, canonical własny,
+obecne w /sitemap.xml. Technicznie nic nie blokuje — brakuje tylko ręcznej prośby
+o indeksowanie.
+
+PROŚBY PAWŁA Z 22.09 ZADZIAŁAŁY. 8 podstron chatbotów i 6 podstron voicebotów =
+„Strona przesłana i zindeksowana". Raport GSC, który Paweł oglądał, miał stempel
+„Ostatnia aktualizacja: 21.09.2026", czyli był sprzed tych crawlów. To opóźnienie
+raportu, nie porażka indeksacji.
+
+VERCEL: błąd faf8c0f ma status „Stale" i jest wpisem HISTORYCZNYM. HEAD = origin/main
+= e3848a2, produkcja serwuje najnowszą treść (200 na wszystkich sprawdzanych trasach).
+Redeploy niepotrzebny.
+
+PORZĄDEK W MAPACH WITRYN: został jeszcze jeden błędny wpis z 06.09
+(https://www.simplefast.ai/uslugi/strony-www — strona HTML wklejona jako mapa,
+1 błąd, 0 stron). Skasowany 2026-09-24 przez tools/gsc-mapy-witryn.js usun.
+Stan końcowy: 1 mapa, /sitemap.xml, 0 błędów, 77 stron.
+
+---
+
 # STATUS — PAKIET 3 NA PRODUKCJI (2026-09-22), po jednej nieudanej próbie deployu
 
 WYPCHNIĘTE: 4ba6857..e908b80 (faf8c0f pakiet 3 + naprawy, e908b80 pusty commit

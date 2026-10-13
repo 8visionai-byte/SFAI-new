@@ -1,0 +1,3563 @@
+{
+ "data": "2026-08-30",
+ "domena": "simplefast.ai",
+ "zrodla": {
+  "gsc": {
+   "okresy": {
+    "7dni": {
+     "klikniecia": 17,
+     "wyswietlenia": 587,
+     "ctr": 2.9,
+     "pozycja": 16.5,
+     "wysw_dziennie": 83.9,
+     "klik_dziennie": 2.43
+    },
+    "28dni": {
+     "klikniecia": 34,
+     "wyswietlenia": 1611,
+     "ctr": 2.11,
+     "pozycja": 15.3,
+     "wysw_dziennie": 57.5,
+     "klik_dziennie": 1.21
+    },
+    "90dni": {
+     "klikniecia": 68,
+     "wyswietlenia": 2596,
+     "ctr": 2.62,
+     "pozycja": 18.3,
+     "wysw_dziennie": 28.8,
+     "klik_dziennie": 0.76
+    }
+   },
+   "zapytania": [
+    {
+     "fraza": "chatbot ai dla firm",
+     "klik": 0,
+     "wysw": 147,
+     "ctr": 0,
+     "poz": 14.1
+    },
+    {
+     "fraza": "audyt ai",
+     "klik": 0,
+     "wysw": 67,
+     "ctr": 0,
+     "poz": 23.2
+    },
+    {
+     "fraza": "bot telefoniczny",
+     "klik": 0,
+     "wysw": 44,
+     "ctr": 0,
+     "poz": 17.1
+    },
+    {
+     "fraza": "chatbot dla firm",
+     "klik": 0,
+     "wysw": 39,
+     "ctr": 0,
+     "poz": 14
+    },
+    {
+     "fraza": "voicebot windykacja",
+     "klik": 0,
+     "wysw": 39,
+     "ctr": 0,
+     "poz": 24.7
+    },
+    {
+     "fraza": "wdrożenie chatbota",
+     "klik": 0,
+     "wysw": 36,
+     "ctr": 0,
+     "poz": 14.1
+    },
+    {
+     "fraza": "chatbot dla firmy",
+     "klik": 0,
+     "wysw": 35,
+     "ctr": 0,
+     "poz": 7.8
+    },
+    {
+     "fraza": "automatyzacja ai dla firm",
+     "klik": 1,
+     "wysw": 33,
+     "ctr": 3,
+     "poz": 10.8
+    },
+    {
+     "fraza": "voicebot do potwierdzania wizyt",
+     "klik": 0,
+     "wysw": 33,
+     "ctr": 0,
+     "poz": 15.4
+    },
+    {
+     "fraza": "voicebot cena",
+     "klik": 0,
+     "wysw": 31,
+     "ctr": 0,
+     "poz": 29.3
+    },
+    {
+     "fraza": "obsługa klienta 24/7 przez voicebota",
+     "klik": 0,
+     "wysw": 30,
+     "ctr": 0,
+     "poz": 24.1
+    },
+    {
+     "fraza": "rozwiązania na zamówienie",
+     "klik": 0,
+     "wysw": 30,
+     "ctr": 0,
+     "poz": 12.3
+    },
+    {
+     "fraza": "kto wdroży chatbota ai dla firmy",
+     "klik": 0,
+     "wysw": 28,
+     "ctr": 0,
+     "poz": 11.4
+    },
+    {
+     "fraza": "voicebot dla firm",
+     "klik": 1,
+     "wysw": 22,
+     "ctr": 4.5,
+     "poz": 12
+    },
+    {
+     "fraza": "automatyczny odczyt faktur",
+     "klik": 0,
+     "wysw": 22,
+     "ctr": 0,
+     "poz": 63.2
+    },
+    {
+     "fraza": "chatboty i asystenci ai dla firm",
+     "klik": 0,
+     "wysw": 22,
+     "ctr": 0,
+     "poz": 17
+    },
+    {
+     "fraza": "ile kosztuje stworzenie asystenta ai dla firmy i kto to robi w polsce?",
+     "klik": 0,
+     "wysw": 21,
+     "ctr": 0,
+     "poz": 7.9
+    },
+    {
+     "fraza": "automatyzacja faktur",
+     "klik": 0,
+     "wysw": 19,
+     "ctr": 0,
+     "poz": 25.3
+    },
+    {
+     "fraza": "cytowalność w chatgpt",
+     "klik": 0,
+     "wysw": 19,
+     "ctr": 0,
+     "poz": 7.2
+    },
+    {
+     "fraza": "audyt druku",
+     "klik": 0,
+     "wysw": 16,
+     "ctr": 0,
+     "poz": 45.3
+    },
+    {
+     "fraza": "voicebot do obsługi klienta",
+     "klik": 0,
+     "wysw": 15,
+     "ctr": 0,
+     "poz": 41.5
+    },
+    {
+     "fraza": "automatyzacje ai dla firm",
+     "klik": 0,
+     "wysw": 13,
+     "ctr": 0,
+     "poz": 20.4
+    },
+    {
+     "fraza": "automatyzacja ksef",
+     "klik": 0,
+     "wysw": 11,
+     "ctr": 0,
+     "poz": 36.6
+    },
+    {
+     "fraza": "\"windykacji\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com",
+     "klik": 0,
+     "wysw": 10,
+     "ctr": 0,
+     "poz": 2.5
+    },
+    {
+     "fraza": "agencja automatyzacji procesów",
+     "klik": 0,
+     "wysw": 10,
+     "ctr": 0,
+     "poz": 31.5
+    },
+    {
+     "fraza": "ocr faktur ai",
+     "klik": 0,
+     "wysw": 10,
+     "ctr": 0,
+     "poz": 18.2
+    },
+    {
+     "fraza": "voicebot dla firmy",
+     "klik": 0,
+     "wysw": 10,
+     "ctr": 0,
+     "poz": 5.5
+    },
+    {
+     "fraza": "wdrożenie chatbota w firmie",
+     "klik": 0,
+     "wysw": 10,
+     "ctr": 0,
+     "poz": 17.3
+    },
+    {
+     "fraza": "ai chatbot dla biznesu",
+     "klik": 0,
+     "wysw": 9,
+     "ctr": 0,
+     "poz": 26.9
+    },
+    {
+     "fraza": "chatbot ai dla firmy",
+     "klik": 0,
+     "wysw": 9,
+     "ctr": 0,
+     "poz": 3.9
+    },
+    {
+     "fraza": "simple fast ai",
+     "klik": 4,
+     "wysw": 7,
+     "ctr": 57.1,
+     "poz": 1
+    },
+    {
+     "fraza": "\"ecommerce newsy\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com",
+     "klik": 0,
+     "wysw": 7,
+     "ctr": 0,
+     "poz": 7.6
+    },
+    {
+     "fraza": "ile kosztuje wdrożenie ai w firmie",
+     "klik": 0,
+     "wysw": 7,
+     "ctr": 0,
+     "poz": 13.1
+    },
+    {
+     "fraza": "inteligentny chatbot biznesowy",
+     "klik": 0,
+     "wysw": 7,
+     "ctr": 0,
+     "poz": 25.4
+    },
+    {
+     "fraza": "\"plus bank\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com",
+     "klik": 0,
+     "wysw": 6,
+     "ctr": 0,
+     "poz": 3.3
+    },
+    {
+     "fraza": "automatyzacja faktur ai",
+     "klik": 0,
+     "wysw": 6,
+     "ctr": 0,
+     "poz": 12.5
+    },
+    {
+     "fraza": "bot głosowy",
+     "klik": 0,
+     "wysw": 6,
+     "ctr": 0,
+     "poz": 18.5
+    },
+    {
+     "fraza": "bot telefon",
+     "klik": 0,
+     "wysw": 6,
+     "ctr": 0,
+     "poz": 7.3
+    },
+    {
+     "fraza": "simple fast",
+     "klik": 0,
+     "wysw": 6,
+     "ctr": 0,
+     "poz": 6.8
+    },
+    {
+     "fraza": "aautomatyzacja procesu faktur",
+     "klik": 0,
+     "wysw": 5,
+     "ctr": 0,
+     "poz": 30.6
+    },
+    {
+     "fraza": "ai chatbot dla małej firmy",
+     "klik": 0,
+     "wysw": 5,
+     "ctr": 0,
+     "poz": 18.2
+    },
+    {
+     "fraza": "audyt procesów ai lublin",
+     "klik": 0,
+     "wysw": 5,
+     "ctr": 0,
+     "poz": 17.8
+    },
+    {
+     "fraza": "automatyzacja social media",
+     "klik": 0,
+     "wysw": 5,
+     "ctr": 0,
+     "poz": 25.8
+    },
+    {
+     "fraza": "doradca ai dla flot",
+     "klik": 0,
+     "wysw": 5,
+     "ctr": 0,
+     "poz": 34.4
+    },
+    {
+     "fraza": "usługi automatyzacji procesów",
+     "klik": 0,
+     "wysw": 5,
+     "ctr": 0,
+     "poz": 19.4
+    },
+    {
+     "fraza": "digitalizacja faktur",
+     "klik": 0,
+     "wysw": 4,
+     "ctr": 0,
+     "poz": 51.5
+    },
+    {
+     "fraza": "simple ai",
+     "klik": 0,
+     "wysw": 4,
+     "ctr": 0,
+     "poz": 8.3
+    },
+    {
+     "fraza": "usługa odbierania telefonów dla gabinetu",
+     "klik": 0,
+     "wysw": 4,
+     "ctr": 0,
+     "poz": 44.8
+    },
+    {
+     "fraza": "wdrożenie chatbota ai w firmie",
+     "klik": 0,
+     "wysw": 4,
+     "ctr": 0,
+     "poz": 16.3
+    },
+    {
+     "fraza": "agent ai ile kosztuje",
+     "klik": 0,
+     "wysw": 3,
+     "ctr": 0,
+     "poz": 33.3
+    },
+    {
+     "fraza": "automatyzacja procesów ai",
+     "klik": 0,
+     "wysw": 3,
+     "ctr": 0,
+     "poz": 12.7
+    },
+    {
+     "fraza": "chatbot na stronę firmową",
+     "klik": 0,
+     "wysw": 3,
+     "ctr": 0,
+     "poz": 19
+    },
+    {
+     "fraza": "ile kosztuje asystent ai",
+     "klik": 1,
+     "wysw": 2,
+     "ctr": 50,
+     "poz": 4.5
+    },
+    {
+     "fraza": "\"windykacja\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 8
+    },
+    {
+     "fraza": "ai do odbierania telefonów",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 6.5
+    },
+    {
+     "fraza": "audyt zgodności z ai act cena i zakres",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 5.5
+    },
+    {
+     "fraza": "boty dzwoniące na telefon",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 14.5
+    },
+    {
+     "fraza": "chatboty ai dla firm białystok",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 22
+    },
+    {
+     "fraza": "fast bots",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 7.5
+    },
+    {
+     "fraza": "ile kosztuje wdrożenie ai w firmie usługowej",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 7
+    },
+    {
+     "fraza": "jak pisac prompty",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 50
+    },
+    {
+     "fraza": "jak pisać prompty",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 54.5
+    },
+    {
+     "fraza": "jakie firmy w polsce wdrażają automatyzacje i asystentów ai dla małych firm?",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 4.5
+    },
+    {
+     "fraza": "optymalizacja pod chatgpt",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 38
+    },
+    {
+     "fraza": "voicebot",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 73
+    },
+    {
+     "fraza": "simplefast",
+     "klik": 1,
+     "wysw": 1,
+     "ctr": 100,
+     "poz": 3
+    },
+    {
+     "fraza": "a fast",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 27
+    },
+    {
+     "fraza": "audyt ai dla firm",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 20
+    },
+    {
+     "fraza": "audyt procesów ai",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 12
+    },
+    {
+     "fraza": "automatyczne wczytywanie faktur",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 54
+    },
+    {
+     "fraza": "automatyzacja fakturowania",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 48
+    },
+    {
+     "fraza": "automatyzacje ai",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 5
+    },
+    {
+     "fraza": "automatyzacje dla firm",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 47
+    },
+    {
+     "fraza": "bot dla firm",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 10
+    },
+    {
+     "fraza": "bot do odbierania telefonów",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 1
+    },
+    {
+     "fraza": "bot do umawiania wizyt",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 8
+    },
+    {
+     "fraza": "bot telefoniczny numer",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 9
+    },
+    {
+     "fraza": "co to są prompty",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 48
+    },
+    {
+     "fraza": "fast aii",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 14
+    },
+    {
+     "fraza": "fast ais",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 65
+    },
+    {
+     "fraza": "firmania simple",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 8
+    },
+    {
+     "fraza": "ile czasu trwa wdrożenie automatyzacji ai",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 15
+    },
+    {
+     "fraza": "jak pisać dobre prompty",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 57
+    },
+    {
+     "fraza": "jak wykorzystać voicebota ai w branży windykacyjnej?",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 34
+    },
+    {
+     "fraza": "która firma oferuje usługi rozwoju ai w przystępnej cenie",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 1
+    },
+    {
+     "fraza": "résumé",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 3
+    },
+    {
+     "fraza": "simp ai",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 13
+    },
+    {
+     "fraza": "simple pod ai",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 4
+    },
+    {
+     "fraza": "skaner ai act",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 46
+    },
+    {
+     "fraza": "szybka strona internetowa",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 63
+    },
+    {
+     "fraza": "telefon bot",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 8
+    },
+    {
+     "fraza": "voicebot ai w turystyce",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 39
+    },
+    {
+     "fraza": "voicebot do umawiania wizyt",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 10
+    }
+   ],
+   "strony": [
+    {
+     "url": "/uslugi/voiceboty",
+     "klik": 3,
+     "wysw": 426,
+     "ctr": 0.7,
+     "poz": 16.9
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "klik": 2,
+     "wysw": 408,
+     "ctr": 0.5,
+     "poz": 13.9
+    },
+    {
+     "url": "/uslugi/dokumenty-faktury",
+     "klik": 0,
+     "wysw": 126,
+     "ctr": 0,
+     "poz": 28.2
+    },
+    {
+     "url": "/uslugi/automatyzacje",
+     "klik": 2,
+     "wysw": 120,
+     "ctr": 1.7,
+     "poz": 15.1
+    },
+    {
+     "url": "/uslugi/audyt-ai",
+     "klik": 2,
+     "wysw": 118,
+     "ctr": 1.7,
+     "poz": 21.8
+    },
+    {
+     "url": "/",
+     "klik": 14,
+     "wysw": 79,
+     "ctr": 17.7,
+     "poz": 8.2
+    },
+    {
+     "url": "/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie",
+     "klik": 1,
+     "wysw": 63,
+     "ctr": 1.6,
+     "poz": 8.2
+    },
+    {
+     "url": "/uslugi/rozwiazania",
+     "klik": 0,
+     "wysw": 48,
+     "ctr": 0,
+     "poz": 8.8
+    },
+    {
+     "url": "/uslugi",
+     "klik": 0,
+     "wysw": 39,
+     "ctr": 0,
+     "poz": 17.3
+    },
+    {
+     "url": "/o-nas",
+     "klik": 5,
+     "wysw": 36,
+     "ctr": 13.9,
+     "poz": 6.2
+    },
+    {
+     "url": "/uslugi/voiceboty/windykacja",
+     "klik": 0,
+     "wysw": 32,
+     "ctr": 0,
+     "poz": 7.4
+    },
+    {
+     "url": "/uslugi/voiceboty/potwierdzanie-wizyt",
+     "klik": 1,
+     "wysw": 27,
+     "ctr": 3.7,
+     "poz": 6
+    },
+    {
+     "url": "/narzedzia",
+     "klik": 0,
+     "wysw": 27,
+     "ctr": 0,
+     "poz": 3.4
+    },
+    {
+     "url": "/uslugi/strony-www",
+     "klik": 1,
+     "wysw": 25,
+     "ctr": 4,
+     "poz": 31.6
+    },
+    {
+     "url": "/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy",
+     "klik": 0,
+     "wysw": 24,
+     "ctr": 0,
+     "poz": 8.5
+    },
+    {
+     "url": "/uslugi/optymalizacja",
+     "klik": 0,
+     "wysw": 23,
+     "ctr": 0,
+     "poz": 9.5
+    },
+    {
+     "url": "/materialy",
+     "klik": 0,
+     "wysw": 18,
+     "ctr": 0,
+     "poz": 5.2
+    },
+    {
+     "url": "/realizacje",
+     "klik": 0,
+     "wysw": 14,
+     "ctr": 0,
+     "poz": 1.1
+    },
+    {
+     "url": "/uslugi/asystent-prezesa",
+     "klik": 2,
+     "wysw": 11,
+     "ctr": 18.2,
+     "poz": 4.6
+    },
+    {
+     "url": "/realizacje/automat-tresci-social",
+     "klik": 0,
+     "wysw": 11,
+     "ctr": 0,
+     "poz": 14.5
+    },
+    {
+     "url": "/kontakt",
+     "klik": 0,
+     "wysw": 9,
+     "ctr": 0,
+     "poz": 2
+    },
+    {
+     "url": "/produkty",
+     "klik": 0,
+     "wysw": 9,
+     "ctr": 0,
+     "poz": 2.1
+    },
+    {
+     "url": "/materialy/50-promptow-ai-dla-wlasciciela-firmy",
+     "klik": 1,
+     "wysw": 8,
+     "ctr": 12.5,
+     "poz": 6.8
+    },
+    {
+     "url": "/materialy/jak-pisac-prompty-ktore-dzialaja",
+     "klik": 0,
+     "wysw": 8,
+     "ctr": 0,
+     "poz": 41.3
+    },
+    {
+     "url": "/uslugi/leady-b2b",
+     "klik": 0,
+     "wysw": 7,
+     "ctr": 0,
+     "poz": 16.6
+    },
+    {
+     "url": "/blog/jak-voicebot-odbiera-telefony",
+     "klik": 0,
+     "wysw": 4,
+     "ctr": 0,
+     "poz": 9
+    },
+    {
+     "url": "/wiedza",
+     "klik": 0,
+     "wysw": 4,
+     "ctr": 0,
+     "poz": 1
+    },
+    {
+     "url": "/materialy/arkusz-policz-koszt-recznych-zadan",
+     "klik": 0,
+     "wysw": 3,
+     "ctr": 0,
+     "poz": 2.7
+    },
+    {
+     "url": "/materialy/checklista-20-procesow-do-automatyzacji-ai",
+     "klik": 0,
+     "wysw": 3,
+     "ctr": 0,
+     "poz": 2.3
+    },
+    {
+     "url": "/uslugi/asystent-prezesa/",
+     "klik": 0,
+     "wysw": 3,
+     "ctr": 0,
+     "poz": 25
+    },
+    {
+     "url": "/ai-radar",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 8
+    },
+    {
+     "url": "/materialy/prompty-branzowe-kancelaria-ecommerce-budowlanka",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 9
+    },
+    {
+     "url": "/materialy/prompty-branzowe-kancelaria-ecommerce-budowlanka/",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 8
+    },
+    {
+     "url": "/poradniki/ai-w-biurze-rachunkowym-jakie-procesy-zautomatyzowac",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 7
+    },
+    {
+     "url": "/realizacje/top10-google-i-widocznosc-w-gpt",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 9
+    },
+    {
+     "url": "/realizacje/transkrypcja-rozmow",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 7
+    }
+   ],
+   "urzadzenia": [
+    {
+     "urzadzenie": "MOBILE",
+     "klik": 19,
+     "wysw": 398,
+     "poz": 12.1
+    },
+    {
+     "urzadzenie": "DESKTOP",
+     "klik": 14,
+     "wysw": 1192,
+     "poz": 16.5
+    },
+    {
+     "urzadzenie": "TABLET",
+     "klik": 1,
+     "wysw": 21,
+     "poz": 8.8
+    }
+   ],
+   "strony_zapytania": [
+    {
+     "url": "/uslugi/chatboty",
+     "fraza": "chatbot ai dla firm",
+     "klik": 0,
+     "wysw": 147,
+     "ctr": 0,
+     "poz": 14.1
+    },
+    {
+     "url": "/uslugi/audyt-ai",
+     "fraza": "audyt ai",
+     "klik": 0,
+     "wysw": 67,
+     "ctr": 0,
+     "poz": 23.2
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "bot telefoniczny",
+     "klik": 0,
+     "wysw": 44,
+     "ctr": 0,
+     "poz": 17.1
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "fraza": "chatbot dla firm",
+     "klik": 0,
+     "wysw": 39,
+     "ctr": 0,
+     "poz": 14
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "fraza": "wdrożenie chatbota",
+     "klik": 0,
+     "wysw": 36,
+     "ctr": 0,
+     "poz": 14.1
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "fraza": "chatbot dla firmy",
+     "klik": 0,
+     "wysw": 35,
+     "ctr": 0,
+     "poz": 7.8
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "voicebot windykacja",
+     "klik": 0,
+     "wysw": 34,
+     "ctr": 0,
+     "poz": 27.4
+    },
+    {
+     "url": "/uslugi/automatyzacje",
+     "fraza": "automatyzacja ai dla firm",
+     "klik": 1,
+     "wysw": 33,
+     "ctr": 3,
+     "poz": 10.8
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "voicebot cena",
+     "klik": 0,
+     "wysw": 31,
+     "ctr": 0,
+     "poz": 29.3
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "voicebot do potwierdzania wizyt",
+     "klik": 0,
+     "wysw": 31,
+     "ctr": 0,
+     "poz": 30.3
+    },
+    {
+     "url": "/uslugi/rozwiazania",
+     "fraza": "rozwiązania na zamówienie",
+     "klik": 0,
+     "wysw": 30,
+     "ctr": 0,
+     "poz": 12.3
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "fraza": "kto wdroży chatbota ai dla firmy",
+     "klik": 0,
+     "wysw": 28,
+     "ctr": 0,
+     "poz": 11.4
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "obsługa klienta 24/7 przez voicebota",
+     "klik": 0,
+     "wysw": 26,
+     "ctr": 0,
+     "poz": 23.4
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "voicebot dla firm",
+     "klik": 1,
+     "wysw": 22,
+     "ctr": 4.5,
+     "poz": 12
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "fraza": "chatboty i asystenci ai dla firm",
+     "klik": 0,
+     "wysw": 22,
+     "ctr": 0,
+     "poz": 17
+    },
+    {
+     "url": "/uslugi/dokumenty-faktury",
+     "fraza": "automatyczny odczyt faktur",
+     "klik": 0,
+     "wysw": 22,
+     "ctr": 0,
+     "poz": 63.2
+    },
+    {
+     "url": "/uslugi/dokumenty-faktury",
+     "fraza": "automatyzacja faktur",
+     "klik": 0,
+     "wysw": 19,
+     "ctr": 0,
+     "poz": 25.3
+    },
+    {
+     "url": "/uslugi/optymalizacja",
+     "fraza": "cytowalność w chatgpt",
+     "klik": 0,
+     "wysw": 19,
+     "ctr": 0,
+     "poz": 7.2
+    },
+    {
+     "url": "/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy",
+     "fraza": "ile kosztuje stworzenie asystenta ai dla firmy i kto to robi w polsce?",
+     "klik": 0,
+     "wysw": 17,
+     "ctr": 0,
+     "poz": 8.6
+    },
+    {
+     "url": "/uslugi/audyt-ai",
+     "fraza": "audyt druku",
+     "klik": 0,
+     "wysw": 16,
+     "ctr": 0,
+     "poz": 45.3
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "voicebot do obsługi klienta",
+     "klik": 0,
+     "wysw": 15,
+     "ctr": 0,
+     "poz": 41.5
+    },
+    {
+     "url": "/uslugi/automatyzacje",
+     "fraza": "automatyzacje ai dla firm",
+     "klik": 0,
+     "wysw": 12,
+     "ctr": 0,
+     "poz": 21.8
+    },
+    {
+     "url": "/uslugi/voiceboty/potwierdzanie-wizyt",
+     "fraza": "voicebot do potwierdzania wizyt",
+     "klik": 0,
+     "wysw": 12,
+     "ctr": 0,
+     "poz": 1.3
+    },
+    {
+     "url": "/uslugi/dokumenty-faktury",
+     "fraza": "automatyzacja ksef",
+     "klik": 0,
+     "wysw": 11,
+     "ctr": 0,
+     "poz": 36.6
+    },
+    {
+     "url": "/uslugi/automatyzacje",
+     "fraza": "agencja automatyzacji procesów",
+     "klik": 0,
+     "wysw": 10,
+     "ctr": 0,
+     "poz": 31.5
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "fraza": "wdrożenie chatbota w firmie",
+     "klik": 0,
+     "wysw": 10,
+     "ctr": 0,
+     "poz": 17.3
+    },
+    {
+     "url": "/uslugi/dokumenty-faktury",
+     "fraza": "ocr faktur ai",
+     "klik": 0,
+     "wysw": 10,
+     "ctr": 0,
+     "poz": 18.2
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "voicebot dla firmy",
+     "klik": 0,
+     "wysw": 10,
+     "ctr": 0,
+     "poz": 5.5
+    },
+    {
+     "url": "/uslugi/voiceboty/windykacja",
+     "fraza": "\"windykacji\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com",
+     "klik": 0,
+     "wysw": 10,
+     "ctr": 0,
+     "poz": 2.5
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "fraza": "ai chatbot dla biznesu",
+     "klik": 0,
+     "wysw": 9,
+     "ctr": 0,
+     "poz": 26.9
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "fraza": "chatbot ai dla firmy",
+     "klik": 0,
+     "wysw": 9,
+     "ctr": 0,
+     "poz": 3.9
+    },
+    {
+     "url": "/",
+     "fraza": "simple fast ai",
+     "klik": 4,
+     "wysw": 7,
+     "ctr": 57.1,
+     "poz": 1
+    },
+    {
+     "url": "/materialy",
+     "fraza": "\"ecommerce newsy\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com",
+     "klik": 0,
+     "wysw": 7,
+     "ctr": 0,
+     "poz": 7.6
+    },
+    {
+     "url": "/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie",
+     "fraza": "ile kosztuje wdrożenie ai w firmie",
+     "klik": 0,
+     "wysw": 7,
+     "ctr": 0,
+     "poz": 13.1
+    },
+    {
+     "url": "/uslugi",
+     "fraza": "simple fast ai",
+     "klik": 0,
+     "wysw": 7,
+     "ctr": 0,
+     "poz": 1
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "fraza": "inteligentny chatbot biznesowy",
+     "klik": 0,
+     "wysw": 7,
+     "ctr": 0,
+     "poz": 25.4
+    },
+    {
+     "url": "/materialy",
+     "fraza": "\"plus bank\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com",
+     "klik": 0,
+     "wysw": 6,
+     "ctr": 0,
+     "poz": 3.3
+    },
+    {
+     "url": "/realizacje",
+     "fraza": "simple fast ai",
+     "klik": 0,
+     "wysw": 6,
+     "ctr": 0,
+     "poz": 1
+    },
+    {
+     "url": "/uslugi/dokumenty-faktury",
+     "fraza": "automatyzacja faktur ai",
+     "klik": 0,
+     "wysw": 6,
+     "ctr": 0,
+     "poz": 12.5
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "bot głosowy",
+     "klik": 0,
+     "wysw": 6,
+     "ctr": 0,
+     "poz": 18.5
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "bot telefon",
+     "klik": 0,
+     "wysw": 6,
+     "ctr": 0,
+     "poz": 7.3
+    },
+    {
+     "url": "/",
+     "fraza": "simple fast",
+     "klik": 0,
+     "wysw": 5,
+     "ctr": 0,
+     "poz": 6
+    },
+    {
+     "url": "/narzedzia",
+     "fraza": "simple fast ai",
+     "klik": 0,
+     "wysw": 5,
+     "ctr": 0,
+     "poz": 1
+    },
+    {
+     "url": "/produkty",
+     "fraza": "simple fast ai",
+     "klik": 0,
+     "wysw": 5,
+     "ctr": 0,
+     "poz": 1
+    },
+    {
+     "url": "/realizacje/automat-tresci-social",
+     "fraza": "automatyzacja social media",
+     "klik": 0,
+     "wysw": 5,
+     "ctr": 0,
+     "poz": 25.8
+    },
+    {
+     "url": "/uslugi",
+     "fraza": "doradca ai dla flot",
+     "klik": 0,
+     "wysw": 5,
+     "ctr": 0,
+     "poz": 34.4
+    },
+    {
+     "url": "/uslugi/audyt-ai",
+     "fraza": "audyt procesów ai lublin",
+     "klik": 0,
+     "wysw": 5,
+     "ctr": 0,
+     "poz": 17.8
+    },
+    {
+     "url": "/uslugi/automatyzacje",
+     "fraza": "aautomatyzacja procesu faktur",
+     "klik": 0,
+     "wysw": 5,
+     "ctr": 0,
+     "poz": 30.6
+    },
+    {
+     "url": "/uslugi/automatyzacje",
+     "fraza": "usługi automatyzacji procesów",
+     "klik": 0,
+     "wysw": 5,
+     "ctr": 0,
+     "poz": 19.4
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "fraza": "ai chatbot dla małej firmy",
+     "klik": 0,
+     "wysw": 5,
+     "ctr": 0,
+     "poz": 18.2
+    },
+    {
+     "url": "/uslugi/voiceboty/windykacja",
+     "fraza": "voicebot windykacja",
+     "klik": 0,
+     "wysw": 5,
+     "ctr": 0,
+     "poz": 7
+    },
+    {
+     "url": "/",
+     "fraza": "simple ai",
+     "klik": 0,
+     "wysw": 4,
+     "ctr": 0,
+     "poz": 8.3
+    },
+    {
+     "url": "/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie",
+     "fraza": "ile kosztuje stworzenie asystenta ai dla firmy i kto to robi w polsce?",
+     "klik": 0,
+     "wysw": 4,
+     "ctr": 0,
+     "poz": 5
+    },
+    {
+     "url": "/uslugi/automatyzacje",
+     "fraza": "simple fast ai",
+     "klik": 0,
+     "wysw": 4,
+     "ctr": 0,
+     "poz": 1
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "fraza": "wdrożenie chatbota ai w firmie",
+     "klik": 0,
+     "wysw": 4,
+     "ctr": 0,
+     "poz": 16.3
+    },
+    {
+     "url": "/uslugi/dokumenty-faktury",
+     "fraza": "digitalizacja faktur",
+     "klik": 0,
+     "wysw": 4,
+     "ctr": 0,
+     "poz": 51.5
+    },
+    {
+     "url": "/uslugi/rozwiazania",
+     "fraza": "simple fast ai",
+     "klik": 0,
+     "wysw": 4,
+     "ctr": 0,
+     "poz": 1
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "usługa odbierania telefonów dla gabinetu",
+     "klik": 0,
+     "wysw": 4,
+     "ctr": 0,
+     "poz": 44.8
+    },
+    {
+     "url": "/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie",
+     "fraza": "agent ai ile kosztuje",
+     "klik": 0,
+     "wysw": 3,
+     "ctr": 0,
+     "poz": 33.3
+    },
+    {
+     "url": "/uslugi/automatyzacje",
+     "fraza": "automatyzacja procesów ai",
+     "klik": 0,
+     "wysw": 3,
+     "ctr": 0,
+     "poz": 12.7
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "fraza": "chatbot na stronę firmową",
+     "klik": 0,
+     "wysw": 3,
+     "ctr": 0,
+     "poz": 19
+    },
+    {
+     "url": "/wiedza",
+     "fraza": "simple fast ai",
+     "klik": 0,
+     "wysw": 3,
+     "ctr": 0,
+     "poz": 1
+    },
+    {
+     "url": "/uslugi/asystent-prezesa",
+     "fraza": "ile kosztuje asystent ai",
+     "klik": 1,
+     "wysw": 2,
+     "ctr": 50,
+     "poz": 4.5
+    },
+    {
+     "url": "/",
+     "fraza": "chatbot na stronę firmową",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 57.5
+    },
+    {
+     "url": "/",
+     "fraza": "fast bots",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 7.5
+    },
+    {
+     "url": "/materialy/jak-pisac-prompty-ktore-dzialaja",
+     "fraza": "jak pisac prompty",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 50
+    },
+    {
+     "url": "/materialy/jak-pisac-prompty-ktore-dzialaja",
+     "fraza": "jak pisać prompty",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 54.5
+    },
+    {
+     "url": "/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie",
+     "fraza": "ile kosztuje wdrożenie ai w firmie usługowej",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 7
+    },
+    {
+     "url": "/uslugi/audyt-ai",
+     "fraza": "audyt zgodności z ai act cena i zakres",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 5.5
+    },
+    {
+     "url": "/uslugi/automatyzacje",
+     "fraza": "automatyzacja faktur ai",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 32
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "fraza": "chatboty ai dla firm białystok",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 22
+    },
+    {
+     "url": "/uslugi/optymalizacja",
+     "fraza": "optymalizacja pod chatgpt",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 38
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "ai do odbierania telefonów",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 6.5
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "boty dzwoniące na telefon",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 14.5
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "voicebot",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 73
+    },
+    {
+     "url": "/uslugi/voiceboty/potwierdzanie-wizyt",
+     "fraza": "obsługa klienta 24/7 przez voicebota",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 30
+    },
+    {
+     "url": "/uslugi/voiceboty/windykacja",
+     "fraza": "\"windykacja\" -site:reddit.com -site:twitter.com -site:x.com -site:wykop.pl -site:tripadvisor.com -site:youtube.com -site:yelp.com -site:booking.com -site:facebook.com -site:instagram.com -site:tiktok.com",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 8
+    },
+    {
+     "url": "/uslugi/voiceboty/windykacja",
+     "fraza": "obsługa klienta 24/7 przez voicebota",
+     "klik": 0,
+     "wysw": 2,
+     "ctr": 0,
+     "poz": 26.5
+    },
+    {
+     "url": "/",
+     "fraza": "simplefast",
+     "klik": 1,
+     "wysw": 1,
+     "ctr": 100,
+     "poz": 3
+    },
+    {
+     "url": "/",
+     "fraza": "a fast",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 27
+    },
+    {
+     "url": "/",
+     "fraza": "fast aii",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 14
+    },
+    {
+     "url": "/",
+     "fraza": "fast ais",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 65
+    },
+    {
+     "url": "/",
+     "fraza": "firmania simple",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 8
+    },
+    {
+     "url": "/",
+     "fraza": "jakie firmy w polsce wdrażają automatyzacje i asystentów ai dla małych firm?",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 5
+    },
+    {
+     "url": "/",
+     "fraza": "simp ai",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 13
+    },
+    {
+     "url": "/kontakt",
+     "fraza": "simple fast ai",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 1
+    },
+    {
+     "url": "/materialy/jak-pisac-prompty-ktore-dzialaja",
+     "fraza": "co to są prompty",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 48
+    },
+    {
+     "url": "/materialy/jak-pisac-prompty-ktore-dzialaja",
+     "fraza": "jak pisać dobre prompty",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 57
+    },
+    {
+     "url": "/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie",
+     "fraza": "automatyzacje ai",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 5
+    },
+    {
+     "url": "/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie",
+     "fraza": "automatyzacje ai dla firm",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 3
+    },
+    {
+     "url": "/produkty",
+     "fraza": "simple fast",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 11
+    },
+    {
+     "url": "/uslugi",
+     "fraza": "jakie firmy w polsce wdrażają automatyzacje i asystentów ai dla małych firm?",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 4
+    },
+    {
+     "url": "/uslugi",
+     "fraza": "która firma oferuje usługi rozwoju ai w przystępnej cenie",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 1
+    },
+    {
+     "url": "/uslugi/audyt-ai",
+     "fraza": "audyt ai dla firm",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 20
+    },
+    {
+     "url": "/uslugi/audyt-ai",
+     "fraza": "audyt procesów ai",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 12
+    },
+    {
+     "url": "/uslugi/automatyzacje",
+     "fraza": "automatyzacje dla firm",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 47
+    },
+    {
+     "url": "/uslugi/automatyzacje",
+     "fraza": "ile czasu trwa wdrożenie automatyzacji ai",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 15
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "fraza": "bot dla firm",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 10
+    },
+    {
+     "url": "/uslugi/dokumenty-faktury",
+     "fraza": "automatyczne wczytywanie faktur",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 54
+    },
+    {
+     "url": "/uslugi/dokumenty-faktury",
+     "fraza": "automatyzacja fakturowania",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 48
+    },
+    {
+     "url": "/uslugi/leady-b2b",
+     "fraza": "skaner ai act",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 46
+    },
+    {
+     "url": "/uslugi/optymalizacja",
+     "fraza": "simple pod ai",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 4
+    },
+    {
+     "url": "/uslugi/strony-www",
+     "fraza": "szybka strona internetowa",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 63
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "bot do odbierania telefonów",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 1
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "bot telefoniczny numer",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 9
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "résumé",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 3
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "telefon bot",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 8
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "voicebot ai w turystyce",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 39
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "fraza": "voicebot do umawiania wizyt",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 10
+    },
+    {
+     "url": "/uslugi/voiceboty/potwierdzanie-wizyt",
+     "fraza": "bot do umawiania wizyt",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 8
+    },
+    {
+     "url": "/uslugi/voiceboty/windykacja",
+     "fraza": "jak wykorzystać voicebota ai w branży windykacyjnej?",
+     "klik": 0,
+     "wysw": 1,
+     "ctr": 0,
+     "poz": 34
+    }
+   ],
+   "potencjal": [
+    {
+     "url": "/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie",
+     "klik": 1,
+     "wysw": 63,
+     "ctr": 1.6,
+     "poz": 8.2,
+     "diagnoza": "TOP10 ale CTR < 3% -> problem w tytule i opisie, nie w pozycji"
+    },
+    {
+     "url": "/uslugi/rozwiazania",
+     "klik": 0,
+     "wysw": 48,
+     "ctr": 0,
+     "poz": 8.8,
+     "diagnoza": "TOP10 ale CTR < 3% -> problem w tytule i opisie, nie w pozycji"
+    },
+    {
+     "url": "/uslugi/voiceboty/windykacja",
+     "klik": 0,
+     "wysw": 32,
+     "ctr": 0,
+     "poz": 7.4,
+     "diagnoza": "TOP10 ale CTR < 3% -> problem w tytule i opisie, nie w pozycji"
+    },
+    {
+     "url": "/narzedzia",
+     "klik": 0,
+     "wysw": 27,
+     "ctr": 0,
+     "poz": 3.4,
+     "diagnoza": "TOP10 ale CTR < 3% -> problem w tytule i opisie, nie w pozycji"
+    },
+    {
+     "url": "/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy",
+     "klik": 0,
+     "wysw": 24,
+     "ctr": 0,
+     "poz": 8.5,
+     "diagnoza": "TOP10 ale CTR < 3% -> problem w tytule i opisie, nie w pozycji"
+    },
+    {
+     "url": "/uslugi/optymalizacja",
+     "klik": 0,
+     "wysw": 23,
+     "ctr": 0,
+     "poz": 9.5,
+     "diagnoza": "TOP10 ale CTR < 3% -> problem w tytule i opisie, nie w pozycji"
+    },
+    {
+     "url": "/materialy",
+     "klik": 0,
+     "wysw": 18,
+     "ctr": 0,
+     "poz": 5.2,
+     "diagnoza": "TOP10 ale CTR < 3% -> problem w tytule i opisie, nie w pozycji"
+    },
+    {
+     "url": "/realizacje",
+     "klik": 0,
+     "wysw": 14,
+     "ctr": 0,
+     "poz": 1.1,
+     "diagnoza": "TOP10 ale CTR < 3% -> problem w tytule i opisie, nie w pozycji"
+    }
+   ],
+   "druga_strona": [
+    {
+     "url": "/uslugi/voiceboty",
+     "klik": 3,
+     "wysw": 426,
+     "ctr": 0.7,
+     "poz": 16.9,
+     "diagnoza": "druga strona Google -> brakuje tresci i linkowania wewnetrznego"
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "klik": 2,
+     "wysw": 408,
+     "ctr": 0.5,
+     "poz": 13.9,
+     "diagnoza": "druga strona Google -> brakuje tresci i linkowania wewnetrznego"
+    },
+    {
+     "url": "/uslugi/automatyzacje",
+     "klik": 2,
+     "wysw": 120,
+     "ctr": 1.7,
+     "poz": 15.1,
+     "diagnoza": "druga strona Google -> brakuje tresci i linkowania wewnetrznego"
+    },
+    {
+     "url": "/uslugi",
+     "klik": 0,
+     "wysw": 39,
+     "ctr": 0,
+     "poz": 17.3,
+     "diagnoza": "druga strona Google -> brakuje tresci i linkowania wewnetrznego"
+    }
+   ]
+  },
+  "bing": {
+   "dni": [
+    {
+     "wysw": 0,
+     "klik": 0
+    },
+    {
+     "wysw": 0,
+     "klik": 0
+    },
+    {
+     "wysw": 0,
+     "klik": 0
+    },
+    {
+     "wysw": 0,
+     "klik": 0
+    },
+    {
+     "wysw": 0,
+     "klik": 0
+    },
+    {
+     "wysw": 0,
+     "klik": 0
+    },
+    {
+     "wysw": 0,
+     "klik": 0
+    },
+    {
+     "wysw": 0,
+     "klik": 0
+    },
+    {
+     "wysw": 0,
+     "klik": 0
+    },
+    {
+     "wysw": 0,
+     "klik": 0
+    },
+    {
+     "wysw": 0,
+     "klik": 0
+    },
+    {
+     "wysw": 1,
+     "klik": 0
+    },
+    {
+     "wysw": 0,
+     "klik": 0
+    },
+    {
+     "wysw": 0,
+     "klik": 0
+    }
+   ],
+   "suma_14dni": {
+    "wyswietlenia": 1,
+    "klikniecia": 0
+   },
+   "zapytania": [
+    {
+     "fraza": "bot rekrutacyjny dla małej firmy oferta cena 2026",
+     "wysw": 2,
+     "klik": 0,
+     "poz": 6
+    },
+    {
+     "fraza": "ai w ksiegowosci jak zautomatyzowac procesy procedury wyszukiwanie maile itd",
+     "wysw": 1,
+     "klik": 0,
+     "poz": 5
+    },
+    {
+     "fraza": "ile kosztguje zrobienie czat bota dla sklepu ktory zadaje pytania na czacie typu ,, w czym moge ci pomoc ''",
+     "wysw": 1,
+     "klik": 0,
+     "poz": 3
+    },
+    {
+     "fraza": "paweł pieloch",
+     "wysw": 1,
+     "klik": 0,
+     "poz": 3
+    },
+    {
+     "fraza": "marcin karpeta",
+     "wysw": 1,
+     "klik": 0,
+     "poz": 4
+    }
+   ]
+  },
+  "ahrefs": {
+   "nasza_domena": "simplefast.ai",
+   "domeny": [
+    {
+     "domena": "innowise.com",
+     "dr": 71
+    },
+    {
+     "domena": "delante.co",
+     "dr": 70
+    },
+    {
+     "domena": "widoczni.com",
+     "dr": 64
+    },
+    {
+     "domena": "gagan.pl",
+     "dr": 56
+    },
+    {
+     "domena": "apifonica.com",
+     "dr": 53
+    },
+    {
+     "domena": "mits.pl",
+     "dr": 50
+    },
+    {
+     "domena": "wasko.pl",
+     "dr": 49
+    },
+    {
+     "domena": "codescriptum.pl",
+     "dr": 34
+    },
+    {
+     "domena": "sagiton.pl",
+     "dr": 32
+    },
+    {
+     "domena": "pawlicaweb.pl",
+     "dr": 27
+    },
+    {
+     "domena": "simplefast.ai",
+     "dr": 18
+    },
+    {
+     "domena": "devstock.pl",
+     "dr": 18
+    },
+    {
+     "domena": "malinski.ai",
+     "dr": 17
+    },
+    {
+     "domena": "syntalith.ai",
+     "dr": 16
+    },
+    {
+     "domena": "biznesailab.pl",
+     "dr": 12
+    },
+    {
+     "domena": "chatbotassistant.pl",
+     "dr": 12
+    },
+    {
+     "domena": "falconworks.pl",
+     "dr": 11
+    },
+    {
+     "domena": "xomedia.pl",
+     "dr": 7
+    },
+    {
+     "domena": "lessmanual.ai",
+     "dr": 4.3
+    },
+    {
+     "domena": "ninjatech.pl",
+     "dr": 3.6
+    }
+   ],
+   "nasz_dr": 18,
+   "slabsi_od_nas": [
+    "malinski.ai",
+    "syntalith.ai",
+    "biznesailab.pl",
+    "chatbotassistant.pl",
+    "falconworks.pl",
+    "xomedia.pl",
+    "lessmanual.ai",
+    "ninjatech.pl"
+   ],
+   "mocniejsi": [
+    "innowise.com",
+    "delante.co",
+    "widoczni.com",
+    "gagan.pl",
+    "apifonica.com",
+    "mits.pl",
+    "wasko.pl",
+    "codescriptum.pl",
+    "sagiton.pl",
+    "pawlicaweb.pl"
+   ],
+   "wg_klastra": {
+    "chatboty": {
+     "slabsi": [
+      "malinski.ai (DR 17)",
+      "lessmanual.ai (DR 4.3)",
+      "falconworks.pl (DR 11)",
+      "biznesailab.pl (DR 12)"
+     ],
+     "mocniejsi": [
+      "mits.pl (DR 50)",
+      "pawlicaweb.pl (DR 27)"
+     ]
+    },
+    "voiceboty": {
+     "slabsi": [
+      "malinski.ai (DR 17)",
+      "syntalith.ai (DR 16)",
+      "xomedia.pl (DR 7)",
+      "chatbotassistant.pl (DR 12)"
+     ],
+     "mocniejsi": [
+      "apifonica.com (DR 53)"
+     ]
+    },
+    "automatyzacje": {
+     "slabsi": [
+      "lessmanual.ai (DR 4.3)"
+     ],
+     "mocniejsi": [
+      "gagan.pl (DR 56)",
+      "codescriptum.pl (DR 34)",
+      "sagiton.pl (DR 32)"
+     ]
+    },
+    "audyt": {
+     "slabsi": [
+      "ninjatech.pl (DR 3.6)"
+     ],
+     "mocniejsi": [
+      "gagan.pl (DR 56)",
+      "delante.co (DR 70)",
+      "widoczni.com (DR 64)"
+     ]
+    },
+    "wdrozenia": {
+     "slabsi": [],
+     "mocniejsi": [
+      "mits.pl (DR 50)",
+      "wasko.pl (DR 49)",
+      "innowise.com (DR 71)"
+     ]
+    }
+   }
+  },
+  "strona": {
+   "podstron": 55,
+   "daty_lastmod": [
+    "2026-08-19",
+    "2026-08-20",
+    "2026-08-16",
+    "2026-06-16",
+    "2026-08-21",
+    "2026-08-18"
+   ],
+   "boty_ai": {
+    "GPTBot": "wymieniony",
+    "OAI-SearchBot": "wymieniony",
+    "ChatGPT-User": "wymieniony",
+    "PerplexityBot": "wymieniony",
+    "ClaudeBot": "wymieniony",
+    "Google-Extended": "wymieniony",
+    "Bingbot": "wymieniony"
+   },
+   "za_dlugie_tytuly": [
+    {
+     "url": "/uslugi",
+     "dl": 65
+    },
+    {
+     "url": "/produkty",
+     "dl": 67
+    },
+    {
+     "url": "/poradniki",
+     "dl": 69
+    },
+    {
+     "url": "/materialy",
+     "dl": 66
+    },
+    {
+     "url": "/o-nas",
+     "dl": 64
+    },
+    {
+     "url": "/uslugi/agent-rekrutacyjny",
+     "dl": 63
+    },
+    {
+     "url": "/realizacje/strona-cytowana-przez-chatgpt",
+     "dl": 61
+    },
+    {
+     "url": "/realizacje/top10-google-i-widocznosc-w-gpt",
+     "dl": 61
+    },
+    {
+     "url": "/realizacje/z-niewidocznej-strony-do-top3-google",
+     "dl": 66
+    },
+    {
+     "url": "/realizacje/auto-podsumowania-spotkan",
+     "dl": 63
+    },
+    {
+     "url": "/realizacje/automatyczne-raporty",
+     "dl": 61
+    },
+    {
+     "url": "/blog/ile-kosztuje-wdrozenie-ai-w-malej-firmie-2026",
+     "dl": 64
+    },
+    {
+     "url": "/blog/automatyzacja-procesow-ai-od-czego-zaczac",
+     "dl": 64
+    },
+    {
+     "url": "/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie",
+     "dl": 74
+    },
+    {
+     "url": "/poradniki/ile-kosztuje-chatbot-dla-firmy-2026",
+     "dl": 61
+    },
+    {
+     "url": "/poradniki/ai-w-biurze-rachunkowym-jakie-procesy-zautomatyzowac",
+     "dl": 69
+    },
+    {
+     "url": "/materialy/50-promptow-ai-dla-wlasciciela-firmy",
+     "dl": 69
+    },
+    {
+     "url": "/materialy/jak-pisac-prompty-ktore-dzialaja",
+     "dl": 65
+    },
+    {
+     "url": "/materialy/prompty-branzowe-kancelaria-ecommerce-budowlanka",
+     "dl": 62
+    },
+    {
+     "url": "/materialy/checklista-20-procesow-do-automatyzacji-ai",
+     "dl": 68
+    }
+   ],
+   "za_dlugie_opisy": [
+    {
+     "url": "/wiedza",
+     "dl": 161
+    },
+    {
+     "url": "/poradniki",
+     "dl": 166
+    }
+   ],
+   "cienka_tresc": [],
+   "podstrony": [
+    {
+     "url": "/",
+     "tytul": "Chatboty, voiceboty i automatyzacje AI dla firm | SimpleFast",
+     "tytul_dl": 60,
+     "opis_dl": 147,
+     "h1": "Chatboty, voiceboty i automatyzacje AI",
+     "schema": [
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Service",
+      "Country",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 4820
+    },
+    {
+     "url": "/uslugi",
+     "tytul": "Usługi AI dla firm: automatyzacje, agenci, strony · SimpleFast.ai",
+     "tytul_dl": 65,
+     "opis_dl": 142,
+     "h1": "Usługi AI dla firm",
+     "schema": [
+      "BreadcrumbList",
+      "ListItem",
+      "ItemList",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1962
+    },
+    {
+     "url": "/uslugi/architekci-wartosci-ai",
+     "tytul": "Architekci Wartości AI: płacisz za efekt · SimpleFast.ai",
+     "tytul_dl": 56,
+     "opis_dl": 129,
+     "h1": "Płacisz za przyniesioną wartość, nie za godziny.",
+     "schema": [
+      "Service",
+      "Country",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2668
+    },
+    {
+     "url": "/narzedzia",
+     "tytul": "Darmowe narzędzia AI dla firm · SimpleFast.ai",
+     "tytul_dl": 45,
+     "opis_dl": 137,
+     "h1": "Darmowe narzędzia AI",
+     "schema": [
+      "BreadcrumbList",
+      "ListItem",
+      "ItemList",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 3381
+    },
+    {
+     "url": "/produkty",
+     "tytul": "Produkty: co zbudowaliśmy i co możesz mieć u siebie · SimpleFast.ai",
+     "tytul_dl": 67,
+     "opis_dl": 137,
+     "h1": "Co zbudowaliśmy i co z tego możesz mieć u siebie",
+     "schema": [
+      "BreadcrumbList",
+      "ListItem",
+      "ItemList",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 3287
+    },
+    {
+     "url": "/wiedza",
+     "tytul": "Wiedza o AI dla firm: poradniki i newsy · SimpleFast.ai",
+     "tytul_dl": 55,
+     "opis_dl": 161,
+     "h1": "Centrum Wiedzy AI dla firm",
+     "schema": [
+      "BreadcrumbList",
+      "ListItem",
+      "ItemList",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1956
+    },
+    {
+     "url": "/poradniki",
+     "tytul": "Poradniki AI dla firm: ile kosztuje, co automatyzować · SimpleFast.ai",
+     "tytul_dl": 69,
+     "opis_dl": 166,
+     "h1": "Poradniki AI dla firm",
+     "schema": [
+      "BreadcrumbList",
+      "ListItem",
+      "ItemList",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1766
+    },
+    {
+     "url": "/ai-radar",
+     "tytul": "AI Radar: newsy AI dla firm z wnioskami · SimpleFast.ai",
+     "tytul_dl": 55,
+     "opis_dl": 138,
+     "h1": "AI Radar: newsy AI dla firm z filtrem, co to znaczy dla Ciebie",
+     "schema": [
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 959
+    },
+    {
+     "url": "/materialy",
+     "tytul": "Darmowe materiały AI dla firm: prompty, checklisty · SimpleFast.ai",
+     "tytul_dl": 66,
+     "opis_dl": 131,
+     "h1": "Materiały do pobrania: prompty, checklisty i arkusze AI dla firm",
+     "schema": [
+      "BreadcrumbList",
+      "ListItem",
+      "ItemList",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1679
+    },
+    {
+     "url": "/realizacje",
+     "tytul": "Realizacje: wdrożenia AI dla firm · SimpleFast.ai",
+     "tytul_dl": 49,
+     "opis_dl": 155,
+     "h1": "Realizacje",
+     "schema": [
+      "BreadcrumbList",
+      "ListItem",
+      "ItemList",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2412
+    },
+    {
+     "url": "/blog",
+     "tytul": "Blog o AI dla firm: poradniki bez żargonu · SimpleFast.ai",
+     "tytul_dl": 57,
+     "opis_dl": 157,
+     "h1": "Blog o AI dla firm",
+     "schema": [
+      "BreadcrumbList",
+      "ListItem",
+      "ItemList",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1888
+    },
+    {
+     "url": "/o-nas",
+     "tytul": "O nas: dwóch founderów, którzy budują AI Agentów · SimpleFast.ai",
+     "tytul_dl": 64,
+     "opis_dl": 154,
+     "h1": "Kto stoi za SimpleFast.ai?",
+     "schema": [
+      "AboutPage",
+      "Person",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1554
+    },
+    {
+     "url": "/kontakt",
+     "tytul": "Kontakt: umów bezpłatną diagnozę AI · SimpleFast.ai",
+     "tytul_dl": 51,
+     "opis_dl": 133,
+     "h1": "Zacznijmy od bezpłatnej diagnozy",
+     "schema": [
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1776
+    },
+    {
+     "url": "/polityka-prywatnosci",
+     "tytul": "Polityka prywatności · SimpleFast.ai",
+     "tytul_dl": 36,
+     "opis_dl": 134,
+     "h1": "Polityka prywatności",
+     "schema": [
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1416
+    },
+    {
+     "url": "/uslugi/chatboty",
+     "tytul": "Chatbot AI dla firm: cena i wdrożenie · SimpleFast.ai",
+     "tytul_dl": 53,
+     "opis_dl": 152,
+     "h1": "Chatbot AI dla firmy",
+     "schema": [
+      "Service",
+      "Country",
+      "Offer",
+      "PriceSpecification",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 3352
+    },
+    {
+     "url": "/uslugi/voiceboty",
+     "tytul": "Voicebot od 2500 zł netto: bot telefoniczny · SimpleFast.ai",
+     "tytul_dl": 59,
+     "opis_dl": 156,
+     "h1": "Voicebot dla firmy, który odbiera telefon za Ciebie",
+     "schema": [
+      "Service",
+      "Country",
+      "Offer",
+      "PriceSpecification",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 3174
+    },
+    {
+     "url": "/uslugi/agent-rekrutacyjny",
+     "tytul": "Agent rekrutacyjny AI: automatyzacja rekrutacji · SimpleFast.ai",
+     "tytul_dl": 63,
+     "opis_dl": 155,
+     "h1": "Agent AI do rekrutacji i pierwszego kontaktu",
+     "schema": [
+      "Service",
+      "Country",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2520
+    },
+    {
+     "url": "/uslugi/automatyzacje",
+     "tytul": "Automatyzacja procesów AI: od czego zacząć · SimpleFast.ai",
+     "tytul_dl": 58,
+     "opis_dl": 147,
+     "h1": "Automatyzacja procesów w firmie z AI",
+     "schema": [
+      "Service",
+      "Country",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2703
+    },
+    {
+     "url": "/uslugi/dokumenty-faktury",
+     "tytul": "Automatyzacja faktur: OCR faktur AI i KSeF · SimpleFast.ai",
+     "tytul_dl": 58,
+     "opis_dl": 149,
+     "h1": "Automatyzacja dokumentów i faktur (OCR, KSeF)",
+     "schema": [
+      "Service",
+      "Country",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2841
+    },
+    {
+     "url": "/uslugi/leady-b2b",
+     "tytul": "Leady branżowe B2B: 1000 rekordów od 169 zł · SimpleFast.ai",
+     "tytul_dl": 59,
+     "opis_dl": 140,
+     "h1": "Leady branżowe B2B: gotowa baza firm",
+     "schema": [
+      "Service",
+      "Country",
+      "Offer",
+      "PriceSpecification",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2603
+    },
+    {
+     "url": "/uslugi/opieka-ai",
+     "tytul": "Opieka AI: utrzymanie automatyzacji · SimpleFast.ai",
+     "tytul_dl": 51,
+     "opis_dl": 146,
+     "h1": "Opieka AI: utrzymanie i rozwój automatyzacji",
+     "schema": [
+      "Service",
+      "Country",
+      "Offer",
+      "PriceSpecification",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2829
+    },
+    {
+     "url": "/uslugi/audyt-ai",
+     "tytul": "Audyt AI firmy: co zautomatyzować i za ile · SimpleFast.ai",
+     "tytul_dl": 58,
+     "opis_dl": 144,
+     "h1": "Audyt AI firmy: mapa oszczędności czasu",
+     "schema": [
+      "Service",
+      "Country",
+      "Offer",
+      "PriceSpecification",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2528
+    },
+    {
+     "url": "/uslugi/rozwiazania",
+     "tytul": "Aplikacje i wtyczki AI na zamówienie · SimpleFast.ai",
+     "tytul_dl": 52,
+     "opis_dl": 150,
+     "h1": "Indywidualne rozwiązania AI: aplikacje i wtyczki na zamówienie",
+     "schema": [
+      "Service",
+      "Country",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2702
+    },
+    {
+     "url": "/uslugi/asystent-prezesa",
+     "tytul": "Prywatny asystent AI dla prezesa: 4999 zł · SimpleFast.ai",
+     "tytul_dl": 57,
+     "opis_dl": 152,
+     "h1": "Prywatny asystent AI dla prezesa",
+     "schema": [
+      "Service",
+      "Country",
+      "Offer",
+      "PriceSpecification",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2805
+    },
+    {
+     "url": "/uslugi/strony-www",
+     "tytul": "Tworzenie stron WWW pod Google i AI · SimpleFast.ai",
+     "tytul_dl": 51,
+     "opis_dl": 146,
+     "h1": "Tworzenie stron WWW widocznych w Google i w AI",
+     "schema": [
+      "Service",
+      "Country",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2653
+    },
+    {
+     "url": "/uslugi/optymalizacja",
+     "tytul": "Pozycjonowanie pod AI: cytowanie w ChatGPT · SimpleFast.ai",
+     "tytul_dl": 58,
+     "opis_dl": 155,
+     "h1": "Pozycjonowanie pod AI: bądź cytowany w ChatGPT i Perplexity",
+     "schema": [
+      "Service",
+      "Country",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2928
+    },
+    {
+     "url": "/uslugi/voiceboty/windykacja",
+     "tytul": "Voicebot do windykacji: odbiera telefon 24/7 · SimpleFast.ai",
+     "tytul_dl": 60,
+     "opis_dl": 157,
+     "h1": "Voicebot do windykacji, który odbiera telefon 24/7",
+     "schema": [
+      "Service",
+      "Country",
+      "Offer",
+      "PriceSpecification",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2264
+    },
+    {
+     "url": "/uslugi/voiceboty/potwierdzanie-wizyt",
+     "tytul": "Voicebot do potwierdzania wizyt: umawia 24/7 · SimpleFast.ai",
+     "tytul_dl": 60,
+     "opis_dl": 155,
+     "h1": "Voicebot do potwierdzania wizyt 24/7",
+     "schema": [
+      "Service",
+      "Country",
+      "Offer",
+      "PriceSpecification",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2683
+    },
+    {
+     "url": "/uslugi/voiceboty/odbieranie-telefonow",
+     "tytul": "Bot telefoniczny: odbiera połączenia 24/7 · SimpleFast.ai",
+     "tytul_dl": 57,
+     "opis_dl": 151,
+     "h1": "Bot telefoniczny, który odbiera telefon 24/7",
+     "schema": [
+      "Service",
+      "Country",
+      "Offer",
+      "PriceSpecification",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "BreadcrumbList",
+      "ListItem",
+      "Organization",
+      "Person",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2462
+    },
+    {
+     "url": "/realizacje/strona-cytowana-przez-chatgpt",
+     "tytul": "Strona cytowana przez ChatGPT po 3 tygodniach · SimpleFast.ai",
+     "tytul_dl": 61,
+     "opis_dl": 147,
+     "h1": "Strona cytowana przez ChatGPT po trzech tygodniach",
+     "schema": [
+      "CreativeWork",
+      "WebPage",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1449
+    },
+    {
+     "url": "/realizacje/top10-google-i-widocznosc-w-gpt",
+     "tytul": "Pierwsza dziesiątka Google i widoczność w GPT · SimpleFast.ai",
+     "tytul_dl": 61,
+     "opis_dl": 153,
+     "h1": "Strona w pierwszej dziesiątce Google i widoczna w GPT",
+     "schema": [
+      "CreativeWork",
+      "WebPage",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1437
+    },
+    {
+     "url": "/realizacje/z-niewidocznej-strony-do-top3-google",
+     "tytul": "Z niewidocznej strony do pierwszej trójki w Google · SimpleFast.ai",
+     "tytul_dl": 66,
+     "opis_dl": 144,
+     "h1": "Z niewidocznej strony do pierwszej trójki w Google",
+     "schema": [
+      "CreativeWork",
+      "WebPage",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1513
+    },
+    {
+     "url": "/realizacje/auto-email-bok",
+     "tytul": "Auto-email dla biura obsługi klienta · SimpleFast.ai",
+     "tytul_dl": 52,
+     "opis_dl": 148,
+     "h1": "Auto-email dla biura obsługi klienta",
+     "schema": [
+      "CreativeWork",
+      "WebPage",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1400
+    },
+    {
+     "url": "/realizacje/lead-generator",
+     "tytul": "Błyskawiczny generator leadów · SimpleFast.ai",
+     "tytul_dl": 45,
+     "opis_dl": 152,
+     "h1": "Błyskawiczny generator leadów",
+     "schema": [
+      "CreativeWork",
+      "WebPage",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1371
+    },
+    {
+     "url": "/realizacje/auto-podsumowania-spotkan",
+     "tytul": "Auto-podsumowania spotkań na Meet, Zoom i Teams · SimpleFast.ai",
+     "tytul_dl": 63,
+     "opis_dl": 150,
+     "h1": "Auto-podsumowania spotkań na Meet, Zoom i Teams",
+     "schema": [
+      "CreativeWork",
+      "WebPage",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1432
+    },
+    {
+     "url": "/realizacje/automat-tresci-social",
+     "tytul": "Automat treści na social media · SimpleFast.ai",
+     "tytul_dl": 46,
+     "opis_dl": 145,
+     "h1": "Automat treści na social media",
+     "schema": [
+      "CreativeWork",
+      "WebPage",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1398
+    },
+    {
+     "url": "/realizacje/automatyczne-raporty",
+     "tytul": "Automatyczne raporty zamiast ręcznych arkuszy · SimpleFast.ai",
+     "tytul_dl": 61,
+     "opis_dl": 147,
+     "h1": "Automatyczne raporty zamiast ręcznych arkuszy",
+     "schema": [
+      "CreativeWork",
+      "WebPage",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1413
+    },
+    {
+     "url": "/realizacje/chatbot-edukacyjny-kursy",
+     "tytul": "Chatbot edukacyjny do kursów online · SimpleFast.ai",
+     "tytul_dl": 51,
+     "opis_dl": 150,
+     "h1": "Chatbot edukacyjny do kursów online",
+     "schema": [
+      "CreativeWork",
+      "WebPage",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1392
+    },
+    {
+     "url": "/realizacje/agenci-ai-24-7",
+     "tytul": "Firmowi Agenci AI 24/7 na stronie · SimpleFast.ai",
+     "tytul_dl": 49,
+     "opis_dl": 154,
+     "h1": "Firmowi Agenci AI 24/7",
+     "schema": [
+      "CreativeWork",
+      "WebPage",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1401
+    },
+    {
+     "url": "/realizacje/transkrypcja-rozmow",
+     "tytul": "Aplikacja do transkrypcji i analizy rozmów · SimpleFast.ai",
+     "tytul_dl": 58,
+     "opis_dl": 147,
+     "h1": "Przechwytywanie i analiza rozmów",
+     "schema": [
+      "CreativeWork",
+      "WebPage",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Person",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1377
+    },
+    {
+     "url": "/blog/ile-kosztuje-wdrozenie-ai-w-malej-firmie-2026",
+     "tytul": "Ile kosztuje wdrożenie AI w małej firmie w 2026? · SimpleFast.ai",
+     "tytul_dl": 64,
+     "opis_dl": 150,
+     "h1": "Ile kosztuje wdrożenie AI w małej firmie w 2026?",
+     "schema": [
+      "Article",
+      "WebPage",
+      "Person",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2094
+    },
+    {
+     "url": "/blog/chatbot-czy-ai-agent-roznice",
+     "tytul": "Chatbot czy AI Agent: różnice i co wybrać · SimpleFast.ai",
+     "tytul_dl": 57,
+     "opis_dl": 152,
+     "h1": "Chatbot czy AI Agent: czym się różnią i co wybrać dla firmy",
+     "schema": [
+      "Article",
+      "WebPage",
+      "Person",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2154
+    },
+    {
+     "url": "/blog/jak-voicebot-odbiera-telefony",
+     "tytul": "Jak voicebot odbiera telefony, gdy pracujesz · SimpleFast.ai",
+     "tytul_dl": 60,
+     "opis_dl": 147,
+     "h1": "Jak voicebot odbiera telefony, gdy pracujesz, i czy klienci to akceptują",
+     "schema": [
+      "Article",
+      "WebPage",
+      "Person",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2158
+    },
+    {
+     "url": "/blog/ai-act-a-twoja-firma-2026",
+     "tytul": "AI Act a Twoja firma: co wiedzieć (2026) · SimpleFast.ai",
+     "tytul_dl": 56,
+     "opis_dl": 145,
+     "h1": "AI Act a Twoja firma: co musisz wiedzieć przed wdrożeniem (2026)",
+     "schema": [
+      "Article",
+      "WebPage",
+      "Person",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2282
+    },
+    {
+     "url": "/blog/automatyzacja-procesow-ai-od-czego-zaczac",
+     "tytul": "Automatyzacja procesów AI: od czego zacząć w MŚP · SimpleFast.ai",
+     "tytul_dl": 64,
+     "opis_dl": 146,
+     "h1": "Czym jest automatyzacja procesów AI i od czego zacząć w MŚP",
+     "schema": [
+      "Article",
+      "WebPage",
+      "Person",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1994
+    },
+    {
+     "url": "/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie",
+     "tytul": "Ile kosztuje automatyzacja AI? Widełki 2026: 3000-10000 zł · SimpleFast.ai",
+     "tytul_dl": 74,
+     "opis_dl": 154,
+     "h1": "Ile kosztuje automatyzacja AI w firmie? Widełki 2026: od 3000 do 10000 zł",
+     "schema": [
+      "Article",
+      "WebPage",
+      "Person",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2913
+    },
+    {
+     "url": "/poradniki/ile-kosztuje-chatbot-dla-firmy-2026",
+     "tytul": "Ile kosztuje chatbot AI dla firmy? Od 1790 zł · SimpleFast.ai",
+     "tytul_dl": 61,
+     "opis_dl": 152,
+     "h1": "Ile kosztuje chatbot dla firmy w 2026? Od 1790 zł i co wpływa na cenę",
+     "schema": [
+      "Article",
+      "WebPage",
+      "Person",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 3307
+    },
+    {
+     "url": "/poradniki/ai-w-biurze-rachunkowym-jakie-procesy-zautomatyzowac",
+     "tytul": "AI w biurze rachunkowym: 12 procesów do automatyzacji · SimpleFast.ai",
+     "tytul_dl": 69,
+     "opis_dl": 147,
+     "h1": "AI w biurze rachunkowym: które procesy zautomatyzować najpierw (lista 12)",
+     "schema": [
+      "Article",
+      "WebPage",
+      "Person",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1942
+    },
+    {
+     "url": "/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy",
+     "tytul": "Ile kosztuje wdrożenie AI agenta? Od 2500 zł · SimpleFast.ai",
+     "tytul_dl": 60,
+     "opis_dl": 147,
+     "h1": "Ile kosztuje wdrożenie AI agenta dla firmy i po czym poznać, że się zwróci",
+     "schema": [
+      "Article",
+      "WebPage",
+      "Person",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2639
+    },
+    {
+     "url": "/materialy/50-promptow-ai-dla-wlasciciela-firmy",
+     "tytul": "50 promptów AI dla właściciela firmy (do skopiowania) · SimpleFast.ai",
+     "tytul_dl": 69,
+     "opis_dl": 154,
+     "h1": "50 promptów AI dla właściciela firmy, gotowe do skopiowania",
+     "schema": [
+      "Article",
+      "WebPage",
+      "Person",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2826
+    },
+    {
+     "url": "/materialy/jak-pisac-prompty-ktore-dzialaja",
+     "tytul": "Jak pisać prompty, które działają (mini poradnik) · SimpleFast.ai",
+     "tytul_dl": 65,
+     "opis_dl": 152,
+     "h1": "Jak pisać prompty, które działają. Mini poradnik dla firm",
+     "schema": [
+      "Article",
+      "WebPage",
+      "Person",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2007
+    },
+    {
+     "url": "/materialy/prompty-branzowe-kancelaria-ecommerce-budowlanka",
+     "tytul": "Prompty AI: kancelaria, e-commerce, budowlanka · SimpleFast.ai",
+     "tytul_dl": 62,
+     "opis_dl": 155,
+     "h1": "Prompty branżowe AI: kancelaria, e-commerce, budowlanka",
+     "schema": [
+      "Article",
+      "WebPage",
+      "Person",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2081
+    },
+    {
+     "url": "/materialy/checklista-20-procesow-do-automatyzacji-ai",
+     "tytul": "Checklista: 20 procesów w firmie do automatyzacji AI · SimpleFast.ai",
+     "tytul_dl": 68,
+     "opis_dl": 155,
+     "h1": "Checklista: 20 procesów w firmie, które warto zautomatyzować z AI",
+     "schema": [
+      "Article",
+      "WebPage",
+      "Person",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2183
+    },
+    {
+     "url": "/materialy/10-bledow-przy-wdrazaniu-ai-w-firmie",
+     "tytul": "10 błędów przy wdrażaniu AI w firmie · SimpleFast.ai",
+     "tytul_dl": 52,
+     "opis_dl": 150,
+     "h1": "10 błędów przy wdrażaniu AI w firmie, i jak ich uniknąć",
+     "schema": [
+      "Article",
+      "WebPage",
+      "Person",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 2221
+    },
+    {
+     "url": "/materialy/arkusz-policz-koszt-recznych-zadan",
+     "tytul": "Arkusz: ile kosztują Cię ręczne zadania · SimpleFast.ai",
+     "tytul_dl": 55,
+     "opis_dl": 154,
+     "h1": "Arkusz: policz, ile naprawdę kosztują Cię ręczne zadania",
+     "schema": [
+      "Article",
+      "WebPage",
+      "Person",
+      "BreadcrumbList",
+      "ListItem",
+      "FAQPage",
+      "Question",
+      "Answer",
+      "Organization",
+      "Country",
+      "PostalAddress",
+      "ContactPoint",
+      "WebSite"
+     ],
+     "slow": 1984
+    }
+   ]
+  }
+ }
+}
