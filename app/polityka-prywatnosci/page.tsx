@@ -21,8 +21,10 @@ import { Section } from '@/components/ui';
 export const dynamic = 'force-static';
 
 const PATH = '/polityka-prywatnosci';
-const UPDATED = '2026-07-03';
-const UPDATED_LABEL = '3 lipca 2026';
+// 2026-10-12: akapit o stronie wejścia i źródle zgłoszenia (formularz diagnozy
+// dosyła je od tej wersji, components/analytics/ZrodloWejscia.tsx).
+const UPDATED = '2026-10-12';
+const UPDATED_LABEL = '12 października 2026';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Polityka prywatności',
@@ -77,9 +79,16 @@ export default function PolitykaPrywatnosciPage() {
 
           <H2>Jakie dane zbieramy i skąd je mamy?</H2>
           <P>
-            Zbieramy tylko to, co podajesz nam sam w formularzu diagnozy lub w wiadomości: imię,
+            Zbieramy to, co podajesz nam sam w formularzu diagnozy lub w wiadomości: imię,
             kontakt (e-mail albo telefon), opcjonalnie branżę, wielkość zespołu i to, czego
             potrzebujesz. Nie kupujemy baz danych i nie pozyskujemy Twoich danych z innych źródeł.
+          </P>
+          <P>
+            Razem ze zgłoszeniem z formularza zapisujemy też trzy informacje techniczne: adres
+            strony naszego serwisu, od której zacząłeś wizytę, nazwę witryny, z której do nas
+            trafiłeś (na przykład wyszukiwarki), i oznaczenie kampanii, jeśli było w linku. Nie
+            używamy do tego ciasteczek, a te informacje trafiają do nas tylko wtedy, gdy sam
+            wyślesz zgłoszenie. Dzięki nim wiemy, która treść odpowiada na pytania klientów.
           </P>
 
           <H2>Dane z czatu z Agentem AI</H2>

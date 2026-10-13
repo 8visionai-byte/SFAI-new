@@ -487,6 +487,7 @@ export function ServiceHero({
               variant="primary"
               size="lg"
               href={usluga.cta.href}
+              data-umami-event="klik_cta_hero"
               className="inf-glow-cta"
               style={{ '--accent': c, '--accent-contrast': '#05050c' } as CSSProperties}
             >

@@ -72,7 +72,8 @@ import type { PodstronaUslugi } from './types';
 export const llmsTxt: PodstronaUslugi = {
   rodzic: 'optymalizacja',
   slug: 'llms-txt',
-  dataAktualizacji: '2026-08-31',
+  // 2026-10-12 (audyt SEO): 22.09 doszedł widoczny tekst z rodzica, data mówiła 31.08.
+  dataAktualizacji: '2026-09-22',
 
   /* H1 1:1 z pakietu §P7. */
   h1: 'llms.txt: co to jest i czy naprawdę coś daje',

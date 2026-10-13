@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui';
 import { SITE, LEGAL_ROUTES } from '@/lib/site';
+import { czytajWejscie } from '@/components/analytics/ZrodloWejscia';
 
 /**
  * DiagnozaForm — multi-step formularz diagnozy (spec 03 §11).
@@ -18,7 +19,7 @@ import { SITE, LEGAL_ROUTES } from '@/lib/site';
  * timestamp trzeba wysłać do Make.com jako dowód zgody (TODO przy podłączaniu webhooka).
  *
  * ANTY-SPAM (do egzekwowania PO STRONIE SERWERA przy podłączeniu webhooka):
- * walidacja formatu e-mail/telefon, honeypot (pole `firma_www`), time-trap
+ * walidacja formatu e-mail/telefon, honeypot (pole `hp_kontrola`, do 2026-10-12 `firma_www`), time-trap
  * (odrzuć submit < ~2s od montażu), opcjonalnie Cloudflare Turnstile. Client-side
  * walidacja niżej to TYLKO UX — NIGDY jedyna bariera.
  */
@@ -65,7 +66,12 @@ export function DiagnozaForm() {
   const [status, setStatus] = useState<Status>('idle');
 
   function next() {
-    setStep((s) => Math.min(3, s + 1));
+    const n = Math.min(3, step + 1);
+    // Lejek w Umami (audyt 2026-10-12): bez tego widać tylko wysłane zgłoszenia,
+    // a nie miejsce, w którym ludzie odpadają. Zawsze przez `?.`. Poza updaterem
+    // setStep, bo StrictMode wywołuje updater dwa razy i zdarzenie by się dublowało.
+    if (n !== step) window.umami?.track('formularz_krok', { krok: n });
+    setStep(n);
   }
   function back() {
     setStep((s) => Math.max(1, s - 1));
@@ -74,7 +80,15 @@ export function DiagnozaForm() {
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     // Anty-spam (lokalnie — i tak MUSI być powtórzone na serwerze):
-    if (honeypot) return; // bot wypełnił ukryte pole
+    // 2026-10-12: wypełniona pułapka NIE kończy się już ciszą. Przy dawnej nazwie
+    // pola (firma_www) autouzupełnianie przeglądarki mogło je wypełnić nazwą firmy
+    // i człowiek klikał przycisk, który nic nie robił. Teraz widzi stan błędu
+    // z mailem i telefonem, a w Umami zostaje ślad, ile razy to się zdarza.
+    if (honeypot) {
+      window.umami?.track('formularz_pulapka');
+      setStatus('error');
+      return;
+    }
     if (Date.now() - mountedAt < 2000) return; // submit zbyt szybki = bot
     if (!imie.trim()) return;
     if (!isValidKontakt(kontakt)) {
@@ -88,6 +102,9 @@ export function DiagnozaForm() {
     // UWAGA: poprzednia wersja wysyłała w protokole Netlify Forms na "/", co na
     // Vercelu zwracało 405 i KAŻDE zgłoszenie ginęło. Zgodę RODO wysyłamy jako pole
     // (dowód zgody); honeypot/time-trap są walidowane tu ORAZ na serwerze.
+    // Strona wejścia i źródło (components/analytics/ZrodloWejscia.tsx): bez nich
+    // pole `strona` w Make mówiło zawsze /kontakt albo strona główna.
+    const wejscie = czytajWejscie();
     fetch('/api/lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -99,7 +116,10 @@ export function DiagnozaForm() {
         imie: imie.trim(),
         kontakt: kontakt.trim(),
         zgoda: 'tak',
-        firma_www: honeypot,
+        hp_kontrola: honeypot,
+        wejscie: wejscie.sciezka,
+        skad: wejscie.skad,
+        utm: wejscie.utm,
       }),
     })
       .then((res) => {
@@ -107,10 +127,17 @@ export function DiagnozaForm() {
         // `?.` jest obowiązkowe: bloker reklam albo brak env = obiektu nie ma, a gołe
         // wywołanie rzuciłoby wyjątkiem i użytkownik zobaczyłby stan błędu mimo
         // poprawnie wysłanego leada. Analityka nigdy nie może zepsuć konwersji.
-        if (res.ok) window.umami?.track('wyslano_formularz');
+        if (res.ok) {
+          window.umami?.track('wyslano_formularz', { potrzeba: potrzeba ?? '', wejscie: wejscie.sciezka });
+        } else {
+          window.umami?.track('formularz_blad', { status: res.status });
+        }
         setStatus(res.ok ? 'success' : 'error');
       })
-      .catch(() => setStatus('error'));
+      .catch(() => {
+        window.umami?.track('formularz_blad', { status: 0 });
+        setStatus('error');
+      });
   }
 
   if (status === 'success') {
@@ -330,12 +357,16 @@ export function DiagnozaForm() {
             )}
           </div>
 
-          {/* Honeypot — ukryte pole anty-bot. Niewidoczne i poza tab-orderem. */}
+          {/* Honeypot — ukryte pole anty-bot. Niewidoczne i poza tab-orderem.
+              2026-10-12: nazwa, id i etykieta celowo BEZ słów, które autouzupełnianie
+              przeglądarki rozpoznaje (firma, www, nazwa, adres, email, telefon).
+              Dawne firma_www Chrome mógł wypełnić nazwą firmy z profilu. Serwer
+              (app/api/lead/route.ts) sprawdza tę nazwę i, przejściowo, starą. */}
           <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
-            <label htmlFor="df-firma-www">Nie wypełniaj tego pola</label>
+            <label htmlFor="df-hp-kontrola">Zostaw to pole puste</label>
             <input
-              id="df-firma-www"
-              name="firma_www"
+              id="df-hp-kontrola"
+              name="hp_kontrola"
               type="text"
               tabIndex={-1}
               autoComplete="off"
@@ -373,6 +404,7 @@ export function DiagnozaForm() {
             href="https://cal.com/simple-fast-ai/spotkanie-ai"
             target="_blank"
             rel="noopener noreferrer"
+            data-umami-event="klik_kalendarz"
             className="sf-press flex min-h-[48px] items-center justify-center gap-2 rounded-sm border-[1.5px] border-accent bg-accent-soft px-4 text-center text-body-sm font-semibold text-accent-hover transition-[background-color,color,transform] duration-fast ease-out hover:bg-accent hover:text-accent-contrast active:scale-[0.98]"
           >
             Wolisz od razu wybrać termin? Otwórz kalendarz

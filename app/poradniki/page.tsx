@@ -34,7 +34,7 @@ const PATH = '/poradniki';
 export const metadata: Metadata = buildMetadata({
   title: 'Poradniki AI dla firm: ile kosztuje, co automatyzować',
   description:
-    'Poradniki AI dla firm: ile kosztuje chatbot i agent AI, które procesy zautomatyzować w biurze rachunkowym i jak policzyć zwrot. Answer-first, z liczbami, bez żargonu.',
+    'Poradniki AI dla firm: ile kosztuje chatbot i agent AI, które procesy zautomatyzować w biurze rachunkowym i jak policzyć zwrot. Z liczbami, bez żargonu.',
   path: PATH,
 });
 

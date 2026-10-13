@@ -18,8 +18,10 @@ export const automatyzacje: Usluga = {
   /* 2026-08-31: data bumpnięta z '2026-08-21', bo zmieniła się treść widoczna
      dla klienta (nagłówek i akapit case'u Instytutu Kryptografii oraz opis
      realizacji: 80% / 75% draftów -> około 85% pisze AI). Pole jest źródłem
-     `lastmod` w sitemap.xml (app/sitemap.ts). */
-  dataAktualizacji: '2026-08-31',
+     `lastmod` w sitemap.xml (app/sitemap.ts).
+     2026-10-12 (audyt SEO): z FAQ o danych usunięta data wejścia AI Act
+     (reguła projektu: zero dat, numerów artykułów i kar z AI Act). */
+  dataAktualizacji: '2026-10-12',
   h1: 'Automatyzacja procesów w firmie z AI',
 
   kapsula:
@@ -393,7 +395,7 @@ export const automatyzacje: Usluga = {
     {
       pytanie: 'Czy moje dane będą bezpieczne?',
       odpowiedz:
-        'Tak. Dane zostają w Unii Europejskiej i przetwarzamy je zgodnie z RODO oraz AI Act, który w pełni obowiązuje od 2 sierpnia 2026. Podpisujemy umowę powierzenia danych, a Ty widzisz każdy krok procesu i w każdej chwili możesz go zatrzymać.',
+        'Tak. Dane zostają w Unii Europejskiej i przetwarzamy je zgodnie z RODO oraz AI Act. Podpisujemy umowę powierzenia danych, a Ty widzisz każdy krok procesu i w każdej chwili możesz go zatrzymać.',
     },
     {
       pytanie: 'Ile trwa wdrożenie automatyzacji?',

@@ -264,7 +264,9 @@ export const AI_RADAR_LAST_MODIFIED = '2026-08-16';
  * przelaczana na `live: true` przy stawianiu kazdej podstrony.
  */
 export const ROUTES: RouteEntry[] = [
-  { path: '/', priority: 1.0, changeFrequency: 'weekly', live: true, lastModified: SEO_ETAPY_1_3 },
+  // 2026-10-12: osobna data, bo FAQ strony głównej (components/sections/faqData.ts)
+  // straciło datę wejścia AI Act. Stała SEO_ETAPY_1_3 zostaje dla /narzedzia.
+  { path: '/', priority: 1.0, changeFrequency: 'weekly', live: true, lastModified: '2026-10-12' },
 
   // Hub /uslugi (rozdroze) — zbudowany (app/uslugi/page.tsx, SSG): rozdroze 3 klastrow
   // + wejscie do strony-parasola. live:true -> wchodzi do sitemapy.
@@ -345,7 +347,8 @@ export const ROUTES: RouteEntry[] = [
 
   // Strony prawne (RODO art. 13). Wymagane PRZED zbieraniem danych w formularzu.
   // INPUT/BUILD: postawić treść stron, potem ustawić live: true (wejdą do sitemapy).
-  { path: '/polityka-prywatnosci', priority: 0.3, changeFrequency: 'yearly', live: true, lastModified: '2026-08-16' },
+  // 2026-10-12: akapit o stronie wejścia i źródle zgłoszenia (realna zmiana treści).
+  { path: '/polityka-prywatnosci', priority: 0.3, changeFrequency: 'yearly', live: true, lastModified: '2026-10-12' },
   { path: '/obowiazek-informacyjny', priority: 0.3, changeFrequency: 'yearly', live: false, lastModified: HOME_LAST_MODIFIED },
 ];
 

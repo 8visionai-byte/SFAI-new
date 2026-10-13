@@ -24,7 +24,9 @@ export function ServiceCTA({ cta }: { cta: Usluga['cta'] }) {
 
         <Reveal delay={0.1}>
           <div className="mt-9 flex flex-col items-center gap-3">
-            <MagneticButton variant="primary" size="lg" href="/kontakt">
+            {/* data-umami-event: Umami sam liczy kliknięcia (adres strony dokłada
+                automatycznie), bez JavaScriptu po naszej stronie. Audyt 2026-10-12. */}
+            <MagneticButton variant="primary" size="lg" href="/kontakt" data-umami-event="klik_cta_dol">
               {cta.label}
             </MagneticButton>
             <span className="text-caption max-w-[60ch] text-fg-subtle">{cta.dowod}</span>

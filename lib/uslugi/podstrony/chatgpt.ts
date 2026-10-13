@@ -86,7 +86,9 @@ import type { PodstronaUslugi } from './types';
 export const chatgpt: PodstronaUslugi = {
   rodzic: 'optymalizacja',
   slug: 'chatgpt',
-  dataAktualizacji: '2026-08-31',
+  // 2026-10-12 (audyt SEO): 22.09 doszedł widoczny tekst z rodzica (16 linii),
+  // a data dalej mówiła 31.08, więc lastmod w mapie nie dawał Google powodu wracać.
+  dataAktualizacji: '2026-09-22',
 
   /* H1 1:1 z pakietu §P2. */
   h1: 'Jak sprawić, żeby ChatGPT polecał Twoją firmę',

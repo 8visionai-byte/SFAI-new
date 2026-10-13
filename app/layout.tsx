@@ -10,6 +10,7 @@ import { AgentConsole } from '@/components/agent/AgentConsole';
 import { FaviconPulse } from '@/components/effects/FaviconPulse';
 import { AuraDesync } from '@/components/effects/AuraDesync';
 import { MotionGate } from '@/components/motion/MotionGate';
+import { ZrodloWejscia } from '@/components/analytics/ZrodloWejscia';
 
 /**
  * Fonty self-host przez next/font/google (zero requestów do fonts.googleapis.com,
@@ -139,6 +140,10 @@ export default function RootLayout({
             window.load, TYLKO desktop ≥1024px, nigdy przy reduced-motion ani
             Save-Data — mobile nie ładuje ani bajta bibliotek (budżet PageSpeed). */}
         <MotionGate />
+
+        {/* Strona wejścia i źródło, raz na sesję (sessionStorage, bez ciasteczek).
+            Formularz diagnozy dosyła je z leadem do Make. Render: null. */}
+        <ZrodloWejscia />
 
         {/* Umami (cookieless analytics, RODO bez banera) — renderuje się TYLKO gdy
             NEXT_PUBLIC_UMAMI_WEBSITE_ID ustawione w Vercelu. defer + koniec body:

@@ -14,7 +14,7 @@
 export const FAQ_ITEMS: { q: string; a: string }[] = [
   {
     q: 'Czy moje dane będą bezpieczne?',
-    a: 'Tak. Twoje dane zostają w Unii Europejskiej i przetwarzamy je zgodnie z RODO oraz AI Act, który w pełni obowiązuje od 2 sierpnia 2026. Podpisujemy umowę powierzenia danych, a Ty przez cały czas widzisz, co Agent robi, i możesz go zatrzymać. Klient rozmawiający z Agentem zawsze wie, że rozmawia z AI.',
+    a: 'Tak. Twoje dane zostają w Unii Europejskiej i przetwarzamy je zgodnie z RODO oraz AI Act. Podpisujemy umowę powierzenia danych, a Ty przez cały czas widzisz, co Agent robi, i możesz go zatrzymać. Klient rozmawiający z Agentem zawsze wie, że rozmawia z AI.',
   },
   {
     q: 'Ile to kosztuje?',

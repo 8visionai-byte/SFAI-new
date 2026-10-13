@@ -8,7 +8,12 @@ import { NextRequest, NextResponse } from 'next/server';
  * Vercel → Settings → Environment Variables → MAKE_LEAD_WEBHOOK_URL (Production).
  *
  * Zabezpieczenia (serwerowe powtórzenie tego, co formularz robi lokalnie):
- *  - honeypot: pole `firma_www` wypełnione = bot, udajemy sukces (bot nie wie, że wpadł),
+ *  - honeypot: pole `hp_kontrola` wypełnione = bot, udajemy sukces (bot nie wie, że wpadł).
+ *    Do 2026-10-12 pole nazywało się `firma_www` (zmiana: autouzupełnianie Chrome
+ *    mogło je wypełnić nazwą firmy). Starą nazwę sprawdzamy dalej, bo przeglądarki
+ *    z kartą otwartą przed wdrożeniem wysyłają jeszcze stary formularz,
+ *  - wejscie / skad / utm: strona wejścia i źródło z components/analytics/ZrodloWejscia.tsx,
+ *    przycięte do 200 znaków. W Make widoczne dopiero po Redetermine data structure,
  *  - walidacja: imię + kontakt + zgoda RODO obowiązkowe,
  *  - limit: max 5 zgłoszeń / 10 min z jednego IP (w pamięci instancji; na Vercelu
  *    to ochrona best-effort, wystarczająca na zwykły spam),
@@ -47,7 +52,12 @@ export async function POST(request: NextRequest) {
   }
 
   // Honeypot: bot wypełnił ukryte pole → udajemy sukces, nic nie wysyłamy.
-  if (typeof dane.firma_www === 'string' && dane.firma_www.trim() !== '') {
+  // Log bez danych osobowych: w Vercel Logs (fraza [lead]) widać, jak często to się dzieje.
+  const pulapka = [dane.hp_kontrola, dane.firma_www].some(
+    (v) => typeof v === 'string' && v.trim() !== ''
+  );
+  if (pulapka) {
+    console.warn('[lead] Wypełniona pułapka na boty, zgłoszenie pominięte.');
     return NextResponse.json({ ok: true });
   }
 
@@ -72,6 +82,9 @@ export async function POST(request: NextRequest) {
     kontakt,
     zgoda: 'tak',
     strona: request.headers.get('referer') ?? '',
+    wejscie: String(dane.wejscie ?? '').slice(0, 200),
+    skad: String(dane.skad ?? '').slice(0, 200),
+    utm: String(dane.utm ?? '').slice(0, 200),
     kiedy: new Date().toISOString(),
   };
 

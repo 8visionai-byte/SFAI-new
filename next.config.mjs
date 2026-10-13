@@ -92,6 +92,12 @@ const nextConfig = {
   async headers() {
     return [...securityHeaders, ...brandCacheHeaders];
   },
+  // 2026-10-12 (audyt SEO): /mission to adres ze starej wersji strony. Zwracał 404,
+  // a Google nadal podawał go jako stronę linkującą do strony głównej (URL Inspection).
+  // permanent: true = 308, czyli trwałe przeniesienie sygnałów na stronę główną.
+  async redirects() {
+    return [{ source: '/mission', destination: '/', permanent: true }];
+  },
 };
 
 export default nextConfig;

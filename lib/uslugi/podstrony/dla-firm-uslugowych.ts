@@ -84,7 +84,8 @@ import type { PodstronaUslugi } from './types';
 export const dlaFirmUslugowych: PodstronaUslugi = {
   rodzic: 'optymalizacja',
   slug: 'dla-firm-uslugowych',
-  dataAktualizacji: '2026-08-31',
+  // 2026-10-12 (audyt SEO): 22.09 doszedł widoczny tekst z rodzica, data mówiła 31.08.
+  dataAktualizacji: '2026-09-22',
 
   /* H1 1:1 z pakietu §P8. Cztery nazwy branż w nagłówku to nie ozdoba:
      to jedyne miejsce w serwisie, gdzie klient usługowy rozpoznaje siebie. */

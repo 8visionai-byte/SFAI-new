@@ -61,7 +61,8 @@ import type { PodstronaUslugi } from './types';
 export const audytWidocznosciWAi: PodstronaUslugi = {
   rodzic: 'optymalizacja',
   slug: 'audyt-widocznosci-w-ai',
-  dataAktualizacji: '2026-08-31',
+  // 2026-10-12 (audyt SEO): 22.09 doszedł widoczny tekst z rodzica, data mówiła 31.08.
+  dataAktualizacji: '2026-09-22',
 
   h1: 'Audyt widoczności w AI: sprawdzamy, czy ChatGPT poleca Twoją firmę',
 

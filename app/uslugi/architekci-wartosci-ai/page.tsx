@@ -7,7 +7,6 @@ import {
   faqSchema,
   breadcrumbSchema,
 } from '@/components/seo/schemas';
-import { SITE } from '@/lib/site';
 
 import type { CSSProperties } from 'react';
 import { Section, MagneticButton, Card } from '@/components/ui';
@@ -49,7 +48,6 @@ import { INF_KATEGORIA, INF_KATEGORIA_DEFAULT } from '@/lib/inf-kategorie';
 export const dynamic = 'force-static';
 
 const PATH = '/uslugi/architekci-wartosci-ai';
-const CANONICAL = `${SITE.url}${PATH}`;
 
 export const metadata: Metadata = buildMetadata({
   title: 'Architekci Wartości AI: płacisz za efekt',
@@ -664,9 +662,9 @@ export default function ArchitekciWartosciAiPage() {
           { name: 'Architekci Wartości AI', path: PATH },
         ])}
       />
-
-      {/* Kanoniczny URL = absolutny (spójność z metadata). */}
-      <link rel="canonical" href={CANONICAL} />
+      {/* 2026-10-12 (audyt SEO): usunięty ręczny <link rel="canonical">. Kanoniczny
+          adres wstawia już buildMetadata (lib/metadata.ts, alternates.canonical),
+          więc w HTML stały DWA identyczne tagi. */}
     </main>
   );
 }

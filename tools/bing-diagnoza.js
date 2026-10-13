@@ -39,11 +39,15 @@ const licz = (x) => Array.isArray(x) ? x.length : (x == null ? 'brak' : x);
   } else console.log('1. WITRYNY: ' + JSON.stringify(sites).slice(0, 200));
 
   // 2. Ile adresow Bing faktycznie zaindeksowal
-  const idx = await call('GetUrlCounts');
-  console.log('\n2. LICZNIKI ADRESOW (crawled/indexed wg dni):');
+  // 2026-10-12: GetUrlCounts zwracal HTTP 404, wiec ta sekcja nic nie pokazywala.
+  // Liczbe stron w indeksie daje GetCrawlStats (pole InIndex, wpis na dzien).
+  const idx = await call('GetCrawlStats');
+  console.log('\n2. STRONY W INDEKSIE BING (GetCrawlStats, InIndex):');
   if (Array.isArray(idx) && idx.length) {
-    const o = idx[idx.length - 1];
-    console.log('   ostatni wpis: ' + JSON.stringify(o).slice(0, 300));
+    const wpisy = idx.filter((o) => o && o.InIndex !== undefined);
+    const ost = wpisy.slice(-5);
+    const dzien = (d) => { const m = /Date\((\d+)/.exec(String(d || '')); return m ? new Date(Number(m[1])).toISOString().slice(0, 10) : String(d || '').slice(0, 30); };
+    ost.forEach((o) => console.log('   ' + dzien(o.Date) + ' | w indeksie ' + o.InIndex + ' | pobrane ' + (o.CrawledPages ?? '?') + ' | bledy ' + (o.CrawlErrors ?? '?')));
   } else console.log('   ' + JSON.stringify(idx).slice(0, 300));
 
   // 3. Bledy indeksowania

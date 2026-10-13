@@ -18,7 +18,9 @@ import type { Usluga } from './types';
  */
 export const agentRekrutacyjny: Usluga = {
   slug: 'agent-rekrutacyjny',
-  dataAktualizacji: '2026-08-21',
+  // 2026-10-12 (audyt SEO): z odpowiedzi o danych usunięta data wejścia AI Act
+  // (reguła projektu: zero dat, numerów artykułów i kar z AI Act).
+  dataAktualizacji: '2026-10-12',
   h1: 'Agent AI do rekrutacji i pierwszego kontaktu',
 
   kapsula:
@@ -184,7 +186,7 @@ export const agentRekrutacyjny: Usluga = {
         naglowek: 'AI w rekrutacji a RODO: dane kandydatów zostają w Unii Europejskiej',
         wariant: 'quiet',
         akapity: [
-          'Dane kandydatów przetwarzamy zgodnie z RODO i AI Act, który obowiązuje w pełni od 2 sierpnia 2026. Infrastruktura stoi w Unii Europejskiej.',
+          'Dane kandydatów przetwarzamy zgodnie z RODO i AI Act. Infrastruktura stoi w Unii Europejskiej.',
           'Kandydat wie, że pierwszy kontakt prowadzi agent AI. Ty kontrolujesz, co jest przechowywane i jak długo. Szczegóły ustalamy na diagnozie.',
         ],
       },

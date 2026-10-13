@@ -84,7 +84,8 @@ import type { PodstronaUslugi } from './types';
 export const monitoringCytowanWAi: PodstronaUslugi = {
   rodzic: 'optymalizacja',
   slug: 'monitoring-cytowan-w-ai',
-  dataAktualizacji: '2026-08-31',
+  // 2026-10-12 (audyt SEO): 22.09 doszedł widoczny tekst z rodzica, data mówiła 31.08.
+  dataAktualizacji: '2026-09-22',
 
   /* H1 1:1 z pakietu §P5. */
   h1: 'Monitoring cytowań w AI: powtarzalny pomiar, czy modele Cię polecają',
