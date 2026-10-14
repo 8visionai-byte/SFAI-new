@@ -9,7 +9,7 @@ Legenda: NIERUSZONE / W TOKU / CLAIMED-UNVERIFIED / DONE (tylko z dowodem).
 |---|---|---|---|
 | 0 | Fala 0 (formularz, pomiar, llms.txt, AI Act, /mission) | DONE | tsc 0, lint 0, build 86/86; commity d10b78d + 1a65a0d, push 13.10 |
 | 0b | Fala 0 na produkcji | DONE | /mission 308; llms.txt 79 linków; chunk JS formularza: hp_kontrola 2×, firma_www 0×; /api/lead zły JSON → 400 |
-| 0c | Make 9666591: wejscie/skad/utm w mailu z leadem | CLAIMED-UNVERIFIED | scenarios_update 13.10 20:31 UTC: aktywny, bez błędów; dowód końcowy = testowe zgłoszenie (zgoda Pawła) |
+| 0c | Make 9666591: wejscie/skad/utm w mailu z leadem | DONE | test Pawła 14.10 14:58 UTC: wykonanie Make status 1 (sukces, 2 operacje), mail „Now Lead z Simlefast.ai" w Gmailu z „Strona wejścia: /" (skąd/utm puste przy wejściu bezpośrednim, poprawnie). Poprawka 14.10: wiedza bota 75% → ok. 85% (commit 0d34499, na produkcji) |
 | 1 | Zwiad (rój wf_6ff5322c-29f, 9 agentów) | DONE | `.seo-przeglad/naprawa-2026-10-13/` (zwiad.json, gsc.json, serp.json 23/42 frazy do CAPTCHA, audyt-strony.json, technika.json) |
 | 2 | Plan fali 1 | DONE | ryzyka odsiane: strony chronione tylko dopiski, nowe podstrony w gałęziach chronionych przesunięte do fali 2 |
 | 3 | Wdrożenie fali 1 (rój wf_d75df5ad-2ec: 7 autorów, integrator, 3 recenzentów, poprawki; wznowiony po limicie sesji) | DONE | 35 uwag recenzji (1 blokująca, 19 ważnych), poprawione; 2 moje poprawki 14.10 (bezpłatna rozmowa = badanie potrzeb, pomiar w Sprincie) |
@@ -38,7 +38,7 @@ Legenda: NIERUSZONE / W TOKU / CLAIMED-UNVERIFIED / DONE (tylko z dowodem).
 4. Role founderów: parasol Architekci mówi, że automatyzacje buduje Marcin, /o-nas i nowe sekcje, że Paweł.
 5. Liczba KNF Team „około 8 h tygodniowo" na stronie wdrożenia.
 6. Kolor, emoji, ikona agenci-ai i wdrozenie-ai w menu.
-7. Zgoda na testowe zgłoszenie TEST-AUDYT (dowód dla Make i formularza).
+7. ~~Zgoda na testowe zgłoszenie~~ ZAMKNIĘTE 14.10: Paweł sam przetestował formularz, Make i mail działają.
 8. Adres bazowy i pełna nazwa prawna (NAP, pakiet poza stroną pkt 0).
 
 ## FALA 2 (po pomiarze fali 1, nie wcześniej niż 28.10)
