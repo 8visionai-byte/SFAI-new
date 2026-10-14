@@ -18,7 +18,11 @@ Wszędzie poniżej, gdzie jest `[ADRES BAZOWY]`, wpisz to, co wybierzesz.
 
 ---
 
-## 1. Domeny, które dziś szkodzą (Hostinger, ok. 10 minut)
+## 1. Domeny (DECYZJA PAWŁA 14.10: bez zmian)
+
+sfai.cloud to osobna, używana strona, więc zostaje bez przekierowania. simplefastai.pl na razie zostaje pusta. Poniższa tabela jest tylko dla porządku, NIE wykonywać.
+
+### (archiwum) Domeny, które dziś szkodzą (Hostinger, ok. 10 minut)
 
 | Domena | Stan 13.10 | Co zrobić |
 |---|---|---|

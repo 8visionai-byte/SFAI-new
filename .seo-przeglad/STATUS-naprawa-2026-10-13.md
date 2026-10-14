@@ -41,6 +41,13 @@ Legenda: NIERUSZONE / W TOKU / CLAIMED-UNVERIFIED / DONE (tylko z dowodem).
 7. ~~Zgoda na testowe zgłoszenie~~ ZAMKNIĘTE 14.10: Paweł sam przetestował formularz, Make i mail działają.
 8. Adres bazowy i pełna nazwa prawna (NAP, pakiet poza stroną pkt 0).
 
+## Działania Pawła 14.10 (z jego relacji + sprawdzenie)
+- Search Console: prośba o zindeksowanie 5 adresów z pakietu, ZROBIONE (Paweł).
+- sfai.cloud: osobna, używana strona, BEZ przekierowania (decyzja Pawła). simplefastai.pl: pusta, na razie bez zmian.
+- LinkedIn: przycisk „Odwiedź witrynę" = https://www.simplefast.ai (zrzut). Publiczna strona 14.10 nadal ma pole „Witryna" (about_website) i sameAs = https://sfai.cloud/ → do zmiany w „Informacje o stronie" albo czeka na odświeżenie LinkedIn.
+- Bing: właściwość simplefast.ai/ obejmuje www (te same dane w API), osobna właściwość niepotrzebna. Bing API SubmitUrlBatch: 20 zmienionych adresów, HTTP 200 (14.10).
+- Katalogi: odłożone przez Pawła na później.
+
 ## FALA 2 (po pomiarze fali 1, nie wcześniej niż 28.10)
 - `/uslugi/chatboty/wdrozenie` (fraza „wdrożenie chatbota", ryzyko podbierania rodzicowi „kto wdroży").
 - `/poradniki/co-to-jest-voicebot` (definicja; ryzyko dla rodzica na „voicebot").
