@@ -200,7 +200,7 @@ import type { Usluga } from './types';
  *      - Lenart Motors: ChatGPT wskazuje firmę na pytanie o najlepszego blacharza
  *        i lakiernika premium, efekt po OKOŁO 3 TYGODNIACH od zbudowania strony
  *        i wrzucenia jej do sieci,
- *      - Fichtelgebirgshaus.de (DE): pierwsza dziesiątka Google na frazy umówione
+ *      - Fichtelgebirgs-Haus (DE): pierwsza dziesiątka Google na frazy umówione
  *        z klientem w umowie plus widoczność w GPT,
  *      - Trockenhaus (DE): z NIEWIDOCZNEJ w Google do PIERWSZEJ TRÓJKI na frazę
  *        „Trockenhaus".
@@ -226,7 +226,7 @@ import type { Usluga } from './types';
  *        stoi już w kapsule, w pasie metryk sekcji `rozwiazanie` i w FAQ,
  *        więc nic się nie rozjeżdża,
  *      - „TOP 10" na frazy z umowy plus widoczność w GPT: pakiet §N1 karta 2,
- *        wynik W GOOGLE, Fichtelgebirgshaus.de,
+ *        wynik W GOOGLE, Fichtelgebirgs-Haus,
  *      - „TOP 3" na frazę Trockenhaus ze stanu bez widoczności: pakiet §N1
  *        karta 3, wynik W GOOGLE, Trockenhaus,
  *      - „5 dni roboczych" Sprintu Diagnostycznego, czasy naprawy (landing
@@ -236,7 +236,7 @@ import type { Usluga } from './types';
  *      - sześć źródeł (N3), pięć kroków i cztery boty (N4): definicje z pakietu,
  *        zero liczb spoza niego.
  *    ROZDZIAŁ KANAŁÓW jest wymogiem pakietu: wynik w AI (Lenart Motors) nazwany
- *    osobno od wyników w Google (Fichtelgebirgshaus.de, Trockenhaus), także
+ *    osobno od wyników w Google (Fichtelgebirgs-Haus, Trockenhaus), także
  *    w polu `zrodlo` każdej metryki. Zero procentów, bo pakiet ich nie podaje.
  *    W N1-N5 nie ma ani jednej kwoty (uwaga wdrożeniowa pakietu §6: kwoty
  *    wyłącznie w sekcjach N8, N9 i N11).
@@ -430,8 +430,11 @@ export const optymalizacja: Usluga = {
   /* PRZYCIĘCIE 2026-09-22: data bumpnięta z '2026-08-31' na dzień przycięcia.
      Pole jest źródłem `lastmod` w sitemap.xml (app/sitemap.ts), a treść strony
      zmieniła się co do sekcji (6177 -> 1577 słów), więc stara data mówiłaby
-     botom nieprawdę. */
-  dataAktualizacji: '2026-09-22',
+     botom nieprawdę.
+     NAPRAWA SEO 2026-10-14: data bumpnięta z '2026-09-22', bo zmieniła się
+     widoczna nazwa klienta w pasie metryk, FAQ i powiązaniach (Fichtelgebirgs-Haus,
+     marka klienta; domena bez myślnika należy do obcej firmy). */
+  dataAktualizacji: '2026-10-14',
   /* H1 NIETKNIĘTE: `ServiceHero.H1_KOLOR.optymalizacja` koloruje końcówkę
      „bądź cytowany w ChatGPT i Perplexity", więc musi być dokładną końcówką. */
   h1: 'Pozycjonowanie pod AI: bądź cytowany w ChatGPT i Perplexity',
@@ -525,7 +528,7 @@ export const optymalizacja: Usluga = {
           {
             wartosc: 'TOP 10',
             opis: 'w Google na frazy z umowy, plus widoczność w GPT',
-            zrodlo: 'Fichtelgebirgshaus.de, wynik w Google',
+            zrodlo: 'Fichtelgebirgs-Haus, wynik w Google',
             ton: 'cyan',
           },
           {
@@ -677,7 +680,7 @@ export const optymalizacja: Usluga = {
     {
       pytanie: 'Macie dowód, że to działa?',
       odpowiedz:
-        'Mamy trzy, każdy z nazwą klienta. Lenart Motors: ChatGPT wskazywał tę firmę na pytanie o najlepszego blacharza i lakiernika premium, po około trzech tygodniach od zbudowania strony i wrzucenia jej do sieci. Fichtelgebirgshaus.de: pierwsza dziesiątka Google na frazy umówione z klientem w umowie, plus widoczność w GPT. Trockenhaus: z niewidocznej w Google do pierwszej trójki na frazę Trockenhaus. Każdy z tych przypadków opisaliśmy osobno w realizacjach. Dwa z trzech to klienci z Niemiec, bo pracujemy na rynku polskim i niemieckim.',
+        'Mamy trzy, każdy z nazwą klienta. Lenart Motors: ChatGPT wskazywał tę firmę na pytanie o najlepszego blacharza i lakiernika premium, po około trzech tygodniach od zbudowania strony i wrzucenia jej do sieci. Fichtelgebirgs-Haus: pierwsza dziesiątka Google na frazy umówione z klientem w umowie, plus widoczność w GPT. Trockenhaus: z niewidocznej w Google do pierwszej trójki na frazę Trockenhaus. Każdy z tych przypadków opisaliśmy osobno w realizacjach. Dwa z trzech to klienci z Niemiec, bo pracujemy na rynku polskim i niemieckim.',
     },
     {
       pytanie: 'Czy dacie gwarancję, że ChatGPT będzie mnie polecać?',
@@ -743,7 +746,7 @@ export const optymalizacja: Usluga = {
       {
         etykieta: 'Strona w pierwszej dziesiątce Google i widoczna w GPT',
         href: '/realizacje/top10-google-i-widocznosc-w-gpt',
-        opis: 'Fichtelgebirgshaus.de: frazy z umowy w pierwszej dziesiątce Google.',
+        opis: 'Fichtelgebirgs-Haus: frazy z umowy w pierwszej dziesiątce Google.',
       },
       {
         etykieta: 'Z niewidocznej strony do pierwszej trójki w Google',

@@ -1,7 +1,14 @@
 import type { Realizacja } from './types';
 
 /**
- * CASE 10 — PIERWSZA DZIESIĄTKA GOOGLE I WIDOCZNOŚĆ W GPT (Fichtelgebirgshaus.de).
+ * CASE 10: PIERWSZA DZIESIĄTKA GOOGLE I WIDOCZNOŚĆ W GPT (Fichtelgebirgs-Haus).
+ *
+ * NAZWA KLIENTA (naprawa SEO 2026-10-14): marka klienta to „Fichtelgebirgs-Haus"
+ * (z myślnikiem, tak podpisuje się klient na fichtelgebirgs-haus.de: stopka
+ * „Fichtelgebirgs-Haus · FGH Bau GmbH"). Wcześniej stała tu nazwa domeny bez
+ * myślnika, a ta domena należy do obcej firmy (dom wakacyjny). Nie wracać do niej
+ * ani w tekście, ani w linku.
+ *
  * Kategoria: optymalizacja → link wewnętrzny do /uslugi/optymalizacja.
  *
  * ŹRÓDŁO DANYCH: `.seo-przeglad/AUDYT-WDROZENIOWY-2026-08-18.md`
@@ -22,11 +29,11 @@ export const top10GoogleIWidocznoscWGpt: Realizacja = {
   slug: 'top10-google-i-widocznosc-w-gpt',
   h1: 'Strona w pierwszej dziesiątce Google i widoczna w GPT',
   kategoria: 'optymalizacja',
-  klient: 'Fichtelgebirgshaus.de',
+  klient: 'Fichtelgebirgs-Haus',
   branza: 'Rynek niemiecki',
 
   kapsula:
-    'Fichtelgebirgshaus.de to nasz klient z rynku niemieckiego. Zbudowaliśmy stronę, która weszła do pierwszej dziesiątki Google na frazy umówione z klientem w umowie, i która jest widoczna także w GPT. Ten sam sposób pracy nad treścią działa nam po polsku i po niemiecku, bo silniki AI czytają jedno i drugie.',
+    'Fichtelgebirgs-Haus to nasz klient z rynku niemieckiego. Zbudowaliśmy stronę, która weszła do pierwszej dziesiątki Google na frazy umówione z klientem w umowie, i która jest widoczna także w GPT. Ten sam sposób pracy nad treścią działa nam po polsku i po niemiecku, bo silniki AI czytają jedno i drugie.',
 
   metaTitle: 'Pierwsza dziesiątka Google i widoczność w GPT',
   metaDescription:
@@ -35,7 +42,7 @@ export const top10GoogleIWidocznoscWGpt: Realizacja = {
   kontekst: {
     h2: 'Z czym przyszedł klient?',
     tresc:
-      'Fichtelgebirgshaus.de to klient z Niemiec. Frazy, na których strona ma być widoczna, zostały zapisane w umowie, więc od pierwszego dnia było jasne, po czym poznamy, że robota się udała. To wygodny układ dla obu stron: nie ma miejsca na przesuwanie bramki po fakcie. Rynek niemiecki rządzi się tu tymi samymi prawami co polski. Klient szuka w Google, coraz częściej pyta modelu AI, i wygrywa ten, kogo widać w obu miejscach.',
+      'Fichtelgebirgs-Haus to klient z Niemiec. Frazy, na których strona ma być widoczna, zostały zapisane w umowie, więc od pierwszego dnia było jasne, po czym poznamy, że robota się udała. To wygodny układ dla obu stron: nie ma miejsca na przesuwanie bramki po fakcie. Rynek niemiecki rządzi się tu tymi samymi prawami co polski. Klient szuka w Google, coraz częściej pyta modelu AI, i wygrywa ten, kogo widać w obu miejscach.',
   },
 
   rozwiazanie: {
@@ -70,7 +77,7 @@ export const top10GoogleIWidocznoscWGpt: Realizacja = {
     {
       pytanie: 'Pracujecie też poza Polską?',
       odpowiedz:
-        'Tak. Fichtelgebirgshaus.de i Trockenhaus to klienci z rynku niemieckiego. Pracujemy po polsku i po niemiecku, a sposób pracy nad treścią jest ten sam, bo silniki AI czytają obydwa języki i w obu szukają tego samego: konkretu i jasnej odpowiedzi.',
+        'Tak. Fichtelgebirgs-Haus i Trockenhaus to klienci z rynku niemieckiego. Pracujemy po polsku i po niemiecku, a sposób pracy nad treścią jest ten sam, bo silniki AI czytają obydwa języki i w obu szukają tego samego: konkretu i jasnej odpowiedzi.',
     },
   ],
 

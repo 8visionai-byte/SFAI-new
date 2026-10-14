@@ -59,7 +59,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Uslugi',
     title: 'Jakie uslugi AI oferuje SimpleFast.ai',
     summary:
-      'Oferujemy dziesiec uslug AI dla firm w trzech grupach: obsluga 24/7 (chatboty, voiceboty, agent rekrutacyjny), back-office i procesy (automatyzacje, faktury OCR/KSeF, opieka AI) oraz budowa i strategia (audyt AI, rozwiazania na zamowienie, strony www, pozycjonowanie pod AI). Budujemy AI Agentow, ktorzy wykonuja prace pod nadzorem czlowieka, nie tylko gadaja. Zaczynasz od jednej rzeczy, ktora zzera najwiecej czasu, a Twoje dane zostaja w Unii Europejskiej.',
+      'Oferujemy czternascie uslug AI dla firm w trzech grupach: obsluga 24/7 (chatboty, voiceboty, agenci AI, agent rekrutacyjny), back-office i procesy (automatyzacje, faktury OCR/KSeF, leady B2B, opieka AI) oraz budowa i strategia (wdrozenie AI w firmie, audyt AI, rozwiazania na zamowienie, asystent AI dla prezesa, strony www, pozycjonowanie pod AI). Budujemy agentow AI, ktorzy wykonuja prace pod nadzorem czlowieka, nie tylko gadaja. Zaczynasz od jednej rzeczy, ktora zzera najwiecej czasu, a Twoje dane zostaja w Unii Europejskiej.',
     url: '/uslugi',
     intents: [
       'jakie macie uslugi',
@@ -94,7 +94,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     // Tytul = poczatek h1 strony (liczba mnoga od 2026-09-06, raport SEO 2026-09-05 sekcja 8).
     title: 'Chatbot AI dla firm',
     summary:
-      'Chatbot AI dla firmy to asystent, ktory odpowiada klientom na stronie i w komunikatorach przez cala dobe: tlumaczy oferte, podaje ceny i godziny, zbiera leady, nawet o 22:00. U nas chatbot to pierwszy krok do Agenta, ktory nie tylko odpowiada, ale i dziala: umawia, zapisuje, przekazuje sprawe dalej. Uczymy go na Twojej wiedzy, a dane zostaja w Unii Europejskiej. Cennik ma trzy progi, wszystkie kwoty netto: prosty 1790 zl w 1-2 dni robocze (bot na strone www, baza wiedzy podpieta przez nas, zbieranie leadow, odsylanie do wlasciwych miejsc na stronie), sredni 3000-6000 zl w 3-4 dni robocze (to co wyzej plus rozbudowana baza wiedzy i dodatkowe funkcje), duzy 8000-15000 zl w 5-10 dni roboczych (pelny zakres z integracjami, zaleznie od liczby elementow do zbudowania). Czas liczymy od przekazania kompletu materialow, nie od podpisania umowy, a w cenie wdrozenia sa dwie rundy poprawek. Rozliczenie masz do wyboru: przekazujemy Ci cala infrastrukture i wtedy nie placisz abonamentu, albo projekt zostaje u nas pod opieka i wtedy jest oplata utrzymaniowa 99-599 zl netto miesiecznie. Opieka chatbota jest tansza niz utrzymanie voicebota, bo chatbot jest prostszy: nie ma telefonii, minut rozmow ani syntezy glosu do pilnowania.',
+      'Chatbot AI dla firmy to asystent, ktory odpowiada klientom na stronie i w komunikatorach przez cala dobe: tlumaczy oferte, podaje ceny i godziny, zbiera leady, nawet o 22:00. U nas chatbot to pierwszy krok do agenta, ktory nie tylko odpowiada, ale i dziala: umawia, zapisuje, przekazuje sprawe dalej. Uczymy go na Twojej wiedzy, a dane zostaja w Unii Europejskiej. Cennik ma trzy progi, wszystkie kwoty netto: prosty 1790 zl w 1-2 dni robocze (bot na strone www, baza wiedzy podpieta przez nas, zbieranie leadow, odsylanie do wlasciwych miejsc na stronie), sredni 3000-6000 zl w 3-4 dni robocze (to co wyzej plus rozbudowana baza wiedzy i dodatkowe funkcje), duzy 8000-15000 zl w 5-10 dni roboczych (pelny zakres z integracjami, zaleznie od liczby elementow do zbudowania). Czas liczymy od przekazania kompletu materialow, nie od podpisania umowy, a w cenie wdrozenia sa dwie rundy poprawek. Rozliczenie masz do wyboru: przekazujemy Ci cala infrastrukture i wtedy nie placisz abonamentu, albo projekt zostaje u nas pod opieka i wtedy jest oplata utrzymaniowa 99-599 zl netto miesiecznie. Opieka chatbota jest tansza niz utrzymanie voicebota, bo chatbot jest prostszy: nie ma telefonii, minut rozmow ani syntezy glosu do pilnowania.',
     url: '/uslugi/chatboty',
     intents: [
       'chatbot dla firmy',
@@ -129,6 +129,26 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
       'utrzymanie voicebota',
       'czy voicebot ma abonament',
       'ile kosztuje voicebot miesiecznie',
+    ],
+  },
+  /* 2026-10-14 (naprawa SEO): nowa strona /uslugi/agenci-ai. Fakty 1:1
+     z lib/uslugi/agenci-ai.ts (kapsula, metaDescription, ramaCeny.tresc). */
+  {
+    id: 'uslugi-agenci-ai',
+    section: 'Uslugi',
+    title: 'Agenci AI dla firm na czacie, w telefonie i w procesach',
+    summary:
+      'Agent AI dla firm to program, ktory dostaje zadanie i sam je wykonuje w Twoich narzedziach: odpowiada klientowi, sprawdza kalendarz, zapisuje dane w CRM, przygotowuje odpowiedz na maila. Chatbot odpowiada, agent dziala. Wdrazamy agentow na czacie, w telefonie i w procesach za kulisami, a decyzje o wysokiej stawce zostaja u czlowieka. Ceny netto: agent czatowy bez integracji od 1790 zl, agent w telefonie od 2500 zl, agent dzialajacy w Twoich systemach 8000-15000 zl na czacie albo 5000-9000 zl w telefonie, prywatny asystent prezesa 4999 zl.',
+    url: '/uslugi/agenci-ai',
+    intents: [
+      'agent AI dla firm',
+      'agenci AI',
+      'czym jest agent AI',
+      'agent AI a chatbot',
+      'wdrozenie agenta AI',
+      'ile kosztuje agent AI',
+      'agent AI w telefonie',
+      'agent AI do maili',
     ],
   },
   {
@@ -199,6 +219,26 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
       'monitoring automatyzacji',
     ],
   },
+  /* 2026-10-14 (naprawa SEO): nowa strona /uslugi/wdrozenie-ai. Fakty 1:1
+     z lib/uslugi/wdrozenie-ai.ts (kapsula, ramaCeny.tresc). Parasol
+     Architekci Wartosci AI zostaje osobnym wpisem wyzej. */
+  {
+    id: 'uslugi-wdrozenie-ai',
+    section: 'Uslugi',
+    title: 'Wdrozenie AI w firmie: etapy, ceny i terminy',
+    summary:
+      'Wdrozenie AI w firmie to podpiecie sztucznej inteligencji pod jeden konkretny proces: obsluge klienta, telefony, maile albo dokumenty. Rozliczamy je etapami i kazdy etap ma jawna cene netto: diagnoza 0 zl, Sprint Diagnostyczny 1490 zl (5 dni roboczych, odliczany od wdrozenia) albo jeden proces na probe za 1990 zl. Dalej cena zalezy od narzedzia: chatbot od 1790 zl, voicebot 2500 zl albo 5000-9000 zl, automatyzacja procesu 3000-10000 zl. Silnik AI wybierasz Ty: OpenAI, Anthropic albo Google, a konto u dostawcy nalezy do Ciebie.',
+    url: '/uslugi/wdrozenie-ai',
+    intents: [
+      'wdrozenie AI w firmie',
+      'jak wdrozyc AI w firmie',
+      'etapy wdrozenia AI',
+      'wdrozenie sztucznej inteligencji',
+      'ile kosztuje wdrozenie AI',
+      'od czego zaczac wdrozenie AI',
+      'AI w malej firmie',
+    ],
+  },
   {
     id: 'uslugi-audyt-ai',
     section: 'Uslugi',
@@ -259,7 +299,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Uslugi',
     title: 'Indywidualne rozwiazania AI: aplikacje i wtyczki na zamowienie',
     summary:
-      'Czasem gotowy chatbot czy automatyzacja nie wystarcza, bo Twoj problem jest tylko Twoj. Wtedy budujemy rozwiazanie na miare: aplikacje webowa, wtyczke do narzedzia, ktorego uzywasz, albo Agenta spietego z kilkoma systemami naraz. Projektujemy dokladnie to, czego potrzebuje Twoj proces, zaczynamy od najmniejszej dzialajacej wersji, a Twoje dane i kod zostaja po Twojej stronie, w Unii Europejskiej.',
+      'Czasem gotowy chatbot czy automatyzacja nie wystarcza, bo Twoj problem jest tylko Twoj. Wtedy budujemy rozwiazanie na miare: aplikacje webowa, wtyczke do narzedzia, ktorego uzywasz, albo agenta spietego z kilkoma systemami naraz. Projektujemy dokladnie to, czego potrzebuje Twoj proces, zaczynamy od najmniejszej dzialajacej wersji, a Twoje dane i kod zostaja po Twojej stronie, w Unii Europejskiej.',
     url: '/uslugi/rozwiazania',
     intents: [
       'indywidualne rozwiazania AI',
@@ -650,12 +690,13 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
   {
     id: 'poradnik-koszt-agenta',
     section: 'Wiedza',
-    title: 'Ile kosztuje wdrozenie AI agenta dla firmy',
+    // 2026-10-14: tytul = nowy H1 poradnika, szyk „agent AI".
+    title: 'Ile kosztuje agent AI dla firmy? Cennik wdrozenia 2026',
     summary:
-      'AI agent kosztuje wiecej niz chatbot, bo nie tylko odpowiada, tylko laczy sie z kalendarzem, CRM i systemami i sam wykonuje zadania. Cene liczymy od wartosci, czyli ile godzin i leadow odzyskasz. W poradniku masz, od czego zalezy koszt agenta, jak policzyc zwrot i po czym poznac, ze wdrozenie sie spina.',
+      'Agent AI kosztuje wiecej niz chatbot, bo nie tylko odpowiada, tylko laczy sie z kalendarzem, CRM i systemami i sam wykonuje zadania. Cene liczymy od wartosci, czyli ile godzin i leadow odzyskasz. W poradniku masz, od czego zalezy koszt agenta, jak policzyc zwrot i po czym poznac, ze wdrozenie sie spina.',
     url: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
     intents: [
-      'ile kosztuje AI agent',
+      'ile kosztuje agent AI',
       'koszt agenta AI',
       'cena agenta AI dla firmy',
       'czy agent AI sie zwroci',
@@ -708,15 +749,16 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
   {
     id: 'blog-chatbot-czy-agent',
     section: 'Wiedza',
-    title: 'Chatbot czy AI Agent: czym sie roznia',
+    // 2026-10-14: tytul = nowy H1 wpisu, szyk „agent AI".
+    title: 'Chatbot czy agent AI: czym sie roznia i co wybrac dla firmy',
     summary:
-      'Chatbot odpowiada na pytania, AI Agent wykonuje cale zadania. Chatbot poda godziny otwarcia i cennik, a agent sprawdzi kalendarz, zaproponuje termin, zapisze wizyte i wysle potwierdzenie. Dla wiekszosci firm dobrym startem jest chatbot, ktory pozniej rozwijasz w agenta, gdy chcesz, zeby AI nie tylko gadalo, ale i dzialalo.',
+      'Chatbot odpowiada na pytania, agent AI wykonuje cale zadania. Chatbot poda godziny otwarcia i cennik, a agent sprawdzi kalendarz, zaproponuje termin, zapisze wizyte i wysle potwierdzenie. Dla wiekszosci firm dobrym startem jest chatbot, ktory pozniej rozwijasz w agenta, gdy chcesz, zeby AI nie tylko gadalo, ale i dzialalo.',
     url: '/blog/chatbot-czy-ai-agent-roznice',
     intents: [
       'chatbot czy agent AI',
       'roznica chatbot agent',
       'co wybrac dla firmy',
-      'czym jest AI agent',
+      'czym jest agent AI',
     ],
   },
   {
@@ -871,7 +913,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Firma',
     title: 'Firmowi Agenci AI 24/7 na stronie',
     summary:
-      'Osadzilismy na firmowej stronie Agentow AI, ktorzy znaja strukture firmy i odpowiadaja nowym leadom cala dobe, bez nadzoru. Klient pisze o polnocy i dostaje odpowiedz od razu, a nie ogolnik. Zaden lead nie zostaje bez odpowiedzi.',
+      'Osadzilismy na firmowej stronie agentow AI, ktorzy znaja strukture firmy i odpowiadaja nowym leadom cala dobe, bez nadzoru. Klient pisze o polnocy i dostaje odpowiedz od razu, a nie ogolnik. Zaden lead nie zostaje bez odpowiedzi.',
     url: '/realizacje/agenci-ai-24-7',
     intents: [
       'agent AI na stronie',
@@ -902,7 +944,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Firma',
     title: 'Kto stoi za SimpleFast.ai',
     summary:
-      'Za SimpleFast.ai stoi dwoch founderow: Pawel Pieloch, Architekt AI i twarz firmy, oraz Marcin Karpeta, ktory prowadzi firme razem z nim. Budujemy AI Agentow dla polskich firm, a nie chatboty, ktore tylko odpowiadaja. Cala historie i nasze podejscie poznasz na stronie O nas.',
+      'Za SimpleFast.ai stoi dwoch founderow: Pawel Pieloch, Architekt AI i twarz firmy, oraz Marcin Karpeta, ktory prowadzi firme razem z nim. Budujemy agentow AI dla polskich firm, a nie chatboty, ktore tylko odpowiadaja. Cala historie i nasze podejscie poznasz na stronie O nas.',
     url: '/o-nas',
     intents: [
       'kto stoi za SimpleFast.ai',
@@ -921,7 +963,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     section: 'Firma',
     title: 'Kim jest Pawel Pieloch',
     summary:
-      'Pawel Pieloch to Architekt AI full-stack, zalozyciel i twarz SimpleFast.ai. Prowadzi cala budowe: projektuje i stawia AI Agentow end to end, czyli strony, automatyzacje, chatboty, voiceboty oraz aplikacje i wtyczki. To z nim rozmawiasz na diagnozie.',
+      'Pawel Pieloch to Architekt AI full-stack, zalozyciel i twarz SimpleFast.ai. Prowadzi cala budowe: projektuje i buduje agentow AI od poczatku do konca, czyli strony, automatyzacje, chatboty, voiceboty oraz aplikacje i wtyczki. To z nim rozmawiasz na diagnozie.',
     url: '/o-nas',
     intents: [
       'kim jest Pawel Pieloch',
@@ -990,7 +1032,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
  * KB_LAST_UPDATED zmieniaj recznie przy aktualizacji wpisow. Sluzy do cache-bustingu
  * promptu (gdy wstrzykujesz KB do system promptu z prompt cachingiem).
  */
-export const KB_LAST_UPDATED = '2026-08-16';
+export const KB_LAST_UPDATED = '2026-10-14';
 
 /**
  * Renderuje cala baze wiedzy do zwiezlego tekstu pod system prompt.

@@ -132,7 +132,7 @@ import type { PodstronaUslugi } from './types';
 export const dlaPrzychodni: PodstronaUslugi = {
   rodzic: 'voiceboty',
   slug: 'dla-przychodni',
-  dataAktualizacji: '2026-09-22',
+  dataAktualizacji: '2026-10-14',
 
   /* H1 1:1 z pakietu (PODSTRONA 2). Fraza główna „voicebot dla przychodni"
      w całości na początku. */
@@ -642,7 +642,8 @@ export const dlaPrzychodni: PodstronaUslugi = {
      OSTATNIE pytanie dołożone, bo kontrakt szablonu chce 5 do 6 pozycji: jedno
      o cenie (kwoty 1:1 z sekcji ceny wyżej), zero nowego faktu. Dołożone było też
      drugie, o szczycie porannym, i to ono zeszło przy przycięciu z 2026-09-22
-     (uzasadnienie w komentarzu na jego miejscu niżej). Lista ma teraz PIĘĆ pozycji,
+     (uzasadnienie w komentarzu na jego miejscu niżej). 2026-10-14 doszło szóste,
+     „Czym jest voicebot medyczny?" (komentarz na jego miejscu). Przed tą datą PIĘĆ pozycji,
      czyli dolną granicę kontraktu: przy kolejnym cięciu nie wolno zdjąć już żadnej,
      a cztery pierwsze są treścią zatwierdzoną z pakietu i nie wolno ich ruszać
      w ogóle. */
@@ -677,6 +678,21 @@ export const dlaPrzychodni: PodstronaUslugi = {
        w `problem.tresc`. FAQ ma teraz PIĘĆ pozycji, czyli dolną granicę kontraktu
        `Usluga` (lib/uslugi/types.ts: faq[5-6]); kafel hero „najczęstszych pytań"
        policzy 5 sam, bo bierze `faq.length`. */
+    /* 2026-10-14 (naprawa SEO, zwiad 13.10, klaster voiceboty): DOŁOŻONE pytanie
+       definicyjne. PAA „Czym jest voicebot medyczny?" pada na 3 z 8 badanych
+       SERP-ów, a ta strona nie używała tej nazwy. FAQ ma teraz SZEŚĆ pozycji,
+       czyli górną granicę kontraktu: kafel w hero pokaże 6. Cztery pierwsze
+       pytania (pakiet) nietknięte. ZERO NOWEGO FAKTU, każde zdanie stoi już
+       na tej stronie: 24/7 (kapsuła, metaDescription), asystent AI w pierwszym
+       zdaniu (punkt sekcji „Co z danymi pacjenta..."), zapis na wolny termin
+       przy grafiku i zgłoszenie bez niego (FAQ o systemie gabinetowym), brak
+       rozmowy o zdrowiu i przekazanie wyników rejestracji (FAQ o wynikach,
+       wiersz „Wyniki i objawy"), zakres zapisu ustala placówka (FAQ o wynikach). */
+    {
+      pytanie: 'Czym jest voicebot medyczny?',
+      odpowiedz:
+        'To voicebot ustawiony pod rejestrację placówki medycznej. Odbiera telefon pacjenta 24/7 i w pierwszym zdaniu mówi, że jest asystentem AI. Gdy widzi grafik, zapisuje na wolny termin, a bez grafiku spisuje zgłoszenie dla rejestracji. O zdrowiu nie rozmawia: sprawy wyników i objawów przekazuje rejestracji. Co z rozmowy zostaje zapisane, ustala placówka przy wdrożeniu.',
+    },
     {
       pytanie: 'Ile kosztuje voicebot dla przychodni?',
       odpowiedz:
@@ -715,6 +731,9 @@ export const dlaPrzychodni: PodstronaUslugi = {
     'voicebot do rejestracji pacjentów',
     'automatyczna rejestracja telefoniczna w przychodni',
     'AI odbiera telefon w przychodni',
+    /* 2026-10-14: GSC „voicebot medyczny" poz. 45 na tej stronie; odpowiada
+       mu pytanie FAQ „Czym jest voicebot medyczny?". */
+    'voicebot medyczny',
   ],
 
   /* POWIĄZANIA: w bok do dwóch istniejących sióstr z tej samej gałęzi

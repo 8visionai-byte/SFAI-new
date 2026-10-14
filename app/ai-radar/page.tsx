@@ -13,11 +13,19 @@ import { RADAR_NEWS } from '@/lib/ai-radar';
  * jest" + siatka kart wpisów (z rejestru, posortowane po dacie). Treść w HTML od
  * razu (KPI #1 = cytowalność LLM).
  *
- * SITEMAP: hub /ai-radar jest `live: true` w ROUTES (lib/site.ts) — strona istnieje
- * (200 OK, SSG, index), więc wchodzi do sitemapy. Pojedyncze wpisy /ai-radar/[slug]
- * dołącza sitemap z rejestru lib/ai-radar, ale TYLKO te realne (szablon !== true):
- * wpisy-szablony mają robots noindex, więc są świadomie pomijane w sitemapie (zelazna
- * zasada: zaden noindex URL). Realne newsy redakcji (Paweł/Make) wejdą automatycznie.
+ * NOINDEX (naprawa SEO 2026-10-14): hub ma robots „noindex, follow". Powód: strona
+ * miała 132 słowa i obiecywała „Codziennie o 19:00", a w rejestrze stoją wyłącznie
+ * wpisy-szablony (szablon: true), które same mają noindex. Cienka strona z obietnicą
+ * bez pokrycia nie powinna rankować. „follow" zostaje, więc linki z huba dalej
+ * przekazują wartość. Ten sam mechanizm co we wpisach-szablonach /ai-radar/[slug]
+ * (buildMetadata({ noindex: true })). Gdy redakcja zacznie dodawać realne newsy,
+ * zdejmij `noindex` tutaj i wyjmij '/ai-radar' z listy wyjątków w app/sitemap.ts.
+ *
+ * SITEMAP: hub /ai-radar jest `live: true` w ROUTES (lib/site.ts), bo strona istnieje
+ * (200 OK, SSG), ale app/sitemap.ts świadomie go pomija (żelazna zasada: żaden
+ * noindex URL w sitemapie). Pojedyncze wpisy /ai-radar/[slug] dołącza sitemap
+ * z rejestru lib/ai-radar, ale TYLKO te realne (szablon !== true). Realne newsy
+ * redakcji (Paweł/Make) wejdą tam automatycznie.
  *
  * BREADCRUMB: wg IA ścieżka to „Strona główna -> Centrum Wiedzy -> AI Radar". Crumb
  * „Centrum Wiedzy" wskazuje na hub /wiedza (live, 200 OK), spójnie z breadcrumbami
@@ -31,6 +39,8 @@ export function generateMetadata(): Metadata {
     description:
       'Newsy ze świata AI przefiltrowane przez jedno pytanie: co to znaczy dla Twojej firmy. Co się stało, czemu ważne dla MŚP i co z tym zrobić.',
     path: '/ai-radar',
+    // Hub ma dziś tylko wpisy-szablony: noindex, follow (patrz komentarz u góry).
+    noindex: true,
   });
 }
 

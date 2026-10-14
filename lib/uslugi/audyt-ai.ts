@@ -27,8 +27,12 @@ export const audytAi: Usluga = {
      samo przełamanie linii, ALE doszła flaga `cenaStala: true`, która zmienia
      treść widoczną dla klienta: kafel ceny w hero traci prefiks „od", a pod
      kartą ceny stoi inna mikrokopia. Pole jest źródłem `lastmod`
-     w sitemap.xml (app/sitemap.ts). */
-  dataAktualizacji: '2026-08-31',
+     w sitemap.xml (app/sitemap.ts).
+     2026-10-14 (operacja naprawcza SEO, .seo-przeglad/naprawa-2026-10-13/
+     zwiad.json, klaster „wdrozenie-ai"): blok definicji „Czym jest audyt AI?"
+     na początku problem.bloki, metaTitle z ceną i terminem, nowe queries
+     i powiązane usługi. H1, kapsuła, FAQ i cena BEZ zmian. */
+  dataAktualizacji: '2026-10-14',
   h1: 'Audyt AI firmy: mapa oszczędności czasu',
 
   /* BLOK KRÓTKIEJ ODPOWIEDZI (audyt §9 etap 1 pkt 2): kapsuła miała 1 z 4
@@ -38,7 +42,12 @@ export const audytAi: Usluga = {
   kapsula:
     'Audyt AI firmy to płatny Sprint Diagnostyczny za 1490 zł netto, który trwa 5 dni roboczych i kończy się raportem PDF z mapą procesów. Rozkładamy Twoje procesy na czynniki i pokazujemy, gdzie AI da realny zysk, a gdzie to przepalanie kasy. Dostajesz Action Plan: miejsca do automatyzacji ułożone od największego zwrotu. Kwotę 1490 zł netto odliczamy od wdrożenia, gdy ruszamy z robotą. Najpierw mapa, potem decyzja, dopiero potem wydatek.',
 
-  metaTitle: 'Audyt AI firmy: co zautomatyzować i za ile',
+  /* SEO 2026-10-14: cena i termin w tytule (konkurenci w wynikach na „audyt ai
+     cena" piszą „wycena indywidualna"). 44 zn. + 16 zn. sufiksu marki
+     („ · SimpleFast.ai") = 60. „netto" zostaje, bo każda nasza cena jest netto
+     (tak samo tytuł siostry: „Audyt widoczności w AI: 1490 zł netto, 5 dni
+     roboczych"). Kwota i termin 1:1 z kapsuły i tabeli tej strony. */
+  metaTitle: 'Audyt AI dla firm: cena 1490 zł netto, 5 dni',
   metaDescription:
     'Audyt AI za 1490 zł netto, 5 dni roboczych, raport PDF z mapą procesów. Mówimy, gdzie AI się opłaci, a gdzie nie. Cena odlicza się od wdrożenia.',
 
@@ -50,6 +59,25 @@ export const audytAi: Usluga = {
     tresc:
       'Bez mapy procesów nie wiesz, gdzie wdrożyć AI w firmie, więc strzelasz na ślepo. Każda zła decyzja to wydane pieniądze, stracony czas i zniechęcenie, że AI to ściema.',
     bloki: [
+      /* SEO 2026-10-14 (zwiad, klaster wdrozenie-ai): DEFINICJA do cytowania.
+         Fraza „audyt ai" ma w Google kilka znaczeń, a strona nie mówiła, które
+         obsługuje (lider agisona.pl wygrywa pierwszą H2 „Czym jest audyt AI?").
+         Kwota, termin, raport i odliczenie 1:1 z kapsuły i ramaCeny tej strony.
+         Audyt widoczności w AI: h1 lib/uslugi/podstrony/audyt-widocznosci-w-ai.ts;
+         akapity bloku to czysty tekst, więc sam link stoi w `powiazane.uslugi`
+         (render PodstronyPowiazane między cennikiem a FAQ).
+         Nagłówek NIE powtarza żadnego pytania z FAQ (zakaz dubla FAQPage).
+         Blok 'sekcja' MA pole `akapity` (wymagane, lekcja z commita faf8c0f). */
+      {
+        typ: 'sekcja',
+        naglowek: 'Czym jest audyt AI?',
+        wariant: 'top',
+        chip: 'SPRINT DIAGNOSTYCZNY',
+        akapity: [
+          'Audyt AI to analiza procesów w firmie, która pokazuje, gdzie AI i automatyzacja oszczędzą czas, a gdzie się nie opłacą. U nas to Sprint Diagnostyczny: 1490 zł netto, 5 dni roboczych i raport PDF z mapą procesów. Kwotę odliczamy od wdrożenia, gdy ruszamy z robotą.',
+          'Nie myl go z audytem widoczności w AI. To osobna usługa, w której sprawdzamy, czy ChatGPT poleca Twoją firmę. Link do niej znajdziesz niżej, pod cennikiem, wśród powiązanych usług.',
+        ],
+      },
       {
         typ: 'naglowek',
         tekst: 'Gdzie firmy przepalają budżet na AI?',
@@ -386,6 +414,10 @@ export const audytAi: Usluga = {
     'gdzie wdrożyć AI',
     'audyt AI dla firmy',
     'gdzie wdrożyć AI w firmie',
+    /* SEO 2026-10-14: frazy z GSC („audyt ai" 263 wyśw., poz. 21,3). */
+    'audyt AI',
+    'audyt AI cena',
+    'audyt AI w firmie',
   ],
 
   /* v22 (linki §3, P2 #15): usługa -> narzędzie było 1/13 w całym serwisie.
@@ -402,6 +434,35 @@ export const audytAi: Usluga = {
         etykieta: 'Kalkulator oszczędności z automatyzacji',
         href: '/narzedzia#kalkulator-oszczednosci',
         opis: 'Wpisujesz godziny tracone na powtarzalnej robocie, a kalkulator pokazuje kwotę roczną do odzyskania.',
+      },
+    ],
+    /* SEO 2026-10-14 (zwiad, klaster wdrozenie-ai, linkiWewnetrzne): co dzieje
+       się po audycie i druga usługa o tej samej nazwie. Etykiety = H1 celów
+       (wdrozenie-ai.ts h1; agenci-ai wg zlecenia, początek h1 z agenci-ai.ts;
+       automatyzacje.ts h1; audyt-widocznosci-w-ai.ts h1). Opisy: fakty ze stron
+       celu (wdrozenie-ai.ts metaDescription, 1990 zł netto = chatboty.ts;
+       automatyzacje.ts ramaCeny; chatboty.ts i voiceboty.ts minPrice;
+       audyt-widocznosci-w-ai.ts metaDescription). */
+    uslugi: [
+      {
+        etykieta: 'Wdrożenie AI w firmie: etapy, ceny i terminy',
+        href: '/uslugi/wdrozenie-ai',
+        opis: 'Wszystkie etapy wdrożenia z ceną i czasem: od bezpłatnej diagnozy po jeden proces na próbę za 1990 zł netto.',
+      },
+      {
+        etykieta: 'Automatyzacja procesów w firmie z AI',
+        href: '/uslugi/automatyzacje',
+        opis: 'Przepisywanie danych, potwierdzenia i przypomnienia przejmuje system. Jeden proces kosztuje zwykle 3000-10000 zł netto.',
+      },
+      {
+        etykieta: 'Agenci AI dla firm',
+        href: '/uslugi/agenci-ai',
+        opis: 'Agenci AI na czacie, w telefonie i w procesach firmy: na czacie od 1790 zł netto, w telefonie od 2500 zł netto.',
+      },
+      {
+        etykieta: 'Audyt widoczności w AI: sprawdzamy, czy ChatGPT poleca Twoją firmę',
+        href: '/uslugi/optymalizacja/audyt-widocznosci-w-ai',
+        opis: 'Inna usługa niż audyt procesów: sprawdzamy, czy ChatGPT wymienia Twoją firmę w odpowiedzi.',
       },
     ],
   },

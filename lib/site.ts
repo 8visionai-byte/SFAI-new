@@ -266,7 +266,9 @@ export const AI_RADAR_LAST_MODIFIED = '2026-08-16';
 export const ROUTES: RouteEntry[] = [
   // 2026-10-12: osobna data, bo FAQ strony głównej (components/sections/faqData.ts)
   // straciło datę wejścia AI Act. Stała SEO_ETAPY_1_3 zostaje dla /narzedzia.
-  { path: '/', priority: 1.0, changeFrequency: 'weekly', live: true, lastModified: '2026-10-12' },
+  // 2026-10-14 (naprawa SEO, recenzja fali 1): sekcja Oferta pokazuje dwie nowe
+  // usługi z rejestru (agenci-ai, wdrozenie-ai), więc data idzie za treścią.
+  { path: '/', priority: 1.0, changeFrequency: 'weekly', live: true, lastModified: '2026-10-14' },
 
   // Hub /uslugi (rozdroze) — zbudowany (app/uslugi/page.tsx, SSG): rozdroze 3 klastrow
   // + wejscie do strony-parasola. live:true -> wchodzi do sitemapy.
@@ -276,7 +278,9 @@ export const ROUTES: RouteEntry[] = [
   // wyeksportowana, bo opisuje datę POSTAWIENIA 6 stron usług i nie jest już
   // datą tego huba. GDYBY przebudowa /uslugi nie weszła do commita, ta jedna
   // linia wraca na USLUGI_LAST_MODIFIED.
-  { path: '/uslugi', priority: 0.9, changeFrequency: 'monthly', live: true, lastModified: ODPOWIEDZI_2026_08_20 },
+  // 2026-10-14 (naprawa SEO): hub dostał dwa nowe kafle (agenci-ai, wdrozenie-ai),
+  // nowy opis meta i liczby policzone z rejestru, więc data idzie za realną zmianą treści.
+  { path: '/uslugi', priority: 0.9, changeFrequency: 'monthly', live: true, lastModified: '2026-10-14' },
 
   // Strona-parasol "Architekci Wartosci AI" (app/uslugi/architekci-wartosci-ai/page.tsx, SSG).
   // CELOWO poza rejestrem lib/uslugi (to centrum oferty, nie szablonowa usluga), wiec
@@ -316,7 +320,8 @@ export const ROUTES: RouteEntry[] = [
   // (app/wiedza/page.tsx +201, app/poradniki/page.tsx +161). /poradniki stało
   // na 2026-08-17, czyli na dacie POPRZEDNIEJ rundy, mimo pełnej przebudowy.
   { path: '/wiedza', priority: 0.8, changeFrequency: 'monthly', live: true, lastModified: ODPOWIEDZI_2026_08_20 },
-  { path: '/poradniki', priority: 0.7, changeFrequency: 'monthly', live: true, lastModified: ODPOWIEDZI_2026_08_20 },
+  // 2026-10-14: hub pokazuje nowe tytuły poradników (agent AI, chatbot, automatyzacja).
+  { path: '/poradniki', priority: 0.7, changeFrequency: 'monthly', live: true, lastModified: '2026-10-14' },
 
   // AI Radar (silnik newsow „AI o 19:00") — hub /ai-radar zbudowany (SSG, 200 OK):
   // app/ai-radar/page.tsx + app/ai-radar/[slug]. Startuje z 2 wpisami-SZABLONAMI
@@ -335,8 +340,10 @@ export const ROUTES: RouteEntry[] = [
   // Dowod i konwersja.
   // v22 dogrywka (MAJOR-4): oba huby PRZEBUDOWANE w commicie 2b2c1b4
   // (app/realizacje/page.tsx +211, app/blog/page.tsx +165).
-  { path: '/realizacje', priority: 0.8, changeFrequency: 'weekly', live: true, lastModified: ODPOWIEDZI_2026_08_20 },
-  { path: '/blog', priority: 0.6, changeFrequency: 'weekly', live: true, lastModified: ODPOWIEDZI_2026_08_20 },
+  // 2026-10-14: /realizacje pokazuje poprawioną nazwę klienta (Fichtelgebirgs-Haus),
+  // /blog nowe tytuły wpisów (automatyzacja procesów, chatbot czy agent AI).
+  { path: '/realizacje', priority: 0.8, changeFrequency: 'weekly', live: true, lastModified: '2026-10-14' },
+  { path: '/blog', priority: 0.6, changeFrequency: 'weekly', live: true, lastModified: '2026-10-14' },
   // /o-nas i /dowod: v22 ich NIE tknęła, więc daty zostają (patrz polityka wyżej).
   { path: '/o-nas', priority: 0.6, changeFrequency: 'monthly', live: true, lastModified: '2026-06-16' },
   { path: '/dowod', priority: 0.5, changeFrequency: 'monthly', live: false, lastModified: HOME_LAST_MODIFIED },

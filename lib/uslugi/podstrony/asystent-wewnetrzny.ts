@@ -110,9 +110,12 @@ import type { PodstronaUslugi } from './types';
 export const asystentWewnetrzny: PodstronaUslugi = {
   rodzic: 'chatboty',
   slug: 'asystent-wewnetrzny',
-  /* 2026-09-06: trzy silniki do wyboru zamiast „tylko Claude" (fakt od
+  /* 2026-10-14: jedna karta w `powiazane.uslugi` do /uslugi/chatboty/obsluga-klienta
+     (zwiad naprawa-2026-10-13: zapytania „asystent ai na stronę" lądują tutaj,
+     a pytający szuka bota dla klientów). Treść strony poza tym bez zmian.
+     2026-09-06: trzy silniki do wyboru zamiast „tylko Claude" (fakt od
      właściciela z 2026-09-05). */
-  dataAktualizacji: '2026-09-06',
+  dataAktualizacji: '2026-10-14',
 
   h1: 'Asystent AI dla pracowników: procedury bez pytania kolegi',
 
@@ -606,6 +609,22 @@ export const asystentWewnetrzny: PodstronaUslugi = {
         href: '/uslugi/chatboty',
         opis:
           'Strona główna usługi: co bot robi po stronie klienta, jak go wdrażamy i jak rośnie do Agenta.',
+      },
+      /* 2026-10-14 (zwiad naprawa-2026-10-13, klaster „chatboty"): GSC pokazuje
+         zapytania „asystent ai na stronę", „asystent ai na stronie" i „asystent
+         ai dla firm na stronie" na TEJ stronie, a pytający szuka bota dla
+         klientów. Typy nie mają linku w odpowiedzi FAQ (odpowiedz to czysty
+         tekst), więc link idzie tu, zaraz pod kartą rodzica. ŚWIADOMY WYJĄTEK
+         od zasady „etykieta = H1 celu": kotwica z polecenia operacji
+         („chatbot dla klientów na stronie"), bo H1 siostry („Chatbot do obsługi
+         klienta, który odpowiada o 22:00") i tak stoi w siatce „Konkretne
+         zastosowania" nad tą sekcją. Opis = fakt z kapsuły
+         lib/uslugi/podstrony/obsluga-klienta.ts, zero kwot. */
+      {
+        etykieta: 'Chatbot dla klientów na stronie',
+        href: '/uslugi/chatboty/obsluga-klienta',
+        opis:
+          'Gdy pytają klienci, a nie pracownicy: bot przejmuje powtarzalne pytania i odpowiada wtedy, gdy nikogo nie ma przy biurku.',
       },
       {
         etykieta: 'Chatbot na Twoich dokumentach: firmowa baza wiedzy (RAG)',

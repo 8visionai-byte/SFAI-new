@@ -21,7 +21,9 @@ export const dziesiecBledow: Material = {
   metaDescription:
     '10 błędów przy wdrażaniu AI w firmie i jak ich uniknąć: od startu od narzędzia zamiast od problemu po brak opieki po wdrożeniu. Przy każdym antidotum.',
   data: '2026-06-16',
-  dataAktualizacji: '2026-08-18',
+  /* NAPRAWA SEO 2026-10-14: data bumpnięta z '2026-08-18', bo w powiązanych
+     usługach doszedł pierwszy link do /uslugi/wdrozenie-ai. */
+  dataAktualizacji: '2026-10-14',
   queries: [
     'błędy przy wdrażaniu ai',
     'jak wdrożyć ai w firmie',
@@ -208,8 +210,18 @@ export const dziesiecBledow: Material = {
    * v22 (PLAN-v22 §3 P2 pkt 12): POWIĄZANIA MATERIAŁU. Przed rundą magnet
    * był ślepym zaułkiem: zero wyjść do oferty i do poradnika, który tłumaczy
    * temat głębiej. Obie trasy są realne i stoją w rejestrach.
+   *
+   * NAPRAWA SEO 2026-10-14: na pierwszym miejscu strona wdrożenia AI. Materiał
+   * łapie intencję „od czego zacząć z AI w firmie", a dotąd nie prowadził do
+   * strony, która tę intencję obsługuje (GSC 90 dni: 0 wyświetleń, brak linku
+   * do strony wdrożenia). Kotwica = metaTitle strony docelowej.
    */
   powiazaneUslugi: [
+    {
+      etykieta: 'Wdrożenie AI w firmie: etapy, ceny, terminy',
+      href: '/uslugi/wdrozenie-ai',
+      opis: 'Jak wygląda wdrożenie krok po kroku, ile kosztuje i ile trwa.',
+    },
     {
       etykieta: 'Opieka AI',
       href: '/uslugi/opieka-ai',
@@ -219,7 +231,7 @@ export const dziesiecBledow: Material = {
   ],
   powiazanePoradniki: [
     {
-      etykieta: 'Ile kosztuje wdrożenie AI agenta dla firmy',
+      etykieta: 'Ile kosztuje agent AI dla firmy? Cennik wdrożenia 2026',
       href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
       opis:
         'Cena agenta i to, po czym poznać, że się zwróci.',

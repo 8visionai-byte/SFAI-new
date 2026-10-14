@@ -34,7 +34,7 @@ import type { PodstronaUslugi } from './types';
  *  - co zmieniamy na stronie (odpowiedź w pierwszym akapicie, nagłówki jak
  *    pytania, dane strukturalne, widoczne daty, zamknięte akapity):
  *    pakiet §P3 punkt 6 i FAQ „Co zmieniacie na stronie",
- *  - case Fichtelgebirgshaus.de i Trockenhaus: pakiet §P3 punkt 8 i FAQ
+ *  - case Fichtelgebirgs-Haus i Trockenhaus: pakiet §P3 punkt 8 i FAQ
  *    „Czy macie na to dowód", zgodne z `lib/uslugi/optymalizacja.ts`
  *    i z `lib/realizacje` (dwa opublikowane case'y),
  *  - cennik i czasy: pakiet §P3 punkt 9 odsyła WPROST do §N8 („te same
@@ -49,7 +49,7 @@ import type { PodstronaUslugi } from './types';
  *  i 1 dzień roboczy (landing), 2900 zł netto i 2-4 dni robocze (strona
  *  biznesowa), od 5900 zł netto i 5-10 dni roboczych (strona zaawansowana),
  *  dwie rundy poprawek w cenie wdrożenia, pierwsza dziesiątka Google
- *  (Fichtelgebirgshaus.de), pierwsza trójka Google (Trockenhaus).
+ *  (Fichtelgebirgs-Haus), pierwsza trójka Google (Trockenhaus).
  *  Wszystkie kwoty zawsze z dopiskiem netto.
  *  UWAGA: czas „2-4 dni robocze" dla strony biznesowej NIE stoi w §P3, tylko
  *  w §N8, na który §P3 punkt 9 odsyła wprost. Jedyna liczba z tej strony
@@ -79,7 +79,11 @@ import type { PodstronaUslugi } from './types';
 export const googleAiOverviews: PodstronaUslugi = {
   rodzic: 'optymalizacja',
   slug: 'google-ai-overviews',
-  dataAktualizacji: '2026-08-31',
+  /* NAPRAWA SEO 2026-10-14: data bumpnięta z '2026-08-31', bo zmieniła się
+     widoczna nazwa klienta w sekcji dowodu, FAQ, CTA i powiązaniach
+     (Fichtelgebirgs-Haus, marka klienta; domena bez myślnika należy do obcej
+     firmy). Pole jest źródłem `lastmod` w sitemap.xml. */
+  dataAktualizacji: '2026-10-14',
 
   /* H1 1:1 z pakietu §P3. */
   h1: 'Jak trafić do odpowiedzi AI w Google (AI Overviews)',
@@ -241,7 +245,7 @@ export const googleAiOverviews: PodstronaUslugi = {
         typ: 'sekcja',
         naglowek: 'Czy mamy na to wynik w samym Google?',
         akapity: [
-          'Fichtelgebirgshaus.de weszło do pierwszej dziesiątki Google na frazy zapisane w umowie, a jego treść jest cytowana także przez GPT. Zakres frazowy był ustalony na piśmie przed startem, więc ten wynik sprawdzisz fraza po frazie.',
+          'Strona Fichtelgebirgs-Haus weszła do pierwszej dziesiątki Google na frazy zapisane w umowie, a jej treść jest cytowana także przez GPT. Zakres frazowy był ustalony na piśmie przed startem, więc ten wynik sprawdzisz fraza po frazie.',
           'Trockenhaus przeszedł ze stanu bez widoczności do pierwszej trójki na frazę Trockenhaus. Serwis jest niewielki, co mówimy wprost: zadziałał konkret w treści, a nie rozmiar strony.',
         ],
         wariant: 'top',
@@ -464,7 +468,7 @@ export const googleAiOverviews: PodstronaUslugi = {
     {
       pytanie: 'Czy macie na to dowód?',
       odpowiedz:
-        'Fichtelgebirgshaus.de weszło do pierwszej dziesiątki Google na frazy zapisane w umowie, a treść jest cytowana także przez GPT. Trockenhaus przeszedł ze stanu bez widoczności do pierwszej trójki na frazę Trockenhaus.',
+        'Strona Fichtelgebirgs-Haus weszła do pierwszej dziesiątki Google na frazy zapisane w umowie, a jej treść jest cytowana także przez GPT. Trockenhaus przeszedł ze stanu bez widoczności do pierwszej trójki na frazę Trockenhaus.',
     },
     {
       pytanie: 'Ile to kosztuje?',
@@ -482,7 +486,7 @@ export const googleAiOverviews: PodstronaUslugi = {
     mikrokopia:
       'Zaczynamy od Sprintu Diagnostycznego: 1490 zł netto, 5 dni roboczych, kwota odliczana w całości od wdrożenia.',
     dowod:
-      'Fichtelgebirgshaus.de: pierwsza dziesiątka Google na frazy zapisane w umowie. Trockenhaus: wejście do pierwszej trójki na frazę Trockenhaus.',
+      'Fichtelgebirgs-Haus: pierwsza dziesiątka Google na frazy zapisane w umowie. Trockenhaus: wejście do pierwszej trójki na frazę Trockenhaus.',
   },
 
   queries: [
@@ -529,7 +533,7 @@ export const googleAiOverviews: PodstronaUslugi = {
       {
         etykieta: 'Strona w pierwszej dziesiątce Google i widoczna w GPT',
         href: '/realizacje/top10-google-i-widocznosc-w-gpt',
-        opis: 'Fichtelgebirgshaus.de: frazy umówione w umowie w pierwszej dziesiątce Google, plus widoczność w GPT.',
+        opis: 'Fichtelgebirgs-Haus: frazy umówione w umowie w pierwszej dziesiątce Google, plus widoczność w GPT.',
       },
       {
         etykieta: 'Z niewidocznej strony do pierwszej trójki w Google',

@@ -41,8 +41,11 @@ export const stronyWww: Usluga = {
   slug: 'strony-www',
   /* 2026-08-31: data bumpnięta z '2026-08-21', bo zmieniła się treść widoczna
      dla klienta (ceny trzech pozycji, tekst sekcji ceny, FAQ, opis meta).
-     Pole jest źródłem `lastmod` w sitemap.xml (app/sitemap.ts). */
-  dataAktualizacji: '2026-08-31',
+     Pole jest źródłem `lastmod` w sitemap.xml (app/sitemap.ts).
+     NAPRAWA SEO 2026-10-14: data bumpnięta z '2026-08-31', bo zmieniła się
+     widoczna nazwa klienta w karcie REALIZACJA 2 (Fichtelgebirgs-Haus, marka
+     klienta; domena bez myślnika należy do obcej firmy). */
+  dataAktualizacji: '2026-10-14',
   h1: 'Tworzenie stron WWW widocznych w Google i w AI',
   kapsula:
     'Budujemy strony widoczne nie tylko w Google, ale i w ChatGPT, Claude, Gemini oraz Perplexity. Większość stron jest dla AI niewidoczna, bo treść doczytuje się skryptem, a boty tego nie czytają. My oddajemy całą treść od razu w czystym kodzie, układamy ją pod cytowanie i robimy to szybko.',
@@ -205,9 +208,9 @@ export const stronyWww: Usluga = {
           },
           {
             numer: 'REALIZACJA 2',
-            tytul: 'Fichtelgebirgshaus.de',
+            tytul: 'Fichtelgebirgs-Haus',
             podtytul: 'top10 Google plus GPT',
-            naglowek: 'Fichtelgebirgshaus.de jest w top10 Google na frazy z umowy i widoczny w GPT.',
+            naglowek: 'Fichtelgebirgs-Haus jest w top10 Google na frazy z umowy i widoczny w GPT.',
             akapity: [
               'To ten sam projekt na dwa kanały: uzgodnione w umowie frazy w Google i obecność w odpowiedziach modelu. Nie budowaliśmy dwóch osobnych stron.',
               'Działamy na rynku polskim i niemieckim, a dwie z naszych realizacji stron to firmy niemieckie. Jeśli sprzedajesz też za granicą, robimy to samo dla tamtego rynku.',

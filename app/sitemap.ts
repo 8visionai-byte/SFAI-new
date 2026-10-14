@@ -27,6 +27,31 @@ import { RADAR_NEWS } from '@/lib/ai-radar';
 const TRESC_LAST_MODIFIED = V22_LAST_MODIFIED;
 
 /**
+ * Wyjatki od wspolnej daty realizacji: case'y, ktorych TRESC zmienil pozniejszy
+ * commit niz 2b2c1b4. Klucz = slug, wartosc = data tej zmiany (YYYY-MM-DD).
+ * Zgodnie z polityka nizej awansujemy WYLACZNIE to, co sie zmienilo.
+ *
+ * Naprawa SEO 2026-10-14: w top10-google-i-widocznosc-w-gpt zmienila sie widoczna
+ * nazwa klienta (Fichtelgebirgs-Haus) w kapsule, kontekscie, FAQ i polu `klient`.
+ * Docelowo ta mapa znika razem z TRESC_LAST_MODIFIED, gdy `Realizacja` dostanie
+ * wlasne pole `dataAktualizacji` (dlug opisany wyzej).
+ */
+const REALIZACJE_LAST_MODIFIED_WYJATKI: Readonly<Record<string, string>> = {
+  'top10-google-i-widocznosc-w-gpt': '2026-10-14',
+};
+
+/**
+ * Trasy z ROUTES (lib/site.ts), ktore sa `live: true` (strona istnieje, 200 OK,
+ * linkuje do niej nawigacja), ale maja robots noindex, wiec NIE moga wejsc do
+ * sitemapy (zelazna zasada nizej: zaden noindex URL).
+ *
+ * Naprawa SEO 2026-10-14: hub /ai-radar dostal noindex, follow (app/ai-radar/page.tsx),
+ * bo ma tylko wpisy-szablony i obietnice bez pokrycia. Gdy redakcja zacznie dodawac
+ * realne newsy i hub wroci do index, usun go z tej listy.
+ */
+const STATYCZNE_NOINDEX: ReadonlySet<string> = new Set(['/ai-radar']);
+
+/**
  * sitemap.xml generowany dynamicznie (spec 04 §10, 01 §7.2).
  *
  * DWA ZRODLA, jedna zasada (emit tylko to, co realnie istnieje, 200 OK, index):
@@ -68,7 +93,9 @@ const TRESC_LAST_MODIFIED = V22_LAST_MODIFIED;
  * ============================================================================
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes: MetadataRoute.Sitemap = ROUTES.filter((route) => route.live).map((route) => ({
+  const staticRoutes: MetadataRoute.Sitemap = ROUTES.filter(
+    (route) => route.live && !STATYCZNE_NOINDEX.has(route.path)
+  ).map((route) => ({
     url: `${SITE.url}${route.path === '/' ? '' : route.path}`,
     lastModified: new Date(route.lastModified),
     changeFrequency: route.changeFrequency,
@@ -90,7 +117,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Realizacje (case studies) — zrodlo prawdy = rejestr lib/realizacje.
   const realizacjeRoutes: MetadataRoute.Sitemap = REALIZACJE_SLUGS.map((slug) => ({
     url: `${SITE.url}/realizacje/${slug}`,
-    lastModified: new Date(TRESC_LAST_MODIFIED),
+    lastModified: new Date(REALIZACJE_LAST_MODIFIED_WYJATKI[slug] ?? TRESC_LAST_MODIFIED),
     changeFrequency: 'monthly',
     priority: 0.7,
   }));
@@ -142,9 +169,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // lastmod z `data`. UWAGA na zelazna zasade (zaden noindex w sitemapie): wpisy
   // startowe to SZABLONY formatu (szablon:true), a ich strony /ai-radar/[slug] maja
   // robots noindex (przyklad formatu, nie realny news). Dlatego filtrujemy je TUTAJ —
-  // do sitemapy trafiaja wylacznie REALNE newsy (szablon !== true). Hub /ai-radar jest
-  // index i wchodzi osobno przez ROUTES. Gdy redakcja doda realny news, pojawi sie tu
-  // automatycznie. Na start lista jest pusta (oba wpisy to szablony) — zero noindex URL.
+  // do sitemapy trafiaja wylacznie REALNE newsy (szablon !== true). Hub /ai-radar ma
+  // od 2026-10-14 noindex, follow, wiec staticRoutes go pomija (STATYCZNE_NOINDEX wyzej).
+  // Gdy redakcja doda realny news, pojawi sie tu automatycznie. Na start lista jest
+  // pusta (oba wpisy to szablony), wiec zero noindex URL.
   const aiRadarRoutes: MetadataRoute.Sitemap = RADAR_NEWS.filter(
     (n) => n.szablon !== true
   ).map((n) => ({

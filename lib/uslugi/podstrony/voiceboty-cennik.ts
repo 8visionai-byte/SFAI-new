@@ -129,7 +129,7 @@ import type { PodstronaUslugi } from './types';
 export const voicebotyCennik: PodstronaUslugi = {
   rodzic: 'voiceboty',
   slug: 'cennik',
-  dataAktualizacji: '2026-09-22',
+  dataAktualizacji: '2026-10-14',
 
   h1: 'Ile kosztuje voicebot w Polsce w 2026 roku',
 
@@ -202,6 +202,43 @@ export const voicebotyCennik: PodstronaUslugi = {
           'Czy w ogóle da się wyjść z abonamentu i na jakich warunkach.',
           'Kto płaci za poprawki po odbiorze i ile ich jest w cenie wdrożenia.',
         ],
+      },
+      /* 2026-10-14 (naprawa SEO, zwiad 13.10, klaster voiceboty): liderzy na
+         „ile kosztuje voicebot" mają zestawienie konstrukcji cenowych, my nie.
+         Tabela opisuje MODELE, BEZ ANI JEDNEJ KWOTY (sekcja `problem` jest celowo
+         bez kwot, a stawki konkurencji są na tej stronie zakazane).
+         Źródła: pula minut i przepadający pakiet = lista pięciu pytań o licznik
+         minut niżej; minuty w kwocie albo doliczane osobno = `problem.tresc`;
+         trzy pozycje i rytm płatności = siatka w `rozwiazanie.bloki`;
+         minuty i tokeny na koncie klienta = lib/uslugi/voiceboty.ts (sekcja
+         „Voicebot czy dodatkowa osoba...") i sekcja „Czyj jest numer..." niżej.
+         Sekcji z przykładowym rachunkiem za minuty CELOWO NIE MA: nie mamy
+         liczby z faktury ani z cennika dostawcy (czeka na Pawła). */
+      {
+        typ: 'tabela',
+        naglowki: ['Model', 'Co płacisz', 'Kiedy się opłaca', 'Co sprawdzić w ofercie'],
+        wiersze: [
+          [
+            'Abonament z pulą minut',
+            'Stałą kwotę co miesiąc, minuty ponad pulę osobno',
+            'Gdy ruch jest równy przez cały rok',
+            'Czy niewykorzystane minuty przepadają i ile kosztuje minuta ponad pulę',
+          ],
+          [
+            'Stawka za minutę plus wdrożenie',
+            'Wdrożenie raz, potem każdą minutę rozmowy',
+            'Gdy telefonów jest mało albo ruch jest sezonowy',
+            'Od której sekundy leci licznik i jak dostawca zaokrągla',
+          ],
+          [
+            'Trzy osobne pozycje (tak liczymy my)',
+            'Budowę raz, utrzymanie co miesiąc albo wcale, minuty i tokeny wprost u dostawców',
+            'Gdy chcesz widzieć każdą pozycję osobno albo przejąć infrastrukturę',
+            'Na czyje konta idą minuty i tokeny',
+          ],
+        ],
+        wKarcie: true,
+        podpis: 'Trzy sposoby rozliczania voicebota spotykane w ofertach.',
       },
     ],
   },
@@ -665,10 +702,21 @@ export const voicebotyCennik: PodstronaUslugi = {
         href: '/uslugi/voiceboty/windykacja',
         opis: 'Telefon w sprawie płatności: bot spisuje deklarowany termin zapłaty.',
       },
+      /* 2026-10-14 (naprawa SEO, zwiad 13.10): pierwszy link z cennika voicebota
+         do cennika chatbota. PAA „Ile kosztuje chatbot?" pada w SERP-ach na
+         „ile kosztuje voicebot" i „voicebot cena". Etykieta = `h1`
+         z lib/uslugi/podstrony/chatboty-cennik.ts, opis BEZ kwot (zasada tej
+         sekcji), fakty z kapsuły tamtej strony: trzy progi z czasem realizacji,
+         utrzymanie u nas albo po przekazaniu, tokeny płacone dostawcy wprost. */
+      {
+        etykieta: 'Ile kosztuje chatbot AI dla firmy? Cennik 2026',
+        href: '/uslugi/chatboty/cennik',
+        opis: 'Trzy progi chatbota z czasem realizacji, dwa modele utrzymania i tokeny płacone dostawcy wprost.',
+      },
     ],
     poradniki: [
       {
-        etykieta: 'Ile kosztuje wdrożenie AI agenta dla firmy',
+        etykieta: 'Ile kosztuje agent AI dla firmy? Cennik wdrożenia 2026',
         href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
         opis: 'Szersze spojrzenie na koszt wdrożeń AI: co podbija wycenę.',
       },

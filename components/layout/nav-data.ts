@@ -157,6 +157,19 @@ const NAV_USLUGI_KROTKIE: Record<string, DdKrotki> = {
     tytul: 'Pozycjonowanie pod AI (GEO)',
     opis: 'Bądź cytowany w ChatGPT i Perplexity',
   },
+  // 2026-10-14 (naprawa SEO, recenzja fali 1): dwie nowe usługi. Tytuł
+  // i podpis = dwie połówki h1 "Agenci AI dla firm na czacie, w telefonie
+  // i w procesach" (lib/uslugi/agenci-ai.ts), 1:1.
+  'agenci-ai': {
+    tytul: 'Agenci AI dla firm',
+    opis: 'Na czacie, w telefonie i w procesach',
+  },
+  // Tytuł i podpis = dwie połówki h1 "Wdrożenie AI w firmie: etapy, ceny
+  // i terminy" (lib/uslugi/wdrozenie-ai.ts), 1:1.
+  'wdrozenie-ai': {
+    tytul: 'Wdrożenie AI w firmie',
+    opis: 'Etapy, ceny i terminy',
+  },
 };
 
 /**

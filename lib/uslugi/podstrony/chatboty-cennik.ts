@@ -196,11 +196,16 @@ import type { PodstronaUslugi } from './types';
 export const chatbotyCennik: PodstronaUslugi = {
   rodzic: 'chatboty',
   slug: 'cennik',
-  /* 2026-09-22: przycięcie 2539 -> około 1500 słów (blok „PRZYCIĘCIE" wyżej).
+  /* 2026-10-14 (operacja naprawcza SEO, zwiad naprawa-2026-10-13, klaster
+     „chatboty"): pytanie FAQ 1 dostało „na stronę WWW" (fraza „chatbot na
+     stronę" nie miała u nas dopasowania w tytule, H1 ani FAQ), karta do
+     cennika voicebota w `powiazane.uslugi` (oba cenniki się nie linkowały)
+     i etykieta karty poradnika = nowy H1 poradnika. metaTitle bez zmian.
+     2026-09-22: przycięcie 2539 -> około 1500 słów (blok „PRZYCIĘCIE" wyżej).
      2026-09-06: dołożone trzy sytuacje „kiedy się nie opłaci" z rodzica oraz
      zamknięcie „abonament czy własność" (pakiet §9) w stopce sekcji
      o porównywaniu ofert. */
-  dataAktualizacji: '2026-09-22',
+  dataAktualizacji: '2026-10-14',
 
   h1: 'Ile kosztuje chatbot AI dla firmy? Cennik 2026',
 
@@ -704,7 +709,9 @@ export const chatbotyCennik: PodstronaUslugi = {
      słowo „netto". Zero innych zmian w treści pakietu. */
   faq: [
     {
-      pytanie: 'Ile kosztuje najprostszy chatbot AI?',
+      /* 2026-10-14: dopisane „na stronę WWW" (fraza „chatbot na stronę").
+         Odpowiedź bez zmian, bo już mówi „To bot na Twojej stronie WWW". */
+      pytanie: 'Ile kosztuje najprostszy chatbot AI na stronę WWW?',
       odpowiedz:
         '1790 zł netto. To bot na Twojej stronie WWW z bazą wiedzy z Twoich materiałów i ze zbieraniem leadów z rozmowy. Wdrażamy go w 1-2 dni robocze.',
     },
@@ -793,6 +800,19 @@ export const chatbotyCennik: PodstronaUslugi = {
         href: '/uslugi/voiceboty',
         opis: 'Kanał telefoniczny zamiast czatu: voicebot odbiera połączenia i nie wydzwania do Twoich klientów.',
       },
+      /* 2026-10-14: cennik -> cennik. Oba cenniki do tej pory się nie
+         linkowały (grep w zwiadzie). Etykieta = H1 strony
+         /uslugi/voiceboty/cennik znak w znak (voiceboty-cennik.ts, pole h1).
+         ŚWIADOMY WYJĄTEK od zasady „zero kwot w powiązaniach" z komentarza
+         wyżej: zadanie operacji każe dać opis z cen tamtej strony. Kwoty są
+         wyłącznie z listy „LICZBY DOZWOLONE" tego pliku (voicebot 2500 zł
+         netto, 5000-9000 zł netto, utrzymanie 299-1500 zł netto) i stoją
+         co do złotówki w kapsule voiceboty-cennik.ts. */
+      {
+        etykieta: 'Ile kosztuje voicebot w Polsce w 2026 roku',
+        href: '/uslugi/voiceboty/cennik',
+        opis: 'Budowa 2500 zł netto albo 5000-9000 zł netto z integracjami, utrzymanie 299-1500 zł netto miesięcznie albo 0 zł, minuty i tokeny osobno.',
+      },
       {
         etykieta: 'Audyt AI firmy: mapa oszczędności czasu',
         href: '/uslugi/audyt-ai',
@@ -801,9 +821,11 @@ export const chatbotyCennik: PodstronaUslugi = {
     ],
     poradniki: [
       {
-        etykieta: 'Ile kosztuje chatbot dla firmy w 2026?',
+        /* 2026-10-14: etykieta = nowy H1 poradnika (poradnik przeszedł na
+           pytanie rynkowe, ten cennik zostaje przy naszych kwotach). */
+        etykieta: 'Ile kosztuje chatbot AI w 2026? Abonament, wdrożenie i ukryte koszty',
         href: '/poradniki/ile-kosztuje-chatbot-dla-firmy-2026',
-        opis: 'Dłuższy rozkład kosztów wdrożenia i tego, co realnie wpływa na cenę bota.',
+        opis: 'Ceny rynkowe, abonament czy wdrożenie i ukryte koszty, o które warto zapytać przed zamówieniem.',
       },
     ],
     narzedzia: [

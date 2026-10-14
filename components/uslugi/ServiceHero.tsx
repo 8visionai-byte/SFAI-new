@@ -162,6 +162,11 @@ const H1_KOLOR: Record<string, string> = {
   'dla-salonu-samochodowego': 'salonu i serwisu samochodowego',
   'dla-kancelarii': 'kancelarii prawnej',
   'rodo-ai-act': 'co musi być spełnione',
+  /* 2026-10-14 (naprawa SEO): dwie nowe strony usług. Bez wpisu H1 świeci
+     w całości szarym. Fragment = dokładna końcówka h1 z pliku usługi
+     (lib/uslugi/agenci-ai.ts:72, lib/uslugi/wdrozenie-ai.ts:46). */
+  'agenci-ai': 'na czacie, w telefonie i w procesach',
+  'wdrozenie-ai': 'etapy, ceny i terminy',
 };
 
 /**
@@ -304,6 +309,21 @@ const KAFEL_CENY: Record<string, { opis: string }> = {
   'dla-stomatologa': { opis: 'pakiet startowy, bez kalendarza' },
   'dla-salonu-samochodowego': { opis: 'pakiet startowy, płatny raz' },
   'dla-kancelarii': { opis: 'pakiet startowy, płatny raz' },
+  /* 2026-10-14 (naprawa SEO): trzy strony usług, które dostały jawne
+     ramaCeny.minPrice. Bez wpisu etykieta liczy się z ramaCeny.h2 i pod
+     kwotą stoi nieprawda:
+      - automatyzacje 1990 zł to AI Start (jeden proces na próbę), a h2 dałby
+        „wdrożenie automatyzacji", które kosztuje 3000-10000 zł
+        (ramaCeny.tresc i pas metryk w lib/uslugi/automatyzacje.ts);
+      - agenci-ai 1790 zł to agent czatowy bez integracji (ramaCeny.tresc
+        w lib/uslugi/agenci-ai.ts), nie każdy agent AI;
+      - wdrozenie-ai 1490 zł to Sprint Diagnostyczny, pierwszy płatny krok
+        (ramaCeny.tresc w lib/uslugi/wdrozenie-ai.ts), ta sama konwencja co
+        podstrony optymalizacji wyżej. Żadna nie ustawia cenaStala, więc
+        prefiks „od " dokłada kafleStatystyk. */
+  automatyzacje: { opis: 'AI Start, jeden proces' },
+  'agenci-ai': { opis: 'agent czatowy, bez integracji' },
+  'wdrozenie-ai': { opis: 'Sprint Diagnostyczny' },
 };
 
 type Kafel = { id: string; wartosc: string; opis: string };

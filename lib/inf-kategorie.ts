@@ -330,6 +330,11 @@ export const INF_USLUGA_BADGE: Record<string, string> = {
   rozwiazania: 'APKI',
   'strony-www': 'WWW',
   optymalizacja: 'SEO',
+  /* 2026-10-14 (naprawa SEO), pochodne slugów jak reszta listy. Kolor, emoji
+     i ikona dla tych dwóch slugów CELOWO jeszcze nie w INF_KATEGORIA (wybór
+     wizualny, czeka na akceptację Pawła; do tego czasu fallback ✨). */
+  'agenci-ai': 'AGENCI',
+  'wdrozenie-ai': 'WDROŻENIE',
 };
 
 /**

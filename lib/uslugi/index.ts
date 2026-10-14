@@ -1,9 +1,9 @@
 /**
  * REJESTR USŁUG — single source of truth dla silnika stron usług.
  *
- * Importuje 6 modułów treści (każdy = jeden obiekt `Usluga`) i eksportuje:
+ * Importuje 14 modułów treści (każdy = jeden obiekt `Usluga`) i eksportuje:
  *  - USLUGI: tablica wszystkich usług (kolejność = kolejność w hubie /uslugi),
- *  - USLUGI_SLUGS: lista slugów (do generateStaticParams = SSG dla 6 stron),
+ *  - USLUGI_SLUGS: lista slugów (do generateStaticParams = SSG dla 14 stron),
  *  - getUslugaBySlug(slug): getter po slug (zwraca Usluga | undefined).
  *
  * Dodanie usługi = jeden import + jeden wpis w tablicy. Trasa, sitemap-hook i
@@ -32,6 +32,11 @@ import { audytAi } from './audyt-ai';
    a są gotowe (§4 leady B2B, §5 prywatny asystent dla prezesa). */
 import { leadyB2b } from './leady-b2b';
 import { asystentPrezesa } from './asystent-prezesa';
+/* Naprawa SEO 2026-10-14 (.seo-przeglad/naprawa-2026-10-13/zwiad.json, klastry
+   agenci-ai i wdrozenie-ai): dwie nowe strony usług pod frazy, na które serwis
+   nie miał żadnego adresu („agent AI dla firm", „wdrożenie AI w firmie"). */
+import { agenciAi } from './agenci-ai';
+import { wdrozenieAi } from './wdrozenie-ai';
 
 export type { Usluga, FaqItem, TabelaWiersz, Krok, Cta } from './types';
 
@@ -44,6 +49,7 @@ export const USLUGI: readonly Usluga[] = [
   // Obsługa 24/7 (pierwsza linia: klient, telefon, kandydat)
   chatboty,
   voiceboty,
+  agenciAi,
   agentRekrutacyjny,
   // Back-office i procesy (powtarzalna robota za kulisami)
   automatyzacje,
@@ -51,6 +57,7 @@ export const USLUGI: readonly Usluga[] = [
   leadyB2b,
   opiekaAi,
   // Budowa i strategia (od czego zacząć, co zbudować, gdzie być widocznym)
+  wdrozenieAi,
   audytAi,
   rozwiazania,
   asystentPrezesa,
@@ -59,7 +66,7 @@ export const USLUGI: readonly Usluga[] = [
 ] as const;
 
 /**
- * Slugi wszystkich usług — wprost do generateStaticParams (SSG 6 stron).
+ * Slugi wszystkich usług: wprost do generateStaticParams (SSG 14 stron).
  * Pochodzą z `slug` każdego modułu, więc nie ma rozjazdu rejestr <-> plik.
  */
 export const USLUGI_SLUGS: readonly string[] = USLUGI.map((u) => u.slug);

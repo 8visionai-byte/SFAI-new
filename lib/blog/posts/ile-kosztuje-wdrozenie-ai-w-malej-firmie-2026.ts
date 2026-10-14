@@ -4,22 +4,47 @@ import type { Post } from '../types';
  * WPIS 1: Ile kosztuje wdrożenie AI w małej firmie w 2026? (realne widełki)
  *
  * Lead answer-first jest PRAWDZIWY i gotowy do cytowania. Sekcje (`tresc`) i FAQ
- * wypełnione: answer-first, ramy rynkowe jako KONTEKST (nie ceny SimpleFast),
- * wycena value-based, jak liczyć zwrot, od czego zacząć. Zero zmyślonych cen.
+ * wypełnione: answer-first, nasz cennik w zł netto, wycena value-based, jak
+ * liczyć zwrot, od czego zacząć. Zero zmyślonych cen.
+ *
+ * SEO 2026-10-14 (operacja naprawcza, .seo-przeglad/naprawa-2026-10-13/zwiad.json,
+ * klaster „wdrozenie-ai"): „ramy rynkowe w USD" bez źródła ZASTĄPIONE naszym
+ * cennikiem w zł netto. KAŻDA kwota 1:1 z plików usług:
+ *   - audyt AI 1490 zł netto, odliczany od wdrożenia: lib/uslugi/audyt-ai.ts,
+ *   - chatbot od 1790 zł netto, z integracjami 8000-15000 zł netto, opieka
+ *     99-599 zł netto/mies.: lib/uslugi/podstrony/chatboty-cennik.ts (kapsula),
+ *   - voicebot 2500 zł netto prosty, 5000-9000 zł netto z integracjami,
+ *     utrzymanie 299-1500 zł netto/mies.: lib/uslugi/voiceboty.ts (ramaCeny),
+ *   - AI Start 1990 zł netto: lib/uslugi/chatboty.ts i
+ *     lib/uslugi/podstrony/asystent-wewnetrzny.ts („1990 zł netto"),
+ *     lib/uslugi/automatyzacje.ts (próg 1),
+ *   - automatyzacja procesu 3000-10000 zł netto, opieka 99-599 zł netto/mies.
+ *     albo 0 zł: lib/uslugi/automatyzacje.ts (ramaCeny),
+ *   - 0 zł abonamentu po przekazaniu infrastruktury: wszystkie trzy pliki wyżej.
+ * Instytut Kryptografii: zdanie 1:1 z kapsuły lib/realizacje/auto-email-bok.ts
+ * (było „75 procent", sprzeczne z kartą realizacji na tej samej stronie).
+ * metaTitle z frazą kosztową, BEZ frazy „wdrożenie AI w firmie: etapy" (to cel
+ * strony usługi /uslugi/wdrozenie-ai). H1 i slug BEZ zmian.
  */
 export const ileKosztujeWdrozenieAi: Post = {
   slug: 'ile-kosztuje-wdrozenie-ai-w-malej-firmie-2026',
   tytul: 'Ile kosztuje wdrożenie AI w małej firmie w 2026?',
 
   lead:
-    'Koszt wdrożenia AI w małej firmie w 2026 zależy głównie od zakresu: prosty chatbot na stronę jest znacznie tańszy niż Agent, który łączy się z kalendarzem, CRM i sam wykonuje zadania. Cenę liczymy od wartości, czyli ile godzin i leadów realnie odzyskujesz. Konkretne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
+    'Wdrożenie AI w małej firmie kosztuje u nas od 1790 zł netto za chatbota na stronę, 2500 zł netto za prosty voicebot i zwykle 3000-10000 zł netto za automatyzację jednego procesu. Pierwszą automatyzację na próbę (AI Start) robimy za 1990 zł netto, a audyt AI za 1490 zł netto odliczamy od wdrożenia. Zaczynasz od bezpłatnej diagnozy, na której mówimy wprost, co u Ciebie ma sens.',
 
-  metaTitle: 'Ile kosztuje wdrożenie AI w małej firmie w 2026?',
+  /* SEO 2026-10-14: 42 zn. + 16 zn. sufiksu marki („ · SimpleFast.ai") = 58.
+     Dokładne dopasowanie zapytania z GSC „ile kosztuje wdrożenie ai w firmie"
+     (11 wyśw., poz. 12,3, trafiało dotąd na poradnik o automatyzacji).
+     „małej" zostaje w H1 i w slugu. Wariant „... w małej firmie? Ceny 2026"
+     miałby 67 znaków z sufiksem, więc odpadł. */
+  metaTitle: 'Ile kosztuje wdrożenie AI w firmie w 2026?',
+  /* 154 znaki, kwoty 1:1 z tabeli cennika w treści. */
   metaDescription:
-    'Ile kosztuje wdrożenie AI w małej firmie w 2026? Co wpływa na cenę chatbota, voicebota i automatyzacji, jak liczyć zwrot i od czego zacząć bez ryzyka.',
+    'Ile kosztuje wdrożenie AI w firmie w 2026? Chatbot od 1790 zł netto, voicebot od 2500 zł netto, automatyzacja 3000-10000 zł netto, audyt AI 1490 zł netto.',
 
   data: '2026-06-15',
-  dataAktualizacji: '2026-08-19',
+  dataAktualizacji: '2026-10-14',
   kategoria: 'Koszty i wycena',
   tagi: ['koszt wdrożenia AI', 'cennik AI dla firm', 'AI w MŚP', 'zwrot z AI'],
 
@@ -34,15 +59,17 @@ export const ileKosztujeWdrozenieAi: Post = {
   tresc: [
     {
       typ: 'akapit',
+      /* SEO 2026-10-14: zdania o „widełkach rynkowych w dolarach" (bez źródła)
+         wycięte. Rozstrzał tłumaczy zakres, a kwoty stoją w tabeli niżej. */
       tekst:
-        'Krótka, uczciwa odpowiedź: to zależy od zakresu. Prosty chatbot, który odpowiada na pytania ze strony, to zupełnie inny koszt niż AI Agent, który łączy się z kalendarzem i CRM, sam umawia spotkania i porządkuje dane. W ramach rynkowych jednorazowy setup mieści się zwykle od kilkuset do kilku tysięcy dolarów, a stała opieka liczona miesięcznie to z reguły od około 200 do 1000 dolarów. To widełki rynkowe, nie nasz cennik. My liczymy od wartości: ile godzin pracy i ile leadów to realnie zdejmie z Twojego zespołu.',
+        'Rozstrzał cen bierze się z zakresu. Prosty chatbot, który odpowiada na pytania ze strony, to zupełnie inny koszt niż agent AI, który łączy się z kalendarzem i CRM, sam umawia spotkania i porządkuje dane. Wszystkie kwoty w tym wpisie to nasz cennik w złotych netto, ten sam co na stronach naszych usług. Liczymy od wartości: ile godzin pracy i ile leadów to realnie zdejmie z Twojego zespołu.',
     },
 
     {
       typ: 'sekcja',
       naglowek: 'Od czego naprawdę zależy cena wdrożenia AI?',
       akapity: [
-        'Cena nie bierze się z liczby okienek na ekranie. Bierze się z tego, jak głęboko rozwiązanie wchodzi w Twoją firmę i ile pracy zdejmuje. Im więcej integracji i im więcej decyzji ma podejmować, tym więcej pracy po stronie wdrożenia. Tu jest różnica między chatbotem a Agentem: chatbot odpowiada, Agent działa. Bot, który tylko odpowie na pytanie o godziny otwarcia, jest tani. Agent, który odbierze zapytanie, sprawdzi dostępność w kalendarzu, zapisze klienta i wpisze go do CRM, kosztuje więcej, bo robi pracę człowieka.',
+        'Cena nie bierze się z liczby okienek na ekranie. Bierze się z tego, jak głęboko rozwiązanie wchodzi w Twoją firmę i ile pracy zdejmuje. Im więcej integracji i im więcej decyzji ma podejmować, tym więcej pracy po stronie wdrożenia. Tu jest różnica między chatbotem a agentem: chatbot odpowiada, agent działa. Bot, który tylko odpowie na pytanie o godziny otwarcia, jest tani. Agent, który odbierze zapytanie, sprawdzi dostępność w kalendarzu, zapisze klienta i wpisze go do CRM, kosztuje więcej, bo robi pracę człowieka.',
       ],
       punkty: [
         'Zakres zadań: czy AI tylko odpowiada, czy też wykonuje akcje (umawia, wysyła, aktualizuje dane).',
@@ -53,32 +80,45 @@ export const ileKosztujeWdrozenieAi: Post = {
       ],
     },
 
+    /* SEO 2026-10-14: sekcja „Jakie są ramy rynkowe kosztów AI w 2026?" z tabelą
+       w USD (bez źródła) zamieniona na NASZ cennik w zł netto. Każda kwota 1:1
+       z pliku usługi (lista źródeł w komentarzu nagłówkowym). Opłaty miesięczne
+       podane per usługa, nigdy jako jedna liczba (różnią się między usługami).
+       Opisy „co robi" z kapsuł i tabel tych samych plików: chatbot (pytania,
+       kontakt do leada), voicebot (odbiera połączenia, umawia w kalendarzu,
+       nigdy nie dzwoni sam), AI Start (jeden proces na próbę), automatyzacja
+       (przepisywanie danych, potwierdzenia), audyt (raport PDF z mapą procesów). */
     {
       typ: 'sekcja',
-      naglowek: 'Jakie są ramy rynkowe kosztów AI w 2026?',
+      naglowek: 'Ile kosztuje wdrożenie AI u nas? Cennik 2026 w zł netto',
       akapity: [
-        'Poniższa tabela to kontekst rynkowy na 2026, nie nasz cennik. Pokazuje rząd wielkości, żeby było od czego zacząć rozmowę. Większość małych firm zaczyna od jednego, wąskiego zastosowania i rozszerza je, kiedy zobaczy pierwszy zwrot. Stawki są podane w dolarach, bo tak najczęściej wygląda rynek narzędzi i wdrożeń.',
+        'To nasze realne ceny, te same co na stronach naszych usług. Każda kwota jest netto. Większość małych firm zaczyna od jednego, wąskiego zastosowania i rozszerza je, kiedy zobaczy pierwszy zwrot.',
+        'Opłata miesięczna zależy od usługi, więc podajemy ją osobno. Po przekazaniu Ci infrastruktury abonament wynosi 0 zł.',
       ],
     },
     {
       typ: 'tabela',
       wKarcie: true,
-      /* Podpis = nagłówek H2 sekcji nad tabelą, znak w znak. Ważne przy TEJ
-         tabeli: mówi wprost „ramy rynkowe", więc kolumny „Setup (rynek)"
-         i „Opieka / mc (rynek)" nie zostaną wzięte za nasz cennik. */
-      podpis: 'Jakie są ramy rynkowe kosztów AI w 2026?',
-      naglowki: ['Typ wdrożenia', 'Co realnie robi', 'Setup (rynek)', 'Opieka / mc (rynek)'],
+      /* Podpis = nagłówek H2 sekcji nad tabelą, znak w znak. */
+      podpis: 'Ile kosztuje wdrożenie AI u nas? Cennik 2026 w zł netto',
+      naglowki: ['Co wdrażasz', 'Co robi', 'Cena netto'],
       wiersze: [
-        ['Chatbot na stronę', 'Odpowiada na pytania, zbiera kontakt do leada', 'od kilkuset USD', 'od ok. 200 USD'],
-        ['AI Agent z integracjami', 'Umawia spotkania, pisze do CRM, działa w tle', 'od ok. 1000 USD wzwyż', 'ok. 200 do 1000 USD'],
-        ['Automatyzacja e-maili', 'Czyta, sortuje i przygotowuje odpowiedzi', 'od kilkuset USD', 'zależnie od wolumenu'],
-        ['Voicebot na telefon', 'Odbiera połączenia, kwalifikuje, umawia', 'wyższy próg setupu', 'zależnie od minut rozmów'],
+        ['Audyt AI (Sprint Diagnostyczny)', 'Raport PDF z mapą procesów: gdzie AI się opłaci, a gdzie nie', '1490 zł, odliczane od wdrożenia'],
+        ['Chatbot na stronę', 'Odpowiada na pytania, zbiera kontakt do leada', 'od 1790 zł'],
+        ['Chatbot z integracjami', 'Pełny zakres z integracjami, na przykład z kalendarzem albo CRM', '8000-15000 zł'],
+        ['Voicebot prosty', 'Odbiera połączenia i odpowiada na powtarzalne pytania', '2500 zł'],
+        ['Voicebot z integracjami', 'Odbiera połączenia i umawia w kalendarzu, z rozbudowanymi scenariuszami', '5000-9000 zł'],
+        ['AI Start', 'Pierwsza automatyzacja jednego procesu na próbę', '1990 zł'],
+        ['Automatyzacja procesu', 'Przepisywanie danych, potwierdzenia i przypomnienia przejmuje system', '3000-10000 zł'],
+        ['Opieka: chatbot i automatyzacja', 'Gdy projekt zostaje u nas', '99-599 zł miesięcznie'],
+        ['Opieka: voicebot', 'Gdy infrastruktura zostaje u nas', '299-1500 zł miesięcznie'],
+        ['Przekazanie infrastruktury Tobie', 'Rozwiązanie utrzymujesz u siebie', '0 zł miesięcznie'],
       ],
     },
     {
       typ: 'akapit',
       tekst:
-        'Traktuj te liczby jako ramy, nie obietnicę. Dwie firmy z tym samym typem bota mogą mieć inny koszt, bo jedna ma uporządkowane treści i prosty proces, a druga pięć systemów, które trzeba ze sobą pogodzić.',
+        'Widełki są szerokie z jednego powodu. Dwie firmy z tym samym typem bota mogą mieć inny koszt, bo jedna ma uporządkowane treści i prosty proces, a druga pięć systemów, które trzeba ze sobą pogodzić. Dokładną kwotę w widełkach podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
     },
 
     {
@@ -86,7 +126,7 @@ export const ileKosztujeWdrozenieAi: Post = {
       naglowek: 'Dlaczego wyceniamy od wartości, a nie od godzin?',
       wariant: 'edge',
       akapity: [
-        'Płacenie za godziny premiuje wolną pracę. Płacenie za efekt premiuje wynik. Dlatego patrzymy najpierw na to, co rozwiązanie ma zdjąć z firmy: ile godzin tygodniowo, ile zgubionych zapytań, ile leadów, które dziś przepadają, bo nikt nie odpisał na czas. Dopiero z tego wychodzi sensowna cena. Nasz manifest jest prosty: AI nie zastępuje ludzi, AI zastępuje to, co ich zatrzymuje. Jeśli Agent zdejmie z handlowca dwie godziny przepisywania danych dziennie, te dwie godziny wracają do sprzedaży.',
+        'Płacenie za godziny premiuje wolną pracę. Płacenie za efekt premiuje wynik. Dlatego patrzymy najpierw na to, co rozwiązanie ma zdjąć z firmy: ile godzin tygodniowo, ile zgubionych zapytań, ile leadów, które dziś przepadają, bo nikt nie odpisał na czas. Dopiero z tego wychodzi sensowna cena. Nasz manifest jest prosty: AI nie zastępuje ludzi, AI zastępuje to, co ich zatrzymuje. Jeśli agent zdejmie z handlowca dwie godziny przepisywania danych dziennie, te dwie godziny wracają do sprzedaży.',
       ],
     },
     {
@@ -100,7 +140,7 @@ export const ileKosztujeWdrozenieAi: Post = {
       naglowek: 'Jak policzyć zwrot z AI dla swojej firmy?',
       wariant: 'quiet',
       akapity: [
-        'Zwrot liczy się prościej, niż się wydaje. Bierzesz czas, który dziś znika na powtarzalnej robocie, mnożysz przez koszt godziny i porównujesz z kosztem wdrożenia oraz opieki. Dwa nasze realne przykłady pokazują, o jakiej skali mówimy. W Instytucie Kryptografii automatyzacja e-maili sprawiła, że 75 procent wiadomości wymaga już tylko drobnej korekty przed wysłaniem, reszta pracy znika. W projekcie Lead Generator zebranie 1000 rekordów zajęło 40 minut zamiast dwóch tygodni ręcznej pracy.',
+        'Zwrot liczy się prościej, niż się wydaje. Bierzesz czas, który dziś znika na powtarzalnej robocie, mnożysz przez koszt godziny i porównujesz z kosztem wdrożenia oraz opieki. Dwa nasze realne przykłady pokazują, o jakiej skali mówimy. W Instytucie Kryptografii około 85% draftów pisze AI, a odpowiedź idzie do klienta od razu albo po drobnej poprawce. W projekcie Lead Generator zebranie 1000 rekordów zajęło 40 minut zamiast dwóch tygodni ręcznej pracy.',
       ],
     },
     {
@@ -134,7 +174,7 @@ export const ileKosztujeWdrozenieAi: Post = {
       typ: 'sekcja',
       naglowek: 'Jednorazowo czy w abonamencie: za co się płaci?',
       akapity: [
-        'Koszt ma dwie części. Jednorazowy setup to zbudowanie rozwiązania: podłączenie systemów, nauczenie Agenta Twoich treści i procesów, testy. Opieka miesięczna to utrzymanie: poprawki, aktualizacje, dostrojenie odpowiedzi, reakcja kiedy coś po stronie Twoich narzędzi się zmieni. AI to nie mebel, który stawiasz raz i zapominasz. Im lepiej zadbany, tym lepiej pracuje. Część firm woli wyższy setup i niższą opiekę, inne odwrotnie. To kwestia tego, jak bardzo rozwiązanie ma się zmieniać po starcie.',
+        'Koszt ma dwie części. Jednorazowy setup to zbudowanie rozwiązania: podłączenie systemów, nauczenie agenta Twoich treści i procesów, testy. Opieka miesięczna to utrzymanie: poprawki, aktualizacje, dostrojenie odpowiedzi, reakcja kiedy coś po stronie Twoich narzędzi się zmieni. AI to nie mebel, który stawiasz raz i zapominasz. Im lepiej zadbany, tym lepiej pracuje. Część firm woli wyższy setup i niższą opiekę, inne odwrotnie. To kwestia tego, jak bardzo rozwiązanie ma się zmieniać po starcie.',
       ],
     },
 
@@ -154,35 +194,51 @@ export const ileKosztujeWdrozenieAi: Post = {
       odpowiedz:
         'Opłaca się, kiedy AI zdejmuje powtarzalną robotę, która dziś zżera czas lub gubi leady. Zwrot policzysz prosto: godziny odzyskane razy koszt godziny minus koszt wdrożenia i opieki. W naszym projekcie Lead Generator zebranie 1000 rekordów zajęło 40 minut zamiast dwóch tygodni ręcznej pracy.',
     },
+    /* SEO 2026-10-14: kwoty w USD bez źródła -> nasze kwoty w zł netto
+       (chatboty-cennik.ts kapsula, voiceboty.ts ramaCeny). */
     {
-      pytanie: 'Ile kosztuje sam chatbot, a ile AI Agent z integracjami?',
+      pytanie: 'Ile kosztuje sam chatbot, a ile agent AI z integracjami?',
       odpowiedz:
-        'Prosty chatbot, który tylko odpowiada na pytania, jest najtańszy. AI Agent, który łączy się z kalendarzem i CRM, sam umawia i aktualizuje dane, kosztuje więcej, bo wykonuje pracę człowieka. W ramach rynkowych setup to od kilkuset do kilku tysięcy dolarów, a opieka miesięczna zwykle od około 200 do 1000 dolarów. To kontekst rynkowy, nie nasz cennik.',
+        'Prosty chatbot na stronę kosztuje u nas od 1790 zł netto. Agent AI, który łączy się z kalendarzem i CRM, sam umawia i aktualizuje dane, kosztuje więcej, bo wykonuje pracę człowieka: na czacie 8000-15000 zł netto, a w telefonie, jako voicebot z integracjami, 5000-9000 zł netto. Opieka to 99-599 zł netto miesięcznie przy czacie i 299-1500 zł netto przy telefonie, albo 0 zł po przekazaniu Ci infrastruktury.',
     },
+    /* SEO 2026-10-14: „Zwykle tak" przeczyło tabeli cennika wyżej (0 zł
+       abonamentu po przekazaniu infrastruktury). Odpowiedź z naszymi dwoma
+       modelami; tokeny u dostawcy: chatboty-cennik.ts i voiceboty.ts. */
     {
       pytanie: 'Czy oprócz wdrożenia trzeba płacić co miesiąc?',
       odpowiedz:
-        'Zwykle tak. Jednorazowy setup to zbudowanie i podłączenie rozwiązania, a opieka miesięczna to utrzymanie: poprawki, aktualizacje i dostrojenie, gdy zmieniają się Twoje narzędzia lub treści. AI działa najlepiej, kiedy jest dostrajany, a nie zostawiony sam sobie.',
+        'Nie musisz. Po wdrożeniu wybierasz: projekt zostaje u nas i płacisz opiekę, czyli poprawki, aktualizacje i dostrojenie, gdy zmieniają się Twoje narzędzia lub treści, albo przekazujemy Ci infrastrukturę i abonament wynosi 0 zł. Przy chatbocie i voicebocie zużycie modelu, czyli tokeny, a przy telefonie także minuty rozmów, płacisz dostawcy wprost.',
     },
   ],
 
   queries: [
     'ile kosztuje wdrożenie AI w małej firmie',
+    'ile kosztuje wdrożenie AI w firmie',
     'koszt wdrożenia AI 2026',
     'cennik AI dla firm',
     'ile kosztuje chatbot dla firmy',
   ],
 
   /* v22 (PLAN-v22 §2.2 pkt 4 i §3 P2 #10): koniec ślepego zaułka. Ten wpis
-     mówi o RAMACH RYNKOWYCH, więc prowadzi do dwóch poradników z NASZYMI
-     realnymi widełkami (poradnik o agencie sam się już do niego odwołuje) oraz
+     (od 2026-10-14 z naszym cennikiem w zł zamiast ram rynkowych) prowadzi do
+     dwóch poradników z pełnymi widełkami (poradnik o agencie sam się już do niego odwołuje) oraz
      do kalkulatora, którym czytelnik policzy to na swoich liczbach.
      ŹRÓDŁA NAPISÓW (znak w znak z rejestrów): usługi = `h1` +
      `metaDescription` z lib/uslugi, narzędzia = `tytul` + `korzysc`
      z lib/narzedzia, poradniki = etykieta i opis z pól `powiazanePoradniki`
      rejestru poradników, realizacje = `h1` + `metaDescription`
      z lib/realizacje. */
+  /* SEO 2026-10-14 (zwiad, klaster wdrozenie-ai, linkiWewnetrzne): na PIERWSZYM
+     miejscu strona usługi /uslugi/wdrozenie-ai (etykieta = h1 z
+     lib/uslugi/wdrozenie-ai.ts; opis = fakty z jej metaDescription: audyt
+     1490 zł netto w 5 dni = audyt-ai.ts, proces na próbę 1990 zł netto =
+     chatboty.ts). Link do /uslugi/audyt-ai już był, zostaje. */
   powiazaneUslugi: [
+    {
+      etykieta: 'Wdrożenie AI w firmie: etapy, ceny i terminy',
+      href: '/uslugi/wdrozenie-ai',
+      opis: 'Od bezpłatnej diagnozy przez audyt AI za 1490 zł netto w 5 dni po jeden proces na próbę za 1990 zł netto.',
+    },
     {
       etykieta: 'Audyt AI firmy: mapa oszczędności czasu',
       href: '/uslugi/audyt-ai',
@@ -191,7 +247,7 @@ export const ileKosztujeWdrozenieAi: Post = {
     {
       etykieta: 'Chatbot AI dla firm',
       href: '/uslugi/chatboty',
-      opis: 'Chatbot AI dla firm, który odpowiada klientom 24/7 i zbiera leady. Ile kosztuje, ile trwa wdrożenie i czym różni się od Agenta. Sprawdź przykłady.',
+      opis: 'Chatbot AI dla firm, który odpowiada klientom 24/7 i zbiera leady. Ile kosztuje, ile trwa wdrożenie i czym różni się od agenta. Sprawdź przykłady.',
     },
   ],
 
@@ -210,7 +266,8 @@ export const ileKosztujeWdrozenieAi: Post = {
       opis: 'Chatbot prosty 1790 zł netto i 1-2 dni robocze, pełne widełki i koszty utrzymania.',
     },
     {
-      etykieta: 'Ile kosztuje wdrożenie AI agenta dla firmy',
+      /* 2026-10-14: etykieta = nowy H1 poradnika (szyk „agent AI"). */
+      etykieta: 'Ile kosztuje agent AI dla firmy? Cennik wdrożenia 2026',
       href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
       opis: 'Widełki 2026 dla agenta AI, od czego zależy cena i jak policzyć zwrot.',
     },

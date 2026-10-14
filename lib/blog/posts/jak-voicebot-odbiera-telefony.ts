@@ -19,7 +19,7 @@ export const jakVoicebotOdbieraTelefony: Post = {
     'Jak voicebot odbiera telefony, gdy pracujesz, i czy klienci to akceptują. Kiedy łączy z człowiekiem i co zrobić, żeby brzmiał naturalnie po polsku.',
 
   data: '2026-06-15',
-  dataAktualizacji: '2026-08-19',
+  dataAktualizacji: '2026-10-14',
   kategoria: 'Voiceboty',
   tagi: ['voicebot', 'odbieranie telefonów', 'asystent głosowy', 'obsługa połączeń'],
 
@@ -144,7 +144,13 @@ export const jakVoicebotOdbieraTelefony: Post = {
       typ: 'sekcja',
       naglowek: 'Ile to kosztuje i kiedy się opłaca?',
       akapity: [
-        'Naszych stawek nie podajemy z cennika, bo wyceniamy od wartości, jaką to daje konkretnej firmie. Inaczej liczy się to dla jednoosobowej działalności, inaczej dla gabinetu z trzema telefonami naraz. Dla ram rynkowych: w 2026 uruchomienie voicebota mieści się orientacyjnie w przedziale około 500 do 5000 dolarów, a bieżąca opieka około 200 do 1000 dolarów miesięcznie. To kontekst rynkowy, nie nasza oferta.',
+        /* 2026-10-14 (naprawa SEO, zwiad 13.10, klaster voiceboty): akapit mówił
+           „Naszych stawek nie podajemy z cennika" i podawał widełki w dolarach bez
+           źródła, a /uslugi/voiceboty/cennik podaje 2500 zł netto. Sprzeczność
+           cenowa w obrębie domeny. Teraz ten sam cennik co w
+           lib/uslugi/podstrony/voiceboty-cennik.ts (kapsula, tabela progów,
+           akapit o marży), co do złotówki. Akapit drugi bez zmian. */
+        'Nasz cennik jest jawny i ma trzy osobne pozycje. Stworzenie bota płacisz raz: 2500 zł netto za wersję prostą albo 5000-9000 zł netto za wersję z integracjami. Utrzymanie kosztuje 299-1500 zł netto miesięcznie, gdy infrastruktura zostaje u nas, albo 0 zł, gdy przekazujemy ją Tobie. Wtedy poprawki zamawiasz po 350 zł netto za godzinę. Minuty rozmów i tokeny płacisz bezpośrednio dostawcom, bez naszej marży. Pełną tabelę, razem z kosztem pierwszego roku, znajdziesz w cenniku voicebota.',
         'Liczbę, która naprawdę przesądza, masz u siebie. Policz, ile zapytań tracisz w tygodniu na nieodebranych telefonach i ile wart jest jeden klient. Jeśli przegapiony lead to dla Ciebie realne pieniądze, voicebot zwraca się szybko. Jeśli telefon dzwoni raz na ruski rok, daruj sobie. Tu nie chodzi o modę na AI, tylko o to, żeby przestać tracić ludzi, którzy już chcieli u Ciebie kupić.',
       ],
     },
@@ -190,6 +196,16 @@ export const jakVoicebotOdbieraTelefony: Post = {
      z lib/realizacje. */
   powiazaneUslugi: [
     {
+      /* 2026-10-14 (naprawa SEO): pierwsza karta prowadzi do cennika, bo sekcja
+         „Ile to kosztuje i kiedy się opłaca?" odsyła do niego słowami, a cennik
+         nie miał ani jednego linku spoza własnej gałęzi. Etykieta = `h1`,
+         opis = `metaDescription` z lib/uslugi/podstrony/voiceboty-cennik.ts,
+         znak w znak (konwencja tego pola). */
+      etykieta: 'Ile kosztuje voicebot w Polsce w 2026 roku',
+      href: '/uslugi/voiceboty/cennik',
+      opis: 'Cennik voicebota 2026: budowa 2500 zł netto albo 5000 do 9000 zł netto, utrzymanie 299 do 1500 zł netto miesięcznie albo 0 zł. Minuty i tokeny osobno.',
+    },
+    {
       etykieta: 'Voicebot dla firmy, który odbiera telefon za Ciebie',
       href: '/uslugi/voiceboty',
       /* 2026-08-19 (audyt §2): stary opis mówił „opieka od 99 zł/mies", czyli
@@ -218,7 +234,7 @@ export const jakVoicebotOdbieraTelefony: Post = {
 
   powiazanePoradniki: [
     {
-      etykieta: 'Ile kosztuje wdrożenie AI agenta dla firmy',
+      etykieta: 'Ile kosztuje agent AI dla firmy? Cennik wdrożenia 2026',
       href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
       opis: 'Widełki 2026 dla agenta AI, od czego zależy cena i jak policzyć zwrot.',
     },

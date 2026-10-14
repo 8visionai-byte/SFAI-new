@@ -25,7 +25,7 @@ import { automatTresciSocial } from './automat-tresci-social';
 import { automatyczneRaporty } from './automatyczne-raporty';
 /* Partia GEO (audyt 2026-08-18 §6.1 i §9 etap 2 pkt 7): trzy dowody
    cytowalności, których strona /uslugi/optymalizacja dotąd nie miała.
-   Kolejność siły z audytu: Lenart Motors, Fichtelgebirgshaus.de, Trockenhaus. */
+   Kolejność siły z audytu: Lenart Motors, Fichtelgebirgs-Haus, Trockenhaus. */
 import { stronaCytowanaPrzezChatgpt } from './strona-cytowana-przez-chatgpt';
 import { top10GoogleIWidocznoscWGpt } from './top10-google-i-widocznosc-w-gpt';
 import { zNiewidocznejStronyDoTop3Google } from './z-niewidocznej-strony-do-top3-google';
@@ -44,7 +44,7 @@ export { KATEGORIA_LABEL } from './types';
  *
  * PARTIA GEO (audyt 2026-08-18 §6.1: „to jest najcenniejszy materiał w całym
  * audycie"): trzy dowody cytowalności wchodzą NA POCZĄTEK listy, w kolejności
- * siły podanej przez audyt (Lenart Motors, Fichtelgebirgshaus.de, Trockenhaus).
+ * siły podanej przez audyt (Lenart Motors, Fichtelgebirgs-Haus, Trockenhaus).
  * Powód: to jedyne case'y z nazwanym klientem i wynikiem w silniku AI, a hub
  * /realizacje pokazuje pierwsze karty jako wizytówkę. Liczniki w serwisie
  * (HeroLiczniki, /kontakt, /wiedza, /realizacje) liczą `REALIZACJE.length`,

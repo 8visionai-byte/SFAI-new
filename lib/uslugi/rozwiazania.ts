@@ -18,10 +18,13 @@ import type { Usluga } from './types';
  */
 export const rozwiazania: Usluga = {
   slug: 'rozwiazania',
-  dataAktualizacji: '2026-08-21',
+  /* 2026-10-14 (operacja naprawcza SEO, zwiad.json klaster „agenci-ai"): doszła
+     karta do strony /uslugi/agenci-ai w `powiazane.uslugi`. Tytuł, H1 i treść
+     sekcji BEZ zmian (strona nie konkuruje o frazy agentowe). */
+  dataAktualizacji: '2026-10-14',
   h1: 'Indywidualne rozwiązania AI: aplikacje i wtyczki na zamówienie',
   kapsula:
-    'Czasem gotowy chatbot czy automatyzacja nie wystarczą, bo Twój problem jest tylko Twój. Wtedy budujemy rozwiązanie na miarę: aplikację webową, wtyczkę do narzędzia, którego używasz, albo Agenta spiętego z kilkoma systemami naraz. Nie sprzedajemy pudełka z funkcjami. Projektujemy dokładnie to, czego potrzebuje Twój proces, i wdrażamy szybko. Zaczynamy od bezpłatnej diagnozy, na której mówimy wprost, czy warto budować od zera, czy taniej złożyć z gotowych klocków.',
+    'Czasem gotowy chatbot czy automatyzacja nie wystarczą, bo Twój problem jest tylko Twój. Wtedy budujemy rozwiązanie na miarę: aplikację webową, wtyczkę do narzędzia, którego używasz, albo agenta spiętego z kilkoma systemami naraz. Nie sprzedajemy pudełka z funkcjami. Projektujemy dokładnie to, czego potrzebuje Twój proces, i wdrażamy szybko. Zaczynamy od bezpłatnej diagnozy, na której mówimy wprost, czy warto budować od zera, czy taniej złożyć z gotowych klocków.',
 
   metaTitle: 'Aplikacje i wtyczki AI na zamówienie',
   metaDescription:
@@ -131,7 +134,7 @@ export const rozwiazania: Usluga = {
          trzech opcji zaczyna się od „Wybierasz ją, gdy...". Fakty bez zmian. */
       {
         typ: 'naglowek',
-        tekst: 'Kiedy wybrać aplikację, kiedy wtyczkę, a kiedy Agenta AI?',
+        tekst: 'Kiedy wybrać aplikację, kiedy wtyczkę, a kiedy agenta AI?',
         ikona: 'folder-kod',
         chip: 'TRZY FORMY',
         overline: 'APLIKACJA · WTYCZKA · AGENT AI',
@@ -347,7 +350,7 @@ export const rozwiazania: Usluga = {
     ],
     linkPoradnik: {
       przed: 'Po czym poznać, że wdrożenie się zwróci, rozpisaliśmy w poradniku: ',
-      etykieta: 'ile kosztuje wdrożenie AI agenta dla firmy',
+      etykieta: 'ile kosztuje agent AI dla firmy',
       po: '.',
       href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
     },
@@ -357,7 +360,7 @@ export const rozwiazania: Usluga = {
     {
       pytanie: 'Czym jest indywidualne rozwiązanie AI?',
       odpowiedz:
-        'To aplikacja, wtyczka albo Agent budowane pod Twój konkretny proces, a nie kupowane z półki. Powstaje wtedy, gdy gotowe narzędzia nie pasują albo zmuszają do płacenia za zbędne funkcje. Projektujemy dokładnie to, czego potrzebujesz, i zaczynamy od najmniejszej wersji, która rozwiązuje problem.',
+        'To aplikacja, wtyczka albo agent budowane pod Twój konkretny proces, a nie kupowane z półki. Powstaje wtedy, gdy gotowe narzędzia nie pasują albo zmuszają do płacenia za zbędne funkcje. Projektujemy dokładnie to, czego potrzebujesz, i zaczynamy od najmniejszej wersji, która rozwiązuje problem.',
     },
     {
       pytanie: 'Kiedy opłaca się budować na zamówienie, a kiedy lepiej wziąć gotowe?',
@@ -436,6 +439,16 @@ export const rozwiazania: Usluga = {
         href: '/narzedzia#kalkulator-procesu',
         opis:
           'Policz roczny koszt swojego procesu i sprawdź, po ilu miesiącach zwróci się dowolna oferta wdrożenia.',
+      },
+    ],
+    /* 2026-10-14: FORMA 3 przełącznika (Agent AI) dostaje tu zejście do pełnego
+       katalogu agentów. Etykieta = H1 nowej strony wg konspektu zwiadu, opis:
+       1790 zł netto = chatboty.ts minPrice, 2500 zł netto = voiceboty.ts minPrice. */
+    uslugi: [
+      {
+        etykieta: 'Agenci AI dla firm',
+        href: '/uslugi/agenci-ai',
+        opis: 'Agenci AI na czacie, w telefonie i w procesach firmy: na czacie od 1790 zł netto, w telefonie od 2500 zł netto.',
       },
     ],
   },

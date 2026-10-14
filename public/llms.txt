@@ -1,6 +1,6 @@
 # SimpleFast.ai
 
-> Architekt AI dla polskich MŚP. Budujemy AI Agentów (działają, nie tylko gadają):
+> Architekt AI dla polskich MŚP. Budujemy agentów AI (działają, nie tylko gadają):
 > automatyzacje procesów, chatboty, voiceboty, strony www pod SEO/AEO/GEO,
 > aplikacje i wtyczki na zamówienie. Dane zostają w Unii Europejskiej (RODO + AI Act),
 > pierwszy krok jest mały i odwracalny, rozliczenie za efekt.
@@ -8,7 +8,7 @@
 > Wszystkie kwoty w tym pliku są netto (bez VAT).
 
 ## Czym się różnimy
-> AI Agent wykonuje całe zadania pod nadzorem człowieka: odbiera telefon, sprawdza
+> Agent AI wykonuje całe zadania pod nadzorem człowieka: odbiera telefon, sprawdza
 > kalendarz, umawia wizytę, wysyła potwierdzenie, pilnuje faktur. Chatbot tylko
 > odpowiada na pytania. Budujemy Agentów, którzy działają, nie systemy, które gadają.
 
@@ -16,13 +16,15 @@
 - [Architekci Wartości AI dla firm](https://www.simplefast.ai/uslugi/architekci-wartosci-ai): my zamiast etatowego działu AI. Sami sprawdzamy, gdzie tracisz godziny, budujemy jedną automatyzację na próbę i ją utrzymujemy. Pełny jawny cennik od 0 zł (darmowa diagnoza). Pierwszy płatny krok: Sprint Diagnostyczny 1490 zł, odliczany od wdrożenia. Zaczynasz od jednej automatyzacji, nie od całego działu.
 
 ## Usługi
-- [Wszystkie usługi (hub)](https://www.simplefast.ai/uslugi): rozdroże 12 usług w 3 grupach: obsługa 24/7, back-office i procesy, budowa i strategia.
+- [Wszystkie usługi (hub)](https://www.simplefast.ai/uslugi): rozdroże 14 usług w 3 grupach: obsługa 24/7, back-office i procesy, budowa i strategia.
 - [Chatbot AI dla firm](https://www.simplefast.ai/uslugi/chatboty): odpowiada klientom 24/7 na bazie wiedzy firmy, zbiera leady, rośnie do Agenta, który umawia i zapisuje. Trzy progi netto: prosty 1790 zł w 1-2 dni robocze, średni 3000-6000 zł w 3-4 dni robocze, duży z integracjami 8000-15000 zł w 5-10 dni roboczych. Opieka po wdrożeniu 99-599 zł/mies. Dwie rundy poprawek w cenie.
 - [Voicebot dla firmy](https://www.simplefast.ai/uslugi/voiceboty): bot telefoniczny (agent głosowy) odbiera połączenia przychodzące po polsku 24/7, umawia wizyty, przyjmuje zgłoszenia. Nie dzwoni sam: sprawę do oddzwonienia zapisuje i wysyła powiadomienie, a kontakt zaczyna człowiek. Trzy osobne pozycje netto zamiast jednego abonamentu: stworzenie 2500 zł (prosty, 3-5 dni roboczych) albo 5000-9000 zł (z integracjami, 5-25 dni roboczych), utrzymanie 299-1500 zł/mies. przy infrastrukturze u nas albo 0 zł/mies. po przekazaniu infrastruktury klientowi (poprawki 350 zł/h), zużycie (tokeny i minuty) według realnego użycia po stronie klienta.
+- [Agenci AI dla firm](https://www.simplefast.ai/uslugi/agenci-ai): agent AI dostaje zadanie i sam je wykonuje w narzędziach firmy: odpowiada klientowi, sprawdza kalendarz, zapisuje dane w CRM, przygotowuje odpowiedź na maila. Chatbot odpowiada, agent działa. Wdrażamy agentów na czacie, w telefonie i w procesach za kulisami. Ceny netto: agent na czacie od 1790 zł, w telefonie od 2500 zł, prywatny asystent prezesa 4999 zł. Decyzje o wysokiej stawce zostają u człowieka.
 - [Agent AI do rekrutacji](https://www.simplefast.ai/uslugi/agent-rekrutacyjny): zbiera CV, robi pierwszy odsiew i scoring, odpowiada kandydatom, umawia rozmowy. Decyzje o zatrudnieniu podejmuje człowiek.
-- [Automatyzacja procesów w firmie z AI](https://www.simplefast.ai/uslugi/automatyzacje): system przejmuje powtarzalną robotę (przepisywanie danych, potwierdzenia, terminy), wdrożenie w dni.
-- [Automatyzacja dokumentów i faktur (OCR, KSeF)](https://www.simplefast.ai/uslugi/dokumenty-faktury): OCR odczytuje fakturę, klasyfikuje koszt, wpisuje do arkusza i księgowości, eksportuje do KSeF. Najszybszy zwrot w biurach rachunkowych.
+- [Automatyzacja procesów w firmie z AI](https://www.simplefast.ai/uslugi/automatyzacje): system przejmuje powtarzalną robotę (przepisywanie danych, potwierdzenia, terminy). Budujemy na Make.com albo n8n, wdrożenie w dni. Pierwszy proces na próbę (AI Start) 1990 zł netto, pełne wdrożenie 3000-10000 zł netto.
+- [Automatyzacja dokumentów i faktur (OCR, KSeF)](https://www.simplefast.ai/uslugi/dokumenty-faktury): automatyczny odczyt faktur. OCR z AI czyta fakturę, klasyfikuje koszt, wpisuje do arkusza i księgowości, eksportuje do KSeF. Najszybszy zwrot w biurach rachunkowych. Wdrożenie zwykle 3000-10000 zł netto.
 - [Opieka AI (utrzymanie automatyzacji)](https://www.simplefast.ai/uslugi/opieka-ai): monitoring, poprawki promptów, rozwój, raport miesięczny. Ryczałt 10/20/40h, od 3000 zł/mies.
+- [Wdrożenie AI w firmie: etapy, ceny i terminy](https://www.simplefast.ai/uslugi/wdrozenie-ai): wdrożenie sztucznej inteligencji pod jeden konkretny proces (obsługa klienta, telefony, maile albo dokumenty), etap po etapie, każdy z jawną ceną netto. Bezpłatna diagnoza, potem Sprint Diagnostyczny 1490 zł (5 dni roboczych, odliczany od wdrożenia) albo jeden proces na próbę 1990 zł. Silnik AI wybiera klient: OpenAI, Anthropic albo Google, a konto u dostawcy należy do klienta.
 - [Audyt AI firmy (Sprint Diagnostyczny)](https://www.simplefast.ai/uslugi/audyt-ai): płatny audyt 1490 zł netto, 5 dni roboczych, efekt to raport PDF z mapą procesów (Action Plan). Cena odliczana od wdrożenia.
 - [Leady branżowe B2B](https://www.simplefast.ai/uslugi/leady-b2b): gotowa paczka rekordów firm z publicznych wizytówek Google Maps. Ceny netto za paczkę: 1000 rekordów 169 zł (0,169 zł/rekord), 5000 rekordów 699 zł (0,140 zł/rekord), 10000 rekordów 1390 zł (0,139 zł/rekord). Zbieranie 1000 rekordów 20-30 minut; ręcznie około 3 minuty na rekord, czyli około 50 godzin. Opłata jednorazowa, bez abonamentu. Wyłącznie dla firm sprzedających B2B.
 - [Prywatny asystent AI dla prezesa](https://www.simplefast.ai/uslugi/asystent-prezesa): agent z własnym interfejsem, który uczy się zachowań jednej osoby: pisze maile, robi research, przygotowuje do rozmów, tworzy prezentacje, wchodzi w udostępnione pliki i działa na nich. Stworzenie 4999 zł netto, budowa 5-10 dni roboczych, utrzymanie serwerów 199 zł netto/mies., zużycie według cennika API modeli po stronie klienta. Bota przekazujemy klientowi.
@@ -94,18 +96,18 @@
 
 ## Poradniki
 - [Poradniki AI dla firm (hub)](https://www.simplefast.ai/poradniki): ile kosztuje chatbot i agent AI, które procesy zautomatyzować, jak policzyć zwrot.
-- [Ile kosztuje chatbot AI dla firmy](https://www.simplefast.ai/poradniki/ile-kosztuje-chatbot-dla-firmy-2026): u nas od 1790 zł netto, wdrożenie w 1-2 dni robocze; pełne widełki, utrzymanie i ukryte koszty.
+- [Ile kosztuje chatbot AI w 2026? Abonament, wdrożenie i ukryte koszty](https://www.simplefast.ai/poradniki/ile-kosztuje-chatbot-dla-firmy-2026): abonament czy wdrożenie, ceny rynkowe i ukryte koszty; u nas od 1790 zł netto, wdrożenie w 1-2 dni robocze.
 - [Ile kosztuje automatyzacja AI w firmie](https://www.simplefast.ai/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie): wdrożenie 3000-10000 zł, pierwsza automatyzacja na próbę 1990 zł, audyt 1490 zł.
-- [Ile kosztuje wdrożenie AI agenta](https://www.simplefast.ai/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy): czym agent różni się od chatbota, od czego zależy koszt i jak policzyć zwrot.
+- [Ile kosztuje agent AI dla firmy? Cennik wdrożenia 2026](https://www.simplefast.ai/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy): od 1790 zł netto za jedno zadanie na czacie, w telefonie od 2500 zł netto, z integracjami 5000-9000 zł netto (telefon) albo 8000-15000 zł netto (czat), opieka miesięczna albo 0 zł. Czym agent różni się od chatbota i jak policzyć zwrot.
 - [AI w biurze rachunkowym](https://www.simplefast.ai/poradniki/ai-w-biurze-rachunkowym-jakie-procesy-zautomatyzowac): 12 procesów do automatyzacji od najszybszego zwrotu.
 
 ## Blog
 - [Blog o AI dla firm](https://www.simplefast.ai/blog): koszty wdrożenia, chatboty i Agenci, voiceboty, AI Act, automatyzacja i dane w UE.
 - [Ile kosztuje wdrożenie AI w małej firmie w 2026](https://www.simplefast.ai/blog/ile-kosztuje-wdrozenie-ai-w-malej-firmie-2026)
-- [Chatbot czy AI Agent: różnice i co wybrać](https://www.simplefast.ai/blog/chatbot-czy-ai-agent-roznice)
+- [Chatbot czy agent AI: czym się różnią i co wybrać dla firmy](https://www.simplefast.ai/blog/chatbot-czy-ai-agent-roznice)
 - [Jak voicebot odbiera telefony, gdy pracujesz](https://www.simplefast.ai/blog/jak-voicebot-odbiera-telefony)
 - [AI Act a Twoja firma](https://www.simplefast.ai/blog/ai-act-a-twoja-firma-2026)
-- [Automatyzacja procesów AI: od czego zacząć](https://www.simplefast.ai/blog/automatyzacja-procesow-ai-od-czego-zaczac)
+- [Automatyzacja procesów w firmie: co to jest i od czego zacząć](https://www.simplefast.ai/blog/automatyzacja-procesow-ai-od-czego-zaczac)
 
 ## Materiały do pobrania (za darmo, bez zapisu)
 - [Materiały AI dla firm (hub)](https://www.simplefast.ai/materialy)
@@ -120,7 +122,6 @@
 - [Produkty (co zbudowaliśmy)](https://www.simplefast.ai/produkty): cztery własne narzędzia AI (skaner faktur do KSeF, apka coachingowa z agentami, obecność i składki zespołu, centrum dowodzenia głosem) plus katalog klocków do rozwiązań na zamówienie.
 - [Narzędzia AI dla firm](https://www.simplefast.ai/narzedzia): kalkulator oszczędności, test gotowości AI, audyt strony pod cytowanie w ChatGPT, generator promptów. Za darmo, bez maila.
 - [Centrum Wiedzy AI dla firm](https://www.simplefast.ai/wiedza): poradniki, AI Radar, blog i case studies w jednym miejscu.
-- [AI Radar](https://www.simplefast.ai/ai-radar): newsy ze świata AI przefiltrowane przez pytanie, co to znaczy dla Twojej firmy.
 
 ## Firma i kontakt
 - [Strona główna](https://www.simplefast.ai): chatboty, voiceboty i automatyzacje AI dla polskich firm, które odbierają telefony, odpisują klientom i pilnują faktur 24/7. Dane w UE.
@@ -130,4 +131,4 @@
 
 ## Uwaga
 > Każdy adres z tego pliku jest w https://www.simplefast.ai/sitemap.xml i odpowiada 200.
-> Wpisy-szablony AI Radar są noindex i nie ma ich w mapie witryny. Plik zaktualizowany 2026-10-12.
+> AI Radar (hub i wpisy) jest noindex i nie ma go w mapie witryny. Plik zaktualizowany 2026-10-14.

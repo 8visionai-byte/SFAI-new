@@ -18,15 +18,26 @@ import type { Usluga } from './types';
  */
 export const dokumentyFaktury: Usluga = {
   slug: 'dokumenty-faktury',
-  dataAktualizacji: '2026-08-21',
+  /* 2026-10-14 (operacja naprawcza SEO 13.10, zwiad.json klaster
+     „automatyzacje"): frazy z GSC („automatyczny odczyt faktur" 20 wyśw.,
+     „automatyczne odczyty faktur ocr" 19, „odczyt faktur ai" 13) weszły do
+     metaTitle, metaDescription i pierwszych słów kapsuły; FAQ o cenie podaje
+     kwotę wdrożenia z ramaCeny tej strony; link do rodzica /uslugi/automatyzacje.
+     H1 BEZ ZMIAN (H1_KOLOR w ServiceHero trzyma końcówkę „(OCR, KSeF)"). */
+  dataAktualizacji: '2026-10-14',
   h1: 'Automatyzacja dokumentów i faktur (OCR, KSeF)',
 
+  /* 2026-10-14: zmienione tylko pierwsze słowa („Automatyzacja faktur to"
+     -> „Automatyczny odczyt faktur to") i czasownik „odczytuje" -> „czyta",
+     żeby nie powtarzać „odczyt" dwa razy w jednym zdaniu. Reszta 1:1. */
   kapsula:
-    'Automatyzacja faktur to system, który sam odczytuje fakturę (OCR), wyciąga kwoty, NIP i daty, przypisuje koszt do właściwej kategorii i wpisuje wszystko do arkusza lub programu księgowego, a na koniec eksportuje do KSeF. Robi to dla skanu, PDF-u i zdjęcia z telefonu. Ty nie przepisujesz nic ręcznie. Najjaśniejszy zysk widzą biura rachunkowe: faktury klientów lecą do Excela, do księgowości i do KSeF automatem, miesiąc po miesiącu. Dane zostają w Unii Europejskiej.',
+    'Automatyczny odczyt faktur to system, który sam czyta fakturę (OCR), wyciąga kwoty, NIP i daty, przypisuje koszt do właściwej kategorii i wpisuje wszystko do arkusza lub programu księgowego, a na koniec eksportuje do KSeF. Robi to dla skanu, PDF-u i zdjęcia z telefonu. Ty nie przepisujesz nic ręcznie. Najjaśniejszy zysk widzą biura rachunkowe: faktury klientów lecą do Excela, do księgowości i do KSeF automatem, miesiąc po miesiącu. Dane zostają w Unii Europejskiej.',
 
-  metaTitle: 'Automatyzacja faktur: OCR faktur AI i KSeF',
+  /* 2026-10-14: z sufiksem marki z layoutu (" · SimpleFast.ai") całość ma
+     59 znaków. Opis 159 znaków; kwota = ramaCeny.tresc tej strony. */
+  metaTitle: 'Automatyczny odczyt faktur: OCR z AI i KSeF',
   metaDescription:
-    'Automatyzacja dokumentów i faktur: OCR odczytuje fakturę, klasyfikuje koszt, wpisuje do arkusza i księgowości, eksportuje do KSeF. Bez przepisywania.',
+    'Automatyczny odczyt faktur OCR z AI: skan, PDF i zdjęcie trafiają do arkusza i księgowości, eksport do KSeF robi automat. Wdrożenie zwykle 3000-10000 zł netto.',
 
   problem: {
     h2: 'Ile godzin miesięcznie przepisujesz faktury z ręki?',
@@ -384,8 +395,12 @@ export const dokumentyFaktury: Usluga = {
   faq: [
     {
       pytanie: 'Ile kosztuje automatyzacja faktur?',
+      /* 2026-10-14: odpowiedź podaje kwotę wdrożenia (do tej pory była tylko
+         w ramaCeny.tresc). Kwoty 1:1 z ramaCeny tej strony: 3000-10000 zł
+         netto, Sprint Diagnostyczny 1490 zł netto odliczany od wdrożenia,
+         opieka 99-599 zł netto/mies. albo 0 zł przy przekazaniu infrastruktury. */
       odpowiedz:
-        'Koszt zależy od skali i zakresu. Sam odczyt faktur do arkusza to inna półka niż pełny obieg z księgowością i KSeF dla wielu klientów biura. Pracę zaczynamy od Sprintu Diagnostycznego za 1490 zł, który odliczamy od wdrożenia, gdy wchodzimy we współpracę. Dokładne widełki podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz. Bez ukrytych kosztów. Po wdrożeniu dostajesz opiekę w abonamencie od 99 zł miesięcznie, nie zostawiamy klientów.',
+        'Automatyzacja procesu faktur kosztuje zwykle 3000-10000 zł netto, zależnie od liczby integracji. Sam odczyt faktur do arkusza to inna półka niż pełny obieg z księgowością i KSeF dla wielu klientów biura. Pracę zaczynamy od Sprintu Diagnostycznego za 1490 zł netto, który odliczamy od wdrożenia. Opieka po wdrożeniu kosztuje 99-599 zł netto miesięcznie albo 0 zł przy przekazaniu infrastruktury. Dokładną kwotę w tych widełkach podajemy na bezpłatnej diagnozie, zanim cokolwiek zamówisz.',
     },
     {
       pytanie: 'Czy OCR poradzi sobie ze zdjęciem faktury z telefonu?',
@@ -457,6 +472,17 @@ export const dokumentyFaktury: Usluga = {
         href: '/narzedzia#kalkulator-oszczednosci',
         opis:
           'Policz, ile złotych rocznie kosztuje Cię ręczne przepisywanie faktur do arkusza i księgowości.',
+      },
+    ],
+    /* 2026-10-14 (crawl 13.10: z tej strony brak linku do rodzica gałęzi).
+       Etykieta = h1 celu, opis = fakt z kapsuły i ceny celu
+       (lib/uslugi/automatyzacje.ts). */
+    uslugi: [
+      {
+        etykieta: 'Automatyzacja procesów w firmie z AI',
+        href: '/uslugi/automatyzacje',
+        opis:
+          'Jeden proces end-to-end na Make.com albo n8n. Pierwszy proces na próbę w pakiecie AI Start za 1990 zł netto.',
       },
     ],
   },

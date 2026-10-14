@@ -31,7 +31,10 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
     'Ile kosztuje automatyzacja AI w firmie? Wdrożenie to 3000 do 10000 zł, pierwsza automatyzacja na próbę 1990 zł, audyt 1490 zł. Realne widełki i przykłady.',
 
   data: '2026-08-16',
-  dataAktualizacji: '2026-08-19',
+  /* 2026-10-14 (operacja naprawcza SEO 13.10): treść BEZ ZMIAN (poz. 4,8),
+     dopisane tylko dwa linki w powiązaniach (usługa faktur, wpis o koszcie
+     wdrożenia AI). Kafle linków to renderowana treść, więc data idzie w górę. */
+  dataAktualizacji: '2026-10-14',
   kategoria: 'Koszty i wycena',
   tagi: [
     'ile kosztuje automatyzacja AI',
@@ -295,7 +298,7 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
       wariant: 'edge',
       akapity: [
         'Rachunek jest prosty. Policz godziny, które co tydzień znikają na przepisywaniu danych, składaniu raportów i odpowiadaniu na te same maile. Pomnóż przez koszt godziny pracy w Twojej firmie i porównaj z ceną wdrożenia oraz abonamentu opieki. Skalę pokazują nasze realizacje:',
-        'Jeśli rozważasz coś więcej niż automatyzację, czyli agenta AI, który sam prowadzi cały proces i podejmuje akcje w wielu systemach, zajrzyj też do naszego poradnika o koszcie wdrożenia AI agenta dla firmy.',
+        'Jeśli rozważasz coś więcej niż automatyzację, czyli agenta AI, który sam prowadzi cały proces i podejmuje akcje w wielu systemach, zajrzyj też do naszego poradnika o tym, ile kosztuje agent AI dla firmy.',
       ],
       punkty: [
         'Auto-email w Instytucie Kryptografii: przy 580 mailach tygodniowo w szczycie około 85% draftów odpowiedzi pisze AI, a mail idzie do klienta od razu albo po drobnej poprawce.',
@@ -369,6 +372,15 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
       href: '/uslugi/opieka-ai',
       opis: 'Gdy chcesz co miesiąc rozwijać automatyzacje, a nie tylko je utrzymywać.',
     },
+    /* 2026-10-14 (zwiad „automatyzacje"): sekcja „Ile kosztuje automatyzacja
+       faktur?" odsyła słownie do „naszej strony automatyzacji faktur
+       i dokumentów", a linku nie było. Etykieta = h1 celu, opis = fakt
+       z kapsuły i ceny celu (lib/uslugi/dokumenty-faktury.ts). */
+    {
+      etykieta: 'Automatyzacja dokumentów i faktur (OCR, KSeF)',
+      href: '/uslugi/dokumenty-faktury',
+      opis: 'Automatyczny odczyt faktur OCR, wpis do arkusza i księgowości, eksport do KSeF. Wdrożenie zwykle 3000-10000 zł netto.',
+    },
   ],
 
   powiazaneNarzedzia: [
@@ -382,7 +394,7 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
   /* SEO 2026-08-17: blok „Zobacz też" — dwa pozostałe poradniki cenowe. */
   powiazanePoradniki: [
     {
-      etykieta: 'Ile kosztuje wdrożenie AI agenta dla firmy',
+      etykieta: 'Ile kosztuje agent AI dla firmy? Cennik wdrożenia 2026',
       href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
       opis: 'Widełki 2026 dla agenta AI, od czego zależy cena i jak policzyć zwrot.',
     },
@@ -390,6 +402,14 @@ export const ileKosztujeAutomatyzacjaAiWFirmie: Poradnik = {
       etykieta: 'Ile kosztuje chatbot dla firmy w 2026',
       href: '/poradniki/ile-kosztuje-chatbot-dla-firmy-2026',
       opis: 'Chatbot prosty 1790 zł netto i 1-2 dni robocze, pełne widełki i koszty utrzymania.',
+    },
+    /* 2026-10-14: wpis blogowy o koszcie wdrożenia AI w małej firmie (cennik
+       wszystkich usług w zł netto). Etykieta = `tytul` wpisu. Grupa poradników
+       przyjmuje cel z /blog tak samo jak w lib/uslugi/chatboty.ts. */
+    {
+      etykieta: 'Ile kosztuje wdrożenie AI w małej firmie w 2026?',
+      href: '/blog/ile-kosztuje-wdrozenie-ai-w-malej-firmie-2026',
+      opis: 'Co wpływa na cenę chatbota, voicebota i automatyzacji i jak policzyć zwrot z AI w swojej firmie.',
     },
   ],
 

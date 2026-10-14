@@ -193,7 +193,7 @@ import type { Usluga } from './types';
  */
 export const voiceboty: Usluga = {
   slug: 'voiceboty',
-  dataAktualizacji: '2026-09-22',
+  dataAktualizacji: '2026-10-14',
   h1: 'Voicebot dla firmy, który odbiera telefon za Ciebie',
 
   /* KAPSUŁA, 49 słów (kontrakt `Usluga.kapsula`: 40-60). Wersja sprzed
@@ -307,6 +307,29 @@ export const voiceboty: Usluga = {
         ],
         wKarcie: true,
         podpis: 'Co rozmówca musi zrobić, żeby dostać odpowiedź.',
+      },
+      /* 2026-10-14 (naprawa SEO, zwiad 13.10, klaster voiceboty): dopisek jednej
+         sekcji, około 55 słów. 6 z 7 liderów w SERP ma „Jak działa voicebot",
+         a u nas definicja stała tylko w FAQ. Zero liczb (opóźnień nie mierzyliśmy).
+         Źródła faktów: trzy klocki (mowa na tekst, model językowy, głos)
+         = lib/blog/posts/jak-voicebot-odbiera-telefony.ts, sekcja „Jak to działa
+         technicznie i po ludzku?"; baza wiedzy = wiersz tabeli wyżej; kalendarz,
+         notatka i przekazanie człowiekowi = siatka wyżej i FAQ 3-4 tej strony.
+         H1, kapsuła, pozostałe H2 i FAQ BEZ ZMIAN. */
+      {
+        typ: 'sekcja',
+        naglowek: 'Jak działa voicebot w czterech krokach?',
+        akapity: [
+          'Rozmówca mówi zwykłym zdaniem, jak do człowieka, a bot przechodzi przez cztery kroki.',
+        ],
+        punkty: [
+          'Słyszy: zamienia mowę rozmówcy na tekst.',
+          'Rozumie: model językowy czyta pytanie i szuka odpowiedzi w bazie wiedzy o Twojej firmie.',
+          'Działa: zapisuje wizytę w kalendarzu, spisuje sprawę albo przekazuje ją człowiekowi.',
+          'Odpowiada: mówi naturalnym głosem po polsku i prowadzi rozmowę dalej.',
+        ],
+        wariant: 'quiet',
+        chip: 'JAK DZIAŁA',
       },
       {
         typ: 'sekcja',
@@ -431,12 +454,16 @@ export const voiceboty: Usluga = {
     ],
     minPrice: 2500, // pakiet startowy (locked 2026-08-16, audyt §2): UI + offers w JSON-LD.
     /* SEO 2026-08-17: linkowanie wewnętrzne do poradnika cenowego (zdanie 1:1
-       z brief-seo-2026-08-17; render w RamaCeny.tsx w tym samym akapicie). */
+       z brief-seo-2026-08-17; render w RamaCeny.tsx w tym samym akapicie).
+       2026-10-14 (naprawa SEO, zwiad 13.10): link przepięty na WŁASNY cennik
+       z kotwicą cenową. GSC: cennik miał poz. 3,0-9,4 do 01.10, od 02.10 zero
+       wyświetleń, a frazy cenowe przejął rodzic na poz. 15-21. Poradnik o agencie
+       nie traci linku: stoi teraz w `powiazane.poradniki` niżej. */
     linkPoradnik: {
-      przed: 'Koszty wdrożeń AI rozpisaliśmy w ',
-      etykieta: 'poradniku o cenie agenta AI',
-      po: '.',
-      href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
+      przed: 'Pełny ',
+      etykieta: 'cennik voicebota na 2026 rok',
+      po: ', razem z kosztem pierwszego roku, stoi na osobnej stronie.',
+      href: '/uslugi/voiceboty/cennik',
     },
   },
 
@@ -451,7 +478,7 @@ export const voiceboty: Usluga = {
     {
       pytanie: 'Czym jest voicebot?',
       odpowiedz:
-        'Voicebot, nazywany też botem telefonicznym albo agentem głosowym, to bot głosowy, który odbiera telefon i rozmawia po polsku jak asystent: umawia wizyty, przyjmuje zgłoszenia i odpowiada na pytania. Działa 24/7. To nie nagranie ani menu „wciśnij jeden”, tylko rozmowa, która kończy się załatwioną sprawą.',
+        'Voicebot, nazywany też botem telefonicznym, agentem głosowym albo asystentem telefonicznym AI, to bot głosowy, który odbiera telefon i rozmawia po polsku jak asystent: umawia wizyty, przyjmuje zgłoszenia i odpowiada na pytania. Działa 24/7. To nie nagranie ani menu „wciśnij jeden”, tylko rozmowa, która kończy się załatwioną sprawą.',
     },
     {
       pytanie: 'Czy voicebot dzwoni sam do klientów?',
@@ -517,6 +544,19 @@ export const voiceboty: Usluga = {
         href: '/narzedzia#kalkulator-oszczednosci',
         opis:
           'Policz, ile złotych rocznie zjada odbieranie tych samych telefonów i przepisywanie zgłoszeń.',
+      },
+    ],
+    /* 2026-10-14: poradnik o koszcie agenta stracił link z `ramaCeny.linkPoradnik`
+       (przepięty na cennik voicebota), więc wraca tutaj jako karta. Etykieta =
+       `tytul` poradnika znak w znak (lib/poradniki/poradniki/
+       ile-kosztuje-wdrozenie-ai-agenta-dla-firmy.ts, nowy H1 z 2026-10-14, ten
+       sam co w kartach agenci-ai.ts i automatyzacje.ts). Opis 1:1 z karty tego
+       poradnika w lib/uslugi/podstrony/voiceboty-cennik.ts. */
+    poradniki: [
+      {
+        etykieta: 'Ile kosztuje agent AI dla firmy? Cennik wdrożenia 2026',
+        href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
+        opis: 'Szersze spojrzenie na koszt wdrożeń AI: co podbija wycenę.',
       },
     ],
   },

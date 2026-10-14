@@ -46,7 +46,11 @@ const CANONICAL = `${SITE.url}${PATH}`;
 export const metadata: Metadata = buildMetadata({
   title: 'Usługi AI dla firm: automatyzacje, agenci, strony',
   description:
-    'Usługi AI dla MŚP: chatboty i voiceboty 24/7, automatyzacja faktur i procesów, audyt AI, strony pod SEO i AI. Zacznij od jednej automatyzacji.',
+    /* 2026-10-14 (naprawa SEO, zwiad.json klaster wdrozenie-ai): hub nie mial
+       slowa „wdrozenie", a lapie fraze „uslugi ai dla firm". Dopisane
+       „wdrozenie AI w firmie" (nowa strona /uslugi/wdrozenie-ai) i „agenci AI"
+       (nowa strona /uslugi/agenci-ai). 143 znaki. Title bez zmian. */
+    'Usługi AI dla MŚP: wdrożenie AI w firmie, chatboty i voiceboty 24/7, agenci AI, automatyzacja faktur i procesów, audyt AI, strony pod SEO i AI.',
   path: PATH,
 });
 
@@ -77,7 +81,7 @@ const KLASTRY: Klaster[] = [
     h2: 'Kto odbierze klienta, telefon i kandydata 24/7?',
     intro:
       'Pierwsza linia, która odpowiada od razu, też wieczorem i w weekend. Agent zbiera leady, umawia, odpowiada na powtarzalne pytania. Człowiek decyduje, agent robi resztę.',
-    slugs: ['chatboty', 'voiceboty', 'agent-rekrutacyjny'],
+    slugs: ['chatboty', 'voiceboty', 'agenci-ai', 'agent-rekrutacyjny'],
   },
   {
     id: 'back-office',
@@ -93,7 +97,7 @@ const KLASTRY: Klaster[] = [
     h2: 'Od czego zacząć i co zbudować, żeby nie przepalić kasy?',
     intro:
       'Najpierw mapa, gdzie AI da zysk. Potem to, czego nie ma na półce: aplikacje, wtyczki, strony cytowalne przez AI. Najpierw plan, potem wydatek.',
-    slugs: ['audyt-ai', 'rozwiazania', 'asystent-prezesa', 'strony-www', 'optymalizacja'],
+    slugs: ['wdrozenie-ai', 'audyt-ai', 'rozwiazania', 'asystent-prezesa', 'strony-www', 'optymalizacja'],
   },
 ];
 
@@ -111,13 +115,13 @@ const TON = INF_KATEGORIA_DEFAULT;
    lib/uslugi albo podstrony w lib/uslugi/podstrony automatycznie
    przelicza pas metryk, tabele i odpowiedzi FAQ. */
 
-/** 10 uslug: lib/uslugi/index.ts USLUGI (chatboty ... optymalizacja). */
+/** 14 uslug (2026-10-14): lib/uslugi/index.ts USLUGI (chatboty ... optymalizacja). */
 const LICZBA_USLUG = USLUGI.length;
 
-/** 3 podstrony voicebotow: lib/uslugi/podstrony/index.ts PODSTRONY. */
+/** Podstrony galezi chatbotow, voicebotow i optymalizacji: lib/uslugi/podstrony/index.ts PODSTRONY. */
 const LICZBA_PODSTRON = PODSTRONY.length;
 
-/** Strony z pelnym opisem uslugi = 10 uslug + 3 podstrony (wszystkie SSG, 200 OK). */
+/** Strony z pelnym opisem uslugi = uslugi + podstrony (wszystkie SSG, 200 OK). */
 const LICZBA_STRON = LICZBA_USLUG + LICZBA_PODSTRON;
 
 /** Uslugi z kwota podana wprost = ramaCeny.minPrice ustawione w rejestrze. */
@@ -132,21 +136,34 @@ const LICZBA_PYTAN =
   USLUGI.reduce((suma, u) => suma + u.faq.length, 0) +
   PODSTRONY.reduce((suma, p) => suma + p.faq.length, 0);
 
+/**
+ * Polska odmiana rzeczownika po liczbie (1 usluga, 2-4 uslugi, 5+ uslug;
+ * 12-14 zawsze forma trzecia). 2026-10-14: liczby hubu rosna razem z rejestrem,
+ * wiec forma slowa musi isc za liczba, a nie byc wpisana na sztywno.
+ */
+function odmiana(n: number, jeden: string, kilka: string, wiele: string): string {
+  if (n === 1) return jeden;
+  const r10 = n % 10;
+  const r100 = n % 100;
+  if (r10 >= 2 && r10 <= 4 && (r100 < 12 || r100 > 14)) return kilka;
+  return wiele;
+}
+
 const METRYKI_HUBU = [
-  { wartosc: String(LICZBA_USLUG), opis: 'usługi AI w ofercie' },
+  { wartosc: String(LICZBA_USLUG), opis: `${odmiana(LICZBA_USLUG, 'usługa', 'usługi', 'usług')} AI w ofercie` },
   {
     wartosc: String(LICZBA_STRON),
-    opis: 'strony z pełnym opisem usługi',
-    zrodlo: `${LICZBA_USLUG} usług i ${LICZBA_PODSTRON} podstrony voicebotów`,
+    opis: `${odmiana(LICZBA_STRON, 'strona', 'strony', 'stron')} z pełnym opisem usługi`,
+    zrodlo: `${LICZBA_USLUG} ${odmiana(LICZBA_USLUG, 'usługa', 'usługi', 'usług')} i ${LICZBA_PODSTRON} ${odmiana(LICZBA_PODSTRON, 'podstrona', 'podstrony', 'podstron')}`,
   },
   {
     wartosc: String(LICZBA_Z_CENA),
-    opis: 'usługi z ceną podaną wprost',
+    opis: `${odmiana(LICZBA_Z_CENA, 'usługa', 'usługi', 'usług')} z ceną podaną wprost`,
     zrodlo: 'kwota „od" w ramie ceny',
   },
   {
     wartosc: String(LICZBA_PYTAN),
-    opis: 'pytania z odpowiedziami',
+    opis: `${odmiana(LICZBA_PYTAN, 'pytanie', 'pytania', 'pytań')} z odpowiedziami`,
     zrodlo: 'sekcje FAQ na stronach usług',
   },
 ];
@@ -218,7 +235,7 @@ const FAQ_HUBU = [
        strony („Zaczynasz od jednej rzeczy, ktora zzera najwiecej czasu"). */
     pytanie: 'Od czego zacząć, jeśli nie wiem, która usługa jest dla mnie?',
     odpowiedz:
-      'Od bezpłatnej diagnozy. Mówimy wprost, czy w ogóle warto budować, i pokazujemy jedną rzecz, która zżera Ci najwięcej czasu. Jeśli chcesz mapę całej firmy, robimy audyt AI za 1490 zł, a tę kwotę odliczamy od kosztu wdrożenia, gdy ruszamy dalej. Jeśli wolisz zobaczyć efekt na jednym procesie, zaczynamy od pierwszej automatyzacji na próbę w pakiecie AI Start za 1990 zł. Nie musisz wybierać wszystkiego dziś.',
+      'Od bezpłatnej diagnozy. Mówimy wprost, czy w ogóle warto budować, i pokazujemy jedną rzecz, która zżera Ci najwięcej czasu. Jeśli chcesz mapę całej firmy, robimy audyt AI za 1490 zł netto, a tę kwotę odliczamy od kosztu wdrożenia, gdy ruszamy dalej. Jeśli wolisz zobaczyć efekt na jednym procesie, zaczynamy od pierwszej automatyzacji na próbę w pakiecie AI Start za 1990 zł netto. Nie musisz wybierać wszystkiego dziś.',
   },
   {
     /* (c) lib/uslugi/chatboty.ts:22 (kapsula: chatbot tekstowy na stronie
@@ -227,7 +244,7 @@ const FAQ_HUBU = [
        strony („Agent wykonuje prace pod nadzorem czlowieka"). */
     pytanie: 'Czym różni się chatbot od voicebota i od agenta AI?',
     odpowiedz:
-      'Chatbot jest tekstowy: odpowiada klientom na stronie i w komunikatorach, tłumaczy ofertę, zbiera leady. Voicebot jest głosowy: odbiera telefon, rozmawia po polsku, umawia wizytę i zapisuje ją w kalendarzu. Agent AI to kolejny poziom obu: nie tylko odpowiada, ale wykonuje pracę pod nadzorem człowieka, czyli umawia, zapisuje i przekazuje sprawę dalej. Chatbot i voicebot to zwykle pierwszy krok do Agenta.',
+      'Chatbot jest tekstowy: odpowiada klientom na stronie i w komunikatorach, tłumaczy ofertę, zbiera leady. Voicebot jest głosowy: odbiera telefon, rozmawia po polsku, umawia wizytę i zapisuje ją w kalendarzu. Agent AI to kolejny poziom obu: odpowiada i do tego wykonuje pracę pod nadzorem człowieka, czyli umawia, zapisuje i przekazuje sprawę dalej. Chatbot i voicebot to zwykle pierwszy krok do agenta.',
   },
   {
     /* (a) LICZBA_Z_CENA policzone z rejestru; (b) ceny z audytu 2026-08-18:
@@ -235,7 +252,7 @@ const FAQ_HUBU = [
        opieka-ai.ts:84 minPrice 3000; api/_knowledge.mjs:37 (AI Start 1990)
        i api/_knowledge.mjs:42 (automatyzacja 3000-10000 zl). */
     pytanie: 'Ile kosztuje wdrożenie AI w małej firmie?',
-    odpowiedz: `${LICZBA_Z_CENA} usługi mają kwotę podaną wprost. Chatbot na stronę startuje od 1790 zł netto i powstaje w 1 do 2 dni roboczych, wdrożenie średnie to 3000 do 6000 zł netto, a duże z integracjami 8000-15000 zł netto. Voicebot to 2500 zł netto w wersji prostej, gotowy w 3 do 5 dni roboczych, albo 5000 do 9000 zł netto z integracjami, wtedy 5 do 25 dni roboczych. Audyt AI kosztuje 1490 zł netto, a Opieka AI od 3000 zł miesięcznie za ryczałt 10 godzin. Pierwsza automatyzacja na próbę w pakiecie AI Start to 1990 zł, a większe wdrożenie automatyzacji kosztuje zwykle od 3000 do 10000 zł, zależnie od liczby integracji. Czas wdrożenia liczymy od przekazania kompletu materiałów. Resztę wyceniamy po bezpłatnej diagnozie, zanim cokolwiek zamówisz.`,
+    odpowiedz: `Kwotę podaną wprost ma ${LICZBA_Z_CENA} z ${LICZBA_USLUG} usług. Chatbot na stronę startuje od 1790 zł netto i powstaje w 1 do 2 dni roboczych, wdrożenie średnie to 3000 do 6000 zł netto, a duże z integracjami 8000-15000 zł netto. Voicebot to 2500 zł netto w wersji prostej, gotowy w 3 do 5 dni roboczych, albo 5000 do 9000 zł netto z integracjami, wtedy 5 do 25 dni roboczych. Audyt AI kosztuje 1490 zł netto, a Opieka AI od 3000 zł netto miesięcznie za ryczałt 10 godzin. Pierwsza automatyzacja na próbę w pakiecie AI Start to 1990 zł netto, a większe wdrożenie automatyzacji kosztuje zwykle od 3000 do 10000 zł netto, zależnie od liczby integracji. Czas wdrożenia liczymy od przekazania kompletu materiałów. Resztę wyceniamy po bezpłatnej diagnozie, zanim cokolwiek zamówisz.`,
   },
   {
     /* (d) api/_knowledge.mjs:336 (dwa modele rozliczenia) i api/_knowledge.mjs:38
@@ -244,7 +261,7 @@ const FAQ_HUBU = [
        lib/uslugi/opieka-ai.ts:83 (ryczalt 10 h = 3000 zl miesiecznie). */
     pytanie: 'Czy po wdrożeniu płacę abonament?',
     odpowiedz:
-      'Masz wybór. Przekazujemy Ci całą infrastrukturę i wtedy nie płacisz abonamentu, albo projekt zostaje u nas pod opieką i wtedy jest opłata utrzymaniowa: chatboty i automatyzacje 99-599 zł netto miesięcznie, voiceboty od 299 do 1500 zł netto miesięcznie. Decydujesz na etapie wyceny, nie po fakcie. Czym innym jest Opieka AI jako osobna usługa: to ryczałt godzin miesięcznie na utrzymanie i rozwój, od 3000 zł za 10 godzin.',
+      'Masz wybór. Przekazujemy Ci całą infrastrukturę i wtedy nie płacisz abonamentu, albo projekt zostaje u nas pod opieką i wtedy jest opłata utrzymaniowa: chatboty i automatyzacje 99-599 zł netto miesięcznie, voiceboty od 299 do 1500 zł netto miesięcznie. Decydujesz na etapie wyceny, nie po fakcie. Czym innym jest Opieka AI jako osobna usługa: to ryczałt godzin miesięcznie na utrzymanie i rozwój, od 3000 zł netto za 10 godzin.',
   },
   {
     /* (c) lib/uslugi/voiceboty.ts:100 (FAQ „Czy voicebot dzwoni sam do
@@ -331,10 +348,10 @@ export default function UslugiHubPage() {
           {/* Kapsuła answer-first — surowy HTML, cytat dla LLM. */}
           <Reveal delay={0.05}>
             <p className="text-lead mt-6 text-fg-muted">
-              Budujemy chatboty, voiceboty i automatyzacje, które łączymy w Agentów AI.
+              Budujemy chatboty, voiceboty i automatyzacje, które łączymy w agentów AI.
               Agent wykonuje pracę pod nadzorem
-              człowieka: odbiera telefon, umawia, pilnuje faktur, odsiewa CV. Poniżej
-              dwanaście usług w trzech grupach: obsługa 24/7, back-office i procesy,
+              człowieka: odbiera telefon, umawia, pilnuje faktur, odsiewa CV. Poniżej{' '}
+              {`${LICZBA_USLUG} ${odmiana(LICZBA_USLUG, 'usługa', 'usługi', 'usług')}`} w trzech grupach: obsługa 24/7, back-office i procesy,
               budowa i strategia. Nie musisz wybierać dziś. Zaczynasz od jednej rzeczy,
               która zżera najwięcej czasu.
             </p>
