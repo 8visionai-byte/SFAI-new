@@ -246,7 +246,7 @@ export const NAV_MAP = [
     id: 'realizacje',
     path: '/realizacje',
     label: 'realizacje',
-    about: 'realizacje i case studies z liczbami: auto-email dla biura obsługi (75% maili po drobnej korekcie), generator leadów (1000 rekordów w 40 minut), podsumowania spotkań i inne',
+    about: 'realizacje i case studies z liczbami: auto-email dla biura obsługi (około 85% draftów pisze AI), generator leadów (1000 rekordów w 40 minut), podsumowania spotkań i inne',
     aliases: 'realizacje, case study, portfolio, przykłady wdrożeń, projekty, co już zrobiliście, referencje, dowody',
   },
   {

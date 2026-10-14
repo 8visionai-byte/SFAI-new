@@ -87,7 +87,7 @@ GOTOWE PRODUKTY (adres: /produkty; opisywane przez funkcję, każdy to punkt wyj
 4. Centrum dowodzenia (MVP): dyktujesz głosem zadanie, pomysł albo notatkę, agent tworzy rekord i sam go sortuje, przypisuje i nadaje priorytet.
 
 REALIZACJE (adres: /realizacje; wyłącznie realne wdrożenia)
-1. Auto-email dla biura obsługi klienta (Instytut Kryptografii, edukacja i szkolenia): system czyta przychodzącego maila, sięga do historii korespondencji i przygotowuje gotowy draft odpowiedzi do jednego kliknięcia. Efekt: 75% maili wymaga już tylko drobnej korekty przed wysłaniem. Wysyłkę zawsze zatwierdza człowiek.
+1. Auto-email dla biura obsługi klienta (Instytut Kryptografii, edukacja i szkolenia): system czyta przychodzącego maila, sięga do historii korespondencji i przygotowuje gotowy draft odpowiedzi do jednego kliknięcia. Efekt: około 85% draftów pisze AI, a odpowiedź idzie do klienta od razu albo po drobnej poprawce. Wysyłkę zawsze zatwierdza człowiek.
 2. Błyskawiczny generator leadów (klient anonimowy, sprzedaż B2B): automat zebrał 1000 rekordów potencjalnych klientów w 40 minut; ręcznie ta praca zajmowała około dwóch tygodni.
 3. Auto-podsumowania spotkań na Meet, Zoom i Teams (klient anonimowy, usługi B2B): agent dołącza do spotkania, spisuje rozmowę i wysyła raport z listą zadań przypisanych do osób. Kilka godzin tygodniowo mniej na notatki (szacunek).
 4. Automat treści na social media (klient anonimowy, marketing): zbiera newsy z branży, dobiera grafikę i przygotowuje gotowy post; człowiek sprawdza i publikuje jednym kliknięciem. Kilka godzin tygodniowo mniej na przygotowanie treści (szacunek).
