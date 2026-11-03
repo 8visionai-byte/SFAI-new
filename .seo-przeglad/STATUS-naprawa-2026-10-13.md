@@ -48,7 +48,25 @@ Legenda: NIERUSZONE / W TOKU / CLAIMED-UNVERIFIED / DONE (tylko z dowodem).
 - Bing: właściwość simplefast.ai/ obejmuje www (te same dane w API), osobna właściwość niepotrzebna. Bing API SubmitUrlBatch: 20 zmienionych adresów, HTTP 200 (14.10).
 - Katalogi: odłożone przez Pawła na później.
 
-## FALA 2 (po pomiarze fali 1, nie wcześniej niż 28.10)
+## PRZEGLĄD 03.11 + FALA 2 (DONE, produkcja)
+Diagnoza (GSC + Google.pl, bez agentów):
+- Widoczność ROŚNIE: 120 → 169-178 wyśw./dzień (tydzień 26.10); na tych samych frazach pozycja 18,1 → 15,6. Średnia pozycja gorsza przez nowe frazy z fali 1 i faktury (490 wyśw. @ 30, SERP = programy Fakturownia/wFirma/Saldeo).
+- Pozycje 3-7 w GSC na frazach pieniężnych = cytaty w Przeglądzie od AI / trybie AI. Organicznie top 10: 0 z 8 fraz; „ile kosztuje wdrożenie agenta ai w firmie" org. 17 (GSC 4,2); „agenci ai dla firm" poza top 20 (GSC 6,8). Stąd ~0 kliknięć.
+- Kliknięcia 28 dni: 34 vs 57; największa strata odbieranie-telefonow (304 wyśw./11 klik. → 25/0), skutek 23.09.
+- Indeks: 76/78 z mapy zaindeksowane (poza: polityka prywatności, 1 materiał). 17 „zeskanowana, niezindeksowana" z raportu GSC to adresy spoza mapy.
+Fala 2 (commity ce3fa2f + 641090b ponowienie po nieudanym buildzie Vercel + 253b70f):
+| ID | Zmiana | Stan |
+|---|---|---|
+| F2-1 | NOWY /poradniki/co-to-jest-voicebot (1432 słowa) | DONE: 200 na produkcji, w mapie, Bing API 200, IndexNow 200 |
+| F2-2 | NOWA /uslugi/chatboty/wdrozenie (1589 słów), rodzic chroniony nieruszony | DONE: 200, link z rodzica automatycznie |
+| F2-3 | automatyzacje: oferty (Trockenhaus 20 min zamiast 2-4 h), fraza „automatyzacja ofert" | DONE |
+| F2-4 | poradnik agenta: sekcja „Ile trwa wdrożenie agenta AI w firmie?" (tytuł bez zmian) | DONE |
+| F2-5 | agenci-ai = „cyfrowi pracownicy" (tytuł, kapsuła, sekcja, FAQ, frazy) | DONE: produkcja sprawdzona |
+Dowód: tsc 0, lint 0, build 90/90, podgląd next start (konsola czysta), skan HTML 0 em-dash/0 placeholderów/0 martwych linków; mapa GSC 204, IndexNow 80×200, Bing API 9×200. Monitor 03.11: wyśw. +20% t/t, klik. 11 vs 6, 6/6 chronionych ok.
+Lekcja: Vercel padł na ce3fa2f mimo lokalnego build OK (jak 22.09) → pusty commit naprawia.
+Wstrzymane świadomie: poradnik „Cyfrowy pracownik AI" (najpierw pomiar agenci-ai, żeby nie dzielić świeżej frazy na 2 adresy).
+
+## FALA 2 (plan z 13.10, częściowo zrobione 03.11)
 - `/uslugi/chatboty/wdrozenie` (fraza „wdrożenie chatbota", ryzyko podbierania rodzicowi „kto wdroży").
 - `/poradniki/co-to-jest-voicebot` (definicja; ryzyko dla rodzica na „voicebot").
 - Tytuł rodzica voicebotów bez ceny, odbieranie-telefonow pod „asystent telefoniczny AI".

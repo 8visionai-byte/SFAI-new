@@ -36,7 +36,9 @@ const GRUPY_STRON = [
   ['wdrozenie-ai (fala 1)', (u) => u === '/uslugi/wdrozenie-ai'],
   ['chatboty rodzic', (u) => u === '/uslugi/chatboty'],
   ['chatboty cennik', (u) => u === '/uslugi/chatboty/cennik'],
-  ['chatboty pozostale', (u) => u.startsWith('/uslugi/chatboty/') && u !== '/uslugi/chatboty/cennik'],
+  ['chatboty wdrozenie (fala 2)', (u) => u === '/uslugi/chatboty/wdrozenie'],
+  ['chatboty pozostale', (u) => u.startsWith('/uslugi/chatboty/') && u !== '/uslugi/chatboty/cennik' && u !== '/uslugi/chatboty/wdrozenie'],
+  ['poradnik voicebot (fala 2)', (u) => u === '/poradniki/co-to-jest-voicebot'],
   ['voiceboty rodzic', (u) => u === '/uslugi/voiceboty'],
   ['voiceboty cennik', (u) => u === '/uslugi/voiceboty/cennik'],
   ['voiceboty pozostale', (u) => u.startsWith('/uslugi/voiceboty/') && u !== '/uslugi/voiceboty/cennik'],
@@ -53,6 +55,7 @@ const GALEZIE = [
   ['voiceboty', /voice ?bot|bot telefon|odbieran.*telefon|asystent (g[lł]osow|telefoniczn)/i],
   ['automatyzacje', /automatyz|\brpa\b|\bn8n\b|make\.com/i],
   ['agenci AI', /agent(a|ów|ow|y|i)? ai|ai agent|agenci ai/i],
+  ['cyfrowi pracownicy', /cyfrow\w* pracowni/i],
   ['wdrozenie AI', /wdro[zż].*\b(ai|sztuczn)|wdra[zż].*\b(ai|sztuczn)|ai dla firm|ai w firmie|sztuczna inteligencja dla firm/i],
   ['audyt AI', /audyt ai/i],
 ];
@@ -68,7 +71,7 @@ const CHRONIONE = [
 ];
 
 const DO_INDEKSU = [
-  '/uslugi/agenci-ai', '/uslugi/wdrozenie-ai', '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
+  '/uslugi/agenci-ai', '/uslugi/wdrozenie-ai', '/uslugi/chatboty/wdrozenie', '/poradniki/co-to-jest-voicebot', '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
   '/uslugi/automatyzacje', '/uslugi/audyt-ai', '/uslugi/chatboty', '/uslugi/voiceboty/cennik',
 ];
 
