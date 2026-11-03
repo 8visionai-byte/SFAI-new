@@ -1,0 +1,702 @@
+[
+ {
+  "klaster": "chatboty",
+  "liderzy": [
+   {
+    "domena": "easycall.pl",
+    "url": "https://www.easycall.pl/chatbot/",
+    "fraza": "chatbot dla firmy",
+    "tytul": "Chatbot Polski - Easycall.pl (H1: Chatbot)",
+    "slowa": 1206,
+    "typ_przewagi": "oba",
+    "co_maja_a_my_nie": [
+     "Sekcje definicyjne i przekrojowe: 'Czym jest chatbot?', 'Rodzaje chatbotów' (zadaniowy vs konwersacyjny), 'Funkcje' (informacyjne, transakcyjne, rezerwacyjne, rekrutacyjne, marketingowe). To dokładnie struktura pod frazę ogólną 'chatbot dla firmy'. U nas nie ma sekcji 'czym jest/rodzaje'.",
+     "Dziesiątki case studies na domenie (w linkach strony głównej: Kopernik, Viessmann, e-commerce, HIS Eskulap). To autorytet marki, nie treść do skopiowania.",
+     "Treść jest słabsza od naszej: 1206 słów wobec naszych 2098, tylko 3 pytania w H2/H3, brak ceny i roku w title/H1. Wygrywa domeną i dopasowaniem do ogólnej frazy, nie jakością."
+    ]
+   },
+   {
+    "domena": "streamsoft.pl",
+    "url": "https://www.streamsoft.pl/ai/chatbot/",
+    "fraza": "chatbot dla firmy",
+    "tytul": "Chatbot – cyfrowy, wydajny i inteligentny asystent w biznesie",
+    "slowa": 1054,
+    "typ_przewagi": "autorytet",
+    "co_maja_a_my_nie": [
+     "Czysty układ edukacyjny: 'Czym są chatboty?', 'Jak działa chatbot?', 'Rodzaje chatbotów' (regułowe, AI, hybrydowe), 'Popularne zastosowania', 'Przyszłość'. Fraza 'chatbot' pada 56 razy. U nas brak jednoznacznego rozróżnienia regułowy / AI / hybrydowy na stronie usługi.",
+     "Bardzo duży serwis firmowy (producent oprogramowania, schema Organization i Person). Przewaga głównie autorytetu domeny, bo treść jest krótsza i bez ceny, liczb czy dowodów."
+    ]
+   },
+   {
+    "domena": "eloni.pl",
+    "url": "https://eloni.pl/uslugi/chatboty-ai-dla-firm",
+    "fraza": "chatbot dla firmy",
+    "tytul": "Wdrażanie chatbotów AI dla firm — od 1500 zł | eloni.pl",
+    "slowa": 1239,
+    "typ_przewagi": "tresc",
+    "co_maja_a_my_nie": [
+     "Cena w tytule: 'od 1500 zł'. Nasz title na stronie głównej usługi ('Chatbot AI dla firm: wdrożenie i cena 2026') nie ma kwoty, kwota jest tylko w meta description.",
+     "Schema Service + Offer + PriceSpecification + FAQPage (my też mamy Offer i PriceSpecification, więc tu parytet). Trzy nazwane pakiety Starter / Pro / Enterprise w jednym widoku. My mamy trzy progi, ale na podstronie /cennik.",
+     "Lokalny kąt: 'Wdrożenia dla firm w Lublinie i całej Polsce' w meta description. [BRAKUJE: czy chcemy kąt lokalny, nasz adres w repo to osobna decyzja]",
+     "Sekcja 'Jak wygląda wdrożenie' z 5 krokami i monitoringiem 30 dni. My mamy to lepiej (strona /wdrozenie, 6 etapów), więc tu nie ma luki."
+    ]
+   },
+   {
+    "domena": "daktela.com",
+    "url": "https://daktela.com/pl/ai/chatbot",
+    "fraza": "chatbot ai dla firm",
+    "tytul": "Daktela AI Chatbot | Automatyzuj do 80% zapytań klientów bez przerwy",
+    "slowa": 1420,
+    "typ_przewagi": "oba",
+    "co_maja_a_my_nie": [
+     "Liczby klientów jako dowód: 'Zaufało nam ponad 1 600 firm', 'ponad 28 000 profesjonalistów', sekcja 'Realne wyniki od prawdziwych klientów' (z wyszukiwarki: Seznam.cz 95% trafności odpowiedzi w B2B, Slevomat 73% bez agenta; to dane własne Daktela). My nie mamy liczbowych wyników klientów, bo repo ich nie zawiera.",
+     "Obietnica liczbowa w title ('do 80% zapytań'). My nie możemy jej powtórzyć bez własnych danych.",
+     "Kanały i integracja jako argument: WhatsApp, Messenger, CRM, przekazanie do operatora, kreator no-code. My mamy kanały i przekazanie, ale nie nazywamy 'przekazania do człowieka' osobnym nagłówkiem na stronie głównej usługi.",
+     "Autorytet: platforma contact center z własnym produktem, wiele wersji językowych."
+    ]
+   },
+   {
+    "domena": "zyntegrai.pl",
+    "url": "https://zyntegrai.pl/chatboty-ai/",
+    "fraza": "chatbot ai dla firm",
+    "tytul": "Chatboty AI – ZyntegrAI | Automatyzacja",
+    "slowa": 1566,
+    "typ_przewagi": "tresc",
+    "co_maja_a_my_nie": [
+     "Sekcja 'Co zyskasz' z sześcioma korzyściami (oszczędność czasu, redukcja kosztów, integracje, zero błędów, CX) i kalkulator 'Policz, ile możesz zyskać'. My mamy narzędzie 'Policz to sam' w linkach, ale nie ma go widocznie wpiętego w sekcję korzyści.",
+     "Cytowanie raportów globalnych ('globalne raporty potwierdzają skuteczność'). My nie cytujemy żadnych zewnętrznych badań na stronie usługi.",
+     "Cztery etapy wdrożenia w jednym widoku z nazwami. My mamy to lepiej rozpisane na /wdrozenie."
+    ]
+   },
+   {
+    "domena": "tanganica.com",
+    "url": "https://www.tanganica.com/pl/blog/e-commerce/wdrozenie-chatbota-w-sklepie",
+    "fraza": "wdrożenie chatbota",
+    "tytul": "Udane wdrożenie chatbota w sklepie internetowym: kompletny przewodnik - Tanganica.com",
+    "slowa": 421,
+    "typ_przewagi": "autorytet",
+    "co_maja_a_my_nie": [
+     "Treść jest dużo słabsza od naszej: 421 słów, 6 punktów, zero pytań FAQ, zero ceny, zero czasu. Mimo to jest na 1. miejscu na 'wdrożenie chatbota', więc wygrywa autorytetem domeny (portal e-commerce, ten sam artykuł w około 15 wersjach językowych w sitemap) i dokładnym dopasowaniem frazy w H1 i tytule.",
+     "Kąt e-commerce w tytule. My mamy osobną podstronę /uslugi/chatboty/sklep-internetowy, ale nasza /wdrozenie nie łączy się z nią w nagłówku."
+    ]
+   },
+   {
+    "domena": "kodivostudio.pl",
+    "url": "https://www.kodivostudio.pl/blog/chatbot-ai-w-sklepie-internetowym-przewodnik",
+    "fraza": "wdrożenie chatbota",
+    "tytul": "Chatbot AI w sklepie internetowym — przewodnik 2026 | Kodivo Studio",
+    "slowa": 1520,
+    "typ_przewagi": "tresc",
+    "co_maja_a_my_nie": [
+     "Rok w tytule i H1 ('przewodnik 2026') oraz sekcja 'Konkretne korzyści w liczbach' z procentami (70-80% zapytań, 15-25% wzrost konwersji). Liczby nie mają tu widocznego źródła, więc ich nie kopiujemy.",
+     "Sekcje, których u nas nie ma: '5 najczęstszych błędów przy wdrażaniu chatbota AI', porównanie modeli 'GPT-4o vs Claude', 'Modele open-source: kiedy warto', 'Przygotowanie bazy wiedzy (RAG)' jako osobny krok. Mamy RAG i trzy silniki na stronie głównej usługi, ale nie jako porównanie ani lista błędów.",
+     "Zewnętrzna statystyka z nazwanym źródłem (Baymard Institute, 69% porzuconych koszyków). Dobry wzorzec: liczba + źródło."
+    ]
+   }
+  ],
+  "nasze_slabosci": [
+   "Nasza treść jest dłuższa i bogatsza niż u każdego z 7 zbadanych lidera na frazy ogólne (nasze strony 1700-2770 słów, FAQ 15-21 pytań w nagłówkach, pełna schema; liderzy 421-1566 słów). Przyczyna braku miejsc w top 3 to głównie autorytet domeny (easycall, streamsoft, daktela, ey, tanganica) i dopasowanie do intencji 'czym jest / jakie rodzaje', nie ilość treści.",
+   "Brak sekcji definicyjnej 'czym jest chatbot / rodzaje: regułowy, AI, hybrydowy' na /uslugi/chatboty. Easycall i Streamsoft (miejsca 1 i 2 na 'chatbot dla firmy') mają ją jako główny szkielet. Grep po repo: słowo 'regułow' nie występuje w lib/uslugi/chatboty.ts, podstronach chatbotów ani w poradniku o cenie.",
+   "Title strony głównej usługi ('Chatbot AI dla firm: wdrożenie i cena 2026') nie ma kwoty, a eloni.pl ma 'od 1500 zł'. Nasza cena jest tylko w meta description i w cenniku. Title cennika ma 'Od 1790 zł netto', więc kanibalizacja kwoty wymaga uwagi.",
+   "Zero liczbowych wyników klientów (Daktela: 1 600 firm, 80%, Seznam 95%). Repo tego nie ma: lib/realizacje/agenci-ai-24-7.ts i chatbot-edukacyjny-kursy.ts jawnie zakazują wymyślania metryk. Do czasu realnych danych zostaje placeholder.",
+   "Brak zewnętrznego źródła z nazwą (np. raport, badanie) na stronie usługi. Kodivo i ZyntegrAI cytują zewnętrzne badania, my nie.",
+   "/uslugi/chatboty/wdrozenie powstała dziś (03.11), GSC pokazuje poz. 14 na 'wdrożenie chatbota'. Tanganica ma 421 słów i jest pierwsza, więc luka tu to autorytet i wiek strony, nie treść. Przed zmianami w tej stronie lepiej poczekać na indeksację i pierwsze dane z GSC.",
+   "Dwie strony usług (sklep i hotel) istnieją, ale nie są podlinkowane z nagłówków /wdrozenie pod kątem 'wdrożenie chatbota w sklepie', który zajmuje Tanganica i Kodivo.",
+   "Nie pobrano ey.com (wynik #2 na 'chatbot ai dla firm') ani boringowl.io i kodivostudio.pl na ich stronach usługowych: nie znaleziono dokładnego adresu strony dla ey.com i boringowl.io (sitemap boringowl bez wyników, WebSearch z operatorem site: nie działa). Dla kodivo użyto artykułu z sitemap, nie strony usługi. [BRAKUJE: dokładne adresy ey.com i boringowl.io]"
+  ],
+  "zmiany": [
+   {
+    "plik": "lib/uslugi/chatboty.ts",
+    "pole": "faq (dodać 1 pozycję)",
+    "co_zrobic": "Dodać pytanie 'Czym jest chatbot AI i czym różni się od chatbota regułowego?' z odpowiedzią w 3 zdaniach: regułowy działa na z góry zapisanych ścieżkach, AI odpowiada z bazy wiedzy firmy, hybrydowy łączy oba. Zakończyć zdaniem odsyłającym do progu 1790 zł z tego samego pola (bez nowych liczb). To mały dopisek, nie rusza H1 ani kapsuły.",
+    "dlaczego": "Easycall (#1) i Streamsoft (#2) na 'chatbot dla firmy' mają całą strukturę 'czym jest / rodzaje'. Na naszej stronie słowa 'regułow' brak. FAQ jest już w schemie FAQPage, więc odpowiedź trafi też do danych strukturalnych.",
+    "priorytet": "wysoki",
+    "ryzyko": "Niskie. Strona chroniona, więc tylko jedna pozycja FAQ, bez zmiany kolejności i bez ruszania istniejących pytań. Sprawdzić, że liczba pytań w FAQPage nie przekracza limitu w schemie i że tekst nie zawiera myślnika długiego."
+   },
+   {
+    "plik": "lib/uslugi/chatboty.ts",
+    "pole": "metaTitle",
+    "co_zrobic": "Zmienić 'Chatbot AI dla firm: wdrożenie i cena 2026' na wersję z kwotą mieszczącą się w konwencji repo 50-60 znaków razem z sufiksem, np. 'Chatbot AI dla firm: wdrożenie od 1790 zł' (41 znaków + sufiks ' · SimpleFast.ai' = 57). Rok można zdjąć, bo jest w H1 cennika.",
+    "dlaczego": "Eloni.pl (#3) ma kwotę 'od 1500 zł' w title. Kwota w tytule zwiększa klikalność przy tej samej pozycji. Kwota 1790 pochodzi z tego samego pliku (minPrice).",
+    "priorytet": "sredni",
+    "ryzyko": "Średnie. Strona chroniona i rosnąca, zmiana tytułu bywa przez Google przepisana albo chwilowo zaburza pozycję. Zrobić tylko to jedno pole i mierzyć CTR w GSC przez 14 dni. Title cennika ('Ile kosztuje chatbot AI dla firmy? Od 1790 zł netto') ma tę samą kwotę, ale inną frazę, więc nie ma kanibalizacji intencji."
+   },
+   {
+    "plik": "lib/uslugi/podstrony/chatboty-wdrozenie.ts",
+    "pole": "faq oraz sekcja 'problem.bloki' (jedna lista)",
+    "co_zrobic": "Dodać H3 'Jakie są najczęstsze błędy przy wdrażaniu chatbota?' z 4-5 punktami zbudowanymi wyłącznie z tego, co już jest w pliku (np. baza wiedzy zbierana po podpisaniu umowy, brak osoby po stronie klienta, brak testów na prawdziwych pytaniach, brak ścieżki do człowieka). Dodać też pytanie FAQ 'Jak wdrożyć chatbota w sklepie internetowym?' z linkiem do /uslugi/chatboty/sklep-internetowy.",
+    "dlaczego": "Kodivo ma osobną sekcję '5 najczęstszych błędów' i krok RAG. Tanganica (#1 na 'wdrożenie chatbota') wygrywa kątem e-commerce w tytule i H1. Strona jest nowa (03.11, GSC poz. 14), więc to jedyna strona w gałęzi, gdzie dodatkowa sekcja ma największy zysk.",
+    "priorytet": "wysoki",
+    "ryzyko": "Niskie. Strona nie jest chroniona. Zasada: punkty tylko z faktów już zapisanych w pliku, bez nowych liczb. Zaczekać kilka dni na pierwszą indeksację, żeby nie mieszać sygnałów."
+   },
+   {
+    "plik": "lib/uslugi/podstrony/chatboty-wdrozenie.ts",
+    "pole": "powiazane / blok linków wewnętrznych",
+    "co_zrobic": "Dodać link kontekstowy w treści sekcji 'Wdrożenie z wykonawcą czy własny chatbot z kreatora?' do /uslugi/chatboty/sklep-internetowy oraz do /poradniki/ile-kosztuje-chatbot-dla-firmy-2026 (jeśli jeszcze nie ma w tekście, sprawdzić grep'em przed dodaniem).",
+    "dlaczego": "Daje podstronie kontekst e-commerce bez nowej strony i wzmacnia strukturę klastra. Konkurenci (Tanganica, Kodivo) rankingują na wdrożenie w sklepie.",
+    "priorytet": "sredni",
+    "ryzyko": "Niskie."
+   },
+   {
+    "plik": "lib/uslugi/chatboty.ts",
+    "pole": "rozwiazanie.bloki lub kapsula (jedno zdanie dopisku)",
+    "co_zrobic": "Dopisać jedno zdanie, które nazywa trzy typy po ludzku: 'regułowy (ścieżki z góry), AI (odpowiada z Twojej bazy wiedzy), hybrydowy'. Wpiąć w istniejący blok, nie dodawać nowej sekcji. Alternatywa zamiast pozycji FAQ z pierwszej zmiany, jeśli właściciel woli nie dotykać FAQ.",
+    "dlaczego": "Ta sama luka definicyjna co w zmianie 1, wprost pod cytowalność w blokach AI Google (na frazę 'chatbot dla firmy' jesteśmy tylko w bloku AI).",
+    "priorytet": "sredni",
+    "ryzyko": "Niskie do średniego. Kapsuły nie ruszać, bo niesie cztery liczby. Dopisek tylko w bloku, nie w pierwszym zdaniu."
+   },
+   {
+    "plik": "lib/poradniki/poradniki/ile-kosztuje-chatbot-dla-firmy-2026.ts",
+    "pole": "sekcja o widełkach cenowych (nowy krótki akapit lub tabela)",
+    "co_zrobic": "Dodać jedną tabelę 'Co jest w cenie: abonament z platformy a wdrożenie na własność' z trzema wierszami (cena wejścia, kto jest właścicielem bazy wiedzy, co po rezygnacji), korzystając tylko z faktów z chatboty-cennik.ts. Nie nazywać konkurentów.",
+    "dlaczego": "Eloni ma gotowe trzy nazwane pakiety w widoku, Kodivo sekcję kosztów w dwóch częściach. Nasz poradnik ma 21 pytań i 2769 słów, ale brakuje szybkiej tabeli porównawczej, którą łatwo wyciąć do odpowiedzi AI.",
+    "priorytet": "niski",
+    "ryzyko": "Niskie. Strona nie jest chroniona. Uwaga na kanibalizację z /cennik: tabela ma odsyłać tam po szczegóły, nie dublować progów."
+   },
+   {
+    "plik": "lib/uslugi/chatboty.ts",
+    "pole": "cta.dowod lub powiazane.realizacje (opis)",
+    "co_zrobic": "Zostawić placeholder '[BRAKUJE: realna liczba z wdrożenia, np. odsetek pytań obsłużonych bez człowieka]' w notatce przy polu i nie publikować nic, dopóki nie ma danych z własnego bota lub realizacji. Gdy będą, dodać jedną linię liczby ze źródłem w sekcji realizacji.",
+    "dlaczego": "Daktela wygrywa dowodem liczbowym (1 600 firm, 80%). My nie mamy liczb w repo, a realizacje mają zakaz wymyślania metryk, więc jedyna uczciwa droga to zebrać dane z naszego bota na stronie lub z wdrożenia.",
+    "priorytet": "sredni",
+    "ryzyko": "Niskie, o ile nie powstanie żadna wymyślona liczba."
+   },
+   {
+    "plik": "lib/uslugi/chatboty.ts",
+    "pole": "faq (zamiast nowej strony)",
+    "co_zrobic": "Dodać pytanie 'Jak działa przekazanie rozmowy do człowieka?' z odpowiedzią opartą na tym, co już jest w pliku (bot mówi wprost, że nie wie, zapisuje kontakt i przekazuje sprawę właścicielowi). Bez nowych obietnic.",
+    "dlaczego": "Daktela nazywa 'płynne przekazanie do operatora' osobnym nagłówkiem i produktem. U nas to zdanie jest rozproszone w odpowiedzi 'Czy chatbot będzie zmyślał odpowiedzi?'.",
+    "priorytet": "niski",
+    "ryzyko": "Niskie. Łącznie z pierwszą zmianą nie przekroczyć dwóch nowych pozycji FAQ na stronie chronionej."
+   }
+  ],
+  "nowe_strony": [
+   {
+    "adres": "/poradniki/co-to-jest-chatbot",
+    "tytul": "Co to jest chatbot AI i jak działa w firmie",
+    "fraza": "co to jest chatbot",
+    "uzasadnienie": "Luka jest wyraźna: easycall i streamsoft (miejsca 1-2 na 'chatbot dla firmy') to strony definicyjne z rozdziałami 'czym jest / jak działa / rodzaje', a my nie mamy takiego poradnika, choć mamy bliźniaczy 'co-to-jest-voicebot' (lib/poradniki/poradniki/co-to-jest-voicebot.ts, 1541 słów, wzorzec gotowy). Nie kanibalizuje: /uslugi/chatboty celuje w 'chatbot ai dla firm', /cennik w koszt, /wdrozenie we wdrożenie, a poradnik w definicję i typy (regułowy, AI, hybrydowy, chatbot czy voicebot czy AI Agent) i linkuje do wszystkich trzech. Odsyłać także do istniejącego /blog/chatbot-czy-ai-agent-roznice, który należy najpierw sprawdzić pod kątem pokrycia tej samej intencji, żeby nie dublować."
+   }
+  ],
+  "wniosek": "W gałęzi chatboty nasze strony są dłuższe i pełniejsze niż liderzy: 1700-2770 słów i 15-21 pytań w nagłówkach, wobec 421-1566 słów u rywali. Liderzy wygrywają głównie autorytetem domeny (easycall, streamsoft, daktela, tanganica) i szkieletem 'czym jest chatbot / rodzaje', którego u nas brak (słowo 'regułow' nie występuje w żadnym pliku gałęzi). Przewagi treści do skopiowania i wzbogacenia od ręki: kwota w title (eloni, 'od 1500 zł'), definicja i typy chatbota (easycall, streamsoft), sekcja błędów przy wdrożeniu i kąt sklepu internetowego (kodivo, tanganica). Przewagi autorytetu, których treścią nie nadrobimy: liczba klientów i wyniki procentowe (daktela), marka i liczne case studies (easycall), pierwsze miejsce Tanganiki mimo 421 słów. Najlepszy stosunek zysku do kosztu: jedna pozycja FAQ o typach chatbotów oraz sekcja błędów i link do sklepu na /wdrozenie, potem jeden nowy poradnik 'co to jest chatbot'. Tytuł strony głównej zmieniać ostrożnie i tylko to jedno pole. Do wykonania przed wdrożeniem: ustalić dokładne adresy ey.com i boringowl.io, bo ich stron nie pobrano. Dane liczbowe konkurentów z szkieletów pochodzą z plików w C:\\Users\\Paweł Pieloch\\CLAUDE CODE\\SF AI WWW\\.seo-przeglad\\konkurencja-2026-11-03\\chatboty (szk-chat.txt, skrypt chat-szkielet.mjs). Użyte: WebSearch i własny skrypt Node, bez skilli."
+ },
+ {
+  "klaster": "voiceboty",
+  "liderzy": [
+   {
+    "domena": "voicebot.pl",
+    "url": "https://voicebot.pl/",
+    "fraza": "voicebot",
+    "tytul": "Voicebot AI – automatyzuj komunikację głosową – Technologia voicebot dla firm",
+    "slowa": 246,
+    "typ_przewagi": "autorytet",
+    "co_maja_a_my_nie": [
+     "Domena dokładnie równa frazie (voicebot.pl) i marka Sovva S.A., która według strony robi boty od 2007 roku (ta sama firma jest też #2 na 'co to jest voicebot' przez sovva.ai)",
+     "Treści NIE: strona ma 246 słów, brak meta description, brak H1, brak JSON-LD, 0 pytań FAQ. Nasza /uslugi/voiceboty ma 2099 słów, 17 pytań w H2/H3, schemat Service+FAQPage. Pozycję 1 trzyma domena i marka, nie treść",
+     "Wniosek: na samą frazę 'voicebot' (u nas GSC poz. 25) dopiski w tekście nie dogonią tej strony, potrzebne są linki i czas"
+    ]
+   },
+   {
+    "domena": "home.pl",
+    "url": "https://home.pl/pulse-ai/asystent-telefoniczny-ai/",
+    "fraza": "bot telefoniczny",
+    "tytul": "Asystent Telefoniczny AI | Odbiera połączenia 24/7 | home.pl",
+    "slowa": 2131,
+    "typ_przewagi": "oba",
+    "co_maja_a_my_nie": [
+     "Autorytet: największy polski hosting i rejestrator domen, strona produktu z koszykiem (Product + AggregateOffer, 3 plany)",
+     "Cena wejścia widoczna od razu: Lite 169 zł netto/mies., pierwszy miesiąc 0 zł, rezygnacja w każdej chwili (stan na 03.11.2026). My: od 2500 zł netto jednorazowo, więc ktoś porównujący widzi u nich 15x niższy próg wejścia, a u nas nie ma wyjaśnienia tej różnicy z liczbami rynku",
+     "Demo na stronie: H2 'Porozmawiaj z Asystentem Telefonicznym AI na żywo'. U nas w trzech plikach gałęzi nie ma ani demo, ani nagrania rozmowy (grep: 0 trafień)",
+     "15 pytań w FAQPage (my 6 na stronę), m.in. 'Czym voicebot różni się od IVR', 'Czy mogę zachować swój numer', 'Czy klienci poznają, że rozmawiają z AI', 'Co się dzieje, gdy AI nie wie, co odpowiedzieć', 'Czy asystent integruje się z moim kalendarzem'",
+     "Krótki dowód szybkości: 'Gotowy w 5 minut', konfiguracja krok po kroku. Tytuł i H1 bez frazy 'bot telefoniczny' (x0 w tekście), czyli wygrywają bez dokładnego dopasowania frazy"
+    ]
+   },
+   {
+    "domena": "altar.com.pl",
+    "url": "https://altar.com.pl/voicebot-co-to-jest-jak-dziala-i-gdzie-znajduje-zastosowanie/",
+    "fraza": "co to jest voicebot",
+    "tytul": "Voicebot: Co to jest, jak działa i gdzie znajduje zastosowanie? - Altar",
+    "slowa": 1272,
+    "typ_przewagi": "autorytet",
+    "co_maja_a_my_nie": [
+     "Autorytet: dostawca contact center z własnymi produktami (AI Contact Center, Parrot AI), partnerzy Voicelab i KODA, artykuł z 23.06.2025 (starszy, więc ma więcej linków i historii niż nasz z 03.11.2026)",
+     "Schema: Article, FAQPage, Person (autor), Organization, BreadcrumbList. Nasz poradnik ma Article, FAQPage, Organization, brak Person",
+     "Treść: sekcja 'Jak działa voicebot? Anatomia technologiczna' z nazwanymi elementami (rozpoznawanie mowy, rozumienie, synteza) i 'Ewolucja' od IVR. U nas w poradniku 0 trafień na rozpoznawanie mowy, ASR, syntezę mowy, opóźnienie",
+     "Treść NIE jest lepsza: 1272 słowa wobec naszych 1541, 3 pytania FAQ wobec naszych 6, brak cennika i brak sekcji 'kiedy się nie opłaca'. To przewaga autorytetu i wieku, nasza strona ma dzień"
+    ]
+   }
+  ],
+  "nasze_slabosci": [
+   "Autorytet, nie tresc: wszystkie trzy nasze strony maja wiecej slow (2099, 2137, 2190, 1541) i wiecej pytan w naglowkach niz liderzy poza home.pl. Na 'voicebot' i 'co to jest voicebot' wygrywaja domeny i marki (voicebot.pl/Sovva, Altar), a nasz poradnik ma dzien (data 2026-11-03).",
+   "Samo FAQPage: w schemacie mamy po 6 pytan na strone, mimo 15-17 pytan w naglowkach H2/H3. home.pl ma 15 pytan w FAQPage. Odpowiedzi na wiele pytan juz stoja w tekscie, ale nie ida do schematu.",
+   "Brak demo/nagrania rozmowy voicebota w calej galezi (grep: 0). home.pl ma demo na zywo. Faktu o istniejacym nagraniu brak: [BRAKUJE: czy mamy nagranie demo rozmowy i czy mozemy je opublikowac].",
+   "Brak punktu odniesienia do cen rynkowych: konkurenci pokazuja abonament (home.pl od 169 zl netto/mies., smart-asystenci.pl od 499 zl netto/mies. za 500 minut, plan Pro 899 zl za 1000 minut), a nasz cennik tlumaczy 'trzy koszty, nie abonament' bez zadnej kwoty rynkowej.",
+   "Kanibalizacja 'bot telefoniczny': tytul rodzica /uslugi/voiceboty konczy sie fraza 'bot telefoniczny' i ma H2 'Co robi bot telefoniczny, gdy nie mozesz odebrac?', a podstrona odbieranie-telefonow ma ta sama fraze w metaTitle, H1 i queries. Dane GSC: rodzic poz. 6,7 na te fraze, podstrona 304 -> 25 wyswietlen od 23.09. Konkurent smart-asystenci.pl ma ta fraze w adresie /bot-telefoniczny i w tytule; u nas adres podstrony to /odbieranie-telefonow.",
+   "Poradnik co-to-jest-voicebot nie nazywa elementow technologii (rozpoznawanie mowy, rozumienie intencji, synteza mowy, opoznienie), ktore Altar i Sovva maja w tytulach sekcji. Brak tez autora w schemacie (Altar ma Person).",
+   "Brak realizacji z voicebotem w rejestrze (komentarz w lib/uslugi/voiceboty.ts: 'Realizacji z voicebotem w rejestrze NIE MA'), wiec nie mamy dowodu wdrozenia w odroznieniu od ofert z koszykiem: [BRAKUJE: choc jedno realne wdrozenie voicebota lub liczba z pilota]."
+  ],
+  "zmiany": [
+   {
+    "plik": "lib/uslugi/podstrony/voiceboty-cennik.ts",
+    "pole": "tresc (nowa sekcja H2/H3 w sekcji 'Dlaczego dwie oferty na voicebota tak trudno porównać?') oraz faq",
+    "co_zrobic": "Dopisz krotki blok 'Abonament gotowy czy bot na zamowienie' z faktami rynkowymi z dnia 03.11.2026: abonamentowy asystent telefoniczny zaczyna sie od 169 zl netto/mies. (pierwszy miesiac 0 zl, 3 pakiety) albo 499 zl netto/mies. za 500 minut (plan Pro 899 zl za 1000 minut), a my bierzemy 2500 zl netto raz plus 299-1500 zl netto/mies. albo 0 zl przy przekazaniu infrastruktury. Dodaj jedno zdanie, kiedy abonament wystarczy (prosty scenariusz bez integracji) i kiedy nie (integracje, wlasny numer, scenariusz branzowy). Do FAQ dopisz pytanie 'Dlaczego voicebot na zamowienie kosztuje wiecej niz abonament z gotowego pakietu?'. Zrodla zostaw w komentarzu w kodzie: home.pl/pulse-ai/asystent-telefoniczny-ai i smart-asystenci.pl/bot-telefoniczny, data pomiaru 2026-11-03.",
+    "dlaczego": "Na fraze 'bot telefoniczny' wyzej stoja strony z kwota od 169 i 499 zl w widocznym miejscu (home.pl, smart-asystenci.pl). Ktos, kto porownuje, trafia na nasze 2500 zl bez wyjasnienia roznicy. Strona o cenie, ktora sama podaje ceny rynku, jest tez gotowa do cytowania przez modele (konkretne liczby z rokiem).",
+    "priorytet": "wysoki",
+    "ryzyko": "Ceny konkurentow zmienia sie, wiec blok trzeba odswiezac (dopisz date pomiaru w tekscie). Pytanie do Pawla: czy nazywamy konkurentow po nazwie, czy piszemy 'abonamenty na polskim rynku od 169 do 499 zl netto/mies.' bez nazw. Domyslnie bez nazw w tekscie widocznym, nazwy tylko w komentarzu kodu. Tekst nie moze sugerowac, ze nasz bot jest lepszy, tylko ze to inny produkt."
+   },
+   {
+    "plik": "lib/uslugi/podstrony/odbieranie-telefonow.ts",
+    "pole": "metaTitle, queries (oraz ewentualnie metaDescription)",
+    "co_zrobic": "HIPOTEZA, wymaga akceptacji: rodzic /uslugi/voiceboty trzyma 'bot telefoniczny' (poz. 6,7), podstrona stracila fraze (304 -> 25 wyswietlen). Zamiast walczyc o ta sama fraze, przesun podstrone na dlugi ogon: metaTitle np. 'Bot do odbierania telefonów 24/7, od 2500 zł netto' (do 60 znakow z sufiksem sprawdz przy wdrozeniu), w queries daj na pierwsze miejsce 'bot do odbierania telefonów' i 'voicebot do odbierania telefonów', a 'bot telefoniczny' zostaw dalej jako fraze poboczna. H1 zostaje bez zmian.",
+    "dlaczego": "Dwa nasze adresy celuja w jedna fraze, a Google wybral rodzica. Dowod: GSC rodzic 6,7, podstrona 304 -> 25 wyswietlen od 23.09. Lider pozycji 1 (home.pl) wygrywa bez frazy 'bot telefoniczny' w tekscie, czyli dokladne dopasowanie nie jest konieczne, a rozdzielenie intencji jest.",
+    "priorytet": "wysoki",
+    "ryzyko": "Zgadywane na produkcji: podstrona moze dostac mniej wyswietlen na 'bot telefoniczny', ale juz je i tak traci. Zmiana odwracalna jedna edycja pola. Ten plik nie jest na liscie chronionych, ale rodzic nie moze sie zmieniac w tym samym czasie (sprawdz efekt po 2 tygodniach w GSC)."
+   },
+   {
+    "plik": "lib/uslugi/voiceboty.ts",
+    "pole": "faq (dopisek, strona chroniona: tylko male dopiski)",
+    "co_zrobic": "Dopisz 2 pytania do FAQ: 'Czym voicebot różni się od chatbota i tonowego IVR?' (odpowiedz skroc z istniejacej sekcji H3 o tej samej nazwie na tej stronie) oraz 'Czy voicebot jest legalny i gdzie trafiają dane rozmówcy?' (skrot istniejacej sekcji H3, bez nowych faktow). Nie ruszaj pozostalych 6 pytan ani kapsuly.",
+    "dlaczego": "Strona ma 17 pytan w naglowkach, a w schemacie FAQPage tylko 6. home.pl daje 15 pytan do FAQPage, w tym 'Czym voicebot różni się od IVR'. Te dwie odpowiedzi juz sa w tekscie, wiec zysk jest za darmo: wiecej zapytan trafia do schematu bez dopisywania nowej tresci.",
+    "priorytet": "sredni",
+    "ryzyko": "Strona chroniona (roznie): male dopiski dozwolone. W komentarzu faq stoi regula, ze pytania kontraktowe maja rozne odpowiedzi na trzech stronach, wiec nie kopiuj slowo w slowo tekstu z poradnika /poradniki/co-to-jest-voicebot (tam te same pytania o chatbota i IVR). Kazde pytanie dluzsze niz 1 akapit nie jest potrzebne."
+   },
+   {
+    "plik": "lib/poradniki/poradniki/co-to-jest-voicebot.ts",
+    "pole": "tresc (nowy H2 po 'Jak działa voicebot krok po kroku?') i faq",
+    "co_zrobic": "Dodaj krotka sekcje 'Z czego sklada sie voicebot: rozpoznawanie mowy, rozumienie, odpowiedz i synteza głosu' (3-4 zdania, nazwy elementow w ludzkim jezyku, dopisek w nawiasie ASR i TTS) z jednym zdaniem o opoznieniu odpowiedzi jako czynniku jakosci rozmowy (bez liczb, dopoki nie mamy pomiaru: [BRAKUJE: zmierzony czas odpowiedzi naszego bota w ms]). Dopisz w tagach 'asr' nie trzeba, wystarczy fraza 'jak dziala voicebot' juz w queries.",
+    "dlaczego": "Altar (lider 'co to jest voicebot') ma osobna sekcje 'Anatomia technologiczna', a Sovva pisze o ASR i syntezie. U nas w calym poradniku 0 trafien na te terminy, a to slownictwo, ktorego uzywa osoba pytajaca 'jak dziala voicebot'. Koszt: kilka zdan, tresc czysto dodana.",
+    "priorytet": "sredni",
+    "ryzyko": "Niskie. Nie wpisuj liczb opoznienia ani nazw dostawcow technologii, dopoki nie ma ich w repo. Zachowaj poradnik jako strone informacyjna, nie dopisuj cen (te sa w cenniku)."
+   },
+   {
+    "plik": "lib/poradniki/poradniki/co-to-jest-voicebot.ts",
+    "pole": "metaDescription oraz tagi (drobna korekta po indeksacji)",
+    "co_zrobic": "Po 2 tygodniach sprawdz w GSC, czy poradnik ma wyswietlenia na 'co to jest voicebot'. Jesli poz. wyzej niz 15, nic nie zmieniaj. Jesli nizej, wzmocnij metaDescription o jedno zdanie definicji pod fragment ('Voicebot to program, który odbiera telefon i rozmawia po polsku...') i dolinkuj poradnik z 2 stron blogowych, na ktore juz mamy kontrole (np. ile-kosztuje-wdrozenie-ai-agenta-dla-firmy ma link do poradnika, sprawdz czy ma go tez /poradniki z innych galezi).",
+    "dlaczego": "Lider (Altar) jest od 2025 i ma wiecej linkow. Nasz poradnik ma dzien. Zamiast zgadywac teraz, poczekaj na dane i dolinkuj, bo przewaga lidera to autorytet, nie tekst.",
+    "priorytet": "niski",
+    "ryzyko": "Brak ryzyka, to tylko pomiar. Nie bumpuj dataAktualizacji bez realnej zmiany tresci."
+   },
+   {
+    "plik": "lib/uslugi/voiceboty.ts (sekcja z listą podstron) oraz lib/uslugi/podstrony/voiceboty-cennik.ts (powiazane)",
+    "pole": "powiazane.poradniki / linki wewnetrzne do poradnika",
+    "co_zrobic": "Dolinkuj poradnik /poradniki/co-to-jest-voicebot z podstrony odbieranie-telefonow.ts (powiazane.poradniki jest tam tylko jeden wpis: kosztowy poradnik). Dodaj druga karte z etykieta dokladnie jak tytul poradnika 'Co to jest voicebot i jak działa w firmie' i opisem z karty w voiceboty.ts. Cennik juz linkuje przez powiazanePoradniki, rodzic tez (sprawdzone w kodzie).",
+    "dlaczego": "Poradnik ma 3 linki wchodzace z uslug (rodzic, cennik w powiazanych, lista w poradniku). Podstrona odbieranie-telefonow, ktora dostaje ruch od 'bot telefoniczny', nie linkuje do definicji. To wzmacnia nowy poradnik wewnetrznym linkiem bez zmiany kopii.",
+    "priorytet": "sredni",
+    "ryzyko": "Niskie. Nie dodawaj linku zwrotnego, ktory sprawi, ze dwie podstrony beda wskazywac wzajemnie na siebie ta sama kotwica."
+   },
+   {
+    "plik": "lib/uslugi/voiceboty.ts",
+    "pole": "demo (brak pola, nowy dopisek: 1 zdanie w sekcji 'Jak działa voicebot w czterech krokach?' lub kapsula nie, strona chroniona)",
+    "co_zrobic": "Dopiero gdy Pawel potwierdzi, ze istnieje nagranie lub numer demo: dopisz jedno zdanie z odnosnikiem 'Posłuchaj przykładowej rozmowy'. Do czasu potwierdzenia nic nie dopisujemy: [BRAKUJE: czy mamy nagranie demo rozmowy voicebota i zgode na publikacje].",
+    "dlaczego": "home.pl ma demo na zywo jako osobny H2 i na tym buduje zaufanie. Na stronie uslugi o telefonie dzwiek jest najmocniejszym dowodem, ktorego nie mamy w ogole (0 trafien w trzech plikach).",
+    "priorytet": "niski",
+    "ryzyko": "Zero zmyslen: bez nagrania nie robimy nic. Nie tworz sztucznej rozmowy i nie opisuj jej jako prawdziwego wdrozenia."
+   }
+  ],
+  "nowe_strony": [
+   {
+    "adres": "/poradniki/voicebot-czy-chatbot",
+    "tytul": "Voicebot czy chatbot: co wybrać dla firmy",
+    "fraza": "voicebot czy chatbot",
+    "uzasadnienie": "Trzech konkurentow ma osobna strone na to porownanie: smart-asystenci.pl/blog/voicebot-czy-chatbot, itdesk.eu/voicebot-ai-czy-chatbot, sovva.ai/chatbot-vs-voicebot-co-jest-lepsze-dla-twojej-firmy. U nas porownanie to tylko H2/H3 w poradniku co-to-jest-voicebot ('Voicebot, chatbot i IVR: czym się różnią?') i H3 na stronie uslugi, czyli bez osobnego adresu. Luka jest wyrazna, a strona nie kanibalizuje: poradnik 'co to jest' zostaje definicja, nowa strona tylko wybor kanalu i ma linkowac do /uslugi/chatboty i /uslugi/voiceboty (strony chronione, tylko linki wychodzace z nowej strony, bez zmian w nich). Warunek: sprawdz w GSC wyswietlenia na 'voicebot czy chatbot' i 'voicebot a chatbot' przed pisaniem (u nas nie mam tych danych: [BRAKUJE: GSC dla tej frazy]) oraz czy galaz chatboty nie ma juz takiego poradnika."
+   }
+  ],
+  "wniosek": "Na voiceboty duza czesc przewagi liderow to autorytet, nie tresc: voicebot.pl (Sovva, domena rowna frazie) ma 246 slow bez H1 i schematu i mimo to jest #1, Altar ma mniej tekstu niz nasz poradnik, a home.pl (hosting) wygrywa 'bot telefoniczny' produktem z koszykiem. Tresci do skopiowania od reki: widoczna cena rynkowa z data (169 i 499 zl netto/mies.) w cenniku, 2 dodatkowe pytania do FAQPage rodzica, sekcja o skladnikach technologii w poradniku, link z odbieranie-telefonow do poradnika, demo rozmowy (dopiero po potwierdzeniu, ze istnieje). Najwiekszy zysk przy najmniejszym koszcie: rozwiazac kanibalizacje 'bot telefoniczny' (rodzic 6,7, podstrona 304 -> 25) przez przesuniecie podstrony na 'bot do odbierania telefonow' (HIPOTEZA, wymaga akceptacji) i dodac blok porownania z abonamentem. Na sama fraze 'voicebot' (u nas poz. 25) nie pomoze zadna zmiana tekstu, tylko linki i czas."
+ },
+ {
+  "klaster": "agenci-cyfrowi",
+  "liderzy": [
+   {
+    "domena": "agenciai.pl",
+    "url": "https://agenciai.pl/",
+    "fraza": "agenci ai dla firm",
+    "tytul": "Automatyzacja procesów biznesowych i wdrożenia AI do firm",
+    "slowa": 1399,
+    "co_maja_a_my_nie": [
+     "Dopasowanie do frazy daje domena (agenciai), nie treść: fraza 'agenci' pada tylko 9 razy, tytuł i H1 jej nie zawierają",
+     "Dowód społeczny na stronie głównej: 'ponad 50 firm', 'ponad 80 wdrożeń' oraz widżet opinii Google (Trustindex)",
+     "Schema Person/Article/WebPage, bez Service i FAQPage; 2 pytania FAQ",
+     "Brak cennika i katalogu agentów na stronie głównej"
+    ],
+    "typ_przewagi": "autorytet"
+   },
+   {
+    "domena": "dokodu.it",
+    "url": "https://dokodu.it/agenci-ai",
+    "fraza": "agenci ai dla firm",
+    "tytul": "Agenci AI dla firm, cyfrowi pracownicy, nie chatboty | Dokodu",
+    "slowa": 625,
+    "co_maja_a_my_nie": [
+     "Krótka architektura 'Mózg / Ręce / Pamięć' w trzech H3, która tłumaczy czym agent jest",
+     "Trzy H3 zaufania: 'Glass Box', 'Human-in-the-Loop', 'Własność kodu'",
+     "Liczby dowodowe u góry strony: 'ponad 140 firm', '80% mniej czasu', 'od 2 tyg.'",
+     "Schema Service + ItemList + FAQPage (6 pytań) + BreadcrumbList",
+     "Zaplecze: około 30 wpisów w /blog/agenci-ai (klaster z linkami wewnętrznymi) oraz szkolenia, to jest autorytet tematyczny. Treści mają mniej niż my (625 słów wobec naszych 2936)"
+    ],
+    "typ_przewagi": "autorytet"
+   },
+   {
+    "domena": "dokodu.it",
+    "url": "https://dokodu.it/blog/ile-kosztuje-wdrozenie-ai-w-firmie",
+    "fraza": "ile kosztuje wdrożenie agenta ai w firmie",
+    "tytul": "Ile kosztuje wdrożenie AI w firmie? Cennik i ROI 2026 | Dokodu",
+    "slowa": 2055,
+    "co_maja_a_my_nie": [
+     "Rok oraz słowa 'cennik' i 'ROI' w tytule SEO; widełki rynkowe w meta description ('od 5 tys. do 250 tys. PLN')",
+     "Sekcja 'Modele wyceny: fixed price, T&M, etapowy' z rekomendacją etapowego: u nas brak",
+     "Sekcja 'Custom czy gotowiec: kiedy co się opłaca': u nas brak",
+     "Sekcja 'Czego unikać, na czym firmy przepalają budżet': u nas brak",
+     "5 osobnych H3 czynników kosztu (liczba procesów, integracje, jakość danych, compliance, liczba użytkowników)",
+     "6 pytań FAQ w FAQPage + BlogPosting + SpeakableSpecification",
+     "Szeroka fraza 'wdrożenie AI w firmie' łapie więcej zapytań niż nasz wąski poradnik o agencie"
+    ],
+    "typ_przewagi": "oba"
+   },
+   {
+    "domena": "stormit.pl",
+    "url": "https://stormit.pl/ai-dla-firm",
+    "fraza": "ile kosztuje wdrożenie agenta ai w firmie",
+    "tytul": "AI dla firm, wdrożenie, koszty i ROI w MSP",
+    "slowa": 684,
+    "co_maja_a_my_nie": [
+     "Strona-filar (CollectionPage + ItemList) z 12 artykułami w klastrze i 6 pytaniami FAQ: siła to struktura klastra, nie długość tekstu",
+     "Tytuł z trzema słowami intencji: 'wdrożenie, koszty i ROI'",
+     "Powiązany artykuł /bledy-wdrozen-ai (2355 słów, format 'błąd, konsekwencja, rozwiązanie', 10 błędów + checklista 5 pytań)",
+     "[BRAKUJE: dokładny URL strony stormit.pl będącej #1 na frazę kosztową. Sitemapa nie zawiera adresu z 'koszt agenta', pokazana strona to najbliższy odpowiednik, sprawdzić ręcznie w Google.pl]"
+    ],
+    "typ_przewagi": "autorytet"
+   }
+  ],
+  "nasze_slabosci": [
+   "/uslugi/agenci-ai jest już dłuższa niż liderzy (2936 słów, 8 FAQ, Service+Offer+FAQPage) i ma tytuł z frazą od 03.11. Poza top 20 przy GSC 6,8 to głównie autorytet i blok AI, a nie luka w treści: nie ma tu dużego pola do przepisywania.",
+   "Brak klastra jak dokodu.it/blog/agenci-ai (około 30 wpisów) i stormit.pl (12 artykułów w filarze): mamy stronę usługi i jeden poradnik kosztowy. To realna przewaga liderów i jedyna większa luka.",
+   "Poradnik kosztowy nie ma sekcji o modelach wyceny (stała cena, rozliczenie za czas, etapowy), o wyborze 'gotowiec czy rozwiązanie na miarę' ani 'czego unikać, na czym firmy przepalają budżet'. Dokodu.it ma wszystkie trzy. Mamy za to widełki, miesięczne koszty, zwrot i porównanie agent/chatbot/automatyzacja.",
+   "metaTitle poradnika ('Ile kosztuje agent AI dla firmy? Od 2500 zł') nie ma roku ani 'cennik'; rok jest dopiero w H1. Konkurent ma 'Cennik i ROI 2026' w tytule.",
+   "Strona usługi ma treści o kontroli człowieka i własności konta, ale bez wyraźnie nazwanej sekcji i bez liczb dowodowych na górze (dokodu.it: '140 firm', '80% mniej czasu')."
+  ],
+  "zmiany": [
+   {
+    "plik": "lib/poradniki/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy.ts",
+    "pole": "metaTitle",
+    "co_zrobic": "Dodać rok i słowo cennik, np. 'Ile kosztuje agent AI dla firmy? Cennik 2026, od 1790 zł' (sprawdzić długość do ok. 60 znaków). Cena 1790 zł netto jest w repo. Nie zmieniać H1.",
+    "dlaczego": "Dokodu.it, lider na tej frazie, ma w tytule 'Cennik i ROI 2026'; nasz tytuł tego nie ma, a rok jest tylko w H1.",
+    "priorytet": "wysoki",
+    "ryzyko": "Niskie. Tytuł strony usługi zmieniony 03.11; ten poradnik zmieniać osobnym wdrożeniem, żeby czytelnie mierzyć efekt w GSC."
+   },
+   {
+    "plik": "lib/poradniki/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy.ts",
+    "pole": "sekcje (nowy blok po sekcji 'Od czego zależy cena agenta AI')",
+    "co_zrobic": "Dodać sekcję H2 'Jak rozliczyć wdrożenie agenta AI: stała cena, czas czy etapy?' z krótkim porównaniem trzech modeli i naszym modelem: Sprint Diagnostyczny 1490 zł netto (5 dni roboczych, kwota odliczana od wdrożenia), potem wdrożenie za stałą kwotę z widełek, opieka 99-599 zł albo 0 zł, zmiany 350 zł netto za godzinę. Fakty tylko z repo, zalecenie 'etapowo' uzasadnić Sprintem, bez zmyślonych statystyk.",
+    "dlaczego": "Dokodu.it ma osobną sekcję 'Modele wyceny: fixed price, T&M, etapowy', której nam brakuje; my mamy czym ją poprzeć (Sprint z odliczeniem).",
+    "priorytet": "wysoki",
+    "ryzyko": "Niskie. Kwoty muszą zgadzać się 1:1 z kaflami i tabelą widełek w tym pliku."
+   },
+   {
+    "plik": "lib/poradniki/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy.ts",
+    "pole": "sekcje (nowy blok przed 'Od czego zacząć bez ryzyka?')",
+    "co_zrobic": "Dodać sekcję H2 'Na czym firmy przepalają budżet na agentach AI' z 4-5 punktami opartymi na zasadach z repo (za duży zakres na start, brak właściciela procesu, brak miary przed wdrożeniem, agent bez zatwierdzania przez człowieka tam, gdzie jest ryzyko). Bez liczb typu '70% porażek'. [BRAKUJE: własne dane o odsetku nieudanych wdrożeń, więc opis tylko jakościowy]",
+    "dlaczego": "Dokodu.it ma 'Czego unikać', stormit.pl ma cały artykuł o błędach wdrożeń z checklistą; to temat, który szukający kosztu czyta zaraz po cenie.",
+    "priorytet": "sredni",
+    "ryzyko": "Niskie."
+   },
+   {
+    "plik": "lib/poradniki/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy.ts",
+    "pole": "faq",
+    "co_zrobic": "Dodać 1-2 pytania: 'Gotowe narzędzie AI czy agent na miarę: co się bardziej opłaca?' (odpowiedź przez nasze ścieżki: chatbot od 1790 zł, automatyzacja procesu 3000-10000 zł netto, agent na zamówienie) oraz ewentualnie pytanie o integracje i jakość danych, jeśli nie dubluje istniejącego pytania o czynniki kosztu.",
+    "dlaczego": "Lider ma 6 pytań FAQ i sekcję 'custom czy gotowiec'; my mamy 5 pytań, więc to tani zysk w schema FAQPage.",
+    "priorytet": "sredni",
+    "ryzyko": "Niskie. Pilnować, żeby nie zdublować istniejącego pytania o czynniki kosztu."
+   },
+   {
+    "plik": "lib/uslugi/agenci-ai.ts",
+    "pole": "blok otwierający (kapsuła/kafle) albo pierwszy blok treści",
+    "co_zrobic": "Przenieść jedną liczbę dowodową, która już jest w pliku, na górę strony: np. 85% draftów BOK Instytutu Kryptografii idzie od razu albo po drobnej poprawce, oferta w 20 minut zamiast 2-4 godzin (Trockenhaus), 1000 rekordów zamiast 2 tygodni. Nie tworzyć nowych liczb. [BRAKUJE: łączna liczba obsłużonych firm, nie podawać do czasu danych]",
+    "dlaczego": "Dokodu.it i agenciai.pl pokazują liczby w pierwszym ekranie ('140 firm', '80% mniej czasu', 'ponad 50 firm'); u nas dowody są dopiero w połowie strony.",
+    "priorytet": "sredni",
+    "ryzyko": "Niskie. Strona nie jest chroniona, ale tytuł zmieniony 03.11, więc tylko mały dopisek."
+   },
+   {
+    "plik": "lib/uslugi/agenci-ai.ts",
+    "pole": "nagłówek H3 'Co agent AI robi sam, a co zatwierdza człowiek'",
+    "co_zrobic": "Dodać do nagłówka lub podtytułu terminy, których szukają: 'Kontrola człowieka (human-in-the-loop) i własność konta'. Treść zostaje, zmienia się nazewnictwo.",
+    "dlaczego": "Dokodu.it ma trzy osobne H3 zaufania z tymi terminami; my mamy tę treść pod inną nazwą.",
+    "priorytet": "niski",
+    "ryzyko": "Bardzo niskie. Sprawdzić, czy nagłówek nie jest kotwicą w linkach wewnętrznych."
+   },
+   {
+    "plik": "lib/poradniki/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy.ts",
+    "pole": "powiazane (linki wewnętrzne)",
+    "co_zrobic": "Upewnić się, że poradnik linkuje do /uslugi/agenci-ai z kotwicą 'agenci AI dla firm', a strona usługi do poradnika z kotwicą 'ile kosztuje wdrożenie agenta AI'. Strona usługi ma już wpis 'Od czego zależy koszt agenta' w powiazane, więc to głównie kontrola kotwic.",
+    "dlaczego": "Liderzy mają klaster; przy braku nowych stron wzmocnienie wiązania dwóch naszych stron daje podobny efekt za zero kosztu.",
+    "priorytet": "niski",
+    "ryzyko": "Niskie. Sprawdzić najpierw, czy linki nie istnieją już w tablicy powiazane."
+   }
+  ],
+  "nowe_strony": [
+   {
+    "adres": "/poradniki/jak-wdrozyc-agenta-ai-w-firmie-plan-30-dni",
+    "tytul": "Jak wdrożyć agenta AI w firmie: plan na 30 dni, krok po kroku",
+    "fraza": "wdrożenie agenta ai w firmie",
+    "uzasadnienie": "Dokodu.it ma osobny wpis /blog/agenci-ai/wdrozenie-agenta-ai (2740 słów, plan 30 dni, checklisty, ROI), a nasza strona usługi ma tylko 3 kroki wdrożenia, zaś poradnik kosztowy skupia się na cenie. Luka jest wyraźna: poradnik o procesie, nie o kosztach. Kanibalizacja niska, jeśli poradnik kosztowy zostaje przy cenie, a nowy mówi o kolejności prac (wybór procesu, najmniejsza działająca wersja, odbiór) i linkuje do obu istniejących stron. Fakty tylko z repo: Sprint 5 dni roboczych, czat 1-2 dni, telefon 5-25 dni, opieka 99-599 zł. Wdrażać dopiero po poprawkach z listy zmian."
+   }
+  ],
+  "wniosek": "Nasze strony są już treściowo mocniejsze od liderów (2936 i 2356 słów, FAQPage, ceny jawne). Agenciai.pl wygrywa domeną z nazwą frazy i dowodem społecznym, dokodu.it i stormit.pl klastrem artykułów, czyli autorytetem tematycznym, którego nie skopiujemy w jeden dzień. Przewagi treści do skopiowania od ręki: rok i słowo 'cennik' w metaTitle poradnika, sekcja o modelach wyceny, sekcja 'na czym firmy przepalają budżet', 1-2 pytania FAQ i liczby dowodowe wyżej na stronie usługi. Przewagi autorytetu: klaster blogowy (około 30 wpisów u dokodu.it), marka i linki. Jedną nową stronę (plan 30 dni) warto dodać po poprawkach. Strony chronione nietknięte. Nieustalone: dokładny URL stormit.pl na frazę kosztową. Pliki pomocnicze: C:\\Users\\Paweł Pieloch\\CLAUDE CODE\\SF AI WWW\\.seo-przeglad\\konkurencja-2026-11-03 (szkielet.js, wynik-konkurenci.txt, wynik-nasze.txt)."
+ },
+ {
+  "klaster": "automatyzacje",
+  "liderzy": [
+   {
+    "domena": "sagiton.pl",
+    "url": "https://www.sagiton.pl/uslugi/automatyzacja-ai",
+    "fraza": "automatyzacja ai",
+    "tytul": "Automatyzacja AI w biznesie | Sagiton",
+    "slowa": 1641,
+    "co_maja_a_my_nie": [
+     "Pilotaż na samej górze strony: pierwszy H2 to 'Przetestuj automatyzację w swojej firmie z naszym projektem pilotażowym'. U nas oferta AI Start 1990 zł jest w tabeli cen niżej, nie w pierwszym ekranie.",
+     "Jedna rozbudowana realizacja w formacie Problem / Rozwiązanie / Szczegóły (ofertowanie, wynik: redukcja ręcznej weryfikacji CV o 90% w drugim wdrożeniu) z nazwanymi funkcjami: transkrypcja, kalkulator ofert, monitorowanie kompletności zapytań.",
+     "Sekcja definicyjna 'Czym jest automatyzacja AI' z podtypami (NLP, dane nieustrukturyzowane, generowanie treści, podpowiedzi do decyzji). My definiujemy w kapsule i H3 'trzy poziomy', bez rozbicia na typy zadań AI.",
+     "Schema: OfferCatalog + Offer + Review (opinie klientów). Nasza strona ma Offer i FAQPage, ale bez Review.",
+     "Cytat zewnętrznego źródła w nagłówku (raport McKinsey 2024: ponad 70% firm używa AI) i mocna siatka linków wewnętrznych: osobne podstrony usług /uslugi/automatyzacja-ofertowania, /automatyzacja-sprzedazy, /automatyzacja-procesow-biznesowych oraz podstrony branżowe (znalezione w linkach strony głównej, nie pobierane)."
+    ],
+    "typ_przewagi": "oba"
+   },
+   {
+    "domena": "dokodu.it",
+    "url": "https://dokodu.it/automatyzacja-ai",
+    "fraza": "automatyzacja ai",
+    "tytul": "Automatyzacja AI dla firm — oszczędź 40% czasu pracy | Dokodu",
+    "slowa": 976,
+    "co_maja_a_my_nie": [
+     "Liczby dowodowe w pierwszym ekranie i tytule: '40h miesięcznie odzyskanego czasu', '2-3 tyg. do pierwszych efektów', '140+ firm nam zaufało', 'oszczędź 40% czasu'. My mamy 'w dni, nie w miesiące' bez konkretnego terminu.",
+     "Sekcja lęków klienta jako H3: 'Chcesz AI, ale boisz się o dane?', 'Excel hamuje rozwój firmy', 'Zespół tonie w bieżączce', oraz 'Systemy na Własność (No Vendor Lock-in)'. Własność mamy w FAQ i ramie ceny, ale nie jako osobny H3 na stronie.",
+     "Sekcja 'Co mówią nasi klienci?' plus 5 pytań FAQ i sekcja ekspertów (Person w schema).",
+     "Schema ItemList z przykładami wdrożeń (księgowanie faktur OCR+ML, maile handlowców n8n, re-pricing dla e-commerce), z wynikiem '+25% konwersji'.",
+     "Autorytet: strona 976 słów jest KRÓTSZA od naszej (2950), czyli przewaga to marka, szkolenia n8n/LangChain i linkowanie, nie głębia treści."
+    ],
+    "typ_przewagi": "oba"
+   },
+   {
+    "domena": "microsoft.com",
+    "url": "https://www.microsoft.com/pl-pl/microsoft-copilot/copilot-101/ai-automation",
+    "fraza": "automatyzacja ai",
+    "tytul": "Automatyzacja AI | Microsoft Copilot",
+    "slowa": 4060,
+    "co_maja_a_my_nie": [
+     "Siła domeny i marki: to jest głównie przewaga AUTORYTETU, której treścią nie nadrobimy.",
+     "Szeroka sekcja informacyjna: 'Czym jest', 'Dlaczego warto', 'Kluczowe zastosowania', 'Wyzwania związane z automatyzacją AI i jak je pokonać', 'Etyczne AI i prywatność danych', 'Przyszłe trendy', 'Przewodnik po rozpoczęciu'. Najbliższa luka u nas: brak sekcji 'Wyzwania i ryzyka' na stronie usługi i w blogu (jest 'Najczęstsze błędy' w blogu).",
+     "Frazę 'automatyzacja ai' powtarza 27 razy (u nas 6 na stronie usługi), co daje gęste dopasowanie do zapytania.",
+     "Brak: schema JSON-LD i FAQPage na stronie nie wykryto (FAQ jest w HTML, 3 pytania), więc po strukturze nie wygrywa, wygrywa autorytetem."
+    ],
+    "typ_przewagi": "autorytet"
+   }
+  ],
+  "nasze_slabosci": [
+   "Strona usługi /uslugi/automatyzacje (2950 słów, 9 pytań FAQ, cena w tytule, FAQPage+Offer, aktualizacja 2026-11-03) przewyższa liderów treścią i strukturą. Różnicę robi autorytet (Microsoft, Sagiton, Dokodu) i brak dowodów społecznych na stronie.",
+   "Brak opinii klientów i ogólnej liczby wdrożeń: Dokodu pokazuje '140+ firm' i sekcję opinii, Sagiton ma Review w schema. U nas [BRAKUJE: zatwierdzone cytaty klientów i liczba realnych wdrożeń].",
+   "Brak konkretnego terminu: 'w dni, nie w miesiące' vs '2-3 tyg. do pierwszych efektów' u Dokodu. W FAQ 'Ile trwa wdrożenie' nie ma żadnej liczby dni. [BRAKUJE: realny typowy czas pierwszego procesu w dniach, do potwierdzenia przez Pawła].",
+   "Pilotaż AI Start 1990 zł jest w środku strony (ramaCeny), a Sagiton zaczyna od niego pierwszym H2.",
+   "Brak sekcji o ryzykach i ograniczeniach automatyzacji AI (Microsoft ma, Sagiton ma 'Najczęstsze błędy'). W blogu jest, na stronie usługi nie.",
+   "Fraza 'agencja automatyzacji ai' (GSC poz. 12, 50 wyśw.) ma tylko H3 'Jak pracuje nasza agencja automatyzacji AI', bez mocnego sygnału w H2 lub tytule.",
+   "Fraza 'automatyzacja ofert' (GSC poz. 24): mamy tylko akapit w H3 'Sprzedaż i oferty'. Sagiton ma osobną podstronę usługi o ofertowaniu (link znaleziony na stronie głównej, strony nie pobierałem).",
+   "Blog /blog/automatyzacja-procesow-ai-od-czego-zaczac: tytuł bez roku i ceny, meta 'jak zacząć'. Poradnik cenowy ma rok i kwotę w tytule, blog nie. Blog i usługa mogą się też kanibalizować na 'automatyzacja procesów AI'."
+  ],
+  "zmiany": [
+   {
+    "plik": "lib/uslugi/automatyzacje.ts",
+    "pole": "faq (nowy wpis)",
+    "co_zrobic": "Dodać pytanie 'Co może pójść nie tak przy automatyzacji AI i jak się przed tym zabezpieczamy?'. Odpowiedź tylko z faktów, które już są w pliku: człowiek zatwierdza gotowy tekst przed wysyłką, klient widzi każdy krok i może zatrzymać proces, dane w UE, dwie rundy poprawek w cenie. To zamyka lukę 'wyzwania i ryzyka' z Microsoft i Sagiton.",
+    "dlaczego": "Microsoft i Sagiton mają sekcję o wyzwaniach i błędach, my na stronie usługi nie. FAQ już jest zbudowane, więc FAQPage dostaje pytanie bez nowej struktury.",
+    "priorytet": "wysoki",
+    "ryzyko": "Niskie. Dopisek do tablicy faq, żaden nowy fakt. Nie ruszać obecnych pytań (kontrakty schema)."
+   },
+   {
+    "plik": "lib/uslugi/automatyzacje.ts",
+    "pole": "faq: odpowiedź na 'Ile trwa wdrożenie automatyzacji?'",
+    "co_zrobic": "Zamienić 'w dni, nie w miesiące' na konkretny typowy czas pierwszego procesu w dniach, wzorem Dokodu ('2-3 tygodnie do pierwszych efektów'). [BRAKUJE: realny czas wdrożenia pierwszego procesu w dniach roboczych, podać Paweł]. Zostawić dwie rundy poprawek (tydzień testów, poprawki, drugi tydzień).",
+    "dlaczego": "Liczba w odpowiedzi i w kapsule to najtańszy sposób dogonienia 'konkretu' Dokodu i lepsza odpowiedź dla AI cytującego.",
+    "priorytet": "wysoki",
+    "ryzyko": "Średnie: liczba musi być prawdziwa. Bez potwierdzenia nie wdrażać. Kapsula jest cytowana, więc zmiana też tam wymaga spójności z FAQ."
+   },
+   {
+    "plik": "lib/uslugi/automatyzacje.ts",
+    "pole": "rozwiazanie: nowy podrozdział lub wzmocnienie H3 'Jak pracuje nasza agencja automatyzacji AI'",
+    "co_zrobic": "Dopisać w H3 lub krótkim akapicie pod nim 'Systemy na własność': jeśli klient wybiera przekazanie infrastruktury, opieka kosztuje 0 zł i nie ma abonamentu (fakt jest już w ramaCeny, linie ok. 497 i 527). Dodać do tego samego akapitu frazę 'agencja automatyzacji AI' w zdaniu o własności rozwiązania.",
+    "dlaczego": "Dokodu eksponuje 'No Vendor Lock-in' jako osobny H3, my chowamy to w cenniku. Fraza 'agencja automatyzacji ai' (GSC poz. 12) dostaje dodatkowy sygnał w H3 z treścią, nie tylko w nagłówku.",
+    "priorytet": "wysoki",
+    "ryzyko": "Niskie. Dopisek tekstowy, fakty już w pliku. Nie zmieniać H1 (etykieta linków w innych plikach)."
+   },
+   {
+    "plik": "lib/uslugi/automatyzacje.ts",
+    "pole": "rozwiazanie: sekcja 'Sprzedaż i oferty' (około linii 282-290)",
+    "co_zrobic": "Rozbudować o 3-4 zdania o automatyzacji ofert z faktami już w repo: Trockenhaus, oferta powstaje w 20 minut zamiast 2 do 4 godzin; narzędzie samo sprawdza aktualne ceny w hurtowniach i składa wycenę. Zachować frazę 'automatyzacja ofert' w nagłówku lub pierwszym zdaniu i podlinkować do realizacji.",
+    "dlaczego": "Fraza 'automatyzacja ofert' ma GSC poz. 24 i jest na granicy strony 3. Sagiton ma osobną podstronę o ofertowaniu, więc minimum to mocniejszy akapit u nas zanim powstanie osobna strona.",
+    "priorytet": "wysoki",
+    "ryzyko": "Niskie. Fakty istnieją, ale sprawdzić jeszcze, czy zgoda klienta na nazwę 'Trockenhaus' jest już w tekście (jest w linii 287)."
+   },
+   {
+    "plik": "lib/uslugi/automatyzacje.ts",
+    "pole": "nowy wpis w rozwiazanie lub problem: blok 'Pilotaż na start' blisko góry strony",
+    "co_zrobic": "Dodać jedno zdanie z linkiem do AI Start 1990 zł netto na początku sekcji 'problem' lub w kapsule jako zdanie wprowadzające sekcję cen (kapsula ma już cenę, więc wystarczy mała karta CTA po pierwszej sekcji). Nie zmieniać kapsuły ani metaTitle (58 znaków z sufiksem).",
+    "dlaczego": "Sagiton otwiera stronę pilotażem. U nas oferta wejściowa jest dopiero w sekcji ceny, a to najmocniejszy argument konwersji.",
+    "priorytet": "sredni",
+    "ryzyko": "Średnie dla układu strony. Strona rośnie, więc tylko mały dopisek, bez przebudowy sekcji."
+   },
+   {
+    "plik": "lib/blog/posts/automatyzacja-procesow-ai-od-czego-zaczac.ts",
+    "pole": "metaTitle i metaDescription",
+    "co_zrobic": "Dopisać rok i konkret do tytułu, np. 'Automatyzacja procesów w firmie 2026: od czego zacząć' (zmieścić do ok. 60 znaków z sufiksem) i w opisie jedno zdanie o widełkach z poradnika (3000-10000 zł netto). Treść H1 bez zmian.",
+    "dlaczego": "Poradnik cenowy ma rok i kwotę w tytule i dobrze wypada. Blog ma 'jak zacząć' bez roku. Rok zwiększa klikalność przy informacyjnych frazach 'automatyzacja procesów AI'.",
+    "priorytet": "sredni",
+    "ryzyko": "Niskie, ale sprawdzić kanibalizację z usługą /uslugi/automatyzacje (ta sama fraza). Blog ma rolę informacyjną, usługa transakcyjną."
+   },
+   {
+    "plik": "lib/uslugi/automatyzacje.ts",
+    "pole": "rozwiazanie: sekcja definicyjna 'Zwykła automatyzacja, automatyzacja AI i agent AI to trzy różne poziomy'",
+    "co_zrobic": "Dopisać 3-4 krótkie punkty, do czego AI jest w automatyzacji używane: czytanie maili i dokumentów (dane nieustrukturyzowane), pisanie szkiców odpowiedzi, klasyfikacja zgłoszeń, podpowiedzi do decyzji. Tylko z przykładów już opisanych na stronie (auto-email, faktury).",
+    "dlaczego": "Sagiton ma sekcję 'Czym jest automatyzacja AI' z podtypami zadań (NLP, dane nieustrukturyzowane, generowanie treści). To buduje semantyczny zasięg frazy 'automatyzacja ai'.",
+    "priorytet": "sredni",
+    "ryzyko": "Niskie. Sekcja już istnieje, dopisek wewnątrz."
+   },
+   {
+    "plik": "lib/uslugi/automatyzacje.ts",
+    "pole": "nowe pole opinii (jeśli typ Usluga je wspiera) lub rozwiazanie: blok 'Co mówią klienci'",
+    "co_zrobic": "Dodać blok opinii z 1-2 cytatami klientów. [BRAKUJE: zatwierdzone cytaty klientów (KNF Team, Instytut Kryptografii, Trockenhaus) i zgoda na publikację]. Do czasu ich otrzymania nie dodawać Review do schema i nie wymyślać ocen.",
+    "dlaczego": "Dokodu ma 'Co mówią nasi klienci' i '140+ firm', Sagiton ma Review w schema. To główna widoczna różnica w dowodzie społecznym.",
+    "priorytet": "sredni",
+    "ryzyko": "Wysokie bez danych: zero zmyślonych opinii. Wdrożyć dopiero po dostarczeniu zatwierdzonych cytatów."
+   }
+  ],
+  "nowe_strony": [
+   {
+    "adres": "/uslugi/automatyzacje/automatyzacja-ofert",
+    "tytul": "Automatyzacja ofert: wycena w 20 minut zamiast 2-4 godzin",
+    "fraza": "automatyzacja ofert",
+    "uzasadnienie": "GSC poz. 24 dla 'automatyzacja ofert', a lider Sagiton ma osobną usługę ofertowania (link /uslugi/automatyzacja-ofertowania znaleziony w linkach strony głównej, strony nie pobierano). Mamy twardy dowód: realizacja Trockenhaus (oferta w 20 minut zamiast 2 do 4 godzin, sprawdzanie cen w hurtowniach). Warunek: najpierw zrobić zmianę nr 4 i obserwować 4-6 tygodni, a stronę tworzyć tylko jeśli sekcja w /uslugi/automatyzacje nie przebije pozycji 24. Adres do potwierdzenia z routingiem podstron w lib/uslugi/podstrony. Nie kanibalizuje, jeśli strona dotyczy wyłącznie ofert, a /uslugi/automatyzacje zostaje stroną ogólną."
+   }
+  ],
+  "wniosek": "Treścią nie przegrywamy z liderami. Nasza strona usługi ma 2950 słów i 9 pytań FAQ. Sagiton ma 1641 słów i brak FAQ, Dokodu 976 słów i 5 pytań, a Microsoft 4060 słów bez schema. Różnicę robi autorytet (marka, domena, linki) oraz dowody społeczne. Dokodu pokazuje '140+ firm' i opinie, Sagiton ma Review w schema, my nie mamy ani jednego ani drugiego. Do skopiowania od ręki z treści: konkretny termin wdrożenia, sekcja o ryzykach, eksponowanie pilotażu 1990 zł na początku, własność rozwiązania jako osobny akapit i szersze 'automatyzacja ofert'. Do zdobycia w czasie: opinie klientów i linki. Ograniczenia danych: WebSearch jest US-only i nie zwrócił realnych wyników Google.pl, więc liderów wziąłem z listy zleceniodawcy (sagiton.pl, dokodu.it, microsoft.com). Vtiger (poz. 3) pominąłem, bo dokładnego adresu strony nie udało się potwierdzić. Liderzy dla 'agencja automatyzacji ai' i 'automatyzacja procesów ai' nie zostali ustaleni niezależnie. Skrypt i wynik: C:\\\\Users\\\\Paweł Pieloch\\\\CLAUDE CODE\\\\SF AI WWW\\\\.seo-przeglad\\\\konkurencja-2026-11-03\\\\szkielet.js oraz automatyzacje-wynik.txt (inny wynik w tym folderze, wynik.txt, należy do innej gałęzi równoległego przebiegu, nie ruszałem go)."
+ },
+ {
+  "klaster": "wdrozenie-audyt",
+  "liderzy": [
+   {
+    "domena": "gagan.pl",
+    "url": "https://www.gagan.pl/ai-dla-biznesu/wdrozenia-ai-dla-firm",
+    "fraza": "wdrożenie ai w firmie",
+    "tytul": "Wdrożenia AI dla firm – automatyzacja i rozwój biznesu | Gagan Growth",
+    "slowa": 1748,
+    "co_maja_a_my_nie": [
+     "Lista integracji wprost w nagłówkach: formularze, CRM, webhooki, API, Make, n8n, WooCommerce (u nas integracje są tylko jako jeden z czterech elementów, bez nazw narzędzi w H2/H3)",
+     "Sekcje po branżach: 'Firmy usługowe i B2B' itd. (u nas branże są w osobnych podstronach, ale /uslugi/wdrozenie-ai ich nie wylicza)",
+     "Sekcja 'Jakie rozwiązania AI możemy wdrożyć' z 6 podtypami jako H3",
+     "Data publikacji w schema 2026-03-10 (my mamy dateModified 2026-10-14, więc tu nie przegrywamy)"
+    ],
+    "typ_przewagi": "autorytet"
+   },
+   {
+    "domena": "agisona.pl",
+    "url": "https://agisona.pl/audyt-ai",
+    "fraza": "audyt ai",
+    "tytul": "Audyt AI | Konsulting AI dla Firm | Agisona AI",
+    "slowa": 894,
+    "co_maja_a_my_nie": [
+     "Pytanie FAQ 'Jakie są rodzaje audytu AI?' (procesy, widoczność w AI, zgodność z AI Act) i trzy H3 w sekcji 'Czym jest audyt AI?'. Nasz /uslugi/audyt-ai tylko wspomina, że audyt widoczności to inna usługa",
+     "Sekcja 'Najczęstsze błędy przy wdrażaniu AI' jako osobny H2 (u nas błędy są w bloku 'Gdzie firmy przepalają budżet', ale bez słowa 'błędy' w nagłówku)",
+     "Obietnica liczbowa: 'ponad 100 godzin pracy miesięcznie' odzyskane u klientów (bez źródła, nie kopiować)",
+     "Krótsza strona (894 słów) niż nasza (2015), więc przewaga to szerokie ujęcie tematu i domena, nie długość"
+    ],
+    "typ_przewagi": "oba"
+   },
+   {
+    "domena": "widoczni.com",
+    "url": "https://www.widoczni.com/audyt-ai/",
+    "fraza": "audyt ai",
+    "tytul": "Audyt AI - Analiza widoczności marki w AI Search Oferta 2026 - widoczni",
+    "slowa": 2952,
+    "co_maja_a_my_nie": [
+     "Rok 2026 w tytule (nasz tytuł ma cenę i termin, ale nie rok)",
+     "Bezpłatne narzędzie 'audyt SEO AI w kilka sekund' wprost na stronie",
+     "Długość 2952 słów i sekcja 'Historie Sukcesów'",
+     "Silna domena agencji SEO (autorytet), brak FAQ w schema (0), więc w schema jesteśmy lepsi"
+    ],
+    "typ_przewagi": "autorytet"
+   }
+  ],
+  "nasze_slabosci": [
+   "Fraza 'audyt ai' jest szersza niż nasza oferta: liderzy (agisona, widoczni, dokodu) łączą pod nią audyt procesów, widoczności w AI i AI Act. Nasza strona pokrywa tylko audyt procesów, więc Google może uznawać ją za węższą (GSC: 35 wyświetleń @ poz. 25).",
+   "Brak roku 2026 w metaTitle /uslugi/audyt-ai i /uslugi/wdrozenie-ai (blog ma rok w tytule, widoczni ma 'Oferta 2026').",
+   "FAQ audytu (6 pytań) nie ma pytania 'jakie są rodzaje audytu AI', które agisona ma w FAQ i w schema.",
+   "Odpowiedź FAQ o dotacjach na /uslugi/wdrozenie-ai jest ogólnikowa ('część wdrożeń da się pokryć'), bez nazwy programu: [BRAKUJE: nazwy programów dotacji, których realnie używamy].",
+   "Blog 'ile kosztuje wdrożenie AI' (GSC 31 wyświetleń @ 13,4) ma 3 pytania w schema FAQ, a w treści 10 pytań w nagłówkach: schema nie odzwierciedla całego FAQ.",
+   "Główna różnica to autorytet domeny (gagan, widoczni, dokodu mają dużo linków i lata historii). Treściowo nasze strony są dłuższe lub równe: wdrożenie-ai 2969 słów, 8 FAQ w schema, Offer + PriceSpecification, której nie ma żaden lider w skrócie schema (gagan: FAQPage; agisona: Offer w OfferCatalog bez ceny w tytule). Nie przepisywać stron od nowa."
+  ],
+  "zmiany": [
+   {
+    "plik": "lib/uslugi/audyt-ai.ts",
+    "pole": "faq (dopisać 7. pytanie na końcu tablicy, linia ok. 399)",
+    "co_zrobic": "Dodać pytanie 'Jakie są rodzaje audytu AI i który jest dla mnie?'. Odpowiedź 3 zdania: (1) audyt procesów = nasz Sprint Diagnostyczny 1490 zł netto, 5 dni roboczych, raport PDF; (2) audyt widoczności w AI = osobna usługa, sprawdza czy ChatGPT poleca firmę, link /uslugi/optymalizacja/audyt-widocznosci-w-ai; (3) audyt zgodności z AI Act: [BRAKUJE: czy SimpleFast.ai oferuje taki audyt i za ile; jeśli nie, napisać tylko, że to inna usługa prawna i nie jest naszą ofertą]. Pytanie wpadnie do schema FAQPage automatycznie.",
+    "dlaczego": "Agisona ma dokładnie to pytanie i rankuje na 'audyt ai'. Zamyka lukę 'nasza strona jest węższa niż fraza' bez nowej strony.",
+    "priorytet": "wysoki",
+    "ryzyko": "Niskie. Pytanie dołożone na końcu, nie rusza kolejności ani kwot. Sprawdzić długość FAQ w testach (jeśli jest limit pytań). Fakt o AI Act tylko po potwierdzeniu."
+   },
+   {
+    "plik": "lib/uslugi/audyt-ai.ts",
+    "pole": "metaTitle (linia 50)",
+    "co_zrobic": "Zmienić na 'Audyt AI dla firm 2026: 1490 zł netto, 5 dni' (50 zn. + 16 zn. sufiksu = 66, za długo). Wariant w limicie: 'Audyt AI 2026: cena 1490 zł netto, 5 dni' (40 zn. + 16 = 56). Kwoty i termin bez zmian.",
+    "dlaczego": "Widoczni ma 'Oferta 2026' w tytule na tej samej frazie. Rok sygnalizuje świeżość, a cena z tytułu już jest naszą przewagą (konkurenci piszą 'wycena indywidualna').",
+    "priorytet": "wysoki",
+    "ryzyko": "Niskie. Zmiana tytułu zeruje na kilka dni test CTR w GSC: zapisać datę zmiany. Frazę 'dla firm' tracimy z tytułu, ale zostaje w H1/opisie. Sprawdzić, czy nic nie porównuje tytułu 1:1 (testy, sitemap, OG)."
+   },
+   {
+    "plik": "lib/uslugi/wdrozenie-ai.ts",
+    "pole": "metaTitle (linia 59)",
+    "co_zrobic": "Dodać rok: 'Wdrożenie AI w firmie 2026: etapy, ceny' (41 zn. + 16 = 57). Zachować słowa 'etapy' i 'ceny'; 'terminy' zostaje w H1 i opisie.",
+    "dlaczego": "Fraza 'wdrożenie ai w firmie' ma liderów z fresh-intent, a nasz tytuł nie ma roku, w odróżnieniu od bloga. Spójność z blogiem 'w 2026'.",
+    "priorytet": "sredni",
+    "ryzyko": "Strona jest w rosnących, ale nie na liście chronionych (chronione: chatboty, voiceboty, potwierdzanie wizyt, home). Mimo to to zmiana tytułu na stronie, która już rośnie: wykonać tylko tytuł, nic więcej w tym samym commicie."
+   },
+   {
+    "plik": "lib/uslugi/wdrozenie-ai.ts",
+    "pole": "rozwiazanie.bloki, lista 'Co możemy wdrożyć w Twojej firmie' (okolice linii 200-260, sekcja z opisem integracji)",
+    "co_zrobic": "W opisie elementu 'Integracje' dopisać nazwy narzędzi, które realnie wdrażamy, w stylu gagan.pl: CRM, formularze, Make, n8n, WooCommerce, poczta. Tylko te, które są już w repo (sprawdzić w lib/uslugi/automatyzacje.ts i lib/realizacje/*.ts). Brakujące: [BRAKUJE: lista systemów, z którymi realnie integrujemy].",
+    "dlaczego": "Gagan wprost wymienia integracje (Make, n8n, CRM, webhooki) w H2/H3 i to pasuje do zapytań 'wdrożenie ai w firmie z integracją'. Dla nas to dopisek, nie nowa sekcja.",
+    "priorytet": "sredni",
+    "ryzyko": "Niskie, o ile nazwy są prawdziwe. Nie zmieniać układu sekcji."
+   },
+   {
+    "plik": "lib/uslugi/wdrozenie-ai.ts",
+    "pole": "faq, odpowiedź na 'Czy na wdrożenie AI są dotacje?' (linia ok. 551)",
+    "co_zrobic": "Zastąpić ogólnik konkretem: [BRAKUJE: nazwa programu (np. regionalny lub PARP) i warunek, które SimpleFast.ai realnie sprawdza przy diagnozie]. Do czasu dostarczenia faktu nie zmieniać zdania.",
+    "dlaczego": "Wynik wyszukiwania na 'wdrożenie ai w firmie' zawiera ofertę programu dotacyjnego Lubuskie i PARP (usługi rozwojowe). Ogólne zdanie o 'części wdrożeń' nie daje nic do cytowania.",
+    "priorytet": "sredni",
+    "ryzyko": "Średnie: dotacje wymagają prawdziwych faktów. Nie wymyślać programów ani kwot."
+   },
+   {
+    "plik": "lib/blog/posts/ile-kosztuje-wdrozenie-ai-w-malej-firmie-2026.ts",
+    "pole": "faq / sekcja 'Najczęstsze pytania' (3 pytania w schema vs 10 pytań w nagłówkach H2/H3)",
+    "co_zrobic": "Sprawdzić, które pytania z H2/H3 mają formę pytania i nie są w tablicy FAQ. Dodać 2-3 z nich do FAQ z odpowiedziami skopiowanymi z istniejącej treści (np. 'Od czego zacząć bez ryzyka?' z naszego cennika: diagnoza bezpłatna, Sprint 1490 zł netto, AI Start 1990 zł netto).",
+    "dlaczego": "Fraza 'ile kosztuje wdrożenie ai' (GSC poz. 13,4, 31 wyświetleń) jest blisko strony 1. W wynikach wyszukiwania przeważają teksty z widełkami; pytanie-odpowiedź z liczbami jest najlepszym kształtem do cytowania.",
+    "priorytet": "sredni",
+    "ryzyko": "Niskie. Odpowiedzi tylko z faktów już w pliku."
+   },
+   {
+    "plik": "lib/blog/posts/ile-kosztuje-wdrozenie-ai-w-malej-firmie-2026.ts",
+    "pole": "sekcja 'Od czego naprawdę zależy cena wdrożenia AI?' (linia 70), początek treści",
+    "co_zrobic": "Dodać 1-2 zdania z kwotą w pierwszym akapicie tej sekcji: 'W SimpleFast.ai ceny zaczynają się od 1490 zł netto (audyt) i 1790 zł netto (chatbot)', jeśli takiego zdania jeszcze nie ma w kapsule. Sprawdzić grepem, żeby nie dublować.",
+    "dlaczego": "Zapytanie komercyjne 'cennik wdrożeń AI' (GSC poz. 7,2, 19 wyświetleń) jest najbliżej top 5. Odpowiedź z liczbą wysoko na stronie podnosi dopasowanie.",
+    "priorytet": "niski",
+    "ryzyko": "Niskie. Kwoty 1:1 z cennika."
+   },
+   {
+    "plik": "lib/uslugi/audyt-ai.ts",
+    "pole": "rozwiazanie.bloki lub problem.bloki (nagłówek sekcji 'Gdzie firmy przepalają budżet na AI?', linia ok. 70-120)",
+    "co_zrobic": "Zmienić nagłówek H3 na 'Najczęstsze błędy przy wdrażaniu AI: gdzie firmy przepalają budżet'. Treść pod nagłówkiem bez zmian.",
+    "dlaczego": "Agisona ma osobny H2 'Najczęstsze błędy przy wdrażaniu AI'. Fraza 'błędy przy wdrażaniu AI' to naturalne zapytanie poboczne, a my mamy materiał, tylko bez tej frazy w nagłówku.",
+    "priorytet": "niski",
+    "ryzyko": "Niskie. Nagłówek nie jest cytowany w FAQ (sprawdzić dubel z pytaniem FAQ, jak w komentarzu 2026-09-22)."
+   }
+  ],
+  "nowe_strony": [],
+  "wniosek": "Treściowo nasze trzy strony nie przegrywają: /uslugi/wdrozenie-ai ma 2969 słów, 8 pytań w schema i Offer z ceną, a /uslugi/audyt-ai 2015 słów i cenę w tytule, czego nie ma żaden z liderów. Przewaga liderów to głównie AUTORYTET (domeny gagan.pl, widoczni.com, dokodu.it, agisona.pl), którego tekstem nie nadrobimy. Realne luki treści są trzy: (1) fraza 'audyt ai' jest szersza niż nasza strona, więc dopisać pytanie o rodzaje audytu z linkiem do audytu widoczności, (2) brak roku 2026 w tytułach audytu i wdrożenia, (3) brak konkretów (nazwy integracji, program dotacji). Nowych stron nie rekomenduję: audyt AI Act (dokodu.it/wdrozenia/audyt) wymagałby usługi, której w repo nie ma ([BRAKUJE: czy ją oferujemy]), a osobna strona o rodzajach audytu skanibalizowałaby /uslugi/audyt-ai. Uwaga o danych: WebSearch jest ograniczone do USA i nie dał polskich wyników Google.pl, więc liderzy pochodzą z dzisiejszych danych właściciela (październikowe wyniki), a adresy ich stron z linków na stronach głównych tych domen. Szkielety stron zapisane w C:\\\\Users\\\\Paweł Pieloch\\\\CLAUDE CODE\\\\SF AI WWW\\\\.seo-przeglad\\\\konkurencja-2026-11-03\\\\wynik.txt (skrypt: szkielet.js w tym samym folderze). Dla frazy 'wdrożenie ai w firmie' dokodu.it (strona /automatyzacja-ai/wdrozenia ma tylko 168 słów) i nocodework.io wygrywają niemal wyłącznie autorytetem lub innym adresem, którego nie ustaliłem (nocodework.io: brak linków w HTML strony głównej).\""
+ }
+]
