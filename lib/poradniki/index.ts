@@ -22,6 +22,9 @@ import { ileKosztujeChatbotDlaFirmy } from './poradniki/ile-kosztuje-chatbot-dla
 import { aiWBiurzeRachunkowym } from './poradniki/ai-w-biurze-rachunkowym-jakie-procesy-zautomatyzowac';
 import { ileKosztujeWdrozenieAiAgenta } from './poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy';
 import { ileKosztujeAutomatyzacjaAiWFirmie } from './poradniki/ile-kosztuje-automatyzacja-ai-w-firmie';
+/* Fala 2 SEO (2026-11-03): intencja informacyjna „co to jest voicebot",
+   oferta i ceny zostają na /uslugi/voiceboty i /uslugi/voiceboty/cennik. */
+import { coToJestVoicebot } from './poradniki/co-to-jest-voicebot';
 
 export type {
   Poradnik,
@@ -40,6 +43,7 @@ const PORADNIKI_RAW: readonly Poradnik[] = [
   aiWBiurzeRachunkowym,
   ileKosztujeWdrozenieAiAgenta,
   ileKosztujeAutomatyzacjaAiWFirmie,
+  coToJestVoicebot,
 ];
 
 /**

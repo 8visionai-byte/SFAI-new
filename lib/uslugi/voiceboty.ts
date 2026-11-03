@@ -193,7 +193,7 @@ import type { Usluga } from './types';
  */
 export const voiceboty: Usluga = {
   slug: 'voiceboty',
-  dataAktualizacji: '2026-10-14',
+  dataAktualizacji: '2026-11-03',
   h1: 'Voicebot dla firmy, który odbiera telefon za Ciebie',
 
   /* KAPSUŁA, 49 słów (kontrakt `Usluga.kapsula`: 40-60). Wersja sprzed
@@ -553,6 +553,13 @@ export const voiceboty: Usluga = {
        sam co w kartach agenci-ai.ts i automatyzacje.ts). Opis 1:1 z karty tego
        poradnika w lib/uslugi/podstrony/voiceboty-cennik.ts. */
     poradniki: [
+      /* Fala 2 SEO (2026-11-03): poradnik definicyjny bierze intencję
+         informacyjną „co to jest voicebot", ta strona zostaje ofertą. */
+      {
+        etykieta: 'Co to jest voicebot i jak działa w firmie',
+        href: '/poradniki/co-to-jest-voicebot',
+        opis: 'Definicja, cztery kroki rozmowy, różnice z chatbotem i IVR, jak rozpoznać bota w telefonie.',
+      },
       {
         etykieta: 'Ile kosztuje agent AI dla firmy? Cennik wdrożenia 2026',
         href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',

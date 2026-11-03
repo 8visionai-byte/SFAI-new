@@ -143,6 +143,7 @@ const H1_KOLOR: Record<string, string> = {
      chatbot AI dla firmy? Cennik 2026"), więc stoi pod kluczem z gałęzią.
      Wartość bez zmian, zmienia się wyłącznie klucz. */
   'chatboty/cennik': 'Cennik 2026',
+  'chatboty/wdrozenie': 'od materiałów do odbioru',
   'obsluga-klienta': 'który odpowiada o 22:00',
   'baza-wiedzy': 'firmowa baza wiedzy (RAG)',
   'sklep-internetowy': 'dla sklepu internetowego',
@@ -261,6 +262,7 @@ const KAFEL_CENY: Record<string, { opis: string }> = {
      „pakiet startowy"), więc wpis chatbotów stoi pod kluczem z gałęzią.
      Wartość bez zmian, zmienia się wyłącznie klucz. */
   'chatboty/cennik': { opis: 'próg prosty' },
+  'chatboty/wdrozenie': { opis: 'próg prosty, bot na stronę' },
   'obsluga-klienta': { opis: 'próg prosty, bot na stronę' },
   /* Dopowiedzenie skrócone z pasa metryk tej strony („najniższy próg
      wdrożenia, baza wiedzy już w środku"). */

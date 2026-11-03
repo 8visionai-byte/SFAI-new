@@ -29,7 +29,7 @@ export const automatyzacje: Usluga = {
      własności i agencie AI, tabela trzech poziomów, przykłady według działów,
      sekcja o zespole i o sposobie pracy, minPrice 1990 (offers w JSON-LD),
      powiązane usługi i wpis. H1 BEZ ZMIAN (etykieta linków w innych plikach). */
-  dataAktualizacji: '2026-10-14',
+  dataAktualizacji: '2026-11-03',
   h1: 'Automatyzacja procesów w firmie z AI',
 
   /* 2026-10-14: kapsuła zaczyna się frazą „automatyzacja procesów AI dla firm"
@@ -279,11 +279,12 @@ export const automatyzacje: Usluga = {
             ],
           },
           {
-            naglowek: 'Sprzedaż',
+            naglowek: 'Sprzedaż i oferty',
             akapity: [
-              'Automatyczne raporty sprzedażowe zamiast ręcznie sklejanych arkuszy.',
+              'Automatyczne raporty sprzedażowe zamiast ręcznie sklejanych arkuszy. Automatyzacja ofert: narzędzie samo sprawdza aktualne ceny w hurtowniach i składa wycenę.',
             ],
             punkty: [
+              'Trockenhaus: oferta powstaje w 20 minut zamiast 2 do 4 godzin.',
               'Generator leadów: 1000 rekordów w 40 minut zamiast około dwóch tygodni ręcznej pracy.',
             ],
           },
@@ -634,6 +635,7 @@ export const automatyzacje: Usluga = {
     'automatyzacja procesów AI',
     'agencja automatyzacji AI',
     'wdrożenie automatyzacji',
+    'automatyzacja ofert',
   ],
 
   /* v22 (linki §3, P1 #6 i P2 #13): 85 wyświetleń, pozycja 17,0, w raporcie SEO

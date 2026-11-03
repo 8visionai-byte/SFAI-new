@@ -57,7 +57,7 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
     'Ile kosztuje chatbot AI w 2026? Cenniki agencji w Polsce: 1990-45000 zł. Abonament czy wdrożenie, ukryte koszty i nasz próg: od 1790 zł netto.',
 
   data: '2026-06-15',
-  dataAktualizacji: '2026-10-14',
+  dataAktualizacji: '2026-11-03',
   kategoria: 'Koszty i wycena',
   tagi: ['ile kosztuje chatbot', 'cena chatbota 2026', 'chatbot dla firmy koszt', 'chatbot na stronę'],
 
@@ -433,6 +433,12 @@ export const ileKosztujeChatbotDlaFirmy: Poradnik = {
       etykieta: 'Ile kosztuje chatbot AI dla firmy? Cennik 2026',
       href: '/uslugi/chatboty/cennik',
       opis: 'Nasza drabina trzech progów, utrzymanie i rachunek na trzy lata.',
+    },
+    /* Fala 2 SEO (2026-11-03): etykieta = H1 nowej podstrony. */
+    {
+      etykieta: 'Wdrożenie chatbota AI krok po kroku: od materiałów do odbioru',
+      href: '/uslugi/chatboty/wdrozenie',
+      opis: 'Sześć etapów, co robisz Ty, a co my, i ile trwa każdy próg: od 1 do 10 dni roboczych.',
     },
     {
       etykieta: 'Audyt AI: mapa oszczędności czasu',

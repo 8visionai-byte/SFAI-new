@@ -91,8 +91,11 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
   /* SEO 2026-08-17: realna aktualizacja treści (widełki + sekcja ceny), więc
      bump TYLKO dataAktualizacji (= Article.dateModified i sitemap lastmod);
      `data` = prawdziwa data publikacji, nie ruszamy (zakaz fałszywej świeżości).
-     2026-10-14: nowe sekcje i zmiana szyku, czyli realna zmiana treści. */
-  dataAktualizacji: '2026-10-14',
+     2026-10-14: nowe sekcje i zmiana szyku, czyli realna zmiana treści.
+     2026-11-03: sekcja o czasie pod frazy „ile czasu trwa / zajmuje wdrożenie
+     agenta ai w firmie" (66 wyświetleń w 28 dni, GSC); tytuł strony bez zmian,
+     bo strona urosła z 13 do 553 wyświetleń po fali 1. */
+  dataAktualizacji: '2026-11-03',
   kategoria: 'Koszty i wycena',
   tagi: [
     'ile kosztuje agent AI',
@@ -210,11 +213,11 @@ export const ileKosztujeWdrozenieAiAgenta: Poradnik = {
     },
     {
       typ: 'sekcja',
-      naglowek: 'Ile trwa wdrożenie agenta AI?',
+      naglowek: 'Ile trwa wdrożenie agenta AI w firmie?',
       chip: 'ZASADA',
       wariant: 'quiet',
       akapity: [
-        'Agent do jednego zadania jest gotowy w 1-2 dni robocze. Czas z tabeli liczymy od przekazania kompletu materiałów, czyli bazy wiedzy, treści i dostępów, a nie od podpisania umowy.',
+        'Wdrożenie agenta AI w firmie trwa od 1-2 dni roboczych przy agencie do jednego zadania na czacie do 5-25 dni roboczych przy agencie głosowym z integracjami. Agent do jednego zadania jest gotowy w 1-2 dni robocze. Czas z tabeli liczymy od przekazania kompletu materiałów, czyli bazy wiedzy, treści i dostępów, a nie od podpisania umowy.',
         'Dwie rundy poprawek są w cenie wdrożenia: testujesz tydzień i zapisujesz uwagi, wdrażamy je, testujesz drugi tydzień, wdrażamy kolejne, potem odbiór.',
         'Po starcie wybierasz jedną z dwóch dróg: infrastruktura zostaje u nas i płacisz opiekę 99-599 zł netto miesięcznie (przy agencie głosowym 299-1500 zł netto), albo przekazujemy Ci infrastrukturę i abonament wynosi 0 zł.',
       ],

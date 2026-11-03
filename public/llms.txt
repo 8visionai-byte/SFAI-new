@@ -34,6 +34,7 @@
 
 ## Chatboty AI: zastosowania i cennik
 - [Cennik chatbota AI dla firmy](https://www.simplefast.ai/uslugi/chatboty/cennik): od 1790 zł netto i 1-2 dni robocze, z integracjami 8000-15000 zł netto. Utrzymanie 99-599 zł netto albo 0 zł po przekazaniu.
+- [Wdrożenie chatbota AI krok po kroku](https://www.simplefast.ai/uslugi/chatboty/wdrozenie): wdrożenie trwa 1-10 dni roboczych od kompletu materiałów (1-2 dni bot na stronę WWW, 3-4 dni z komunikatorami, 5-10 dni z integracjami), sześć etapów z podziałem na to, co robi klient, a co my, dwie rundy poprawek w cenie.
 - [Chatbot do obsługi klienta](https://www.simplefast.ai/uslugi/chatboty/obsluga-klienta): przejmuje powtarzalne pytania i odpisuje po godzinach. Od 1790 zł netto, gotowy w 1-2 dni robocze. Trudną sprawę oddaje człowiekowi.
 - [Chatbot z bazą wiedzy firmy (RAG)](https://www.simplefast.ai/uslugi/chatboty/baza-wiedzy): odpowiada z Twoich dokumentów, nie z internetu, i wskazuje źródło odpowiedzi. Baza wiedzy jest w każdym bocie od 1790 zł netto.
 - [Chatbot dla sklepu internetowego](https://www.simplefast.ai/uslugi/chatboty/sklep-internetowy): dostępność, dobór produktu, status zamówienia i zwroty. Wpięcie w sklep od 8000 zł netto, wdrożenie 5-10 dni roboczych.
@@ -100,6 +101,7 @@
 - [Ile kosztuje automatyzacja AI w firmie](https://www.simplefast.ai/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie): wdrożenie 3000-10000 zł, pierwsza automatyzacja na próbę 1990 zł, audyt 1490 zł.
 - [Ile kosztuje agent AI dla firmy? Cennik wdrożenia 2026](https://www.simplefast.ai/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy): od 1790 zł netto za jedno zadanie na czacie, w telefonie od 2500 zł netto, z integracjami 5000-9000 zł netto (telefon) albo 8000-15000 zł netto (czat), opieka miesięczna albo 0 zł. Czym agent różni się od chatbota i jak policzyć zwrot.
 - [AI w biurze rachunkowym](https://www.simplefast.ai/poradniki/ai-w-biurze-rachunkowym-jakie-procesy-zautomatyzowac): 12 procesów do automatyzacji od najszybszego zwrotu.
+- [Co to jest voicebot i jak działa w firmie](https://www.simplefast.ai/poradniki/co-to-jest-voicebot): voicebot to program, który odbiera telefon i rozmawia po polsku zwykłymi zdaniami; cztery kroki rozmowy, różnice z chatbotem i IVR, jak rozpoznać bota w telefonie, czego voicebot nie zrobi i kiedy się nie opłaca.
 
 ## Blog
 - [Blog o AI dla firm](https://www.simplefast.ai/blog): koszty wdrożenia, chatboty i Agenci, voiceboty, AI Act, automatyzacja i dane w UE.

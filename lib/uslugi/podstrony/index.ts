@@ -48,12 +48,14 @@ import { dlaStomatologa } from './dla-stomatologa';
 import { dlaSalonuSamochodowego } from './dla-salonu-samochodowego';
 import { dlaKancelarii } from './dla-kancelarii';
 import { rodoAiAct } from './rodo-ai-act';
+/* Fala 2 SEO (2026-11-03): fraza „wdrożenie chatbota", rodzic chroniony. */
+import { chatbotyWdrozenie } from './chatboty-wdrozenie';
 
 export type { PodstronaUslugi } from './types';
 
 /**
  * Wszystkie podstrony usług (dziś: dziewięć voicebotów, osiem optymalizacji,
- * osiem chatbotów — razem 25).
+ * dziewięć chatbotów, razem 26).
  */
 export const PODSTRONY: readonly PodstronaUslugi[] = [
   windykacja,
@@ -100,6 +102,9 @@ export const PODSTRONY: readonly PodstronaUslugi[] = [
   dlaSalonuSamochodowego,
   dlaKancelarii,
   rodoAiAct,
+  /* Fala 2 SEO (2026-11-03): dopisana NA KOŃCU, żeby nie przestawiać kolejności
+     adresów już zaindeksowanych w mapie witryny. */
+  chatbotyWdrozenie,
 ] as const;
 
 /** Indeks `rodzic/slug` -> podstrona (O(1) lookup, budowany raz na moduł). */

@@ -19,7 +19,7 @@ export const jakVoicebotOdbieraTelefony: Post = {
     'Jak voicebot odbiera telefony, gdy pracujesz, i czy klienci to akceptują. Kiedy łączy z człowiekiem i co zrobić, żeby brzmiał naturalnie po polsku.',
 
   data: '2026-06-15',
-  dataAktualizacji: '2026-10-14',
+  dataAktualizacji: '2026-11-03',
   kategoria: 'Voiceboty',
   tagi: ['voicebot', 'odbieranie telefonów', 'asystent głosowy', 'obsługa połączeń'],
 
@@ -233,6 +233,11 @@ export const jakVoicebotOdbieraTelefony: Post = {
   ],
 
   powiazanePoradniki: [
+    {
+      etykieta: 'Co to jest voicebot i jak działa w firmie',
+      href: '/poradniki/co-to-jest-voicebot',
+      opis: 'Definicja, cztery kroki rozmowy, różnice z chatbotem i IVR, jak rozpoznać bota w telefonie.',
+    },
     {
       etykieta: 'Ile kosztuje agent AI dla firmy? Cennik wdrożenia 2026',
       href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
