@@ -74,20 +74,22 @@ import type { Usluga } from './types';
  */
 export const agenciAi: Usluga = {
   slug: 'agenci-ai',
-  dataAktualizacji: '2026-10-14',
+  dataAktualizacji: '2026-11-03',
   h1: 'Agenci AI dla firm na czacie, w telefonie i w procesach',
 
   /* Kapsuła: definicja w dwóch pierwszych zdaniach, potem gdzie pracują
      nasi agenci, najniższa cena i zasada kontroli. Fraza w pierwszym zdaniu. */
   kapsula:
-    'Agent AI dla firm to program, który dostaje zadanie i sam je wykonuje w Twoich narzędziach: odpowiada klientowi, sprawdza kalendarz, zapisuje dane w CRM, przygotowuje odpowiedź na maila. Chatbot odpowiada, agent działa. Wdrażamy agentów na czacie, w telefonie i w procesach za kulisami. Najprostszy agent czatowy kosztuje 1790 zł netto. Decyzje o wysokiej stawce zostają u człowieka.',
+    'Agent AI dla firm, nazywany też cyfrowym pracownikiem, to program, który dostaje zadanie i sam je wykonuje w Twoich narzędziach: odpowiada klientowi, sprawdza kalendarz, zapisuje dane w CRM, przygotowuje odpowiedź na maila. Chatbot odpowiada, agent działa. Wdrażamy agentów na czacie, w telefonie i w procesach. Najprostszy kosztuje 1790 zł netto. Decyzje o wysokiej stawce zostają u człowieka.',
 
   /* 43 znaki + sufiks marki z layoutu („ · SimpleFast.ai", 16) = 59.
      2026-10-14 (recenzja fali 1): bez „cennik 2026", bo to fraza poradnika
      kosztowego; zostaje fraza główna i trzy miejsca pracy agentów z H1. */
-  metaTitle: 'Agenci AI dla firm: czat, telefon i procesy',
+  /* 2026-11-03: 44 znaki + sufiks marki = 60. Oba hasła w tytule, jak liderzy
+     strony 1 na „cyfrowi pracownicy dla firm" (dokodu, flowbiz). */
+  metaTitle: 'Agenci AI dla firm, czyli cyfrowi pracownicy',
   metaDescription:
-    'Agenci AI dla firm z jawnym cennikiem: czat od 1790 zł netto, telefon od 2500 zł netto, asystent prezesa 4999 zł netto. Wdrożenie od 1-2 dni roboczych.',
+    'Agenci AI, czyli cyfrowi pracownicy dla firm: czat od 1790 zł netto, telefon od 2500 zł netto, asystent prezesa 4999 zł netto. Start od 1-2 dni roboczych.',
 
   problem: {
     h2: 'Czym jest agent AI dla firm i kiedy wystarczy chatbot?',
@@ -151,6 +153,28 @@ export const agenciAi: Usluga = {
         akapity: [
           'Zwykły czat AI nie zna Twojej firmy i nie ma dostępu do Twoich plików ani systemów. Za każdym razem zaczynasz od tłumaczenia, czym się zajmujesz, a gotową odpowiedź i tak sam przenosisz tam, gdzie ma trafić.',
           'Agent pracuje na Twojej wiedzy i w Twoich narzędziach. Wchodzi w udostępnione pliki i systemy i działa na nich, zamiast tylko podpowiadać, co zrobić.',
+        ],
+      },
+      /* Fala 2 SEO (2026-11-03): „cyfrowy pracownik" (polecenie Pawła, fraza
+         rośnie). Google.pl 03.11: na „cyfrowi pracownicy dla firm" strona 1 ma
+         strony usług łączące oba hasła (dokodu 4., flowbiz 8.: „Agenci AI dla
+         firm, cyfrowi pracownicy"). Fakty sekcji 1:1 z tej strony: granice
+         ustalane na starcie, dostęp tylko do potrzebnych systemów, akceptacja
+         człowieka przy wysokiej stawce, 24/7. */
+      {
+        typ: 'sekcja',
+        naglowek: 'Cyfrowy pracownik a agent AI: czy to to samo?',
+        wariant: 'quiet',
+        chip: 'NAZWY',
+        akapity: [
+          'W praktyce tak. „Cyfrowy pracownik" to nazwa, która mówi, co system robi w firmie: przejmuje konkretne obowiązki, jak pracownik z opisanym zakresem zadań. „Agent AI" mówi, jak to działa od środka.',
+          'U nas cyfrowy pracownik ma to samo, czego wymagasz od człowieka na nowym stanowisku:',
+        ],
+        punkty: [
+          'zakres obowiązków, na przykład odpowiadanie na maile biura obsługi albo odbieranie telefonów po godzinach,',
+          'dostęp tylko do tych systemów, których potrzebuje do swojego zadania,',
+          'przełożonego: przy decyzjach o wysokiej stawce czeka na akceptację człowieka,',
+          'pracę 24/7, bez urlopów i bez godzin pracy.',
         ],
       },
     ],
@@ -411,6 +435,11 @@ export const agenciAi: Usluga = {
      w poradniku o koszcie agenta (recenzja fali 1, 2026-10-14). */
   faq: [
     {
+      pytanie: 'Czym jest cyfrowy pracownik AI?',
+      odpowiedz:
+        'To agent AI, który przejmuje w firmie konkretne obowiązki, na przykład odpowiada na maile biura obsługi, odbiera telefony po godzinach albo robi pierwszy odsiew CV. Ma opisany zakres zadań, dostęp tylko do potrzebnych systemów i człowieka, który zatwierdza ważne decyzje. Pracuje 24/7.',
+    },
+    {
       pytanie: 'Co agent AI zrobi w firmie, czego nie zrobi chatbot?',
       odpowiedz:
         'Chatbot odpowiada, agent AI działa. Chatbot odpowie na pytanie o ofertę z Twojej bazy wiedzy. Agent sprawdzi wolny termin w kalendarzu, zapisze wizytę, dopisze klienta do CRM i wyśle potwierdzenie. Dlatego agent kosztuje więcej: każdy system, do którego sięga, to osobne dostępy, testy i obsługa błędów.',
@@ -462,6 +491,8 @@ export const agenciAi: Usluga = {
     'wdrożenie agenta AI',
     'agent AI dla biznesu',
     'agenci AI w firmie',
+    'cyfrowy pracownik AI',
+    'cyfrowi pracownicy dla firm',
   ],
 
   /* Linki wychodzące. Etykiety = h1/tytuł strony docelowej, opisy = fakt,
