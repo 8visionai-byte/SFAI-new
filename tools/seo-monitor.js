@@ -68,6 +68,7 @@ const OBSERWOWANE = [
   { obszar: 'chatboty', strona: '/uslugi/chatboty', fraza: 'chatbot dla firmy' },
   { obszar: 'chatboty', strona: '/uslugi/chatboty/cennik', fraza: 'ile kosztuje chatbot' },
   { obszar: 'chatboty', strona: '/uslugi/chatboty/wdrozenie', fraza: 'wdrożenie chatbota' },
+  { obszar: 'chatboty', strona: '/poradniki/co-to-jest-chatbot', fraza: 'chatbot' },
   { obszar: 'voiceboty', strona: '/uslugi/voiceboty', fraza: 'bot telefoniczny' },
   { obszar: 'voiceboty', strona: '/uslugi/voiceboty/cennik', fraza: 'ile kosztuje voicebot' },
   { obszar: 'voiceboty', strona: '/uslugi/voiceboty/odbieranie-telefonow', fraza: null },
@@ -87,7 +88,7 @@ const OBSERWOWANE = [
 ];
 
 const DO_INDEKSU = [
-  '/uslugi/agenci-ai', '/uslugi/wdrozenie-ai', '/uslugi/chatboty/wdrozenie', '/poradniki/co-to-jest-voicebot', '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
+  '/uslugi/agenci-ai', '/uslugi/wdrozenie-ai', '/uslugi/chatboty/wdrozenie', '/poradniki/co-to-jest-voicebot', '/poradniki/co-to-jest-chatbot', '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
   '/uslugi/automatyzacje', '/uslugi/audyt-ai', '/uslugi/chatboty', '/uslugi/voiceboty/cennik',
 ];
 
