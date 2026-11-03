@@ -32,7 +32,7 @@ export const audytAi: Usluga = {
      zwiad.json, klaster „wdrozenie-ai"): blok definicji „Czym jest audyt AI?"
      na początku problem.bloki, metaTitle z ceną i terminem, nowe queries
      i powiązane usługi. H1, kapsuła, FAQ i cena BEZ zmian. */
-  dataAktualizacji: '2026-10-14',
+  dataAktualizacji: '2026-11-04',
   h1: 'Audyt AI firmy: mapa oszczędności czasu',
 
   /* BLOK KRÓTKIEJ ODPOWIEDZI (audyt §9 etap 1 pkt 2): kapsuła miała 1 z 4
@@ -396,6 +396,14 @@ export const audytAi: Usluga = {
       pytanie: 'Czy audyt ma sens przy małej firmie?',
       odpowiedz:
         'Ma, często nawet większy. Im mniejsza firma, tym bardziej boli każda zła decyzja i każda godzina zmarnowana na rzeczy, które AI może zdjąć. Audyt pokazuje, gdzie zacząć przy małym budżecie, żeby jeden dobrze dobrany proces dał szybki zwrot, zamiast rozdrabniać się na wszystko naraz.',
+    },
+    /* 2026-11-04 (analiza konkurencji 03.11): fraza „audyt ai" jest szersza
+       niż ta strona, lider agisona.pl rozbija ją na rodzaje audytu. Fakty:
+       Sprint z tej strony, audyt widoczności = podstrony/audyt-widocznosci-w-ai.ts. */
+    {
+      pytanie: 'Jakie są rodzaje audytu AI i który jest dla mnie?',
+      odpowiedz:
+        'Pod hasłem „audyt AI” kryją się zwykle dwie różne usługi. Audyt procesów to nasz Sprint Diagnostyczny: 1490 zł netto, 5 dni roboczych i raport PDF z mapą procesów, które warto oddać AI i automatyzacji. Audyt widoczności w AI sprawdza, czy ChatGPT i inne czaty polecają Twoją firmę, i ma osobną stronę. Jeśli chcesz odzyskać czas zespołu, wybierz pierwszy.',
     },
   ],
 

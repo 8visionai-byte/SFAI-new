@@ -145,7 +145,7 @@ export const chatboty: Usluga = {
   slug: 'chatboty',
   /* 2026-09-06: przycięcie strony (patrz nagłówek pliku). Pole jest źródłem
      `lastmod` w sitemap.xml (app/sitemap.ts). */
-  dataAktualizacji: '2026-09-06',
+  dataAktualizacji: '2026-11-04',
   h1: 'Chatbot AI dla firm, który odpowiada klientom 24/7',
 
   /* BLOK KRÓTKIEJ ODPOWIEDZI (audyt §9 etap 1 pkt 2): pierwsze zdanie niesie
@@ -363,6 +363,16 @@ export const chatboty: Usluga = {
       pytanie: 'Gdzie działa chatbot?',
       odpowiedz:
         'Na Twojej stronie WWW oraz na WhatsAppie, Messengerze, Instagramie i Telegramie. To pełna lista kanałów, które wdrażamy. Jedna baza wiedzy, ten sam bot, kilka okien.',
+    },
+    /* 2026-11-04 (analiza konkurencji 03.11): liderzy na „chatbot dla firmy"
+       (easycall, streamsoft) mają rozróżnienie chatbot regułowy / AI, u nas
+       go brakowało. Strona CHRONIONA: tylko jedno pytanie dopisane na końcu.
+       Fakty 1:1 z tabeli „Bot na regułach a bot z bazą wiedzy"
+       (podstrony/baza-wiedzy.ts) i progu 1790 zł netto z tej strony. */
+    {
+      pytanie: 'Czym chatbot AI różni się od chatbota na regułach?',
+      odpowiedz:
+        'Chatbot na regułach odpowiada ręcznie wpisanymi formułkami. Gdy klient zapyta inaczej, niż przewidziano, wraca menu wyboru, a każdą zmianę w ofercie ktoś musi przepisać w regułach. Chatbot AI rozumie pytanie zadane własnymi słowami i odpowiada z Twoich dokumentów, a zmianę w ofercie robisz podmianą pliku. Wdrażamy chatboty AI z bazą wiedzy, od 1790 zł netto.',
     },
   ],
 

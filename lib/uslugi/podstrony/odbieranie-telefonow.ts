@@ -62,7 +62,7 @@ import type { PodstronaUslugi } from './types';
 export const odbieranieTelefonow: PodstronaUslugi = {
   rodzic: 'voiceboty',
   slug: 'odbieranie-telefonow',
-  dataAktualizacji: '2026-09-22',
+  dataAktualizacji: '2026-11-04',
 
   // v20: 58 -> 44 znaków (pomiar §4b: 4 linie -> 3 na 1440, 5 -> 4 na 375/320).
   // Fraza obowiązkowa „bot telefoniczny" zostaje NA POCZĄTKU (poz. 16,9 w GSC),
@@ -591,8 +591,14 @@ export const odbieranieTelefonow: PodstronaUslugi = {
      rodzica, więc poradnik i kalkulator wchodzą tędy. */
   powiazane: {
     poradniki: [
+      /* 2026-11-04: poradnik definicyjny z fali 2 (link z analizy konkurencji 03.11). */
       {
-        etykieta: 'Ile kosztuje wdrożenie AI agenta dla firmy',
+        etykieta: 'Co to jest voicebot i jak działa w firmie',
+        href: '/poradniki/co-to-jest-voicebot',
+        opis: 'Definicja, cztery kroki rozmowy, różnice z chatbotem i IVR, jak rozpoznać bota w telefonie.',
+      },
+      {
+        etykieta: 'Ile kosztuje agent AI dla firmy? Cennik wdrożenia 2026',
         href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',
         opis: 'Widełki 2026, od czego zależy cena i jak policzyć zwrot z wdrożenia.',
       },
