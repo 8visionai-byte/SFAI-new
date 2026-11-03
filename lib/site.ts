@@ -322,7 +322,8 @@ export const ROUTES: RouteEntry[] = [
   { path: '/wiedza', priority: 0.8, changeFrequency: 'monthly', live: true, lastModified: ODPOWIEDZI_2026_08_20 },
   // 2026-10-14: hub pokazuje nowe tytuły poradników (agent AI, chatbot, automatyzacja).
   // 2026-11-03: nowy poradnik „Co to jest voicebot i jak działa w firmie" na liście.
-  { path: '/poradniki', priority: 0.7, changeFrequency: 'monthly', live: true, lastModified: '2026-11-03' },
+  // 2026-11-04: nowy poradnik „Co to jest chatbot AI i jak działa w firmie".
+  { path: '/poradniki', priority: 0.7, changeFrequency: 'monthly', live: true, lastModified: '2026-11-04' },
 
   // AI Radar (silnik newsow „AI o 19:00") — hub /ai-radar zbudowany (SSG, 200 OK):
   // app/ai-radar/page.tsx + app/ai-radar/[slug]. Startuje z 2 wpisami-SZABLONAMI

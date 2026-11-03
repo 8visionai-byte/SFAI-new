@@ -101,6 +101,7 @@
 - [Ile kosztuje automatyzacja AI w firmie](https://www.simplefast.ai/poradniki/ile-kosztuje-automatyzacja-ai-w-firmie): wdrożenie 3000-10000 zł, pierwsza automatyzacja na próbę 1990 zł, audyt 1490 zł.
 - [Ile kosztuje agent AI dla firmy? Cennik wdrożenia 2026](https://www.simplefast.ai/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy): od 1790 zł netto za jedno zadanie na czacie, w telefonie od 2500 zł netto, z integracjami 5000-9000 zł netto (telefon) albo 8000-15000 zł netto (czat), opieka miesięczna albo 0 zł. Czym agent różni się od chatbota i jak policzyć zwrot.
 - [AI w biurze rachunkowym](https://www.simplefast.ai/poradniki/ai-w-biurze-rachunkowym-jakie-procesy-zautomatyzowac): 12 procesów do automatyzacji od najszybszego zwrotu.
+- [Co to jest chatbot AI i jak działa w firmie](https://www.simplefast.ai/poradniki/co-to-jest-chatbot): chatbot AI odpowiada klientom na piśmie (strona WWW, WhatsApp, Messenger, Instagram, Telegram) z materiałów firmy; rodzaje: regułowy, AI z bazą wiedzy, AI z integracjami; jak działa krok po kroku, czym różni się od ChatGPT i od voicebota, kiedy się nie opłaca.
 - [Co to jest voicebot i jak działa w firmie](https://www.simplefast.ai/poradniki/co-to-jest-voicebot): voicebot to program, który odbiera telefon i rozmawia po polsku zwykłymi zdaniami; cztery kroki rozmowy, różnice z chatbotem i IVR, jak rozpoznać bota w telefonie, czego voicebot nie zrobi i kiedy się nie opłaca.
 
 ## Blog

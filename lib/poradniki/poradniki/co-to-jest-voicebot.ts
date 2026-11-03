@@ -46,7 +46,7 @@ export const coToJestVoicebot: Poradnik = {
     'Co to jest voicebot, jak działa krok po kroku, czym różni się od chatbota i IVR, jak rozpoznać rozmowę z botem i kiedy voicebot się nie opłaca.',
 
   data: '2026-11-03',
-  dataAktualizacji: '2026-11-03',
+  dataAktualizacji: '2026-11-04',
   kategoria: 'Automatyzacja',
   tagi: ['voicebot', 'co to jest voicebot', 'bot telefoniczny', 'asystent telefoniczny AI'],
 
@@ -301,6 +301,11 @@ export const coToJestVoicebot: Poradnik = {
   ],
 
   powiazanePoradniki: [
+    {
+      etykieta: 'Co to jest chatbot AI i jak działa w firmie',
+      href: '/poradniki/co-to-jest-chatbot',
+      opis: 'Bot, który odpowiada na piśmie: rodzaje, jak działa i czym różni się od voicebota.',
+    },
     {
       etykieta: 'Ile kosztuje agent AI dla firmy? Cennik wdrożenia 2026',
       href: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy',

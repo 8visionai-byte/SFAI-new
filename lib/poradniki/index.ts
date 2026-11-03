@@ -25,6 +25,8 @@ import { ileKosztujeAutomatyzacjaAiWFirmie } from './poradniki/ile-kosztuje-auto
 /* Fala 2 SEO (2026-11-03): intencja informacyjna „co to jest voicebot",
    oferta i ceny zostają na /uslugi/voiceboty i /uslugi/voiceboty/cennik. */
 import { coToJestVoicebot } from './poradniki/co-to-jest-voicebot';
+/* 2026-11-04 (analiza konkurencji 03.11): bliźniak poradnika o voicebocie. */
+import { coToJestChatbot } from './poradniki/co-to-jest-chatbot';
 
 export type {
   Poradnik,
@@ -44,6 +46,7 @@ const PORADNIKI_RAW: readonly Poradnik[] = [
   ileKosztujeWdrozenieAiAgenta,
   ileKosztujeAutomatyzacjaAiWFirmie,
   coToJestVoicebot,
+  coToJestChatbot,
 ];
 
 /**

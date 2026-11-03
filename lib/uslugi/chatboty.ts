@@ -435,10 +435,17 @@ export const chatboty: Usluga = {
       },
     ],
     poradniki: [
+      /* 2026-11-04: poradnik definicyjny (intencja „co to jest chatbot"),
+         ta strona zostaje ofertą. Etykieta wpisu blogowego = jego H1 po fali 1. */
       {
-        etykieta: 'Chatbot czy AI Agent: czym się różnią i co wybrać dla firmy',
+        etykieta: 'Co to jest chatbot AI i jak działa w firmie',
+        href: '/poradniki/co-to-jest-chatbot',
+        opis: 'Rodzaje chatbotów, jak działa krok po kroku i czym różni się od ChatGPT.',
+      },
+      {
+        etykieta: 'Chatbot czy agent AI: czym się różnią i co wybrać dla firmy',
         href: '/blog/chatbot-czy-ai-agent-roznice',
-        opis: 'Chatbot odpowiada, Agent działa. Który wybrać.',
+        opis: 'Chatbot odpowiada, agent działa. Który wybrać.',
       },
     ],
     uslugi: [
