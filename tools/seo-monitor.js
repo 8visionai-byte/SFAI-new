@@ -60,14 +60,30 @@ const GALEZIE = [
   ['audyt AI', /audyt ai/i],
 ];
 
-// Strony chronione: rosna, nie wolno ich przebudowywac. Alarm, gdy spadaja.
-const CHRONIONE = [
-  { strona: '/uslugi/voiceboty', fraza: 'bot telefoniczny' },
-  { strona: '/uslugi/chatboty', fraza: 'chatbot dla firmy' },
-  { strona: '/uslugi/voiceboty/potwierdzanie-wizyt', fraza: 'voicebot do potwierdzania wizyt' },
-  { strona: '/', fraza: null },
-  { strona: '/uslugi/automatyzacje', fraza: 'automatyzacja procesów ai' },
-  { strona: '/uslugi/optymalizacja/perplexity', fraza: null },
+// 20 stron obserwowanych ze wszystkich obszarow (decyzja Pawla 03.11: nie 6, tylko
+// 10-20, zeby widziec kazdy obszar). Dla kazdej: cala strona + glowna fraza (jesli jest).
+// Alarm, gdy strona traci > 40% wyswietlen albo pozycja pogarsza sie o > 3.
+const OBSERWOWANE = [
+  { obszar: 'marka', strona: '/', fraza: null },
+  { obszar: 'chatboty', strona: '/uslugi/chatboty', fraza: 'chatbot dla firmy' },
+  { obszar: 'chatboty', strona: '/uslugi/chatboty/cennik', fraza: 'ile kosztuje chatbot' },
+  { obszar: 'chatboty', strona: '/uslugi/chatboty/wdrozenie', fraza: 'wdrożenie chatbota' },
+  { obszar: 'voiceboty', strona: '/uslugi/voiceboty', fraza: 'bot telefoniczny' },
+  { obszar: 'voiceboty', strona: '/uslugi/voiceboty/cennik', fraza: 'ile kosztuje voicebot' },
+  { obszar: 'voiceboty', strona: '/uslugi/voiceboty/odbieranie-telefonow', fraza: null },
+  { obszar: 'voiceboty', strona: '/uslugi/voiceboty/potwierdzanie-wizyt', fraza: null },
+  { obszar: 'voiceboty', strona: '/poradniki/co-to-jest-voicebot', fraza: 'voicebot' },
+  { obszar: 'agenci AI', strona: '/uslugi/agenci-ai', fraza: 'agenci ai dla firm' },
+  { obszar: 'agenci AI', strona: '/poradniki/ile-kosztuje-wdrozenie-ai-agenta-dla-firmy', fraza: 'ile kosztuje' },
+  { obszar: 'automatyzacje', strona: '/uslugi/automatyzacje', fraza: 'automatyzacja procesów ai' },
+  { obszar: 'automatyzacje', strona: '/uslugi/dokumenty-faktury', fraza: null },
+  { obszar: 'wdrozenie AI', strona: '/uslugi/wdrozenie-ai', fraza: null },
+  { obszar: 'audyt AI', strona: '/uslugi/audyt-ai', fraza: 'audyt ai' },
+  { obszar: 'asystenci', strona: '/uslugi/asystent-prezesa', fraza: null },
+  { obszar: 'asystenci', strona: '/uslugi/agent-rekrutacyjny', fraza: null },
+  { obszar: 'GEO', strona: '/uslugi/optymalizacja', fraza: null },
+  { obszar: 'GEO', strona: '/uslugi/optymalizacja/perplexity', fraza: null },
+  { obszar: 'marka', strona: '/o-nas', fraza: null },
 ];
 
 const DO_INDEKSU = [
@@ -139,17 +155,30 @@ async function main() {
     L.push(`| ${n} | ${a.w} | ${zmiana(a, b)} | ${a.k} | ${fmtP(a)} | ${fmtP(b)} | ${top ? `${top.keys[1]} (${top.impressions} @ ${top.position.toFixed(1).replace('.', ',')})` : '-'} |`);
   }
 
-  L.push('', '## Strony chronione (alarm przy spadku)', '');
+  L.push('', `## ${OBSERWOWANE.length} stron obserwowanych (alarm przy spadku)`, '');
+  L.push('Uwaga: pozycje z GSC na frazach pienieznych bywaja zawyzone, bo Google liczy tez cytat w bloku AI. Prawdziwa pozycje organiczna sprawdza sie w Google.pl.', '');
+  L.push('| Stan | Obszar | Strona | Wysw. (bylo) | Klik. | Poz. (byla) | Fraza: wysw. @ poz. (bylo) |', '|---|---|---|---|---|---|---|');
   let alarmy = 0;
-  for (const c of CHRONIONE) {
-    const f = (r) => sciezka(r.keys[0]) === c.strona && (!c.fraza || r.keys[1].toLowerCase().includes(c.fraza));
-    const a = suma(pqT.filter(f)), b = suma(pqW.filter(f));
+  const alarmyLista = [];
+  for (const c of OBSERWOWANE) {
+    const fs_ = (r) => sciezka(r.keys[0]) === c.strona;
+    const a = suma(pT.filter(fs_)), b = suma(pW.filter(fs_));
+    let frazaTxt = '-';
+    let fa = null, fb = null;
+    if (c.fraza) {
+      const ff = (r) => sciezka(r.keys[0]) === c.strona && r.keys[1].toLowerCase().includes(c.fraza);
+      fa = suma(pqT.filter(ff)); fb = suma(pqW.filter(ff));
+      frazaTxt = `„${c.fraza}": ${fa.w} @ ${fmtP(fa)} (${fb.w} @ ${fmtP(fb)})`;
+    }
     const spadekW = b.w >= 20 && a.w < b.w * 0.6;
     const spadekP = b.w >= 10 && a.w && a.p - b.p > 3;
-    const alarm = spadekW || spadekP;
-    if (alarm) alarmy++;
-    L.push(`- ${alarm ? '**ALARM**' : 'ok'}: ${c.strona}${c.fraza ? ` na „${c.fraza}"` : ''}: ${a.w} wysw. @ ${fmtP(a)} (bylo ${b.w} @ ${fmtP(b)})`);
+    const spadekF = fb && fb.w >= 10 && fa.w && fa.p - fb.p > 3;
+    const alarm = spadekW || spadekP || spadekF;
+    if (alarm) { alarmy++; alarmyLista.push(c.strona); }
+    const nowa = !b.w && a.w ? 'NOWA' : '';
+    L.push(`| ${alarm ? '**ALARM**' : (nowa || 'ok')} | ${c.obszar} | ${c.strona} | ${a.w} (${b.w}) | ${a.k} | ${fmtP(a)} (${fmtP(b)}) | ${frazaTxt} |`);
   }
+  L.push('', `Alarmy: ${alarmy}${alarmy ? ' (' + alarmyLista.join(', ') + ')' : ''}.`);
   if (alarmy) {
     L.push('', '**Co zrobic przy alarmie:** sprawdz w `git log`, co zmienilo sie na tej stronie w ostatnich 14 dniach. Jesli spadek zbiega sie z nasza zmiana, cofnij tylko te zmiane (`git revert <commit>`), nie cala fale. Szybkie cofniecie calej strony: Vercel → Deployments → poprzednie wdrozenie → Promote to Production. Jedna zla doba to szum: alarm traktuj powaznie dopiero, gdy powtorzy sie w dwoch kolejnych odczytach.');
   }

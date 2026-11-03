@@ -66,6 +66,15 @@ Dowód: tsc 0, lint 0, build 90/90, podgląd next start (konsola czysta), skan H
 Lekcja: Vercel padł na ce3fa2f mimo lokalnego build OK (jak 22.09) → pusty commit naprawia.
 Wstrzymane świadomie: poradnik „Cyfrowy pracownik AI" (najpierw pomiar agenci-ai, żeby nie dzielić świeżej frazy na 2 adresy).
 
+## ANALIZA KONKURENCJI TOP 3 (03.11, zgoda Pawła na 5-10 agentów, zostało ~10% limitu)
+| Etap | Stan | Dowód |
+|---|---|---|
+| Rój wf_ea3e624e-eff: 5 agentów Sonnet (chatboty, voiceboty, agenci+cyfrowi, automatyzacje, wdrożenie+audyt), tylko odczyt | W TOKU | wyniki do `.seo-przeglad/konkurencja-2026-11-03/` |
+| Synteza w plan zmian (sam, bez agentów) | NIERUSZONE | |
+| Prośba o indeksację 3 adresów (agenci-ai, chatboty/wdrozenie, poradnik voicebot) | DONE (Paweł, 03.11) | |
+| Monitor rozszerzony do 20 stron z 9 obszarów | DONE | odczyt 03.11: 1 alarm (asystent-prezesa 6,2 → 10,5, 69 → 52 wyśw.; strony nie ruszaliśmy, obserwujemy) |
+| Rutyna Claude „SEO SimpleFast.ai: poniedziałkowy raport" (pon. 8:01, tylko odczyt i raport) | DONE (założona) | `~/.claude/scheduled-tasks/seo-monitor-simplefast/SKILL.md`; pierwsze uruchomienie 10.11; Paweł: „Run now" raz w aplikacji, żeby zatwierdzić narzędzia |
+
 ## FALA 2 (plan z 13.10, częściowo zrobione 03.11)
 - `/uslugi/chatboty/wdrozenie` (fraza „wdrożenie chatbota", ryzyko podbierania rodzicowi „kto wdroży").
 - `/poradniki/co-to-jest-voicebot` (definicja; ryzyko dla rodzica na „voicebot").
